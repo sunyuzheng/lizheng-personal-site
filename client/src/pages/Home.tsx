@@ -80,10 +80,10 @@ export default function Home() {
           <div className="space-y-6">
             <div className="space-y-2">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                通关职场的博士，
-                <span className="text-amber-500">带你超线性增长</span>
+                用AI解决真实问题，
+                <span className="text-amber-500">超线性增长</span>
               </h1>
-              <p className="text-xl text-zinc-400">主宰自己人生</p>
+              <p className="text-xl text-zinc-400">Stay foolish</p>
             </div>
             
             <p className="text-lg text-zinc-300 leading-relaxed">

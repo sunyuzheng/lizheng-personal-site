@@ -52,9 +52,9 @@ git push -u origin main
 Vercel会自动检测到这是一个Vite项目。确认以下设置：
 
 - **Framework Preset**: Vite
-- **Build Command**: `cd client && pnpm install && pnpm build`
-- **Output Directory**: `client/dist`
 - **Install Command**: `pnpm install`
+- **Build Command**: `pnpm run build`
+- **Output Directory**: `dist/public`
 
 ### 2.3 环境变量设置
 
@@ -64,6 +64,8 @@ Vercel会自动检测到这是一个Vite项目。确认以下设置：
 VITE_APP_TITLE=Yuzheng Sun | 课代表立正
 VITE_APP_LOGO=/profile.jpg
 ```
+
+保存后点击 **Redeploy** 以使最新环境变量生效。
 
 ### 2.4 部署
 
@@ -165,4 +167,3 @@ Vercel会自动为您的域名配置免费的SSL证书（HTTPS）。
 ---
 
 **祝部署顺利！🚀**
-

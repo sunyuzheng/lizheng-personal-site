@@ -21,8 +21,11 @@ git push -u origin main
 1. 访问 https://vercel.com/new
 2. 用GitHub账号登录
 3. 选择 `lizheng-personal-site` 仓库
-4. 点击 "Deploy"（保持默认设置即可）
-5. 等待部署完成
+4. 点击 "Deploy"（Vercel 会自动读取仓库中的 `vercel.json` 配置，无需额外修改）
+5. 部署完成后在 Settings → Environment Variables 添加：
+   - `VITE_APP_TITLE` = `Yuzheng Sun | 课代表立正`
+   - `VITE_APP_LOGO` = `/profile.jpg`
+6. 重新部署（或点击 "Redeploy"）并等待构建完成
 
 ## 第3步：配置域名（5分钟）
 
@@ -57,4 +60,3 @@ TTL: 600
 ---
 
 **详细说明请查看 DEPLOYMENT.md**
-

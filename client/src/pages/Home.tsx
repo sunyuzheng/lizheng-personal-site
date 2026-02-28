@@ -82,7 +82,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight text-balance">
                 用AI创造价值，积累
                 <span className="text-amber-500">超线性增长</span>
               </h1>
@@ -347,8 +347,8 @@ export default function Home() {
             {/* Quote 1 — 戴雨森 */}
             <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
-              <CardContent className="pt-10 pb-6">
-                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+              <CardContent className="pt-10 pb-6 flex flex-col">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
                   "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现真正的超线性成长。"
                 </p>
                 <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
@@ -367,8 +367,8 @@ export default function Home() {
             {/* Quote 2 — 刘嘉 */}
             <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
-              <CardContent className="pt-10 pb-6">
-                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+              <CardContent className="pt-10 pb-6 flex flex-col">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
                   "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。"
                 </p>
                 <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
@@ -388,8 +388,8 @@ export default function Home() {
             {/* Quote 3 — Wei Manfredi */}
             <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
-              <CardContent className="pt-10 pb-6">
-                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+              <CardContent className="pt-10 pb-6 flex flex-col">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
                   "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing."
                 </p>
                 <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
@@ -409,8 +409,8 @@ export default function Home() {
             {/* Quote 4 — Vijaye Raji */}
             <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
-              <CardContent className="pt-10 pb-6">
-                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+              <CardContent className="pt-10 pb-6 flex flex-col">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
                   "Yuzheng distills years of product growth wisdom into actionable insight — helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders unlock a repeatable path to compounding PMF. He transforms metrics into momentum."
                 </p>
                 <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
@@ -421,7 +421,7 @@ export default function Home() {
                   <div>
                     <div className="font-bold text-white">Vijaye Raji</div>
                     <div className="text-amber-500 text-sm">Founder & CEO, Statsig</div>
-                    <div className="text-zinc-500 text-xs mt-0.5">Former CTO of Applications, OpenAI</div>
+                    <div className="text-zinc-500 text-xs mt-0.5">CTO of Applications, OpenAI</div>
                   </div>
                 </div>
               </CardContent>

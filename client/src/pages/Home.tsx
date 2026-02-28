@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { 
   Youtube, 
@@ -44,7 +45,8 @@ export default function Home() {
               <button onClick={() => scrollToSection('about')} className="text-zinc-400 hover:text-amber-500 transition-colors">About</button>
               <button onClick={() => scrollToSection('course')} className="text-zinc-400 hover:text-amber-500 transition-colors">AI Builders</button>
               <button onClick={() => scrollToSection('background')} className="text-zinc-400 hover:text-amber-500 transition-colors">Background</button>
-              <button onClick={() => scrollToSection('testimonials')} className="text-zinc-400 hover:text-amber-500 transition-colors">Testimonials</button>
+              <button onClick={() => scrollToSection('endorsements')} className="text-zinc-400 hover:text-amber-500 transition-colors">Endorsements</button>
+              <button onClick={() => scrollToSection('testimonials')} className="text-zinc-400 hover:text-amber-500 transition-colors">Reviews</button>
               <Button variant="default" className="bg-amber-600 hover:bg-amber-700" asChild>
                 <a href="https://www.superlinear.academy/feed" target="_blank" rel="noopener noreferrer">
                   <Users className="w-4 h-4 mr-2" />
@@ -67,7 +69,8 @@ export default function Home() {
               <button onClick={() => scrollToSection('about')} className="block text-zinc-400 hover:text-amber-500 transition-colors">About</button>
               <button onClick={() => scrollToSection('course')} className="block text-zinc-400 hover:text-amber-500 transition-colors">AI Builders</button>
               <button onClick={() => scrollToSection('background')} className="block text-zinc-400 hover:text-amber-500 transition-colors">Background</button>
-              <button onClick={() => scrollToSection('testimonials')} className="block text-zinc-400 hover:text-amber-500 transition-colors">Testimonials</button>
+              <button onClick={() => scrollToSection('endorsements')} className="block text-zinc-400 hover:text-amber-500 transition-colors">Endorsements</button>
+              <button onClick={() => scrollToSection('testimonials')} className="block text-zinc-400 hover:text-amber-500 transition-colors">Reviews</button>
               <a href="mailto:yz@superlinear.academy" className="block text-zinc-400 hover:text-amber-500 transition-colors">Contact</a>
             </div>
           )}
@@ -332,6 +335,101 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Notable Endorsements Section */}
+      <section id="endorsements" className="py-16 md:py-20 border-y border-zinc-800">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white mb-3">业界领袖怎么说</h2>
+            <p className="text-zinc-400">来自投资人、学者与科技领导者的评价</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Quote 1 — 戴雨森 */}
+            <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
+              <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
+              <CardContent className="pt-10 pb-6">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+                  "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现真正的超线性成长。"
+                </p>
+                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600">
+                    <AvatarImage src="/avatars/dai-yusen.jpg" alt="戴雨森" />
+                    <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">雨森</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-bold text-white">戴雨森</div>
+                    <div className="text-amber-500 text-sm">真格基金合伙人</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quote 2 — 刘嘉 */}
+            <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
+              <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
+              <CardContent className="pt-10 pb-6">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+                  "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。"
+                </p>
+                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600">
+                    <AvatarImage src="/avatars/liu-jia.jpg" alt="刘嘉" />
+                    <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">刘嘉</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-bold text-white">刘嘉</div>
+                    <div className="text-amber-500 text-sm">清华大学讲席教授 · 脑神经与认知科学系主任</div>
+                    <div className="text-zinc-500 text-xs mt-0.5">《最强大脑》总科学顾问</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quote 3 — Wei Manfredi */}
+            <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
+              <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
+              <CardContent className="pt-10 pb-6">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+                  "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing."
+                </p>
+                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600">
+                    <AvatarImage src="/avatars/wei-manfredi.jpg" alt="Wei Manfredi" />
+                    <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">WM</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-bold text-white">Wei Manfredi</div>
+                    <div className="text-amber-500 text-sm">Global CAIO & CTO · McDonald's · Google Cloud · lululemon</div>
+                    <div className="text-zinc-500 text-xs mt-0.5">Top 100 Global AI Leaders · Top AI Leaders in Retail 2026</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quote 4 — Vijaye Raji */}
+            <Card className="bg-zinc-800/60 border-zinc-700 relative overflow-hidden group hover:border-amber-600/50 transition-colors">
+              <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
+              <CardContent className="pt-10 pb-6">
+                <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10">
+                  "Yuzheng distills years of product growth wisdom into actionable insight — helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders unlock a repeatable path to compounding PMF. He transforms metrics into momentum."
+                </p>
+                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600">
+                    <AvatarImage src="/avatars/vijaye-raji.jpg" alt="Vijaye Raji" />
+                    <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">VR</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <div className="font-bold text-white">Vijaye Raji</div>
+                    <div className="text-amber-500 text-sm">Founder & CEO, Statsig</div>
+                    <div className="text-zinc-500 text-xs mt-0.5">Former CTO of Applications, OpenAI</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section id="testimonials" className="container mx-auto px-4 py-16 md:py-20">
         <h2 className="text-4xl font-bold text-white mb-12 text-center">学员评价</h2>
@@ -385,7 +483,16 @@ export default function Home() {
 
         <div className="text-center mt-8">
           <p className="text-zinc-400 text-sm">
-            所有评价来自Maven平台，公开、实名、可追溯
+            所有评价来自{" "}
+            <a
+              href="https://maven.com/superlinear/aibuilders"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-500 hover:text-amber-400 underline underline-offset-2 transition-colors"
+            >
+              Maven 平台
+            </a>
+            ，公开、实名、可追溯
           </p>
         </div>
       </section>

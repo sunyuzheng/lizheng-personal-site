@@ -349,16 +349,17 @@ export default function Home() {
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
               <CardContent className="pt-10 pb-6 flex flex-col">
                 <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
-                  "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现真正的超线性成长。"
+                  "立正是真正的 AI Native Pioneer——<br />他用独特的思维框架，<br />带领更多人在AI时代实现超线性成长。"
                 </p>
-                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
-                  <Avatar className="w-10 h-10 border border-zinc-600">
+                <div className="border-t border-zinc-700 pt-4 flex items-start gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600 flex-shrink-0 mt-0.5">
                     <AvatarImage src="/avatars/dai-yusen.jpg" alt="戴雨森" />
                     <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">雨森</AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="min-h-[3.5rem]">
                     <div className="font-bold text-white">戴雨森</div>
-                    <div className="text-amber-500 text-sm">真格基金合伙人</div>
+                    <div className="text-amber-500 text-sm mt-0.5">真格基金合伙人</div>
+                    <div className="text-zinc-500 text-xs mt-0.5">ZhenFund Partner</div>
                   </div>
                 </div>
               </CardContent>
@@ -369,16 +370,16 @@ export default function Home() {
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
               <CardContent className="pt-10 pb-6 flex flex-col">
                 <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
-                  "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。"
+                  "立正分享的不只是工具，而是思维哲学——<br />这才是AI时代最稀缺、最有价值的东西。<br />他的课程让我这个科学家也深受启发。"
                 </p>
-                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
-                  <Avatar className="w-10 h-10 border border-zinc-600">
+                <div className="border-t border-zinc-700 pt-4 flex items-start gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600 flex-shrink-0 mt-0.5">
                     <AvatarImage src="/avatars/liu-jia.jpg" alt="刘嘉" />
                     <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">刘嘉</AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="min-h-[3.5rem]">
                     <div className="font-bold text-white">刘嘉</div>
-                    <div className="text-amber-500 text-sm">清华大学讲席教授 · 脑神经与认知科学系主任</div>
+                    <div className="text-amber-500 text-sm mt-0.5">清华大学讲席教授 · 脑神经与认知科学系主任</div>
                     <div className="text-zinc-500 text-xs mt-0.5">《最强大脑》总科学顾问</div>
                   </div>
                 </div>
@@ -390,16 +391,16 @@ export default function Home() {
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
               <CardContent className="pt-10 pb-6 flex flex-col">
                 <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
-                  "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing."
+                  "Yuzheng has built what I consider<br />the best AI education community bar none —<br />thoughtfully curated, rigorously practical,<br />and genuinely life-changing."
                 </p>
-                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
-                  <Avatar className="w-10 h-10 border border-zinc-600">
+                <div className="border-t border-zinc-700 pt-4 flex items-start gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600 flex-shrink-0 mt-0.5">
                     <AvatarImage src="/avatars/wei-manfredi.jpg" alt="Wei Manfredi" />
                     <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">WM</AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="min-h-[3.5rem]">
                     <div className="font-bold text-white">Wei Manfredi</div>
-                    <div className="text-amber-500 text-sm">Global CAIO & CTO · McDonald's · Google Cloud · lululemon</div>
+                    <div className="text-amber-500 text-sm mt-0.5">Global CAIO & CTO · McDonald's · Google Cloud · lululemon</div>
                     <div className="text-zinc-500 text-xs mt-0.5">Top 100 Global AI Leaders · Top AI Leaders in Retail 2026</div>
                   </div>
                 </div>
@@ -411,16 +412,16 @@ export default function Home() {
               <div className="absolute top-3 left-5 text-7xl text-amber-500/10 font-serif leading-none select-none group-hover:text-amber-500/20 transition-colors">"</div>
               <CardContent className="pt-10 pb-6 flex flex-col">
                 <p className="text-zinc-200 text-base leading-relaxed mb-6 relative z-10 flex-grow">
-                  "Yuzheng distills years of product growth wisdom into actionable insight — helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders unlock a repeatable path to compounding PMF. He transforms metrics into momentum."
+                  "Yuzheng distills years of product growth wisdom<br />into actionable insight — helping data scientists<br />surface decisive signals, PMs turn numbers into strategy,<br />and founders find a repeatable path to compounding PMF."
                 </p>
-                <div className="border-t border-zinc-700 pt-4 flex items-center gap-3">
-                  <Avatar className="w-10 h-10 border border-zinc-600">
+                <div className="border-t border-zinc-700 pt-4 flex items-start gap-3">
+                  <Avatar className="w-10 h-10 border border-zinc-600 flex-shrink-0 mt-0.5">
                     <AvatarImage src="/avatars/vijaye-raji.jpg" alt="Vijaye Raji" />
                     <AvatarFallback className="bg-amber-600 text-white text-sm font-bold">VR</AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="min-h-[3.5rem]">
                     <div className="font-bold text-white">Vijaye Raji</div>
-                    <div className="text-amber-500 text-sm">Founder & CEO, Statsig</div>
+                    <div className="text-amber-500 text-sm mt-0.5">Founder & CEO, Statsig</div>
                     <div className="text-zinc-500 text-xs mt-0.5">CTO of Applications, OpenAI</div>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import {
   Youtube,
@@ -55,6 +56,41 @@ const career = [
   { company: "腾讯 (Tencent)", role: "数据科学总监 (Director of Data Science)", note: "双五星绩效 · 管理 30 人数据与AI团队" },
   { company: "Meta (Facebook)", role: "数据科学家 (Data Scientist)", note: "" },
   { company: "Amazon", role: "经济学家 (Economist)", note: "" },
+];
+
+const endorsements = [
+  {
+    quote: "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现超线性成长。",
+    name: "戴雨森",
+    title: "真格基金合伙人",
+    subtitle: "ZhenFund Partner",
+    avatar: "/avatars/dai-yusen.jpg",
+    initials: "雨森",
+  },
+  {
+    quote: "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
+    name: "刘嘉",
+    title: "清华大学讲席教授 · 脑神经与认知科学系主任",
+    subtitle: "《最强大脑》总科学顾问",
+    avatar: "/avatars/liu-jia.jpg",
+    initials: "刘嘉",
+  },
+  {
+    quote: "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing.",
+    name: "Wei Manfredi",
+    title: "Global CAIO & CTO · McDonald's · Google Cloud · lululemon",
+    subtitle: "Top 100 Global AI Leaders · Top AI Leaders in Retail 2026",
+    avatar: "/avatars/wei-manfredi.jpg",
+    initials: "WM",
+  },
+  {
+    quote: "Yuzheng distills years of product growth wisdom into actionable insight — helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
+    name: "Vijaye Raji",
+    title: "Founder & CEO, Statsig",
+    subtitle: "CTO of Applications, OpenAI",
+    avatar: "/avatars/vijaye-raji.jpg",
+    initials: "VR",
+  },
 ];
 
 const guests = [
@@ -178,6 +214,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("about")} className="text-sm text-zinc-300 transition hover:text-amber-300">About</button>
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="text-sm text-zinc-300 transition hover:text-amber-300">Background</button>
+              <button onClick={() => scrollToSection("endorsements")} className="text-sm text-zinc-300 transition hover:text-amber-300">Endorsements</button>
               <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">Testimonials</button>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
@@ -202,6 +239,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("about")} className="block text-zinc-300 transition hover:text-amber-300">About</button>
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="block text-zinc-300 transition hover:text-amber-300">Background</button>
+              <button onClick={() => scrollToSection("endorsements")} className="block text-zinc-300 transition hover:text-amber-300">Endorsements</button>
               <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">Testimonials</button>
             </div>
@@ -372,6 +410,36 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        <section id="endorsements" className="container py-14 md:py-20">
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl font-bold text-white md:text-5xl">业界领袖怎么说</h2>
+            <p className="mt-3 text-zinc-400">来自投资人、学者与科技领导者的评价</p>
+          </div>
+          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+            {endorsements.map((item) => (
+              <Card key={item.name} className="relative overflow-hidden border-white/10 bg-white/5 transition-colors hover:border-amber-300/40">
+                <div className="pointer-events-none absolute left-5 top-3 select-none font-serif text-7xl leading-none text-amber-300/10">"</div>
+                <CardContent className="flex flex-col pt-10 pb-6">
+                  <p className="relative z-10 mb-6 flex-grow text-base leading-relaxed text-zinc-200">
+                    "{item.quote}"
+                  </p>
+                  <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                    <Avatar className="mt-0.5 h-10 w-10 shrink-0 border border-white/20">
+                      <AvatarImage src={item.avatar} alt={item.name} />
+                      <AvatarFallback className="bg-amber-400/20 text-xs font-bold text-amber-300">{item.initials}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-bold text-white">{item.name}</p>
+                      <p className="mt-0.5 text-sm text-amber-300">{item.title}</p>
+                      <p className="mt-0.5 text-xs text-zinc-500">{item.subtitle}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 

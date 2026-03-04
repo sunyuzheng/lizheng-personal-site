@@ -26,7 +26,7 @@ const stats = [
   { value: "300K+", label: "全网高质量粉丝" },
   { value: "3000+", label: "付费学员 · 半数硅谷大厂" },
   { value: "4.9/5", label: "课程评分" },
-  { value: "200+", label: "嘉宾访谈" },
+  { value: "200+", label: "科技领袖对话" },
 ];
 
 const highlights = [
@@ -213,12 +213,12 @@ export default function Home() {
 
             <div className="hidden items-center gap-6 lg:flex">
               <button onClick={() => scrollToSection("about")} className="text-sm text-zinc-300 transition hover:text-amber-300">About</button>
-              <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="text-sm text-zinc-300 transition hover:text-amber-300">Background</button>
               <button onClick={() => scrollToSection("endorsements")} className="text-sm text-zinc-300 transition hover:text-amber-300">Endorsements</button>
               <button onClick={() => scrollToSection("enterprise")} className="text-sm text-zinc-300 transition hover:text-amber-300">企业培训</button>
-              <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">Testimonials</button>
+              <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
                 <a href="https://www.superlinear.academy/feed" target="_blank" rel="noopener noreferrer">
                   <Users className="mr-2 h-4 w-4" />
@@ -239,12 +239,12 @@ export default function Home() {
           {mobileMenuOpen && (
             <div className="mt-4 space-y-3 border-t border-white/10 pt-4 lg:hidden">
               <button onClick={() => scrollToSection("about")} className="block text-zinc-300 transition hover:text-amber-300">About</button>
-              <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="block text-zinc-300 transition hover:text-amber-300">Background</button>
               <button onClick={() => scrollToSection("endorsements")} className="block text-zinc-300 transition hover:text-amber-300">Endorsements</button>
               <button onClick={() => scrollToSection("enterprise")} className="block text-zinc-300 transition hover:text-amber-300">企业培训</button>
-              <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">Testimonials</button>
+              <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
             </div>
           )}
         </div>
@@ -266,25 +266,32 @@ export default function Home() {
               </h1>
 
               <p className="max-w-2xl text-base leading-relaxed text-zinc-300 md:text-lg">
-                在美17年，康奈尔经济学博士。Amazon 经济学家、Meta 数据科学家、腾讯 IEG 副总监，以 Statsig 唯一布道师身份见证 OpenAI 收购。Superlinear Academy 创始人，3000+ 学员超半数来自硅谷大厂；Maven AI 课程全网口碑第一，受邀为多家 Fortune 500 企业提供培训与 AI 策略顾问服务。
+                在美17年 · 康奈尔经济学博士<br />
+                Amazon 经济学家 | Meta 数据科学家 | 腾讯 IEG 副总监 | Statsig 唯一布道师（OpenAI 收购）<br />
+                Superlinear Academy 创始人 · 3000+ 付费学员 · 超半数来自硅谷大厂<br />
+                Maven AI 课程全网口碑第一 · 服务多家 Fortune 500 企业
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
                   <Users className="mr-2 h-4 w-4" />30万+ 高质量粉丝
                 </Badge>
-                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <Star className="mr-2 h-4 w-4" />Maven Top AI Instructor · 全网口碑第一
-                </Badge>
+                <a href="https://maven.com/superlinear/aibuilders" target="_blank" rel="noopener noreferrer">
+                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
+                    <Star className="mr-2 h-4 w-4" />Maven Top AI Instructor · 全网口碑第一
+                  </Badge>
+                </a>
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
                   <TrendingUp className="mr-2 h-4 w-4" />3000+ 学员 · 50%+ 硅谷大厂
                 </Badge>
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
                   <Building2 className="mr-2 h-4 w-4" />Fortune 500 企业培训顾问
                 </Badge>
-                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <BookOpen className="mr-2 h-4 w-4" />WSJ 2025 CIO 必读书籍
-                </Badge>
+                <a href="https://cio.cmail20.com/t/d-e-girlkdl-digklttz-r/" target="_blank" rel="noopener noreferrer">
+                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
+                    <BookOpen className="mr-2 h-4 w-4" />WSJ 2025 CIO 必读书籍
+                  </Badge>
+                </a>
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">
@@ -334,35 +341,6 @@ export default function Home() {
                 <CardContent className="py-6 text-center">
                   <div className="text-3xl font-bold text-amber-300">{item.value}</div>
                   <p className="mt-2 text-sm text-zinc-300">{item.label}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
-        <section id="course" className="container py-14 md:py-20">
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-3xl font-bold text-white md:text-5xl">AI-Builders.com</h2>
-              <p className="mt-3 text-zinc-300">通过实战，学会 AI 原生的思维方式和工程方法论，真正驾驭 AI</p>
-            </div>
-            <Button asChild variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20">
-              <a href="https://ai-builders.com" target="_blank" rel="noopener noreferrer">
-                查看完整课程
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {highlights.map((item) => (
-              <Card key={item.title} className="border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur">
-                <CardContent className="flex gap-4 py-6">
-                  <div className="mt-0.5">{item.icon}</div>
-                  <div>
-                    <h3 className="font-semibold text-white">{item.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-300">{item.desc}</p>
-                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -458,9 +436,6 @@ export default function Home() {
         <section id="enterprise" className="border-y border-white/10 bg-black/20 py-14 md:py-20">
           <div className="container">
             <div className="mb-10">
-              <Badge className="mb-4 border border-amber-300/40 bg-amber-300/10 text-amber-200">
-                受邀合作 · 非主动推销
-              </Badge>
               <h2 className="text-3xl font-bold text-white md:text-5xl">企业培训 & AI 策略顾问</h2>
               <p className="mt-3 max-w-2xl text-zinc-300">
                 因个人课程在硅谷大厂员工中的口碑效应，已受多家 Fortune 500 企业主动邀请，提供定制化 AI 能力培训与策略顾问服务。
@@ -496,13 +471,42 @@ export default function Home() {
                   <p className="mt-1 text-sm text-zinc-400">如果你希望为团队带来一次有深度、有后续的 AI 培训，欢迎联系。</p>
                 </div>
                 <Button asChild className="shrink-0 bg-amber-500 text-[#211300] hover:bg-amber-400">
-                  <a href="mailto:yz@superlinear.academy">
-                    <Mail className="mr-2 h-4 w-4" />
-                    联系合作
+                  <a href="https://corp-training.ai-builders.com" target="_blank" rel="noopener noreferrer">
+                    <ArrowRight className="mr-2 h-4 w-4" />
+                    了解企业培训
                   </a>
                 </Button>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section id="course" className="container py-14 md:py-20">
+          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <h2 className="text-3xl font-bold text-white md:text-5xl">AI-Builders.com</h2>
+              <p className="mt-3 text-zinc-300">通过实战，学会 AI 原生的思维方式和工程方法论，真正驾驭 AI</p>
+            </div>
+            <Button asChild variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20">
+              <a href="https://ai-builders.com" target="_blank" rel="noopener noreferrer">
+                查看完整课程
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {highlights.map((item) => (
+              <Card key={item.title} className="border-white/10 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur">
+                <CardContent className="flex gap-4 py-6">
+                  <div className="mt-0.5">{item.icon}</div>
+                  <div>
+                    <h3 className="font-semibold text-white">{item.title}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-zinc-300">{item.desc}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </section>
 

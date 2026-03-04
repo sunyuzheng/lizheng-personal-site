@@ -19,13 +19,14 @@ import {
   X,
   ArrowRight,
   Play,
+  Building2,
 } from "lucide-react";
 
 const stats = [
-  { value: "300K+", label: "全网订阅者" },
-  { value: "3000+", label: "付费学员" },
+  { value: "300K+", label: "全网高质量粉丝" },
+  { value: "3000+", label: "付费学员 · 半数硅谷大厂" },
   { value: "4.9/5", label: "课程评分" },
-  { value: "数百期", label: "嘉宾访谈" },
+  { value: "200+", label: "嘉宾访谈" },
 ];
 
 const highlights = [
@@ -52,8 +53,8 @@ const highlights = [
 ];
 
 const career = [
-  { company: "Statsig (Acquired by OpenAI)", role: "Evangelist - 布道师", note: "2025年以 $11 亿估值被 OpenAI 收购，验证非共识眼光" },
-  { company: "腾讯 (Tencent)", role: "数据科学总监 (Director of Data Science)", note: "双五星绩效 · 管理 30 人数据与AI团队" },
+  { company: "Statsig (Acquired by OpenAI)", role: "公司唯一布道师 (Sole Evangelist)", note: "早期成员，2025年被 OpenAI 以 $11 亿估值收购，验证非共识眼光" },
+  { company: "腾讯 IEG (Tencent IEG)", role: "副总监 · 数据与 AI (Deputy Director, Data & AI)", note: "双五星绩效 · 管理 30 人数据与AI团队" },
   { company: "Meta (Facebook)", role: "数据科学家 (Data Scientist)", note: "" },
   { company: "Amazon", role: "经济学家 (Economist)", note: "" },
 ];
@@ -215,6 +216,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="text-sm text-zinc-300 transition hover:text-amber-300">Background</button>
               <button onClick={() => scrollToSection("endorsements")} className="text-sm text-zinc-300 transition hover:text-amber-300">Endorsements</button>
+              <button onClick={() => scrollToSection("enterprise")} className="text-sm text-zinc-300 transition hover:text-amber-300">企业培训</button>
               <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">Testimonials</button>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
@@ -240,6 +242,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("background")} className="block text-zinc-300 transition hover:text-amber-300">Background</button>
               <button onClick={() => scrollToSection("endorsements")} className="block text-zinc-300 transition hover:text-amber-300">Endorsements</button>
+              <button onClick={() => scrollToSection("enterprise")} className="block text-zinc-300 transition hover:text-amber-300">企业培训</button>
               <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">Testimonials</button>
             </div>
@@ -252,7 +255,7 @@ export default function Home() {
           <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
               <Badge className="border border-amber-300/40 bg-amber-300/10 text-amber-200 hover:bg-amber-300/20">
-                通关职场的博士，带你超线性增长
+                在美17年 · Cornell PhD · AI布道者 · 观察者 · 内容创业者
               </Badge>
 
               <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
@@ -263,18 +266,24 @@ export default function Home() {
               </h1>
 
               <p className="max-w-2xl text-base leading-relaxed text-zinc-300 md:text-lg">
-                Superlinear Academy 创始人。前 Statsig 布道师（OpenAI 收购）、腾讯数据科学副总监、Meta 数据科学家、亚马逊经济学家；康奈尔经济学博士。
+                在美17年，康奈尔经济学博士。Amazon 经济学家、Meta 数据科学家、腾讯 IEG 副总监，以 Statsig 唯一布道师身份见证 OpenAI 收购。Superlinear Academy 创始人，3000+ 学员超半数来自硅谷大厂；Maven AI 课程全网口碑第一，受邀为多家 Fortune 500 企业提供培训与 AI 策略顾问服务。
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <Users className="mr-2 h-4 w-4" />30万+ 全网订阅
+                  <Users className="mr-2 h-4 w-4" />30万+ 高质量粉丝
                 </Badge>
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <Star className="mr-2 h-4 w-4" />Maven Top AI Instructor
+                  <Star className="mr-2 h-4 w-4" />Maven Top AI Instructor · 全网口碑第一
                 </Badge>
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <TrendingUp className="mr-2 h-4 w-4" />3000+ 学员
+                  <TrendingUp className="mr-2 h-4 w-4" />3000+ 学员 · 50%+ 硅谷大厂
+                </Badge>
+                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
+                  <Building2 className="mr-2 h-4 w-4" />Fortune 500 企业培训顾问
+                </Badge>
+                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
+                  <BookOpen className="mr-2 h-4 w-4" />WSJ 2025 CIO 必读书籍
                 </Badge>
               </div>
 
@@ -378,10 +387,13 @@ export default function Home() {
                   <h3 className="text-xl font-semibold text-white">Content & Community</h3>
                 </div>
                 <p className="text-sm leading-relaxed text-zinc-300">
-                  从 2020 年创立频道「课代表立正」，进行 AI 科普和嘉宾访谈，推动 AI 认知进步，全网 30 万订阅。
+                  从 2020 年创立「课代表立正」，在 YouTube、B站、小红书上进行 AI 科普与嘉宾访谈，累计对话 200+ 位中美科技高管与顶级 AI 研究员，数篇文章转载量超百万，全网 30 万高质量粉丝。
                 </p>
                 <p className="text-sm leading-relaxed text-zinc-300">
                   2023 年发表《关于ChatGPT最重要的五个问题》，成为中文互联网极具影响力的 AI 科普文章之一，多项判断已被验证。
+                </p>
+                <p className="text-sm leading-relaxed text-zinc-300">
+                  所著《Grow Data Analytics Playbook》获《华尔街日报》推荐，入选 2025 年 CIO 必读书单。
                 </p>
               </CardContent>
             </Card>
@@ -440,6 +452,57 @@ export default function Home() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </section>
+
+        <section id="enterprise" className="border-y border-white/10 bg-black/20 py-14 md:py-20">
+          <div className="container">
+            <div className="mb-10">
+              <Badge className="mb-4 border border-amber-300/40 bg-amber-300/10 text-amber-200">
+                受邀合作 · 非主动推销
+              </Badge>
+              <h2 className="text-3xl font-bold text-white md:text-5xl">企业培训 & AI 策略顾问</h2>
+              <p className="mt-3 max-w-2xl text-zinc-300">
+                因个人课程在硅谷大厂员工中的口碑效应，已受多家 Fortune 500 企业主动邀请，提供定制化 AI 能力培训与策略顾问服务。
+              </p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card className="border-white/10 bg-white/5">
+                <CardContent className="space-y-4 py-8">
+                  <Building2 className="h-8 w-8 text-amber-300" />
+                  <h3 className="text-xl font-semibold text-white">不只是一次培训</h3>
+                  <p className="leading-relaxed text-zinc-300">
+                    培训结束后，员工可加入 Superlinear Academy 社群，与 3000+ 位 AI 实践者持续交流、持续更新认知——不是培训一次就完，而是长期赋能。
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-white/10 bg-white/5">
+                <CardContent className="space-y-4 py-8">
+                  <Award className="h-8 w-8 text-amber-300" />
+                  <h3 className="text-xl font-semibold text-white">真正懂 AI 的人讲 AI</h3>
+                  <p className="leading-relaxed text-zinc-300">
+                    大厂实战（Amazon / Meta / 腾讯 IEG）+ 亲历 Statsig 被 OpenAI 收购的非共识判断 + 对话 200+ 位顶级 AI 研究员与科技高管的一手洞察，构建无法复制的认知深度。
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-amber-300/20 bg-amber-300/5 p-6 md:p-8">
+              <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="font-semibold text-white">有合作意向？</p>
+                  <p className="mt-1 text-sm text-zinc-400">如果你希望为团队带来一次有深度、有后续的 AI 培训，欢迎联系。</p>
+                </div>
+                <Button asChild className="shrink-0 bg-amber-500 text-[#211300] hover:bg-amber-400">
+                  <a href="mailto:yz@superlinear.academy">
+                    <Mail className="mr-2 h-4 w-4" />
+                    联系合作
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
 

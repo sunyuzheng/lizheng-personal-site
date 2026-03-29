@@ -190,6 +190,75 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+// ─── Markdown renderer ───────────────────────────────────
+function renderInline(text: string): React.ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**"))
+      return <strong key={i} className="text-white font-semibold">{part.slice(2, -2)}</strong>;
+    if (part.startsWith("`") && part.endsWith("`"))
+      return <code key={i} className="text-amber-300 bg-white/10 px-1 rounded text-xs font-mono">{part.slice(1, -1)}</code>;
+    return part;
+  });
+}
+
+function MarkdownMessage({ content }: { content: string }) {
+  const lines = content.split("\n");
+  const nodes: React.ReactNode[] = [];
+  let listBuffer: React.ReactNode[] = [];
+
+  const flushList = () => {
+    if (listBuffer.length) {
+      nodes.push(<ul key={`ul-${nodes.length}`} className="space-y-1 my-1">{listBuffer}</ul>);
+      listBuffer = [];
+    }
+  };
+
+  lines.forEach((line, i) => {
+    if (line.startsWith("## ")) {
+      flushList();
+      nodes.push(<p key={i} className="text-white font-bold text-sm mt-3 mb-1">{renderInline(line.slice(3))}</p>);
+    } else if (line.startsWith("### ")) {
+      flushList();
+      nodes.push(<p key={i} className="text-white font-semibold text-sm mt-2 mb-0.5">{renderInline(line.slice(4))}</p>);
+    } else if (line.trim() === "---") {
+      flushList();
+      nodes.push(<hr key={i} className="border-white/10 my-2" />);
+    } else if (/^[-*] /.test(line)) {
+      listBuffer.push(
+        <li key={i} className="flex gap-2 text-sm text-zinc-300 leading-relaxed">
+          <span className="text-amber-400 flex-shrink-0 mt-0.5">•</span>
+          <span>{renderInline(line.slice(2))}</span>
+        </li>
+      );
+    } else if (/^\d+\. /.test(line)) {
+      const m = line.match(/^(\d+)\. (.*)/);
+      if (m) listBuffer.push(
+        <li key={i} className="flex gap-2 text-sm text-zinc-300 leading-relaxed">
+          <span className="text-amber-400 font-mono text-xs flex-shrink-0 mt-0.5 w-4">{m[1]}.</span>
+          <span>{renderInline(m[2])}</span>
+        </li>
+      );
+    } else if (line.startsWith("> ")) {
+      flushList();
+      nodes.push(
+        <blockquote key={i} className="border-l-2 border-amber-400/40 pl-3 text-zinc-400 text-sm italic my-1">
+          {renderInline(line.slice(2))}
+        </blockquote>
+      );
+    } else if (line.trim() === "") {
+      flushList();
+      nodes.push(<div key={i} className="h-1.5" />);
+    } else {
+      flushList();
+      nodes.push(<p key={i} className="text-sm text-zinc-300 leading-relaxed">{renderInline(line)}</p>);
+    }
+  });
+  flushList();
+
+  return <div className="space-y-0.5">{nodes}</div>;
+}
+
 // ─── AI Advisor Chat ──────────────────────────────────────
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -200,11 +269,22 @@ const ADVISOR_STARTERS = [
   "怎么跟老板谈薪资才不吃亏？",
 ];
 
+const SKILL_INSTALL_URL =
+  "https://raw.githubusercontent.com/sunyuzheng/zhenbenshi-advisor/main/zhenbenshi-advisor.skill";
+
 function AdvisorSection() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const copyInstallLink = () => {
+    navigator.clipboard.writeText(SKILL_INSTALL_URL).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -289,13 +369,15 @@ function AdvisorSection() {
                   </div>
                 )}
                 <div
-                  className={`max-w-[82%] text-sm leading-relaxed whitespace-pre-wrap ${
+                  className={`max-w-[82%] ${
                     m.role === "user"
-                      ? "bg-amber-500/15 border border-amber-400/20 text-amber-100 px-3 py-2"
-                      : "text-zinc-300"
+                      ? "bg-amber-500/15 border border-amber-400/20 text-amber-100 text-sm leading-relaxed px-3 py-2"
+                      : ""
                   }`}
                 >
-                  {m.content}
+                  {m.role === "user"
+                    ? m.content
+                    : <MarkdownMessage content={m.content} />}
                 </div>
               </div>
             ))}
@@ -329,6 +411,32 @@ function AdvisorSection() {
           </Button>
         </div>
         <p className="text-zinc-600 text-xs mt-2">按 Enter 发送 · Shift+Enter 换行</p>
+
+        {/* GitHub skill install */}
+        <div className="mt-6 border border-white/10 bg-white/[0.03] p-4 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-white font-semibold">在 Claude Desktop 安装真本事顾问 Skill</p>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              粘贴链接到 Claude Desktop 的 Cowork 模式，随时对话无需打开网页
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0">
+            <button
+              onClick={copyInstallLink}
+              className="text-xs border border-amber-400/40 text-amber-400 hover:bg-amber-400/10 px-3 py-1.5 transition-colors whitespace-nowrap"
+            >
+              {copied ? "已复制 ✓" : "复制安装链接"}
+            </button>
+            <a
+              href="https://github.com/sunyuzheng/zhenbenshi-advisor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 px-3 py-1.5 transition-colors"
+            >
+              GitHub →
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );

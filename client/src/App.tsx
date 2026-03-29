@@ -12,7 +12,7 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path={"/book"} component={ZhenbenShi} />
+      <Route path={"/zbs"} component={ZhenbenShi} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

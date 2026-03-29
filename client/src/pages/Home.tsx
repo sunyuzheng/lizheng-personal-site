@@ -220,7 +220,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">嘉宾</button>
-              <Link href="/book" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
+              <Link href="/zbs" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
                 <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
                   <Users className="mr-2 h-4 w-4" />
@@ -247,7 +247,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">嘉宾</button>
-              <Link href="/book" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
+              <Link href="/zbs" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
               <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer" className="block text-amber-300 transition hover:text-amber-200">加入社群 →</a>
             </div>
           )}
@@ -273,7 +273,7 @@ export default function Home() {
                 在美17年 · 康奈尔经济学博士<br />
                 Amazon 经济学家 | Meta 数据科学家 | 腾讯 IEG 副总监 | Statsig 唯一布道师（OpenAI 收购）<br />
                 Superlinear Academy 创始人 · 3000+ 付费学员 · 超半数来自硅谷大厂<br />
-                Maven AI 课程全网口碑第一 · 服务多家 Fortune 500 企业
+                Maven AI 课程全网口碑第一 · 服务多家头部科技大厂
               </p>
 
               <div className="flex flex-wrap gap-3">
@@ -288,9 +288,11 @@ export default function Home() {
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
                   <TrendingUp className="mr-2 h-4 w-4" />3000+ 学员 · 50%+ 硅谷大厂
                 </Badge>
-                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <Building2 className="mr-2 h-4 w-4" />Fortune 500 企业培训顾问
-                </Badge>
+                <a href="https://corp-training.ai-builders.com/" target="_blank" rel="noopener noreferrer">
+                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
+                    <Building2 className="mr-2 h-4 w-4" />多家头部科技大厂AI转型顾问
+                  </Badge>
+                </a>
                 <a href="https://cio.cmail20.com/t/d-e-girlkdl-digklttz-r/" target="_blank" rel="noopener noreferrer">
                   <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
                     <BookOpen className="mr-2 h-4 w-4" />WSJ 2025 CIO 必读书籍
@@ -303,13 +305,13 @@ export default function Home() {
                   查看课程
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10" asChild>
+                <Button size="lg" variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20" asChild>
                   <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
                     加入社区
                   </a>
                 </Button>
-                <Button size="lg" variant="outline" className="border-red-700/50 bg-red-950/30 text-red-300 hover:bg-red-900/40 hover:text-red-200" asChild>
-                  <Link href="/book">
+                <Button size="lg" variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20" asChild>
+                  <Link href="/zbs">
                     新书上市
                   </Link>
                 </Button>
@@ -449,7 +451,7 @@ export default function Home() {
             <div className="mb-10">
               <h2 className="text-3xl font-bold text-white md:text-5xl">企业培训 & AI 策略顾问</h2>
               <p className="mt-3 max-w-2xl text-zinc-300">
-                因个人课程在硅谷大厂员工中的口碑效应，已受多家 Fortune 500 企业主动邀请，提供定制化 AI 能力培训与策略顾问服务。
+                因个人课程在硅谷大厂员工中的口碑效应，已受多家头部科技大厂主动邀请，提供定制化 AI 能力培训与策略顾问服务。
               </p>
             </div>
 
@@ -497,10 +499,12 @@ export default function Home() {
           <div className="rounded-xl border border-red-900/40 bg-gradient-to-r from-red-950/50 to-zinc-900/80 p-5 md:p-6">
             <div className="flex flex-col items-center gap-5 sm:flex-row">
               <div className="flex flex-shrink-0 items-stretch" style={{ transform: "perspective(600px) rotateY(-12deg)", filter: "drop-shadow(6px 12px 24px rgba(0,0,0,0.6))" }}>
-                <div className="w-3 overflow-hidden" style={{ filter: "brightness(0.65)" }}>
+                <div className="flex-shrink-0 overflow-hidden" style={{ width: "10px", filter: "brightness(0.65)" }}>
                   <img src="/book/cover-spine.png" alt="" className="h-full w-full object-cover object-top" />
                 </div>
-                <img src="/book/cover-front.png" alt="《真本事》" className="block h-28 w-auto" />
+                <div className="flex-shrink-0">
+                  <img src="/book/cover-front.png" alt="《真本事》" className="block h-28 w-auto" />
+                </div>
               </div>
               <div className="flex-1 text-center sm:text-left">
                 <div className="mb-1 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
@@ -511,7 +515,7 @@ export default function Home() {
                 <p className="mt-1 text-sm text-zinc-400">把自己变成稀缺资产，让个体价值持续变现。B站职场类长期第一课程集结成书。</p>
               </div>
               <Button className="flex-shrink-0 bg-red-700 text-white hover:bg-red-800" asChild>
-                <Link href="/book">查看详情 →</Link>
+                <Link href="/zbs">查看详情 →</Link>
               </Button>
             </div>
           </div>

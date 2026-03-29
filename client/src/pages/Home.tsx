@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
+import { Link } from "wouter";
 import {
   Youtube,
   Linkedin,
@@ -219,6 +220,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">Testimonials</button>
               <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <Link href="/book" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
                 <a href="https://www.superlinear.academy/feed" target="_blank" rel="noopener noreferrer">
                   <Users className="mr-2 h-4 w-4" />
@@ -245,6 +247,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">Testimonials</button>
               <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <Link href="/book" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
             </div>
           )}
         </div>
@@ -477,6 +480,31 @@ export default function Home() {
                   </a>
                 </Button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Book teaser */}
+        <section className="container py-6 md:py-8">
+          <div className="rounded-xl border border-red-900/40 bg-gradient-to-r from-red-950/50 to-zinc-900/80 p-5 md:p-6">
+            <div className="flex flex-col items-center gap-5 sm:flex-row">
+              <div className="flex flex-shrink-0 items-stretch" style={{ transform: "perspective(600px) rotateY(-12deg)", filter: "drop-shadow(6px 12px 24px rgba(0,0,0,0.6))" }}>
+                <div className="w-3 overflow-hidden" style={{ filter: "brightness(0.65)" }}>
+                  <img src="/book/cover-spine.png" alt="" className="h-full w-full object-cover object-top" />
+                </div>
+                <img src="/book/cover-front.png" alt="《真本事》" className="block h-28 w-auto" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="mb-1 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+                  <span className="rounded-sm bg-red-700 px-2 py-0.5 text-xs font-semibold text-white">新书发布</span>
+                  <span className="text-xs text-zinc-500">人民邮电出版社</span>
+                </div>
+                <h3 className="text-lg font-black text-white md:text-xl">《真本事：从会工作到会赚钱》</h3>
+                <p className="mt-1 text-sm text-zinc-400">把自己变成稀缺资产，让个体价值持续变现。B站职场类长期第一课程集结成书。</p>
+              </div>
+              <Button className="flex-shrink-0 bg-red-700 text-white hover:bg-red-800" asChild>
+                <Link href="/book">查看详情 →</Link>
+              </Button>
             </div>
           </div>
         </section>

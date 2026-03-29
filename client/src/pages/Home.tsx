@@ -213,18 +213,18 @@ export default function Home() {
             </button>
 
             <div className="hidden items-center gap-6 lg:flex">
-              <button onClick={() => scrollToSection("about")} className="text-sm text-zinc-300 transition hover:text-amber-300">About</button>
-              <button onClick={() => scrollToSection("background")} className="text-sm text-zinc-300 transition hover:text-amber-300">Background</button>
-              <button onClick={() => scrollToSection("endorsements")} className="text-sm text-zinc-300 transition hover:text-amber-300">Endorsements</button>
+              <button onClick={() => scrollToSection("about")} className="text-sm text-zinc-300 transition hover:text-amber-300">关于我</button>
+              <button onClick={() => scrollToSection("background")} className="text-sm text-zinc-300 transition hover:text-amber-300">职业背景</button>
+              <button onClick={() => scrollToSection("endorsements")} className="text-sm text-zinc-300 transition hover:text-amber-300">推荐语</button>
               <button onClick={() => scrollToSection("enterprise")} className="text-sm text-zinc-300 transition hover:text-amber-300">企业培训</button>
-              <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI Builders</button>
-              <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">Testimonials</button>
-              <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI课程</button>
+              <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">学员评价</button>
+              <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">嘉宾</button>
               <Link href="/book" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
-                <a href="https://www.superlinear.academy/feed" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
                   <Users className="mr-2 h-4 w-4" />
-                  Join Community
+                  加入社群
                 </a>
               </Button>
             </div>
@@ -240,14 +240,15 @@ export default function Home() {
 
           {mobileMenuOpen && (
             <div className="mt-4 space-y-3 border-t border-white/10 pt-4 lg:hidden">
-              <button onClick={() => scrollToSection("about")} className="block text-zinc-300 transition hover:text-amber-300">About</button>
-              <button onClick={() => scrollToSection("background")} className="block text-zinc-300 transition hover:text-amber-300">Background</button>
-              <button onClick={() => scrollToSection("endorsements")} className="block text-zinc-300 transition hover:text-amber-300">Endorsements</button>
+              <button onClick={() => scrollToSection("about")} className="block text-zinc-300 transition hover:text-amber-300">关于我</button>
+              <button onClick={() => scrollToSection("background")} className="block text-zinc-300 transition hover:text-amber-300">职业背景</button>
+              <button onClick={() => scrollToSection("endorsements")} className="block text-zinc-300 transition hover:text-amber-300">推荐语</button>
               <button onClick={() => scrollToSection("enterprise")} className="block text-zinc-300 transition hover:text-amber-300">企业培训</button>
-              <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI Builders</button>
-              <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">Testimonials</button>
-              <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">Guests</button>
+              <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI课程</button>
+              <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">学员评价</button>
+              <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">嘉宾</button>
               <Link href="/book" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
+              <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer" className="block text-amber-300 transition hover:text-amber-200">加入社群 →</a>
             </div>
           )}
         </div>
@@ -302,8 +303,15 @@ export default function Home() {
                   查看课程
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10" onClick={() => scrollToSection("about")}>
-                  了解更多
+                <Button size="lg" variant="outline" className="border-white/20 bg-white/5 text-white hover:bg-white/10" asChild>
+                  <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
+                    加入社区
+                  </a>
+                </Button>
+                <Button size="lg" variant="outline" className="border-red-700/50 bg-red-950/30 text-red-300 hover:bg-red-900/40 hover:text-red-200" asChild>
+                  <Link href="/book">
+                    新书上市
+                  </Link>
                 </Button>
               </div>
 

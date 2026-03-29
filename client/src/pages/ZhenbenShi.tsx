@@ -398,7 +398,7 @@ function AdvisorSection() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="描述你的职场困境，或直接点击上方示例..."
+            placeholder="说说你的情况：行业/职级/工作年限，遇到了什么问题，已经尝试过什么，希望达到什么目标——背景越具体，建议越准。"
             rows={2}
             className="flex-1 bg-white/5 border border-white/10 text-white placeholder:text-zinc-600 text-sm px-3 py-2.5 resize-none focus:outline-none focus:border-amber-400/50 transition-colors"
           />
@@ -412,29 +412,44 @@ function AdvisorSection() {
         </div>
         <p className="text-zinc-600 text-xs mt-2">按 Enter 发送 · Shift+Enter 换行</p>
 
-        {/* GitHub skill install */}
-        <div className="mt-6 border border-white/10 bg-white/[0.03] p-4 flex flex-col sm:flex-row sm:items-center gap-3">
-          <div className="flex-1 min-w-0">
-            <p className="text-sm text-white font-semibold">在 Claude Desktop 安装真本事顾问 Skill</p>
-            <p className="text-xs text-zinc-500 mt-0.5">
-              粘贴链接到 Claude Desktop 的 Cowork 模式，随时对话无需打开网页
-            </p>
+        {/* Multi-tool install callout */}
+        <div className="mt-6 border border-white/10 bg-white/[0.03] p-4 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-white font-semibold">在你常用的 AI 工具里使用</p>
+              <p className="text-xs text-zinc-500 mt-0.5">
+                支持 Claude Desktop、Claude.ai Projects、ChatGPT Custom GPT、Kimi、豆包等所有工具
+              </p>
+            </div>
+            <div className="flex gap-2 flex-shrink-0">
+              <button
+                onClick={copyInstallLink}
+                className="text-xs border border-amber-400/40 text-amber-400 hover:bg-amber-400/10 px-3 py-1.5 transition-colors whitespace-nowrap"
+              >
+                {copied ? "已复制 ✓" : "复制 Claude Desktop 链接"}
+              </button>
+              <a
+                href="https://github.com/sunyuzheng/zhenbenshi-advisor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 px-3 py-1.5 transition-colors whitespace-nowrap"
+              >
+                查看完整安装教程 →
+              </a>
+            </div>
           </div>
-          <div className="flex gap-2 flex-shrink-0">
-            <button
-              onClick={copyInstallLink}
-              className="text-xs border border-amber-400/40 text-amber-400 hover:bg-amber-400/10 px-3 py-1.5 transition-colors whitespace-nowrap"
-            >
-              {copied ? "已复制 ✓" : "复制安装链接"}
-            </button>
-            <a
-              href="https://github.com/sunyuzheng/zhenbenshi-advisor"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 px-3 py-1.5 transition-colors"
-            >
-              GitHub →
-            </a>
+          <div className="flex flex-wrap gap-2">
+            {[
+              ["Claude Desktop", "Cowork 模式一键安装"],
+              ["Claude.ai", "粘贴到 Project Instructions"],
+              ["ChatGPT", "创建 Custom GPT"],
+              ["其他工具", "复制系统提示词"],
+            ].map(([tool, desc]) => (
+              <div key={tool} className="border border-white/[0.08] px-2.5 py-1.5">
+                <span className="text-xs text-white font-medium">{tool}</span>
+                <span className="text-xs text-zinc-600 ml-1.5">{desc}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

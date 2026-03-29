@@ -315,7 +315,7 @@ function AdvisorSection() {
     setInput("");
     setLoading(true);
 
-    try {
+    const callApi = async () => {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -324,11 +324,25 @@ function AdvisorSection() {
           history: messages.map((m) => ({ role: m.role, content: m.content })),
         }),
       });
-
-      if (!res.ok) throw new Error("API error");
+      if (!res.ok) throw new Error(`${res.status}`);
       const data = await res.json() as { content: string };
-      setMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
-    } catch {
+      return data.content;
+    };
+
+    try {
+      // First attempt
+      let content: string;
+      try {
+        content = await callApi();
+      } catch (firstErr) {
+        // Cold-start retry: wait 1.5s and try once more before giving up
+        console.warn("Chat first attempt failed, retrying…", firstErr);
+        await new Promise((r) => setTimeout(r, 1500));
+        content = await callApi();
+      }
+      setMessages((prev) => [...prev, { role: "assistant", content }]);
+    } catch (err) {
+      console.error("Chat failed after retry:", err);
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: "抱歉，出现了一点问题，请稍后再试。" },

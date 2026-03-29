@@ -272,18 +272,34 @@ const ADVISOR_STARTERS = [
 const SKILL_INSTALL_URL =
   "https://raw.githubusercontent.com/sunyuzheng/zhenbenshi-advisor/main/zhenbenshi-advisor.skill";
 
+const EXAMPLE_QUESTION =
+  '我在一家200人的互联网公司做产品经理，工作三年，去年和今年绩效都是B+，但两次晋升都被卡住了，上级说我\u201c影响力不足\u201d。我自认为项目交付没问题，但不太擅长向上汇报。我希望在年底前晋升，目前不考虑跳槽。';
+
 function AdvisorSection() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showExample, setShowExample] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const copyInstallLink = () => {
     navigator.clipboard.writeText(SKILL_INSTALL_URL).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
+  };
+
+  const prefillFromStarter = (starter: string) => {
+    const hint = "（在这里补充你的背景，建议越具体回答越准：所在行业/职级、工作年限、具体情况、已经试过什么、最希望达到什么）";
+    setInput(`${starter}\n\n${hint}`);
+    setTimeout(() => {
+      if (!textareaRef.current) return;
+      textareaRef.current.focus();
+      // Place cursor right after the question so user types context naturally
+      textareaRef.current.setSelectionRange(starter.length + 2, starter.length + 2);
+    }, 0);
   };
 
   useEffect(() => {
@@ -347,17 +363,41 @@ function AdvisorSection() {
         </div>
 
         {messages.length === 0 ? (
-          <div className="grid sm:grid-cols-2 gap-3 mb-6">
-            {ADVISOR_STARTERS.map((s) => (
-              <button
-                key={s}
-                onClick={() => sendMessage(s)}
-                className="text-left p-4 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-amber-400/40 transition-all text-sm text-zinc-300 group"
-              >
-                <span className="text-amber-400 mr-2 group-hover:text-amber-300">▸</span>
-                {s}
-              </button>
-            ))}
+          <div className="mb-5 space-y-3">
+            {/* Starter prompts — prefill only, do not send */}
+            <div className="grid sm:grid-cols-2 gap-2">
+              {ADVISOR_STARTERS.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => prefillFromStarter(s)}
+                  className="text-left p-3.5 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-amber-400/40 transition-all text-sm text-zinc-300 group"
+                >
+                  <span className="text-amber-400 mr-2 group-hover:text-amber-300">▸</span>
+                  {s}
+                </button>
+              ))}
+            </div>
+
+            {/* Example question toggle */}
+            <button
+              onClick={() => setShowExample((v) => !v)}
+              className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+            >
+              <span className={`transition-transform ${showExample ? "rotate-90" : ""}`}>▸</span>
+              看看什么样的问题能得到最好的回答
+            </button>
+
+            {showExample && (
+              <div className="border border-amber-400/15 bg-amber-500/[0.04] p-4 space-y-2">
+                <p className="text-[10px] text-amber-400/70 uppercase tracking-widest">优秀提问示范</p>
+                <p className="text-zinc-300 text-sm leading-relaxed">
+                  "{EXAMPLE_QUESTION}"
+                </p>
+                <p className="text-zinc-600 text-xs">
+                  包含：职级背景 · 具体卡点 · 已知信息 · 明确目标 · 限制条件
+                </p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="border border-white/10 bg-white/[0.03] mb-4 max-h-[52vh] overflow-y-auto p-4 space-y-5">
@@ -395,6 +435,7 @@ function AdvisorSection() {
 
         <div className="flex gap-2">
           <textarea
+            ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}

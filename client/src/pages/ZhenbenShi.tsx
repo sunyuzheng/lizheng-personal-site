@@ -98,7 +98,7 @@ const ENDORSEMENTS: Endorser[] = [
     quote:
       "我在硅谷做了二十多年高管和投资人，见过很多聪明人，煜征是少数让我印象深刻的学习能力极强、又很愿意分享学习结果的那一类。他不只履历漂亮，而更重要的是，他既能想明白，又能做到。我们做过十多次深度对话，每次他都能抓到问题的重点，进行深度思考，挖掘到我身上真正有价值的经验；并在工作、创业、投资中，把这些经验融会贯通。所以，他既能做出紧跟时代的选择，又能长期耕耘，做出有护城河的结果，而这本书是他真金白银换、长期思考带来的认知，值得每个人认真读。",
     name: "硅谷徐老师",
-    title: "斯坦福讲师",
+    title: "财富五百强 GEN 首席AI官、投资人、斯坦福商学院客座讲师",
   },
 ];
 
@@ -923,7 +923,7 @@ export default function ZhenbenShi() {
                   <span className="absolute top-3 right-4 text-5xl font-serif text-white/10 leading-none select-none">
                     "
                   </span>
-                  <blockquote className="text-zinc-300 text-sm leading-relaxed italic relative z-10">
+                  <blockquote className="text-zinc-300 text-sm leading-relaxed relative z-10">
                     {e.quote}
                   </blockquote>
                   <div>

@@ -512,6 +512,20 @@ function AdvisorSection() {
 export default function ZhenbenShi() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const prevTitle = document.title;
+    const prevDesc = document.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
+    document.title = "《真本事》· 课代表立正 — 从会工作到会赚钱";
+    document.querySelector('meta[name="description"]')?.setAttribute(
+      "content",
+      "课代表立正孙煜征新书《真本事：从会工作到会赚钱》— B站职场类长期第一课程集结成书，人民邮电出版社出版。把自己变成稀缺资产，让个体价值持续变现。"
+    );
+    return () => {
+      document.title = prevTitle;
+      document.querySelector('meta[name="description"]')?.setAttribute("content", prevDesc);
+    };
+  }, []);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMobileMenuOpen(false);

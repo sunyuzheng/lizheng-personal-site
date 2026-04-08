@@ -589,22 +589,22 @@ export default function Home() {
           <h2 className="mb-10 text-center text-3xl font-bold text-white md:text-5xl">学员评价</h2>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {testimonials.map((item) => (
-              <Card key={item.name} className=”border-white/10 bg-white/5”>
-                <CardContent className=”flex flex-col py-6”>
-                  <div className=”mb-3 flex gap-1”>
+              <Card key={item.name} className="border-white/10 bg-white/5">
+                <CardContent className="flex flex-col py-6">
+                  <div className="mb-3 flex gap-1">
                     {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star key={idx} className=”h-4 w-4 fill-amber-300 text-amber-300” />
+                      <Star key={idx} className="h-4 w-4 fill-amber-300 text-amber-300" />
                     ))}
                   </div>
-                  <p className=”flex-grow text-sm leading-relaxed text-zinc-200”>”{item.quote}”</p>
-                  <div className=”mt-5 flex items-center gap-3 border-t border-white/10 pt-4”>
-                    <Avatar className=”h-10 w-10 shrink-0 border border-white/20”>
+                  <p className="flex-grow text-sm leading-relaxed text-zinc-200">"{item.quote}"</p>
+                  <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <Avatar className="h-10 w-10 shrink-0 border border-white/20">
                       <AvatarImage src={item.avatar} alt={item.name} />
-                      <AvatarFallback className=”bg-amber-400/20 text-xs font-bold text-amber-300”>{item.initials}</AvatarFallback>
+                      <AvatarFallback className="bg-amber-400/20 text-xs font-bold text-amber-300">{item.initials}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className=”font-medium text-white”>{item.name}</p>
-                      <p className=”text-xs text-zinc-400”>{item.role} · <span className=”text-amber-400/80”>{item.company}</span></p>
+                      <p className="font-medium text-white">{item.name}</p>
+                      <p className="text-xs text-zinc-400">{item.role} · <span className="text-amber-400/80">{item.company}</span></p>
                     </div>
                   </div>
                 </CardContent>

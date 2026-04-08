@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "wouter";
 import {
   Youtube,
@@ -21,6 +21,7 @@ import {
   ArrowRight,
   Play,
   Building2,
+  Rss,
 } from "lucide-react";
 
 const stats = [
@@ -171,24 +172,53 @@ const guests = [
 const testimonials = [
   {
     quote:
-      "尽管我日常工作就在使用AI工具，但我发现自己依然能学到新的、更深层次的东西，并且能够更有效地利用AI来构建解决方案。",
-    name: "Clairy Cheung",
-    role: "UX Manager, Google",
+      "无论你的背景如何（技术或非技术），无论你在 AI 学习旅程的哪个阶段，这门课都极具价值——它教的是如何思考用 AI 来构建系统的框架。我注意到自己在工作和日常生活中的思维方式发生了转变，就像用一副全新的视角看世界。这门课给了我一个坚实的起点，让我有信心也有动力继续自主探索。",
+    name: "Julia",
+    role: "Strategy Ops Manager",
+    company: "TikTok",
+    avatar: "/avatars/julia.png",
+    initials: "J",
   },
   {
-    quote: "这门课真的能教会你正确的思维方式，并且给你更有效自学的能力。",
+    quote:
+      "课程内容和教学都非常出色、很吸引人。涵盖了基础知识和最新前沿话题（如 Agent 和行业最新产品），理论与实践的平衡做得很好。尽管每天都在使用 AI 工具，我仍然学到了更深层次的东西，能更有效地利用 AI 来构建解决方案。讲师对问题的回应也非常及时，很受启发。",
+    name: "Chairy",
+    role: "UX Manager",
+    company: "Google",
+    avatar: "/avatars/chairy.png",
+    initials: "C",
+  },
+  {
+    quote:
+      "市面上有很多课程教你具体的技巧，但这门课帮你建立正确的思维方式，让你能更高效地自我学习。",
     name: "Shuyang",
-    role: "Senior Applied Science Manager, Uber",
-  },
-  {
-    quote: "思考如何用AI解决问题，已经成为了我的一个习惯。我在日常生活中亲身感受到了AI的好处。",
-    name: "Tingting Wang",
-    role: "Applied Scientist, Microsoft",
+    role: "Senior Applied Science Manager",
+    company: "Uber",
+    avatar: "/avatars/shuyang.jpg",
+    initials: "S",
   },
 ];
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [communityVisible, setCommunityVisible] = useState(false);
+  const communityRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = communityRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCommunityVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -293,7 +323,7 @@ export default function Home() {
                     <Building2 className="mr-2 h-4 w-4" />多家头部科技大厂AI转型顾问
                   </Badge>
                 </a>
-                <a href="https://cio.cmail20.com/t/d-e-girlkdl-digklttz-r/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822" target="_blank" rel="noopener noreferrer">
                   <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
                     <BookOpen className="mr-2 h-4 w-4" />WSJ 2025 CIO 必读书籍
                   </Badge>
@@ -329,6 +359,9 @@ export default function Home() {
                 <a href="https://www.linkedin.com/in/yuzhengsun/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 transition hover:text-amber-300">
                   <Linkedin className="h-6 w-6" />
                 </a>
+                <a href="https://yuzheng.substack.com/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 transition hover:text-amber-300" aria-label="Substack">
+                  <Rss className="h-6 w-6" />
+                </a>
                 <a href="mailto:yz@superlinear.academy" className="text-zinc-400 transition hover:text-amber-300">
                   <Mail className="h-6 w-6" />
                 </a>
@@ -339,9 +372,11 @@ export default function Home() {
               <div className="absolute inset-0 rounded-3xl border border-amber-300/30 bg-gradient-to-br from-amber-300/10 via-white/5 to-sky-300/10 blur-sm" />
               <img
                 src="/profile.jpg"
-                alt="Yuzheng Sun"
+                alt="Yuzheng Sun — AI educator, founder of Superlinear Academy"
                 className="relative w-full rounded-3xl border border-white/10 object-cover shadow-2xl transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]"
-                loading="lazy"
+                width={1446}
+                height={1445}
+                fetchPriority="high"
               />
             </a>
           </div>
@@ -554,16 +589,24 @@ export default function Home() {
           <h2 className="mb-10 text-center text-3xl font-bold text-white md:text-5xl">学员评价</h2>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {testimonials.map((item) => (
-              <Card key={item.name} className="border-white/10 bg-white/5">
-                <CardContent className="py-6">
-                  <div className="mb-3 flex gap-1">
+              <Card key={item.name} className=”border-white/10 bg-white/5”>
+                <CardContent className=”flex flex-col py-6”>
+                  <div className=”mb-3 flex gap-1”>
                     {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star key={idx} className="h-4 w-4 fill-amber-300 text-amber-300" />
+                      <Star key={idx} className=”h-4 w-4 fill-amber-300 text-amber-300” />
                     ))}
                   </div>
-                  <p className="min-h-[6rem] text-sm leading-relaxed text-zinc-200">“{item.quote}”</p>
-                  <p className="mt-4 font-medium text-white">{item.name}</p>
-                  <p className="text-xs text-zinc-400">{item.role}</p>
+                  <p className=”flex-grow text-sm leading-relaxed text-zinc-200”>”{item.quote}”</p>
+                  <div className=”mt-5 flex items-center gap-3 border-t border-white/10 pt-4”>
+                    <Avatar className=”h-10 w-10 shrink-0 border border-white/20”>
+                      <AvatarImage src={item.avatar} alt={item.name} />
+                      <AvatarFallback className=”bg-amber-400/20 text-xs font-bold text-amber-300”>{item.initials}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className=”font-medium text-white”>{item.name}</p>
+                      <p className=”text-xs text-zinc-400”>{item.role} · <span className=”text-amber-400/80”>{item.company}</span></p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -605,12 +648,9 @@ export default function Home() {
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <img
-                      src={`https://img.youtube.com/vi/${guest.id}/maxresdefault.jpg`}
-                      alt={guest.name}
+                      src={`https://img.youtube.com/vi/${guest.id}/mqdefault.jpg`}
+                      alt={`${guest.name} — ${guest.title}, ${guest.company}`}
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${guest.id}/hqdefault.jpg`;
-                      }}
                       loading="lazy"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100">
@@ -636,12 +676,18 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-white md:text-4xl">加入 Superlinear Academy 社区</h2>
               <p className="mt-2 text-amber-100">与 AI 时代的 Builder 和终身学习者一起成长</p>
             </div>
-            <div className="overflow-hidden rounded-2xl border border-white/20 bg-white shadow-2xl">
-              <iframe
-                style={{ border: 0, boxShadow: "none", width: "100%", height: "72vh", minHeight: "560px" }}
-                src="https://www.superlinear.academy/c/ai-resources?iframe=true"
-                title="Superlinear Academy Community"
-              />
+            <div ref={communityRef} className="overflow-hidden rounded-2xl border border-white/20 bg-white shadow-2xl" style={{ minHeight: "560px" }}>
+              {communityVisible ? (
+                <iframe
+                  style={{ border: 0, boxShadow: "none", width: "100%", height: "72vh", minHeight: "560px" }}
+                  src="https://www.superlinear.academy/c/ai-resources?iframe=true"
+                  title="Superlinear Academy Community"
+                />
+              ) : (
+                <div className="flex items-center justify-center" style={{ height: "72vh", minHeight: "560px" }}>
+                  <p className="text-sm text-zinc-400">社区加载中…</p>
+                </div>
+              )}
             </div>
           </div>
         </section>

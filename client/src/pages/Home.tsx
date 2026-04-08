@@ -71,14 +71,6 @@ const endorsements = [
     initials: "雨森",
   },
   {
-    quote: "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
-    name: "刘嘉",
-    title: "清华大学讲席教授 · 脑神经与认知科学系主任",
-    subtitle: "《最强大脑》总科学顾问",
-    avatar: "/avatars/liu-jia.jpg",
-    initials: "刘嘉",
-  },
-  {
     quote: "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing.",
     name: "Wei Manfredi",
     title: "Global CAIO & CTO · McDonald's · Google Cloud · lululemon",
@@ -454,17 +446,17 @@ export default function Home() {
         <section id="endorsements" className="container py-14 md:py-20">
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-bold text-white md:text-5xl">业界领袖怎么说</h2>
-            <p className="mt-3 text-zinc-400">来自投资人、学者与科技领导者的评价</p>
+            <p className="mt-3 text-zinc-400">来自投资人与科技领袖的评价</p>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
             {endorsements.map((item) => (
-              <Card key={item.name} className="relative overflow-hidden border-white/10 bg-white/5 transition-colors hover:border-amber-300/40">
+              <Card key={item.name} className="relative flex h-full flex-col overflow-hidden border-white/10 bg-white/5 transition-colors hover:border-amber-300/40">
                 <div className="pointer-events-none absolute left-5 top-3 select-none font-serif text-7xl leading-none text-amber-300/10">"</div>
-                <CardContent className="flex flex-col pt-10 pb-6">
+                <CardContent className="flex h-full flex-col pt-10 pb-6">
                   <p className="relative z-10 mb-6 flex-grow text-base leading-relaxed text-zinc-200">
                     "{item.quote}"
                   </p>
-                  <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                  <div className="mt-auto flex items-start gap-3 border-t border-white/10 pt-4">
                     <Avatar className="mt-0.5 h-10 w-10 shrink-0 border border-white/20">
                       <AvatarImage src={item.avatar} alt={item.name} />
                       <AvatarFallback className="bg-amber-400/20 text-xs font-bold text-amber-300">{item.initials}</AvatarFallback>

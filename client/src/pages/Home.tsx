@@ -21,6 +21,7 @@ import {
   ArrowRight,
   Play,
   Building2,
+  Rss,
 } from "lucide-react";
 
 const stats = [
@@ -329,6 +330,9 @@ export default function Home() {
                 <a href="https://www.linkedin.com/in/yuzhengsun/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 transition hover:text-amber-300">
                   <Linkedin className="h-6 w-6" />
                 </a>
+                <a href="https://yuzheng.substack.com/" target="_blank" rel="noopener noreferrer" className="text-zinc-400 transition hover:text-amber-300" aria-label="Substack">
+                  <Rss className="h-6 w-6" />
+                </a>
                 <a href="mailto:yz@superlinear.academy" className="text-zinc-400 transition hover:text-amber-300">
                   <Mail className="h-6 w-6" />
                 </a>
@@ -339,9 +343,9 @@ export default function Home() {
               <div className="absolute inset-0 rounded-3xl border border-amber-300/30 bg-gradient-to-br from-amber-300/10 via-white/5 to-sky-300/10 blur-sm" />
               <img
                 src="/profile.jpg"
-                alt="Yuzheng Sun"
+                alt="Yuzheng Sun — AI educator, founder of Superlinear Academy"
                 className="relative w-full rounded-3xl border border-white/10 object-cover shadow-2xl transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]"
-                loading="lazy"
+                fetchPriority="high"
               />
             </a>
           </div>
@@ -605,12 +609,9 @@ export default function Home() {
                 >
                   <div className="relative aspect-video overflow-hidden">
                     <img
-                      src={`https://img.youtube.com/vi/${guest.id}/maxresdefault.jpg`}
-                      alt={guest.name}
+                      src={`https://img.youtube.com/vi/${guest.id}/mqdefault.jpg`}
+                      alt={`${guest.name} — ${guest.title}, ${guest.company}`}
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://img.youtube.com/vi/${guest.id}/hqdefault.jpg`;
-                      }}
                       loading="lazy"
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100">

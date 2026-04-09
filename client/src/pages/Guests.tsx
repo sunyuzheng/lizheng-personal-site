@@ -22,6 +22,7 @@ const guests = guestsRaw as Guest[];
 
 export default function Guests() {
   const [query, setQuery] = useState("");
+  const [modalGuest, setModalGuest] = useState<Guest | null>(null);
 
   useEffect(() => {
     const prevTitle = document.title;
@@ -122,57 +123,130 @@ export default function Guests() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((guest) => (
-              <a
-                key={guest.primary_video_id}
-                href={guest.primary_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10"
-              >
-                {/* Thumbnail */}
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={`https://img.youtube.com/vi/${guest.primary_video_id}/mqdefault.jpg`}
-                    alt={`${guest.guest_name} — ${guest.guest_title}`}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  {/* Play overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-400/90 text-[#211300]">
-                      <Play className="h-4 w-4 fill-current" />
+              <div key={guest.primary_video_id} className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
+                <a
+                  href={guest.primary_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  {/* Thumbnail */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <img
+                      src={`https://img.youtube.com/vi/${guest.primary_video_id}/mqdefault.jpg`}
+                      alt={`${guest.guest_name} — ${guest.guest_title}`}
+                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Play overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-400/90 text-[#211300]">
+                        <Play className="h-4 w-4 fill-current" />
+                      </div>
                     </div>
                   </div>
-                  {/* Multi-episode badge */}
-                  {guest.episode_count > 1 && (
-                    <div className="absolute right-2 top-2 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold text-[#211300]">
-                      {guest.episode_count} 期
-                    </div>
-                  )}
-                </div>
 
-                {/* Info */}
-                <div className="p-3">
-                  <p className="line-clamp-1 text-sm font-semibold leading-tight text-white">
-                    {guest.guest_name}
-                  </p>
-                  {guest.guest_company && (
-                    <p className="mt-1 line-clamp-1 text-xs font-medium leading-tight text-amber-300">
-                      {guest.guest_company}
+                  {/* Info */}
+                  <div className="p-3 pb-2">
+                    <p className="line-clamp-1 text-sm font-semibold leading-tight text-white">
+                      {guest.guest_name}
                     </p>
-                  )}
-                  {guest.guest_title && (
-                    <p className="mt-0.5 line-clamp-1 text-xs leading-tight text-zinc-400">
-                      {guest.guest_title}
-                    </p>
-                  )}
-                </div>
-              </a>
+                    {guest.guest_company && (
+                      <p className="mt-1 line-clamp-1 text-xs font-medium leading-tight text-amber-300">
+                        {guest.guest_company}
+                      </p>
+                    )}
+                    {guest.guest_title && (
+                      <p className="mt-0.5 line-clamp-1 text-xs leading-tight text-zinc-400">
+                        {guest.guest_title}
+                      </p>
+                    )}
+                  </div>
+                </a>
+
+                {/* Multi-episode button */}
+                {guest.episode_count > 1 && (
+                  <button
+                    onClick={() => setModalGuest(guest)}
+                    className="mx-3 mb-3 flex w-[calc(100%-1.5rem)] items-center justify-center gap-1 rounded-lg border border-amber-300/30 bg-amber-300/10 py-1.5 text-[11px] font-semibold text-amber-300 transition hover:bg-amber-300/20"
+                  >
+                    <Play className="h-3 w-3 fill-current" />
+                    查看全部 {guest.episode_count} 期
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         ) : (
           <div className="py-24 text-center text-zinc-500">
             没有找到「{query}」相关的嘉宾
+          </div>
+        )}
+
+        {/* Episodes modal */}
+        {modalGuest && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            onClick={() => setModalGuest(null)}
+          >
+            <div
+              className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#0B0F1A] p-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal header */}
+              <div className="mb-4 flex items-start justify-between">
+                <div>
+                  <h2 className="text-lg font-bold text-white">{modalGuest.guest_name}</h2>
+                  {modalGuest.guest_company && (
+                    <p className="text-sm text-amber-300">{modalGuest.guest_company}</p>
+                  )}
+                  {modalGuest.guest_title && (
+                    <p className="text-xs text-zinc-400">{modalGuest.guest_title}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => setModalGuest(null)}
+                  className="ml-4 rounded-lg p-1.5 text-zinc-400 transition hover:bg-white/10 hover:text-white"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <p className="mb-4 text-xs text-zinc-500">全部 {modalGuest.episode_count} 期访谈 · 点击观看</p>
+
+              {/* Episode grid */}
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {modalGuest.all_video_ids.map((vid, i) => (
+                  <a
+                    key={vid}
+                    href={`https://www.youtube.com/watch?v=${vid}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group overflow-hidden rounded-xl border border-white/10 bg-white/5 transition hover:border-amber-300/40 hover:bg-white/10"
+                  >
+                    <div className="relative aspect-video overflow-hidden">
+                      <img
+                        src={`https://img.youtube.com/vi/${vid}/mqdefault.jpg`}
+                        alt={`第 ${i + 1} 期`}
+                        className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-400/90 text-[#211300]">
+                          <Play className="h-3.5 w-3.5 fill-current" />
+                        </div>
+                      </div>
+                      {vid === modalGuest.primary_video_id && (
+                        <div className="absolute left-2 top-2 rounded-full bg-amber-400 px-2 py-0.5 text-[10px] font-bold text-[#211300]">
+                          精选
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-2">
+                      <p className="text-[11px] text-zinc-400">第 {i + 1} 期</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </main>

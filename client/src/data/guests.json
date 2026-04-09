@@ -68,8 +68,8 @@
   {
     "guest_name": "徐老师 (Howie Xu)",
     "guest_en_name": "Howie Xu",
-    "guest_title": "硅谷科技评论家",
-    "guest_company": "硅谷",
+    "guest_title": "财富五百强 GEN 首席AI官、投资人、斯坦福商学院客座讲师",
+    "guest_company": "GEN",
     "primary_video_id": "awaZBWTss-4",
     "all_video_ids": [
       "knTP07tE89Y",
@@ -121,10 +121,29 @@
     ]
   },
   {
+    "guest_name": "简尼 (Jiannie)",
+    "guest_en_name": "Jiannie",
+    "guest_title": "OnlyFans创作者",
+    "guest_company": "Independent",
+    "primary_video_id": "JxKvQttZAhc",
+    "all_video_ids": [
+      "JxKvQttZAhc",
+      "IcMbpTVX5iY"
+    ],
+    "max_views": 104536,
+    "thumbnail_url": "https://img.youtube.com/vi/JxKvQttZAhc/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=JxKvQttZAhc",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=JxKvQttZAhc",
+      "https://www.youtube.com/watch?v=IcMbpTVX5iY"
+    ]
+  },
+  {
     "guest_name": "郭宇",
     "guest_en_name": "Guo Yu",
-    "guest_title": "Programmer",
-    "guest_company": "",
+    "guest_title": "Independent Software Engineer / Blogger",
+    "guest_company": "Independent",
     "primary_video_id": "mf13n8Fl7FM",
     "all_video_ids": [
       "mf13n8Fl7FM"
@@ -293,16 +312,18 @@
     "all_video_ids": [
       "mOy2BmSVtyQ",
       "q7t4_UM8J74",
-      "2L9ReWu-sZc"
+      "2L9ReWu-sZc",
+      "9DkGV_lqdGk"
     ],
     "max_views": 31345,
     "thumbnail_url": "https://img.youtube.com/vi/q7t4_UM8J74/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=q7t4_UM8J74",
-    "episode_count": 3,
+    "episode_count": 4,
     "all_urls": [
       "https://www.youtube.com/watch?v=mOy2BmSVtyQ",
       "https://www.youtube.com/watch?v=q7t4_UM8J74",
-      "https://www.youtube.com/watch?v=2L9ReWu-sZc"
+      "https://www.youtube.com/watch?v=2L9ReWu-sZc",
+      "https://www.youtube.com/watch?v=9DkGV_lqdGk"
     ]
   },
   {
@@ -381,6 +402,27 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=HAQ4p74KbdY"
+    ]
+  },
+  {
+    "guest_name": "Cooper竹子",
+    "guest_en_name": "Cooper Zhu",
+    "guest_title": "Web3 analyst",
+    "guest_company": "",
+    "primary_video_id": "4LwKnM7GChE",
+    "all_video_ids": [
+      "gG6IRuwtmJ4",
+      "E_Cqqxx3_i4",
+      "4LwKnM7GChE"
+    ],
+    "max_views": 24259,
+    "thumbnail_url": "https://img.youtube.com/vi/4LwKnM7GChE/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=4LwKnM7GChE",
+    "episode_count": 3,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=gG6IRuwtmJ4",
+      "https://www.youtube.com/watch?v=E_Cqqxx3_i4",
+      "https://www.youtube.com/watch?v=4LwKnM7GChE"
     ]
   },
   {
@@ -552,6 +594,37 @@
     ]
   },
   {
+    "guest_name": "柳超 Liu Chao",
+    "guest_en_name": "Liu Chao",
+    "guest_title": "Chief Product Officer",
+    "guest_company": "Meet Social (飞书声诺)",
+    "primary_video_id": "A12Z_CHi7PE",
+    "all_video_ids": [
+      "WDSPYtv8rXY",
+      "6puUPZA0wVs",
+      "A12Z_CHi7PE",
+      "aaDv8hq6cOc",
+      "JaxI3B7bUhA",
+      "KvJjk6nn-c0",
+      "9213uFD30VM",
+      "-S1BZ_-hvlg"
+    ],
+    "max_views": 19318,
+    "thumbnail_url": "https://img.youtube.com/vi/A12Z_CHi7PE/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=A12Z_CHi7PE",
+    "episode_count": 8,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=WDSPYtv8rXY",
+      "https://www.youtube.com/watch?v=6puUPZA0wVs",
+      "https://www.youtube.com/watch?v=A12Z_CHi7PE",
+      "https://www.youtube.com/watch?v=aaDv8hq6cOc",
+      "https://www.youtube.com/watch?v=JaxI3B7bUhA",
+      "https://www.youtube.com/watch?v=KvJjk6nn-c0",
+      "https://www.youtube.com/watch?v=9213uFD30VM",
+      "https://www.youtube.com/watch?v=-S1BZ_-hvlg"
+    ]
+  },
+  {
     "guest_name": "Vijaye Raji",
     "guest_en_name": "Vijaye Raji",
     "guest_title": "CEO, Startup Founder, ex-Facebook VP",
@@ -594,22 +667,47 @@
     ]
   },
   {
+    "guest_name": "盧毅 Lu Yi",
+    "guest_en_name": "Lu Yi",
+    "guest_title": "Founder & CEO",
+    "guest_company": "Forceout AI",
+    "primary_video_id": "CfCZeAmsyKM",
+    "all_video_ids": [
+      "CfCZeAmsyKM",
+      "QY5-3kl5tPY",
+      "_8FiYUjdsd4"
+    ],
+    "max_views": 17691,
+    "thumbnail_url": "https://img.youtube.com/vi/CfCZeAmsyKM/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=CfCZeAmsyKM",
+    "episode_count": 3,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=CfCZeAmsyKM",
+      "https://www.youtube.com/watch?v=QY5-3kl5tPY",
+      "https://www.youtube.com/watch?v=_8FiYUjdsd4"
+    ]
+  },
+  {
     "guest_name": "Indigo",
     "guest_en_name": "Indigo",
-    "guest_title": "Former VP, Investor",
+    "guest_title": "微博VP / AI投资人",
     "guest_company": "Sina Weibo",
     "primary_video_id": "myincnnSj8c",
     "all_video_ids": [
       "myincnnSj8c",
-      "Lpp5ZdUtWog"
+      "Lpp5ZdUtWog",
+      "FB4KLGPvKv0",
+      "bZE3LVBfykA"
     ],
     "max_views": 17683,
     "thumbnail_url": "https://img.youtube.com/vi/myincnnSj8c/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=myincnnSj8c",
-    "episode_count": 2,
+    "episode_count": 4,
     "all_urls": [
       "https://www.youtube.com/watch?v=myincnnSj8c",
-      "https://www.youtube.com/watch?v=Lpp5ZdUtWog"
+      "https://www.youtube.com/watch?v=Lpp5ZdUtWog",
+      "https://www.youtube.com/watch?v=FB4KLGPvKv0",
+      "https://www.youtube.com/watch?v=bZE3LVBfykA"
     ]
   },
   {
@@ -631,6 +729,29 @@
       "https://www.youtube.com/watch?v=RRSMjC_BF8Y",
       "https://www.youtube.com/watch?v=AcRLM5S-4Bw",
       "https://www.youtube.com/watch?v=mRhsuF4wf3Q"
+    ]
+  },
+  {
+    "guest_name": "LuluLeon",
+    "guest_en_name": "LuluLeon",
+    "guest_title": "旅行教育博主",
+    "guest_company": "Independent",
+    "primary_video_id": "qDRJDK64gJk",
+    "all_video_ids": [
+      "qDRJDK64gJk",
+      "Tec54wr1vCc",
+      "tjOWeYOBePU",
+      "9qqHH975Eds"
+    ],
+    "max_views": 16935,
+    "thumbnail_url": "https://img.youtube.com/vi/qDRJDK64gJk/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=qDRJDK64gJk",
+    "episode_count": 4,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=qDRJDK64gJk",
+      "https://www.youtube.com/watch?v=Tec54wr1vCc",
+      "https://www.youtube.com/watch?v=tjOWeYOBePU",
+      "https://www.youtube.com/watch?v=9qqHH975Eds"
     ]
   },
   {
@@ -852,25 +973,6 @@
     ]
   },
   {
-    "guest_name": "Cooper竹子",
-    "guest_en_name": "Cooper Zhu",
-    "guest_title": "Web3 analyst",
-    "guest_company": "",
-    "primary_video_id": "gG6IRuwtmJ4",
-    "all_video_ids": [
-      "gG6IRuwtmJ4",
-      "E_Cqqxx3_i4"
-    ],
-    "max_views": 13740,
-    "thumbnail_url": "https://img.youtube.com/vi/gG6IRuwtmJ4/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=gG6IRuwtmJ4",
-    "episode_count": 2,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=gG6IRuwtmJ4",
-      "https://www.youtube.com/watch?v=E_Cqqxx3_i4"
-    ]
-  },
-  {
     "guest_name": "Bailu Xu",
     "guest_en_name": "Bailu Xu",
     "guest_title": "Management Consultant",
@@ -1080,6 +1182,48 @@
     ]
   },
   {
+    "guest_name": "周南 Zhou Nan",
+    "guest_en_name": "Zhou Nan",
+    "guest_title": "Director",
+    "guest_company": "Qualcomm Ventures",
+    "primary_video_id": "VOyAMRk5WE0",
+    "all_video_ids": [
+      "VOyAMRk5WE0",
+      "0R4hOezhHZo"
+    ],
+    "max_views": 8181,
+    "thumbnail_url": "https://img.youtube.com/vi/VOyAMRk5WE0/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=VOyAMRk5WE0",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=VOyAMRk5WE0",
+      "https://www.youtube.com/watch?v=0R4hOezhHZo"
+    ]
+  },
+  {
+    "guest_name": "Ethan (DoorDash)",
+    "guest_en_name": "Ethan",
+    "guest_title": "Director of Analytics",
+    "guest_company": "DoorDash",
+    "primary_video_id": "cVtgJ7KFjgY",
+    "all_video_ids": [
+      "_X4aJmOn3AI",
+      "rCYw13Ad2ig",
+      "cVtgJ7KFjgY",
+      "4pWsovy9cV8"
+    ],
+    "max_views": 7929,
+    "thumbnail_url": "https://img.youtube.com/vi/cVtgJ7KFjgY/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=cVtgJ7KFjgY",
+    "episode_count": 4,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=_X4aJmOn3AI",
+      "https://www.youtube.com/watch?v=rCYw13Ad2ig",
+      "https://www.youtube.com/watch?v=cVtgJ7KFjgY",
+      "https://www.youtube.com/watch?v=4pWsovy9cV8"
+    ]
+  },
+  {
     "guest_name": "土汪",
     "guest_en_name": "Tu Wang",
     "guest_title": "Tech Lead",
@@ -1186,6 +1330,27 @@
       "https://www.youtube.com/watch?v=tJBv3kHZtzg",
       "https://www.youtube.com/watch?v=4iKB7_YH1wc",
       "https://www.youtube.com/watch?v=o-RlaLqTdLQ"
+    ]
+  },
+  {
+    "guest_name": "陈湘宇 Chen Xiangyu",
+    "guest_en_name": "Chen Xiangyu",
+    "guest_title": "CEO",
+    "guest_company": "创梦天地 (Dream Center)",
+    "primary_video_id": "4P8KRyw5oCk",
+    "all_video_ids": [
+      "4P8KRyw5oCk",
+      "Gbq2_fY1nDg",
+      "pQcCw1qNYS4"
+    ],
+    "max_views": 6501,
+    "thumbnail_url": "https://img.youtube.com/vi/4P8KRyw5oCk/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=4P8KRyw5oCk",
+    "episode_count": 3,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=4P8KRyw5oCk",
+      "https://www.youtube.com/watch?v=Gbq2_fY1nDg",
+      "https://www.youtube.com/watch?v=pQcCw1qNYS4"
     ]
   },
   {
@@ -1614,6 +1779,25 @@
       "https://www.youtube.com/watch?v=MU3BExM33jM",
       "https://www.youtube.com/watch?v=Z0BB6SAfpUA",
       "https://www.youtube.com/watch?v=kc4sey7gFLQ"
+    ]
+  },
+  {
+    "guest_name": "王珍 & Nick",
+    "guest_en_name": "Wang Zhen & Nick",
+    "guest_title": "创始人 & 股东",
+    "guest_company": "花生经济 (Huasheng Economy)",
+    "primary_video_id": "osZDEDx8fyE",
+    "all_video_ids": [
+      "osZDEDx8fyE",
+      "D61PK9BdYVA"
+    ],
+    "max_views": 2965,
+    "thumbnail_url": "https://img.youtube.com/vi/osZDEDx8fyE/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=osZDEDx8fyE",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=osZDEDx8fyE",
+      "https://www.youtube.com/watch?v=D61PK9BdYVA"
     ]
   },
   {

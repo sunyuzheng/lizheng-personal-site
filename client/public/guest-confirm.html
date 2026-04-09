@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>嘉宾确认页 — 课代表立正</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0B0F1A; color: #e4e4e7; font-family: -apple-system, sans-serif; padding: 24px; }
+  h1 { font-size: 24px; font-weight: 700; color: #fbbf24; margin-bottom: 8px; }
+  .subtitle { color: #71717a; font-size: 14px; margin-bottom: 32px; }
+  .section { margin-bottom: 48px; }
+  .section h2 { font-size: 16px; font-weight: 600; color: #a1a1aa; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #27272a; }
+  .card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .card:hover { border-color: #fbbf24; }
+  .card-header { display: flex; gap: 16px; align-items: flex-start; }
+  .thumb-wrap { position: relative; flex-shrink: 0; width: 160px; }
+  .thumb-wrap img { width: 160px; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px; display: block; }
+  .thumb-wrap .badge { position: absolute; top: 4px; left: 4px; background: #dc2626; color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
+  .thumb-wrap .badge.green { background: #16a34a; }
+  .info { flex: 1; }
+  .info h3 { font-size: 15px; font-weight: 600; color: #f4f4f5; margin-bottom: 6px; }
+  .info .vid-id { font-size: 12px; color: #71717a; font-family: monospace; margin-bottom: 8px; }
+  .info .context { font-size: 13px; color: #a1a1aa; line-height: 1.6; margin-bottom: 10px; }
+  .info a { font-size: 12px; color: #fbbf24; text-decoration: none; }
+  .info a:hover { text-decoration: underline; }
+  .tag { display: inline-block; background: #1c1917; border: 1px solid #44403c; border-radius: 4px; font-size: 11px; color: #a8a29e; padding: 2px 6px; margin-right: 4px; margin-bottom: 4px; }
+  .panel-members { margin-top: 12px; }
+  .panel-members h4 { font-size: 12px; color: #71717a; text-transform: uppercase; margin-bottom: 8px; }
+  .panel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .panel-card { background: #09090b; border-radius: 8px; overflow: hidden; }
+  .panel-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+  .panel-card .panel-info { padding: 6px 8px; }
+  .panel-card .panel-info p { font-size: 11px; color: #a1a1aa; }
+  .note { background: #1c1917; border: 1px solid #44403c; border-radius: 8px; padding: 12px 16px; margin-bottom: 24px; font-size: 13px; color: #a8a29e; line-height: 1.6; }
+  .note strong { color: #fbbf24; }
+</style>
+</head>
+<body>
+
+<h1>嘉宾确认页</h1>
+<p class="subtitle">以下是 Claude 无法确认身份的嘉宾，请您帮忙核实。确认后请告知 Claude 正确的姓名/职位，或直接说「跳过」。</p>
+
+<div class="note">
+  <strong>已完成的更新（无需确认）：</strong><br>
+  ✅ 新增 8 位嘉宾：简尼(OnlyFans)、柳超 Liu Chao(Meet Social CPO)、盧毅 Lu Yi(Forceout AI)、LuluLeon(旅行教育)、周南 Zhou Nan(Qualcomm Ventures)、Ethan(DoorDash)、陈湘宇(创梦天地)、王珍&Nick(花生经济) <br>
+  ✅ 更新徐老师职位 → GEN 首席AI官 / 斯坦福讲师<br>
+  ✅ 更新郭宇公司 → Independent<br>
+  ✅ Cooper竹子 新视频(24k播放)、Indigo 补全片段、Vivian 补 1/2 集
+</div>
+
+<div class="section">
+  <h2>Group 1 — 前亚马逊VP（2轮）</h2>
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/NfQ_46PhyuM/mqdefault.jpg" alt="前亚马逊VP" />
+        <span class="badge">会员</span>
+      </div>
+      <div class="info">
+        <h3>前亚马逊VP — 身份未知</h3>
+        <div class="vid-id">NfQ_46PhyuM（前亚马逊VP教我们职业发展）</div>
+        <p class="context">
+          在亚马逊工作 15 年（2005–2020），帮助创立 Prime Video 和 Prime Gaming，管理 800+ 人，并亲自参与写作某条亚马逊领导力原则（LP）。
+          现在独立从事培训/咨询，在 Maven 上有课程「Productivity Empowered for Tech Roles」（$900/$2500），YouTube 频道「Pragmatic Data Scientist」。
+          此为会员视频，公开视频 0 次播放。
+        </p>
+        <span class="tag">Prime Video 创始团队</span>
+        <span class="tag">MVP/管理800+人</span>
+        <span class="tag">写过亚马逊LP</span>
+        <span class="tag">Maven 讲师</span>
+        <br /><a href="https://www.youtube.com/watch?v=NfQ_46PhyuM" target="_blank">▶ 第 1 轮 (NfQ_46PhyuM)</a> &nbsp;&nbsp;
+        <a href="https://www.youtube.com/watch?v=XYgol93Q7ww" target="_blank">▶ 第 2 轮 (XYgol93Q7ww)</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Group 2 — Stack AV 主任工程师</h2>
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/ZHHPbdU2_eU/mqdefault.jpg" alt="Stack AV" />
+        <span class="badge">会员</span>
+      </div>
+      <div class="info">
+        <h3>Stack AV 主任工程师 — 身份未知</h3>
+        <div class="vid-id">ZHHPbdU2_eU（自动驾驶的技术、商业与未来）</div>
+        <p class="context">
+          在 Stack AV 做主任工程师（Principal/Staff Engineer），专注无人卡车技术。
+          讨论了 L3/L4/L5 自动驾驶差异、长尾问题、ODD 定义等。会员视频。
+        </p>
+        <span class="tag">Stack AV</span>
+        <span class="tag">无人卡车</span>
+        <span class="tag">自动驾驶</span>
+        <br /><a href="https://www.youtube.com/watch?v=ZHHPbdU2_eU" target="_blank">▶ 观看（会员）</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Group 3 — 脱口秀演员</h2>
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/I2UPMjevf0U/mqdefault.jpg" alt="脱口秀演员" />
+        <span class="badge">会员</span>
+      </div>
+      <div class="info">
+        <h3>脱口秀演员 — 身份未知</h3>
+        <div class="vid-id">I2UPMjevf0U（脱口秀演员帮课代表讲述羞于启齿的经历）/ 9YN6Sf6mcGk（喜剧让我们无敌，片段）</div>
+        <p class="context">
+          男性脱口秀演员，近期初为人父（baby刚出生），有自营社区/副业（Self-running business），
+          在西雅图，喜欢谈论喜剧段子写作技巧，和「观众优越感」。
+          视频中提到朋友圈里另一位脱口秀演员叫「邵远」。
+        </p>
+        <span class="tag">脱口秀演员</span>
+        <span class="tag">新晋奶爸</span>
+        <span class="tag">有自运营社区</span>
+        <br /><a href="https://www.youtube.com/watch?v=9YN6Sf6mcGk" target="_blank">▶ 公开片段 (9YN6Sf6mcGk)</a> &nbsp;&nbsp;
+        <a href="https://www.youtube.com/watch?v=I2UPMjevf0U" target="_blank">▶ 完整版（会员）</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Group 4 — 亚马逊科学家 AMA（4 人）</h2>
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/PucrhAhOu74/mqdefault.jpg" alt="Amazon AMA" />
+        <span class="badge green">公开 12.9k 播放</span>
+      </div>
+      <div class="info">
+        <h3>4 位 Amazon Science Manager — 需确认添加方式</h3>
+        <div class="vid-id">PucrhAhOu74（亚马逊Science Managers的AMA，四位加起来27级）</div>
+        <p class="context">
+          从 SRT 已确认 4 位嘉宾姓名：<br>
+          1. <strong>陈茂茂 (Mark Chen)</strong> — Amazon Principal Research Scientist，供应链优化，17 年经验<br>
+          2. <strong>李明 (Li Ming)</strong> — Research Science Manager，5.5 年<br>
+          3. <strong>沈心洋 (Shen Xinyang)</strong> — Supply Chain Optimization Technology，2 年<br>
+          4. <strong>钟远 (Zhong Yuan)</strong> — 8 年（3 年 IC + 5 年 manager）<br>
+          <br>
+          请问：是作为 4 个独立条目添加，还是合并为一个「Amazon AMA 团队」条目？还是不加？
+        </p>
+        <br /><a href="https://www.youtube.com/watch?v=PucrhAhOu74" target="_blank">▶ 观看（公开）</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>附：其他边缘情况</h2>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/qDRJDK64gJk/mqdefault.jpg" alt="LuluLeon" />
+        <span class="badge green">已添加</span>
+      </div>
+      <div class="info">
+        <h3>LuluLeon — 已添加，确认信息</h3>
+        <div class="vid-id">qDRJDK64gJk（上）/ Tec54wr1vCc（下）</div>
+        <p class="context">
+          已添加为「LuluLeon | 旅行教育博主 | Independent」。
+          从 SRT 知是一对夫妻，带两个孩子（3岁和5岁）环球旅行，做家庭教育内容。
+          「露露」是其中一位的名字，「Leon（文青）」可能是另一位的名字。
+          请确认他们的真实姓名是否有更准确的版本？
+        </p>
+        <br /><a href="https://www.youtube.com/watch?v=qDRJDK64gJk" target="_blank">▶ 上集</a> &nbsp;&nbsp;
+        <a href="https://www.youtube.com/watch?v=Tec54wr1vCc" target="_blank">▶ 下集</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="thumb-wrap">
+        <img src="https://img.youtube.com/vi/JxKvQttZAhc/mqdefault.jpg" alt="简尼" />
+        <span class="badge green">已添加 104k 播</span>
+      </div>
+      <div class="info">
+        <h3>简尼 (Jiannie) — OnlyFans 博主，已添加</h3>
+        <div class="vid-id">JxKvQttZAhc（104,536 播放！）</div>
+        <p class="context">
+          已添加为「简尼 (Jiannie) | OnlyFans创作者 | Independent」。
+          从 SRT 中仅知道她的名字叫「简尼」，这是一个网络昵称。
+          请确认：这个名字是否合适展示在嘉宾页面？是否要匿名/不显示？
+        </p>
+        <br /><a href="https://www.youtube.com/watch?v=JxKvQttZAhc" target="_blank">▶ 观看（公开）</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Make thumbnail links clickable
+document.querySelectorAll('.thumb-wrap').forEach(wrap => {
+  const link = wrap.closest('.card').querySelector('a');
+  if (link) {
+    wrap.style.cursor = 'pointer';
+    wrap.addEventListener('click', () => window.open(link.href, '_blank'));
+  }
+});
+</script>
+</body>
+</html>

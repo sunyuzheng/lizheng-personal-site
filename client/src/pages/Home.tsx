@@ -242,6 +242,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <button onClick={() => scrollToSection("guests")} className="text-sm text-zinc-300 transition hover:text-amber-300">嘉宾</button>
+              <Link href="/guests" className="text-sm text-zinc-300 transition hover:text-amber-300">全部嘉宾</Link>
               <Link href="/zbs" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
                 <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
@@ -269,6 +270,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <button onClick={() => scrollToSection("guests")} className="block text-zinc-300 transition hover:text-amber-300">嘉宾</button>
+              <Link href="/guests" className="block text-zinc-300 transition hover:text-amber-300">全部嘉宾</Link>
               <Link href="/zbs" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
               <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer" className="block text-amber-300 transition hover:text-amber-200">加入社群 →</a>
             </div>
@@ -622,11 +624,10 @@ export default function Home() {
                 </p>
               </div>
               <Button asChild variant="outline" className="shrink-0 border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20">
-                <a href="https://www.youtube.com/@kedaibiao" target="_blank" rel="noopener noreferrer">
-                  <Youtube className="mr-2 h-4 w-4" />
-                  全部访谈
+                <Link href="/guests">
+                  查看全部 102 位嘉宾
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">

@@ -267,15 +267,21 @@
     "primary_video_id": "3R-wxLm3G7M",
     "all_video_ids": [
       "3R-wxLm3G7M",
-      "N7yFSOj3fRo"
+      "N7yFSOj3fRo",
+      "FKCPAI9yHKE",
+      "k4ymsRaIUX4",
+      "gs3WxZqckLQ"
     ],
     "max_views": 35361,
     "thumbnail_url": "https://img.youtube.com/vi/3R-wxLm3G7M/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=3R-wxLm3G7M",
-    "episode_count": 2,
+    "episode_count": 5,
     "all_urls": [
       "https://www.youtube.com/watch?v=3R-wxLm3G7M",
-      "https://www.youtube.com/watch?v=N7yFSOj3fRo"
+      "https://www.youtube.com/watch?v=N7yFSOj3fRo",
+      "https://www.youtube.com/watch?v=FKCPAI9yHKE",
+      "https://www.youtube.com/watch?v=k4ymsRaIUX4",
+      "https://www.youtube.com/watch?v=gs3WxZqckLQ"
     ]
   },
   {
@@ -399,9 +405,9 @@
     ]
   },
   {
-    "guest_name": "曹星龙",
-    "guest_en_name": "Cao Xinglong",
-    "guest_title": "内容生态部总监",
+    "guest_name": "Teri 张雅缇",
+    "guest_en_name": "Teri",
+    "guest_title": "腾讯内容生态部总监",
     "guest_company": "腾讯",
     "primary_video_id": "oue4lPnsY74",
     "all_video_ids": [
@@ -439,20 +445,22 @@
     ]
   },
   {
-    "guest_name": "光叔",
-    "guest_en_name": "Guang Shu",
-    "guest_title": "",
-    "guest_company": "",
-    "primary_video_id": "OR6rikid31g",
+    "guest_name": "光叔 光芒",
+    "guest_en_name": "Guang",
+    "guest_title": "General Manager, 虚环负责人, 《黑神话悟空》宣传策划者",
+    "guest_company": "Tencent",
+    "primary_video_id": "apFYcIzJ1jY",
     "all_video_ids": [
+      "apFYcIzJ1jY",
       "ZIyLgob1ReY",
       "OR6rikid31g"
     ],
     "max_views": 21833,
-    "thumbnail_url": "https://img.youtube.com/vi/OR6rikid31g/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=OR6rikid31g",
-    "episode_count": 2,
+    "thumbnail_url": "https://img.youtube.com/vi/apFYcIzJ1jY/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=apFYcIzJ1jY",
+    "episode_count": 3,
     "all_urls": [
+      "https://www.youtube.com/watch?v=apFYcIzJ1jY",
       "https://www.youtube.com/watch?v=ZIyLgob1ReY",
       "https://www.youtube.com/watch?v=OR6rikid31g"
     ]
@@ -651,10 +659,10 @@
     ]
   },
   {
-    "guest_name": "Angelina",
-    "guest_en_name": "Angelina",
-    "guest_title": "前创业公司数据负责人",
-    "guest_company": "",
+    "guest_name": "Angelina Yang",
+    "guest_en_name": "Angelina Yang",
+    "guest_title": "VP of Data (former), Founder & Host of TwoSetAI",
+    "guest_company": "Underdog Fantasy / TwoSetAI",
     "primary_video_id": "tJXIGeu6wXQ",
     "all_video_ids": [
       "tJXIGeu6wXQ"
@@ -821,10 +829,10 @@
     ]
   },
   {
-    "guest_name": "YC",
-    "guest_en_name": "YC",
-    "guest_title": "First-time Founder",
-    "guest_company": "Unknown",
+    "guest_name": "Devin Dong 董有超",
+    "guest_en_name": "Devin Dong",
+    "guest_title": "Founder & CEO at Cookiy AI; ex Meetsocial CPO, TikTok GM of Pangle, 腾讯副总监",
+    "guest_company": "Cookiy AI",
     "primary_video_id": "YFYKMbYpcvI",
     "all_video_ids": [
       "hU1hr7KCyqk",
@@ -903,27 +911,10 @@
     ]
   },
   {
-    "guest_name": "Cheng Qian",
-    "guest_en_name": "Cheng Qian",
-    "guest_title": "",
-    "guest_company": "",
-    "primary_video_id": "f8IAAxmiU_w",
-    "all_video_ids": [
-      "f8IAAxmiU_w"
-    ],
-    "max_views": 12617,
-    "thumbnail_url": "https://img.youtube.com/vi/f8IAAxmiU_w/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=f8IAAxmiU_w",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=f8IAAxmiU_w"
-    ]
-  },
-  {
-    "guest_name": "Jiakan",
-    "guest_en_name": "Jiakan",
-    "guest_title": "创始成员",
-    "guest_company": "Statsig",
+    "guest_name": "Jiakan Wang",
+    "guest_en_name": "Jiakan Wang",
+    "guest_title": "Engineering at OpenAI, ex Head of Enterprise Engineering at Statsig",
+    "guest_company": "OpenAI",
     "primary_video_id": "NAZoiCYPrqI",
     "all_video_ids": [
       "NAZoiCYPrqI"
@@ -975,10 +966,10 @@
     ]
   },
   {
-    "guest_name": "詹老师",
-    "guest_en_name": "Teacher Zhan",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_name": "詹冬业",
+    "guest_en_name": "Dongye Zhan",
+    "guest_title": "潮汕工夫茶非遗传承人",
+    "guest_company": "潮汕工夫茶",
     "primary_video_id": "z77JFTjccxQ",
     "all_video_ids": [
       "z77JFTjccxQ",
@@ -1034,18 +1025,18 @@
     "guest_en_name": "Liu Jia",
     "guest_title": "Professor, Brain Science Expert",
     "guest_company": "Tsinghua University",
-    "primary_video_id": "Et3GJRSI_0",
+    "primary_video_id": "-Et3GJRSI_0",
     "all_video_ids": [
       "EfEk4V3FMdg",
-      "Et3GJRSI_0"
+      "-Et3GJRSI_0"
     ],
     "max_views": 9097,
-    "thumbnail_url": "https://img.youtube.com/vi/Et3GJRSI_0/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=Et3GJRSI_0",
+    "thumbnail_url": "https://img.youtube.com/vi/-Et3GJRSI_0/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=-Et3GJRSI_0",
     "episode_count": 2,
     "all_urls": [
       "https://www.youtube.com/watch?v=EfEk4V3FMdg",
-      "https://www.youtube.com/watch?v=Et3GJRSI_0"
+      "https://www.youtube.com/watch?v=-Et3GJRSI_0"
     ]
   },
   {
@@ -1089,23 +1080,6 @@
     ]
   },
   {
-    "guest_name": "光芒",
-    "guest_en_name": "Guang Mang",
-    "guest_title": "General Manager, Content Ecology Department",
-    "guest_company": "Tencent",
-    "primary_video_id": "apFYcIzJ1jY",
-    "all_video_ids": [
-      "apFYcIzJ1jY"
-    ],
-    "max_views": 8166,
-    "thumbnail_url": "https://img.youtube.com/vi/apFYcIzJ1jY/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=apFYcIzJ1jY",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=apFYcIzJ1jY"
-    ]
-  },
-  {
     "guest_name": "土汪",
     "guest_en_name": "Tu Wang",
     "guest_title": "Tech Lead",
@@ -1139,23 +1113,6 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=c7M6B2GR5-k"
-    ]
-  },
-  {
-    "guest_name": "Frey",
-    "guest_en_name": "Frey",
-    "guest_title": "",
-    "guest_company": "",
-    "primary_video_id": "JZCoScCpxL0",
-    "all_video_ids": [
-      "JZCoScCpxL0"
-    ],
-    "max_views": 7389,
-    "thumbnail_url": "https://img.youtube.com/vi/JZCoScCpxL0/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=JZCoScCpxL0",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=JZCoScCpxL0"
     ]
   },
   {
@@ -1232,29 +1189,33 @@
     ]
   },
   {
-    "guest_name": "Cadence Gao",
+    "guest_name": "高寒 Cadence Gao",
     "guest_en_name": "Cadence Gao",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_title": "B站UP主, 喜鹊派老板和主厨",
+    "guest_company": "鞑厨高寒 / 喜鹊派",
     "primary_video_id": "6FGf8kmftjc",
     "all_video_ids": [
       "6FGf8kmftjc",
-      "oWOtqSA8kAA"
+      "oWOtqSA8kAA",
+      "ZVAiVVv5Lhs",
+      "N7kSD2yPxs0"
     ],
     "max_views": 6493,
     "thumbnail_url": "https://img.youtube.com/vi/6FGf8kmftjc/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=6FGf8kmftjc",
-    "episode_count": 2,
+    "episode_count": 4,
     "all_urls": [
       "https://www.youtube.com/watch?v=6FGf8kmftjc",
-      "https://www.youtube.com/watch?v=oWOtqSA8kAA"
+      "https://www.youtube.com/watch?v=oWOtqSA8kAA",
+      "https://www.youtube.com/watch?v=ZVAiVVv5Lhs",
+      "https://www.youtube.com/watch?v=N7kSD2yPxs0"
     ]
   },
   {
-    "guest_name": "Eula",
+    "guest_name": "Eula 尤拉",
     "guest_en_name": "Eula",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_title": "小红书网红",
+    "guest_company": "小红书",
     "primary_video_id": "h3UY4Jb2uJE",
     "all_video_ids": [
       "h3UY4Jb2uJE"
@@ -1268,10 +1229,10 @@
     ]
   },
   {
-    "guest_name": "冠然",
-    "guest_en_name": "Guan Ran",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_name": "赵冠然",
+    "guest_en_name": "Guanran Zhao",
+    "guest_title": "得觉学员",
+    "guest_company": "腾讯",
     "primary_video_id": "UflXpXjVkik",
     "all_video_ids": [
       "JyC1qluOzFw",
@@ -1326,9 +1287,9 @@
   },
   {
     "guest_name": "王浩岚",
-    "guest_en_name": "Wang Haolan",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_en_name": "Haolan Wang",
+    "guest_title": "岚目公众号主笔, 美国政治爱好者",
+    "guest_company": "岚目",
     "primary_video_id": "xRbNOgT__5I",
     "all_video_ids": [
       "wDU8hA4NoIg",
@@ -1352,27 +1313,6 @@
     ]
   },
   {
-    "guest_name": "TQ",
-    "guest_en_name": "TQ",
-    "guest_title": "CEO",
-    "guest_company": "Huhu AI",
-    "primary_video_id": "k4ymsRaIUX4",
-    "all_video_ids": [
-      "FKCPAI9yHKE",
-      "k4ymsRaIUX4",
-      "gs3WxZqckLQ"
-    ],
-    "max_views": 5383,
-    "thumbnail_url": "https://img.youtube.com/vi/k4ymsRaIUX4/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=k4ymsRaIUX4",
-    "episode_count": 3,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=FKCPAI9yHKE",
-      "https://www.youtube.com/watch?v=k4ymsRaIUX4",
-      "https://www.youtube.com/watch?v=gs3WxZqckLQ"
-    ]
-  },
-  {
     "guest_name": "虚汗僧",
     "guest_en_name": "Xu Hanquan",
     "guest_title": "EDC收藏爱好者",
@@ -1390,20 +1330,22 @@
     ]
   },
   {
-    "guest_name": "Xu Hui",
+    "guest_name": "许辉博士",
     "guest_en_name": "Xu Hui",
     "guest_title": "",
     "guest_company": "",
     "primary_video_id": "XqaLlZVoNFo",
     "all_video_ids": [
-      "XqaLlZVoNFo"
+      "XqaLlZVoNFo",
+      "JykJ7mqtRMU"
     ],
     "max_views": 5186,
     "thumbnail_url": "https://img.youtube.com/vi/XqaLlZVoNFo/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=XqaLlZVoNFo",
-    "episode_count": 1,
+    "episode_count": 2,
     "all_urls": [
-      "https://www.youtube.com/watch?v=XqaLlZVoNFo"
+      "https://www.youtube.com/watch?v=XqaLlZVoNFo",
+      "https://www.youtube.com/watch?v=JykJ7mqtRMU"
     ]
   },
   {
@@ -1464,10 +1406,10 @@
     ]
   },
   {
-    "guest_name": "响歌歌",
-    "guest_en_name": "Xiang Ge Ge",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_name": "响歌歌 Stacy Li",
+    "guest_en_name": "Stacy Li",
+    "guest_title": "Sr. Data Scientist, 小红书网红",
+    "guest_company": "LinkedIn",
     "primary_video_id": "uQNbl6RgC3M",
     "all_video_ids": [
       "uQNbl6RgC3M",
@@ -1504,8 +1446,8 @@
   {
     "guest_name": "陈哲",
     "guest_en_name": "Chen Zhe",
-    "guest_title": "摄影师",
-    "guest_company": "Unknown",
+    "guest_title": "纽约著名摄影师",
+    "guest_company": "",
     "primary_video_id": "E3lrA5Ldzx8",
     "all_video_ids": [
       "5I-lo-FyYT4",
@@ -1766,8 +1708,8 @@
   {
     "guest_name": "李森",
     "guest_en_name": "Li Sen",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_title": "副总监",
+    "guest_company": "腾讯",
     "primary_video_id": "-nIcaJL1wzU",
     "all_video_ids": [
       "2vZGD67NTzY",
@@ -1837,7 +1779,7 @@
   {
     "guest_name": "星瞳",
     "guest_en_name": "Xing Tong",
-    "guest_title": "",
+    "guest_title": "国内顶级虚拟偶像",
     "guest_company": "",
     "primary_video_id": "dmUTGbe6d00",
     "all_video_ids": [
@@ -1868,25 +1810,6 @@
     "all_urls": [
       "https://www.youtube.com/watch?v=zbm1bWihx5E",
       "https://www.youtube.com/watch?v=rZO-Z3b1Skk"
-    ]
-  },
-  {
-    "guest_name": "高寒",
-    "guest_en_name": "Gao Han",
-    "guest_title": "",
-    "guest_company": "",
-    "primary_video_id": "N7kSD2yPxs0",
-    "all_video_ids": [
-      "ZVAiVVv5Lhs",
-      "N7kSD2yPxs0"
-    ],
-    "max_views": 0,
-    "thumbnail_url": "https://img.youtube.com/vi/N7kSD2yPxs0/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=N7kSD2yPxs0",
-    "episode_count": 2,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=ZVAiVVv5Lhs",
-      "https://www.youtube.com/watch?v=N7kSD2yPxs0"
     ]
   },
   {
@@ -1943,10 +1866,10 @@
     ]
   },
   {
-    "guest_name": "Deb",
-    "guest_en_name": "Deb",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_name": "Deb Liu",
+    "guest_en_name": "Deb Liu",
+    "guest_title": "Ancestry CEO, Facebook VP (former)",
+    "guest_company": "Ancestry",
     "primary_video_id": "avzhELi1muU",
     "all_video_ids": [
       "avzhELi1muU",
@@ -1979,27 +1902,10 @@
     ]
   },
   {
-    "guest_name": "许辉",
-    "guest_en_name": "Xu Hui",
-    "guest_title": "博士",
-    "guest_company": "",
-    "primary_video_id": "JykJ7mqtRMU",
-    "all_video_ids": [
-      "JykJ7mqtRMU"
-    ],
-    "max_views": 0,
-    "thumbnail_url": "https://img.youtube.com/vi/JykJ7mqtRMU/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=JykJ7mqtRMU",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=JykJ7mqtRMU"
-    ]
-  },
-  {
-    "guest_name": "超旻",
-    "guest_en_name": "Chao Min",
-    "guest_title": "",
-    "guest_company": "",
+    "guest_name": "余超旻",
+    "guest_en_name": "Chaomin Yu",
+    "guest_title": "前Databricks, Meta",
+    "guest_company": "OpenAI",
     "primary_video_id": "FQ60U0DxVyM",
     "all_video_ids": [
       "FQ60U0DxVyM"
@@ -2015,8 +1921,8 @@
   {
     "guest_name": "格桑泽仁",
     "guest_en_name": "Gelsang Zeren",
-    "guest_title": "老师",
-    "guest_company": "",
+    "guest_title": "得觉创始人",
+    "guest_company": "四川大学",
     "primary_video_id": "G1sQ5Yei2ug",
     "all_video_ids": [
       "G1sQ5Yei2ug"

@@ -293,10 +293,10 @@
     ]
   },
   {
-    "guest_name": "Vivian",
-    "guest_en_name": "Vivian",
-    "guest_title": "Former Executive",
-    "guest_company": "",
+    "guest_name": "Vivian Wang",
+    "guest_en_name": "Vivian Wang",
+    "guest_title": "连续创业者，前平安副总裁",
+    "guest_company": "Palpay (former 平安)",
     "primary_video_id": "q7t4_UM8J74",
     "all_video_ids": [
       "mOy2BmSVtyQ",
@@ -377,9 +377,30 @@
     ]
   },
   {
-    "guest_name": "Eugene",
-    "guest_en_name": "Eugene",
-    "guest_title": "Biz Tech Lead",
+    "guest_name": "Emily",
+    "guest_en_name": "Emily",
+    "guest_title": "00后耶鲁MBA",
+    "guest_company": "",
+    "primary_video_id": "djaJm63w8BU",
+    "all_video_ids": [
+      "djaJm63w8BU",
+      "xrBlVBhl7WI",
+      "Ril9owWEHxg"
+    ],
+    "max_views": 29741,
+    "thumbnail_url": "https://img.youtube.com/vi/djaJm63w8BU/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=djaJm63w8BU",
+    "episode_count": 3,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=djaJm63w8BU",
+      "https://www.youtube.com/watch?v=xrBlVBhl7WI",
+      "https://www.youtube.com/watch?v=Ril9owWEHxg"
+    ]
+  },
+  {
+    "guest_name": "Eugene Wang",
+    "guest_en_name": "Eugene Wang",
+    "guest_title": "前亚马逊首席产品经理",
     "guest_company": "Amazon",
     "primary_video_id": "HAQ4p74KbdY",
     "all_video_ids": [
@@ -664,6 +685,29 @@
     ]
   },
   {
+    "guest_name": "Howard Li",
+    "guest_en_name": "Howard Li",
+    "guest_title": "Meta DS Director",
+    "guest_company": "Meta",
+    "primary_video_id": "ZiARi5uJpco",
+    "all_video_ids": [
+      "ZiARi5uJpco",
+      "R-wEqPs_CEs",
+      "M20Pw63eOGY",
+      "KS7V-uK7B8w"
+    ],
+    "max_views": 18050,
+    "thumbnail_url": "https://img.youtube.com/vi/ZiARi5uJpco/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=ZiARi5uJpco",
+    "episode_count": 4,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=ZiARi5uJpco",
+      "https://www.youtube.com/watch?v=R-wEqPs_CEs",
+      "https://www.youtube.com/watch?v=M20Pw63eOGY",
+      "https://www.youtube.com/watch?v=KS7V-uK7B8w"
+    ]
+  },
+  {
     "guest_name": "卢易 Lu Yi",
     "guest_en_name": "Lu Yi",
     "guest_title": "ML Researcher",
@@ -756,6 +800,23 @@
     ]
   },
   {
+    "guest_name": "Kathy and Ashley",
+    "guest_en_name": "Kathy and Ashley",
+    "guest_title": "Software Engineers at Google and Meta",
+    "guest_company": "Google / Meta",
+    "primary_video_id": "5dq3XxmjTBc",
+    "all_video_ids": [
+      "5dq3XxmjTBc"
+    ],
+    "max_views": 16824,
+    "thumbnail_url": "https://img.youtube.com/vi/5dq3XxmjTBc/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=5dq3XxmjTBc",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=5dq3XxmjTBc"
+    ]
+  },
+  {
     "guest_name": "Rod",
     "guest_en_name": "Rod",
     "guest_title": "",
@@ -798,10 +859,10 @@
     ]
   },
   {
-    "guest_name": "Mengying",
-    "guest_en_name": "Mengying",
-    "guest_title": "天使投资人",
-    "guest_company": "",
+    "guest_name": "李梦颖 Mengying",
+    "guest_en_name": "Mengying Li",
+    "guest_title": "天使投资人，前Notion/MotherDuck Head of Growth DS",
+    "guest_company": "MotherDuck (former)",
     "primary_video_id": "NWe92tuQUTA",
     "all_video_ids": [
       "cZtyn6ZkX7s",
@@ -970,6 +1031,25 @@
     ]
   },
   {
+    "guest_name": "Newton",
+    "guest_en_name": "Newton",
+    "guest_title": "微软程序员，餐馆老板",
+    "guest_company": "Microsoft",
+    "primary_video_id": "VpXcXv9S5ws",
+    "all_video_ids": [
+      "VpXcXv9S5ws",
+      "q-q6cHC67DE"
+    ],
+    "max_views": 13484,
+    "thumbnail_url": "https://img.youtube.com/vi/VpXcXv9S5ws/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=VpXcXv9S5ws",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=VpXcXv9S5ws",
+      "https://www.youtube.com/watch?v=q-q6cHC67DE"
+    ]
+  },
+  {
     "guest_name": "Paul 保罗在美国",
     "guest_en_name": "Paul",
     "guest_title": "Content Creator / 网红",
@@ -1025,7 +1105,7 @@
     ]
   },
   {
-    "guest_name": "晨璐",
+    "guest_name": "王晨璐",
     "guest_en_name": "Chen Lu",
     "guest_title": "Data Scientist",
     "guest_company": "Meta (formerly Amazon BIE)",
@@ -1044,7 +1124,7 @@
     ]
   },
   {
-    "guest_name": "Trystane",
+    "guest_name": "Trystane 崔老师",
     "guest_en_name": "Trystane",
     "guest_title": "Content Creator",
     "guest_company": "Self-employed",
@@ -1196,6 +1276,23 @@
     ]
   },
   {
+    "guest_name": "Nan Zhou",
+    "guest_en_name": "Nan Zhou",
+    "guest_title": "Director at Qualcomm Ventures",
+    "guest_company": "Qualcomm Ventures",
+    "primary_video_id": "VOyAMRk5WE0",
+    "all_video_ids": [
+      "VOyAMRk5WE0"
+    ],
+    "max_views": 8181,
+    "thumbnail_url": "https://img.youtube.com/vi/VOyAMRk5WE0/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=VOyAMRk5WE0",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=VOyAMRk5WE0"
+    ]
+  },
+  {
     "guest_name": "Ethan Zhu 朱一丰",
     "guest_en_name": "Ethan Zhu",
     "guest_title": "Director of Analytics",
@@ -1301,6 +1398,27 @@
     ]
   },
   {
+    "guest_name": "张国琪",
+    "guest_en_name": "Zhang Guoqi",
+    "guest_title": "腾讯HRBP",
+    "guest_company": "腾讯",
+    "primary_video_id": "Iz41o4-2Vg0",
+    "all_video_ids": [
+      "Iz41o4-2Vg0",
+      "A7I0h91Jy-A",
+      "6P6ClAtxa8U"
+    ],
+    "max_views": 7126,
+    "thumbnail_url": "https://img.youtube.com/vi/Iz41o4-2Vg0/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=Iz41o4-2Vg0",
+    "episode_count": 3,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=Iz41o4-2Vg0",
+      "https://www.youtube.com/watch?v=A7I0h91Jy-A",
+      "https://www.youtube.com/watch?v=6P6ClAtxa8U"
+    ]
+  },
+  {
     "guest_name": "Riley Shu",
     "guest_en_name": "Riley Shu",
     "guest_title": "Product Manager, AI Developer",
@@ -1390,6 +1508,23 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=h3UY4Jb2uJE"
+    ]
+  },
+  {
+    "guest_name": "金海峰",
+    "guest_en_name": "Jin Haifeng",
+    "guest_title": "被谷歌收编的开源博士",
+    "guest_company": "Google",
+    "primary_video_id": "EHP7JnKBmuA",
+    "all_video_ids": [
+      "EHP7JnKBmuA"
+    ],
+    "max_views": 6408,
+    "thumbnail_url": "https://img.youtube.com/vi/EHP7JnKBmuA/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=EHP7JnKBmuA",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=EHP7JnKBmuA"
     ]
   },
   {
@@ -1510,6 +1645,23 @@
     "all_urls": [
       "https://www.youtube.com/watch?v=XqaLlZVoNFo",
       "https://www.youtube.com/watch?v=JykJ7mqtRMU"
+    ]
+  },
+  {
+    "guest_name": "郭浩宇",
+    "guest_en_name": "Guo Haoyu",
+    "guest_title": "游戏策划",
+    "guest_company": "腾讯",
+    "primary_video_id": "vPVgz_cAlV4",
+    "all_video_ids": [
+      "vPVgz_cAlV4"
+    ],
+    "max_views": 5160,
+    "thumbnail_url": "https://img.youtube.com/vi/vPVgz_cAlV4/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=vPVgz_cAlV4",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=vPVgz_cAlV4"
     ]
   },
   {
@@ -1738,6 +1890,25 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=tx2sB8vrUEQ"
+    ]
+  },
+  {
+    "guest_name": "SVTC",
+    "guest_en_name": "SVTC",
+    "guest_title": "Data Scientist",
+    "guest_company": "",
+    "primary_video_id": "DP3N1YyGmG8",
+    "all_video_ids": [
+      "DP3N1YyGmG8",
+      "mpjfs1fk-I4"
+    ],
+    "max_views": 3322,
+    "thumbnail_url": "https://img.youtube.com/vi/DP3N1YyGmG8/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=DP3N1YyGmG8",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=DP3N1YyGmG8",
+      "https://www.youtube.com/watch?v=mpjfs1fk-I4"
     ]
   },
   {
@@ -2169,6 +2340,57 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=ZHHPbdU2_eU"
+    ]
+  },
+  {
+    "guest_name": "刘律师",
+    "guest_en_name": "Liu Lawyer",
+    "guest_title": "硅谷公司法律师",
+    "guest_company": "",
+    "primary_video_id": "gUHMGWv-hiU",
+    "all_video_ids": [
+      "gUHMGWv-hiU"
+    ],
+    "max_views": 0,
+    "thumbnail_url": "https://img.youtube.com/vi/gUHMGWv-hiU/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=gUHMGWv-hiU",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=gUHMGWv-hiU"
+    ]
+  },
+  {
+    "guest_name": "贾扬清",
+    "guest_en_name": "Yangqing Jia",
+    "guest_title": "PyTorch创始人之一，前Meta Director，阿里VP，Lepton AI创始人",
+    "guest_company": "Lepton AI",
+    "primary_video_id": "Lt-lVe957hc",
+    "all_video_ids": [
+      "Lt-lVe957hc"
+    ],
+    "max_views": 0,
+    "thumbnail_url": "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=Lt-lVe957hc",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=Lt-lVe957hc"
+    ]
+  },
+  {
+    "guest_name": "Kelly Xu",
+    "guest_en_name": "Kelly Xu",
+    "guest_title": "创业者，网红，前Airbnb数据科学家",
+    "guest_company": "Airbnb (former)",
+    "primary_video_id": "QcSbcHgh36I",
+    "all_video_ids": [
+      "QcSbcHgh36I"
+    ],
+    "max_views": 0,
+    "thumbnail_url": "https://img.youtube.com/vi/QcSbcHgh36I/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=QcSbcHgh36I",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=QcSbcHgh36I"
     ]
   }
 ]

@@ -970,9 +970,9 @@
     ]
   },
   {
-    "guest_name": "Paul",
+    "guest_name": "Paul 保罗在美国",
     "guest_en_name": "Paul",
-    "guest_title": "Content Creator",
+    "guest_title": "Content Creator / 网红",
     "guest_company": "Microsoft (Former)",
     "primary_video_id": "kL3mt73vfWw",
     "all_video_ids": [
@@ -1027,8 +1027,8 @@
   {
     "guest_name": "晨璐",
     "guest_en_name": "Chen Lu",
-    "guest_title": "Job Seeker",
-    "guest_company": "",
+    "guest_title": "Data Scientist",
+    "guest_company": "Meta (formerly Amazon BIE)",
     "primary_video_id": "IWLo9iLnnfM",
     "all_video_ids": [
       "NyVd3ZPNNBk",
@@ -1196,8 +1196,8 @@
     ]
   },
   {
-    "guest_name": "Ethan (DoorDash)",
-    "guest_en_name": "Ethan",
+    "guest_name": "Ethan Zhu 朱一丰",
+    "guest_en_name": "Ethan Zhu",
     "guest_title": "Director of Analytics",
     "guest_company": "DoorDash",
     "primary_video_id": "cVtgJ7KFjgY",
@@ -1205,17 +1205,21 @@
       "_X4aJmOn3AI",
       "rCYw13Ad2ig",
       "cVtgJ7KFjgY",
-      "4pWsovy9cV8"
+      "4pWsovy9cV8",
+      "ZJzguLBcTos",
+      "krYyRVdZ34Y"
     ],
     "max_views": 7929,
     "thumbnail_url": "https://img.youtube.com/vi/cVtgJ7KFjgY/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=cVtgJ7KFjgY",
-    "episode_count": 4,
+    "episode_count": 6,
     "all_urls": [
       "https://www.youtube.com/watch?v=_X4aJmOn3AI",
       "https://www.youtube.com/watch?v=rCYw13Ad2ig",
       "https://www.youtube.com/watch?v=cVtgJ7KFjgY",
-      "https://www.youtube.com/watch?v=4pWsovy9cV8"
+      "https://www.youtube.com/watch?v=4pWsovy9cV8",
+      "https://www.youtube.com/watch?v=ZJzguLBcTos",
+      "https://www.youtube.com/watch?v=krYyRVdZ34Y"
     ]
   },
   {
@@ -1427,8 +1431,8 @@
     ]
   },
   {
-    "guest_name": "Daliana",
-    "guest_en_name": "Daliana",
+    "guest_name": "Daliana Liu",
+    "guest_en_name": "Daliana Liu",
     "guest_title": "Content Creator",
     "guest_company": "",
     "primary_video_id": "lQPavb89kpk",
@@ -1544,25 +1548,6 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=SCh-0MaeC_c"
-    ]
-  },
-  {
-    "guest_name": "朱一丰",
-    "guest_en_name": "Zhu Yifeng",
-    "guest_title": "Director",
-    "guest_company": "Large Tech Company",
-    "primary_video_id": "krYyRVdZ34Y",
-    "all_video_ids": [
-      "ZJzguLBcTos",
-      "krYyRVdZ34Y"
-    ],
-    "max_views": 4846,
-    "thumbnail_url": "https://img.youtube.com/vi/krYyRVdZ34Y/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=krYyRVdZ34Y",
-    "episode_count": 2,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=ZJzguLBcTos",
-      "https://www.youtube.com/watch?v=krYyRVdZ34Y"
     ]
   },
   {

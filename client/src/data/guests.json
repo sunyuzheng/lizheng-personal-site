@@ -1234,6 +1234,25 @@
     ]
   },
   {
+    "guest_name": "俞奕舟",
+    "guest_en_name": "Yu Yizhou",
+    "guest_title": "Meta 程序员",
+    "guest_company": "Meta",
+    "primary_video_id": "vYOogCGsIog",
+    "all_video_ids": [
+      "vYOogCGsIog",
+      "OpF_xP2gC3o"
+    ],
+    "max_views": 9990,
+    "thumbnail_url": "https://img.youtube.com/vi/vYOogCGsIog/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=vYOogCGsIog",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=vYOogCGsIog",
+      "https://www.youtube.com/watch?v=OpF_xP2gC3o"
+    ]
+  },
+  {
     "guest_name": "王然",
     "guest_en_name": "Wang Ran",
     "guest_title": "创始人",
@@ -1891,6 +1910,23 @@
     ]
   },
   {
+    "guest_name": "何冬阳",
+    "guest_en_name": "He Dongyang",
+    "guest_title": "前国企金融负责人，卡电宝创始人",
+    "guest_company": "卡电宝",
+    "primary_video_id": "1ZbVBnYHlKI",
+    "all_video_ids": [
+      "1ZbVBnYHlKI"
+    ],
+    "max_views": 4119,
+    "thumbnail_url": "https://img.youtube.com/vi/1ZbVBnYHlKI/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=1ZbVBnYHlKI",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=1ZbVBnYHlKI"
+    ]
+  },
+  {
     "guest_name": "Timothy Chan",
     "guest_en_name": "Timothy Chan",
     "guest_title": "Lead Data Scientist",
@@ -2516,6 +2552,40 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=mgQwCTXgoME"
+    ]
+  },
+  {
+    "guest_name": "Sam Zhang",
+    "guest_en_name": "Sam Zhang",
+    "guest_title": "字节早期员工",
+    "guest_company": "ByteDance / Unity",
+    "primary_video_id": "UKEL3M1MbGM",
+    "all_video_ids": [
+      "UKEL3M1MbGM"
+    ],
+    "max_views": 0,
+    "thumbnail_url": "https://img.youtube.com/vi/UKEL3M1MbGM/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=UKEL3M1MbGM",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=UKEL3M1MbGM"
+    ]
+  },
+  {
+    "guest_name": "陈字昕",
+    "guest_en_name": "Chen Zixin",
+    "guest_title": "Stanford 在读 · Oracle 全职",
+    "guest_company": "Oracle / Stanford",
+    "primary_video_id": "PphnjXFr1SA",
+    "all_video_ids": [
+      "PphnjXFr1SA"
+    ],
+    "max_views": 0,
+    "thumbnail_url": "https://img.youtube.com/vi/PphnjXFr1SA/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=PphnjXFr1SA",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=PphnjXFr1SA"
     ]
   }
 ]

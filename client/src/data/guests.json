@@ -377,24 +377,22 @@
     ]
   },
   {
-    "guest_name": "Emily",
-    "guest_en_name": "Emily",
-    "guest_title": "00后耶鲁MBA",
-    "guest_company": "",
+    "guest_name": "赵勇",
+    "guest_en_name": "Zhao Yong",
+    "guest_title": "君子食堂创始人",
+    "guest_company": "君子食堂",
     "primary_video_id": "djaJm63w8BU",
     "all_video_ids": [
       "djaJm63w8BU",
-      "xrBlVBhl7WI",
-      "Ril9owWEHxg"
+      "wHIX7yq9vFc"
     ],
     "max_views": 29741,
     "thumbnail_url": "https://img.youtube.com/vi/djaJm63w8BU/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=djaJm63w8BU",
-    "episode_count": 3,
+    "episode_count": 2,
     "all_urls": [
       "https://www.youtube.com/watch?v=djaJm63w8BU",
-      "https://www.youtube.com/watch?v=xrBlVBhl7WI",
-      "https://www.youtube.com/watch?v=Ril9owWEHxg"
+      "https://www.youtube.com/watch?v=wHIX7yq9vFc"
     ]
   },
   {
@@ -1612,6 +1610,25 @@
     ]
   },
   {
+    "guest_name": "Emily",
+    "guest_en_name": "Emily",
+    "guest_title": "00后耶鲁MBA",
+    "guest_company": "",
+    "primary_video_id": "xrBlVBhl7WI",
+    "all_video_ids": [
+      "xrBlVBhl7WI",
+      "Ril9owWEHxg"
+    ],
+    "max_views": 5292,
+    "thumbnail_url": "https://img.youtube.com/vi/xrBlVBhl7WI/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=xrBlVBhl7WI",
+    "episode_count": 2,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=xrBlVBhl7WI",
+      "https://www.youtube.com/watch?v=Ril9owWEHxg"
+    ]
+  },
+  {
     "guest_name": "虚汗僧",
     "guest_en_name": "Xu Hanquan",
     "guest_title": "EDC收藏爱好者",
@@ -2236,23 +2253,6 @@
     "all_urls": [
       "https://www.youtube.com/watch?v=avzhELi1muU",
       "https://www.youtube.com/watch?v=5Nhoyz6sDUw"
-    ]
-  },
-  {
-    "guest_name": "赵勇",
-    "guest_en_name": "Zhao Yong",
-    "guest_title": "创始人",
-    "guest_company": "君子食堂",
-    "primary_video_id": "wHIX7yq9vFc",
-    "all_video_ids": [
-      "wHIX7yq9vFc"
-    ],
-    "max_views": 0,
-    "thumbnail_url": "https://img.youtube.com/vi/wHIX7yq9vFc/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=wHIX7yq9vFc",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=wHIX7yq9vFc"
     ]
   },
   {

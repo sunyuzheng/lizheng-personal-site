@@ -266,6 +266,49 @@
     ]
   },
   {
+    "guest_name": "Devin Dong 董有超",
+    "guest_en_name": "Devin Dong",
+    "guest_title": "Founder & CEO at Cookiy AI; ex Meetsocial CPO, TikTok GM of Pangle, 腾讯副总监",
+    "guest_company": "Cookiy AI",
+    "primary_video_id": "4eYzTGxZazw",
+    "all_video_ids": [
+      "hU1hr7KCyqk",
+      "yiZ_rs2Jbz0",
+      "YFYKMbYpcvI",
+      "xIxviFc8yxE",
+      "WDSPYtv8rXY",
+      "6puUPZA0wVs",
+      "A12Z_CHi7PE",
+      "aaDv8hq6cOc",
+      "JaxI3B7bUhA",
+      "KvJjk6nn-c0",
+      "9213uFD30VM",
+      "-S1BZ_-hvlg",
+      "4eYzTGxZazw",
+      "lhcQkrkTUhc"
+    ],
+    "max_views": 39664,
+    "thumbnail_url": "https://img.youtube.com/vi/4eYzTGxZazw/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=4eYzTGxZazw",
+    "episode_count": 14,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=hU1hr7KCyqk",
+      "https://www.youtube.com/watch?v=yiZ_rs2Jbz0",
+      "https://www.youtube.com/watch?v=YFYKMbYpcvI",
+      "https://www.youtube.com/watch?v=xIxviFc8yxE",
+      "https://www.youtube.com/watch?v=WDSPYtv8rXY",
+      "https://www.youtube.com/watch?v=6puUPZA0wVs",
+      "https://www.youtube.com/watch?v=A12Z_CHi7PE",
+      "https://www.youtube.com/watch?v=aaDv8hq6cOc",
+      "https://www.youtube.com/watch?v=JaxI3B7bUhA",
+      "https://www.youtube.com/watch?v=KvJjk6nn-c0",
+      "https://www.youtube.com/watch?v=9213uFD30VM",
+      "https://www.youtube.com/watch?v=-S1BZ_-hvlg",
+      "https://www.youtube.com/watch?v=4eYzTGxZazw",
+      "https://www.youtube.com/watch?v=lhcQkrkTUhc"
+    ]
+  },
+  {
     "guest_name": "杜磊",
     "guest_en_name": "Du Lei",
     "guest_title": "Investor",
@@ -335,24 +378,28 @@
     ]
   },
   {
-    "guest_name": "Kevin",
-    "guest_en_name": "Kevin",
+    "guest_name": "Kevin Chen",
+    "guest_en_name": "Kevin Chen",
     "guest_title": "MIT Engineering Professor",
     "guest_company": "MIT SMRL",
     "primary_video_id": "6FvFgTWO9BU",
     "all_video_ids": [
       "UlZJd6XpkAQ",
       "2fpnJlHPhGA",
-      "6FvFgTWO9BU"
+      "6FvFgTWO9BU",
+      "vwoj6fHdxNI",
+      "I4_OejHnJSU"
     ],
     "max_views": 30956,
     "thumbnail_url": "https://img.youtube.com/vi/6FvFgTWO9BU/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=6FvFgTWO9BU",
-    "episode_count": 3,
+    "episode_count": 5,
     "all_urls": [
       "https://www.youtube.com/watch?v=UlZJd6XpkAQ",
       "https://www.youtube.com/watch?v=2fpnJlHPhGA",
-      "https://www.youtube.com/watch?v=6FvFgTWO9BU"
+      "https://www.youtube.com/watch?v=6FvFgTWO9BU",
+      "https://www.youtube.com/watch?v=vwoj6fHdxNI",
+      "https://www.youtube.com/watch?v=I4_OejHnJSU"
     ]
   },
   {
@@ -548,6 +595,41 @@
     ]
   },
   {
+    "guest_name": "李森",
+    "guest_en_name": "Li Sen",
+    "guest_title": "副总监",
+    "guest_company": "腾讯",
+    "primary_video_id": "ExlzfUFIfrY",
+    "all_video_ids": [
+      "2vZGD67NTzY",
+      "-nIcaJL1wzU",
+      "XUf5RbqVBUg",
+      "Nk_2rqwNkYE",
+      "CXlzh3TDMAc",
+      "ieqFc8NZJsE",
+      "ArfiQWpihhA",
+      "GUOfaIhVQoA",
+      "HL2MbqJD5ZA",
+      "ExlzfUFIfrY"
+    ],
+    "max_views": 22619,
+    "thumbnail_url": "https://img.youtube.com/vi/ExlzfUFIfrY/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=ExlzfUFIfrY",
+    "episode_count": 10,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=2vZGD67NTzY",
+      "https://www.youtube.com/watch?v=-nIcaJL1wzU",
+      "https://www.youtube.com/watch?v=XUf5RbqVBUg",
+      "https://www.youtube.com/watch?v=Nk_2rqwNkYE",
+      "https://www.youtube.com/watch?v=CXlzh3TDMAc",
+      "https://www.youtube.com/watch?v=ieqFc8NZJsE",
+      "https://www.youtube.com/watch?v=ArfiQWpihhA",
+      "https://www.youtube.com/watch?v=GUOfaIhVQoA",
+      "https://www.youtube.com/watch?v=HL2MbqJD5ZA",
+      "https://www.youtube.com/watch?v=ExlzfUFIfrY"
+    ]
+  },
+  {
     "guest_name": "戴雨森",
     "guest_en_name": "Dai Yusen",
     "guest_title": "Partner",
@@ -652,45 +734,6 @@
       "https://www.youtube.com/watch?v=McTi0DdKybY",
       "https://www.youtube.com/watch?v=A8XWmGsQVW8",
       "https://www.youtube.com/watch?v=cyZeAw8DLew"
-    ]
-  },
-  {
-    "guest_name": "Devin Dong 董有超",
-    "guest_en_name": "Devin Dong",
-    "guest_title": "Founder & CEO at Cookiy AI; ex Meetsocial CPO, TikTok GM of Pangle, 腾讯副总监",
-    "guest_company": "Cookiy AI",
-    "primary_video_id": "A12Z_CHi7PE",
-    "all_video_ids": [
-      "hU1hr7KCyqk",
-      "yiZ_rs2Jbz0",
-      "YFYKMbYpcvI",
-      "xIxviFc8yxE",
-      "WDSPYtv8rXY",
-      "6puUPZA0wVs",
-      "A12Z_CHi7PE",
-      "aaDv8hq6cOc",
-      "JaxI3B7bUhA",
-      "KvJjk6nn-c0",
-      "9213uFD30VM",
-      "-S1BZ_-hvlg"
-    ],
-    "max_views": 19318,
-    "thumbnail_url": "https://img.youtube.com/vi/A12Z_CHi7PE/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=A12Z_CHi7PE",
-    "episode_count": 12,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=hU1hr7KCyqk",
-      "https://www.youtube.com/watch?v=yiZ_rs2Jbz0",
-      "https://www.youtube.com/watch?v=YFYKMbYpcvI",
-      "https://www.youtube.com/watch?v=xIxviFc8yxE",
-      "https://www.youtube.com/watch?v=WDSPYtv8rXY",
-      "https://www.youtube.com/watch?v=6puUPZA0wVs",
-      "https://www.youtube.com/watch?v=A12Z_CHi7PE",
-      "https://www.youtube.com/watch?v=aaDv8hq6cOc",
-      "https://www.youtube.com/watch?v=JaxI3B7bUhA",
-      "https://www.youtube.com/watch?v=KvJjk6nn-c0",
-      "https://www.youtube.com/watch?v=9213uFD30VM",
-      "https://www.youtube.com/watch?v=-S1BZ_-hvlg"
     ]
   },
   {
@@ -1891,25 +1934,6 @@
     ]
   },
   {
-    "guest_name": "MIT教授",
-    "guest_en_name": "MIT Professor",
-    "guest_title": "Professor",
-    "guest_company": "MIT",
-    "primary_video_id": "vwoj6fHdxNI",
-    "all_video_ids": [
-      "vwoj6fHdxNI",
-      "I4_OejHnJSU"
-    ],
-    "max_views": 5063,
-    "thumbnail_url": "https://img.youtube.com/vi/vwoj6fHdxNI/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=vwoj6fHdxNI",
-    "episode_count": 2,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=vwoj6fHdxNI",
-      "https://www.youtube.com/watch?v=I4_OejHnJSU"
-    ]
-  },
-  {
     "guest_name": "Tom",
     "guest_en_name": "Tom",
     "guest_title": "程序员",
@@ -2334,39 +2358,6 @@
     "episode_count": 1,
     "all_urls": [
       "https://www.youtube.com/watch?v=pmMlMXBvHxU"
-    ]
-  },
-  {
-    "guest_name": "李森",
-    "guest_en_name": "Li Sen",
-    "guest_title": "副总监",
-    "guest_company": "腾讯",
-    "primary_video_id": "-nIcaJL1wzU",
-    "all_video_ids": [
-      "2vZGD67NTzY",
-      "-nIcaJL1wzU",
-      "XUf5RbqVBUg",
-      "Nk_2rqwNkYE",
-      "CXlzh3TDMAc",
-      "ieqFc8NZJsE",
-      "ArfiQWpihhA",
-      "GUOfaIhVQoA",
-      "HL2MbqJD5ZA"
-    ],
-    "max_views": 1725,
-    "thumbnail_url": "https://img.youtube.com/vi/-nIcaJL1wzU/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=-nIcaJL1wzU",
-    "episode_count": 9,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=2vZGD67NTzY",
-      "https://www.youtube.com/watch?v=-nIcaJL1wzU",
-      "https://www.youtube.com/watch?v=XUf5RbqVBUg",
-      "https://www.youtube.com/watch?v=Nk_2rqwNkYE",
-      "https://www.youtube.com/watch?v=CXlzh3TDMAc",
-      "https://www.youtube.com/watch?v=ieqFc8NZJsE",
-      "https://www.youtube.com/watch?v=ArfiQWpihhA",
-      "https://www.youtube.com/watch?v=GUOfaIhVQoA",
-      "https://www.youtube.com/watch?v=HL2MbqJD5ZA"
     ]
   },
   {

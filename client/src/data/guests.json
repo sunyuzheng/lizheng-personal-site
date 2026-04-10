@@ -911,12 +911,14 @@
     ]
   },
   {
-    "guest_name": "Lulu (LuluLeon)",
+    "guest_name": "Lulu",
     "guest_en_name": "Lulu",
-    "guest_title": "旅行教育博主",
-    "guest_company": "Independent",
+    "guest_title": "珠宝商",
+    "guest_company": "水贝珠宝世家",
     "primary_video_id": "qDRJDK64gJk",
     "all_video_ids": [
+      "Q6c06h2Y4e8",
+      "y3UuCqmLJYk",
       "qDRJDK64gJk",
       "Tec54wr1vCc",
       "tjOWeYOBePU",
@@ -925,8 +927,10 @@
     "max_views": 16935,
     "thumbnail_url": "https://img.youtube.com/vi/qDRJDK64gJk/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=qDRJDK64gJk",
-    "episode_count": 4,
+    "episode_count": 6,
     "all_urls": [
+      "https://www.youtube.com/watch?v=Q6c06h2Y4e8",
+      "https://www.youtube.com/watch?v=y3UuCqmLJYk",
       "https://www.youtube.com/watch?v=qDRJDK64gJk",
       "https://www.youtube.com/watch?v=Tec54wr1vCc",
       "https://www.youtube.com/watch?v=tjOWeYOBePU",
@@ -1450,23 +1454,6 @@
     ]
   },
   {
-    "guest_name": "Nan Zhou",
-    "guest_en_name": "Nan Zhou",
-    "guest_title": "Director at Qualcomm Ventures",
-    "guest_company": "Qualcomm Ventures",
-    "primary_video_id": "VOyAMRk5WE0",
-    "all_video_ids": [
-      "VOyAMRk5WE0"
-    ],
-    "max_views": 8181,
-    "thumbnail_url": "https://img.youtube.com/vi/VOyAMRk5WE0/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=VOyAMRk5WE0",
-    "episode_count": 1,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=VOyAMRk5WE0"
-    ]
-  },
-  {
     "guest_name": "光叔 光芒",
     "guest_en_name": "Guang",
     "guest_title": "General Manager, 虚环负责人, 《黑神话悟空》宣传策划者",
@@ -1967,25 +1954,6 @@
     "all_urls": [
       "https://www.youtube.com/watch?v=vx1vx8B-aX4",
       "https://www.youtube.com/watch?v=gZ_428eJutg"
-    ]
-  },
-  {
-    "guest_name": "Lulu",
-    "guest_en_name": "Lulu",
-    "guest_title": "珠宝商",
-    "guest_company": "水贝珠宝世家",
-    "primary_video_id": "Q6c06h2Y4e8",
-    "all_video_ids": [
-      "Q6c06h2Y4e8",
-      "y3UuCqmLJYk"
-    ],
-    "max_views": 4615,
-    "thumbnail_url": "https://img.youtube.com/vi/Q6c06h2Y4e8/hqdefault.jpg",
-    "primary_url": "https://www.youtube.com/watch?v=Q6c06h2Y4e8",
-    "episode_count": 2,
-    "all_urls": [
-      "https://www.youtube.com/watch?v=Q6c06h2Y4e8",
-      "https://www.youtube.com/watch?v=y3UuCqmLJYk"
     ]
   },
   {

@@ -123,12 +123,12 @@ export default function Guests() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((guest) => (
-              <div key={guest.primary_video_id} className="group relative block overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
+              <div key={guest.primary_video_id} className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
                 <a
                   href={guest.primary_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block"
+                  className="flex flex-1 flex-col"
                 >
                   {/* Thumbnail */}
                   <div className="relative aspect-video overflow-hidden">
@@ -146,8 +146,8 @@ export default function Guests() {
                     </div>
                   </div>
 
-                  {/* Info */}
-                  <div className="p-3 pb-2">
+                  {/* Info — flex-1 pushes button to bottom of card */}
+                  <div className="flex-1 p-3 pb-3">
                     <p className="line-clamp-1 text-sm font-semibold leading-tight text-white">
                       {guest.guest_name}
                     </p>
@@ -164,7 +164,7 @@ export default function Guests() {
                   </div>
                 </a>
 
-                {/* Multi-episode button */}
+                {/* Multi-episode button — always at card bottom */}
                 {guest.episode_count > 1 && (
                   <button
                     onClick={() => setModalGuest(guest)}

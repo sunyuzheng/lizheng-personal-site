@@ -26,6 +26,7 @@ function formatPublishedAt(value?: string): string | null {
     year: "numeric",
     month: "numeric",
     day: "numeric",
+    timeZone: "UTC",
   }).format(date);
 }
 

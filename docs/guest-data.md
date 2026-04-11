@@ -22,7 +22,15 @@ Published runtime URL:
 
 `https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json`
 
-Do not maintain a second editable guest roster in this repo.
+Deployed artifact in this repo:
+
+- `shared/guest-roster-snapshot.ts`
+
+Important:
+
+- `shared/guest-roster-snapshot.ts` is not hand-maintained source of truth
+- it is a checked-in deployment snapshot generated from `kedaibiao-channel/guests.json`
+- do not maintain a second editable guest roster in this repo
 
 ### 2. Video titles used on guest detail pages
 
@@ -53,7 +61,7 @@ The file that combines these inputs for the app is:
 
 It does this:
 
-1. fetch guest roster from `kedaibiao-content-tools/guests.json`
+1. read deployed `shared/guest-roster-snapshot.ts`
 2. join with `shared/guest-video-metadata.ts`
 3. defensively merge `all_urls` and `all_video_ids`
 4. build slugs and episode objects

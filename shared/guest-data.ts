@@ -1,4 +1,5 @@
 import { guestVideoMetadata } from "./guest-video-metadata";
+import { guestRosterSnapshot } from "./guest-roster-snapshot";
 
 export const SITE_URL = "https://www.lizheng.ai";
 export const GUESTS_DATA_URL =
@@ -30,14 +31,14 @@ export interface RawGuest {
   xiaohongshu_url?: string;
   linkedin_url?: string;
   primary_video_id: string;
-  all_video_ids: string[];
+  all_video_ids: readonly string[];
   max_views: number;
   thumbnail_url: string;
   primary_url: string;
   episode_count: number;
-  all_urls: string[];
+  all_urls: readonly string[];
   slug?: string;
-  episodes?: RawGuestEpisode[];
+  episodes?: readonly RawGuestEpisode[];
 }
 
 export interface RawVideoMetadata {
@@ -263,19 +264,15 @@ export function buildGuestDirectory(
   });
 }
 
-async function fetchJson<T>(url: string, fetchImpl: typeof fetch): Promise<T> {
-  const response = await fetchImpl(url, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${url}: HTTP ${response.status}`);
-  }
-
-  return response.json() as Promise<T>;
-}
-
 export async function fetchGuestDirectory(
-  fetchImpl: typeof fetch = fetch
+  _fetchImpl: typeof fetch = fetch
 ): Promise<GuestProfile[]> {
-  const rawGuests = await fetchJson<RawGuest[]>(GUESTS_DATA_URL, fetchImpl);
+  const rawGuests = guestRosterSnapshot.map(guest => ({
+      ...guest,
+      all_video_ids: [...guest.all_video_ids],
+      all_urls: [...guest.all_urls],
+    })) as RawGuest[];
+
   return buildGuestDirectory(rawGuests, [...guestVideoMetadata]);
 }
 

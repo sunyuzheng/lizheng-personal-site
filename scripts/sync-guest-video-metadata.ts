@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { GUESTS_DATA_URL } from "../shared/guest-data.ts";
+
+const GUESTS_DATA_URL =
+  "https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json";
 
 interface LocalVideoMetadata {
   video_id: string;
@@ -26,7 +28,9 @@ const LOCAL_VIDEO_METADATA_PATH = path.join(
   "youtube",
   "all_videos_full.json"
 );
+const LOCAL_GUESTS_PATH = path.join(DEFAULT_CONTENT_REPO_DIR, "guests.json");
 const OUTPUT_PATH = path.join(ROOT, "shared", "guest-video-metadata.ts");
+const ROSTER_OUTPUT_PATH = path.join(ROOT, "shared", "guest-roster-snapshot.ts");
 
 function assertFileExists(filePath: string) {
   if (!fs.existsSync(filePath)) {
@@ -116,16 +120,19 @@ function getRequiredGuestVideoIds(guests: RemoteGuest[]): string[] {
 
 async function main() {
   assertFileExists(LOCAL_VIDEO_METADATA_PATH);
+  assertFileExists(LOCAL_GUESTS_PATH);
 
   const localVideos = JSON.parse(
     fs.readFileSync(LOCAL_VIDEO_METADATA_PATH, "utf8")
   ) as LocalVideoMetadata[];
+  const localGuests = JSON.parse(
+    fs.readFileSync(LOCAL_GUESTS_PATH, "utf8")
+  ) as RemoteGuest[];
   const localVideoById = new Map(
     localVideos.map(video => [video.video_id, video])
   );
 
-  const guests = await fetchJson<RemoteGuest[]>(GUESTS_DATA_URL);
-  const requiredIds = getRequiredGuestVideoIds(guests);
+  const requiredIds = getRequiredGuestVideoIds(localGuests);
 
   const output: LocalVideoMetadata[] = [];
   for (const videoId of requiredIds) {
@@ -147,12 +154,16 @@ async function main() {
   const missingTitles = output.filter(video => !video.title);
   const header = `// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.\n//\n// Upstream source of truth:\n// - Guest roster and episode membership: ${GUESTS_DATA_URL}\n// - Video title authority: ${LOCAL_VIDEO_METADATA_PATH}\n// - Fallback for IDs missing in local metadata: YouTube oEmbed\n//\n// Refresh command:\n//   pnpm sync:guest-video-metadata\n\n`;
   const body = `export const guestVideoMetadata = ${JSON.stringify(output, null, 2)} as const;\n`;
+  const rosterHeader = `// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.\n//\n// Upstream source of truth:\n// - Guest roster and episode membership: ${LOCAL_GUESTS_PATH}\n// - Canonical published source: ${GUESTS_DATA_URL}\n//\n// Refresh command:\n//   pnpm sync:guest-video-metadata\n\n`;
+  const rosterBody = `export const guestRosterSnapshot = ${JSON.stringify(localGuests, null, 2)} as const;\n`;
 
   fs.writeFileSync(OUTPUT_PATH, header + body, "utf8");
+  fs.writeFileSync(ROSTER_OUTPUT_PATH, rosterHeader + rosterBody, "utf8");
 
   console.log(
     `Wrote ${output.length} guest video metadata records to ${OUTPUT_PATH}`
   );
+  console.log(`Wrote ${localGuests.length} guest roster records to ${ROSTER_OUTPUT_PATH}`);
   console.log(`Local metadata source: ${LOCAL_VIDEO_METADATA_PATH}`);
   if (missingTitles.length > 0) {
     console.warn(

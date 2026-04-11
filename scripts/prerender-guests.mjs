@@ -3,8 +3,11 @@
  *
  * 作用：生成 dist/public/guests/index.html，内含：
  *   - 页面专属 <title> / <meta description> / canonical / og 标签
- *   - JSON-LD ItemList（128 位嘉宾结构化数据）
+ *   - JSON-LD ItemList（嘉宾结构化数据）
  *   - <noscript> 纯文本嘉宾列表（供无 JS 爬虫读取）
+ *
+ * 数据来源：kedaibiao-content-tools 仓库的 guests.json（GitHub raw URL）
+ * 更新嘉宾数据后只需 commit+push 到该仓库，下次 Vercel 构建时自动生效。
  *
  * Vercel 静态部署时，真实文件优先于 rewrite 规则，
  * 所以 /guests 会直接命中这个文件，不走 index.html 的 rewrite。
@@ -18,9 +21,20 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-// ── 读取数据 ──────────────────────────────────────────────────────────────
-const guestsPath = path.join(ROOT, "client", "src", "data", "guests.json");
-const guests = JSON.parse(fs.readFileSync(guestsPath, "utf-8"));
+// ── 读取数据（从 GitHub raw URL 拉取，与运行时保持同一来源）──────────────
+const GUESTS_URL =
+  "https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json";
+
+let guests;
+try {
+  const res = await fetch(GUESTS_URL);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  guests = await res.json();
+  console.log(`   从 GitHub 拉取嘉宾数据：${guests.length} 条`);
+} catch (err) {
+  console.warn(`⚠️  无法拉取 guests.json（${err.message}），跳过预渲染内容注入`);
+  guests = [];
+}
 
 const baseHtmlPath = path.join(ROOT, "dist", "public", "index.html");
 if (!fs.existsSync(baseHtmlPath)) {

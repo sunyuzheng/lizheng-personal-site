@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Play, Search, X, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import guestsRaw from "@/data/guests.json";
+
+// 嘉宾数据从 kedaibiao-content-tools 仓库动态加载
+// 更新嘉宾数据：在 kedaibiao-channel 修改 guests.json → commit → push，网站自动生效
+const GUESTS_DATA_URL =
+  "https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json";
 
 interface Guest {
   guest_name: string;
@@ -18,8 +22,6 @@ interface Guest {
   all_urls: string[];
 }
 
-const guests = guestsRaw as Guest[];
-
 function formatViews(views: number): string | null {
   if (!views) return null;
   if (views >= 10000) return `${(views / 10000).toFixed(1)}万`;
@@ -28,17 +30,26 @@ function formatViews(views: number): string | null {
 }
 
 export default function Guests() {
+  const [guests, setGuests] = useState<Guest[]>([]);
+  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [modalGuest, setModalGuest] = useState<Guest | null>(null);
+
+  useEffect(() => {
+    fetch(GUESTS_DATA_URL)
+      .then((r) => r.json())
+      .then((data: Guest[]) => { setGuests(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
 
   useEffect(() => {
     const prevTitle = document.title;
     const prevDesc =
       document.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
-    document.title = "全部嘉宾 · 课代表立正 — 100+ 科技领袖访谈";
+    document.title = "全部嘉宾 · 课代表立正 — 128位科技领袖访谈";
     document.querySelector('meta[name="description"]')?.setAttribute(
       "content",
-      "课代表立正访谈过的 100+ 位嘉宾，涵盖 OpenAI、Meta、Google、Databricks、ZhenFund 等顶级科技公司的领袖、创始人与投资人。"
+      "课代表立正访谈过的 128 位嘉宾，涵盖 OpenAI、Meta、Google、Databricks、ZhenFund 等顶级科技公司的领袖、创始人与投资人。"
     );
     return () => {
       document.title = prevTitle;
@@ -94,9 +105,11 @@ export default function Guests() {
         {/* Header */}
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl">超级节点 · 全部嘉宾</h1>
-          <p className="mt-3 text-zinc-400">
-            {guests.length} 位嘉宾 · {multiEp} 位多期深访 · 覆盖 OpenAI / Meta / Google / Databricks / ZhenFund
-          </p>
+          {!loading && (
+            <p className="mt-3 text-zinc-400">
+              {guests.length} 位嘉宾 · {multiEp} 位多期深访 · 覆盖 OpenAI / Meta / Google / Databricks / ZhenFund
+            </p>
+          )}
         </div>
 
         {/* Search */}
@@ -120,14 +133,29 @@ export default function Guests() {
         </div>
 
         {/* Result count when searching */}
-        {query && (
+        {query && !loading && (
           <p className="mb-6 text-center text-sm text-zinc-500">
             找到 <span className="text-amber-300">{filtered.length}</span> 位嘉宾
           </p>
         )}
 
+        {/* Loading skeleton */}
+        {loading && (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div key={i} className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                <div className="aspect-video bg-white/10 animate-pulse" />
+                <div className="p-3 space-y-2">
+                  <div className="h-3 w-3/4 rounded bg-white/10 animate-pulse" />
+                  <div className="h-2.5 w-1/2 rounded bg-white/10 animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Guest grid */}
-        {filtered.length > 0 ? (
+        {!loading && filtered.length > 0 && (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((guest) => (
               <article key={guest.primary_video_id} className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
@@ -162,7 +190,7 @@ export default function Guests() {
                     )}
                   </div>
 
-                  {/* Info — flex-1 pushes button to bottom of card */}
+                  {/* Info */}
                   <div className="flex-1 p-3 pb-3">
                     <h2 className="line-clamp-1 text-sm font-semibold leading-tight text-white">
                       {guest.guest_name}
@@ -180,7 +208,7 @@ export default function Guests() {
                   </div>
                 </a>
 
-                {/* Multi-episode button — always at card bottom */}
+                {/* Multi-episode button */}
                 {guest.episode_count > 1 && (
                   <button
                     onClick={() => setModalGuest(guest)}
@@ -193,7 +221,9 @@ export default function Guests() {
               </article>
             ))}
           </div>
-        ) : (
+        )}
+
+        {!loading && filtered.length === 0 && query && (
           <div className="py-24 text-center text-zinc-500">
             没有找到「{query}」相关的嘉宾
           </div>
@@ -209,7 +239,6 @@ export default function Guests() {
               className="relative w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl border border-white/10 bg-[#0B0F1A] p-6 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal header */}
               <div className="mb-4 flex items-start justify-between">
                 <div>
                   <h2 className="text-lg font-bold text-white">{modalGuest.guest_name}</h2>
@@ -229,7 +258,6 @@ export default function Guests() {
               </div>
               <p className="mb-4 text-xs text-zinc-500">全部 {modalGuest.episode_count} 期访谈 · 点击观看</p>
 
-              {/* Episode grid */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {modalGuest.all_video_ids.map((vid, i) => (
                   <a

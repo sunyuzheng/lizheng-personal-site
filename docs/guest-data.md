@@ -98,6 +98,12 @@ When only video titles change:
 5. run `pnpm build`
 6. push this repo
 
+For the normal low-frequency refresh flow, use:
+
+```bash
+pnpm refresh:guests
+```
+
 ## Commands
 
 Generate the checked-in title snapshot:

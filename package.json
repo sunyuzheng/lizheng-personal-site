@@ -10,6 +10,7 @@
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
     "sync:guest-video-metadata": "tsx scripts/sync-guest-video-metadata.ts",
+    "refresh:guests": "pnpm sync:guest-video-metadata && pnpm check && pnpm build",
     "format": "prettier --write ."
   },
   "dependencies": {

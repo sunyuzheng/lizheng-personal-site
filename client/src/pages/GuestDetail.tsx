@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
-import { ArrowLeft, ExternalLink, Linkedin, Play, Share2 } from "lucide-react";
+import { ArrowLeft, ExternalLink, Linkedin, Play } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
 
@@ -28,6 +28,27 @@ function formatPublishedAt(value?: string): string | null {
     day: "numeric",
     timeZone: "UTC",
   }).format(date);
+}
+
+function XiaohongshuIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="mr-2 h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="3.5" y="4.5" width="17" height="15" rx="4" />
+      <path d="M8 9.25h3.25L8 14.75h3.6" />
+      <path d="M14 9.25h2.75" />
+      <path d="M14 12h2.2" />
+      <path d="M14 14.75h3" />
+    </svg>
+  );
 }
 
 export default function GuestDetail({ slug }: GuestDetailProps) {
@@ -95,8 +116,6 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
     );
   }
 
-  const sharePath = guest.share_url.replace("https://www.lizheng.ai", "");
-
   return (
     <GuestsLayout>
       <div className="container py-12 md:py-16">
@@ -135,18 +154,8 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               </p>
             )}
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                <Share2 className="h-4 w-4 text-amber-300" />
-                当前页面可直接分享
-              </div>
-              <p className="mt-2 break-all text-sm text-zinc-400">
-                {sharePath}
-              </p>
-            </div>
-
             {(guest.xiaohongshu_url || guest.linkedin_url) && (
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
                 <div className="text-sm font-semibold text-white">外部主页</div>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {guest.xiaohongshu_url && (
@@ -160,6 +169,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
+                        <XiaohongshuIcon />
                         小红书
                         <ExternalLink className="ml-2 h-4 w-4" />
                       </a>

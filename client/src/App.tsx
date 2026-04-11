@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import GuestDetail from "./pages/GuestDetail";
 import Guests from "./pages/Guests";
 import Home from "./pages/Home";
 import ZhenbenShi from "./pages/ZhenbenShi";
@@ -13,6 +14,9 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/guests/:slug"}>
+        {params => <GuestDetail slug={params.slug} />}
+      </Route>
       <Route path={"/guests"} component={Guests} />
       <Route path={"/zbs"} component={ZhenbenShi} />
       <Route path={"/book"} component={ZhenbenShi} />
@@ -31,9 +35,7 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="dark"
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
           <Router />

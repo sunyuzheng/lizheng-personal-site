@@ -1,3 +1,13 @@
+// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.
+//
+// Upstream source of truth:
+// - Guest roster and episode membership: https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json
+// - Video title authority: /Users/sunyuzheng/Desktop/AI/content/kedaibiao-channel/tools/youtube/all_videos_full.json
+// - Fallback for IDs missing in local metadata: YouTube oEmbed
+//
+// Refresh command:
+//   pnpm sync:guest-video-metadata
+
 export const guestVideoMetadata = [
   {
     video_id: "_DFrwyNlu0o",

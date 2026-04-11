@@ -3,9 +3,17 @@ import { guestVideoMetadata } from "./guest-video-metadata";
 export const SITE_URL = "https://www.lizheng.ai";
 export const GUESTS_DATA_URL =
   "https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json";
-// The upstream content repo does not publish all_videos_full.json via GitHub raw,
-// so guest pages use a checked-in snapshot containing only the video metadata
-// required by /guests and /guests/:slug.
+// Guest roster source of truth:
+// - kedaibiao-content-tools/guests.json
+//
+// Episode title source of truth:
+// - local kedaibiao-channel/tools/youtube/all_videos_full.json
+// - fallback: YouTube oEmbed for IDs missing from local metadata
+//
+// Deployed snapshot used by this repo:
+// - shared/guest-video-metadata.ts
+//
+// See docs/guest-data.md for the full update workflow.
 
 export interface RawGuestEpisode {
   video_id?: string;

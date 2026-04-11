@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
+    "sync:guest-video-metadata": "tsx scripts/sync-guest-video-metadata.ts",
     "format": "prettier --write ."
   },
   "dependencies": {

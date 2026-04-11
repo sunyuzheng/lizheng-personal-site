@@ -9,6 +9,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+// Build-time SEO uses the same merged guest directory as the app runtime.
+// Source-of-truth details live in docs/guest-data.md.
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const TODAY = new Date().toISOString().slice(0, 10);

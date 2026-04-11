@@ -27,6 +27,8 @@ export interface RawGuest {
   guest_en_name: string;
   guest_title: string;
   guest_company: string;
+  xiaohongshu_url?: string;
+  linkedin_url?: string;
   primary_video_id: string;
   all_video_ids: string[];
   max_views: number;
@@ -61,6 +63,8 @@ export interface GuestProfile {
   guest_en_name: string;
   guest_title: string;
   guest_company: string;
+  xiaohongshu_url?: string;
+  linkedin_url?: string;
   primary_video_id: string;
   max_views: number;
   thumbnail_url: string;

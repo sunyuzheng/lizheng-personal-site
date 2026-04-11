@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
-import { ArrowLeft, ExternalLink, Play, Share2 } from "lucide-react";
+import { ArrowLeft, ExternalLink, Linkedin, Play, Share2 } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
 
@@ -143,6 +143,46 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 {sharePath}
               </p>
             </div>
+
+            {(guest.xiaohongshu_url || guest.linkedin_url) && (
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="text-sm font-semibold text-white">外部主页</div>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {guest.xiaohongshu_url && (
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                    >
+                      <a
+                        href={guest.xiaohongshu_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        小红书
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                      </a>
+                    </Button>
+                  )}
+                  {guest.linkedin_url && (
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                    >
+                      <a
+                        href={guest.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Linkedin className="mr-2 h-4 w-4" />
+                        LinkedIn
+                      </a>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            )}
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Button

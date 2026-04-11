@@ -204,7 +204,7 @@ export function buildGuestDirectory(
 }
 
 async function fetchJson<T>(url: string, fetchImpl: typeof fetch): Promise<T> {
-  const response = await fetchImpl(url);
+  const response = await fetchImpl(url, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`Failed to fetch ${url}: HTTP ${response.status}`);
   }

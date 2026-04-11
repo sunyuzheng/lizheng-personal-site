@@ -47,6 +47,12 @@ export interface RawVideoMetadata {
   view_count?: number | string;
 }
 
+interface GuestEpisodeSeed {
+  videoId: string;
+  url?: string;
+  index: number;
+}
+
 export interface GuestEpisode {
   videoId: string;
   url: string;
@@ -105,6 +111,37 @@ function buildVideoLookup(
   return new Map(videos.map(video => [video.video_id, video]));
 }
 
+function extractYouTubeVideoId(url: string): string | undefined {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname === "youtu.be") {
+      return parsed.pathname.split("/").filter(Boolean)[0];
+    }
+
+    if (
+      parsed.hostname === "youtube.com" ||
+      parsed.hostname === "www.youtube.com" ||
+      parsed.hostname === "m.youtube.com"
+    ) {
+      if (parsed.pathname === "/watch") {
+        return parsed.searchParams.get("v") || undefined;
+      }
+
+      if (
+        parsed.pathname.startsWith("/shorts/") ||
+        parsed.pathname.startsWith("/embed/")
+      ) {
+        return parsed.pathname.split("/").filter(Boolean)[1];
+      }
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
 function slugifyText(value: string): string {
   return value
     .normalize("NFKD")
@@ -139,10 +176,10 @@ function buildGuestSlug(rawGuest: RawGuest, usedSlugs: Set<string>): string {
 
 function buildGuestEpisode(
   rawGuest: RawGuest,
-  videoId: string,
-  index: number,
+  seed: GuestEpisodeSeed,
   videoLookup: Map<string, RawVideoMetadata>
 ): GuestEpisode {
+  const { videoId, index, url: seedUrl } = seed;
   const explicitEpisode = rawGuest.episodes?.find(
     episode => (episode.video_id || episode.videoId) === videoId
   );
@@ -153,7 +190,7 @@ function buildGuestEpisode(
     fallbackEpisodeTitle(index);
   const url =
     explicitEpisode?.url?.trim() ||
-    rawGuest.all_urls[index] ||
+    seedUrl ||
     `https://www.youtube.com/watch?v=${videoId}`;
 
   return {
@@ -168,6 +205,26 @@ function buildGuestEpisode(
   };
 }
 
+function buildGuestEpisodeSeeds(rawGuest: RawGuest): GuestEpisodeSeed[] {
+  const seeds: GuestEpisodeSeed[] = [];
+  const seen = new Set<string>();
+
+  for (const url of rawGuest.all_urls || []) {
+    const videoId = extractYouTubeVideoId(url);
+    if (!videoId || seen.has(videoId)) continue;
+    seen.add(videoId);
+    seeds.push({ videoId, url, index: seeds.length });
+  }
+
+  for (const videoId of rawGuest.all_video_ids || []) {
+    if (!videoId || seen.has(videoId)) continue;
+    seen.add(videoId);
+    seeds.push({ videoId, index: seeds.length });
+  }
+
+  return seeds;
+}
+
 export function buildGuestDirectory(
   rawGuests: RawGuest[],
   videos: RawVideoMetadata[]
@@ -177,8 +234,9 @@ export function buildGuestDirectory(
 
   return rawGuests.map(rawGuest => {
     const slug = buildGuestSlug(rawGuest, usedSlugs);
-    const episodes = rawGuest.all_video_ids.map((videoId, index) =>
-      buildGuestEpisode(rawGuest, videoId, index, videoLookup)
+    const episodeSeeds = buildGuestEpisodeSeeds(rawGuest);
+    const episodes = episodeSeeds.map(seed =>
+      buildGuestEpisode(rawGuest, seed, videoLookup)
     );
     const primaryEpisode = episodes.find(episode => episode.isPrimary) ||
       episodes[0] || {
@@ -195,6 +253,8 @@ export function buildGuestDirectory(
     return {
       ...rawGuest,
       episode_count: episodes.length,
+      all_video_ids: episodes.map(episode => episode.videoId),
+      all_urls: episodes.map(episode => episode.url),
       slug,
       share_url: `${SITE_URL}/guests/${slug}`,
       episodes,

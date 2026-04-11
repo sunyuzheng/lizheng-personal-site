@@ -12,6 +12,7 @@ interface LocalVideoMetadata {
 
 interface RemoteGuest {
   all_video_ids: string[];
+  all_urls?: string[];
 }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -60,6 +61,59 @@ async function fetchOEmbedTitle(videoId: string): Promise<string> {
   return payload.title?.trim() || "";
 }
 
+function extractYouTubeVideoId(url: string): string | undefined {
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname === "youtu.be") {
+      return parsed.pathname.split("/").filter(Boolean)[0];
+    }
+
+    if (
+      parsed.hostname === "youtube.com" ||
+      parsed.hostname === "www.youtube.com" ||
+      parsed.hostname === "m.youtube.com"
+    ) {
+      if (parsed.pathname === "/watch") {
+        return parsed.searchParams.get("v") || undefined;
+      }
+
+      if (
+        parsed.pathname.startsWith("/shorts/") ||
+        parsed.pathname.startsWith("/embed/")
+      ) {
+        return parsed.pathname.split("/").filter(Boolean)[1];
+      }
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
+function getRequiredGuestVideoIds(guests: RemoteGuest[]): string[] {
+  const requiredIds: string[] = [];
+  const seen = new Set<string>();
+
+  for (const guest of guests) {
+    for (const url of guest.all_urls || []) {
+      const videoId = extractYouTubeVideoId(url);
+      if (!videoId || seen.has(videoId)) continue;
+      seen.add(videoId);
+      requiredIds.push(videoId);
+    }
+
+    for (const videoId of guest.all_video_ids || []) {
+      if (!videoId || seen.has(videoId)) continue;
+      seen.add(videoId);
+      requiredIds.push(videoId);
+    }
+  }
+
+  return requiredIds;
+}
+
 async function main() {
   assertFileExists(LOCAL_VIDEO_METADATA_PATH);
 
@@ -71,9 +125,7 @@ async function main() {
   );
 
   const guests = await fetchJson<RemoteGuest[]>(GUESTS_DATA_URL);
-  const requiredIds = [
-    ...new Set(guests.flatMap(guest => guest.all_video_ids)),
-  ];
+  const requiredIds = getRequiredGuestVideoIds(guests);
 
   const output: LocalVideoMetadata[] = [];
   for (const videoId of requiredIds) {

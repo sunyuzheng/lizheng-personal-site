@@ -1,5 +1,7 @@
 # Guest Data Flow
 
+For operational maintenance, read `docs/guests-maintenance.md` first.
+
 This project has two different data concepts for `/guests`, and they do not come from the same file.
 
 ## Source Of Truth

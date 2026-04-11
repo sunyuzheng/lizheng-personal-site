@@ -2,7 +2,7 @@
 //
 // Upstream source of truth:
 // - Guest roster and episode membership: https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json
-// - Video title authority: /Users/sunyuzheng/Desktop/AI/content/kedaibiao-channel/tools/youtube/all_videos_full.json
+// - Guest page video metadata authority: /Users/sunyuzheng/Desktop/AI/content/kedaibiao-channel/guest_video_metadata.json
 // - Fallback for IDs missing in local metadata: YouTube oEmbed
 //
 // Refresh command:
@@ -24,8 +24,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "-6CS95pZoIM",
     "title": "听完我对Web3黑转粉了，你呢？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-10-25T00:00:00Z",
+    "view_count": 13666
   },
   {
     "video_id": "8omGQSetKMA",
@@ -36,8 +36,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "G_tWnkZoSyc",
     "title": "全网唯一，不搞噱头的Web3",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-10-20T00:00:00Z",
+    "view_count": 22979
   },
   {
     "video_id": "FsYCf_YuYvs",
@@ -48,8 +48,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "AqQ6HQXFueE",
     "title": "想清楚这些，才能成为财富的主人｜Multiple-Fire系列",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-06-10T00:00:00Z",
+    "view_count": 47748
   },
   {
     "video_id": "CTcMvIZFQcw",
@@ -60,8 +60,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "u4DpfGx-9i0",
     "title": "原来有意义的人生这么短？｜Mutiple-Fire系列",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-06-15T00:00:00Z",
+    "view_count": 27980
   },
   {
     "video_id": "UsMKU7qcywY",
@@ -72,8 +72,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "dlv97OHFnGY",
     "title": "如何摆脱无意义的工作？｜Multiple-Fire系列",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-05-23T00:00:00Z",
+    "view_count": 186397
   },
   {
     "video_id": "YxJntEwMUfk",
@@ -138,7 +138,7 @@ export const guestVideoMetadata = [
   {
     "video_id": "9qqHH975Eds",
     "title": "LuluLeon聊教育_下",
-    "published_at": "",
+    "published_at": "2024-05-02T00:00:00Z",
     "view_count": 0
   },
   {
@@ -186,8 +186,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "Uf9uzFLpVEc",
     "title": "大佬亲身经历剖析，中美科技创业差异？｜中国SaaS为什么不赚钱？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-10-14T00:00:00Z",
+    "view_count": 27948
   },
   {
     "video_id": "fsTQ_Na7MgA",
@@ -198,8 +198,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "R8X4ClBY5tg",
     "title": "我们如何利用好这轮衰退？｜生成式AI神预言",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-10-07T00:00:00Z",
+    "view_count": 85380
   },
   {
     "video_id": "KL3GMXsXXnw",
@@ -420,8 +420,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "4eYzTGxZazw",
     "title": "看了才知道，简历竟然应该这么改？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-02-01T00:00:00Z",
+    "view_count": 40459
   },
   {
     "video_id": "lhcQkrkTUhc",
@@ -582,13 +582,13 @@ export const guestVideoMetadata = [
   {
     "video_id": "gG6IRuwtmJ4",
     "title": "如何识破Web3镰刀们的话术？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-10-31T00:00:00Z",
+    "view_count": 13776
   },
   {
     "video_id": "E_Cqqxx3_i4",
     "title": "大厂AI科学家创业，分享坑、learnings、意料之外的困难，与坚持的动力｜Cooper竹子返场",
-    "published_at": "",
+    "published_at": "2025-03-25T00:00:00Z",
     "view_count": 0
   },
   {
@@ -678,7 +678,7 @@ export const guestVideoMetadata = [
   {
     "video_id": "Nk_2rqwNkYE",
     "title": "当年滴滴大战Uber的前线战史，稀有的商业真谛｜送鱼也送渔，再送新领域破局秘籍，和大厂常犯的误区",
-    "published_at": "",
+    "published_at": "2022-01-16T00:00:00Z",
     "view_count": 0
   },
   {
@@ -708,7 +708,7 @@ export const guestVideoMetadata = [
   {
     "video_id": "HL2MbqJD5ZA",
     "title": "初中学历滑雪教练，凭什么空降大厂？｜诶～进去就懵逼了？",
-    "published_at": "",
+    "published_at": "2021-12-27T00:00:00Z",
     "view_count": 0
   },
   {
@@ -822,8 +822,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "cly9g6DUKkc",
     "title": "Quit FAANG for a startup. Is it rational?",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-11-19T00:00:00Z",
+    "view_count": 3353
   },
   {
     "video_id": "V9dNLWDhMuE",
@@ -990,14 +990,14 @@ export const guestVideoMetadata = [
   {
     "video_id": "D4XZqFFQkXI",
     "title": "抖音如何让你欲罢不能？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-05-05T00:00:00Z",
+    "view_count": 10516
   },
   {
     "video_id": "gBj0JY7LDpE",
     "title": "应届生三年为公司赚五十亿，靠的是｜直播话术的本质",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-05-17T00:00:00Z",
+    "view_count": 9286
   },
   {
     "video_id": "vD2BGwvjkLI",
@@ -1206,8 +1206,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "zlHBC-sAv8g",
     "title": "加入的Startup翻十倍有多快乐？",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-12-02T00:00:00Z",
+    "view_count": 11955
   },
   {
     "video_id": "NyVd3ZPNNBk",
@@ -1242,8 +1242,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "77yo5GQr1pQ",
     "title": "打工人喝茶的好处？｜工夫茶非遗传承采访2/3",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-06-26T00:00:00Z",
+    "view_count": 3821
   },
   {
     "video_id": "9JdIkWyyOJI",
@@ -1362,8 +1362,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "apFYcIzJ1jY",
     "title": "真诚是面试第一要义",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-06-23T00:00:00Z",
+    "view_count": 8273
   },
   {
     "video_id": "ZIyLgob1ReY",
@@ -1476,8 +1476,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "Iz41o4-2Vg0",
     "title": "国内HR为什么存在感这么强？｜鹅厂资深HR的真实工作内容分享",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2022-02-24T00:00:00Z",
+    "view_count": 7156
   },
   {
     "video_id": "A7I0h91Jy-A",
@@ -1758,8 +1758,8 @@ export const guestVideoMetadata = [
   {
     "video_id": "iLO21o24qCk",
     "title": "大尺度照片，伤风败俗吗？｜陈哲访谈_下",
-    "published_at": "",
-    "view_count": 0
+    "published_at": "2023-12-03T00:00:00Z",
+    "view_count": 3159
   },
   {
     "video_id": "76ZrAjt4t54",

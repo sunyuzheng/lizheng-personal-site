@@ -24,9 +24,7 @@ const DEFAULT_CONTENT_REPO_DIR =
   "/Users/sunyuzheng/Desktop/AI/content/kedaibiao-channel";
 const LOCAL_VIDEO_METADATA_PATH = path.join(
   DEFAULT_CONTENT_REPO_DIR,
-  "tools",
-  "youtube",
-  "all_videos_full.json"
+  "guest_video_metadata.json"
 );
 const LOCAL_GUESTS_PATH = path.join(DEFAULT_CONTENT_REPO_DIR, "guests.json");
 const OUTPUT_PATH = path.join(ROOT, "shared", "guest-video-metadata.ts");
@@ -152,7 +150,7 @@ async function main() {
   }
 
   const missingTitles = output.filter(video => !video.title);
-  const header = `// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.\n//\n// Upstream source of truth:\n// - Guest roster and episode membership: ${GUESTS_DATA_URL}\n// - Video title authority: ${LOCAL_VIDEO_METADATA_PATH}\n// - Fallback for IDs missing in local metadata: YouTube oEmbed\n//\n// Refresh command:\n//   pnpm sync:guest-video-metadata\n\n`;
+  const header = `// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.\n//\n// Upstream source of truth:\n// - Guest roster and episode membership: ${GUESTS_DATA_URL}\n// - Guest page video metadata authority: ${LOCAL_VIDEO_METADATA_PATH}\n// - Fallback for IDs missing in local metadata: YouTube oEmbed\n//\n// Refresh command:\n//   pnpm sync:guest-video-metadata\n\n`;
   const body = `export const guestVideoMetadata = ${JSON.stringify(output, null, 2)} as const;\n`;
   const rosterHeader = `// AUTO-GENERATED FILE. DO NOT EDIT BY HAND.\n//\n// Upstream source of truth:\n// - Guest roster and episode membership: ${LOCAL_GUESTS_PATH}\n// - Canonical published source: ${GUESTS_DATA_URL}\n//\n// Refresh command:\n//   pnpm sync:guest-video-metadata\n\n`;
   const rosterBody = `export const guestRosterSnapshot = ${JSON.stringify(localGuests, null, 2)} as const;\n`;

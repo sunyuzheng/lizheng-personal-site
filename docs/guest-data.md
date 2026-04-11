@@ -32,17 +32,20 @@ Important:
 - it is a checked-in deployment snapshot generated from `kedaibiao-channel/guests.json`
 - do not maintain a second editable guest roster in this repo
 
-### 2. Video titles used on guest detail pages
+### 2. Guest page video metadata
 
 This is the authority for:
 
 - episode titles shown on `/guests/:slug`
+- episode publish dates shown on `/guests/:slug`
+- episode view counts used for sorting on `/guests/:slug`
 - episode titles injected into guest-page SEO / JSON-LD
 
 Upstream authority:
 
-- local content repo: `kedaibiao-channel/tools/youtube/all_videos_full.json`
-- fallback for IDs missing from that file: YouTube oEmbed
+- local content repo: `kedaibiao-channel/guest_video_metadata.json`
+- upstream generation input: `kedaibiao-channel/tools/youtube/all_videos_full.json`
+- fallback for IDs missing from guest metadata: YouTube oEmbed
 
 Deployed artifact in this repo:
 
@@ -51,7 +54,7 @@ Deployed artifact in this repo:
 Important:
 
 - `shared/guest-video-metadata.ts` is not hand-maintained source of truth
-- it is a checked-in snapshot required because `all_videos_full.json` is not published through GitHub raw
+- it is a checked-in snapshot generated from `guest_video_metadata.json`
 
 ## Runtime Consumption
 
@@ -88,10 +91,12 @@ When guest membership changes:
 
 When only video titles change:
 
-1. refresh `kedaibiao-channel/tools/youtube/all_videos_full.json`
-2. run `pnpm sync:guest-video-metadata`
-3. run `pnpm build`
-4. push this repo
+1. refresh `kedaibiao-channel/tools/youtube/all_videos_full.json` if needed
+2. update `kedaibiao-channel/guest_video_metadata.json`
+3. run `python3 tools/check/validate_guest_data.py` in `kedaibiao-channel`
+4. run `pnpm sync:guest-video-metadata`
+5. run `pnpm build`
+6. push this repo
 
 ## Commands
 

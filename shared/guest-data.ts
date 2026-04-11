@@ -7,8 +7,9 @@ export const GUESTS_DATA_URL =
 // Guest roster source of truth:
 // - kedaibiao-content-tools/guests.json
 //
-// Episode title source of truth:
-// - local kedaibiao-channel/tools/youtube/all_videos_full.json
+// Guest page video metadata source of truth:
+// - local kedaibiao-channel/guest_video_metadata.json
+// - generation input: local kedaibiao-channel/tools/youtube/all_videos_full.json
 // - fallback: YouTube oEmbed for IDs missing from local metadata
 //
 // Deployed snapshot used by this repo:
@@ -83,6 +84,18 @@ export interface GuestProfile {
   share_url: string;
   episodes: GuestEpisode[];
   primary_episode: GuestEpisode;
+}
+
+function compareGuestEpisodesByViews(a: GuestEpisode, b: GuestEpisode): number {
+  const viewsA = a.viewCount ?? -1;
+  const viewsB = b.viewCount ?? -1;
+  if (viewsA !== viewsB) return viewsB - viewsA;
+
+  const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
+  const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
+  if (dateA !== dateB) return dateB - dateA;
+
+  return a.index - b.index;
 }
 
 export interface PageMeta {
@@ -236,11 +249,11 @@ export function buildGuestDirectory(
   return rawGuests.map(rawGuest => {
     const slug = buildGuestSlug(rawGuest, usedSlugs);
     const episodeSeeds = buildGuestEpisodeSeeds(rawGuest);
-    const episodes = episodeSeeds.map(seed =>
+    const baseEpisodes = episodeSeeds.map(seed =>
       buildGuestEpisode(rawGuest, seed, videoLookup)
     );
-    const primaryEpisode = episodes.find(episode => episode.isPrimary) ||
-      episodes[0] || {
+    const primaryEpisode = baseEpisodes.find(episode => episode.isPrimary) ||
+      baseEpisodes[0] || {
         videoId: rawGuest.primary_video_id,
         url: rawGuest.primary_url,
         title: rawGuest.guest_name,
@@ -250,6 +263,7 @@ export function buildGuestDirectory(
         isPrimary: true,
         index: 0,
       };
+    const episodes = [...baseEpisodes].sort(compareGuestEpisodesByViews);
 
     return {
       ...rawGuest,

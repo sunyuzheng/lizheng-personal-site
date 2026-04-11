@@ -234,7 +234,15 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <h2 className="text-2xl font-semibold leading-tight text-white">
                 {guest.primary_episode.title}
               </h2>
-              <p className="mt-3 text-sm text-zinc-200">
+              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-200">
+                {formatViews(guest.primary_episode.viewCount) && (
+                  <span>{formatViews(guest.primary_episode.viewCount)} 次观看</span>
+                )}
+                {formatPublishedAt(guest.primary_episode.publishedAt) && (
+                  <span>{formatPublishedAt(guest.primary_episode.publishedAt)}</span>
+                )}
+              </div>
+              <p className="mt-2 text-sm text-zinc-200">
                 点开后直接跳转到 YouTube 播放页
               </p>
             </div>
@@ -250,12 +258,12 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <h2 className="mt-2 text-2xl font-bold text-white">全部访谈</h2>
             </div>
             <p className="text-sm text-zinc-500">
-              {guest.episode_count} 期内容，标题已展开
+              {guest.episode_count} 期内容，按观看量排序
             </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {guest.episodes.map(episode => (
+            {guest.episodes.map((episode, rank) => (
               <a
                 key={episode.videoId}
                 href={episode.url}
@@ -283,7 +291,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 </div>
                 <div className="space-y-3 p-4">
                   <div className="flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
-                    <span>Episode {episode.index + 1}</span>
+                    <span>Top {rank + 1}</span>
                     {formatPublishedAt(episode.publishedAt) && (
                       <span>{formatPublishedAt(episode.publishedAt)}</span>
                     )}

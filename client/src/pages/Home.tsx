@@ -623,7 +623,7 @@ export default function Home() {
               </div>
               <Button asChild variant="outline" className="shrink-0 border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20">
                 <Link href="/guests">
-                  查看全部 102 位嘉宾
+                  查看全部 128 位嘉宾
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

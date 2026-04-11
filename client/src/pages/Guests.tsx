@@ -20,6 +20,13 @@ interface Guest {
 
 const guests = guestsRaw as Guest[];
 
+function formatViews(views: number): string | null {
+  if (!views) return null;
+  if (views >= 10000) return `${(views / 10000).toFixed(1)}万`;
+  if (views >= 1000) return `${(views / 1000).toFixed(1)}k`;
+  return String(views);
+}
+
 export default function Guests() {
   const [query, setQuery] = useState("");
   const [modalGuest, setModalGuest] = useState<Guest | null>(null);
@@ -123,20 +130,23 @@ export default function Guests() {
         {filtered.length > 0 ? (
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {filtered.map((guest) => (
-              <div key={guest.primary_video_id} className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
+              <article key={guest.primary_video_id} className="group relative flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10">
                 <a
                   href={guest.primary_url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${guest.guest_name}${guest.guest_company ? `，${guest.guest_company}` : ""}${guest.guest_title ? `，${guest.guest_title}` : ""} — 观看访谈`}
                   className="flex flex-1 flex-col"
                 >
                   {/* Thumbnail */}
                   <div className="relative aspect-video overflow-hidden">
                     <img
                       src={`https://img.youtube.com/vi/${guest.primary_video_id}/mqdefault.jpg`}
-                      alt={`${guest.guest_name} — ${guest.guest_title}`}
+                      alt={`${guest.guest_name}访谈 — ${guest.guest_title || guest.guest_company || "课代表立正"}`}
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                       loading="lazy"
+                      width={320}
+                      height={180}
                     />
                     {/* Play overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition duration-300 group-hover:opacity-100">
@@ -144,13 +154,19 @@ export default function Guests() {
                         <Play className="h-4 w-4 fill-current" />
                       </div>
                     </div>
+                    {/* View count badge */}
+                    {formatViews(guest.max_views) && (
+                      <div className="absolute bottom-1.5 right-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
+                        {formatViews(guest.max_views)}
+                      </div>
+                    )}
                   </div>
 
                   {/* Info — flex-1 pushes button to bottom of card */}
                   <div className="flex-1 p-3 pb-3">
-                    <p className="line-clamp-1 text-sm font-semibold leading-tight text-white">
+                    <h2 className="line-clamp-1 text-sm font-semibold leading-tight text-white">
                       {guest.guest_name}
-                    </p>
+                    </h2>
                     {guest.guest_company && (
                       <p className="mt-1 line-clamp-1 text-xs font-medium leading-tight text-amber-300">
                         {guest.guest_company}
@@ -174,7 +190,7 @@ export default function Guests() {
                     查看全部 {guest.episode_count} 期
                   </button>
                 )}
-              </div>
+              </article>
             ))}
           </div>
         ) : (

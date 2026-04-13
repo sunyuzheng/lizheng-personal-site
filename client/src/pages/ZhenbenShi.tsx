@@ -578,7 +578,7 @@ export default function ZhenbenShi() {
                 asChild
               >
                 <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
-                  微信读书免费读
+                  微信读书
                 </a>
               </Button>
               <Button
@@ -627,7 +627,7 @@ export default function ZhenbenShi() {
                 rel="noopener noreferrer"
                 className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
               >
-                微信读书免费读 →
+                微信读书 →
               </a>
               <a
                 href="https://item.jd.com/14667625.html"
@@ -669,12 +669,12 @@ export default function ZhenbenShi() {
             <div className="flex flex-wrap gap-3">
               <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
                 <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
-                  微信读书免费读
+                  微信读书
                 </a>
               </Button>
               <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
                 <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
-                  京东购买
+                  京东购买 <span className="ml-1.5 text-amber-400 font-semibold">¥39.8</span>
                 </a>
               </Button>
               <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
@@ -689,12 +689,11 @@ export default function ZhenbenShi() {
             </p>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t border-white/[0.08]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 border-t border-white/[0.08]">
               {[
                 ["3,143", "B站购课人数"],
                 ["300+", "Superlinear 学员"],
                 ["739,563", "次播放 · 职场 #1"],
-                ["¥79.6万", "B站课程成交额"],
               ].map(([num, label]) => (
                 <div key={label} className="space-y-0.5">
                   <div className="text-xl md:text-2xl font-bold text-amber-400">{num}</div>
@@ -1112,7 +1111,7 @@ export default function ZhenbenShi() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                微信读书免费读
+                微信读书
               </a>
             </Button>
             <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>

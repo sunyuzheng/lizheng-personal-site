@@ -578,7 +578,7 @@ export default function ZhenbenShi() {
                 asChild
               >
                 <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
-                  微信读书
+                  微信读书免费读
                 </a>
               </Button>
               <Button
@@ -627,7 +627,7 @@ export default function ZhenbenShi() {
                 rel="noopener noreferrer"
                 className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
               >
-                微信读书购买 →
+                微信读书免费读 →
               </a>
               <a
                 href="https://item.jd.com/14667625.html"
@@ -669,7 +669,7 @@ export default function ZhenbenShi() {
             <div className="flex flex-wrap gap-3">
               <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
                 <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
-                  微信读书购买
+                  微信读书免费读
                 </a>
               </Button>
               <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
@@ -1112,7 +1112,7 @@ export default function ZhenbenShi() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                微信读书购买
+                微信读书免费读
               </a>
             </Button>
             <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>

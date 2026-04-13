@@ -108,8 +108,8 @@ const FAQ = [
     a: "适合想跳出职场内卷、打造副业现金流、或准备职业转型的知识型工作者。无论你处于职场初中期还是管理层，都能在书中找到可落地的策略。书的核心不是给你励志故事，而是给你一套可操作的分析框架。",
   },
   {
-    q: "如何预约购书通知？",
-    a: "书即将上架。前往 superlinear.academy/c/posts/book 在帖子下留言，上架后第一时间收到通知。",
+    q: "在哪里可以购买这本书？",
+    a: "现已全平台上架。微信读书：weread.qq.com（搜索"真本事"）；京东：item.jd.com/14667625.html。",
   },
   {
     q: "副业会不会影响主业表现？",
@@ -577,8 +577,18 @@ export default function ZhenbenShi() {
                 className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
                 asChild
               >
-                <a href="https://www.superlinear.academy/c/posts/book" target="_blank" rel="noopener noreferrer">
-                  预约购书
+                <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
+                  微信读书
+                </a>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10"
+                asChild
+              >
+                <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
+                  京东
                 </a>
               </Button>
             </div>
@@ -612,12 +622,20 @@ export default function ZhenbenShi() {
                 </button>
               ))}
               <a
-                href="https://www.superlinear.academy/c/posts/book"
+                href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
               >
-                预约购书 →
+                微信读书购买 →
+              </a>
+              <a
+                href="https://item.jd.com/14667625.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
+              >
+                京东购买 →
               </a>
             </div>
           )}
@@ -650,8 +668,13 @@ export default function ZhenbenShi() {
 
             <div className="flex flex-wrap gap-3">
               <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
-                <a href="https://www.superlinear.academy/c/posts/book" target="_blank" rel="noopener noreferrer">
-                  预约到货通知
+                <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
+                  微信读书购买
+                </a>
+              </Button>
+              <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
+                <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
+                  京东购买
                 </a>
               </Button>
               <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
@@ -662,16 +685,7 @@ export default function ZhenbenShi() {
               </Button>
             </div>
             <p className="text-zinc-500 text-xs">
-              书即将上架 ·{" "}
-              <a
-                href="https://www.superlinear.academy/c/posts/book"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-amber-400 hover:underline"
-              >
-                在帖子下留言
-              </a>{" "}
-              即可预约，第一时间通知
+              现已全平台上架 · 人民邮电出版社出版
             </p>
 
             {/* Stats */}
@@ -1089,16 +1103,21 @@ export default function ZhenbenShi() {
         <div className="container mx-auto px-4 max-w-2xl">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4">开启你的真本事之旅</h2>
           <p className="text-zinc-400 mb-8">
-            购书链接即将开放。现在预约，上架第一时间通知；或加入社群，今天就开始实践。
+            现已全平台上架。立即购书，或加入社群，今天就开始实践。
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
               <a
-                href="https://www.superlinear.academy/c/posts/book"
+                href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                预约购书通知
+                微信读书购买
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
+              <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
+                京东购买
               </a>
             </Button>
             <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
@@ -1108,18 +1127,6 @@ export default function ZhenbenShi() {
               </a>
             </Button>
           </div>
-          <p className="text-white/20 text-xs mt-4">
-            在{" "}
-            <a
-              href="https://www.superlinear.academy/c/posts/book"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white/40 underline"
-            >
-              此帖子
-            </a>{" "}
-            下留言即可预约 · 购书链接即将开放
-          </p>
         </div>
       </section>
 

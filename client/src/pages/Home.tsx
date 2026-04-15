@@ -22,6 +22,14 @@ import {
   Play,
   Building2,
   Rss,
+  Zap,
+  Wrench,
+  Rocket,
+  Landmark,
+  Brain,
+  Compass,
+  BarChart2,
+  MapPin,
 } from "lucide-react";
 
 const stats = [
@@ -161,6 +169,20 @@ const guests = [
   },
 ];
 
+const playlists = [
+  { name: "AI时代机会", count: 101, desc: "AI趋势、AGI与职业冲击", id: "PLO_DkCSmTKMNecQCgUHqTYtmwPWGUvDG_", icon: <Zap className="h-5 w-5" />, color: "text-amber-300" },
+  { name: "AI工具实战", count: 16, desc: "Cursor、Vibe Coding、工作流", id: "PLO_DkCSmTKMPdBSW6bJH_KduR9-kzVTNF", icon: <Wrench className="h-5 w-5" />, color: "text-sky-300" },
+  { name: "求职与面试", count: 28, desc: "简历、DS/PM/Eng面试全攻略", id: "PLO_DkCSmTKMN5IGvvtiNU9Q1MskoN_RHb", icon: <Briefcase className="h-5 w-5" />, color: "text-green-300" },
+  { name: "职场技能", count: 90, desc: "升职加薪、汇报、情绪价值", id: "PLO_DkCSmTKMPS6P2dKYHRethlKqmIQw0h", icon: <TrendingUp className="h-5 w-5" />, color: "text-lime-300" },
+  { name: "大厂观察", count: 57, desc: "FAANG内幕、VP路径、裁员", id: "PLO_DkCSmTKMMws_nKzRMsIx5nvP5Hl68R", icon: <Building2 className="h-5 w-5" />, color: "text-rose-300" },
+  { name: "创业实战", count: 115, desc: "创始人访谈、融资、产品增长", id: "PLO_DkCSmTKMOPSv4YWDKC7-gr88CyHf_3", icon: <Rocket className="h-5 w-5" />, color: "text-orange-300" },
+  { name: "财富与投资", count: 41, desc: "财富自由、投资策略、理财", id: "PLO_DkCSmTKMPrqKZDSrq9scXhcyrcib8E", icon: <Landmark className="h-5 w-5" />, color: "text-yellow-300" },
+  { name: "思维与决策", count: 130, desc: "思维模型、判断力、认知升级", id: "PLO_DkCSmTKMOCP4X8YxHQf5ZZdh0JpgIn", icon: <Brain className="h-5 w-5" />, color: "text-purple-300" },
+  { name: "人生设计", count: 120, desc: "重大选择、意义感、自洽", id: "PLO_DkCSmTKMMCWo7yeAyHVKzvy4fTXlju", icon: <Compass className="h-5 w-5" />, color: "text-pink-300" },
+  { name: "数据科学", count: 43, desc: "DS/ML技术、AB实验、数据分析", id: "PLO_DkCSmTKMPBTVU2zy8JH-I6e6L8lx-l", icon: <BarChart2 className="h-5 w-5" />, color: "text-cyan-300" },
+  { name: "美国生活", count: 43, desc: "文化观察、约会、回国vs留美", id: "PLO_DkCSmTKMNDn0jfOu8pB0mPxqCsr4lU", icon: <MapPin className="h-5 w-5" />, color: "text-teal-300" },
+];
+
 const testimonials = [
   {
     quote:
@@ -242,6 +264,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="text-sm text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="text-sm text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <Link href="/guests" className="text-sm text-zinc-300 transition hover:text-amber-300">嘉宾</Link>
+              <button onClick={() => scrollToSection("playlists")} className="text-sm text-zinc-300 transition hover:text-amber-300">内容分类</button>
               <Link href="/zbs" className="text-sm text-zinc-300 transition hover:text-amber-300">新书</Link>
               <Button asChild className="bg-amber-500 text-[#211300] hover:bg-amber-400">
                 <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
@@ -269,6 +292,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("course")} className="block text-zinc-300 transition hover:text-amber-300">AI课程</button>
               <button onClick={() => scrollToSection("testimonials")} className="block text-zinc-300 transition hover:text-amber-300">学员评价</button>
               <Link href="/guests" className="block text-zinc-300 transition hover:text-amber-300">嘉宾</Link>
+              <button onClick={() => scrollToSection("playlists")} className="block text-zinc-300 transition hover:text-amber-300">内容分类</button>
               <Link href="/zbs" className="block text-zinc-300 transition hover:text-amber-300">新书《真本事》</Link>
               <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer" className="block text-amber-300 transition hover:text-amber-200">加入社群 →</a>
             </div>
@@ -658,6 +682,45 @@ export default function Home() {
                 </a>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section id="playlists" className="container py-14 md:py-20">
+          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <h2 className="text-3xl font-bold text-white md:text-5xl">按话题探索</h2>
+              <p className="mt-3 text-zinc-300">700+ 期内容，按主题分类，直达你关心的方向</p>
+            </div>
+            <Button asChild variant="outline" className="shrink-0 border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20">
+              <a href="https://www.youtube.com/@kedaibiao" target="_blank" rel="noopener noreferrer">
+                <Youtube className="mr-2 h-4 w-4" />
+                全部视频
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {playlists.map((pl) => (
+              <a
+                key={pl.id}
+                href={`https://www.youtube.com/playlist?list=${pl.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/10"
+              >
+                <div className="flex items-center justify-between">
+                  <div className={pl.color}>{pl.icon}</div>
+                  <span className="rounded-full border border-white/10 bg-white/10 px-2 py-0.5 text-xs text-zinc-400">{pl.count} 期</span>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">{pl.name}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-400">{pl.desc}</p>
+                </div>
+                <div className="flex items-center gap-1 text-xs text-amber-300/50 transition group-hover:text-amber-300">
+                  在 YouTube 观看 <ArrowRight className="h-3 w-3" />
+                </div>
+              </a>
+            ))}
           </div>
         </section>
 

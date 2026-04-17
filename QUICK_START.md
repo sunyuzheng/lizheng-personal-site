@@ -1,62 +1,93 @@
-# 快速部署指南 - 3步完成
+# lizheng.ai 开发指南
 
-## 第1步：推送到GitHub（5分钟）
-
-1. 在GitHub创建新仓库：https://github.com/new
-   - 仓库名：`lizheng-personal-site`
-   - 可见性：Public 或 Private（都可以）
-   - **不要**添加README、.gitignore或license
-
-2. 在终端执行（替换YOUR_USERNAME为您的GitHub用户名）：
-
-```bash
-cd /home/ubuntu/lizheng-personal-site
-git remote add origin https://github.com/YOUR_USERNAME/lizheng-personal-site.git
-git branch -M main
-git push -u origin main
-```
-
-## 第2步：部署到Vercel（3分钟）
-
-1. 访问 https://vercel.com/new
-2. 用GitHub账号登录
-3. 选择 `lizheng-personal-site` 仓库
-4. 点击 "Deploy"（Vercel 会自动读取仓库中的 `vercel.json` 配置，无需额外修改）
-5. 部署完成后在 Settings → Environment Variables 添加：
-   - `VITE_APP_TITLE` = `Yuzheng Sun | 课代表立正`
-   - `VITE_APP_LOGO` = `/profile.jpg`
-6. 重新部署（或点击 "Redeploy"）并等待构建完成
-
-## 第3步：配置域名（5分钟）
-
-### 在Vercel添加域名
-
-1. 在Vercel项目页面 → Settings → Domains
-2. 输入 `lizheng.ai` → Add
-
-### 在GoDaddy配置DNS
-
-1. 登录GoDaddy → My Products → lizheng.ai → DNS
-2. 添加/修改记录：
-
-```
-类型: A
-名称: @
-值: 76.76.21.21
-TTL: 600
-
-类型: CNAME
-名称: www
-值: cname.vercel-dns.com
-TTL: 600
-```
-
-3. 保存并等待5-30分钟DNS生效
-
-## 完成！
-
-访问 https://lizheng.ai 查看您的网站。
+**站点**：[lizheng.ai](https://lizheng.ai) · **仓库**：[github.com/sunyuzheng/lizheng-personal-site](https://github.com/sunyuzheng/lizheng-personal-site)
 
 ---
 
-**详细说明请查看 DEPLOYMENT.md**
+## 本地开发
+
+```bash
+pnpm install   # 首次或依赖变更后
+pnpm dev       # 启动开发服务器 → http://localhost:3000
+```
+
+---
+
+## 目录结构
+
+```
+client/
+  src/
+    pages/        ← 页面：Home, Guests, GuestDetail, ZhenbenShi, NotFound
+    components/   ← UI 组件（ui/ 是 Shadcn 原生组件，guests/ 是自定义）
+    data/         ← 静态数据（guest-data.ts、const.ts 等）
+    contexts/     ← ThemeContext
+    hooks/        ← 自定义 hooks
+    lib/          ← utils.ts, seo.ts
+  public/
+    avatars/      ← 头像图片（testimonials + endorsers）
+    book/         ← 《真本事》封面图
+    profile.jpg   ← 首页个人照
+
+shared/           ← 前后端共用的数据类型和数据文件
+server/           ← Express server（生产环境静态文件服务 + SPA routing）
+api/              ← Vercel Edge Function（AI chat 接口）
+scripts/          ← 构建辅助脚本
+docs/             ← 数据结构和嘉宾维护说明
+```
+
+---
+
+## 路由
+
+| 路径 | 页面 |
+|------|------|
+| `/` | 首页（个人简介、评价、频道） |
+| `/guests` | 嘉宾目录 |
+| `/guests/:slug` | 单个嘉宾详情 |
+| `/zbs` 或 `/book` | 《真本事》书页 |
+
+---
+
+## 常见更新任务
+
+### 修改首页内容
+编辑 `client/src/pages/Home.tsx`：
+- `testimonials` 数组 → 学员评价
+- `endorsements` → 推荐语
+- `playlists` → 话题分类
+
+### 修改图片
+将图片放入 `client/public/avatars/`（头像）或 `client/public/`（其他），
+代码里用 `/avatars/filename.jpg` 这样的相对路径引用。
+
+### 更新嘉宾数据
+```bash
+pnpm refresh:guests   # 拉取视频元数据 → 类型检查 → 重新构建
+```
+详见 `docs/guests-maintenance.md`。
+
+---
+
+## 构建与部署
+
+```bash
+pnpm build        # 本地构建（Vite + 预渲染128个嘉宾页）
+./deploy.sh       # 提交 + 推送到 GitHub（Vercel 自动触发部署）
+```
+
+**Vercel 环境变量**（在 Vercel Dashboard → Settings → Environment Variables 配置）：
+
+| 变量 | 说明 |
+|------|------|
+| `VITE_APP_TITLE` | 页面标题 |
+| `VITE_APP_LOGO` | favicon 路径 |
+| `VITE_ANALYTICS_ENDPOINT` | Umami 域名 |
+| `VITE_ANALYTICS_WEBSITE_ID` | Umami 站点 ID |
+| `ANTHROPIC_API_KEY` | Claude API key（AI chat 功能） |
+
+---
+
+## 技术栈
+
+React 18 + TypeScript + Vite + Tailwind CSS v4 + Shadcn UI + Wouter + Express + Vercel

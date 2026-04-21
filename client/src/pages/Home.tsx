@@ -32,6 +32,8 @@ import {
   Compass,
   BarChart2,
   MapPin,
+  Smartphone,
+  Apple,
 } from "lucide-react";
 
 const stats = {
@@ -100,7 +102,7 @@ const career = {
   en: [
     {
       company: "Statsig (acquired by OpenAI)",
-      role: "Sole Evangelist",
+      role: "Principal Data Scientist + Sole Evangelist",
       note: "Early team member. Statsig was acquired by OpenAI in 2025 at a $1.1B valuation — a non-consensus bet that paid off.",
     },
     {
@@ -112,8 +114,8 @@ const career = {
     { company: "Amazon", role: "Economist", note: "" },
   ],
   zh: [
-    { company: "Statsig (Acquired by OpenAI)", role: "公司唯一布道师 (Sole Evangelist)", note: "早期成员，2025年被 OpenAI 以 $11 亿估值收购，验证非共识眼光" },
-    { company: "腾讯 IEG (Tencent IEG)", role: "副总监 · 数据与 AI (Deputy Director, Data & AI)", note: "双五星绩效 · 管理 30 人数据与AI团队" },
+    { company: "Statsig (被 OpenAI 收购)", role: "首席数据科学家 + 唯一布道师 (Principal DS + Sole Evangelist)", note: "早期成员，2025 年被 OpenAI 以 $11 亿估值收购，验证非共识眼光" },
+    { company: "腾讯 IEG (Tencent IEG)", role: "副总监 · 数据与 AI (Deputy Director, Data & AI)", note: "双五星绩效 · 管理 30 人数据与 AI 团队" },
     { company: "Meta (Facebook)", role: "数据科学家 (Data Scientist)", note: "" },
     { company: "Amazon", role: "经济学家 (Economist)", note: "" },
   ],
@@ -426,81 +428,133 @@ export default function Home() {
 
       <main className="relative z-10">
         <section id="hero" className="container py-14 md:py-20 lg:py-24">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-6">
-              <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
+          <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-7">
+              <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] tracking-[-0.02em] text-white md:text-5xl lg:text-6xl">
                 {lang === "en" ? (
                   <>
-                    In the age of AI,
+                    From usable AI
                     <span className="block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-300 bg-clip-text text-transparent">
-                      own your upside.
+                      to AI that delivers at work.
                     </span>
                   </>
                 ) : (
                   <>
-                    在 AI 浪潮里，
+                    把 AI 从「能用」
                     <span className="block bg-gradient-to-r from-amber-200 via-amber-400 to-orange-300 bg-clip-text text-transparent">
-                      主宰自己的人生增量
+                      推到真实工作里的「靠谱与高效」。
                     </span>
                   </>
                 )}
               </h1>
 
-              <p className="max-w-2xl text-base leading-relaxed text-zinc-300 md:text-lg">
+              <div className="max-w-2xl space-y-1 font-mono text-[13px] leading-relaxed text-amber-300/85">
                 {lang === "en" ? (
                   <>
-                    17 years in the US · Cornell Economics PhD<br />
-                    Ex-Amazon Economist · Ex-Meta Data Scientist · Ex-Tencent IEG Deputy Director · Sole Evangelist at Statsig (acquired by OpenAI)<br />
-                    Founder of Superlinear Academy · 3,000+ paying students · over half from top Silicon Valley companies<br />
-                    Maven AI instructor · trusted advisor to multiple Fortune 500 tech companies
+                    <p>Cornell PhD · ex-Amazon / Meta / Tencent IEG Deputy Director</p>
+                    <p>Principal Data Scientist + sole evangelist at Statsig (acquired by OpenAI)</p>
                   </>
                 ) : (
                   <>
-                    在美17年 · 康奈尔经济学博士<br />
-                    Amazon 经济学家 | Meta 数据科学家 | 腾讯 IEG 副总监 | Statsig 唯一布道师（OpenAI 收购）<br />
-                    Superlinear Academy 创始人 · 3000+ 付费学员 · 超半数来自硅谷大厂<br />
-                    Maven AI 课程讲师 · 服务多家头部科技大厂
+                    <p>康奈尔经济学博士 · 前 Amazon / Meta / 腾讯 IEG 副总监</p>
+                    <p>Statsig 首席数据科学家 + 唯一布道师（被 OpenAI 收购）</p>
                   </>
                 )}
-              </p>
+              </div>
 
-              <div className="flex flex-wrap gap-3">
-                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <Users className="mr-2 h-4 w-4" />
-                  {lang === "en" ? "300K+ high-signal followers" : "30万+ 高质量粉丝"}
-                </Badge>
-                <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
-                  <TrendingUp className="mr-2 h-4 w-4" />
-                  {lang === "en" ? "3,000+ students · 50%+ Silicon Valley" : "3000+ 学员 · 50%+ 硅谷大厂"}
-                </Badge>
-                <a href="https://corp-training.ai-builders.com/" target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
-                    <Building2 className="mr-2 h-4 w-4" />
-                    {lang === "en" ? "AI advisor to top tech companies" : "多家头部科技大厂AI转型顾问"}
-                  </Badge>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <a
+                  href="https://ai-builders.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/10"
+                >
+                  <div className="flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-amber-300">
+                    <GraduationCap className="h-4 w-4" />
+                    {lang === "en" ? "For professionals" : "对个体"}
+                  </div>
+                  <h3 className="mt-3 text-lg font-semibold text-white">
+                    {lang === "en" ? "AI-Builders course" : "AI-Builders 课程"}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                    {lang === "en"
+                      ? "A rigorous program to bring every student up to the AI fluency of a strong Anthropic engineer. 3,000+ paying students, over half from top Silicon Valley companies."
+                      : "让每位学员达到 Anthropic 优秀员工级别的 AI 使用水平。3000+ 付费学员，半数以上来自硅谷一线大厂。"}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1 font-mono text-xs font-medium text-amber-300 transition group-hover:text-amber-200">
+                    ai-builders.com <ArrowRight className="h-3 w-3" />
+                  </div>
                 </a>
-                <a href="https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822" target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
-                    <BookOpen className="mr-2 h-4 w-4" />
-                    {lang === "en" ? "WSJ 2025 CIO Must-Read" : "WSJ 2025 CIO 必读书籍"}
-                  </Badge>
+                <a
+                  href="https://corp-training.ai-builders.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/10"
+                >
+                  <div className="flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-amber-300">
+                    <Building2 className="h-4 w-4" />
+                    {lang === "en" ? "For organizations" : "对组织"}
+                  </div>
+                  <h3 className="mt-3 text-lg font-semibold text-white">
+                    {lang === "en" ? "Context Architecture" : "Context Architecture 方法论"}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                    {lang === "en" ? (
+                      <>
+                        A methodology for real AI transformation and productivity gains. Engaged by{" "}
+                        <span className="text-white">Tencent, DoorDash, Pinterest, 1Password, Amazon</span>{" "}
+                        and more.
+                      </>
+                    ) : (
+                      <>
+                        推动企业 AI 转型与生产力落地。已服务{" "}
+                        <span className="text-white">腾讯、DoorDash、Pinterest、1Password、亚马逊</span>{" "}
+                        等。
+                      </>
+                    )}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1 font-mono text-xs font-medium text-amber-300 transition group-hover:text-amber-200">
+                    {lang === "en" ? "Enterprise inquiry" : "企业合作"} <ArrowRight className="h-3 w-3" />
+                  </div>
                 </a>
               </div>
 
+              <div className="flex flex-wrap gap-2">
+                <a href="https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822" target="_blank" rel="noopener noreferrer">
+                  <Badge variant="secondary" className="cursor-pointer bg-white/5 px-3 py-1.5 font-mono text-[11px] font-normal text-zinc-200 transition hover:bg-white/10">
+                    <BookOpen className="mr-2 h-3.5 w-3.5" />
+                    {lang === "en"
+                      ? "WSJ 2025 CIO Must-Read · Grow Data Analytics Playbook"
+                      : "WSJ 2025 CIO 必读 ·《Grow Data Analytics Playbook》"}
+                  </Badge>
+                </a>
+                <Link href="/guests">
+                  <Badge variant="secondary" className="cursor-pointer bg-white/5 px-3 py-1.5 font-mono text-[11px] font-normal text-zinc-200 transition hover:bg-white/10">
+                    <MessageSquare className="mr-2 h-3.5 w-3.5" />
+                    {lang === "en"
+                      ? "100+ in-depth conversations with top tech execs & AI researchers"
+                      : "100+ 中美科技高管与 AI 研究员深度对话"}
+                  </Badge>
+                </Link>
+                <Badge variant="secondary" className="bg-white/5 px-3 py-1.5 font-mono text-[11px] font-normal text-zinc-200">
+                  <Users className="mr-2 h-3.5 w-3.5" />
+                  {lang === "en"
+                    ? "300K+ followers · YouTube · Xiaohongshu · LinkedIn"
+                    : "30万+ 高质量粉丝 · YouTube · 小红书 · 领英"}
+                </Badge>
+              </div>
+
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button size="lg" className="bg-amber-500 text-[#211300] hover:bg-amber-400" onClick={() => scrollToSection("course")}>
-                  {lang === "en" ? "View course" : "查看课程"}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" variant="outline" className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10" onClick={() => scrollToSection("course")}>
+                  {lang === "en" ? "Course" : "查看课程"}
                 </Button>
-                <Button size="lg" variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20" asChild>
+                <Button size="lg" variant="outline" className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10" onClick={() => scrollToSection("enterprise")}>
+                  {lang === "en" ? "Enterprise" : "企业合作"}
+                </Button>
+                <Button size="lg" variant="outline" className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10" asChild>
                   <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
-                    {lang === "en" ? "Join community" : "加入社区"}
+                    {lang === "en" ? "Community" : "加入社区"}
                   </a>
-                </Button>
-                <Button size="lg" variant="outline" className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20" asChild>
-                  <Link href="/zbs">
-                    {lang === "en" ? "New book" : "新书上市"}
-                  </Link>
                 </Button>
               </div>
 
@@ -536,6 +590,53 @@ export default function Home() {
                 fetchPriority="high"
               />
             </a>
+          </div>
+
+          {/* App download — part of hero */}
+          <div className="mt-10 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.04] via-white/[0.02] to-amber-300/[0.04] p-5 md:mt-12 md:p-6">
+            <div className="flex flex-col items-center gap-5 sm:flex-row">
+              <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#0B0F1A] text-amber-300 shadow-xl shadow-amber-500/10">
+                <Smartphone className="h-7 w-7" />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <div className="mb-1 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+                  <span className="rounded-full bg-amber-300/15 px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-amber-300">
+                    {lang === "en" ? "Now on mobile" : "移动端上线"}
+                  </span>
+                  <span className="font-mono text-[10px] text-zinc-500">iOS · Android</span>
+                </div>
+                <h3 className="text-lg font-semibold text-white md:text-xl">
+                  {lang === "en" ? "Superlinear Academy — in your pocket." : "把 Superlinear Academy 装进口袋"}
+                </h3>
+                <p className="mt-1 text-sm text-zinc-400">
+                  {lang === "en"
+                    ? "Daily discussions with 3,000+ builders, course bites, and curated AI resources — on the go."
+                    : "3000+ Builder 每日讨论、课程速览、AI 资源整理，随时带在身边。"}
+                </p>
+              </div>
+              <div className="flex flex-shrink-0 flex-col gap-2 sm:flex-row">
+                <Button variant="outline" className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10" asChild>
+                  <a
+                    href="https://apps.apple.com/us/app/superlinear-academy/id6760123187"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Apple className="mr-2 h-4 w-4" />
+                    App Store
+                  </a>
+                </Button>
+                <Button variant="outline" className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10" asChild>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=academy.superlinear.www"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Play className="mr-2 h-4 w-4 fill-current" />
+                    Google Play
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -718,61 +819,6 @@ export default function Home() {
                   </a>
                 </Button>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Book teaser */}
-        <section className="container py-6 md:py-8">
-          <div className="rounded-xl border border-red-900/40 bg-gradient-to-r from-red-950/50 to-zinc-900/80 p-5 md:p-6">
-            <div className="flex flex-col items-center gap-5 sm:flex-row">
-              <div className="flex flex-shrink-0 items-stretch" style={{ transform: "perspective(600px) rotateY(-12deg)", filter: "drop-shadow(6px 12px 24px rgba(0,0,0,0.6))" }}>
-                <div className="flex-shrink-0 overflow-hidden" style={{ width: "10px", filter: "brightness(0.65)" }}>
-                  <img src="/book/cover-spine.png" alt="" className="h-full w-full object-cover object-top" />
-                </div>
-                <div className="flex-shrink-0">
-                  <img src="/book/cover-front.png" alt="《真本事》" className="block h-28 w-auto" />
-                </div>
-              </div>
-              <div className="flex-1 text-center sm:text-left">
-                <div className="mb-1 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-                  <span className="rounded-sm bg-red-700 px-2 py-0.5 text-xs font-semibold text-white">
-                    {lang === "en" ? "New release" : "新书发布"}
-                  </span>
-                  <span className="text-xs text-zinc-500">
-                    {lang === "en"
-                      ? "人民邮电出版社 (Posts & Telecom Press)"
-                      : "人民邮电出版社"}
-                  </span>
-                  {lang === "en" && (
-                    <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] text-zinc-400">
-                      Chinese edition
-                    </span>
-                  )}
-                </div>
-                <h3 className="text-lg font-black text-white md:text-xl">
-                  {lang === "en" ? (
-                    <>
-                      《真本事》
-                      <span className="text-sm font-semibold text-zinc-300">
-                        {" "}— my new Chinese-language book
-                      </span>
-                    </>
-                  ) : (
-                    "《真本事：从会工作到会赚钱》"
-                  )}
-                </h3>
-                <p className="mt-1 text-sm text-zinc-400">
-                  {lang === "en"
-                    ? "A playbook for turning yourself into a scarce asset and compounding your personal value. Built on my long-running #1 career course on Bilibili. Details page is in Chinese."
-                    : "把自己变成稀缺资产，让个体价值持续变现。B站职场类长期第一课程集结成书。"}
-                </p>
-              </div>
-              <Button className="flex-shrink-0 bg-red-700 text-white hover:bg-red-800" asChild>
-                <Link href="/zbs">
-                  {lang === "en" ? "Learn more →" : "查看详情 →"}
-                </Link>
-              </Button>
             </div>
           </div>
         </section>

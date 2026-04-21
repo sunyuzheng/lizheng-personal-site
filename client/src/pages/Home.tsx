@@ -428,12 +428,6 @@ export default function Home() {
         <section id="hero" className="container py-14 md:py-20 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
-              <Badge className="border border-amber-300/40 bg-amber-300/10 text-amber-200 hover:bg-amber-300/20">
-                {lang === "en"
-                  ? "17 years in the US · Cornell PhD · AI Builder · Observer · Creator"
-                  : "在美17年 · Cornell PhD · AI布道者 · 观察者 · 内容创业者"}
-              </Badge>
-
               <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight text-white md:text-6xl">
                 {lang === "en" ? (
                   <>
@@ -458,14 +452,14 @@ export default function Home() {
                     17 years in the US · Cornell Economics PhD<br />
                     Ex-Amazon Economist · Ex-Meta Data Scientist · Ex-Tencent IEG Deputy Director · Sole Evangelist at Statsig (acquired by OpenAI)<br />
                     Founder of Superlinear Academy · 3,000+ paying students · over half from top Silicon Valley companies<br />
-                    Maven's #1-rated AI course · trusted advisor to multiple Fortune 500 tech leaders
+                    Maven AI instructor · trusted advisor to multiple Fortune 500 tech companies
                   </>
                 ) : (
                   <>
                     在美17年 · 康奈尔经济学博士<br />
                     Amazon 经济学家 | Meta 数据科学家 | 腾讯 IEG 副总监 | Statsig 唯一布道师（OpenAI 收购）<br />
                     Superlinear Academy 创始人 · 3000+ 付费学员 · 超半数来自硅谷大厂<br />
-                    Maven AI 课程全网口碑第一 · 服务多家头部科技大厂
+                    Maven AI 课程讲师 · 服务多家头部科技大厂
                   </>
                 )}
               </p>
@@ -475,12 +469,6 @@ export default function Home() {
                   <Users className="mr-2 h-4 w-4" />
                   {lang === "en" ? "300K+ high-signal followers" : "30万+ 高质量粉丝"}
                 </Badge>
-                <a href="https://maven.com/superlinear/aibuilders" target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="cursor-pointer bg-white/10 px-4 py-1.5 text-zinc-100 transition hover:bg-white/20">
-                    <Star className="mr-2 h-4 w-4" />
-                    {lang === "en" ? "Maven #1 AI Instructor" : "Maven Top AI Instructor · 全网口碑第一"}
-                  </Badge>
-                </a>
                 <Badge variant="secondary" className="bg-white/10 px-4 py-1.5 text-zinc-100">
                   <TrendingUp className="mr-2 h-4 w-4" />
                   {lang === "en" ? "3,000+ students · 50%+ Silicon Valley" : "3000+ 学员 · 50%+ 硅谷大厂"}

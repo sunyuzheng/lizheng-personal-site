@@ -1,5 +1,6 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
@@ -16,15 +17,15 @@ function formatViews(views?: number): string | null {
   return views.toLocaleString("en-US");
 }
 
-function formatPublishedAt(value?: string): string | null {
+function formatPublishedAt(value: string | undefined, lang: "en" | "zh"): string | null {
   if (!value) return null;
 
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
 
-  return new Intl.DateTimeFormat("zh-CN", {
+  return new Intl.DateTimeFormat(lang === "en" ? "en-US" : "zh-CN", {
     year: "numeric",
-    month: "numeric",
+    month: lang === "en" ? "short" : "numeric",
     day: "numeric",
     timeZone: "UTC",
   }).format(date);
@@ -52,6 +53,7 @@ function XiaohongshuIcon() {
 }
 
 export default function GuestDetail({ slug }: GuestDetailProps) {
+  const { lang } = useLanguage();
   const { guests, loading, error } = useGuestDirectory();
   const guest = guests.find(item => item.slug === slug);
 
@@ -99,22 +101,29 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               Guest Not Found
             </p>
             <h1 className="mt-4 text-3xl font-bold text-white">
-              这个嘉宾页不存在
+              {lang === "en" ? "This guest page doesn't exist" : "这个嘉宾页不存在"}
             </h1>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
-              链接可能写错了，或者对应 slug 还没有生成。
+              {lang === "en"
+                ? "The link may be wrong, or the slug may not have been generated yet."
+                : "链接可能写错了，或者对应 slug 还没有生成。"}
             </p>
             <Button
               asChild
               className="mt-8 bg-amber-300 text-[#211300] hover:bg-amber-200"
             >
-              <Link href="/guests">返回全部嘉宾</Link>
+              <Link href="/guests">
+                {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
+              </Link>
             </Button>
           </div>
         </div>
       </GuestsLayout>
     );
   }
+
+  const displayName =
+    lang === "en" && guest.guest_en_name ? guest.guest_en_name : guest.guest_name;
 
   return (
     <GuestsLayout>
@@ -124,24 +133,28 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
           className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-amber-300"
         >
           <ArrowLeft className="h-4 w-4" />
-          返回全部嘉宾
+          {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
         </Link>
 
         <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
               <span className="rounded-full border border-white/10 px-2.5 py-1">
-                {guest.episode_count} 期访谈
+                {lang === "en"
+                  ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
+                  : `${guest.episode_count} 期访谈`}
               </span>
               {formatViews(guest.max_views) && (
                 <span className="rounded-full border border-white/10 px-2.5 py-1">
-                  最高播放 {formatViews(guest.max_views)}
+                  {lang === "en"
+                    ? `Top view count ${formatViews(guest.max_views)}`
+                    : `最高播放 ${formatViews(guest.max_views)}`}
                 </span>
               )}
             </div>
 
             <h1 className="mt-5 text-4xl font-bold text-white md:text-5xl">
-              {guest.guest_name}
+              {displayName}
             </h1>
             {guest.guest_company && (
               <p className="mt-4 text-lg font-semibold text-amber-300">
@@ -156,7 +169,9 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
 
             {(guest.xiaohongshu_url || guest.linkedin_url) && (
               <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="text-sm font-semibold text-white">外部主页</div>
+                <div className="text-sm font-semibold text-white">
+                  {lang === "en" ? "External profiles" : "外部主页"}
+                </div>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {guest.xiaohongshu_url && (
                     <Button
@@ -170,7 +185,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                         rel="noopener noreferrer"
                       >
                         <XiaohongshuIcon />
-                        小红书
+                        {lang === "en" ? "Xiaohongshu" : "小红书"}
                         <ExternalLink className="ml-2 h-4 w-4" />
                       </a>
                     </Button>
@@ -206,7 +221,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   rel="noopener noreferrer"
                 >
                   <Play className="mr-2 h-4 w-4 fill-current" />
-                  观看精选访谈
+                  {lang === "en" ? "Watch featured interview" : "观看精选访谈"}
                 </a>
               </Button>
               <Button
@@ -219,7 +234,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  打开 YouTube
+                  {lang === "en" ? "Open on YouTube" : "打开 YouTube"}
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -240,21 +255,27 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6">
               <div className="mb-3 inline-flex items-center rounded-full bg-amber-400 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#211300]">
-                精选视频
+                {lang === "en" ? "Featured" : "精选视频"}
               </div>
               <h2 className="text-2xl font-semibold leading-tight text-white">
                 {guest.primary_episode.title}
               </h2>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-200">
                 {formatViews(guest.primary_episode.viewCount) && (
-                  <span>{formatViews(guest.primary_episode.viewCount)} 次观看</span>
+                  <span>
+                    {lang === "en"
+                      ? `${formatViews(guest.primary_episode.viewCount)} views`
+                      : `${formatViews(guest.primary_episode.viewCount)} 次观看`}
+                  </span>
                 )}
-                {formatPublishedAt(guest.primary_episode.publishedAt) && (
-                  <span>{formatPublishedAt(guest.primary_episode.publishedAt)}</span>
+                {formatPublishedAt(guest.primary_episode.publishedAt, lang) && (
+                  <span>{formatPublishedAt(guest.primary_episode.publishedAt, lang)}</span>
                 )}
               </div>
               <p className="mt-2 text-sm text-zinc-200">
-                点开后直接跳转到 YouTube 播放页
+                {lang === "en"
+                  ? "Click through to watch on YouTube"
+                  : "点开后直接跳转到 YouTube 播放页"}
               </p>
             </div>
           </a>
@@ -266,10 +287,14 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <p className="text-sm uppercase tracking-[0.18em] text-zinc-500">
                 Episodes
               </p>
-              <h2 className="mt-2 text-2xl font-bold text-white">全部访谈</h2>
+              <h2 className="mt-2 text-2xl font-bold text-white">
+                {lang === "en" ? "All interviews" : "全部访谈"}
+              </h2>
             </div>
             <p className="text-sm text-zinc-500">
-              {guest.episode_count} 期内容，按观看量排序
+              {lang === "en"
+                ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}, sorted by views`
+                : `${guest.episode_count} 期内容，按观看量排序`}
             </p>
           </div>
 
@@ -296,15 +321,15 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   </div>
                   {episode.isPrimary && (
                     <div className="absolute left-3 top-3 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#211300]">
-                      精选
+                      {lang === "en" ? "Featured" : "精选"}
                     </div>
                   )}
                 </div>
                 <div className="space-y-3 p-4">
                   <div className="flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
                     <span>Top {rank + 1}</span>
-                    {formatPublishedAt(episode.publishedAt) && (
-                      <span>{formatPublishedAt(episode.publishedAt)}</span>
+                    {formatPublishedAt(episode.publishedAt, lang) && (
+                      <span>{formatPublishedAt(episode.publishedAt, lang)}</span>
                     )}
                   </div>
                   <h3 className="line-clamp-3 text-base font-semibold leading-6 text-white">
@@ -313,7 +338,11 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   <div className="flex items-center justify-between text-sm text-zinc-400">
                     <span>{episode.videoId}</span>
                     {formatViews(episode.viewCount) && (
-                      <span>{formatViews(episode.viewCount)} 次观看</span>
+                      <span>
+                        {lang === "en"
+                          ? `${formatViews(episode.viewCount)} views`
+                          : `${formatViews(episode.viewCount)} 次观看`}
+                      </span>
                     )}
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestsPageMeta } from "@shared/guest-data";
@@ -6,14 +7,20 @@ import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
-function formatViews(views: number): string | null {
+function formatViews(views: number, lang: "en" | "zh"): string | null {
   if (!views) return null;
+  if (lang === "en") {
+    if (views >= 1_000_000) return `${(views / 1_000_000).toFixed(1)}M`;
+    if (views >= 1000) return `${(views / 1000).toFixed(1)}K`;
+    return String(views);
+  }
   if (views >= 10000) return `${(views / 10000).toFixed(1)}万`;
   if (views >= 1000) return `${(views / 1000).toFixed(1)}k`;
   return String(views);
 }
 
 export default function Guests() {
+  const { lang } = useLanguage();
   const { guests, loading, error } = useGuestDirectory();
   const [query, setQuery] = useState("");
 
@@ -21,13 +28,19 @@ export default function Guests() {
     const meta = guests.length
       ? getGuestsPageMeta(guests)
       : {
-          title: "全部嘉宾 · 课代表立正",
-          description: "课代表立正访谈嘉宾总览。",
+          title:
+            lang === "en"
+              ? "All Guests · Yuzheng Sun"
+              : "全部嘉宾 · 课代表立正",
+          description:
+            lang === "en"
+              ? "Overview of interview guests on the Yuzheng Sun / 课代表立正 channel."
+              : "课代表立正访谈嘉宾总览。",
           canonical: "https://www.lizheng.ai/guests",
         };
 
     return applyPageSeo(meta);
-  }, [guests]);
+  }, [guests, lang]);
 
   const q = query.trim().toLowerCase();
   const filtered = guests.filter(
@@ -46,12 +59,23 @@ export default function Guests() {
       <div className="container py-12 md:py-16">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl">
-            超级节点 · 全部嘉宾
+            {lang === "en"
+              ? "Super Nodes · All Guests"
+              : "超级节点 · 全部嘉宾"}
           </h1>
           {!loading && !error && (
             <p className="mt-3 text-zinc-400">
-              {guests.length} 位嘉宾 · {multiEp} 位多期深访 ·
-              每位嘉宾都有独立分享页
+              {lang === "en" ? (
+                <>
+                  {guests.length} guests · {multiEp} featured in multiple
+                  interviews · every guest has a dedicated page
+                </>
+              ) : (
+                <>
+                  {guests.length} 位嘉宾 · {multiEp} 位多期深访 ·
+                  每位嘉宾都有独立分享页
+                </>
+              )}
             </p>
           )}
         </div>
@@ -62,7 +86,11 @@ export default function Guests() {
             type="text"
             value={query}
             onChange={event => setQuery(event.target.value)}
-            placeholder="搜索嘉宾姓名、公司、职位…"
+            placeholder={
+              lang === "en"
+                ? "Search by name, company, or title…"
+                : "搜索嘉宾姓名、公司、职位…"
+            }
             className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-10 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-amber-300/50 focus:bg-white/8"
           />
           {query && (
@@ -77,8 +105,17 @@ export default function Guests() {
 
         {query && !loading && !error && (
           <p className="mb-6 text-center text-sm text-zinc-500">
-            找到 <span className="text-amber-300">{filtered.length}</span>{" "}
-            位嘉宾
+            {lang === "en" ? (
+              <>
+                Found <span className="text-amber-300">{filtered.length}</span>{" "}
+                guest{filtered.length === 1 ? "" : "s"}
+              </>
+            ) : (
+              <>
+                找到 <span className="text-amber-300">{filtered.length}</span>{" "}
+                位嘉宾
+              </>
+            )}
           </p>
         )}
 
@@ -120,7 +157,11 @@ export default function Guests() {
                   <div className="relative aspect-video overflow-hidden">
                     <img
                       src={guest.primary_episode.thumbnailUrl}
-                      alt={`${guest.guest_name}访谈封面`}
+                      alt={
+                        lang === "en"
+                          ? `Interview cover — ${guest.guest_en_name || guest.guest_name}`
+                          : `${guest.guest_name}访谈封面`
+                      }
                       className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                       loading="lazy"
                       width={320}
@@ -131,9 +172,9 @@ export default function Guests() {
                         <Play className="h-4 w-4 fill-current" />
                       </div>
                     </div>
-                    {formatViews(guest.max_views) && (
+                    {formatViews(guest.max_views, lang) && (
                       <div className="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
-                        {formatViews(guest.max_views)}
+                        {formatViews(guest.max_views, lang)}
                       </div>
                     )}
                   </div>
@@ -141,7 +182,9 @@ export default function Guests() {
                   <div className="flex flex-1 flex-col p-4">
                     <div>
                       <h2 className="line-clamp-1 text-base font-semibold text-white">
-                        {guest.guest_name}
+                        {lang === "en" && guest.guest_en_name
+                          ? guest.guest_en_name
+                          : guest.guest_name}
                       </h2>
                       {guest.guest_company && (
                         <p className="mt-1 line-clamp-1 text-sm font-medium text-amber-300">
@@ -156,9 +199,13 @@ export default function Guests() {
                     </div>
 
                     <div className="mt-4 flex items-center justify-between text-xs text-zinc-500">
-                      <span>{guest.episode_count} 期访谈</span>
+                      <span>
+                        {lang === "en"
+                          ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
+                          : `${guest.episode_count} 期访谈`}
+                      </span>
                       <span className="rounded-full border border-white/10 px-2 py-0.5">
-                        独立页
+                        {lang === "en" ? "Dedicated page" : "独立页"}
                       </span>
                     </div>
 
@@ -173,7 +220,7 @@ export default function Guests() {
                     href={`/guests/${guest.slug}`}
                     className="inline-flex items-center justify-center gap-1 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-semibold text-amber-300 transition hover:bg-amber-300/20"
                   >
-                    查看子页
+                    {lang === "en" ? "View page" : "查看子页"}
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                   <a
@@ -193,7 +240,9 @@ export default function Guests() {
 
         {!loading && !error && filtered.length === 0 && query && (
           <div className="py-24 text-center text-zinc-500">
-            没有找到「{query}」相关的嘉宾
+            {lang === "en"
+              ? `No guests found for "${query}"`
+              : `没有找到「${query}」相关的嘉宾`}
           </div>
         )}
       </div>

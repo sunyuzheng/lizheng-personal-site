@@ -4,6 +4,7 @@ import NotFound from "@/pages/NotFound";
 import { Analytics } from "@vercel/analytics/react";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import GuestDetail from "./pages/GuestDetail";
 import Guests from "./pages/Guests";
@@ -35,13 +36,15 @@ function Router() {
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider defaultTheme="dark">
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-          <Analytics />
-        </TooltipProvider>
-      </ThemeProvider>
+      <LanguageProvider defaultLang="en">
+        <ThemeProvider defaultTheme="dark">
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+            <Analytics />
+          </TooltipProvider>
+        </ThemeProvider>
+      </LanguageProvider>
     </ErrorBoundary>
   );
 }

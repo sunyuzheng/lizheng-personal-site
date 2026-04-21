@@ -1,4 +1,6 @@
+import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowLeft, Youtube } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "wouter";
@@ -8,6 +10,7 @@ interface GuestsLayoutProps {
 }
 
 export default function GuestsLayout({ children }: GuestsLayoutProps) {
+  const { lang } = useLanguage();
   return (
     <div className="relative min-h-screen bg-[#0B0F1A] text-zinc-100">
       <div className="pointer-events-none absolute inset-0 opacity-60">
@@ -24,26 +27,31 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
             <ArrowLeft className="h-4 w-4" />
             <div>
               <div className="text-sm font-semibold text-amber-300">
-                课代表立正
+                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
               </div>
-              <div className="text-xs text-zinc-500">Yuzheng Sun</div>
+              <div className="text-xs text-zinc-500">
+                {lang === "en" ? "课代表立正" : "Yuzheng Sun"}
+              </div>
             </div>
           </Link>
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20"
-          >
-            <a
-              href="https://www.youtube.com/@kedaibiao"
-              target="_blank"
-              rel="noopener noreferrer"
+          <div className="flex items-center gap-3">
+            <LanguageToggle size="sm" />
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20"
             >
-              <Youtube className="mr-1.5 h-3.5 w-3.5" />
-              订阅频道
-            </a>
-          </Button>
+              <a
+                href="https://www.youtube.com/@kedaibiao"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Youtube className="mr-1.5 h-3.5 w-3.5" />
+                {lang === "en" ? "Subscribe" : "订阅频道"}
+              </a>
+            </Button>
+          </div>
         </div>
       </nav>
 
@@ -55,9 +63,9 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
             href="/"
             className="text-amber-400 transition hover:text-amber-300"
           >
-            课代表立正
+            {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
           </Link>{" "}
-          · 访谈内容版权所有
+          · {lang === "en" ? "All interview content © original rights holders" : "访谈内容版权所有"}
         </p>
       </footer>
     </div>

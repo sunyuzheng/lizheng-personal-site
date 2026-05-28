@@ -40,14 +40,14 @@ import {
 
 const stats = {
   en: [
-    { value: "300K+", label: "High-signal followers" },
-    { value: "3,000+", label: "Paying students · half from Silicon Valley" },
+    { value: "300K+", label: "Audience across platforms" },
+    { value: "3,000+", label: "Paying students" },
     { value: "4.9/5", label: "Course rating" },
     { value: "200+", label: "Conversations with tech leaders" },
   ],
   zh: [
-    { value: "300K+", label: "全网高质量粉丝" },
-    { value: "3000+", label: "付费学员 · 半数硅谷大厂" },
+    { value: "300K+", label: "跨平台内容受众" },
+    { value: "3000+", label: "付费学员" },
     { value: "4.9/5", label: "课程评分" },
     { value: "200+", label: "科技领袖对话" },
   ],
@@ -57,8 +57,8 @@ const highlights = {
   en: [
     {
       icon: <Award className="h-5 w-5 text-amber-300" />,
-      title: "Maven Top AI Instructor",
-      desc: "A rigorous AI methodology course for top professionals at top companies. Endorsed by Prof. Jia Liu of Tsinghua University.",
+      title: "AI-Builders course",
+      desc: "A structured course for professionals who want to turn AI from tool use into reliable output. Recommended by Prof. Jia Liu of Tsinghua University.",
     },
     {
       icon: <BookOpen className="h-5 w-5 text-amber-300" />,
@@ -79,8 +79,8 @@ const highlights = {
   zh: [
     {
       icon: <Award className="h-5 w-5 text-amber-300" />,
-      title: "Maven Top AI Instructor",
-      desc: "专为顶尖公司的顶尖个体打造的 AI 方法论课程。清华大学刘嘉教授倾情推荐。",
+      title: "AI-Builders 课程",
+      desc: "面向专业人士的系统课程，帮助学员把 AI 从工具使用落到稳定产出。清华大学刘嘉教授推荐。",
     },
     {
       icon: <BookOpen className="h-5 w-5 text-amber-300" />,
@@ -105,7 +105,7 @@ const career = {
     {
       company: "Statsig (acquired by OpenAI)",
       role: "Principal Data Scientist + Sole Evangelist",
-      note: "Early team member. Statsig was acquired by OpenAI in 2025 at a $1.1B valuation — a non-consensus bet that paid off.",
+      note: "Early team member. Statsig was acquired by OpenAI in 2025.",
     },
     {
       company: "Tencent IEG",
@@ -119,7 +119,7 @@ const career = {
     {
       company: "Statsig (被 OpenAI 收购)",
       role: "首席数据科学家 + 唯一布道师 (Principal DS + Sole Evangelist)",
-      note: "早期成员，2025 年被 OpenAI 以 $11 亿估值收购，验证非共识眼光",
+      note: "早期成员，2025 年被 OpenAI 收购",
     },
     {
       company: "腾讯 IEG (Tencent IEG)",
@@ -187,7 +187,7 @@ const throughline = {
       role: "经济学博士",
       title: "经济学训练我先看激励、约束和隐藏的系统结构。",
       detail:
-        "真正有用的问题，往往不是一个观点听起来对不对，而是：它成立需要哪些前提？什么证据会让我改变判断？",
+        "真正有用的问题通常是：它成立需要哪些前提？什么证据会让我改变判断？",
     },
     {
       era: "Amazon",
@@ -222,7 +222,7 @@ const throughline = {
       role: "Founder & CEO",
       title: "现在我在为 AI 时代的 builders 搭建学习系统。",
       detail:
-        "课程、社群、访谈、企业培训和学习闭环，服务的是同一个目标：帮助更多人从会用工具，走到能构建东西。",
+        "课程、社群、访谈、企业培训和学习闭环，服务的是同一个目标：帮助更多人把工具使用推进到真实构建。",
     },
   ],
 };
@@ -253,7 +253,7 @@ const principles = {
     {
       title: "The AI era belongs to builders, not passive users.",
       detail:
-        "The gap is not whether someone uses AI. It is whether they can turn AI into a reliable workflow, product, asset, or system.",
+        "The meaningful gap is whether someone can turn AI into a reliable workflow, product, asset, or system.",
       linkLabel: "Note: AI User vs. AI Builder",
       href: "https://www.superlinear.academy/c/ai-resources/ai-mastery",
     },
@@ -269,14 +269,14 @@ const principles = {
     {
       title: "更好的世界模型会复利。",
       detail:
-        "一个人的天花板，往往受限于他对真实世界建模的质量。关键不是知道更多词，而是让这个模型更频繁地和真实世界对账。",
+        "一个人的天花板，往往受限于他对真实世界建模的质量。关键在于让这个模型更频繁地和真实世界对账。",
       linkLabel: "视频：世界模型",
       href: "https://www.youtube.com/watch?v=r0nsW3nIFgk",
     },
     {
       title: "强观点要经得起更强的反驳。",
       detail:
-        "观点要足够清晰，才有被检验的价值；讨论的目的不是赢，而是把关键假设暴露出来，让事情往前走。",
+        "观点要足够清晰，才有被检验的价值；讨论的价值在于把关键假设暴露出来，让事情往前走。",
       linkLabel: "视频：如何坚持观点",
       href: "https://www.youtube.com/watch?v=vYOogCGsIog",
     },
@@ -288,9 +288,9 @@ const principles = {
       href: "https://www.superlinear.academy/c/ai-resources/ai-tutorial",
     },
     {
-      title: "AI 时代属于 builders，不属于只会使用工具的人。",
+      title: "AI 时代奖励能把工具变成系统的人。",
       detail:
-        "差距不在于会不会打开工具，而在于能不能把 AI 变成稳定的工作流、产品、资产和系统。",
+        "真正拉开差距的，是能否把 AI 变成稳定的工作流、产品、资产和系统。",
       linkLabel: "文章：AI User 与 AI Builder 的差距",
       href: "https://www.superlinear.academy/c/ai-resources/ai-mastery",
     },
@@ -311,7 +311,7 @@ const practicePaths = {
       label: "For individuals",
       title: "AI-Builders",
       detail:
-        "A rigorous course and community for professionals who want to build with AI, not just use prompts.",
+        "A course and community for professionals who want to build reliable AI workflows beyond prompt tricks.",
       proof: "3,000+ paying students · 4.9/5 Maven rating",
       href: "https://ai-builders.com",
       cta: "View curriculum",
@@ -322,7 +322,7 @@ const practicePaths = {
       title: "Enterprise AI training",
       detail:
         "Custom sessions for teams at Tencent, DoorDash, Pinterest, 1Password, Amazon, and more, centered on context architecture and real workflows.",
-      proof: "AI transformation as an operating habit, not a one-off workshop",
+      proof: "AI transformation as an operating habit, with workshop time tied to real workflows",
       href: "https://corp-training.ai-builders.com",
       cta: "Enterprise inquiry",
     },
@@ -331,7 +331,7 @@ const practicePaths = {
       label: "For builders",
       title: "Superlinear Academy",
       detail:
-        "A high-signal community where builders trade notes, test ideas, and keep each other close to the frontier.",
+        "A community where builders trade notes, test ideas, and stay close to real work.",
       proof: '"Good design happens in chunks." - Paul Graham',
       href: "https://www.superlinear.academy",
       cta: "Join community",
@@ -343,7 +343,7 @@ const practicePaths = {
       label: "面向个体",
       title: "AI-Builders",
       detail:
-        "面向专业人士的系统课程和社群，目标不是学几个 prompt，而是学会用 AI 构建。",
+        "面向专业人士的系统课程和社群，帮助学员把 AI 放进稳定的工作流和产出里。",
       proof: "3000+ 付费学员 · Maven 4.9/5 评分",
       href: "https://ai-builders.com",
       cta: "查看课程",
@@ -354,7 +354,7 @@ const practicePaths = {
       title: "企业 AI 培训",
       detail:
         "为腾讯、DoorDash、Pinterest、1Password、Amazon 等团队做定制训练，核心是上下文架构和真实工作流。",
-      proof: "把 AI 转型变成组织习惯，而不是一次性培训",
+      proof: "把培训时间接回真实工作流，让 AI 转型进入组织习惯",
       href: "https://corp-training.ai-builders.com",
       cta: "企业合作",
     },
@@ -363,7 +363,7 @@ const practicePaths = {
       label: "面向 builders",
       title: "Superlinear Academy",
       detail:
-        "一个面向 builders 的社群，用来交换经验、测试想法，并持续靠近技术与商业前沿。",
+        "一个面向 builders 的社群，用来交换经验、测试想法，并把讨论留在真实工作附近。",
       proof: '"Good design happens in chunks." - Paul Graham',
       href: "https://www.superlinear.academy",
       cta: "加入社群",
@@ -375,7 +375,7 @@ const endorsements = {
   en: [
     {
       quote:
-        "Yuzheng is a true AI-native pioneer — his distinctive thinking framework helps people achieve superlinear growth in the AI era.",
+        "Yuzheng has a rare ability to connect AI, product judgment, and personal growth into a practical learning system.",
       name: "Dai Yusen",
       title: "Partner, ZhenFund",
       subtitle: "真格基金合伙人",
@@ -384,7 +384,7 @@ const endorsements = {
     },
     {
       quote:
-        "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing.",
+        "Yuzheng has built an AI education community that is carefully curated, practical, and unusually useful for people doing real work.",
       name: "Wei Manfredi",
       title: "Global CAIO & CTO · McDonald's · Google Cloud · lululemon",
       subtitle: "Top 100 Global AI Leaders · Top AI Leaders in Retail 2026",
@@ -404,7 +404,7 @@ const endorsements = {
   zh: [
     {
       quote:
-        "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现超线性成长。",
+        "立正很擅长把 AI、产品判断和个人成长连接成一套可实践的学习系统。",
       name: "戴雨森",
       title: "真格基金合伙人",
       subtitle: "ZhenFund Partner",
@@ -413,19 +413,19 @@ const endorsements = {
     },
     {
       quote:
-        "Yuzheng has built what I consider the best AI education community bar none — thoughtfully curated, rigorously practical, and genuinely life-changing.",
+        "立正做的 AI 教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
       name: "Wei Manfredi",
-      title: "Global CAIO & CTO · McDonald's · Google Cloud · lululemon",
+      title: "全球 CAIO & CTO · McDonald's · Google Cloud · lululemon",
       subtitle: "Top 100 Global AI Leaders · Top AI Leaders in Retail 2026",
       avatar: "/avatars/wei-manfredi.jpg",
       initials: "WM",
     },
     {
       quote:
-        "Yuzheng distills years of product growth wisdom into actionable insight — helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
+        "立正能把多年产品增长经验提炼成可执行的洞察，帮助数据科学家、产品经理和创始人更快看清关键问题。",
       name: "Vijaye Raji",
-      title: "Founder & CEO, Statsig",
-      subtitle: "CTO of Applications, OpenAI",
+      title: "Statsig 创始人 & CEO",
+      subtitle: "OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
     },
@@ -803,7 +803,7 @@ const guestCategories = {
     {
       label: "企业高管与产品领导者",
       title: "在大规模组织里做过事的人",
-      desc: "他们的经验来自真实组织、真实产品和真实约束，不是抽象的管理口号。",
+      desc: "他们的经验来自真实组织、真实产品和真实约束，离管理口号很远。",
       items: [
         {
           name: "光叔 光芒",
@@ -966,7 +966,6 @@ const playlists = {
       desc: "AI trends, AGI, and career impact",
       id: "PLO_DkCSmTKMNecQCgUHqTYtmwPWGUvDG_",
       icon: <Zap className="h-5 w-5" />,
-      color: "text-amber-300",
     },
     {
       name: "AI tools in practice",
@@ -974,7 +973,6 @@ const playlists = {
       desc: "Cursor, vibe coding, workflows",
       id: "PLO_DkCSmTKMPdBSW6bJH_KduR9-kzVTNF",
       icon: <Wrench className="h-5 w-5" />,
-      color: "text-sky-300",
     },
     {
       name: "Job search & interviews",
@@ -982,7 +980,6 @@ const playlists = {
       desc: "Resumes, DS/PM/Eng interview playbooks",
       id: "PLO_DkCSmTKMN5IGvvtiNU9Q1MskoN_RHb",
       icon: <Briefcase className="h-5 w-5" />,
-      color: "text-green-300",
     },
     {
       name: "Workplace skills",
@@ -990,7 +987,6 @@ const playlists = {
       desc: "Promotions, presenting up, soft skills",
       id: "PLO_DkCSmTKMPS6P2dKYHRethlKqmIQw0h",
       icon: <TrendingUp className="h-5 w-5" />,
-      color: "text-lime-300",
     },
     {
       name: "Big Tech, up close",
@@ -998,7 +994,6 @@ const playlists = {
       desc: "FAANG internals, VP tracks, layoffs",
       id: "PLO_DkCSmTKMMws_nKzRMsIx5nvP5Hl68R",
       icon: <Building2 className="h-5 w-5" />,
-      color: "text-rose-300",
     },
     {
       name: "Founders & startups",
@@ -1006,7 +1001,6 @@ const playlists = {
       desc: "Founder interviews, fundraising, product growth",
       id: "PLO_DkCSmTKMOPSv4YWDKC7-gr88CyHf_3",
       icon: <Rocket className="h-5 w-5" />,
-      color: "text-orange-300",
     },
     {
       name: "Wealth & investing",
@@ -1014,15 +1008,13 @@ const playlists = {
       desc: "Financial freedom, strategy, personal finance",
       id: "PLO_DkCSmTKMPrqKZDSrq9scXhcyrcib8E",
       icon: <Landmark className="h-5 w-5" />,
-      color: "text-yellow-300",
     },
     {
       name: "Thinking & decisions",
       count: 130,
-      desc: "Mental models, judgment, upgrading how you think",
+      desc: "Mental models, judgment, decision quality",
       id: "PLO_DkCSmTKMOCP4X8YxHQf5ZZdh0JpgIn",
       icon: <Brain className="h-5 w-5" />,
-      color: "text-purple-300",
     },
     {
       name: "Life design",
@@ -1030,7 +1022,6 @@ const playlists = {
       desc: "Big choices, meaning, and living coherently",
       id: "PLO_DkCSmTKMMCWo7yeAyHVKzvy4fTXlju",
       icon: <Compass className="h-5 w-5" />,
-      color: "text-pink-300",
     },
     {
       name: "Data science",
@@ -1038,7 +1029,6 @@ const playlists = {
       desc: "DS/ML, A/B testing, analytics",
       id: "PLO_DkCSmTKMPBTVU2zy8JH-I6e6L8lx-l",
       icon: <BarChart2 className="h-5 w-5" />,
-      color: "text-cyan-300",
     },
     {
       name: "Life in the US",
@@ -1046,7 +1036,6 @@ const playlists = {
       desc: "Culture notes, dating, staying vs. going home",
       id: "PLO_DkCSmTKMNDn0jfOu8pB0mPxqCsr4lU",
       icon: <MapPin className="h-5 w-5" />,
-      color: "text-teal-300",
     },
   ],
   zh: [
@@ -1056,7 +1045,6 @@ const playlists = {
       desc: "AI趋势、AGI与职业冲击",
       id: "PLO_DkCSmTKMNecQCgUHqTYtmwPWGUvDG_",
       icon: <Zap className="h-5 w-5" />,
-      color: "text-amber-300",
     },
     {
       name: "AI工具实战",
@@ -1064,7 +1052,6 @@ const playlists = {
       desc: "Cursor、Vibe Coding、工作流",
       id: "PLO_DkCSmTKMPdBSW6bJH_KduR9-kzVTNF",
       icon: <Wrench className="h-5 w-5" />,
-      color: "text-sky-300",
     },
     {
       name: "求职与面试",
@@ -1072,7 +1059,6 @@ const playlists = {
       desc: "简历、DS/PM/Eng面试全攻略",
       id: "PLO_DkCSmTKMN5IGvvtiNU9Q1MskoN_RHb",
       icon: <Briefcase className="h-5 w-5" />,
-      color: "text-green-300",
     },
     {
       name: "职场技能",
@@ -1080,7 +1066,6 @@ const playlists = {
       desc: "升职加薪、汇报、情绪价值",
       id: "PLO_DkCSmTKMPS6P2dKYHRethlKqmIQw0h",
       icon: <TrendingUp className="h-5 w-5" />,
-      color: "text-lime-300",
     },
     {
       name: "大厂观察",
@@ -1088,7 +1073,6 @@ const playlists = {
       desc: "FAANG内幕、VP路径、裁员",
       id: "PLO_DkCSmTKMMws_nKzRMsIx5nvP5Hl68R",
       icon: <Building2 className="h-5 w-5" />,
-      color: "text-rose-300",
     },
     {
       name: "创业实战",
@@ -1096,7 +1080,6 @@ const playlists = {
       desc: "创始人访谈、融资、产品增长",
       id: "PLO_DkCSmTKMOPSv4YWDKC7-gr88CyHf_3",
       icon: <Rocket className="h-5 w-5" />,
-      color: "text-orange-300",
     },
     {
       name: "财富与投资",
@@ -1104,15 +1087,13 @@ const playlists = {
       desc: "财富自由、投资策略、理财",
       id: "PLO_DkCSmTKMPrqKZDSrq9scXhcyrcib8E",
       icon: <Landmark className="h-5 w-5" />,
-      color: "text-yellow-300",
     },
     {
       name: "思维与决策",
       count: 130,
-      desc: "思维模型、判断力、认知升级",
+      desc: "思维模型、判断力、决策质量",
       id: "PLO_DkCSmTKMOCP4X8YxHQf5ZZdh0JpgIn",
       icon: <Brain className="h-5 w-5" />,
-      color: "text-purple-300",
     },
     {
       name: "人生设计",
@@ -1120,7 +1101,6 @@ const playlists = {
       desc: "重大选择、意义感、自洽",
       id: "PLO_DkCSmTKMMCWo7yeAyHVKzvy4fTXlju",
       icon: <Compass className="h-5 w-5" />,
-      color: "text-pink-300",
     },
     {
       name: "数据科学",
@@ -1128,7 +1108,6 @@ const playlists = {
       desc: "DS/ML技术、AB实验、数据分析",
       id: "PLO_DkCSmTKMPBTVU2zy8JH-I6e6L8lx-l",
       icon: <BarChart2 className="h-5 w-5" />,
-      color: "text-cyan-300",
     },
     {
       name: "美国生活",
@@ -1136,7 +1115,6 @@ const playlists = {
       desc: "文化观察、约会、回国vs留美",
       id: "PLO_DkCSmTKMNDn0jfOu8pB0mPxqCsr4lU",
       icon: <MapPin className="h-5 w-5" />,
-      color: "text-teal-300",
     },
   ],
 };
@@ -1243,8 +1221,8 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,191,36,0.08)_0%,rgba(11,15,26,0)_22rem),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:100%_100%,72px_72px,72px_72px]" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,15,26,0)_0%,#0B0F1A_78%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,191,36,0.055)_0%,rgba(11,15,26,0)_18rem)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-amber-300/25" />
 
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
         <div className="container py-4">
@@ -1425,27 +1403,16 @@ export default function Home() {
               >
                 {lang === "en" ? (
                   <>
-                    <span className="block">
-                      I don't worship abstract intelligence;
-                    </span>
+                    <span className="block">When execution gets cheaper,</span>
                     <span className="mt-3 block text-zinc-200">
-                      I care about judgment meeting reality early,
-                    </span>
-                    <span className="block text-zinc-200">
-                      and systems that compound.
+                      judgment becomes more expensive.
                     </span>
                   </>
                 ) : (
                   <>
-                    <span className="block">我不迷信抽象的聪明；</span>
+                    <span className="block">当执行越来越便宜，</span>
                     <span className="mt-3 block text-zinc-200">
-                      我更在意的是，
-                    </span>
-                    <span className="block text-zinc-200">
-                      让判断尽早穿透现实，
-                    </span>
-                    <span className="block text-zinc-200">
-                      并长成复利的系统。
+                      判断会越来越贵。
                     </span>
                   </>
                 )}
@@ -1453,8 +1420,8 @@ export default function Home() {
 
               <p className="mt-7 max-w-2xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
                 {lang === "en"
-                  ? "I study how people and organizations make better decisions in complex systems, then turn those decisions into products, growth, and AI-native systems."
-                  : "我是孙煜征。我长期关注一件事：人在复杂系统里如何形成更好的判断，并把判断落到产品、增长、组织能力和 AI 原生系统里。"}
+                  ? "I work across AI education, company training, and long-form conversations with builders and executives. The common thread is structure: finding where a problem is really stuck, then turning that judgment into output."
+                  : "我是孙煜征，课代表立正。我做 AI 教育、企业培训和科技访谈。它们共享同一件事：看清问题卡在哪里，再把判断变成课程、产品、组织方法和真实产出。"}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2">
@@ -1574,12 +1541,13 @@ export default function Home() {
                   fetchPriority="high"
                 />
               </div>
-              <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10">
+              <div className="mt-5 border-y border-white/10 py-4">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                 {[
                   {
                     value: "300K+",
                     label:
-                      lang === "en" ? "high-signal followers" : "高质量粉丝",
+                      lang === "en" ? "content audience" : "内容受众",
                   },
                   {
                     value: "3,000+",
@@ -1595,15 +1563,16 @@ export default function Home() {
                     label: lang === "en" ? "course rating" : "课程评分",
                   },
                 ].map(item => (
-                  <div key={item.label} className="bg-[#0B0F1A]/95 p-4">
-                    <div className="font-mono text-xl text-amber-300">
+                  <div key={item.label}>
+                    <div className="font-mono text-lg text-zinc-100">
                       {item.value}
                     </div>
-                    <div className="mt-1 text-xs leading-5 text-zinc-400">
+                    <div className="mt-1 text-xs leading-5 text-zinc-500">
                       {item.label}
                     </div>
                   </div>
                 ))}
+                </div>
               </div>
               <div className="mt-4 border-l border-white/15 pl-4">
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
@@ -1611,8 +1580,8 @@ export default function Home() {
                 </p>
                 <p className="mt-2 text-sm leading-6 text-zinc-300">
                   {lang === "en"
-                    ? "What does it take for ambitious people and teams to become genuinely AI-native?"
-                    : "有野心的个体和组织，要怎样才算真正 AI 原生？"}
+                    ? "When AI makes execution cheap, what kind of human judgment becomes more valuable?"
+                    : "AI 让执行变便宜之后，什么样的判断会持续变贵？"}
                 </p>
               </div>
             </div>
@@ -1627,20 +1596,20 @@ export default function Home() {
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">
                 {lang === "en"
-                  ? "My work sits between decision science, growth, and AI-native building."
-                  : "我的工作围绕决策科学、增长实验和 AI 原生构建展开。"}
+                  ? "My work connects decision science, growth, AI, and organizational practice."
+                  : "我的工作把决策、增长、AI 和组织实践放在同一个问题里。"}
               </h2>
             </div>
             <div className="space-y-5 text-base leading-8 text-zinc-300">
               <p>
                 {lang === "en"
-                  ? "From the outside, the work looks like courses, interviews, books, company sessions, and a community. Underneath, it is one continuous project: helping ambitious people build better mental models and convert them into action."
-                  : "从外面看，它是课程、访谈、书、企业培训和社群；底层其实是同一个项目：帮助有野心的人建立更好的世界模型，并把模型转化成行动。"}
+                  ? "The visible forms are courses, interviews, books, company sessions, and a community. The underlying practice is consistent: read the structure, locate the constraint, and bring feedback closer to the work."
+                  : "外在形式有课程、访谈、书、企业培训和社群。背后是一条稳定的工作方式：看结构，找约束，把反馈尽快接回行动。"}
               </p>
               <p>
                 {lang === "en"
-                  ? "That is why growth and A/B testing matter so much to me. They are not just data science techniques. They are a disciplined way to ask reality for feedback."
-                  : "所以增长和 A/B testing 对我很重要。它们不只是数据科学技巧，而是一套有纪律地向现实要反馈的方法。"}
+                  ? "That is why growth and A/B testing matter so much to me. They are disciplined ways to ask reality for feedback before a story gets too comfortable."
+                  : "所以增长和 A/B testing 对我很重要。它们能在故事变得太顺之前，逼我们先向现实要反馈。"}
               </p>
             </div>
           </div>
@@ -1711,8 +1680,8 @@ export default function Home() {
               </h2>
               <p className="mt-5 max-w-md text-sm leading-7 text-zinc-400">
                 {lang === "en"
-                  ? "This page is not meant to read like a resume. These are the beliefs my writing, teaching, and company work keep returning to."
-                  : "这个页面不应该只是简历。这些主张，是我写作、教学和公司项目里反复回到的东西。"}
+                  ? "A resume gives the sequence. These are the beliefs my writing, teaching, and company work keep returning to."
+                  : "简历交代顺序。这里放的是我写作、教学和公司项目里反复回到的主张。"}
               </p>
             </div>
             <div className="divide-y divide-white/10 border-y border-white/10">
@@ -1757,7 +1726,7 @@ export default function Home() {
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
                   {lang === "en"
                     ? "Where it becomes practice"
-                    : "这些主张变成什么"}
+                    : "主张落到哪里"}
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
                   {lang === "en"
@@ -1781,36 +1750,33 @@ export default function Home() {
               </Button>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div className="divide-y divide-white/10 border-y border-white/10">
               {practicePaths[lang].map(item => (
                 <a
                   key={item.title}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex min-h-[19rem] flex-col rounded-xl border border-white/10 bg-white/[0.04] p-6 transition duration-300 hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/[0.07]"
+                  className="group grid gap-5 py-7 transition md:grid-cols-[13rem_1fr_12rem] md:items-start"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-amber-300">
-                      {item.icon}
-                      {item.label}
-                    </div>
-                    <ExternalLink className="h-4 w-4 text-zinc-600 transition group-hover:text-amber-300" />
+                  <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500 transition group-hover:text-amber-300">
+                    {item.icon}
+                    {item.label}
                   </div>
-                  <h3 className="mt-5 text-2xl font-semibold text-white">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 min-h-[5.25rem] text-sm leading-7 text-zinc-400">
-                    {item.detail}
-                  </p>
-                  <div className="mt-6 border-t border-white/10 pt-4">
-                    <p className="text-sm leading-6 text-zinc-300">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 max-w-2xl text-sm leading-7 text-zinc-400">
+                      {item.detail}
+                    </p>
+                    <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300">
                       {item.proof}
                     </p>
-                    <p className="mt-3 inline-flex items-center gap-1 font-mono text-xs text-amber-300">
-                      {item.cta}
-                      <ArrowRight className="h-3 w-3" />
-                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 font-mono text-xs text-amber-300 md:justify-end">
+                    {item.cta}
+                    <ArrowRight className="h-3 w-3 transition group-hover:translate-x-0.5" />
                   </div>
                 </a>
               ))}
@@ -1901,7 +1867,7 @@ export default function Home() {
                 className="relative flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.04] transition-colors hover:border-amber-300/40"
               >
                 <CardContent className="flex h-full flex-col pt-7 pb-6">
-                  <p className="min-h-[11rem] text-base leading-8 text-zinc-200">
+                  <p className="text-base leading-8 text-zinc-200">
                     "{item.quote}"
                   </p>
                   <div className="flex items-start gap-3 border-t border-white/10 pt-4">
@@ -1952,7 +1918,7 @@ export default function Home() {
                       />
                     ))}
                   </div>
-                  <p className="min-h-[12.25rem] text-sm leading-7 text-zinc-300">
+                  <p className="text-sm leading-7 text-zinc-300">
                     "{item.quote}"
                   </p>
                   <div className="flex items-center gap-3 border-t border-white/10 pt-4">
@@ -2021,8 +1987,8 @@ export default function Home() {
                 </h2>
                 <p className="mt-3 max-w-2xl text-zinc-300">
                   {lang === "en"
-                    ? "The best conversations are not decoration. They connect research, operators, capital, data, and creator-led communities back into the same learning loop."
-                    : "好的对话不是装饰。它们把研究、企业、资本、数据和创作者社群，重新接回同一个学习循环。"}
+                    ? "The best conversations connect research, operators, capital, data, and creator-led communities back into the same learning loop."
+                    : "好的对话会把研究、企业、资本、数据和创作者社群，重新接回同一个学习循环。"}
                 </p>
               </div>
             </div>
@@ -2040,7 +2006,7 @@ export default function Home() {
                 <p className="mt-3 text-sm leading-6 text-zinc-400">
                   {lang === "en"
                     ? "Some are Chinese-language interviews, some are English panels, and some are company rooms. I group them by the kind of judgment they bring into the work."
-                    : "有些是中文深访，有些是英文 panel，有些是企业内部现场。我把它们按嘉宾带来的判断类型放在一起，而不是按频道或语言切开。"}
+                    : "这里有中文深访、英文 panel，也有企业内部现场。我按嘉宾带来的判断类型组织它们。"}
                 </p>
               </div>
 
@@ -2066,7 +2032,7 @@ export default function Home() {
                     key={category.label}
                     className="flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5"
                   >
-                    <div className="min-h-[8.75rem]">
+                    <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
                         {category.label}
                       </p>
@@ -2198,7 +2164,9 @@ export default function Home() {
                 className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/10"
               >
                 <div className="flex items-center justify-between">
-                  <div className={pl.color}>{pl.icon}</div>
+                  <div className="text-zinc-500 transition group-hover:text-amber-300">
+                    {pl.icon}
+                  </div>
                   <span className="rounded-full border border-white/10 bg-white/10 px-2 py-0.5 text-xs text-zinc-400">
                     {lang === "en" ? `${pl.count} eps` : `${pl.count} 期`}
                   </span>

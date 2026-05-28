@@ -50,7 +50,7 @@
 
 :root {
   --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: "Space Grotesk", "Noto Sans SC", sans-serif;
+  --font-display: "Geist", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-blue-50);
   --sidebar-primary: var(--color-blue-600);

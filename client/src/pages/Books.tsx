@@ -202,7 +202,7 @@ export default function Books() {
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
               {lang === "en"
                 ? "One book is written for the data and growth world. The other is written for Chinese professionals trying to turn work into a compounding asset."
-                : "一本写给数据和增长世界，一本写给中文职场人。它们不是两个身份，而是同一个问题在不同语境里的展开。"}
+                : "一本写给数据和增长世界，一本写给中文职场人。它们共享同一个问题，只是落在不同语境里。"}
             </p>
           </div>
 

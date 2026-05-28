@@ -32,7 +32,7 @@ Yuzheng Sun works across the following areas:
 
 - 300,000+ subscribers across YouTube (@kedaibiao) and Bilibili
 - Creator of "Build with AI" course, which has helped 2,000+ students and is rated 4.9/5 on Maven
-- Author of "关于ChatGPT最重要的五个问题" (The 5 Most Important Questions About ChatGPT), one of the most influential AI articles in the Chinese internet, published in 2023 with predictions that have largely come true
+- Author of "关于ChatGPT最重要的五个问题" (The 5 Most Important Questions About ChatGPT), a widely discussed 2023 article about AI's long-term implications
 - Hundreds of guest interviews with leading figures in AI, tech, and academia
 
 ## Notable Endorsements

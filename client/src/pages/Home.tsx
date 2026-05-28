@@ -109,7 +109,7 @@ const career = {
     },
     {
       company: "Tencent IEG",
-      role: "Deputy Director, Data & AI",
+      role: "Vice Director, Data & AI",
       note: "Two consecutive five-star performance ratings. Led a 30-person data and AI org.",
     },
     { company: "Meta (Facebook)", role: "Data Scientist", note: "" },
@@ -123,7 +123,7 @@ const career = {
     },
     {
       company: "腾讯 IEG (Tencent IEG)",
-      role: "副总监 · 数据与 AI (Deputy Director, Data & AI)",
+      role: "副总监 · 数据与 AI (Vice Director, Data & AI)",
       note: "双五星绩效 · 管理 30 人数据与 AI 团队",
     },
     {
@@ -161,7 +161,7 @@ const throughline = {
     },
     {
       era: "Tencent IEG",
-      role: "Director, Data & AI",
+      role: "Vice Director, Data & AI",
       title: "Leadership made the system larger than any single analysis.",
       detail:
         "Running data and AI teams made me think harder about talent density, communication bandwidth, incentives, and the cost of unclear direction.",
@@ -205,7 +205,7 @@ const throughline = {
     },
     {
       era: "腾讯 IEG",
-      role: "数据与 AI 总监",
+      role: "数据与 AI 副总监",
       title: "管理经历让我看到分析之外的系统。",
       detail:
         "带数据与 AI 团队以后，我更在意人才密度、沟通带宽、组织激励，以及方向不清晰本身的成本。",
@@ -1403,8 +1403,10 @@ export default function Home() {
               >
                 {lang === "en" ? (
                   <>
-                    <span className="block">When execution gets cheaper,</span>
-                    <span className="mt-3 block text-zinc-200">
+                    <span className="block [text-wrap:balance]">
+                      When execution gets cheaper,
+                    </span>
+                    <span className="mt-3 block text-zinc-200 [text-wrap:balance]">
                       judgment becomes more expensive.
                     </span>
                   </>
@@ -1541,8 +1543,7 @@ export default function Home() {
                   fetchPriority="high"
                 />
               </div>
-              <div className="mt-5 border-y border-white/10 py-4">
-                <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-4">
                 {[
                   {
                     value: "300K+",
@@ -1563,16 +1564,13 @@ export default function Home() {
                     label: lang === "en" ? "course rating" : "课程评分",
                   },
                 ].map(item => (
-                  <div key={item.label}>
-                    <div className="font-mono text-lg text-zinc-100">
+                  <div key={item.label} className="flex items-baseline gap-1.5">
+                    <span className="font-mono text-sm text-zinc-300">
                       {item.value}
-                    </div>
-                    <div className="mt-1 text-xs leading-5 text-zinc-500">
-                      {item.label}
-                    </div>
+                    </span>
+                    <span className="text-xs text-zinc-500">{item.label}</span>
                   </div>
                 ))}
-                </div>
               </div>
               <div className="mt-4 border-l border-white/15 pl-4">
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
@@ -1592,7 +1590,7 @@ export default function Home() {
           <div className="grid gap-8 border-y border-white/10 py-8 md:grid-cols-[0.9fr_1.1fr] md:py-10">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
-                {lang === "en" ? "Quick read" : "快速读懂"}
+                {lang === "en" ? "In one line" : "一句话"}
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">
                 {lang === "en"
@@ -1680,8 +1678,8 @@ export default function Home() {
               </h2>
               <p className="mt-5 max-w-md text-sm leading-7 text-zinc-400">
                 {lang === "en"
-                  ? "A resume gives the sequence. These are the beliefs my writing, teaching, and company work keep returning to."
-                  : "简历交代顺序。这里放的是我写作、教学和公司项目里反复回到的主张。"}
+                  ? "A résumé lists the sequence. These are the beliefs my writing, teaching, and company work keep returning to."
+                  : "履历讲的是经历的先后；这里是我在写作、教学和公司项目里反复回到的判断。"}
               </p>
             </div>
             <div className="divide-y divide-white/10 border-y border-white/10">
@@ -1836,25 +1834,25 @@ export default function Home() {
           <div className="mb-10 max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
               {lang === "en"
-                ? "Two kinds of trust from people close to the work"
-                : "两类真实接触后的信号"}
+                ? "Two perspectives from people close to the work"
+                : "来自一线的两种视角"}
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
               {lang === "en"
-                ? "Trust from senior peers and students"
-                : "行业大佬与学员给出的信任"}
+                ? "How senior peers and students see it"
+                : "行业前辈与学员，怎么看这件事"}
             </h2>
           </div>
 
           <div className="mb-4 flex items-end gap-4">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/90">
-                {lang === "en" ? "01 / Endorsements" : "01 / 行业评价"}
+                {lang === "en" ? "01 / Industry insight" : "01 / 行业洞见"}
               </p>
               <h3 className="mt-2 text-xl font-semibold text-white">
                 {lang === "en"
-                  ? "Industry leaders and collaborators"
-                  : "行业大佬与合作方"}
+                  ? "Senior peers and collaborators"
+                  : "行业前辈与合作方"}
               </h3>
             </div>
             <div className="mb-2 h-px flex-1 bg-white/10" />
@@ -2056,37 +2054,21 @@ export default function Home() {
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="group flex gap-3 rounded-lg border border-white/0 p-2.5 transition hover:border-white/10 hover:bg-white/[0.04]"
+                          className="group flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5 last:border-0 hover:border-white/10"
                         >
-                          {"image" in item && item.image ? (
-                            <img
-                              src={item.image}
-                              alt=""
-                              className="h-16 w-24 shrink-0 rounded-md border border-white/10 object-cover opacity-85 transition group-hover:opacity-100"
-                              loading="eager"
-                              width={192}
-                              height={128}
-                            />
-                          ) : (
-                            <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                              {item.name.slice(0, 2)}
-                            </div>
-                          )}
                           <div className="min-w-0 flex-1">
-                            <div className="flex items-start justify-between gap-2">
-                              <p className="text-sm font-semibold leading-5 text-white">
-                                {item.name}
-                              </p>
-                              {item.href.startsWith("http") ? (
-                                <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
-                              ) : (
-                                <ArrowRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
-                              )}
-                            </div>
-                            <p className="mt-0.5 text-xs leading-5 text-zinc-500">
+                            <p className="truncate text-sm font-medium leading-5 text-zinc-100 transition group-hover:text-white">
+                              {item.name}
+                            </p>
+                            <p className="mt-0.5 truncate text-xs leading-5 text-zinc-500">
                               {item.role}
                             </p>
                           </div>
+                          {item.href.startsWith("http") ? (
+                            <ExternalLink className="h-3.5 w-3.5 shrink-0 translate-y-0.5 text-zinc-600 transition group-hover:text-amber-300" />
+                          ) : (
+                            <ArrowRight className="h-3.5 w-3.5 shrink-0 translate-y-0.5 text-zinc-600 transition group-hover:text-amber-300" />
+                          )}
                         </a>
                       ))}
                     </div>
@@ -2154,33 +2136,32 @@ export default function Home() {
               </a>
             </Button>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid border-t border-white/10 md:grid-cols-2 md:gap-x-10">
             {playlists[lang].map(pl => (
               <a
                 key={pl.id}
                 href={`https://www.youtube.com/playlist?list=${pl.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-5 transition duration-300 hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-white/10"
+                className="group flex items-center gap-4 border-b border-white/[0.07] py-4 transition hover:border-white/15"
               >
-                <div className="flex items-center justify-between">
-                  <div className="text-zinc-500 transition group-hover:text-amber-300">
-                    {pl.icon}
-                  </div>
-                  <span className="rounded-full border border-white/10 bg-white/10 px-2 py-0.5 text-xs text-zinc-400">
-                    {lang === "en" ? `${pl.count} eps` : `${pl.count} 期`}
-                  </span>
+                <div className="shrink-0 text-zinc-600 transition group-hover:text-amber-300">
+                  {pl.icon}
                 </div>
-                <div>
-                  <h3 className="font-semibold text-white">{pl.name}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-zinc-400">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <h3 className="truncate font-medium text-zinc-100 transition group-hover:text-white">
+                      {pl.name}
+                    </h3>
+                    <span className="shrink-0 font-mono text-xs text-zinc-500">
+                      {lang === "en" ? `${pl.count} eps` : `${pl.count} 期`}
+                    </span>
+                  </div>
+                  <p className="mt-0.5 truncate text-xs leading-5 text-zinc-500">
                     {pl.desc}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-amber-300/50 transition group-hover:text-amber-300">
-                  {lang === "en" ? "Watch on YouTube" : "在 YouTube 观看"}{" "}
-                  <ArrowRight className="h-3 w-3" />
-                </div>
+                <ArrowRight className="h-4 w-4 shrink-0 text-zinc-700 transition group-hover:text-amber-300" />
               </a>
             ))}
           </div>

@@ -2054,21 +2054,37 @@ export default function Home() {
                               ? "noopener noreferrer"
                               : undefined
                           }
-                          className="group flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5 last:border-0 hover:border-white/10"
+                          className="group flex gap-3 rounded-lg border border-white/0 p-2.5 transition hover:border-white/10 hover:bg-white/[0.04]"
                         >
+                          {"image" in item && item.image ? (
+                            <img
+                              src={item.image}
+                              alt=""
+                              className="h-16 w-24 shrink-0 rounded-md border border-white/10 object-cover opacity-85 transition group-hover:opacity-100"
+                              loading="eager"
+                              width={192}
+                              height={128}
+                            />
+                          ) : (
+                            <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+                              {item.name.slice(0, 2)}
+                            </div>
+                          )}
                           <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium leading-5 text-zinc-100 transition group-hover:text-white">
-                              {item.name}
-                            </p>
-                            <p className="mt-0.5 truncate text-xs leading-5 text-zinc-500">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-sm font-semibold leading-5 text-white">
+                                {item.name}
+                              </p>
+                              {item.href.startsWith("http") ? (
+                                <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
+                              ) : (
+                                <ArrowRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
+                              )}
+                            </div>
+                            <p className="mt-0.5 text-xs leading-5 text-zinc-500">
                               {item.role}
                             </p>
                           </div>
-                          {item.href.startsWith("http") ? (
-                            <ExternalLink className="h-3.5 w-3.5 shrink-0 translate-y-0.5 text-zinc-600 transition group-hover:text-amber-300" />
-                          ) : (
-                            <ArrowRight className="h-3.5 w-3.5 shrink-0 translate-y-0.5 text-zinc-600 transition group-hover:text-amber-300" />
-                          )}
                         </a>
                       ))}
                     </div>

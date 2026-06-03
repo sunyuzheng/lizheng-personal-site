@@ -1576,13 +1576,8 @@ export default function Home() {
                 ))}
               </div>
               <div className="mt-4 border-l border-white/15 pl-4">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-500">
-                  {lang === "en" ? "Current question" : "当前问题"}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-zinc-300">
-                  {lang === "en"
-                    ? "When AI makes execution cheap, what kind of human judgment becomes more valuable?"
-                    : "AI 让执行变便宜之后，什么样的判断会持续变贵？"}
+                <p className="text-sm leading-6 text-zinc-300">
+                  当前问题：构建适配AI的全新生产关系和工作流程
                 </p>
               </div>
             </div>

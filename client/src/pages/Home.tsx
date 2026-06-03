@@ -1536,11 +1536,14 @@ export default function Home() {
               <div className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03]">
                 <img
                   src="/profile.jpg"
-                  alt="Yuzheng Sun"
+                  alt={
+                    lang === "en"
+                      ? "Yuzheng Sun speaking with the founders of Acquired"
+                      : "孙煜征与 Acquired Podcast 两位创始人对谈"
+                  }
                   className="aspect-[1.02] w-full object-cover"
-                  width={1446}
-                  height={1445}
-                  fetchPriority="high"
+                  width={1200}
+                  height={1200}
                 />
               </div>
               <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-4">

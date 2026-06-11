@@ -1598,13 +1598,13 @@ export default function Home() {
             <div className="mb-2 h-px flex-1 bg-white/10" />
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-5 lg:grid-cols-3 lg:grid-rows-[1fr_auto]">
             {endorsements[lang].map(item => (
               <Card
                 key={item.name}
-                className="relative flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.04] transition-colors hover:border-amber-300/40"
+                className="relative flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.04] transition-colors hover:border-amber-300/40 lg:grid lg:grid-rows-subgrid lg:row-span-2"
               >
-                <CardContent className="flex h-full flex-col pt-7 pb-6">
+                <CardContent className="flex h-full flex-col pt-7 pb-6 lg:grid lg:grid-rows-subgrid lg:row-span-2">
                   <p className="flex-1 pb-4 text-base leading-8 text-zinc-200">
                     "{item.quote}"
                   </p>

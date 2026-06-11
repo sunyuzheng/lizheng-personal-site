@@ -1605,7 +1605,7 @@ export default function Home() {
                 className="relative flex h-full flex-col overflow-hidden border-white/10 bg-white/[0.04] transition-colors hover:border-amber-300/40"
               >
                 <CardContent className="flex h-full flex-col pt-7 pb-6">
-                  <p className="text-base leading-8 text-zinc-200">
+                  <p className="flex-1 pb-4 text-base leading-8 text-zinc-200">
                     "{item.quote}"
                   </p>
                   <div className="flex items-start gap-3 border-t border-white/10 pt-4">
@@ -1647,8 +1647,8 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             {testimonials[lang].map(item => (
               <Card key={item.name} className="border-white/10 bg-white/[0.04]">
-                <CardContent className="flex flex-col py-6">
-                  <p className="text-sm leading-7 text-zinc-300">
+                <CardContent className="flex h-full flex-col py-6">
+                  <p className="flex-1 pb-4 text-sm leading-7 text-zinc-300">
                     "{item.quote}"
                   </p>
                   <div className="flex items-center gap-3 border-t border-white/10 pt-4">
@@ -1749,7 +1749,7 @@ export default function Home() {
                       key={category.label}
                       className="flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5"
                     >
-                      <div>
+                      <div className="flex-1 pb-3">
                         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400">
                           {category.label}
                         </p>

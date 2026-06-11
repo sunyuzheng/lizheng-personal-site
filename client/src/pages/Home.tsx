@@ -11,14 +11,11 @@ import {
   Youtube,
   Linkedin,
   Mail,
-  BookOpen,
   Users,
-  Star,
   TrendingUp,
-  Award,
   Briefcase,
   GraduationCap,
-  MessageSquare,
+  ChevronDown,
   Menu,
   X,
   ArrowRight,
@@ -37,103 +34,6 @@ import {
   Smartphone,
   Apple,
 } from "lucide-react";
-
-const stats = {
-  en: [
-    { value: "300K+", label: "Audience across platforms" },
-    { value: "3,000+", label: "Paying students" },
-    { value: "4.9/5", label: "Course rating" },
-    { value: "200+", label: "Conversations with tech leaders" },
-  ],
-  zh: [
-    { value: "300K+", label: "跨平台内容受众" },
-    { value: "3000+", label: "付费学员" },
-    { value: "4.9/5", label: "课程评分" },
-    { value: "200+", label: "科技领袖对话" },
-  ],
-};
-
-const highlights = {
-  en: [
-    {
-      icon: <Award className="h-5 w-5 text-amber-300" />,
-      title: "AI-Builders course",
-      desc: "A structured course for professionals who want to turn AI from tool use into reliable output. Recommended by Prof. Jia Liu of Tsinghua University.",
-    },
-    {
-      icon: <BookOpen className="h-5 w-5 text-amber-300" />,
-      title: "300+ pages of original material",
-      desc: "12 hours of carefully produced video — first principles and real-world practice, end to end.",
-    },
-    {
-      icon: <TrendingUp className="h-5 w-5 text-amber-300" />,
-      title: "8 hands-on projects",
-      desc: "Go from thinking to shipping — build a compounding growth curve as a builder.",
-    },
-    {
-      icon: <Users className="h-5 w-5 text-amber-300" />,
-      title: "Lifetime community support",
-      desc: "One-time purchase. Ongoing Q&A, new cohorts, and content updates.",
-    },
-  ],
-  zh: [
-    {
-      icon: <Award className="h-5 w-5 text-amber-300" />,
-      title: "AI-Builders 课程",
-      desc: "面向专业人士的系统课程，帮助学员把 AI 从工具使用落到稳定产出。清华大学刘嘉教授推荐。",
-    },
-    {
-      icon: <BookOpen className="h-5 w-5 text-amber-300" />,
-      title: "300+ 页原创课件",
-      desc: "12小时精心录制视频，系统打通原理与实战",
-    },
-    {
-      icon: <TrendingUp className="h-5 w-5 text-amber-300" />,
-      title: "8个实战项目",
-      desc: "从思维到产品交付，建立 Builder 增长曲线",
-    },
-    {
-      icon: <Users className="h-5 w-5 text-amber-300" />,
-      title: "终身社区支持",
-      desc: "一次购买，长期答疑与内容更新",
-    },
-  ],
-};
-
-const career = {
-  en: [
-    {
-      company: "Statsig (acquired by OpenAI)",
-      role: "Principal Data Scientist + Sole Evangelist",
-      note: "Early team member. Statsig was acquired by OpenAI in 2025.",
-    },
-    {
-      company: "Tencent IEG",
-      role: "Vice Director, Data & AI",
-      note: "Two consecutive five-star performance ratings. Led a 30-person data and AI org.",
-    },
-    { company: "Meta (Facebook)", role: "Data Scientist", note: "" },
-    { company: "Amazon", role: "Economist", note: "" },
-  ],
-  zh: [
-    {
-      company: "Statsig (被 OpenAI 收购)",
-      role: "首席数据科学家 + 唯一布道师 (Principal DS + Sole Evangelist)",
-      note: "早期成员，2025 年被 OpenAI 收购",
-    },
-    {
-      company: "腾讯 IEG (Tencent IEG)",
-      role: "副总监 · 数据与 AI (Vice Director, Data & AI)",
-      note: "双五星绩效 · 管理 30 人数据与 AI 团队",
-    },
-    {
-      company: "Meta (Facebook)",
-      role: "数据科学家 (Data Scientist)",
-      note: "",
-    },
-    { company: "Amazon", role: "经济学家 (Economist)", note: "" },
-  ],
-};
 
 const throughline = {
   en: [
@@ -322,7 +222,8 @@ const practicePaths = {
       title: "Enterprise AI training",
       detail:
         "Custom sessions for teams at Tencent, DoorDash, Pinterest, 1Password, Amazon, and more, centered on context architecture and real workflows.",
-      proof: "AI transformation as an operating habit, with workshop time tied to real workflows",
+      proof:
+        "AI transformation as an operating habit, with workshop time tied to real workflows",
       href: "https://corp-training.ai-builders.com",
       cta: "Enterprise inquiry",
     },
@@ -403,8 +304,7 @@ const endorsements = {
   ],
   zh: [
     {
-      quote:
-        "立正很擅长把 AI、产品判断和个人成长连接成一套可实践的学习系统。",
+      quote: "立正很擅长把 AI、产品判断和个人成长连接成一套可实践的学习系统。",
       name: "戴雨森",
       title: "真格基金合伙人",
       subtitle: "ZhenFund Partner",
@@ -428,153 +328,6 @@ const endorsements = {
       subtitle: "OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
-    },
-  ],
-};
-
-const guests = {
-  en: [
-    {
-      id: "7ej2r7XysKc",
-      name: "Shuchao Bi",
-      title: "Head of Post-Training · Multimodal",
-      company: "OpenAI",
-      videoUrl: "https://www.youtube.com/watch?v=7ej2r7XysKc",
-    },
-    {
-      id: "RRSMjC_BF8Y",
-      name: "Ethan Evans",
-      title: "Former VP",
-      company: "Amazon",
-      videoUrl: "https://www.youtube.com/watch?v=RRSMjC_BF8Y",
-    },
-    {
-      id: "GIv0I-34aaI",
-      name: "Reynold Xin",
-      title: "Co-founder",
-      company: "Databricks",
-      videoUrl: "https://www.youtube.com/watch?v=GIv0I-34aaI",
-    },
-    {
-      id: "dymM40bVIhQ",
-      name: "Yuandong Tian",
-      title: "Research Scientist",
-      company: "Meta AI (FAIR)",
-      videoUrl: "https://www.youtube.com/watch?v=dymM40bVIhQ",
-    },
-    {
-      id: "awaZBWTss-4",
-      name: "Howie Xu",
-      title: "Chief AI Officer",
-      company: "Gen Digital",
-      videoUrl: "https://www.youtube.com/watch?v=awaZBWTss-4",
-    },
-    {
-      id: "iw2QYZeVlOQ",
-      name: "Vijaye Raji (VJ)",
-      title: "Founder & CEO",
-      company: "Statsig · acquired by OpenAI",
-      videoUrl: "https://www.youtube.com/watch?v=iw2QYZeVlOQ",
-    },
-    {
-      id: "CTcMvIZFQcw",
-      name: "Leon",
-      title: "Anonymous Silicon Valley exec",
-      company: "Silicon Valley",
-      videoUrl: "https://www.youtube.com/watch?v=CTcMvIZFQcw",
-    },
-    {
-      id: "BnL5qaBzmR0",
-      name: "Ryo Lu",
-      title: "Head of Design",
-      company: "Cursor",
-      videoUrl: "https://www.youtube.com/watch?v=BnL5qaBzmR0",
-    },
-    {
-      id: "3t2I_BMG9gU",
-      name: "Dai Yusen",
-      title: "Partner",
-      company: "ZhenFund",
-      videoUrl: "https://www.youtube.com/watch?v=3t2I_BMG9gU",
-    },
-    {
-      id: "UndcL0uEmYs",
-      name: "Prof. Zhou Yu",
-      title: "Professor of AI",
-      company: "Columbia University",
-      videoUrl: "https://www.youtube.com/watch?v=UndcL0uEmYs",
-    },
-  ],
-  zh: [
-    {
-      id: "7ej2r7XysKc",
-      name: "毕书超 Shuchao Bi",
-      title: "Head of Post-Training · Multimodal",
-      company: "OpenAI",
-      videoUrl: "https://www.youtube.com/watch?v=7ej2r7XysKc",
-    },
-    {
-      id: "RRSMjC_BF8Y",
-      name: "Ethan Evans",
-      title: "前副总裁 (Former VP)",
-      company: "Amazon",
-      videoUrl: "https://www.youtube.com/watch?v=RRSMjC_BF8Y",
-    },
-    {
-      id: "GIv0I-34aaI",
-      name: "Reynold Xin",
-      title: "联合创始人 (Co-founder)",
-      company: "Databricks",
-      videoUrl: "https://www.youtube.com/watch?v=GIv0I-34aaI",
-    },
-    {
-      id: "dymM40bVIhQ",
-      name: "田渊栋 Yuandong Tian",
-      title: "Research Scientist",
-      company: "Meta AI (FAIR)",
-      videoUrl: "https://www.youtube.com/watch?v=dymM40bVIhQ",
-    },
-    {
-      id: "awaZBWTss-4",
-      name: "Howie Xu (硅谷徐老师)",
-      title: "首席 AI 官 (Chief AI Officer)",
-      company: "Gen Digital",
-      videoUrl: "https://www.youtube.com/watch?v=awaZBWTss-4",
-    },
-    {
-      id: "iw2QYZeVlOQ",
-      name: "Vijaye Raji (VJ)",
-      title: "创始人 & CEO",
-      company: "Statsig · OpenAI 收购",
-      videoUrl: "https://www.youtube.com/watch?v=iw2QYZeVlOQ",
-    },
-    {
-      id: "CTcMvIZFQcw",
-      name: "Leon",
-      title: "匿名硅谷高管",
-      company: "Silicon Valley",
-      videoUrl: "https://www.youtube.com/watch?v=CTcMvIZFQcw",
-    },
-    {
-      id: "BnL5qaBzmR0",
-      name: "Ryo Lu",
-      title: "Head of Design",
-      company: "Cursor",
-      videoUrl: "https://www.youtube.com/watch?v=BnL5qaBzmR0",
-    },
-    {
-      id: "3t2I_BMG9gU",
-      name: "戴雨森",
-      title: "合伙人 (Partner)",
-      company: "真格基金 (Zhenfund)",
-      videoUrl: "https://www.youtube.com/watch?v=3t2I_BMG9gU",
-    },
-    {
-      id: "UndcL0uEmYs",
-      name: "俞舟 Zhou Yu",
-      title: "AI 教授 (Professor)",
-      company: "Columbia University",
-      videoUrl: "https://www.youtube.com/watch?v=UndcL0uEmYs",
     },
   ],
 };
@@ -1183,6 +936,9 @@ const testimonials = {
 export default function Home() {
   const { lang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedGuestGroups, setExpandedGuestGroups] = useState<
+    Record<number, boolean>
+  >({});
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -1291,7 +1047,7 @@ export default function Home() {
               <LanguageToggle size="sm" />
               <Button
                 asChild
-                className="bg-amber-500 text-[#211300] hover:bg-amber-400"
+                className="bg-amber-400 text-[#211300] hover:bg-amber-300"
               >
                 <a
                   href="https://www.superlinear.academy"
@@ -1386,10 +1142,13 @@ export default function Home() {
       </nav>
 
       <main className="relative z-10">
-        <section id="hero" className="container py-16 md:py-24 lg:py-28">
+        <section
+          id="hero"
+          className="container scroll-mt-24 py-16 md:py-24 lg:py-28"
+        >
           <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 border-l border-amber-300/60 pl-3 font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300/90">
+              <div className="mb-6 inline-flex items-center gap-2 border-l border-white/20 pl-3 font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                 <span>{lang === "en" ? "Yuzheng Sun" : "Yuzheng Sun"}</span>
                 <span className="text-zinc-600">/</span>
                 <span>{lang === "en" ? "课代表立正" : "课代表立正"}</span>
@@ -1466,17 +1225,6 @@ export default function Home() {
                 >
                   {lang === "en" ? "See the work" : "看我做的事"}
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white/15 bg-transparent text-zinc-100 hover:bg-white/10"
-                  asChild
-                >
-                  <Link href="/book">
-                    <BookOpen className="mr-2 h-4 w-4" />
-                    {lang === "en" ? "Books" : "两本书"}
-                  </Link>
-                </Button>
               </div>
 
               <div className="mt-8 flex gap-4">
@@ -1550,8 +1298,7 @@ export default function Home() {
                 {[
                   {
                     value: "300K+",
-                    label:
-                      lang === "en" ? "content audience" : "内容受众",
+                    label: lang === "en" ? "content audience" : "内容受众",
                   },
                   {
                     value: "3,000+",
@@ -1577,17 +1324,19 @@ export default function Home() {
               </div>
               <div className="mt-4 border-l border-white/15 pl-4">
                 <p className="text-sm leading-6 text-zinc-300">
-                  当前问题：构建适配AI的全新生产关系和工作流程
+                  {lang === "en"
+                    ? "Current question: building production relationships and workflows native to the AI era."
+                    : "当前问题：构建适配AI的全新生产关系和工作流程"}
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="about" className="container py-8 md:py-12">
+        <section id="about" className="container scroll-mt-24 py-8 md:py-12">
           <div className="grid gap-8 border-y border-white/10 py-8 md:grid-cols-[0.9fr_1.1fr] md:py-10">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                 {lang === "en" ? "In one line" : "一句话"}
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">
@@ -1613,11 +1362,11 @@ export default function Home() {
 
         <section
           id="background"
-          className="border-y border-white/10 bg-black/20 py-14 md:py-20"
+          className="scroll-mt-24 border-y border-white/10 bg-black/20 py-14 md:py-20"
         >
           <div className="container">
             <div className="mb-10 max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                 {lang === "en" ? "The throughline" : "一条主线"}
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
@@ -1636,14 +1385,14 @@ export default function Home() {
                     className="relative grid gap-4 rounded-xl border border-white/0 py-2 transition md:grid-cols-[12rem_1fr]"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-amber-300/40 bg-[#0B0F1A] font-mono text-[11px] text-amber-300">
+                      <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-[#0B0F1A] font-mono text-[11px] text-zinc-400">
                         {String(index + 1).padStart(2, "0")}
                       </div>
                       <div className="pt-0.5">
-                        <p className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-500">
+                        <p className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">
                           {item.era}
                         </p>
-                        <p className="mt-1 text-sm font-medium leading-5 text-amber-300/90">
+                        <p className="mt-1 text-sm font-medium leading-5 text-zinc-300">
                           {item.role}
                         </p>
                       </div>
@@ -1663,10 +1412,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="beliefs" className="container py-14 md:py-20">
+        <section id="beliefs" className="container scroll-mt-24 py-14 md:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                 {lang === "en" ? "Axioms I return to" : "我反复回到的主张"}
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
@@ -1686,7 +1435,7 @@ export default function Home() {
                   key={item.title}
                   className="grid gap-4 py-6 sm:grid-cols-[4rem_1fr]"
                 >
-                  <div className="font-mono text-sm text-amber-300/80">
+                  <div className="font-mono text-sm text-zinc-500">
                     {String(index + 1).padStart(2, "0")}
                   </div>
                   <div>
@@ -1700,7 +1449,7 @@ export default function Home() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500 transition hover:text-amber-300"
+                      className="group mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition hover:text-amber-300"
                     >
                       <span>{item.linkLabel}</span>
                       <ExternalLink className="h-3 w-3 transition group-hover:translate-x-0.5" />
@@ -1714,15 +1463,13 @@ export default function Home() {
 
         <section
           id="work"
-          className="border-y border-white/10 bg-black/20 py-14 md:py-20"
+          className="scroll-mt-24 border-y border-white/10 bg-black/20 py-14 md:py-20"
         >
           <div className="container">
             <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div className="max-w-3xl">
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
-                  {lang === "en"
-                    ? "Where it becomes practice"
-                    : "主张落到哪里"}
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+                  {lang === "en" ? "Where it becomes practice" : "主张落到哪里"}
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
                   {lang === "en"
@@ -1730,20 +1477,15 @@ export default function Home() {
                     : "课程、企业项目、社群，以及围绕它们生长出来的工具"}
                 </h2>
               </div>
-              <Button
-                asChild
-                variant="outline"
-                className="shrink-0 border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20"
+              <a
+                href="https://www.superlinear.academy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex shrink-0 items-center gap-2 text-sm text-amber-300 transition hover:text-amber-200"
               >
-                <a
-                  href="https://www.superlinear.academy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {lang === "en" ? "Enter Superlinear" : "进入 Superlinear"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+                {lang === "en" ? "Enter Superlinear" : "进入 Superlinear"}
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </a>
             </div>
 
             <div className="divide-y divide-white/10 border-y border-white/10">
@@ -1755,7 +1497,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="group grid gap-5 py-7 transition md:grid-cols-[13rem_1fr_12rem] md:items-start"
                 >
-                  <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-500 transition group-hover:text-amber-300">
+                  <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition group-hover:text-amber-300">
                     {item.icon}
                     {item.label}
                   </div>
@@ -1779,7 +1521,7 @@ export default function Home() {
             </div>
 
             <div className="mt-6 flex flex-col gap-4 rounded-xl border border-white/10 bg-white/[0.035] p-5 sm:flex-row sm:items-center">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#0B0F1A] text-amber-300">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-[#0B0F1A] text-zinc-300">
                 <Smartphone className="h-5 w-5" />
               </div>
               <div className="flex-1">
@@ -1828,9 +1570,9 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="proof" className="container py-14 md:py-20">
+        <section id="proof" className="container scroll-mt-24 py-14 md:py-20">
           <div className="mb-10 max-w-3xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
               {lang === "en"
                 ? "Two perspectives from people close to the work"
                 : "来自一线的两种视角"}
@@ -1844,7 +1586,7 @@ export default function Home() {
 
           <div className="mb-4 flex items-end gap-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/90">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400">
                 {lang === "en" ? "01 / Industry insight" : "01 / 行业洞见"}
               </p>
               <h3 className="mt-2 text-xl font-semibold text-white">
@@ -1875,7 +1617,7 @@ export default function Home() {
                     </Avatar>
                     <div>
                       <p className="font-bold text-white">{item.name}</p>
-                      <p className="mt-0.5 text-sm text-amber-300">
+                      <p className="mt-0.5 text-sm text-zinc-300">
                         {item.title}
                       </p>
                       <p className="mt-0.5 text-xs text-zinc-500">
@@ -1890,7 +1632,7 @@ export default function Home() {
 
           <div className="mt-12 mb-4 flex items-end gap-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-amber-300/90">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400">
                 {lang === "en" ? "02 / Course reviews" : "02 / 学员反馈"}
               </p>
               <h3 className="mt-2 text-xl font-semibold text-white">
@@ -1906,14 +1648,6 @@ export default function Home() {
             {testimonials[lang].map(item => (
               <Card key={item.name} className="border-white/10 bg-white/[0.04]">
                 <CardContent className="flex flex-col py-6">
-                  <div className="mb-3 flex gap-1">
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <Star
-                        key={idx}
-                        className="h-4 w-4 fill-amber-300 text-amber-300"
-                      />
-                    ))}
-                  </div>
                   <p className="text-sm leading-7 text-zinc-300">
                     "{item.quote}"
                   </p>
@@ -1928,9 +1662,7 @@ export default function Home() {
                       <p className="font-medium text-white">{item.name}</p>
                       <p className="text-xs text-zinc-400">
                         {item.role} ·{" "}
-                        <span className="text-amber-400/80">
-                          {item.company}
-                        </span>
+                        <span className="text-zinc-300">{item.company}</span>
                       </p>
                     </div>
                   </div>
@@ -1971,7 +1703,7 @@ export default function Home() {
 
         <section
           id="guests"
-          className="border-y border-white/10 bg-black/20 py-14 md:py-20"
+          className="scroll-mt-24 border-y border-white/10 bg-black/20 py-14 md:py-20"
         >
           <div className="container">
             <div className="mb-10">
@@ -1991,7 +1723,7 @@ export default function Home() {
 
             <div className="border-t border-white/10 pt-10">
               <div className="mb-8 max-w-3xl">
-                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-500">
+                <p className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-zinc-400">
                   {lang === "en" ? "Conversation map" : "嘉宾地图"}
                 </p>
                 <h3 className="mt-2 text-2xl font-bold text-white md:text-3xl">
@@ -2006,93 +1738,110 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="mb-6 grid gap-2 md:grid-cols-3 xl:grid-cols-6">
-                {guestCategories[lang].map((category, index) => (
-                  <div
-                    key={`${category.label}-step`}
-                    className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.025] px-3 py-2"
-                  >
-                    <span className="font-mono text-[10px] text-amber-300">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <span className="min-w-0 text-xs font-medium leading-4 text-zinc-300">
-                      {category.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
               <div className="grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
-                {guestCategories[lang].map(category => (
-                  <article
-                    key={category.label}
-                    className="flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5"
-                  >
-                    <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
-                        {category.label}
-                      </p>
-                      <h4 className="mt-3 text-lg font-semibold leading-6 text-white">
-                        {category.title}
-                      </h4>
-                      <p className="mt-2 text-xs leading-6 text-zinc-400">
-                        {category.desc}
-                      </p>
-                    </div>
-                    <div className="space-y-2 border-t border-white/10 pt-3">
-                      {category.items.map(item => (
-                        <a
-                          key={`${category.label}-${item.name}`}
-                          href={item.href}
-                          target={
-                            item.href.startsWith("http") ? "_blank" : undefined
-                          }
-                          rel={
-                            item.href.startsWith("http")
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
-                          className="group flex gap-3 rounded-lg border border-white/0 p-2.5 transition hover:border-white/10 hover:bg-white/[0.04]"
-                        >
-                          {"image" in item && item.image ? (
-                            <img
-                              src={item.image}
-                              alt=""
-                              className="h-16 w-24 shrink-0 rounded-md border border-white/10 object-cover opacity-85 transition group-hover:opacity-100"
-                              loading="eager"
-                              width={192}
-                              height={128}
-                            />
-                          ) : (
-                            <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] font-mono text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-                              {item.name.slice(0, 2)}
-                            </div>
-                          )}
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-start justify-between gap-2">
-                              <p className="text-sm font-semibold leading-5 text-white">
-                                {item.name}
+                {guestCategories[lang].map((category, categoryIndex) => {
+                  const isExpanded = !!expandedGuestGroups[categoryIndex];
+                  const visibleItems = isExpanded
+                    ? category.items
+                    : category.items.slice(0, 2);
+                  return (
+                    <article
+                      key={category.label}
+                      className="flex h-full flex-col rounded-xl border border-white/10 bg-white/[0.04] p-4 md:p-5"
+                    >
+                      <div>
+                        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400">
+                          {category.label}
+                        </p>
+                        <h4 className="mt-3 text-lg font-semibold leading-6 text-white">
+                          {category.title}
+                        </h4>
+                        <p className="mt-2 text-xs leading-6 text-zinc-400">
+                          {category.desc}
+                        </p>
+                      </div>
+                      <div className="space-y-2 border-t border-white/10 pt-3">
+                        {visibleItems.map(item => (
+                          <a
+                            key={`${category.label}-${item.name}`}
+                            href={item.href}
+                            target={
+                              item.href.startsWith("http")
+                                ? "_blank"
+                                : undefined
+                            }
+                            rel={
+                              item.href.startsWith("http")
+                                ? "noopener noreferrer"
+                                : undefined
+                            }
+                            className="group flex gap-3 rounded-lg border border-white/0 p-2.5 transition hover:border-white/10 hover:bg-white/[0.04]"
+                          >
+                            {"image" in item && item.image ? (
+                              <img
+                                src={item.image}
+                                alt=""
+                                className="h-16 w-24 shrink-0 rounded-md border border-white/10 object-cover opacity-85 transition group-hover:opacity-100"
+                                loading="lazy"
+                                width={192}
+                                height={128}
+                              />
+                            ) : (
+                              <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.04] font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+                                {item.name.slice(0, 2)}
+                              </div>
+                            )}
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-start justify-between gap-2">
+                                <p className="text-sm font-semibold leading-5 text-white">
+                                  {item.name}
+                                </p>
+                                {item.href.startsWith("http") ? (
+                                  <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
+                                ) : (
+                                  <ArrowRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
+                                )}
+                              </div>
+                              <p className="mt-0.5 text-xs leading-5 text-zinc-400">
+                                {item.role}
                               </p>
-                              {item.href.startsWith("http") ? (
-                                <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
-                              ) : (
-                                <ArrowRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-600 transition group-hover:text-amber-300" />
-                              )}
                             </div>
-                            <p className="mt-0.5 text-xs leading-5 text-zinc-500">
-                              {item.role}
-                            </p>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </article>
-                ))}
+                          </a>
+                        ))}
+                        {category.items.length > 2 && (
+                          <button
+                            onClick={() =>
+                              setExpandedGuestGroups(prev => ({
+                                ...prev,
+                                [categoryIndex]: !prev[categoryIndex],
+                              }))
+                            }
+                            className="flex w-full items-center justify-center gap-1.5 rounded-lg p-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition hover:bg-white/[0.04] hover:text-amber-300"
+                          >
+                            {isExpanded
+                              ? lang === "en"
+                                ? "Show less"
+                                : "收起"
+                              : lang === "en"
+                                ? `Show all ${category.items.length}`
+                                : `展开全部 ${category.items.length} 条`}
+                            <ChevronDown
+                              className={cn(
+                                "h-3.5 w-3.5 transition",
+                                isExpanded && "rotate-180"
+                              )}
+                            />
+                          </button>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
 
               <div className="mt-8 rounded-xl border border-amber-300/25 bg-amber-300/[0.06] p-5 md:flex md:items-center md:justify-between md:gap-6">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400">
                     {lang === "en" ? "Full guest index" : "完整嘉宾索引"}
                   </p>
                   <h4 className="mt-2 text-xl font-semibold text-white">
@@ -2122,7 +1871,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="playlists" className="container py-14 md:py-20">
+        <section
+          id="playlists"
+          className="container scroll-mt-24 py-14 md:py-20"
+        >
           <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div>
               <h2 className="text-3xl font-bold text-white md:text-5xl">
@@ -2167,11 +1919,11 @@ export default function Home() {
                     <h3 className="truncate font-medium text-zinc-100 transition group-hover:text-white">
                       {pl.name}
                     </h3>
-                    <span className="shrink-0 font-mono text-xs text-zinc-500">
+                    <span className="shrink-0 font-mono text-xs text-zinc-400">
                       {lang === "en" ? `${pl.count} eps` : `${pl.count} 期`}
                     </span>
                   </div>
-                  <p className="mt-0.5 truncate text-xs leading-5 text-zinc-500">
+                  <p className="mt-0.5 truncate text-xs leading-5 text-zinc-400">
                     {pl.desc}
                   </p>
                 </div>
@@ -2184,7 +1936,7 @@ export default function Home() {
         <section className="container py-12 pb-16 md:pb-24">
           <div className="grid gap-6 border-y border-white/10 py-8 md:grid-cols-[1fr_auto] md:items-center">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
                 {lang === "en" ? "Stay close to the work" : "继续靠近这些工作"}
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-white md:text-3xl">
@@ -2299,7 +2051,7 @@ export default function Home() {
         </div>
 
         <div className="container mt-8 border-t border-white/10 pt-6 text-center text-xs text-zinc-500">
-          © 2025 Yuzheng Sun. All rights reserved.
+          © {new Date().getFullYear()} Yuzheng Sun. All rights reserved.
         </div>
       </footer>
     </div>

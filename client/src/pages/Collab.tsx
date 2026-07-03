@@ -37,9 +37,9 @@ const copy = {
     categories: [
       {
         num: "01",
-        title: "Podcasts & interviews",
+        title: "Podcasts & interviews (me as your guest)",
         detail:
-          "Three episode directions are already prepared — pick one and the sources and data arrive before the recording. After the episode ships, it gets pushed across YouTube, Bilibili, and Xiaohongshu simultaneously.",
+          "This one means: inviting me onto your show. Three episode directions are already prepared — pick one and the sources and data arrive before the recording. After the episode ships, it gets pushed across my YouTube, Bilibili, and Xiaohongshu channels simultaneously.",
         items: [
           "Predictions, audited: putting the dated public calls on the table — including the misses",
           "What are people earning $1M actually anxious about: an economist's framework + 3,000 Silicon Valley engineer students + corporate-training observations",
@@ -73,17 +73,20 @@ const copy = {
       },
       {
         num: "04",
-        title: "Business partnerships",
+        title: "Products & deeper partnerships",
         detail:
-          "Products, brands, channels, and things that don't fit the boxes above. This category depends most on fit — the three-line email below settles it quickly.",
-        fit: "Fits when: there is a concrete thing to build or ship together, not just audiences to swap.",
+          "The principle first: my channels don't take sponsored placements — the judgment isn't for sale. For genuinely good products there are deeper structures than an ad read: a founder interview (a product story worth telling is content in its own right), an advisor package, or an angel check.",
+        fit: "Fits when: you have long-term conviction in the product and want deep involvement of judgment and network — not a one-off exposure.",
       },
     ] as Category[],
+    priceTitle: "Two numbers, for reference",
+    priceDetail:
+      "Advisory at $2,000/hour; custom corporate training from $100k. Posted here to save time on both sides — when the numbers work, everything else is easy to discuss.",
     passTitle: "Where we can't help",
     passIntro:
       "Three kinds of proposals we usually pass on — not because they are bad ideas, but because we can't deliver something worthy of your effort:",
     passes: [
-      "Endorsing products we haven't used or verified — we can't hand our audience a conclusion we didn't reach ourselves.",
+      "Sponsored placements and endorsements of products we haven't used — the judgment isn't for sale, and we can't hand our audience a conclusion we didn't reach ourselves.",
       "Pure audience swaps and cross-promotion — no new value for either side's audience.",
       "Topics with no overlap with AI, growth, or personal development — we would have nothing insider to say.",
     ],
@@ -118,9 +121,9 @@ const copy = {
     categories: [
       {
         num: "01",
-        title: "播客 · 访谈",
+        title: "播客 · 访谈（请我做嘉宾）",
         detail:
-          "三个选题方向已经备好——选定一个，相关原文和数据会在录制前整理给你。节目上线后，B 站、YouTube、小红书三个平台同步推这一期。",
+          "这一类说的是：请我上你的节目。三个选题方向已经备好——选定一个，相关原文和数据会在录制前整理给你。节目上线后，我的 B 站、YouTube、小红书三个平台同步推这一期。",
         items: [
           "预言复盘：把带日期的公开判断摊开对答案，包括错的",
           "年薪百万的人在焦虑什么：经济学家的框架 + 3,000 名硅谷工程师学员样本 + 内训现场观察",
@@ -154,17 +157,20 @@ const copy = {
       },
       {
         num: "04",
-        title: "商务合作",
+        title: "产品与深度合作",
         detail:
-          "产品、品牌、渠道，以及上面三类装不下的想法。这一类最看匹配度——用下面的三行邮件，很快能对出来。",
-        fit: "最合适的情况：有一件具体的事要一起做出来，而不只是交换一下流量。",
+          "先说原则：我的节目不接商单——判断不出售。但对真正好的产品，有比商单更深的合作方式：请 founder 上节目做访谈（值得讲的产品故事，本身就是内容）；advisor 合作包；天使投资。",
+        fit: "最合适的情况：你对产品有长期信心，想要的是判断和网络的深度参与，而不是一次曝光。",
       },
     ] as Category[],
+    priceTitle: "两个数字，供参考",
+    priceDetail:
+      "咨询 $2,000/小时；定制企业培训 $100k 起。写在明处，是为了替双方省时间——数字对得上，后面都好谈。",
     passTitle: "先说清楚，哪些帮不上",
     passIntro:
       "三类提议我们通常会婉拒——不是事情不好，是我们给不出对得起你的交付：",
     passes: [
-      "没用过、没验证过的产品要推荐或背书——我们不能把自己没得出的结论递给观众。",
+      "商单、软广，以及没用过的产品背书——判断不出售，我们也不能把自己没得出的结论递给观众。",
       "单纯换量的互推和资源置换——对两边的观众都没有增量。",
       "和 AI、增长、个人成长都不沾边的题目——我们讲不出内行的东西。",
     ],
@@ -310,7 +316,14 @@ export default function Collab() {
             </div>
           </div>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-2">
+          <div className="mt-10 rounded-2xl border border-amber-300/25 bg-amber-300/[0.06] p-6 md:p-8">
+            <h3 className="text-lg font-semibold text-white">{t.priceTitle}</h3>
+            <p className="mt-2 max-w-3xl text-sm leading-7 text-zinc-300">
+              {t.priceDetail}
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-8 md:grid-cols-2">
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
               <h3 className="text-lg font-semibold text-white">
                 {t.passTitle}

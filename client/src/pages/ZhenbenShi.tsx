@@ -117,7 +117,7 @@ const FAQ = [
   },
   {
     q: "是否提供线下活动或一对一辅导？",
-    a: "Superlinear 社群定期举办线下共创与远程冲刺营。如有合作或讲座需求，欢迎发邮件至 hello@superlinear.academy。",
+    a: "Superlinear 社群定期举办线下共创与远程冲刺营。如有合作或讲座需求，欢迎发邮件至 yz@superlinear.academy。",
   },
 ];
 
@@ -1135,7 +1135,7 @@ export default function ZhenbenShi() {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/30">
             <p>© 2025 Superlinear Academy · 《真本事》版权所有 · 孙煜征博士</p>
             <nav className="flex gap-4">
-              <a href="mailto:hello@superlinear.academy" className="hover:text-white/60 transition-colors">
+              <a href="mailto:yz@superlinear.academy" className="hover:text-white/60 transition-colors">
                 联系我们
               </a>
               <a

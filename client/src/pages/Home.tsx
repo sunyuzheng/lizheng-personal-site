@@ -1614,17 +1614,17 @@ export default function Home() {
         >
           <div className="mb-10 max-w-3xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {lang === "en" ? "Judgment, on the record" : "判断留档"}
+              {lang === "en" ? "A few calls" : "几个判断"}
             </p>
             <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
               {lang === "en"
-                ? "Called early, dated, checkable"
-                : "带日期的公开判断，随时可对账"}
+                ? "What I said, and when"
+                : "说过什么，什么时候说的"}
             </h2>
             <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400">
               {lang === "en"
-                ? "Since 2023 I have published my calls with dates attached — the reasoning, the specific numbers, and the deadlines that make them checkable."
-                : "从 2023 年起，我把对 AI 的判断带着日期公开写下来、讲出来——有推理、有具体数字、有可以对账的时限。"}
+                ? "The essays and videos are all up, dates attached — including the parts that turned out wrong."
+                : "原文和视频都在，带着日期——包括后来看错了的部分。"}
             </p>
           </div>
           <div className="divide-y divide-white/10 border-y border-white/10">

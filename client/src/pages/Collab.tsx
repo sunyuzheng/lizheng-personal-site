@@ -32,7 +32,7 @@ const copy = {
     h1: "Everything a collaboration needs, on one page.",
     intro:
       "Four kinds of collaboration below. Each one states what fits and what to prepare — when those match, things move fast.",
-    recordLink: "See the on-record calls",
+    recordLink: "A few calls since 2023",
     catEyebrow: "Four kinds of collaboration",
     categories: [
       {
@@ -105,7 +105,7 @@ const copy = {
     contactButton: "Email",
     back: "Back to homepage",
     closing:
-      "If nothing here fits, no problem — the calls stay on the record, whenever you want to check them.",
+      "If nothing here fits, no problem — everything I've written stays public, whenever you feel like reading.",
   },
   zh: {
     seoTitle: "合作 · 课代表立正",
@@ -116,7 +116,7 @@ const copy = {
     h1: "一次合作需要的东西，都在这一页。",
     intro:
       "下面是四类合作。每类都写清了什么情况最合适、需要你准备什么——对得上，事情就快。",
-    recordLink: "看判断留档",
+    recordLink: "2023 年以来的几个判断",
     catEyebrow: "四类合作",
     categories: [
       {
@@ -188,7 +188,7 @@ const copy = {
     contactButton: "邮件联系",
     back: "回到主页",
     closing:
-      "都不合适也没关系，当作认识一下——判断都公开留档，什么时候想翻都在。",
+      "都不合适也没关系，当作认识一下。我写过的东西都公开，什么时候想翻都在。",
   },
 };
 

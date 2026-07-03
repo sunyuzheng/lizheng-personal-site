@@ -33,6 +33,7 @@ import {
   MapPin,
   Smartphone,
   Apple,
+  Handshake,
 } from "lucide-react";
 
 const throughline = {
@@ -1415,6 +1416,14 @@ export default function Home() {
                 >
                   <Mail className="h-6 w-6" />
                 </a>
+                <Link
+                  href="/collab"
+                  className="flex items-center gap-1.5 text-zinc-400 transition hover:text-amber-300"
+                  aria-label={lang === "en" ? "Collaborate" : "合作"}
+                >
+                  <Handshake className="h-6 w-6" />
+                  <span className="text-sm">{lang === "en" ? "Collaborate" : "合作"}</span>
+                </Link>
               </div>
             </div>
 
@@ -2177,6 +2186,12 @@ export default function Home() {
               {lang === "en" ? "Links" : "链接"}
             </h3>
             <div className="mt-3 space-y-2 text-sm text-zinc-400">
+              <Link
+                href="/collab"
+                className="block transition hover:text-amber-300"
+              >
+                {lang === "en" ? "Collaborate (podcasts / talks / training)" : "合作（播客 / 演讲 / 培训）"}
+              </Link>
               <a
                 href="https://ai-builders.com"
                 target="_blank"

@@ -13,124 +13,176 @@ import {
 import { useEffect } from "react";
 import { Link } from "wouter";
 
+type Category = {
+  num: string;
+  title: string;
+  detail: string;
+  fit: string;
+  items?: string[];
+  action?: { label: string; href: string; external: boolean };
+};
+
 const copy = {
   en: {
     seoTitle: "Collaborate · Yuzheng Sun",
     seoDesc:
-      "Invite Yuzheng Sun (课代表立正) to your podcast or event: three prepared episode directions, logistics, and a downloadable guest kit.",
+      "Work with Yuzheng Sun (课代表立正): podcasts and interviews, talks and events, corporate training, and business partnerships.",
     navSub: "Collaborate",
-    eyebrow: "Podcasts · Interviews · Events",
-    h1: "Everything you need for an episode, on one page.",
+    eyebrow: "Podcasts · Talks · Training · Partnerships",
+    h1: "Everything a collaboration needs, on one page.",
     intro:
-      "The dated, checkable track record lives on the homepage. This page has the rest: three prepared episode directions, logistics, and a guest kit you can forward.",
+      "Four kinds of collaboration below. Each one states what fits and what to prepare — when those match, things move fast.",
     recordLink: "See the on-record calls",
-    topicsEyebrow: "Three directions, prepared for your audience — one is enough",
-    topics: [
+    catEyebrow: "Four kinds of collaboration",
+    categories: [
       {
-        num: "Direction 1",
-        title: "Predictions, audited: putting the public calls on the table",
+        num: "01",
+        title: "Podcasts & interviews",
         detail:
-          "Which calls landed, which missed, and the reasoning at the time. Every source carries a date — including the misses.",
-        fit: "Fits: audiences drowning in AI news — three years compressed into one hour.",
+          "Three episode directions are already prepared — pick one and the sources and data arrive before the recording. After the episode ships, it gets pushed across YouTube, Bilibili, and Xiaohongshu simultaneously.",
+        items: [
+          "Predictions, audited: putting the dated public calls on the table — including the misses",
+          "What are people earning $1M actually anxious about: an economist's framework + 3,000 Silicon Valley engineer students + corporate-training observations",
+          "From User to Builder: compounding AI leverage for non-engineers",
+        ],
+        fit: "Fits when: your audience cares about AI, growth, or careers, and you want an hour with real information density.",
+        action: {
+          label: "Guest kit (3-page PDF)",
+          href: "/collab/podcast-one-pager.pdf",
+          external: true,
+        },
       },
       {
-        num: "Direction 2",
-        title: "What are people earning $1M actually anxious about?",
+        num: "02",
+        title: "Talks & events",
         detail:
-          "Three first-hand layers: an economist's framework (the marginal cost of distributing intelligence goes to zero — which jobs gain leverage, which get zeroed out), a sample of 3,000 Silicon Valley engineer students, and observations from corporate trainings at Tencent, Meituan, and Xiaohongshu.",
-        fit: "Fits: audiences asking “will AI come for me” — answers with a framework and data.",
+          "Keynotes and panels around the same material: AI judgment, growth and experimentation, User to Builder, career leverage. The same sessions have been delivered inside Tencent, Meituan, Xiaohongshu, and DoorDash — three recordings are public.",
+        fit: "Fits when: you can say who is in the room and what they should walk away with. Audience beats venue size.",
       },
       {
-        num: "Direction 3",
-        title: "From User to Builder: compounding AI leverage for non-engineers",
+        num: "03",
+        title: "Corporate training",
         detail:
-          "How people who don't write code put AI to real work: agent habits, reusable compounding skills, and making outcomes deterministic. Field-tested in corporate trainings at Meituan and Xiaohongshu.",
-        fit: "Fits: audiences who aren't engineers but refuse to stay spectators.",
+          "Structured programs for engineering and non-engineering teams. Delivered at Tencent, Meituan, Xiaohongshu, and DoorDash; a dedicated site covers formats and details.",
+        fit: "Fits when: a team needs to move from using AI to building with it, and leadership wants deterministic outcomes.",
+        action: {
+          label: "corp-training.ai-builders.com",
+          href: "https://corp-training.ai-builders.com/",
+          external: true,
+        },
       },
+      {
+        num: "04",
+        title: "Business partnerships",
+        detail:
+          "Products, brands, channels, and things that don't fit the boxes above. This category depends most on fit — the three-line email below settles it quickly.",
+        fit: "Fits when: there is a concrete thing to build or ship together, not just audiences to swap.",
+      },
+    ] as Category[],
+    passTitle: "Where we can't help",
+    passIntro:
+      "Three kinds of proposals we usually pass on — not because they are bad ideas, but because we can't deliver something worthy of your effort:",
+    passes: [
+      "Endorsing products we haven't used or verified — we can't hand our audience a conclusion we didn't reach ourselves.",
+      "Pure audience swaps and cross-promotion — no new value for either side's audience.",
+      "Topics with no overlap with AI, growth, or personal development — we would have nothing insider to say.",
     ],
-    range:
-      "Beyond these three: growth, data & experimentation (Growth Data Analytics Playbook · sole evangelist at Statsig) · career leverage (真本事) · an economics PhD's take on metaphysics. For creator-focused shows there is one more option: why a long-free community started charging — a fully open-numbers case study.",
-    practical: [
-      {
-        title: "Distribution",
-        detail:
-          "After the episode ships, it gets pushed across YouTube, Bilibili, and Xiaohongshu simultaneously.",
-      },
-      {
-        title: "Scheduling",
-        detail: "Recording time follows your calendar; remote works fine.",
-      },
-      {
-        title: "Prep",
-        detail:
-          "Pick a direction and the relevant sources and data arrive before the recording — no extra homework for you.",
-      },
+    passClose: "Anything outside these three — happy to talk.",
+    howTitle: "How to reach out",
+    howIntro:
+      "Three lines in the email are usually enough to decide within the week:",
+    hows: [
+      "Who you are, in one sentence.",
+      "What you want to do together — concrete form and timing.",
+      "Who your audience or users are, and what they get out of it.",
     ],
-    kitTitle: "Guest kit (3-page PDF)",
-    kitDetail:
-      "Track record, bio and verified numbers, episode directions — ready to forward.",
-    kitButton: "Download PDF",
+    howClose: "Replies within three working days — including when the answer is no.",
     contactTitle: "Yuzheng Sun (课代表立正)",
+    contactDetail: "yz@superlinear.academy · Business WeChat: FM13870617",
     contactButton: "Email",
     back: "Back to homepage",
     closing:
-      "If none of this fits your show, no problem — the calls stay on the record, whenever you want to check them.",
+      "If nothing here fits, no problem — the calls stay on the record, whenever you want to check them.",
   },
   zh: {
     seoTitle: "合作 · 课代表立正",
     seoDesc:
-      "邀请课代表立正上播客或活动：三个准备好的选题方向、实务安排，以及可直接转发的嘉宾资料包。",
+      "与课代表立正合作：播客与访谈、演讲与活动、企业培训、商务合作。每类写清了什么情况最合适、需要准备什么。",
     navSub: "合作",
-    eyebrow: "播客 · 访谈 · 活动",
-    h1: "一期节目需要的东西，都在这一页。",
+    eyebrow: "播客 · 演讲 · 培训 · 商务",
+    h1: "一次合作需要的东西，都在这一页。",
     intro:
-      "带日期、可对账的判断记录在主页。这一页是剩下的部分：三个准备好的选题方向、实务安排，和一份可以直接转发的嘉宾资料包。",
+      "下面是四类合作。每类都写清了什么情况最合适、需要你准备什么——对得上，事情就快。",
     recordLink: "看判断留档",
-    topicsEyebrow: "为你的观众准备了三个方向，选一个就够",
-    topics: [
+    catEyebrow: "四类合作",
+    categories: [
       {
-        num: "方向一",
-        title: "预言复盘：把 2023 年以来的公开判断摊开对答案",
+        num: "01",
+        title: "播客 · 访谈",
         detail:
-          "哪条对了，哪条错了，当时是怎么想的。所有原文带日期可查，包括错的。",
-        fit: "适合：观众常被 AI 资讯淹没——这一期把三年的信息压缩成一个小时。",
+          "三个选题方向已经备好——选定一个，相关原文和数据会在录制前整理给你。节目上线后，B 站、YouTube、小红书三个平台同步推这一期。",
+        items: [
+          "预言复盘：把带日期的公开判断摊开对答案，包括错的",
+          "年薪百万的人在焦虑什么：经济学家的框架 + 3,000 名硅谷工程师学员样本 + 内训现场观察",
+          "从 User 到 Builder：普通人把 AI 用出复利",
+        ],
+        fit: "最合适的情况：你的观众关心 AI、增长或职业，你想要一期信息密度高的节目。",
+        action: {
+          label: "嘉宾资料包（三页 PDF）",
+          href: "/collab/podcast-one-pager.pdf",
+          external: true,
+        },
       },
       {
-        num: "方向二",
-        title: "年薪百万的人在焦虑什么",
+        num: "02",
+        title: "演讲 · 活动",
         detail:
-          "三层都是一手的：经济学家的框架——智力分发的边际成本降为 0，哪类工作的杠杆在放大、哪类在清零；3,000 名硅谷工程师学员的样本；腾讯、美团、小红书内训现场的观察。",
-        fit: "适合：观众问过「AI 到底会不会动到我」——答案带框架，也带数据。",
+          "Keynote 和圆桌，围绕同一套内容：AI 判断力、增长与实验、User→Builder、职业杠杆。同样的内容在腾讯、美团、小红书、DoorDash 的场子里讲过，三场实录公开可查。",
+        fit: "最合适的情况：你说得清台下坐的是谁、希望他们带走什么。观众是谁，比场面大小重要。",
       },
       {
-        num: "方向三",
-        title: "从 User 到 Builder：普通人把 AI 用出复利",
+        num: "03",
+        title: "企业培训",
         detail:
-          "不写代码的人怎么动手把 AI 用好：养成用 agent 的习惯，持续产出能复用、能复利的 skills，把结果做确定。这套内容在美团、小红书的企业内训里当场验证过。",
-        fit: "适合：观众不是工程师，但不想只当看客。",
+          "面向研发和非研发团队的成体系课程。腾讯、美团、小红书、DoorDash 都交付过，形式和细节有专门的站点。",
+        fit: "最合适的情况：团队需要从「会用 AI」走到「用 AI 做出东西」，管理层在意结果的确定性。",
+        action: {
+          label: "corp-training.ai-builders.com",
+          href: "https://corp-training.ai-builders.com/",
+          external: true,
+        },
       },
+      {
+        num: "04",
+        title: "商务合作",
+        detail:
+          "产品、品牌、渠道，以及上面三类装不下的想法。这一类最看匹配度——用下面的三行邮件，很快能对出来。",
+        fit: "最合适的情况：有一件具体的事要一起做出来，而不只是交换一下流量。",
+      },
+    ] as Category[],
+    passTitle: "先说清楚，哪些帮不上",
+    passIntro:
+      "三类提议我们通常会婉拒——不是事情不好，是我们给不出对得起你的交付：",
+    passes: [
+      "没用过、没验证过的产品要推荐或背书——我们不能把自己没得出的结论递给观众。",
+      "单纯换量的互推和资源置换——对两边的观众都没有增量。",
+      "和 AI、增长、个人成长都不沾边的题目——我们讲不出内行的东西。",
     ],
-    range:
-      "这三个之外还能聊：增长、数据与实验（《Growth Data Analytics Playbook》· Statsig 唯一布道师）· 个人成长与职业杠杆（《真本事》）· 一个经济学博士怎么看玄学。观众偏创作者的节目，还有一个备选：免费社区办了几年，为什么开始收费——一个数字全公开的商业化案例。",
-    practical: [
-      {
-        title: "分发",
-        detail: "节目上线后，B 站、YouTube、小红书三个平台同步推这一期。",
-      },
-      { title: "档期", detail: "录制时间随你的档期，远程连线即可。" },
-      {
-        title: "资料",
-        detail: "选定方向后，提前把相关原文和数据整理给你，不用再做功课。",
-      },
+    passClose: "不在这三类里的，都欢迎聊。",
+    howTitle: "怎么联系",
+    howIntro: "邮件里写清三件事，通常当周就能定：",
+    hows: [
+      "你是谁，一句话。",
+      "想一起做什么——具体到形式和时间。",
+      "你的观众或用户是谁，这件事对他们有什么用。",
     ],
-    kitTitle: "嘉宾资料包（三页 PDF）",
-    kitDetail: "判断留档、人物与数字、选题方向——可以直接转发给团队。",
-    kitButton: "下载 PDF",
+    howClose: "三个工作日内一定回复——不合适也会回。",
     contactTitle: "孙煜征（课代表立正）",
+    contactDetail: "yz@superlinear.academy · 商务合作微信：FM13870617",
     contactButton: "邮件联系",
     back: "回到主页",
     closing:
-      "方向不合也没关系，当作认识一下——判断都公开留档，什么时候想翻都在。",
+      "都不合适也没关系，当作认识一下——判断都公开留档，什么时候想翻都在。",
   },
 };
 
@@ -203,91 +255,124 @@ export default function Collab() {
 
           <div className="mt-14">
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {t.topicsEyebrow}
+              {t.catEyebrow}
             </p>
             <div className="mt-5 grid gap-5">
-              {t.topics.map(topic => (
+              {t.categories.map(cat => (
                 <article
-                  key={topic.num}
+                  key={cat.num}
                   className="rounded-2xl border border-white/10 bg-white/[0.045] p-6 md:p-8"
                 >
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
-                    {topic.num}
-                  </p>
-                  <h2 className="mt-2 text-xl font-semibold leading-8 text-white md:text-2xl">
-                    {topic.title}
-                  </h2>
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-sm text-amber-300/90">
+                      {cat.num}
+                    </span>
+                    <h2 className="text-xl font-semibold leading-8 text-white md:text-2xl">
+                      {cat.title}
+                    </h2>
+                  </div>
                   <p className="mt-3 max-w-3xl text-sm leading-7 text-zinc-400">
-                    {topic.detail}
+                    {cat.detail}
                   </p>
+                  {cat.items ? (
+                    <ul className="mt-3 max-w-3xl space-y-1.5 border-l border-white/15 pl-4">
+                      {cat.items.map(item => (
+                        <li
+                          key={item}
+                          className="text-sm leading-7 text-zinc-400"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                   <p className="mt-3 text-sm leading-7 text-zinc-300">
-                    {topic.fit}
+                    {cat.fit}
                   </p>
+                  {cat.action ? (
+                    <a
+                      href={cat.action.href}
+                      target={cat.action.external ? "_blank" : undefined}
+                      rel={
+                        cat.action.external ? "noopener noreferrer" : undefined
+                      }
+                      className="group mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition hover:text-amber-300"
+                    >
+                      {cat.action.href.endsWith(".pdf") ? (
+                        <Download className="h-3 w-3" />
+                      ) : null}
+                      <span>{cat.action.label}</span>
+                      <ExternalLink className="h-3 w-3 transition group-hover:translate-x-0.5" />
+                    </a>
+                  ) : null}
                 </article>
               ))}
             </div>
-            <p className="mt-6 max-w-4xl text-sm leading-7 text-zinc-400">
-              {t.range}
-            </p>
           </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {t.practical.map(item => (
-              <div key={item.title} className="border-t-2 border-white/60 pt-4">
-                <h3 className="text-base font-semibold text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-zinc-400">
-                  {item.detail}
-                </p>
-              </div>
-            ))}
+          <div className="mt-14 grid gap-8 md:grid-cols-2">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+              <h3 className="text-lg font-semibold text-white">
+                {t.passTitle}
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-400">
+                {t.passIntro}
+              </p>
+              <ul className="mt-4 space-y-3">
+                {t.passes.map(item => (
+                  <li
+                    key={item}
+                    className="border-l border-white/20 pl-4 text-sm leading-7 text-zinc-400"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-sm leading-7 text-zinc-300">
+                {t.passClose}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8">
+              <h3 className="text-lg font-semibold text-white">{t.howTitle}</h3>
+              <p className="mt-3 text-sm leading-7 text-zinc-400">
+                {t.howIntro}
+              </p>
+              <ol className="mt-4 space-y-3">
+                {t.hows.map((item, i) => (
+                  <li key={item} className="flex gap-3 text-sm leading-7">
+                    <span className="font-mono text-amber-300/90">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-zinc-300">{item}</span>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 text-sm leading-7 text-zinc-400">
+                {t.howClose}
+              </p>
+            </div>
           </div>
 
-          <div className="mt-14 grid gap-5 md:grid-cols-2">
-            <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.045] p-6 md:p-8">
-              <div>
-                <h3 className="text-xl font-semibold text-white">
-                  {t.kitTitle}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-zinc-400">
-                  {t.kitDetail}
-                </p>
-              </div>
-              <a
-                href="/collab/podcast-one-pager.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={cn(
-                  buttonVariants(),
-                  "mt-6 w-fit bg-amber-400 text-[#211300] hover:bg-amber-300"
-                )}
-              >
-                <Download className="mr-2 h-4 w-4" />
-                {t.kitButton}
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
+          <div className="mt-10 flex flex-col items-start justify-between gap-6 rounded-2xl border border-white/10 bg-white/[0.045] p-6 md:flex-row md:items-center md:p-8">
+            <div>
+              <h3 className="text-xl font-semibold text-white">
+                {t.contactTitle}
+              </h3>
+              <p className="mt-2 text-sm leading-7 text-zinc-400">
+                {t.contactDetail}
+              </p>
             </div>
-            <div className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.045] p-6 md:p-8">
-              <div>
-                <h3 className="text-xl font-semibold text-white">
-                  {t.contactTitle}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-zinc-400">
-                  yz@superlinear.academy · 商务合作微信：FM13870617
-                </p>
-              </div>
-              <a
-                href="mailto:yz@superlinear.academy"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "mt-6 w-fit border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                )}
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                {t.contactButton}
-              </a>
-            </div>
+            <a
+              href="mailto:yz@superlinear.academy"
+              className={cn(
+                buttonVariants(),
+                "bg-amber-400 text-[#211300] hover:bg-amber-300"
+              )}
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              {t.contactButton}
+            </a>
           </div>
 
           <p className="mt-10 text-sm leading-7 text-zinc-500">{t.closing}</p>

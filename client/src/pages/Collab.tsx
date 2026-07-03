@@ -20,7 +20,7 @@ const copy = {
       "Invite Yuzheng Sun (课代表立正) to your podcast or event: three prepared episode directions, logistics, and a downloadable guest kit.",
     navSub: "Collaborate",
     eyebrow: "Podcasts · Interviews · Events",
-    h1: "Want Yuzheng on your show? This page is enough.",
+    h1: "Everything you need for an episode, on one page.",
     intro:
       "The dated, checkable track record lives on the homepage. This page has the rest: three prepared episode directions, logistics, and a guest kit you can forward.",
     recordLink: "See the on-record calls",
@@ -82,7 +82,7 @@ const copy = {
       "邀请课代表立正上播客或活动：三个准备好的选题方向、实务安排，以及可直接转发的嘉宾资料包。",
     navSub: "合作",
     eyebrow: "播客 · 访谈 · 活动",
-    h1: "想请立正上节目？这一页就够了。",
+    h1: "一期节目需要的东西，都在这一页。",
     intro:
       "带日期、可对账的判断记录在主页。这一页是剩下的部分：三个准备好的选题方向、实务安排，和一份可以直接转发的嘉宾资料包。",
     recordLink: "看判断留档",
@@ -171,7 +171,7 @@ export default function Collab() {
               size="sm"
               className="bg-amber-400 text-[#211300] hover:bg-amber-300"
             >
-              <a href="mailto:sunyuzheng@gmail.com">
+              <a href="mailto:yz@superlinear.academy">
                 <Mail className="mr-1.5 h-3.5 w-3.5" />
                 {t.contactButton}
               </a>
@@ -274,11 +274,11 @@ export default function Collab() {
                   {t.contactTitle}
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-zinc-400">
-                  sunyuzheng@gmail.com · superlinear.academy
+                  yz@superlinear.academy · 商务合作微信：FM13870617
                 </p>
               </div>
               <a
-                href="mailto:sunyuzheng@gmail.com"
+                href="mailto:yz@superlinear.academy"
                 className={cn(
                   buttonVariants({ variant: "outline" }),
                   "mt-6 w-fit border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"

@@ -75,13 +75,13 @@ const copy = {
         num: "04",
         title: "Products & deeper partnerships",
         detail:
-          "The principle first: my channels don't take sponsored placements — the judgment isn't for sale. For genuinely good products there are deeper structures than an ad read: a founder interview (a product story worth telling is content in its own right), an advisor package, or an angel check.",
+          "The principle first: my channels don't take sponsored placements. The reason is simple: the audience comes for judgment that hasn't been paid for — that trust is the only thing the channel owns, and it can only be sold once. So for genuinely good products we go deeper instead: a founder interview (a product story worth telling is good content in its own right), an advisor package, or an angel check.",
         fit: "Fits when: you have long-term conviction in the product and want deep involvement of judgment and network — not a one-off exposure.",
       },
     ] as Category[],
-    priceTitle: "Two numbers, for reference",
+    priceTitle: "Two numbers, and how to do the math",
     priceDetail:
-      "Advisory at $2,000/hour; custom corporate training from $100k. Posted here to save time on both sides — when the numbers work, everything else is easy to discuss.",
+      "Advisory at $2,000/hour; custom corporate training from $100k. Posted plainly to save time on both sides. A quick self-check: if the decision this hour affects is worth six figures, the price is cheap; if not yet, don't spend it — my channels and the Knowledge Bank stay open, and most of my thinking is there for free.",
     passTitle: "Where we can't help",
     passIntro:
       "Three kinds of proposals we usually pass on — not because they are bad ideas, but because we can't deliver something worthy of your effort:",
@@ -159,13 +159,13 @@ const copy = {
         num: "04",
         title: "产品与深度合作",
         detail:
-          "先说原则：我的节目不接商单——判断不出售。但对真正好的产品，有比商单更深的合作方式：请 founder 上节目做访谈（值得讲的产品故事，本身就是内容）；advisor 合作包；天使投资。",
+          "先说原则：我的节目不接商单。原因很简单：观众来，是为了没被付费影响过的判断——这份信任是频道唯一值钱的东西，卖一次就没了。所以对真正好的产品，我们换更深的做法：请 founder 上节目做访谈（值得讲的产品故事，本身就是好内容）；advisor 合作包；天使投资。",
         fit: "最合适的情况：你对产品有长期信心，想要的是判断和网络的深度参与，而不是一次曝光。",
       },
     ] as Category[],
-    priceTitle: "两个数字，供参考",
+    priceTitle: "两个数字，和一个自查的算法",
     priceDetail:
-      "咨询 $2,000/小时；定制企业培训 $100k 起。写在明处，是为了替双方省时间——数字对得上，后面都好谈。",
+      "咨询 $2,000/小时；定制企业培训 $100k 起。写在明处，是为了替双方省时间。自查的算法：如果这一小时要影响的决策值六位数，这个价格就是划算的；还没到的话，先别花这个钱——B 站、YouTube 和 Knowledge Bank 一直开着，我判断里能公开的部分都在那里，免费。",
     passTitle: "先说清楚，哪些帮不上",
     passIntro:
       "三类提议我们通常会婉拒——不是事情不好，是我们给不出对得起你的交付：",

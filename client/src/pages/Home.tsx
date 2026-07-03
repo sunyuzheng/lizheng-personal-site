@@ -1067,6 +1067,7 @@ export default function Home() {
       content: "Explore",
       book: "Books",
       newBook: "Books",
+      collab: "Collaborate",
       joinCommunity: "Join Community",
       joinArrow: "Join community →",
     },
@@ -1081,6 +1082,7 @@ export default function Home() {
       content: "深入",
       book: "书",
       newBook: "两本书",
+      collab: "合作",
       joinCommunity: "加入社群",
       joinArrow: "加入社群 →",
     },
@@ -1160,6 +1162,12 @@ export default function Home() {
                 className="text-sm text-zinc-300 transition hover:text-amber-300"
               >
                 {nav.book}
+              </Link>
+              <Link
+                href="/collab"
+                className="text-sm text-zinc-300 transition hover:text-amber-300"
+              >
+                {nav.collab}
               </Link>
               <LanguageToggle size="sm" />
               <Button
@@ -1250,6 +1258,13 @@ export default function Home() {
                 className="block text-zinc-300 transition hover:text-amber-300"
               >
                 {nav.newBook}
+              </Link>
+              <Link
+                href="/collab"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block text-zinc-300 transition hover:text-amber-300"
+              >
+                {nav.collab}
               </Link>
               <a
                 href="https://www.superlinear.academy"

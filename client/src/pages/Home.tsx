@@ -204,6 +204,115 @@ const principles = {
   ],
 };
 
+const predictions = {
+  en: [
+    {
+      date: "2023.03",
+      title: "Generative AI is a paradigm shift — with probabilities attached",
+      detail:
+        "From “The Five Most Important Questions About ChatGPT”: a digital apprentice for everyone (75%), 10x coding productivity (70%), AI that works for me (50%) — and “the marginal cost of distributing intelligence goes to zero.”",
+      links: [
+        {
+          label: "Essay",
+          href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+        },
+      ],
+    },
+    {
+      date: "2024.12",
+      title: "Agentic AI: from “ask me anything” to “do it for me”",
+      detail:
+        "Explained why this was the most important shift underway, then put a precise window on it: 10–18 months. The agentic wave landed inside that window.",
+      links: [
+        {
+          label: "Essay",
+          href: "https://www.superlinear.academy/c/ai-resources/agentic-ai-agentic-ai",
+        },
+        { label: "Video", href: "https://youtu.be/FzbkAy0DcQk" },
+      ],
+    },
+    {
+      date: "2025.03",
+      title: "MCP: the business game behind a unified tool protocol",
+      detail:
+        "Framed the protocol race as a standards-and-ecosystem play, not a technical one — then publicly revisited the call in October: “OpenAI’s Apps SDK support is a crisis for MCP.”",
+      links: [
+        {
+          label: "Essay",
+          href: "https://www.superlinear.academy/c/ai-resources/mcp",
+        },
+        { label: "Video", href: "https://youtu.be/kwwjR6HHJPM" },
+      ],
+    },
+    {
+      date: "2026.02",
+      title: "OpenClaw: why it took off — and why it would cool",
+      detail:
+        "Published before the hype peak. Named the mechanism (bringing what a niche already enjoyed to a much larger audience) and the ceiling: “Tools fade. Understanding why they work doesn’t.”",
+      links: [
+        {
+          label: "Essay",
+          href: "https://www.superlinear.academy/c/ai-resources/openclaw",
+        },
+        { label: "Video", href: "https://youtu.be/h_yCYBRzbVw" },
+      ],
+    },
+  ],
+  zh: [
+    {
+      date: "2023.03",
+      title: "生成式 AI 是范式突破——判断带着概率",
+      detail:
+        "《关于ChatGPT最重要的五个问题》：每个人的数字学徒（75%）、编程提效十倍（70%）、替我打工（50%）——以及「智力分发的边际成本降为 0」。",
+      links: [
+        {
+          label: "原文",
+          href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+        },
+      ],
+    },
+    {
+      date: "2024.12",
+      title: "Agentic AI：从「我问你答」到「我问你做」",
+      detail:
+        "讲清了为什么这是最重要的变化；随后的视频给出精确的机会窗口：10–18 个月——之后 agentic 产品的全面爆发落在这个窗口里。",
+      links: [
+        {
+          label: "原文",
+          href: "https://www.superlinear.academy/c/ai-resources/agentic-ai-agentic-ai",
+        },
+        { label: "视频", href: "https://youtu.be/FzbkAy0DcQk" },
+      ],
+    },
+    {
+      date: "2025.03",
+      title: "MCP：统一工具协议背后的商业与技术博弈",
+      detail:
+        "把协议之争讲成标准与生态之争；同年 10 月公开复盘「OpenAI Apps SDK 对 MCP 反而是危机」。",
+      links: [
+        {
+          label: "原文",
+          href: "https://www.superlinear.academy/c/ai-resources/mcp",
+        },
+        { label: "视频", href: "https://youtu.be/kwwjR6HHJPM" },
+      ],
+    },
+    {
+      date: "2026.02",
+      title: "OpenClaw（小龙虾）：为什么是它火，以及它为什么会凉",
+      detail:
+        "热度顶峰前发布。讲清了火的机制——把一小撮人已经享受的能力，推到更大的用户群面前；也点破了天花板：「工具会过气，对工具本质的理解不会」。",
+      links: [
+        {
+          label: "原文",
+          href: "https://www.superlinear.academy/c/ai-resources/openclaw",
+        },
+        { label: "视频", href: "https://youtu.be/h_yCYBRzbVw" },
+      ],
+    },
+  ],
+};
+
 const practicePaths = {
   en: [
     {
@@ -951,6 +1060,7 @@ export default function Home() {
       about: "Snapshot",
       background: "Path",
       beliefs: "Beliefs",
+      record: "On record",
       work: "Work",
       proof: "Proof",
       guests: "Guests",
@@ -964,6 +1074,7 @@ export default function Home() {
       about: "速写",
       background: "路径",
       beliefs: "主张",
+      record: "判断",
       work: "作品",
       proof: "证据",
       guests: "嘉宾",
@@ -1013,6 +1124,12 @@ export default function Home() {
                 className="text-sm text-zinc-300 transition hover:text-amber-300"
               >
                 {nav.beliefs}
+              </button>
+              <button
+                onClick={() => scrollToSection("record")}
+                className="text-sm text-zinc-300 transition hover:text-amber-300"
+              >
+                {nav.record}
               </button>
               <button
                 onClick={() => scrollToSection("work")}
@@ -1095,6 +1212,12 @@ export default function Home() {
                 className="block text-zinc-300 transition hover:text-amber-300"
               >
                 {nav.beliefs}
+              </button>
+              <button
+                onClick={() => scrollToSection("record")}
+                className="block text-zinc-300 transition hover:text-amber-300"
+              >
+                {nav.record}
               </button>
               <button
                 onClick={() => scrollToSection("work")}
@@ -1458,6 +1581,61 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section
+          id="record"
+          className="container scroll-mt-24 py-14 md:py-20"
+        >
+          <div className="mb-10 max-w-3xl">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+              {lang === "en" ? "Judgment, on the record" : "判断留档"}
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold text-white md:text-5xl">
+              {lang === "en"
+                ? "Called early, dated, checkable"
+                : "带日期的公开判断，随时可对账"}
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400">
+              {lang === "en"
+                ? "Since 2023 I have published my calls with dates attached — the reasoning, the specific numbers, and the deadlines that make them checkable."
+                : "从 2023 年起，我把对 AI 的判断带着日期公开写下来、讲出来——有推理、有具体数字、有可以对账的时限。"}
+            </p>
+          </div>
+          <div className="divide-y divide-white/10 border-y border-white/10">
+            {predictions[lang].map((item) => (
+              <div
+                key={item.date}
+                className="grid gap-4 py-6 md:grid-cols-[7rem_1fr]"
+              >
+                <div className="font-mono text-sm text-amber-300/90">
+                  {item.date}
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold leading-7 text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 max-w-3xl text-sm leading-7 text-zinc-400">
+                    {item.detail}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-5">
+                    {item.links.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition hover:text-amber-300"
+                      >
+                        <span>{link.label}</span>
+                        <ExternalLink className="h-3 w-3 transition group-hover:translate-x-0.5" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 

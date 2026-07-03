@@ -1026,7 +1026,7 @@ export default function ZhenbenShi() {
               <div className="bg-white/[0.04] border border-white/10 p-4">
                 <p className="text-sm text-zinc-400">
                   📖 所著{" "}
-                  <span className="text-white font-semibold">《Grow Data Analytics Playbook》</span>{" "}
+                  <span className="text-white font-semibold">《Growth Data Analytics Playbook》</span>{" "}
                   获《华尔街日报》推荐为 2025 年 CIO 必读书籍
                 </p>
               </div>

@@ -60,7 +60,8 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 ## Active Assets
 
-- Hero: `/english-network/acquired.webp`
+- Hero desktop: `/hero/acquired-behind-scenes-desktop.webp`
+- Hero mobile: `/hero/acquired-behind-scenes-mobile.webp`
 - Enterprise work: `/english-network/doordash-ai-training.webp`
 - Book launch: `/book/growth-data-launch.webp`
 

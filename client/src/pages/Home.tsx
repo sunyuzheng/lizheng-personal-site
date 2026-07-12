@@ -557,17 +557,23 @@ export default function Home() {
           id="hero"
           className="relative isolate min-h-[700px] scroll-mt-[72px] overflow-hidden md:min-h-[calc(100svh-72px)]"
         >
-          <img
-            src="/english-network/acquired.webp"
-            alt={
-              lang === "en"
-                ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
-                : "孙煜征与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈"
-            }
-            className="absolute inset-0 h-full w-full object-cover object-[72%_center] md:object-center"
-            width={1280}
-            height={720}
-          />
+          <picture>
+            <source
+              media="(max-width: 767px)"
+              srcSet="/hero/acquired-behind-scenes-mobile.webp"
+            />
+            <img
+              src="/hero/acquired-behind-scenes-desktop.webp"
+              alt={
+                lang === "en"
+                  ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
+                  : "孙煜征与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈"
+              }
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              width={2400}
+              height={1600}
+            />
+          </picture>
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.91)_38%,rgba(7,10,18,0.42)_67%,rgba(7,10,18,0.2)_100%)] md:bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.9)_38%,rgba(7,10,18,0.18)_75%,rgba(7,10,18,0.08)_100%)]" />
           <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,10,18,0.94)_0%,transparent_36%)] md:bg-[linear-gradient(0deg,rgba(7,10,18,0.72)_0%,transparent_30%)]" />
 

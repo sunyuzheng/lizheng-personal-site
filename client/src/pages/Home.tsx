@@ -133,6 +133,29 @@ const ideas = {
   ],
 };
 
+const featuredPrediction = {
+  en: {
+    date: "2023.02",
+    context: "BEFORE GPT-4",
+    title:
+      "Before GPT-4, I argued that ChatGPT was not a better chatbot, but a new natural-language interface to data and compute.",
+    detail:
+      "The essay anticipated collapsing inference costs; tool use and agents; personal memory and private search; copilots; and AI-native systems.",
+    label: "Read Five Questions about ChatGPT",
+    href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+  },
+  zh: {
+    date: "2023.02",
+    context: "GPT-4 发布前",
+    title:
+      "在 GPT-4 发布前，我已经判断：ChatGPT 不是更好的聊天机器人，而是用自然语言调用数据与算力的新范式。",
+    detail:
+      "文中提前推演了推理成本骤降、工具调用与 agent、个人记忆与 private search（后来被称为 RAG）、Copilot，以及 AI-native 系统。",
+    label: "阅读万字原文",
+    href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+  },
+};
+
 const predictions = {
   en: [
     {
@@ -848,7 +871,29 @@ export default function Home() {
               <h3 className="mt-4 text-2xl font-semibold text-white">
                 {lang === "en" ? "A few dated calls" : "几次有时间戳的判断"}
               </h3>
-              <div className="mt-7 border-t border-white/10">
+              <a
+                href={featuredPrediction[lang].href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-7 block border-y border-amber-300/25 py-6"
+              >
+                <span className="font-mono text-xs text-amber-300">
+                  {featuredPrediction[lang].date}
+                  <span className="px-2 text-zinc-600">·</span>
+                  {featuredPrediction[lang].context}
+                </span>
+                <span className="mt-3 block text-lg font-semibold leading-7 text-white group-hover:text-amber-100">
+                  {featuredPrediction[lang].title}
+                </span>
+                <span className="mt-3 block text-sm leading-6 text-zinc-400">
+                  {featuredPrediction[lang].detail}
+                </span>
+                <span className="mt-4 flex items-center gap-2 text-xs font-semibold text-amber-300 group-hover:text-amber-200">
+                  {featuredPrediction[lang].label}
+                  <ArrowRight className="h-4 w-4 shrink-0" />
+                </span>
+              </a>
+              <div>
                 {predictions[lang].map(item => (
                   <a
                     key={item.date}

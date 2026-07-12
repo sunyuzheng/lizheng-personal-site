@@ -41,7 +41,7 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 1. Acquired conversation in the hero: peer context and international technology positioning.
 2. Cornell / Amazon / Meta / Tencent / Statsig: institutional and operating credibility.
-3. Dated public calls: evidence of independent judgment.
+3. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
 4. Superlinear / AI-Builders / enterprise work: evidence that ideas become environments and operating systems.
 5. 200+ conversations and selected guests: network quality before follower quantity.
 6. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.

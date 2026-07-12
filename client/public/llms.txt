@@ -1,6 +1,6 @@
 # Yuzheng Sun | 课代表立正
 
-> Yuzheng Sun (孙煜征, also known as 课代表立正) is an AI educator, content creator, and founder of Superlinear Academy. His work connects AI practice, product judgment, data science, and structured learning for professionals and teams. He reaches 300,000+ followers across YouTube and Bilibili.
+> Yuzheng Sun (孙煜征, also known as 课代表立正) is an AI educator, content creator, and founder of Superlinear Academy. His work connects AI practice, product judgment, data science, and structured learning for professionals and teams. He reaches 400,000+ followers across YouTube, Bilibili, and Xiaohongshu.
 
 ## Identity
 
@@ -21,18 +21,18 @@ Yuzheng Sun works across the following areas:
 
 ## Professional Background
 
-- Founder & CEO, Superlinear Academy (AI education community with 5,000+ members)
-- Evangelist, Statsig (acquired by OpenAI in 2025)
-- VP of Data Science, Tencent Games
+- Founder & CEO, Superlinear Academy (AI learning and builder community)
+- Principal Data Scientist and sole evangelist, Statsig (acquired by OpenAI in 2025)
+- Vice Director, Data & AI, Tencent IEG
 - Data Scientist, Meta (Facebook)
 - Economist, Amazon
 - PhD in Economics, Cornell University
 
 ## Content & Influence
 
-- 300,000+ subscribers across YouTube (@kedaibiao) and Bilibili
-- Creator of "Build with AI" course, which has helped 2,000+ students and is rated 4.9/5 on Maven
-- Author of "关于ChatGPT最重要的五个问题" (The 5 Most Important Questions About ChatGPT), a widely discussed 2023 article about AI's long-term implications
+- 400,000+ followers across YouTube (@kedaibiao), Bilibili, and Xiaohongshu
+- Creator of AI-Builders, which has served 3,000+ paid students and is rated 4.9/5 on Maven
+- Author of "关于ChatGPT最重要的五个问题" (The 5 Most Important Questions About ChatGPT), first written in February 2023 before GPT-4. It anticipated collapsing inference costs, tool use and agents, personal memory and private search, copilots, and AI-native systems.
 - Hundreds of guest interviews with leading figures in AI, tech, and academia
 
 ## Notable Endorsements

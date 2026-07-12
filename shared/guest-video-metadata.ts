@@ -268,6 +268,12 @@ export const guestVideoMetadata = [
     "view_count": 91382
   },
   {
+    "video_id": "vd_oYgwQSBM",
+    "title": "一红16年，干啥啥赚钱？｜屠龙博士创业的秘密！",
+    "published_at": "2026-06-25T01:15:00Z",
+    "view_count": 83048
+  },
+  {
     "video_id": "YE24Rpn3oD0",
     "title": "第一性原理思考的至高境界｜Databricks Cofounder Reynold Xin访谈完整版",
     "published_at": "2024-11-12T10:33:23Z",

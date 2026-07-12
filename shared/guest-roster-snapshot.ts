@@ -157,6 +157,23 @@ export const guestRosterSnapshot = [
     ]
   },
   {
+    "guest_name": "杨滢（屠龙大实话）",
+    "guest_en_name": "Yang Ying",
+    "guest_title": "神经科学博士、连续创业者、内容创作者",
+    "guest_company": "屠龙大实话",
+    "primary_video_id": "vd_oYgwQSBM",
+    "all_video_ids": [
+      "vd_oYgwQSBM"
+    ],
+    "max_views": 83048,
+    "thumbnail_url": "https://img.youtube.com/vi/vd_oYgwQSBM/hqdefault.jpg",
+    "primary_url": "https://www.youtube.com/watch?v=vd_oYgwQSBM",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.youtube.com/watch?v=vd_oYgwQSBM"
+    ]
+  },
+  {
     "guest_name": "Reynold Xin",
     "guest_en_name": "Reynold Xin",
     "guest_title": "Cofounder & Chief Architect",

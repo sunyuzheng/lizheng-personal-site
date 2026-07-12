@@ -247,6 +247,24 @@ const selectedGuests = {
       image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
     },
     {
+      name: "Tian Yuandong",
+      role: "AI researcher · Former Meta AI / FAIR",
+      href: "/guests/tian-yuandong",
+      image: "https://img.youtube.com/vi/dymM40bVIhQ/maxresdefault.jpg",
+    },
+    {
+      name: "Howie Xu",
+      role: "Chief AI Officer, Gen · Stanford GSB guest lecturer",
+      href: "/guests/howie-xu",
+      image: "https://img.youtube.com/vi/R8X4ClBY5tg/maxresdefault.jpg",
+    },
+    {
+      name: "Yang Ying · Tulong Dashihua",
+      role: "Neuroscience PhD · Serial entrepreneur",
+      href: "/guests/yang-ying",
+      image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
+    },
+    {
       name: "Shuchao Bi",
       role: "Head of Post-Training · Multimodal, OpenAI",
       href: "/guests/shuchao-bi",
@@ -283,6 +301,24 @@ const selectedGuests = {
       role: "PyTorch 共同创始人 · Lepton AI 创始人",
       href: "/guests/yangqing-jia",
       image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
+    },
+    {
+      name: "田渊栋",
+      role: "AI 研究者 · 前 Meta AI / FAIR",
+      href: "/guests/tian-yuandong",
+      image: "https://img.youtube.com/vi/dymM40bVIhQ/maxresdefault.jpg",
+    },
+    {
+      name: "硅谷徐老师 Howie Xu",
+      role: "GEN 首席 AI 官 · 斯坦福商学院客座讲师",
+      href: "/guests/howie-xu",
+      image: "https://img.youtube.com/vi/R8X4ClBY5tg/maxresdefault.jpg",
+    },
+    {
+      name: "杨滢 · 屠龙大实话",
+      role: "神经科学博士 · 连续创业者",
+      href: "/guests/yang-ying",
+      image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
     },
     {
       name: "毕书超 Shuchao Bi",
@@ -331,9 +367,17 @@ const endorsements = {
       quote:
         "Yuzheng has built an AI education community that is carefully curated, practical, and unusually useful for people doing real work.",
       name: "Wei Manfredi",
-      role: "Global CAIO & CTO · McDonald's · Google Cloud · lululemon",
+      role: "Senior Vice President, AI & Architecture · IHG Hotels & Resorts",
       avatar: "/avatars/wei-manfredi.jpg",
       initials: "WM",
+    },
+    {
+      quote:
+        "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era. Even as a scientist, I found his course deeply illuminating.",
+      name: "Liu Jia",
+      role: "Chair Professor, Tsinghua University · Cognitive neuroscientist",
+      avatar: "/avatars/liu-jia.jpg",
+      initials: "LJ",
     },
     {
       quote:
@@ -357,9 +401,17 @@ const endorsements = {
       quote:
         "立正做的 AI 教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
       name: "Wei Manfredi",
-      role: "全球 CAIO & CTO · McDonald's · Google Cloud · lululemon",
+      role: "IHG Hotels & Resorts AI 与架构高级副总裁",
       avatar: "/avatars/wei-manfredi.jpg",
       initials: "WM",
+    },
+    {
+      quote:
+        "立正分享的不只是工具，而是思维哲学——这才是 AI 时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
+      name: "刘嘉",
+      role: "清华大学讲席教授 ·《最强大脑》总科学顾问",
+      avatar: "/avatars/liu-jia.jpg",
+      initials: "刘嘉",
     },
     {
       quote: "立正很擅长把 AI、产品判断和个人成长连接成一套可实践的学习系统。",
@@ -887,8 +939,8 @@ export default function Home() {
                     src="/english-network/doordash-ai-training.webp"
                     alt={
                       lang === "en"
-                        ? "Yuzheng Sun leading an AI training session at DoorDash"
-                        : "孙煜征在 DoorDash AI 活动现场演讲"
+                        ? "Yuzheng Sun leading an AI training session at a DoorDash team offsite in Seattle"
+                        : "孙煜征在西雅图 DoorDash 团队 offsite 进行 AI 培训"
                     }
                     className="aspect-[4/3] w-full object-cover md:aspect-[16/10] lg:aspect-[4/3]"
                     loading="lazy"
@@ -899,10 +951,10 @@ export default function Home() {
                 <figcaption className="mt-3 flex justify-between gap-4 text-xs leading-5 text-[#777064]">
                   <span>
                     {lang === "en"
-                      ? "Enterprise AI session · DoorDash"
-                      : "企业 AI 现场 · DoorDash"}
+                      ? "DoorDash team offsite · AI training"
+                      : "DoorDash 团队 offsite · AI 培训"}
                   </span>
-                  <span>{lang === "en" ? "San Francisco" : "旧金山"}</span>
+                  <span>{lang === "en" ? "Seattle" : "西雅图"}</span>
                 </figcaption>
               </figure>
             </div>
@@ -1021,8 +1073,8 @@ export default function Home() {
               >
                 <Link href="/guests">
                   {lang === "en"
-                    ? "Browse all 128 guests"
-                    : "浏览全部 128 位嘉宾"}
+                    ? "Browse all guest conversations"
+                    : "查看全部嘉宾访谈"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
@@ -1100,13 +1152,13 @@ export default function Home() {
             <SectionLabel dark>
               {lang === "en" ? "INDEPENDENT SIGNAL" : "来自同行的评价"}
             </SectionLabel>
-            <div className="mt-8 grid border-t border-white/10 md:grid-cols-2">
+            <div className="mt-8 grid border-t border-white/10 lg:grid-cols-3">
               {endorsements[lang].slice(1).map((item, index) => (
                 <blockquote
                   key={item.name}
                   className={cn(
-                    "border-b border-white/10 py-8 md:px-8",
-                    index === 1 && "md:border-l"
+                    "border-b border-white/10 py-8 lg:px-8",
+                    index > 0 && "lg:border-l"
                   )}
                 >
                   <p className="text-lg leading-8 text-zinc-200">

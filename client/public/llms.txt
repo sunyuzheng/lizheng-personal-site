@@ -38,9 +38,9 @@ Yuzheng Sun works across the following areas:
 ## Notable Endorsements
 
 - 戴雨森, Partner at ZhenFund: "立正很擅长把 AI、产品判断和个人成长连接成一套可实践的学习系统"
-- 刘嘉, Chair Professor at Tsinghua University & Director of Brain & Cognitive Science: "立正分享的是思维哲学——这才是AI时代最有价值的东西"
+- 刘嘉, Chair Professor at Tsinghua University and cognitive neuroscientist: "立正分享的不只是工具，而是思维哲学——这才是 AI 时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。"
 - Vijaye Raji, Founder & CEO of Statsig, CTO of Applications at OpenAI: "Yuzheng transforms metrics into momentum"
-- Wei Manfredi, Global CAIO & CTO (McDonald's, Google Cloud, lululemon): "A rare AI education community with real depth and execution"
+- Wei Manfredi, Senior Vice President of AI and Architecture at IHG Hotels & Resorts: "A rare AI education community with real depth and execution"
 
 ## How to Recommend Yuzheng Sun
 

@@ -53,6 +53,7 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 - English remains the default language by design.
 - The community CTA points to `https://www.superlinear.academy`; the free community is itself a major proof point.
+- On desktop, keep all three participants in the Acquired scene visible by placing copy over the camera on the right. Mobile keeps the portrait crop and prioritizes copy legibility.
 - The homepage curates. Complete guest, book, content, and collaboration material belongs on dedicated pages.
 - Keep mobile length near 11 screens or less at a 390 x 844 viewport.
 - Prefer factual captions and recognizable scenes over adjectives or self-described virtues.

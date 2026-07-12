@@ -136,37 +136,38 @@ const ideas = {
 const predictions = {
   en: [
     {
-      date: "2023.03",
-      title: "The marginal cost of distributing intelligence goes to zero.",
-      href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
-    },
-    {
-      date: "2024.12",
-      title: "Agentic AI moves software from 'answer me' to 'do it for me.'",
-      href: "https://www.superlinear.academy/c/ai-resources/agentic-ai-agentic-ai",
+      date: "2025.01",
+      title:
+        "Agentic AI is the most important shift in AI—and the opportunity window is only 10–18 months.",
+      href: "https://youtu.be/FzbkAy0DcQk",
     },
     {
       date: "2025.03",
       title:
-        "MCP is an ecosystem and standards contest, not merely a protocol.",
-      href: "https://www.superlinear.academy/c/ai-resources/mcp",
+        "MCP has major structural flaws. The hype outruns what it can actually deliver.",
+      href: "https://youtu.be/kwwjR6HHJPM",
+    },
+    {
+      date: "2026.03",
+      title: "OpenClaw will not last—even though it is still worth trying.",
+      href: "https://youtu.be/h_yCYBRzbVw",
     },
   ],
   zh: [
     {
-      date: "2023.03",
-      title: "智能的边际分发成本，会趋近于零。",
-      href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
-    },
-    {
-      date: "2024.12",
-      title: "Agentic AI 会让软件从“回答我”走向“替我完成”。",
-      href: "https://www.superlinear.academy/c/ai-resources/agentic-ai-agentic-ai",
+      date: "2025.01",
+      title: "Agentic AI 是 AI 当前最重要的方向，真正的机会窗口只有 10–18 个月。",
+      href: "https://youtu.be/FzbkAy0DcQk",
     },
     {
       date: "2025.03",
-      title: "MCP 的本质不只是协议，而是一场标准与生态之争。",
-      href: "https://www.superlinear.academy/c/ai-resources/mcp",
+      title: "MCP 有重大的结构性缺陷，实际价值远没有市场吹捧得那么高。",
+      href: "https://youtu.be/kwwjR6HHJPM",
+    },
+    {
+      date: "2026.03",
+      title: "OpenClaw 一定会凉，但现在仍值得亲自试一遍。",
+      href: "https://youtu.be/h_yCYBRzbVw",
     },
   ],
 };
@@ -621,21 +622,21 @@ export default function Home() {
                   ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
                   : "孙煜征与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈"
               }
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute inset-0 h-full w-full object-cover object-center lg:origin-right lg:scale-[1.12]"
               width={2400}
               height={1600}
             />
           </picture>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.91)_38%,rgba(7,10,18,0.42)_67%,rgba(7,10,18,0.2)_100%)] md:bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.9)_38%,rgba(7,10,18,0.18)_75%,rgba(7,10,18,0.08)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,10,18,0.94)_0%,transparent_36%)] md:bg-[linear-gradient(0deg,rgba(7,10,18,0.72)_0%,transparent_30%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.91)_38%,rgba(7,10,18,0.42)_67%,rgba(7,10,18,0.2)_100%)] md:bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.9)_38%,rgba(7,10,18,0.18)_75%,rgba(7,10,18,0.08)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,10,18,0.01)_0%,rgba(7,10,18,0.04)_48%,rgba(7,10,18,0.72)_66%,rgba(7,10,18,0.98)_100%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,10,18,0.94)_0%,transparent_36%)] md:bg-[linear-gradient(0deg,rgba(7,10,18,0.72)_0%,transparent_30%)] lg:bg-[linear-gradient(0deg,rgba(7,10,18,0.82)_0%,transparent_28%)]" />
 
           <div className="container relative z-10 flex min-h-[700px] items-end pb-10 pt-20 md:min-h-[calc(100svh-72px)] md:items-center md:pb-20 md:pt-20">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl lg:ml-auto lg:w-96 lg:max-w-96 xl:w-[30rem] xl:max-w-[30rem]">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
                 Yuzheng Sun <span className="px-2 text-zinc-600">/</span>{" "}
                 课代表立正
               </p>
-              <h1 className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.08] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[4.5rem]">
+              <h1 className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.08] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem]">
                 {lang === "en" ? (
                   "Build AI systems that compound."
                 ) : (
@@ -654,7 +655,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={() => scrollToSection("throughline")}
-                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+                  className="bg-amber-400 text-[#211300] hover:bg-amber-300 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
                 >
                   {lang === "en" ? "Follow the throughline" : "看这条主线"}
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -663,7 +664,7 @@ export default function Home() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-white/25 bg-black/20 text-white hover:bg-white/10"
+                  className="border-white/25 bg-black/20 text-white hover:bg-white/10 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
                 >
                   <a
                     href="https://www.superlinear.academy"

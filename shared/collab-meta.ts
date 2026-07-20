@@ -21,16 +21,16 @@ export const COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
 
 export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
   en: {
-    title: "Podcasts & creator invitations · Yuzheng Sun",
+    title: "Podcast & video invitations · Yuzheng Sun",
     description:
-      "Invite Yuzheng Sun to a podcast, video, or long-form conversation. Explore possible questions, recording details, editorial boundaries, and host-ready materials.",
+      "Invite Yuzheng Sun to a podcast, video, or long-form conversation. See recent Chinese conversations, original angles, production details, and host-ready materials.",
     canonical: "https://www.lizheng.ai/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
   },
   zh: {
-    title: "播客与创作者邀请 · 课代表立正",
+    title: "节目邀请 · 课代表立正｜播客与视频对谈",
     description:
-      "邀请课代表立正参与播客、视频或深度对谈：可聊问题、录制方式、编辑边界与主持人素材。",
+      "邀请课代表立正参与播客、视频与深度对谈。查看十字路口、刘嘉教授、屠龙等代表对话，可聊问题、录制方式与主持人素材。",
     canonical: "https://www.lizheng.ai/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
   },

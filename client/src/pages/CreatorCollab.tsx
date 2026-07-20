@@ -24,108 +24,124 @@ import { CREATOR_COLLAB_PAGE_META } from "../../../shared/collab-meta";
 
 const copy = {
   en: {
-    navSub: "Podcasts & creator invitations",
-    eyebrow: "Podcasts · Video · Long-form conversations",
-    h1: "Invite me to your show.",
+    navSub: "Podcast & video invitations",
+    eyebrow: "Podcasts · Video · Long-form",
+    h1: "Let’s make a conversation only your show could create.",
     intro:
-      "If your audience is wrestling with a real question about AI, work, learning, or judgment, send the invitation. You own the format and editorial direction; I’ll come prepared, welcome hard questions, and say when I don’t know.",
-    fitNote:
-      "The size of the show is not the first filter. The question, whether I can genuinely contribute, and timing matter more.",
-    questionCta: "See possible questions",
+      "My work has moved across economics, big tech, AI products, education, and independent media. If you are pursuing a question about AI, work, learning, or judgment, I can bring first-hand cases and claims that welcome pressure-testing. You define the show; the conversation should have its own edge.",
+    heroProofs: [
+      "Cornell Economics PhD",
+      "Amazon · Meta · Tencent · Statsig",
+      "200+ published conversations",
+      "400K+ cross-platform audience",
+    ],
+    questionCta: "See three representative conversations",
     kitCta: "Open the host kit",
-    stanceEyebrow: "A GOOD CONVERSATION",
-    stanceTitle:
-      "Start with the audience’s question, not my résumé or a product launch.",
+    stanceEyebrow: "NOT A PRESS TOUR",
+    stanceTitle: "I am not coming to repeat a polished set of talking points.",
     stanceDetail:
-      "We do not need to agree. The episode should leave people with a clearer way to think, a claim they can test, or a useful next move.",
-    formatsEyebrow: "POSSIBLE FORMATS",
-    formatsTitle: "The shape follows the question.",
+      "The best episodes begin with the host’s editorial instinct. I will prepare sources, cases, and my strongest current view; you can challenge any of it. AI Builders and Stay Superlinear can appear when they are useful live cases—not as the reason for the episode.",
+    formatsEyebrow: "WHAT I BRING INTO THE ROOM",
+    formatsTitle:
+      "More than one set of AI talking points: several real arenas.",
     formats: [
       {
         number: "01",
-        title: "Long-form interview",
+        title: "First-hand operating context",
         detail:
-          "You set the questions and direction. I bring relevant sources, first-hand cases, and the strongest counterargument I can find.",
+          "From economics and big tech to an AI startup, courses, community, and independent media—I have seen the same question carry different costs inside different systems.",
       },
       {
         number: "02",
-        title: "Thesis audit or debate",
+        title: "Claims that can be revisited",
         detail:
-          "Put a dated claim, live disagreement, or contested assumption on the table and examine where the evidence actually leads.",
+          "I leave timestamps on public views, then return to what held up, what failed, and which new evidence changed my mind.",
       },
       {
         number: "03",
-        title: "Builder breakdown",
+        title: "An interviewer’s ear",
         detail:
-          "Take a real workflow, product, or creator problem and work through what AI should do, what a person must judge, and how the result gets tested.",
+          "After 200+ published conversations, I know when an answer is too neat, when to stop, and how to leave room for the host’s next question.",
       },
     ],
-    questionsEyebrow: "POSSIBLE STARTING POINTS",
-    questionsTitle: "Questions I can do real work on.",
+    questionsEyebrow: "QUESTIONS WITH REAL TENSION",
+    questionsTitle: "A sharp question matters more than a complete topic list.",
     questionsIntro:
-      "These are starting points, not a fixed menu or a prewritten tour.",
+      "Every one of these can be challenged, and any one can carry the episode on its own.",
     questions: [
-      "As AI makes execution cheaper, where does human value move?",
-      "What actually separates using AI from building with it?",
-      "How do you form strong views without becoming trapped by them?",
-      "Looking back at recent AI predictions: what was right, what was wrong, and why?",
-      "How do economics, product work, and organizational experience change the way we think about careers and learning?",
+      "Why do stronger AI models leave most people’s real output nearly unchanged?",
+      "As execution approaches zero cost, where do human value, organizational moats, and career leverage move?",
+      "What is ‘stop using ChatGPT’ actually arguing against—and what does agentic work change?",
+      "Across Amazon, Meta, Tencent, and Statsig, how do technology organizations make decisions and systematically get them wrong?",
+      "Which of my public AI calls have aged well, which require a correction, and why?",
+      "Can education and community build judgment without creating a new form of dependency?",
     ],
     otherDirections:
-      "Other useful directions include growth and experimentation, career leverage, China–U.S. technology, and when a long-running free community should add a paid membership layer—with Stay Superlinear as one live case.",
-    conversationsEyebrow: "CONVERSATIONS I’VE HOSTED",
-    conversationsTitle: "These show how I prepare for a serious conversation.",
+      "There are also grounded cases in experimentation, creator economics, China–U.S. technology, and the operating decisions behind AI Builders and Stay Superlinear. An episode does not need to cover them all; one good question is usually stronger.",
+    conversationsEyebrow: "RECENT CHINESE CONVERSATIONS",
+    conversationsTitle:
+      "Three conversations, three different editorial relationships.",
+    conversationsIntro:
+      "Guest, role-swapping counterpart, and long-form host: these examples say more about what an episode can become than a list of available topics.",
     conversations: [
       {
-        name: "Gergely Orosz",
-        role: "Founder, The Pragmatic Engineer",
-        note: "Engineering careers, the technology industry, and the systems behind durable independent work.",
-        href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
-        image: "/english-network/gergely-orosz.webp",
+        label: "INVITED GUEST / ROLE-SWAP · CROSSING",
+        name: "How do power users actually use AI?",
+        role: "Koji × Yuzheng · two-part video podcast",
+        note: "Koji begins by pressing me on agentic work and learning. In the second half, we switch seats to examine AI investing—a single premise expanding naturally into two episodes.",
+        proof: "67K+ Xiaoyuzhou plays · 130+ comments",
+        href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
       },
       {
-        name: "Ryo Lu",
-        role: "Head of Design, Cursor",
-        note: "How an AI-native product is designed, where taste enters, and what changes when software starts to act.",
-        href: "/guests/ryo-lu",
-        image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
+        label: "HOST · DEEP INTERVIEW",
+        name: "Professor Liu Jia: neuroscience at the edge of AI",
+        role: "Chair, Department of Psychology and Cognitive Science, Tsinghua University",
+        note: "A nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education—one line of inquiry across several disciplines.",
+        proof: "130K+ YouTube views · 460+ comments",
+        href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
+        image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
       },
       {
-        name: "Vijaye Raji",
-        role: "Founder, Statsig · CTO of Applications, OpenAI",
-        note: "Experimentation, product judgment, company building, and what changes when AI becomes an operating layer.",
-        href: "/guests/vijaye-raji",
-        image: "https://img.youtube.com/vi/iw2QYZeVlOQ/maxresdefault.jpg",
+        label: "DUAL RELEASE · TULONG DASHIHUA",
+        name: "One recording, two shows each treated it as their own episode",
+        role: "Yuzheng × Yang Ying (Tulong)",
+        note: "On my channel it became a 95-minute profile moving from neuroscience into the realities of company-building. On Tulong’s show, the same recording became an episode about the trap of linear thinking—two editorial frames, both released in full.",
+        proof: "90K+ YouTube views · 3,100+ likes",
+        href: "https://www.youtube.com/watch?v=vd_oYgwQSBM",
+        image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
       },
     ],
-    agreementsEyebrow: "WORKING AGREEMENT",
-    agreementsTitle: "Clear boundaries make a better conversation.",
+    metricsNote:
+      "Public platform counts checked July 2026 and rounded down; platforms use different counting methods.",
+    agreementsEyebrow: "HOW I WORK",
+    agreementsTitle: "Respect the show, and bring a point of view.",
     agreements: [
       {
-        title: "Your show, your editorial judgment.",
+        title: "The host sets the frame.",
         detail:
-          "You choose the questions, pacing, title, and final edit. I do not require pre-approval of questions or a final cut.",
+          "You choose the questions, pacing, title, and final edit. We can align on direction before recording; I do not require pre-approval of questions or the final cut.",
       },
       {
-        title: "Preparation helps; it does not control the interview.",
+        title: "Prepare around one or two real questions.",
         detail:
-          "I can share sources and cases before recording, then help fact-check names, dates, or data before release. Your argument and framing remain yours.",
+          "I can bring primary sources, data, first-hand cases, and the strongest counterargument I can find—not scripted answers.",
       },
       {
-        title: "Distribution is not the price of the interview.",
+        title: "Disagreement can stay in.",
         detail:
-          "No audience swap or cross-promotion commitment is required. If the finished conversation fits my audience and we agree on clip rights, we can discuss sharing the episode or excerpts.",
+          "Challenge the premise or follow an answer until it changes. I will distinguish facts, inference, experience, and what I simply do not know.",
       },
       {
-        title: "Editorial and commercial relationships stay separate.",
+        title: "Facts deserve care.",
         detail:
-          "Paid work, advisory relationships, and investments do not buy coverage or an appearance on my own channels. Any material relationship relevant to the conversation will be disclosed in the episode or notes.",
+          "Before release, I can help check names, dates, quotations, and data. The editorial conclusion remains yours.",
       },
     ],
     coproduction:
-      "For a co-produced episode, we agree before recording on the primary cut, editing responsibility, clip rights, and release timing.",
+      "For a jointly published episode, we can agree in advance on the primary cut, editing responsibility, clip rights, and release timing.",
     logisticsEyebrow: "RECORDING DETAILS",
-    logisticsTitle: "Easy to schedule, clear before recording.",
+    logisticsTitle: "Production details, without ceremony.",
     logistics: [
       { icon: Languages, label: "Languages", value: "Mandarin or English" },
       {
@@ -136,7 +152,7 @@ const copy = {
       {
         icon: Clock3,
         label: "Length",
-        value: "Usually 45–90 minutes; adaptable to the show",
+        value: "Usually 60–120 minutes; adaptable to the show",
       },
       {
         icon: MapPin,
@@ -145,15 +161,15 @@ const copy = {
       },
     ],
     kitEyebrow: "HOST KIT",
-    kitTitle: "Everything useful for an introduction, now on the page.",
+    kitTitle: "A producer can build the introduction from this page.",
     kitIntro:
-      "Use the bio length that fits your show. Facts and links below are provided for verification, not as required talking points.",
+      "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
     shortBioLabel: "Short bio",
     shortBio:
       "Yuzheng Sun is an economist, AI educator, and founder of Superlinear. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and focuses on turning judgment into testable, reusable systems that compound.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Silicon Valley. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Today he teaches AI Builders and co-leads Stay Superlinear with Yage, has taught 3,000+ paying learners, and has held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Silicon Valley. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. Today he builds Superlinear, teaches AI Builders, and co-leads Stay Superlinear with Yage. He has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
@@ -163,7 +179,7 @@ const copy = {
         href: "/#ideas",
       },
       {
-        label: "200+ guest conversations",
+        label: "200+ published conversations",
         href: "/guests",
       },
       {
@@ -176,115 +192,130 @@ const copy = {
       },
     ],
     audienceFact:
-      "Current public reach: 400K+ followers across YouTube, Bilibili, and Xiaohongshu. This is context, not a condition for collaboration.",
-    contactEyebrow: "SEND AN INVITATION",
-    contactTitle: "A few plain sentences are enough.",
+      "Current public audience: 400K+ followers across YouTube, Bilibili, and Xiaohongshu.",
+    contactEyebrow: "PROGRAM INVITATIONS",
+    contactTitle: "Start with the question you want to pursue.",
     contactDetail:
-      "Send a link to the show, the question you want to explore, the format and language, and a rough recording window. No polished deck, full outline, or cross-promotion promise needed.",
-    contactButton: "Invite Yuzheng",
+      "Send the show or channel, the core question, why it matters to your audience, the format and language, and a rough recording window. We can first see whether I am the right guest for that question, then prepare around your editorial direction. No audience swap or cross-promotion is assumed.",
+    contactButton: "Discuss an episode",
     back: "Back to all collaboration options",
   },
   zh: {
-    navSub: "播客与创作者邀请",
+    navSub: "播客与视频节目邀请",
     eyebrow: "播客 · 视频 · 深度对谈",
-    h1: "邀请我上你的节目。",
+    h1: "把一个值得追的问题，聊成一期真正属于你的节目。",
     intro:
-      "如果你的听众或观众正在面对一个关于 AI、工作、学习或判断的真实问题，欢迎把邀请发来。你决定节目的形式和编辑方向；我会认真准备，欢迎尖锐问题，也会坦白哪些事情我还不知道。",
-    fitNote:
-      "节目体量不是首要标准。问题是否值得谈、我是否真能贡献，以及时间是否合适，才是。",
-    questionCta: "看可以从哪些问题开始",
+      "我的经历横跨经济学、科技大厂、AI 产品、教育与独立内容。如果你正在追一个关于 AI、工作、学习或判断的问题，我可以带来一线案例，以及愿意接受追问和反驳的判断。节目由你定义；对话应该有自己的锋芒。",
+    heroProofs: [
+      "康奈尔经济学博士",
+      "Amazon · Meta · 腾讯 · Statsig",
+      "200+ 场公开对谈",
+      "400K+ 跨平台关注",
+    ],
+    questionCta: "先看三场代表对话",
     kitCta: "打开主持人素材",
-    stanceEyebrow: "一场好对话",
-    stanceTitle: "从观众真正关心的问题出发，不是从我的履历或产品发布出发。",
+    stanceEyebrow: "不是宣传通告",
+    stanceTitle: "我不是来重复一套已经讲熟的标准答案。",
     stanceDetail:
-      "我们不必同意。录完后，应该让观众多一套能带走的判断方式、一个可以验证的说法，或者一个有用的下一步。",
-    formatsEyebrow: "可以怎么录",
-    formatsTitle: "形式应该服务问题。",
+      "真正好的节目，首先来自主持人的问题意识。我会准备原文、一线案例和自己当下最强的判断，你可以从任何地方追问或反驳。AI Builders 和 Stay Superlinear 只在能说明问题时作为真实案例出现，不是录制的目的。",
+    formatsEyebrow: "我能带进录音棚的",
+    formatsTitle: "不只是一套 AI 观点，而是几种真实现场。",
     formats: [
       {
         number: "01",
-        title: "长篇访谈",
+        title: "横跨几种现场",
         detail:
-          "你决定问题和方向。我带来相关原文、一线案例，以及我能找到的最强反方论证。",
+          "从经济学研究、科技大厂、AI 初创公司，到自己做课程、社区和内容；同一个问题，我见过不同组织里的真实代价。",
       },
       {
         number: "02",
-        title: "判断复盘或辩论",
+        title: "可以复盘的公开判断",
         detail:
-          "把一个有时间戳的判断、真实分歧或有争议的假设放到桌上，看证据究竟把我们带到哪里。",
+          "我习惯给观点留下时间戳，也愿意重看哪里说对、哪里说错、哪些新证据让我改口。",
       },
       {
         number: "03",
-        title: "Builder 拆解",
+        title: "采访者的耳朵",
         detail:
-          "拿一个真实工作流、产品或创作者问题，现场拆清 AI 该做什么、人必须判断什么、结果怎么验证。",
+          "做过 200+ 场公开对谈后，我知道一个答案什么时候太顺、什么时候该停，也知道如何把空间留给主持人的追问。",
       },
     ],
-    questionsEyebrow: "可能的起点",
-    questionsTitle: "这些问题，我可以真正做功课。",
-    questionsIntro: "它们是起点，不是固定菜单，也不是写好的巡回话术。",
+    questionsEyebrow: "有张力的问题",
+    questionsTitle: "一个锋利的问题，比完整的选题清单更重要。",
+    questionsIntro: "下面这些都可以被挑战，也可以只选一个往深处走。",
     questions: [
-      "当 AI 让执行越来越便宜，人的价值会往哪里移动？",
-      "从会用 AI 到能用 AI 构建，真正的门槛是什么？",
-      "如何形成强观点，又不把自己困在观点里？",
-      "回看过去几年的 AI 判断：哪里说对了，哪里说错了，为什么？",
-      "经济学、产品与组织经验，如何改变我们对职业和学习的判断？",
+      "AI 模型越来越强，为什么多数人的实际产出没有同步跃升？",
+      "当执行成本不断接近零，人的价值、组织的壁垒和职业杠杆会迁移到哪里？",
+      "“停止使用 ChatGPT”究竟在反对什么？Agentic work 真正改变了哪一层？",
+      "从 Amazon、Meta、腾讯到 Statsig，中美科技组织如何做出判断，又怎样系统性地犯错？",
+      "回看我过去公开的 AI 判断，哪些成立、哪些需要改口，为什么？",
+      "AI 时代的教育与社区，怎样培养判断力，而不是制造新的依赖？",
     ],
     otherDirections:
-      "其他可聊方向包括增长与实验、职业杠杆、中美科技，以及一个长期免费的社区在什么时候、为什么应该增加付费会员层——Stay Superlinear 可以作为一个正在发生的案例。",
-    conversationsEyebrow: "我主持过的对谈",
-    conversationsTitle: "这些节目能看出我会如何为一场认真对话做准备。",
+      "也可以谈增长实验、创作者经济、科技创业，以及 AI Builders 与 Stay Superlinear 的真实经营决策。一期节目不必面面俱到；一个足够好的问题，往往更有力量。",
+    conversationsEyebrow: "近期中文对谈",
+    conversationsTitle: "三场对话，三种节目合作方式。",
+    conversationsIntro:
+      "我做过受邀嘉宾，也和对方交换过采访角色，还主持过近三小时的深度访谈。它们比一串可聊话题更能说明，一期节目最终可以长成什么样。",
     conversations: [
       {
-        name: "Gergely Orosz",
-        role: "The Pragmatic Engineer 创始人",
-        note: "工程师职业、科技行业，以及能够长期运行的独立工作系统。",
-        href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
-        image: "/english-network/gergely-orosz.webp",
+        label: "受邀嘉宾 / 交换角色 · 十字路口 Crossing",
+        name: "高手怎么用 AI？普通人怎么学 AI？",
+        role: "Koji × 课代表立正 · 上下两集视频播客",
+        note: "上半场由 Koji 追问 agentic 工作方式与学习；下半场双方交换角色，继续讨论 2026 年的 AI 创业与投资。一个问题自然延展成两集，而不是把履历轮流讲一遍。",
+        proof: "小宇宙 6.7 万+ 播放 · 130+ 评论",
+        href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
       },
       {
-        name: "Ryo Lu",
-        role: "Cursor 设计负责人",
-        note: "AI-native 产品如何被设计，品味在哪里进入，软件开始行动后什么发生变化。",
-        href: "/guests/ryo-lu",
-        image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
+        label: "主持 · 近三小时深度访谈",
+        name: "刘嘉教授：站在脑科学顶端看 AI",
+        role: "清华大学心理与认知科学系主任",
+        note: "从智能、学习和意识，一路追到具身智能、脑机接口和 AI 时代教育；不同学科没有被做成话题拼盘，而是沿着同一条主线持续往下走。",
+        proof: "YouTube 13 万+ 观看 · 460+ 评论",
+        href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
+        image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
       },
       {
-        name: "Vijaye Raji",
-        role: "Statsig 创始人 · OpenAI CTO of Applications",
-        note: "实验、产品判断、公司构建，以及 AI 成为运营底层后的变化。",
-        href: "/guests/vijaye-raji",
-        image: "https://img.youtube.com/vi/iw2QYZeVlOQ/maxresdefault.jpg",
+        label: "双向发布 · 屠龙大实话",
+        name: "一场录制，两个节目都把它当成自己的正片",
+        role: "课代表立正 × 杨滢（屠龙）",
+        note: "在我的频道，它是一场从脑科学走到创业现场的 95 分钟人物访谈；在屠龙自己的节目，它被重新编辑为“线性思维害死人”。双方各自决定标题、结构和重点，再把完整对话带回自己的观众。",
+        proof: "B站 8.5 万+ 播放 · 6,700+ 收藏",
+        href: "https://www.bilibili.com/video/BV1krM46BEpn",
+        image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
       },
     ],
-    agreementsEyebrow: "合作约定",
-    agreementsTitle: "边界说清，对话才会更好。",
+    metricsNote:
+      "公开平台数据核验于 2026 年 7 月，并向下取整；各平台统计口径不同，数字仅作内容表现参考。",
+    agreementsEyebrow: "录制方式",
+    agreementsTitle: "尊重你的节目，也带着自己的判断来。",
     agreements: [
       {
-        title: "这是你的节目，编辑判断属于你。",
+        title: "编辑判断属于主持人。",
         detail:
-          "你决定问题、节奏、标题和最终剪辑。我不要求提前审核问题或成片。",
+          "你决定问题、节奏、标题和最终剪辑。录制前可以对齐方向，但我不要求提前审核问题或成片。",
       },
       {
-        title: "准备服务事实，不控制采访。",
+        title: "围绕一两个真问题准备。",
         detail:
-          "我可以在录制前提供原文和案例，发布前协助核对人名、日期和数据。你的论点和框架仍属于你。",
+          "我会带来原文、数据、一线案例，以及能找到的最强反方论证；不准备逐字答案。",
       },
       {
-        title: "分发不是访谈的交换价格。",
+        title: "分歧不必剪掉。",
         detail:
-          "不要求换量，也不以互推为合作条件。如果成片适合我的受众，双方也同意素材使用方式，可以再讨论转发正片或剪出片段。",
+          "欢迎反驳，也欢迎追问到我改口。我会尽量区分事实、推断、个人经验和不知道。",
       },
       {
-        title: "内容判断与商业关系分开。",
+        title: "事实可以一起核对。",
         detail:
-          "付费合作、顾问关系和投资，不会换来我个人频道的采访或内容露出。与对话有关的实质利益关系，会在节目或说明中披露。",
+          "涉及具体人名、日期、引文和数据，发布前可以一起核对；最终怎样呈现，仍由你决定。",
       },
     ],
     coproduction:
-      "如果是双方共同制作、共同发布，我们会在录制前把主版本、剪辑责任、素材使用和发布时间说清楚。",
+      "如果需要共同发布，我们会在录制前把主版本、剪辑责任、素材使用和发布时间说清楚。",
     logisticsEyebrow: "录制信息",
-    logisticsTitle: "好安排，开录前说清。",
+    logisticsTitle: "制作信息，简单说清。",
     logistics: [
       { icon: Languages, label: "语言", value: "普通话或英文" },
       {
@@ -295,16 +326,16 @@ const copy = {
       {
         icon: Clock3,
         label: "时长",
-        value: "通常 45–90 分钟，也可适配节目形式",
+        value: "通常 60–120 分钟，也可适配节目形式",
       },
       {
         icon: MapPin,
         label: "时区",
-        value: "美国太平洋时间；随主持人档期协调",
+        value: "美国太平洋时间；按双方档期协调",
       },
     ],
     kitEyebrow: "主持人素材",
-    kitTitle: "节目介绍需要的信息，都放在网页上。",
+    kitTitle: "制作人可以直接从这一页完成节目介绍。",
     kitIntro:
       "按节目需要选择简介长度。下面的事实和链接用于核对，不是必问话术。",
     shortBioLabel: "短介绍",
@@ -312,13 +343,13 @@ const copy = {
       "孙煜征（课代表立正），经济学博士、AI 教育者，Superlinear 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，长期关注如何把判断变成可检验、可复用、能够持续复利的系统。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）是康奈尔大学经济学博士、管理者、作者与 AI 教育者，现居硅谷。他做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和唯一布道师。现教授 AI Builders，并与鸭哥共同主理 Stay Superlinear；累计有 3,000+ 付费学员，并与研究者、创始人和一线管理者完成 200+ 场公开对话。他合著《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）是康奈尔大学经济学博士、科技从业者、作者与 AI 教育者，现居硅谷。他做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家与开发者布道师。现主理 Superlinear，教授 AI Builders，并与鸭哥共同主理 Stay Superlinear；累计有 3,000+ 付费学员，并与研究者、创始人和一线管理者完成 200+ 场公开对话。他合著《Growth Data Analytics Playbook》，著有《真本事》。",
     headshotLabel: "1200 × 1200 头像",
     headshotCta: "下载头像",
     factsTitle: "公开事实与来源",
     facts: [
       { label: "有时间戳的 AI 公开判断", href: "/#ideas" },
-      { label: "200+ 场嘉宾对话", href: "/guests" },
+      { label: "200+ 场公开对谈", href: "/guests" },
       {
         label: "AI Builders · 3,000+ 付费学员",
         href: "https://ai-builders.com",
@@ -328,13 +359,12 @@ const copy = {
         href: "https://staysuperlinear.com",
       },
     ],
-    audienceFact:
-      "当前公开触达：YouTube、B 站与小红书合计 400K+ 关注者。这是背景信息，不是合作条件。",
-    contactEyebrow: "发出邀请",
-    contactTitle: "几句话就够。",
+    audienceFact: "当前公开受众：YouTube、B 站与小红书合计 400K+ 关注者。",
+    contactEyebrow: "节目邀请",
+    contactTitle: "从你真正想追的那个问题开始。",
     contactDetail:
-      "发来节目链接、你想讲清的问题、形式与语言，以及大概的录制时间。无需先做完整提案或提纲，也不需要承诺互推。",
-    contactButton: "邀请立正",
+      "请发来节目或频道、你想追的核心问题、为什么你的听众会关心它、形式与语言，以及大概的录制时间。我们先看我是不是这个问题的合适嘉宾，再沿着你的编辑方向认真准备。合作不以互推或换量为前提。",
+    contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
   },
 };
@@ -346,8 +376,8 @@ function buildCreatorMailto(lang: "en" | "zh") {
       : "邀请课代表立正参与节目";
   const body =
     lang === "en"
-      ? "Show link:\n\nQuestion to explore:\n\nFormat and language:\n\nRough recording window:\n"
-      : "节目链接：\n\n想讲清的问题：\n\n形式和语言：\n\n大概录制时间：\n";
+      ? "Show or channel:\n\nCore question:\n\nWhy this matters to your audience:\n\nFormat and language:\n\nRough recording window:\n"
+      : "节目或频道：\n\n核心问题：\n\n为什么你的听众会关心：\n\n形式和语言：\n\n大概录制时间：\n";
   return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -383,12 +413,19 @@ export default function CreatorCollab() {
                 {t.h1}
               </h1>
               <p className="mt-6 text-lg leading-8 text-zinc-300">{t.intro}</p>
-              <p className="mt-5 border-l border-amber-300/50 pl-4 text-sm leading-7 text-zinc-400">
-                {t.fitNote}
-              </p>
+              <div className="mt-7 grid grid-cols-2 gap-x-5 gap-y-3 border-y border-white/10 py-5">
+                {t.heroProofs.map(proof => (
+                  <p
+                    key={proof}
+                    className="text-xs font-medium leading-5 text-zinc-300"
+                  >
+                    {proof}
+                  </p>
+                ))}
+              </div>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <a
-                  href="#questions"
+                  href="#conversations"
                   className={cn(
                     buttonVariants(),
                     "bg-amber-400 text-[#211300] hover:bg-amber-300"
@@ -444,6 +481,79 @@ export default function CreatorCollab() {
                 {t.stanceDetail}
               </p>
             </div>
+          </section>
+
+          <section id="conversations" className="scroll-mt-24 pt-20">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+              {t.conversationsEyebrow}
+            </p>
+            <h2 className="mt-4 max-w-4xl text-3xl font-semibold text-white md:text-4xl">
+              {t.conversationsTitle}
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
+              {t.conversationsIntro}
+            </p>
+            <div className="mt-8 grid gap-5 lg:grid-cols-2">
+              {t.conversations.map((conversation, index) => (
+                <a
+                  key={conversation.name}
+                  href={conversation.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] transition hover:border-amber-300/35 hover:bg-white/[0.055]",
+                    index === 0 &&
+                      "lg:col-span-2 lg:grid lg:grid-cols-[1.14fr_0.86fr]"
+                  )}
+                >
+                  <div className="overflow-hidden bg-[#151A25]">
+                    <img
+                      src={conversation.image}
+                      alt=""
+                      className={cn(
+                        "aspect-video h-full w-full object-cover transition duration-500 group-hover:scale-[1.015]",
+                        index === 0 && "lg:aspect-auto"
+                      )}
+                      loading="lazy"
+                      width={1280}
+                      height={720}
+                    />
+                  </div>
+                  <div
+                    className={cn(
+                      "p-6",
+                      index === 0 &&
+                        "lg:flex lg:flex-col lg:justify-center lg:p-10"
+                    )}
+                  >
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                      {conversation.label}
+                    </p>
+                    <h3
+                      className={cn(
+                        "mt-3 flex items-start gap-2 text-xl font-semibold leading-snug text-white",
+                        index === 0 && "md:text-3xl"
+                      )}
+                    >
+                      <span>{conversation.name}</span>
+                      <ExternalLink className="mt-1.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
+                    </h3>
+                    <p className="mt-2 text-xs leading-5 text-amber-200/75">
+                      {conversation.role}
+                    </p>
+                    <p className="mt-4 text-sm leading-7 text-zinc-400">
+                      {conversation.note}
+                    </p>
+                    <p className="mt-5 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-300">
+                      {conversation.proof}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <p className="mt-4 text-xs leading-5 text-zinc-500">
+              {t.metricsNote}
+            </p>
           </section>
 
           <section className="mt-20">
@@ -504,53 +614,6 @@ export default function CreatorCollab() {
                   {t.otherDirections}
                 </p>
               </div>
-            </div>
-          </section>
-
-          <section className="mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {t.conversationsEyebrow}
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
-              {t.conversationsTitle}
-            </h2>
-            <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {t.conversations.map(conversation => (
-                <a
-                  key={conversation.name}
-                  href={withLanguage(conversation.href, lang)}
-                  target={
-                    conversation.href.startsWith("http") ? "_blank" : undefined
-                  }
-                  rel={
-                    conversation.href.startsWith("http")
-                      ? "noopener noreferrer"
-                      : undefined
-                  }
-                  className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] transition hover:border-white/25"
-                >
-                  <img
-                    src={conversation.image}
-                    alt={conversation.name}
-                    className="aspect-video w-full object-cover grayscale transition duration-500 group-hover:grayscale-0"
-                    loading="lazy"
-                    width={1280}
-                    height={720}
-                  />
-                  <div className="p-5">
-                    <h3 className="flex items-center gap-2 text-lg font-semibold text-white">
-                      {conversation.name}
-                      <ExternalLink className="h-3.5 w-3.5 text-zinc-600" />
-                    </h3>
-                    <p className="mt-1 text-xs text-amber-300/80">
-                      {conversation.role}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-zinc-400">
-                      {conversation.note}
-                    </p>
-                  </div>
-                </a>
-              ))}
             </div>
           </section>
 

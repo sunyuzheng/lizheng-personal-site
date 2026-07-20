@@ -14,7 +14,7 @@ export default function LanguageToggle({
 
   return (
     <div
-      className={`inline-flex items-center overflow-hidden rounded-full border border-white/15 bg-white/5 ${className}`}
+      className={`inline-flex shrink-0 items-center overflow-hidden rounded-full border border-white/15 bg-white/5 ${className}`}
       role="group"
       aria-label="Language"
     >
@@ -22,7 +22,7 @@ export default function LanguageToggle({
         type="button"
         onClick={() => setLang("en")}
         aria-pressed={lang === "en"}
-        className={`${pad} font-semibold uppercase tracking-wide transition ${
+        className={`${pad} whitespace-nowrap font-semibold uppercase tracking-wide transition ${
           lang === "en"
             ? "bg-amber-300 text-[#211300]"
             : "text-zinc-400 hover:text-amber-200"
@@ -34,7 +34,7 @@ export default function LanguageToggle({
         type="button"
         onClick={() => setLang("zh")}
         aria-pressed={lang === "zh"}
-        className={`${pad} font-semibold transition ${
+        className={`${pad} whitespace-nowrap font-semibold transition ${
           lang === "zh"
             ? "bg-amber-300 text-[#211300]"
             : "text-zinc-400 hover:text-amber-200"

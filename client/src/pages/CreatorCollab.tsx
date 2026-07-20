@@ -147,7 +147,7 @@ const copy = {
       {
         icon: MonitorUp,
         label: "Format",
-        value: "Remote, or in person in the San Francisco Bay Area",
+        value: "Remote, or in person in Seattle",
       },
       {
         icon: Clock3,
@@ -156,8 +156,8 @@ const copy = {
       },
       {
         icon: MapPin,
-        label: "Scheduling",
-        value: "Pacific Time; arranged around the host’s window",
+        label: "Based in",
+        value: "Seattle · Pacific Time",
       },
     ],
     kitEyebrow: "HOST KIT",
@@ -169,7 +169,7 @@ const copy = {
       "Yuzheng Sun is an economist, AI educator, and founder of Superlinear. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and focuses on turning judgment into testable, reusable systems that compound.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Silicon Valley. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. Today he builds Superlinear, teaches AI Builders, and co-leads Stay Superlinear with Yage. He has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. Today he builds Superlinear, teaches AI Builders, and co-leads Stay Superlinear with Yage. He has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
@@ -320,7 +320,7 @@ const copy = {
       {
         icon: MonitorUp,
         label: "形式",
-        value: "远程；旧金山湾区也可线下",
+        value: "远程；西雅图也可以线下",
       },
       {
         icon: Clock3,
@@ -329,8 +329,8 @@ const copy = {
       },
       {
         icon: MapPin,
-        label: "时区",
-        value: "常驻湾区，具体时间再约",
+        label: "常驻",
+        value: "西雅图 · 美国太平洋时间",
       },
     ],
     kitEyebrow: "嘉宾资料",
@@ -341,7 +341,7 @@ const copy = {
       "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居硅谷。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。现在主理 Superlinear，开设 AI Builders 课程，并和鸭哥共同主理 Stay Superlinear。过去几年，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。现在主理 Superlinear，开设 AI Builders 课程，并和鸭哥共同主理 Stay Superlinear。过去几年，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     headshotLabel: "1200 × 1200 头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",

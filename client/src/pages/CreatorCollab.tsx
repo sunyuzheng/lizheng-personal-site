@@ -202,168 +202,166 @@ const copy = {
   },
   zh: {
     navSub: "播客与视频节目邀请",
-    eyebrow: "播客 · 视频 · 深度对谈",
-    h1: "把一个值得追的问题，聊成一期真正属于你的节目。",
+    eyebrow: "播客 · 视频访谈 · 长对话",
+    h1: "你来定问题，我们把它聊透。",
     intro:
-      "我的经历横跨经济学、科技大厂、AI 产品、教育与独立内容。如果你正在追一个关于 AI、工作、学习或判断的问题，我可以带来一线案例，以及愿意接受追问和反驳的判断。节目由你定义；对话应该有自己的锋芒。",
+      "我做过经济学研究，也先后在 Amazon、Meta、腾讯和 Statsig 做过经济学、数据和 AI 相关的工作。后来自己做课程、社区和内容。如果你想把 AI、工作、学习，或者一个具体的人生选择聊深，可以来找我。我会带着原文、数据，也会讲自己真正做过、见过的事。不怕追问，也不怕反驳。你的节目，你来定方向。",
     heroProofs: [
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig",
       "200+ 场公开对谈",
-      "400K+ 跨平台关注",
+      "YouTube · B站 · 小红书 40 万+ 关注者",
     ],
-    questionCta: "先看三场代表对话",
-    kitCta: "打开主持人素材",
-    stanceEyebrow: "不是宣传通告",
-    stanceTitle: "我不是来重复一套已经讲熟的标准答案。",
+    questionCta: "先看三场对话",
+    kitCta: "查看嘉宾资料",
+    stanceEyebrow: "不是来跑通告",
+    stanceTitle: "如果只是把我讲过的话再讲一遍，就没必要录。",
     stanceDetail:
-      "真正好的节目，首先来自主持人的问题意识。我会准备原文、一线案例和自己当下最强的判断，你可以从任何地方追问或反驳。AI Builders 和 Stay Superlinear 只在能说明问题时作为真实案例出现，不是录制的目的。",
-    formatsEyebrow: "我能带进录音棚的",
-    formatsTitle: "不只是一套 AI 观点，而是几种真实现场。",
+      "你比我更清楚自己的听众，也更清楚这期节目该从哪里切入。我会围绕你的问题准备原文和案例，也会把自己现在怎么想的理清楚。哪一点站不住，都可以当场追问。如果聊到 AI Builders 和 Stay Superlinear，是因为里面正好有值得讲的案例，不会为了宣传硬塞进来。",
+    formatsEyebrow: "我能带来的",
+    formatsTitle: "这里面的事，我自己做过，也踩过坑。",
     formats: [
       {
         number: "01",
-        title: "横跨几种现场",
+        title: "不只从一个位置看问题",
         detail:
-          "从经济学研究、科技大厂、AI 初创公司，到自己做课程、社区和内容；同一个问题，我见过不同组织里的真实代价。",
+          "我做过经济学研究，也在大厂和 AI 创业公司一线工作过；现在自己做课程、社区和内容。同一个问题，放在学术研究、大公司、创业公司和自己的生意里，答案常常完全不同。为什么会这样，我可以慢慢拆。",
       },
       {
         number: "02",
-        title: "可以复盘的公开判断",
+        title: "过去说过的话，可以翻旧账",
         detail:
-          "我习惯给观点留下时间戳，也愿意重看哪里说对、哪里说错、哪些新证据让我改口。",
+          "我公开讲过的判断大多留有时间戳。哪里说对、哪里说错、什么新证据让我改口，都可以摊开聊。",
       },
       {
         number: "03",
-        title: "采访者的耳朵",
+        title: "我也坐过主持人的位置",
         detail:
-          "做过 200+ 场公开对谈后，我知道一个答案什么时候太顺、什么时候该停，也知道如何把空间留给主持人的追问。",
+          "做过 200 多场对谈后，我知道嘉宾最容易把答案讲得太满，也知道什么时候该停下来，让你继续往下问。",
       },
     ],
-    questionsEyebrow: "有张力的问题",
-    questionsTitle: "一个锋利的问题，比完整的选题清单更重要。",
-    questionsIntro: "下面这些都可以被挑战，也可以只选一个往深处走。",
+    questionsEyebrow: "可以聊什么",
+    questionsTitle: "不用列十个话题。挑一个真有分歧的，往下聊。",
+    questionsIntro: "下面这些问题，我最近一直在想，其中不少还没想明白。",
     questions: [
-      "AI 模型越来越强，为什么多数人的实际产出没有同步跃升？",
-      "当执行成本不断接近零，人的价值、组织的壁垒和职业杠杆会迁移到哪里？",
-      "“停止使用 ChatGPT”究竟在反对什么？Agentic work 真正改变了哪一层？",
-      "从 Amazon、Meta、腾讯到 Statsig，中美科技组织如何做出判断，又怎样系统性地犯错？",
-      "回看我过去公开的 AI 判断，哪些成立、哪些需要改口，为什么？",
-      "AI 时代的教育与社区，怎样培养判断力，而不是制造新的依赖？",
+      "AI 模型越来越强，为什么大多数人的实际产出几乎没变？",
+      "AI 把执行变得越来越便宜以后，人和公司真正值钱的东西还剩什么？",
+      "我为什么说“停止使用 ChatGPT”？从聊天框到 Agent，工作方式到底变了什么？",
+      "在 Amazon、Meta、腾讯和 Statsig，我见过的大公司和创业公司，通常怎么做判断，又怎么把自己带偏？",
+      "回头看我过去的 AI 判断，哪些说对了，哪些现在必须改口？",
+      "一门课、一个社区，到底是在帮人长本事，还是让人越来越离不开老师和圈子？",
     ],
     otherDirections:
-      "也可以谈增长实验、创作者经济、科技创业，以及 AI Builders 与 Stay Superlinear 的真实经营决策。一期节目不必面面俱到；一个足够好的问题，往往更有力量。",
-    conversationsEyebrow: "近期中文对谈",
-    conversationsTitle: "三场对话，三种节目合作方式。",
+      "增长实验、创作者怎么赚钱、科技创业也都能聊。AI Builders 和 Stay Superlinear 是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
+    conversationsEyebrow: "最近几场中文对话",
+    conversationsTitle: "我做过嘉宾，也做过主持。还有一场，双方各剪各的。",
     conversationsIntro:
-      "我做过受邀嘉宾，也和对方交换过采访角色，还主持过近三小时的深度访谈。它们比一串可聊话题更能说明，一期节目最终可以长成什么样。",
+      "这三场里，我坐的位置都不一样。看完大概就知道，我在节目里会是什么样。",
     conversations: [
       {
-        label: "受邀嘉宾 / 交换角色 · 十字路口 Crossing",
+        label: "做嘉宾，后半场换位提问 · 十字路口 Crossing",
         name: "高手怎么用 AI？普通人怎么学 AI？",
-        role: "Koji × 课代表立正 · 上下两集视频播客",
-        note: "上半场由 Koji 追问 agentic 工作方式与学习；下半场双方交换角色，继续讨论 2026 年的 AI 创业与投资。一个问题自然延展成两集，而不是把履历轮流讲一遍。",
+        role: "与 Koji 的上下两集视频播客",
+        note: "Koji 先问我怎么用 Agent、怎么学 AI。聊到后半场，我们干脆换了位置，我问他怎么看 2026 年的 AI 创业和投资。最后自然做成了上下两集。",
         proof: "小宇宙 6.7 万+ 播放 · 130+ 评论",
         href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
         image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
       },
       {
-        label: "主持 · 近三小时深度访谈",
-        name: "刘嘉教授：站在脑科学顶端看 AI",
+        label: "做主持，一口气聊了近三小时",
+        name: "刘嘉教授：从脑科学聊到 AI 和教育",
         role: "清华大学心理与认知科学系主任",
-        note: "从智能、学习和意识，一路追到具身智能、脑机接口和 AI 时代教育；不同学科没有被做成话题拼盘，而是沿着同一条主线持续往下走。",
+        note: "从智能、学习和意识，一路聊到具身智能、脑机接口和教育。话题很多，但一直追着同一个问题：我们到底该怎样理解智能？",
         proof: "YouTube 13 万+ 观看 · 460+ 评论",
         href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
         image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
       },
       {
-        label: "双向发布 · 屠龙大实话",
-        name: "一场录制，两个节目都把它当成自己的正片",
+        label: "同一场录制，两边各发自己的正片",
+        name: "我和屠龙，用一场对话做了两期不同的节目",
         role: "课代表立正 × 杨滢（屠龙）",
-        note: "在我的频道，它是一场从脑科学走到创业现场的 95 分钟人物访谈；在屠龙自己的节目，它被重新编辑为“线性思维害死人”。双方各自决定标题、结构和重点，再把完整对话带回自己的观众。",
+        note: "我这边从她的脑科学背景聊到创业；屠龙那边把主线定成“线性思维害死人”。同一场录制，双方各自定标题、结构和重点，最后剪成了两期不一样的完整节目。",
         proof: "B站 8.5 万+ 播放 · 6,700+ 收藏",
         href: "https://www.bilibili.com/video/BV1krM46BEpn",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
       },
     ],
-    metricsNote:
-      "公开平台数据核验于 2026 年 7 月，并向下取整；各平台统计口径不同，数字仅作内容表现参考。",
-    agreementsEyebrow: "录制方式",
-    agreementsTitle: "尊重你的节目，也带着自己的判断来。",
+    metricsNote: "播放与互动数据截至 2026 年 7 月。",
+    agreementsEyebrow: "怎么一起录",
+    agreementsTitle: "录之前把边界说清，录的时候就可以放开聊。",
     agreements: [
       {
-        title: "编辑判断属于主持人。",
+        title: "怎么问、怎么剪，你说了算。",
         detail:
-          "你决定问题、节奏、标题和最终剪辑。录制前可以对齐方向，但我不要求提前审核问题或成片。",
+          "可以提前对一下方向，但不用提前给我问题清单，成片也不用给我审。",
       },
       {
-        title: "围绕一两个真问题准备。",
+        title: "我会做功课，但不背稿。",
         detail:
-          "我会带来原文、数据、一线案例，以及能找到的最强反方论证；不准备逐字答案。",
+          "原文、数据和案例我会准备，也会先想一遍，别人最可能从哪里反对我。不会准备逐字答案。",
       },
       {
-        title: "分歧不必剪掉。",
+        title: "不同意也没关系。",
         detail:
-          "欢迎反驳，也欢迎追问到我改口。我会尽量区分事实、推断、个人经验和不知道。",
+          "可以反驳，也可以追问到我改口。我会说清楚哪些是事实，哪些是我的判断，哪些我确实不知道。",
       },
       {
-        title: "事实可以一起核对。",
+        title: "具体事实，发布前一起核对。",
         detail:
-          "涉及具体人名、日期、引文和数据，发布前可以一起核对；最终怎样呈现，仍由你决定。",
+          "人名、日期、引文和数据，我愿意帮忙查；最后怎么呈现，还是你决定。",
       },
     ],
     coproduction:
-      "如果需要共同发布，我们会在录制前把主版本、剪辑责任、素材使用和发布时间说清楚。",
+      "如果双方都要发，录前把谁来剪主版、素材怎么用、什么时候发说清楚，后面就省事。",
     logisticsEyebrow: "录制信息",
-    logisticsTitle: "制作信息，简单说清。",
+    logisticsTitle: "录制怎么安排",
     logistics: [
-      { icon: Languages, label: "语言", value: "普通话或英文" },
+      { icon: Languages, label: "语言", value: "中文或英文" },
       {
         icon: MonitorUp,
         label: "形式",
-        value: "远程，或旧金山湾区线下",
+        value: "远程；旧金山湾区也可线下",
       },
       {
         icon: Clock3,
         label: "时长",
-        value: "通常 60–120 分钟，也可适配节目形式",
+        value: "通常聊 60–120 分钟，按你的节目调整",
       },
       {
         icon: MapPin,
         label: "时区",
-        value: "美国太平洋时间；按双方档期协调",
+        value: "常驻湾区，具体时间再约",
       },
     ],
-    kitEyebrow: "主持人素材",
-    kitTitle: "制作人可以直接从这一页完成节目介绍。",
-    kitIntro:
-      "按节目需要选择简介长度。下面的事实和链接用于核对，不是必问话术。",
+    kitEyebrow: "嘉宾资料",
+    kitTitle: "做节目介绍需要的资料，都在这里。",
+    kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），经济学博士、AI 教育者，Superlinear 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，长期关注如何把判断变成可检验、可复用、能够持续复利的系统。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）是康奈尔大学经济学博士、科技从业者、作者与 AI 教育者，现居硅谷。他做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家与开发者布道师。现主理 Superlinear，教授 AI Builders，并与鸭哥共同主理 Stay Superlinear；累计有 3,000+ 付费学员，并与研究者、创始人和一线管理者完成 200+ 场公开对话。他合著《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居硅谷。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。现在主理 Superlinear，开设 AI Builders 课程，并和鸭哥共同主理 Stay Superlinear。过去几年，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     headshotLabel: "1200 × 1200 头像",
     headshotCta: "下载头像",
-    factsTitle: "公开事实与来源",
+    factsTitle: "相关链接",
     facts: [
-      { label: "有时间戳的 AI 公开判断", href: "/#ideas" },
+      { label: "过去公开做过的 AI 判断", href: "/#ideas" },
       { label: "200+ 场公开对谈", href: "/guests" },
       {
         label: "AI Builders · 3,000+ 付费学员",
         href: "https://ai-builders.com",
       },
       {
-        label: "Stay Superlinear 年费会员",
+        label: "Stay Superlinear 会员社区",
         href: "https://staysuperlinear.com",
       },
     ],
-    audienceFact: "当前公开受众：YouTube、B 站与小红书合计 400K+ 关注者。",
+    audienceFact: "YouTube、B 站和小红书共 40 万+ 关注者。",
     contactEyebrow: "节目邀请",
-    contactTitle: "从你真正想追的那个问题开始。",
+    contactTitle: "邮件里先告诉我：你最想追问什么。",
     contactDetail:
-      "请发来节目或频道、你想追的核心问题、为什么你的听众会关心它、形式与语言，以及大概的录制时间。我们先看我是不是这个问题的合适嘉宾，再沿着你的编辑方向认真准备。合作不以互推或换量为前提。",
+      "发我节目或频道链接，再写清楚你最想追的那个问题、听众为什么会在意、想怎么录，以及大概什么时候方便。先看这个问题我是不是真有东西可讲；如果有，我们就约时间、开始准备。不需要先谈互推，也不用写一份完整提案。",
     contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
   },
@@ -377,7 +375,7 @@ function buildCreatorMailto(lang: "en" | "zh") {
   const body =
     lang === "en"
       ? "Show or channel:\n\nCore question:\n\nWhy this matters to your audience:\n\nFormat and language:\n\nRough recording window:\n"
-      : "节目或频道：\n\n核心问题：\n\n为什么你的听众会关心：\n\n形式和语言：\n\n大概录制时间：\n";
+      : "节目或频道链接：\n\n最想追问的问题：\n\n为什么听众会在意：\n\n想怎么录：\n\n大概时间：\n";
   return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 

@@ -1,6 +1,7 @@
 import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
 import { ArrowLeft, Youtube } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "wouter";
@@ -21,7 +22,7 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
         <div className="container flex items-center justify-between py-4">
           <Link
-            href="/"
+            href={withLanguage("/", lang)}
             className="flex items-center gap-2 text-zinc-400 transition hover:text-amber-300"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -60,12 +61,15 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
       <footer className="relative z-10 mt-16 border-t border-white/10 bg-black/30 py-10 text-center">
         <p className="text-sm text-zinc-500">
           <Link
-            href="/"
+            href={withLanguage("/", lang)}
             className="text-amber-400 transition hover:text-amber-300"
           >
             {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
           </Link>{" "}
-          · {lang === "en" ? "All interview content © original rights holders" : "访谈内容版权所有"}
+          ·{" "}
+          {lang === "en"
+            ? "All interview content © original rights holders"
+            : "访谈内容版权所有"}
         </p>
       </footer>
     </div>

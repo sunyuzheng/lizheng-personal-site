@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
 import {
   ChevronDown,
   ChevronUp,
@@ -510,6 +512,7 @@ function AdvisorSection() {
 
 // ─── Main page ────────────────────────────────────────────
 export default function ZhenbenShi() {
+  const { lang } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -546,7 +549,7 @@ export default function ZhenbenShi() {
           <div className="flex items-center justify-between h-14">
             {/* Back + brand */}
             <div className="flex items-center gap-3">
-              <Link href="/" className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 transition-colors text-sm">
+              <Link href={withLanguage("/", lang)} className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 transition-colors text-sm">
                 <ArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">孙煜征</span>
               </Link>

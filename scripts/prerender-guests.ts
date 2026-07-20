@@ -5,6 +5,10 @@ import {
   getGuestsPageMeta,
   type GuestProfile,
 } from "../shared/guest-data.ts";
+import {
+  COLLAB_PAGE_META,
+  CREATOR_COLLAB_PAGE_META,
+} from "../shared/collab-meta.ts";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -31,13 +35,18 @@ function serializeJsonLd(value: unknown): string {
 
 function stripExistingSeo(baseHtml: string) {
   return baseHtml
-    .replace(/<title>[^<]*<\/title>/gi, "")
-    .replace(/\s*<meta name="description"[^>]*>\s*/gi, "\n")
-    .replace(/\s*<link rel="canonical"[^>]*>\s*/gi, "\n")
-    .replace(/\s*<link rel="alternate" hreflang="[^"]+"[^>]*>\s*/gi, "\n")
-    .replace(/\s*<meta property="og:[^"]+"[^>]*>\s*/gi, "\n")
-    .replace(/\s*<meta property="profile:[^"]+"[^>]*>\s*/gi, "\n")
-    .replace(/\s*<meta name="twitter:[^"]+"[^>]*>\s*/gi, "\n")
+    .replace(/<title\b[^>]*>[\s\S]*?<\/title>\s*/gi, "")
+    .replace(/\s*<meta\b(?=[^>]*\bname=["']description["'])[^>]*>\s*/gi, "\n")
+    .replace(/\s*<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>\s*/gi, "\n")
+    .replace(/\s*<link\b(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, "\n")
+    .replace(
+      /\s*<meta\b(?=[^>]*\bproperty=["'](?:og|profile):[^"']+["'])[^>]*>\s*/gi,
+      "\n"
+    )
+    .replace(
+      /\s*<meta\b(?=[^>]*\bname=["']twitter:[^"']+["'])[^>]*>\s*/gi,
+      "\n"
+    )
     .replace(
       /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/gi,
       "\n"
@@ -59,6 +68,7 @@ function buildHead(meta: {
   canonical: string;
   ogImage: string;
   type?: string;
+  locale?: string;
   jsonLd?: unknown;
 }) {
   return `
@@ -71,9 +81,10 @@ function buildHead(meta: {
   <meta property="og:title" content="${escapeHtml(meta.title)}" />
   <meta property="og:description" content="${escapeHtml(meta.description)}" />
   <meta property="og:image" content="${escapeHtml(meta.ogImage)}" />
-  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:locale" content="${escapeHtml(meta.locale || "zh_CN")}" />
 
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="${escapeHtml(meta.canonical)}" />
   <meta name="twitter:title" content="${escapeHtml(meta.title)}" />
   <meta name="twitter:description" content="${escapeHtml(meta.description)}" />
   <meta name="twitter:image" content="${escapeHtml(meta.ogImage)}" />
@@ -82,6 +93,22 @@ function buildHead(meta: {
       ? `<script type="application/ld+json">${serializeJsonLd(meta.jsonLd)}</script>`
       : ""
   }`;
+}
+
+function buildStaticNoscript(options: {
+  title: string;
+  description: string;
+  linkLabel: string;
+  linkHref: string;
+}) {
+  return `
+<noscript>
+  <div style="font-family:sans-serif;max-width:760px;margin:2rem auto;padding:1rem">
+    <h1>${escapeHtml(options.title)}</h1>
+    <p>${escapeHtml(options.description)}</p>
+    <p><a href="${escapeHtml(options.linkHref)}">${escapeHtml(options.linkLabel)}</a></p>
+  </div>
+</noscript>`;
 }
 
 function buildGuestsListJsonLd(guests: GuestProfile[], description: string) {
@@ -186,6 +213,12 @@ function buildSitemapXml(guests: GuestProfile[]) {
     { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0" },
     { loc: `${SITE_URL}/book`, changefreq: "monthly", priority: "0.8" },
     { loc: `${SITE_URL}/guests`, changefreq: "weekly", priority: "0.8" },
+    { loc: `${SITE_URL}/collab`, changefreq: "monthly", priority: "0.7" },
+    {
+      loc: `${SITE_URL}/collab/creators`,
+      changefreq: "monthly",
+      priority: "0.7",
+    },
     ...guests.map(guest => ({
       loc: guest.share_url,
       changefreq: "monthly",
@@ -216,6 +249,45 @@ if (!fs.existsSync(baseHtmlPath)) {
 }
 
 const baseHtml = stripExistingSeo(fs.readFileSync(baseHtmlPath, "utf-8"));
+
+const staticPages = [
+  {
+    directory: path.join(ROOT, "dist", "public", "collab"),
+    meta: COLLAB_PAGE_META.en,
+    linkLabel: "Podcast and creator invitations",
+    linkHref: "/collab/creators",
+  },
+  {
+    directory: path.join(ROOT, "dist", "public", "collab", "creators"),
+    meta: CREATOR_COLLAB_PAGE_META.en,
+    linkLabel: "Email Yuzheng Sun",
+    linkHref: "mailto:yz@superlinear.academy",
+  },
+];
+
+for (const page of staticPages) {
+  const html = injectDocument(baseHtml, {
+    head: buildHead({
+      ...page.meta,
+      locale: "en_US",
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: page.meta.title,
+        description: page.meta.description,
+        url: page.meta.canonical,
+      },
+    }),
+    noscript: buildStaticNoscript({
+      title: page.meta.title,
+      description: page.meta.description,
+      linkLabel: page.linkLabel,
+      linkHref: page.linkHref,
+    }),
+  });
+  fs.mkdirSync(page.directory, { recursive: true });
+  fs.writeFileSync(path.join(page.directory, "index.html"), html, "utf-8");
+}
 
 let guests: GuestProfile[] = [];
 try {
@@ -263,5 +335,7 @@ fs.writeFileSync(
   "utf-8"
 );
 
-console.log(`✅ 预渲染完成: /guests + ${guests.length} 个 guest 子页`);
-console.log(`✅ sitemap 已更新，包含 ${guests.length + 3} 个 URL`);
+console.log(
+  `✅ 预渲染完成: 2 个 collab 页 + /guests + ${guests.length} 个 guest 子页`
+);
+console.log(`✅ sitemap 已更新，包含 ${guests.length + 5} 个 URL`);

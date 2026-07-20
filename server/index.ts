@@ -16,6 +16,10 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
+  app.get("/collab/podcast-one-pager.pdf", (_req, res) => {
+    res.redirect(308, "/collab/creators");
+  });
+
   app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes

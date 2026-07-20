@@ -311,7 +311,7 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
     title: `全部嘉宾 · 课代表立正 — ${totalGuests}位科技领袖访谈`,
     description: `课代表立正访谈过的 ${totalGuests} 位嘉宾，${totalEpisodes} 期对话，涵盖 ${topCompanies} 等顶级科技公司的领袖、创始人与投资人。`,
     canonical: `${SITE_URL}/guests`,
-    ogImage: `${SITE_URL}/profile.jpg`,
+    ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };
 }
 

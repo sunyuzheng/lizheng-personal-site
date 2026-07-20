@@ -33,7 +33,7 @@ The career is not presented as six unrelated credentials.
 - Amazon and Meta connect models to product and business decisions.
 - Leading a 30-person data and AI team at Tencent makes judgment an organizational problem.
 - Statsig turns experimentation and belief-updating into infrastructure.
-- Superlinear Academy, AI-Builders, books, and enterprise work turn those lessons into systems other people can use.
+- AI Builders turns those lessons into building capability; Stay Superlinear makes continued practice social and durable; books and enterprise work carry them into public ideas and organizations.
 
 The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into systems that compound. These ideas support the story; they should not all become slogans.
 
@@ -41,8 +41,8 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 1. Acquired conversation in the hero: peer context and international technology positioning.
 2. Cornell / Amazon / Meta / Tencent / Statsig: institutional and operating credibility.
-3. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
-4. Superlinear / AI-Builders / enterprise work: evidence that ideas become environments and operating systems.
+3. Dated public calls, led by the March 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
+4. AI Builders / Stay Superlinear / enterprise work: evidence that ideas become capabilities, environments, and operating systems.
 5. 200+ conversations and selected guests: network quality before follower quantity.
 6. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
 7. Independent endorsements: external validation.
@@ -52,7 +52,9 @@ The deeper throughline comes from the local axioms: build a better model of real
 ## Durable Decisions
 
 - English remains the default language by design.
-- The community CTA points to `https://www.superlinear.academy`; the free community is itself a major proof point.
+- The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
+- In the Work section, AI Builders represents building capability, Stay Superlinear represents the long-term environment, and enterprise programs represent organizational application.
+- The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.
 - On desktop, keep all three participants in the Acquired scene visible by placing copy over the camera on the right. Mobile keeps the portrait crop and prioritizes copy legibility.
 - The homepage curates. Complete guest, book, content, and collaboration material belongs on dedicated pages.
 - Keep mobile length near 11 screens or less at a 390 x 844 viewport.

@@ -2,6 +2,7 @@ import GuestsLayout from "@/components/guests/GuestsLayout";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
+import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
 import { ArrowLeft, ExternalLink, Linkedin, Play } from "lucide-react";
@@ -112,7 +113,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               asChild
               className="mt-8 bg-amber-300 text-[#211300] hover:bg-amber-200"
             >
-              <Link href="/guests">
+              <Link href={withLanguage("/guests", lang)}>
                 {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
               </Link>
             </Button>
@@ -129,7 +130,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
     <GuestsLayout>
       <div className="container py-12 md:py-16">
         <Link
-          href="/guests"
+          href={withLanguage("/guests", lang)}
           className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-amber-300"
         >
           <ArrowLeft className="h-4 w-4" />

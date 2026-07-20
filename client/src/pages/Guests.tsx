@@ -1,6 +1,7 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
+import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestsPageMeta } from "@shared/guest-data";
 import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
@@ -37,6 +38,7 @@ export default function Guests() {
               ? "Overview of interview guests on the Yuzheng Sun / 课代表立正 channel."
               : "课代表立正访谈嘉宾总览。",
           canonical: "https://www.lizheng.ai/guests",
+          ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
         };
 
     return applyPageSeo(meta);
@@ -151,7 +153,7 @@ export default function Guests() {
                 className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10"
               >
                 <Link
-                  href={`/guests/${guest.slug}`}
+                  href={withLanguage(`/guests/${guest.slug}`, lang)}
                   className="flex flex-1 flex-col"
                 >
                   <div className="relative aspect-video overflow-hidden">
@@ -217,7 +219,7 @@ export default function Guests() {
 
                 <div className="grid grid-cols-2 gap-2 border-t border-white/10 p-3">
                   <Link
-                    href={`/guests/${guest.slug}`}
+                    href={withLanguage(`/guests/${guest.slug}`, lang)}
                     className="inline-flex items-center justify-center gap-1 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-semibold text-amber-300 transition hover:bg-amber-300/20"
                   >
                     {lang === "en" ? "View page" : "查看子页"}

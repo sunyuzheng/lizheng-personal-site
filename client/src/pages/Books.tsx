@@ -2,6 +2,7 @@ import LanguageToggle from "@/components/LanguageToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, BookOpen, ExternalLink } from "lucide-react";
@@ -118,6 +119,8 @@ function SmartLink({
   children: ReactNode;
   className?: string;
 }) {
+  const { lang } = useLanguage();
+
   if (external) {
     return (
       <a
@@ -132,7 +135,7 @@ function SmartLink({
   }
 
   return (
-    <Link href={href} className={className}>
+    <Link href={withLanguage(href, lang)} className={className}>
       {children}
     </Link>
   );
@@ -149,6 +152,8 @@ export default function Books() {
           ? "Books by Yuzheng Sun: Growth Data Analytics Playbook and 真本事：从会工作到会赚钱."
           : "孙煜征的两本书：英文 Growth Data Analytics Playbook 与中文《真本事：从会工作到会赚钱》。",
       canonical: "https://www.lizheng.ai/book",
+      ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
+      locale: lang === "zh" ? "zh_CN" : "en_US",
     });
   }, [lang]);
 
@@ -159,7 +164,7 @@ export default function Books() {
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
         <div className="container flex items-center justify-between py-4">
           <Link
-            href="/"
+            href={withLanguage("/", lang)}
             className="flex items-center gap-2 text-zinc-400 transition hover:text-amber-300"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -179,7 +184,7 @@ export default function Books() {
               size="sm"
               className="bg-amber-400 text-[#211300] hover:bg-amber-300"
             >
-              <Link href="/guests">
+              <Link href={withLanguage("/guests", lang)}>
                 {lang === "en" ? "Guests" : "嘉宾"}
                 <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </Link>
@@ -282,7 +287,7 @@ export default function Books() {
 
           <div className="mt-8 flex justify-center">
             <Link
-              href="/"
+              href={withLanguage("/", lang)}
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"

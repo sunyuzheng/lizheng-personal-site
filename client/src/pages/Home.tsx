@@ -2,6 +2,7 @@ import LanguageToggle from "@/components/LanguageToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import {
@@ -135,7 +136,7 @@ const ideas = {
 
 const featuredPrediction = {
   en: {
-    date: "2023.02",
+    date: "2023.03",
     context: "BEFORE GPT-4",
     title:
       "Before GPT-4, I argued that ChatGPT was not a better chatbot, but a new natural-language interface to data and compute.",
@@ -145,7 +146,7 @@ const featuredPrediction = {
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   },
   zh: {
-    date: "2023.02",
+    date: "2023.03",
     context: "GPT-4 发布前",
     title:
       "在 GPT-4 发布前，我已经判断：ChatGPT 不是更好的聊天机器人，而是用自然语言调用数据与算力的新范式。",
@@ -179,7 +180,8 @@ const predictions = {
   zh: [
     {
       date: "2025.01",
-      title: "Agentic AI 是 AI 当前最重要的方向，真正的机会窗口只有 10–18 个月。",
+      title:
+        "Agentic AI 是 AI 当前最重要的方向，真正的机会窗口只有 10–18 个月。",
       href: "https://youtu.be/FzbkAy0DcQk",
     },
     {
@@ -198,24 +200,24 @@ const predictions = {
 const work = {
   en: [
     {
-      icon: Users,
-      label: "PEER LAB",
-      title: "Superlinear Academy",
+      icon: GraduationCap,
+      label: "BUILDING CAPABILITY",
+      title: "AI Builders",
       detail:
-        "A free community where builders share work, compare methods, ask for help, and learn in public. Hundreds of projects and thousands of substantive comments have made it a high-density environment for people who want to keep getting better.",
-      proof: "Projects · discussion · collaboration · opportunity",
-      href: "https://www.superlinear.academy",
-      cta: "Enter the community",
+        "Start with a real problem, learn to make AI carry complex work reliably, and produce work that can be shown, reused, and improved.",
+      proof: "3,000+ paying learners · 55 course projects",
+      href: "https://ai-builders.com",
+      cta: "Explore AI Builders",
     },
     {
-      icon: GraduationCap,
-      label: "LEARNING SYSTEM",
-      title: "AI-Builders",
+      icon: Users,
+      label: "LONG-TERM ENVIRONMENT",
+      title: "Stay Superlinear",
       detail:
-        "A course for professionals who want to move beyond prompt tricks and build reliable AI workflows, products, and operating habits.",
-      proof: "3,000+ paying learners · 4.9/5 on Maven",
-      href: "https://ai-builders.com",
-      cta: "View AI-Builders",
+        "A membership for people already using AI and bringing real expertise—organized around worthwhile questions, serious feedback, useful work, and the people who can help it move forward.",
+      proof: "Built on a free community of nearly 20,000 · co-led with Yage",
+      href: "https://staysuperlinear.com",
+      cta: "Explore Stay Superlinear",
     },
     {
       icon: Building2,
@@ -230,24 +232,24 @@ const work = {
   ],
   zh: [
     {
-      icon: Users,
-      label: "同行实验室",
-      title: "Superlinear Academy",
+      icon: GraduationCap,
+      label: "建立能力",
+      title: "AI Builders",
       detail:
-        "一个免费的实践者社区。大家公开分享作品、交换方法、提出问题，也在真实行动中彼此学习。数百个项目和数千条有内容的讨论，让这里逐渐形成了少见的人才与行动密度。",
-      proof: "项目 · 讨论 · 合作 · 机会",
-      href: "https://www.superlinear.academy",
-      cta: "进入社区",
+        "从真实问题出发，学会让 AI 可靠承担复杂工作，并把有效做法留下来，变成能展示、复用和继续改进的作品与系统。",
+      proof: "3,000+ 付费学员 · 55 个课程项目",
+      href: "https://ai-builders.com",
+      cta: "了解 AI Builders",
     },
     {
-      icon: GraduationCap,
-      label: "学习系统",
-      title: "AI-Builders",
+      icon: Users,
+      label: "长期环境",
+      title: "Stay Superlinear",
       detail:
-        "面向专业人士的系统课程，帮助学员越过 prompt 技巧，把 AI 放进稳定的工作流、产品和工作方式里。",
-      proof: "3,000+ 付费学员 · Maven 4.9/5",
-      href: "https://ai-builders.com",
-      cta: "了解 AI-Builders",
+        "为已经在使用 AI、也有专业积累的人，持续把值得认识的人、需要讲透的问题，以及围绕作品的反馈与机会组织起来。",
+      proof: "建立在近 20,000 人免费社区之上 · 立正与鸭哥共同主理",
+      href: "https://staysuperlinear.com",
+      cta: "了解 Stay Superlinear",
     },
     {
       icon: Building2,
@@ -484,6 +486,10 @@ export default function Home() {
           ? "Yuzheng Sun helps individuals and organizations build AI systems that compound. Cornell-trained economist, operator, author, and founder of Superlinear Academy."
           : "孙煜征，课代表立正。帮助个人与企业建立能够复利的 AI 系统，真正行动起来，抓住 AI 时代的机会。",
       canonical: "https://www.lizheng.ai/",
+      ogImage:
+        "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
+      type: "profile",
+      locale: lang === "zh" ? "zh_CN" : "en_US",
     });
   }, [lang]);
 
@@ -540,13 +546,13 @@ export default function Home() {
               </button>
             ))}
             <Link
-              href="/book"
+              href={withLanguage("/book", lang)}
               className="text-sm text-zinc-400 transition hover:text-white"
             >
               {nav.books}
             </Link>
             <Link
-              href="/collab"
+              href={withLanguage("/collab", lang)}
               className="text-sm text-zinc-400 transition hover:text-white"
             >
               {nav.collaborate}
@@ -602,14 +608,14 @@ export default function Home() {
                 </button>
               ))}
               <Link
-                href="/book"
+                href={withLanguage("/book", lang)}
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-zinc-300"
               >
                 {nav.books}
               </Link>
               <Link
-                href="/collab"
+                href={withLanguage("/collab", lang)}
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-zinc-300"
               >
@@ -684,20 +690,12 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 <Button
-                  asChild
                   size="lg"
                   variant="outline"
+                  onClick={() => scrollToSection("work")}
                   className="border-white/25 bg-black/20 text-white hover:bg-white/10 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
                 >
-                  <a
-                    href="https://www.superlinear.academy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {lang === "en"
-                      ? "Enter Superlinear Academy"
-                      : "进入 Superlinear Academy"}
-                  </a>
+                  {lang === "en" ? "See what I’m building" : "看我正在构建什么"}
                 </Button>
               </div>
               <div className="mt-8 flex items-center gap-4 border-t border-white/15 pt-5">
@@ -787,8 +785,8 @@ export default function Home() {
                 </p>
                 <p>
                   {lang === "en"
-                    ? "Today, Superlinear Academy, AI-Builders, my books, and my work with companies are different expressions of the same instinct: form a view, make it testable, and turn what survives into something other people can use."
-                    : "今天的 Superlinear Academy、AI-Builders、两本书和企业项目，看起来形式不同，背后却是同一种倾向：形成判断，让它接受检验，再把经得起检验的部分，变成别人也能使用的东西。"}
+                    ? "Today, AI Builders, Stay Superlinear, my books, and my work with companies are different expressions of the same instinct: form a view, make it testable, and turn what survives into something other people can use."
+                    : "今天的 AI Builders、Stay Superlinear、两本书和企业项目，看起来形式不同，背后却是同一种倾向：形成判断，让它接受检验，再把经得起检验的部分，变成别人也能使用的东西。"}
                 </p>
                 <p className="border-l-2 border-[#C86923] pl-5 text-xl font-medium leading-8 text-[#1F1B15] md:text-2xl md:leading-9">
                   {lang === "en"
@@ -934,8 +932,8 @@ export default function Home() {
               </div>
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
-                  ? "Courses, communities, company work, and public writing are not separate projects. They are different ways to turn judgment into an environment, a capability, or an operating habit."
-                  : "课程、社区、企业项目和公开内容，并不是几件彼此无关的事。它们都在尝试把判断变成环境、能力，或者可以长期运行的工作方式。"}
+                  ? "AI makes execution cheaper. I work on what becomes more valuable: choosing the right problem, making judgment testable, and turning what works into capabilities, work, and systems that compound."
+                  : "AI 让执行越来越便宜。我关心的是随之变得更贵的东西：选对问题，让判断接受检验，再把有效的方法变成别人能使用、可以持续复利的能力、作品与系统。"}
               </p>
             </div>
 
@@ -1102,7 +1100,7 @@ export default function Home() {
                 ) : (
                   <Link
                     key={guest.name}
-                    href={guest.href}
+                    href={withLanguage(guest.href, lang)}
                     className="group block bg-[#0B0F1A]"
                   >
                     {content}
@@ -1117,7 +1115,7 @@ export default function Home() {
                 variant="outline"
                 className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
               >
-                <Link href="/guests">
+                <Link href={withLanguage("/guests", lang)}>
                   {lang === "en"
                     ? "Browse all guest conversations"
                     : "查看全部嘉宾访谈"}
@@ -1154,7 +1152,7 @@ export default function Home() {
                   asChild
                   className="mt-6 bg-[#191712] text-white hover:bg-[#302C25]"
                 >
-                  <Link href="/book">
+                  <Link href={withLanguage("/book", lang)}>
                     <BookOpen className="mr-2 h-4 w-4" />
                     {lang === "en" ? "Explore both books" : "查看两本书"}
                   </Link>
@@ -1266,7 +1264,7 @@ export default function Home() {
                 variant="outline"
                 className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
               >
-                <Link href="/collab">
+                <Link href={withLanguage("/collab", lang)}>
                   <Handshake className="mr-2 h-4 w-4" />
                   {lang === "en" ? "Collaborate" : "合作"}
                 </Link>

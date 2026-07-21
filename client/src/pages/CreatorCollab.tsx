@@ -198,7 +198,7 @@ const copy = {
     eyebrow: "Podcasts · Video · Long-form",
     h1: "You set the question. I’ll bring a view and the evidence.",
     intro: [
-      "I’m Yuzheng Sun: a Cornell-trained economist who worked across Amazon, Meta, Tencent, and Statsig, and now builds AI Builders and Stay Superlinear.",
+      "I’m Yuzheng Sun. I have a PhD in Economics from Cornell, worked across Amazon, Meta, Tencent, and Statsig, and now build AI Builders and Stay Superlinear.",
       "I most often talk about three things: how AI actually changes work, how companies make decisions, and how people keep getting better while the ground moves under them.",
     ],
     heroProofs: [
@@ -443,7 +443,7 @@ const copy = {
       "Yuzheng Sun is an economist, AI educator, and founder of Superlinear Academy and AI Builders. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and now works across AI education, content, and community.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is an operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",

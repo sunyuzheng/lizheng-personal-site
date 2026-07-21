@@ -4,7 +4,7 @@ This is a factual index for Yuzheng Sun's public website. It was reviewed on 202
 
 ## Summary
 
-Yuzheng Sun is a Cornell-trained economist, operator, author, and founder based in Seattle. His work asks how a useful judgment can meet reality, improve through feedback, and become a capability, product, or system that other people can use.
+Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. His work asks how a useful judgment can meet reality, improve through feedback, and become a capability, product, or system that other people can use.
 
 He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 

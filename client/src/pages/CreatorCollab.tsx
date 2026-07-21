@@ -26,42 +26,47 @@ const copy = {
   en: {
     navSub: "Podcast & video invitations",
     eyebrow: "Podcasts · Video · Long-form",
-    h1: "Let’s make a conversation only your show could create.",
-    intro:
-      "My work has moved across economics, big tech, AI products, education, and independent media. If you are pursuing a question about AI, work, learning, or judgment, I can bring first-hand cases and claims that welcome pressure-testing. You define the show; the conversation should have its own edge.",
+    h1: "You set the question. I’ll bring a view and the evidence.",
+    intro: [
+      "I’m Yuzheng Sun: a Cornell-trained economist who worked across Amazon, Meta, Tencent, and Statsig, and now builds AI Builders and Stay Superlinear.",
+      "I most often talk about three things: how AI actually changes work, how companies make decisions, and how people keep getting better while the ground moves under them.",
+    ],
     heroProofs: [
       "Cornell Economics PhD",
       "Amazon · Meta · Tencent · Statsig",
       "200+ published conversations",
-      "400K+ cross-platform audience",
+      "400K+ across Xiaohongshu · YouTube · Bilibili",
     ],
-    questionCta: "See three representative conversations",
+    questionCta: "See two proven collaborations",
     kitCta: "Open the host kit",
-    stanceEyebrow: "NOT A PRESS TOUR",
-    stanceTitle: "I am not coming to repeat a polished set of talking points.",
+    stanceEyebrow: "STRONG OPINIONS, WEAKLY HELD",
+    stanceTitle: "A clear view, without the need to defend a persona.",
     stanceDetail:
-      "The best episodes begin with the host’s editorial instinct. I will prepare sources, cases, and my strongest current view; you can challenge any of it. AI Builders and Stay Superlinear can appear when they are useful live cases—not as the reason for the episode.",
-    formatsEyebrow: "WHAT I BRING INTO THE ROOM",
-    formatsTitle:
-      "More than one set of AI talking points: several real arenas.",
+      "I like making a view clear enough to challenge. You can question the premise, keep the disagreement, or press until new evidence changes how I think. Those are often my favorite moments in a conversation. AI Builders and Stay Superlinear only enter when they genuinely help explain the issue.",
+    formatsEyebrow: "WHY THIS EPISODE IS WORTH MAKING",
+    formatsTitle: "Three things I can bring to the conversation.",
     formats: [
       {
         number: "01",
-        title: "First-hand operating context",
+        title: "A background that is hard to duplicate",
         detail:
-          "From economics and big tech to an AI startup, courses, community, and independent media—I have seen the same question carry different costs inside different systems.",
+          "Cornell Economics PhD; economist at Amazon, data scientist at Meta, Data & AI leader at Tencent, and an early operator at Statsig. I now build courses, community, and media—across research, big tech, startup, and creator work.",
+        proof: "China & U.S. · research & operating · big tech & startup",
       },
       {
         number: "02",
-        title: "Claims that can be revisited",
+        title: "A point of view, not a performance",
         detail:
-          "I leave timestamps on public views, then return to what held up, what failed, and which new evidence changed my mind.",
+          "I like stating a judgment clearly enough for a host to push against it. Strong opinions, weakly held: I bring reasons, cases, and the strongest counterargument—and I genuinely enjoy the question that changes my mind.",
+        proof: "A useful judgment, plus room for the conversation to change it",
       },
       {
         number: "03",
-        title: "An interviewer’s ear",
+        title: "Content travels; co-publishing can amplify it",
         detail:
-          "After 200+ published conversations, I know when an answer is too neat, when to stop, and how to leave room for the host’s next question.",
+          "My communities span Xiaohongshu, YouTube, and Bilibili, and our team can edit long-form video and clips. But audience and production are amplifiers, not the premise: Koji’s independently published episode already traveled across audio and three video platforms.",
+        proof:
+          "Koji: content traveled independently · Tulong: co-production reached 58.2K likes",
       },
     ],
     questionsEyebrow: "QUESTIONS WITH REAL TENSION",
@@ -78,42 +83,137 @@ const copy = {
     ],
     otherDirections:
       "There are also grounded cases in experimentation, creator economics, China–U.S. technology, and the operating decisions behind AI Builders and Stay Superlinear. An episode does not need to cover them all; one good question is usually stronger.",
-    conversationsEyebrow: "RECENT CHINESE CONVERSATIONS",
+    conversationsEyebrow: "CONTENT, THEN AMPLIFICATION",
     conversationsTitle:
-      "Three conversations, three different editorial relationships.",
+      "First prove the content holds. Then see how far production and distribution can push it.",
     conversationsIntro:
-      "Guest, role-swapping counterpart, and long-form host: these examples say more about what an episode can become than a list of available topics.",
+      "Koji first shows that one strong conversation can work in long-form audio and across video platforms. Tulong then layers strong content, both audiences, and co-production to see how much farther it can go.",
     conversations: [
       {
-        label: "INVITED GUEST / ROLE-SWAP · CROSSING",
-        name: "How do power users actually use AI?",
-        role: "Koji × Yuzheng · two-part video podcast",
-        note: "Koji begins by pressing me on agentic work and learning. In the second half, we switch seats to examine AI investing—a single premise expanding naturally into two episodes.",
-        proof: "67K+ Xiaoyuzhou plays · 130+ comments",
+        priority: "lead",
+        label: "CASE 01 · THE CONTENT TEST · REMOTE",
+        name: "One remote conversation set records across audio and three video platforms",
+        role: "Crossing with Koji × Yuzheng Sun",
+        note: "The episode reached 67K Xiaoyuzhou plays, then produced high-save and high-share clips on Douyin, Xiaohongshu, and WeChat Channels. The Douyin clip became Koji’s all-time most-liked post; Xiaohongshu reached an annual save high. Only then does the smaller point matter: this was a simple remote recording, edited and published by Koji, without co-publishing from my accounts.",
+        highlight:
+          "This was not one lucky hit on one platform. People listened in long form, then saved and shared the ideas in short form—evidence that the guest background and point of view survived the change in medium.",
+        metrics: [
+          {
+            value: "67K",
+            label: "Xiaoyuzhou plays",
+            signal: "Show Top 2",
+          },
+          {
+            value: "12K",
+            label: "Douyin likes",
+            signal: "Account all-time high",
+          },
+          {
+            value: "8,343",
+            label: "Xiaohongshu saves",
+            signal: "Account annual high",
+          },
+          {
+            value: "6,502",
+            label: "WeChat Channels shares",
+            signal: "Cross-platform sharing",
+          },
+        ],
+        proofNote:
+          "Also: 132 Xiaoyuzhou comments; 4,709 Xiaohongshu likes; 8,582 Douyin saves and 1,476 shares.",
+        quote:
+          "“A genuinely useful episode. I’m moving from ChatGPT to Codex and building up my context.” — Xiaoyuzhou listener",
         href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        linkLabel: "Listen on Xiaoyuzhou",
         image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
+        evidenceLabel: "View platform screenshots (4)",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/koji-xiaoyuzhou.webp",
+            alt: "Crossing episode listed among the most popular with 67K plays and 132 comments",
+            caption: "Xiaoyuzhou · 67K plays · 132 comments",
+          },
+          {
+            src: "/collab/creator-proof/koji-xiaohongshu.webp",
+            alt: "Koji clip on Xiaohongshu with 4,709 likes and 8,343 saves",
+            caption: "Xiaohongshu · 4,709 likes · 8,343 saves",
+          },
+          {
+            src: "/collab/creator-proof/koji-douyin.webp",
+            alt: "Koji clip on Douyin with 12K likes, 8,582 saves and 1,476 shares",
+            caption: "Douyin · 12K likes · account record",
+          },
+          {
+            src: "/collab/creator-proof/koji-wechat.webp",
+            alt: "Koji clip on WeChat Channels with 6,502 shares",
+            caption: "WeChat Channels · 6,502 shares",
+          },
+        ],
       },
       {
-        label: "HOST · DEEP INTERVIEW",
-        name: "Professor Liu Jia: neuroscience at the edge of AI",
-        role: "Chair, Department of Psychology and Cognitive Science, Tsinghua University",
-        note: "A nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education—one line of inquiry across several disciplines.",
-        proof: "130K+ YouTube views · 460+ comments",
-        href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
-        image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
-      },
-      {
-        label: "DUAL RELEASE · TULONG DASHIHUA",
-        name: "One recording, two shows each treated it as their own episode",
+        priority: "lead",
+        label: "CASE 02 · CONTENT + PRODUCTION + BOTH AUDIENCES",
+        name: "Once the content holds, both sides can make it much bigger",
         role: "Yuzheng × Yang Ying (Tulong)",
-        note: "On my channel it became a 95-minute profile moving from neuroscience into the realities of company-building. On Tulong’s show, the same recording became an episode about the trap of linear thinking—two editorial frames, both released in full.",
-        proof: "90K+ YouTube views · 3,100+ likes",
-        href: "https://www.youtube.com/watch?v=vd_oYgwQSBM",
+        note: "Each side chose its own title, structure, and emphasis. Tulong kept the language of her show; our team built a second long-form cut and Xiaohongshu clips. When a joint release fits, my communities on Xiaohongshu, YouTube, and Bilibili can carry the work farther, while our team adds topic development, editing, clipping, and distribution support.",
+        highlight:
+          "Our Xiaohongshu version reached 58.2K likes, 59K saves, and 11K shares; the Bilibili long-form cut added 90K+ plays and nearly 7,000 saves. This was more than exposure: saves exceeded likes, which shows that the content held the attention the joint reach created.",
+        metrics: [
+          {
+            value: "58.2K",
+            label: "Xiaohongshu likes",
+            signal: "Co-published",
+          },
+          {
+            value: "59K",
+            label: "Xiaohongshu saves",
+            signal: "More saves than likes",
+          },
+          { value: "11K", label: "shares", signal: "Secondary reach" },
+          { value: "1,066", label: "comments", signal: "High discussion" },
+        ],
+        proofNote: "",
+        quote: "",
+        href: "https://www.bilibili.com/video/BV1krM46BEpn",
+        linkLabel: "Watch our full cut",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
+        evidenceLabel: "Verify the Xiaohongshu result (1 screenshot)",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/tulong-performance.webp",
+            alt: "Yuzheng and Tulong co-created Xiaohongshu video with 58.2K likes, 59K saves and 1,066 comments",
+            caption: "Our cut · 58.2K likes · 59K saves · 1,066 comments",
+          },
+        ],
+      },
+      {
+        priority: "supporting",
+        label: "ANOTHER SAMPLE · I AM THE HOST",
+        name: "Professor Liu Jia: from neuroscience to AI and education",
+        role: "Chair, Department of Psychology and Cognitive Science, Tsinghua University",
+        note: "A nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education. It is here to show the other side of the table: I know how much preparation and listening a host brings to a long interview.",
+        highlight:
+          "A long conversation does not need a pile of topics. It needs one question that can keep unfolding.",
+        metrics: [
+          { value: "130K+", label: "YouTube views", signal: "Long-form" },
+          { value: "460+", label: "comments", signal: "Deep discussion" },
+          {
+            value: "~3 hrs",
+            label: "one continuous conversation",
+            signal: "Full-length",
+          },
+        ],
+        proofNote: "",
+        quote: "",
+        href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
+        linkLabel: "Watch the full conversation",
+        image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
+        evidenceLabel: "",
+        evidenceImages: [],
       },
     ],
     metricsNote:
-      "Public platform counts checked July 2026 and rounded down; platforms use different counting methods.",
+      "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
     agreementsEyebrow: "HOW I WORK",
     agreementsTitle: "Respect the show, and bring a point of view.",
     agreements: [
@@ -128,9 +228,9 @@ const copy = {
           "I can bring primary sources, data, first-hand cases, and the strongest counterargument I can find—not scripted answers.",
       },
       {
-        title: "Disagreement can stay in.",
+        title: "Disagreement can stay; a judgment can change.",
         detail:
-          "Challenge the premise or follow an answer until it changes. I will distinguish facts, inference, experience, and what I simply do not know.",
+          "I will state the view clearly and say what evidence could overturn it. The best conversations make me re-check—and sometimes change—how I think.",
       },
       {
         title: "Facts deserve care.",
@@ -203,41 +303,46 @@ const copy = {
   zh: {
     navSub: "播客与视频节目邀请",
     eyebrow: "播客 · 视频访谈 · 长对话",
-    h1: "你来定问题，我们把它聊透。",
-    intro:
-      "我做过经济学研究，也先后在 Amazon、Meta、腾讯和 Statsig 做过经济学、数据和 AI 相关的工作。后来自己做课程、社区和内容。如果你想把 AI、工作、学习，或者一个具体的人生选择聊深，可以来找我。我会带着原文、数据，也会讲自己真正做过、见过的事。不怕追问，也不怕反驳。你的节目，你来定方向。",
+    h1: "你定问题，我带着判断和证据来。",
+    intro: [
+      "我是课代表立正。康奈尔经济学博士，先后在 Amazon、Meta、腾讯和 Statsig 做过经济学、数据和 AI；现在主理 AI Builders 和 Stay Superlinear。",
+      "我最常聊三件事：AI 到底怎么改变工作，公司怎么做判断，人又怎么在变化里长出真本事。",
+    ],
     heroProofs: [
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig",
       "200+ 场公开对谈",
-      "YouTube · B站 · 小红书 40 万+ 关注者",
+      "小红书 · YouTube · B站 40 万+ 关注者",
     ],
-    questionCta: "先看三场对话",
+    questionCta: "先看两个合作案例",
     kitCta: "查看嘉宾资料",
-    stanceEyebrow: "不是来跑通告",
-    stanceTitle: "如果只是把我讲过的话再讲一遍，就没必要录。",
+    stanceEyebrow: "STRONG OPINIONS, WEAKLY HELD",
+    stanceTitle: "有立场，但不需要守住人设。",
     stanceDetail:
-      "你比我更清楚自己的听众，也更清楚这期节目该从哪里切入。我会围绕你的问题准备原文和案例，也会把自己现在怎么想的理清楚。哪一点站不住，都可以当场追问。如果聊到 AI Builders 和 Stay Superlinear，是因为里面正好有值得讲的案例，不会为了宣传硬塞进来。",
-    formatsEyebrow: "我能带来的",
-    formatsTitle: "这里面的事，我自己做过，也踩过坑。",
+      "我喜欢先把观点说得足够明确，让主持人真的有东西可以追问。你可以挑战前提、保留分歧，也可以用一个好问题让我重新想一遍。我最喜欢的，就是在对话里真的改变了自己的想法。",
+    formatsEyebrow: "为什么这期值得录",
+    formatsTitle: "我能给这场对话带来三样东西。",
     formats: [
       {
         number: "01",
-        title: "不只从一个位置看问题",
+        title: "研究、大厂、创业和内容，我都真正做过",
         detail:
-          "我做过经济学研究，也在大厂和 AI 创业公司一线工作过；现在自己做课程、社区和内容。同一个问题，放在学术研究、大公司、创业公司和自己的生意里，答案常常完全不同。为什么会这样，我可以慢慢拆。",
+          "康奈尔经济学博士；做过 Amazon 经济学家、Meta 数据科学家、腾讯数据与 AI 副总监，也在 Statsig 这样的创业公司一线干过。我既做过研究，也真正带过业务、做过产品和内容。",
+        proof: "中美 · 研究与实战 · 大厂与创业",
       },
       {
         number: "02",
-        title: "过去说过的话，可以翻旧账",
+        title: "有立场，也最喜欢被挑战",
         detail:
-          "我公开讲过的判断大多留有时间戳。哪里说对、哪里说错、什么新证据让我改口，都可以摊开聊。",
+          "我信奉 strong opinions, weakly held：观点要讲得足够明确，理由、案例和反方也都摆出来；一个好问题真能让我改变想法，我会很开心。",
+        proof: "有判断，不护答案 · 观众能带走一个可用的观点",
       },
       {
         number: "03",
-        title: "我也坐过主持人的位置",
+        title: "内容能自己跑，联发还能放大",
         detail:
-          "做过 200 多场对谈后，我知道嘉宾最容易把答案讲得太满，也知道什么时候该停下来，让你继续往下问。",
+          "我在小红书、YouTube 和 B 站都有长期经营的社区，团队也能做长视频、切片和分发。但流量和团队只是放大器：Koji 独立发布的节目，已经同时在音频和三个视频平台跑了出来。",
+        proof: "Koji：内容自己跑 · 屠龙：联合制作 5.82 万赞",
       },
     ],
     questionsEyebrow: "可以聊什么",
@@ -248,45 +353,111 @@ const copy = {
       "AI 把执行变得越来越便宜以后，人和公司真正值钱的东西还剩什么？",
       "我为什么说“停止使用 ChatGPT”？从聊天框到 Agent，工作方式到底变了什么？",
       "在 Amazon、Meta、腾讯和 Statsig，我见过的大公司和创业公司，通常怎么做判断，又怎么把自己带偏？",
-      "回头看我过去的 AI 判断，哪些说对了，哪些现在必须改口？",
+      "回头看我过去的 AI 判断，哪些说对了，哪些现在需要重新判断？",
       "一门课、一个社区，到底是在帮人长本事，还是让人越来越离不开老师和圈子？",
     ],
     otherDirections:
       "增长实验、创作者怎么赚钱、科技创业也都能聊。AI Builders 和 Stay Superlinear 是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
-    conversationsEyebrow: "最近几场中文对话",
-    conversationsTitle: "我做过嘉宾，也做过主持。还有一场，双方各剪各的。",
+    conversationsEyebrow: "两个合作案例",
+    conversationsTitle: "先看内容自己能不能跑，再看双方能把它推多远。",
     conversationsIntro:
-      "这三场里，我坐的位置都不一样。看完大概就知道，我在节目里会是什么样。",
+      "Koji 那期先证明，一场好对话能同时在音频和多个视频平台成立。屠龙的合作则把好内容、双方受众和制作资源叠在一起，看它还能被放大到哪里。",
     conversations: [
       {
-        label: "做嘉宾，后半场换位提问 · 十字路口 Crossing",
-        name: "高手怎么用 AI？普通人怎么学 AI？",
-        role: "与 Koji 的上下两集视频播客",
-        note: "Koji 先问我怎么用 Agent、怎么学 AI。聊到后半场，我们干脆换了位置，我问他怎么看 2026 年的 AI 创业和投资。最后自然做成了上下两集。",
-        proof: "小宇宙 6.7 万+ 播放 · 130+ 评论",
+        priority: "lead",
+        label: "案例一 · 内容自己能跑",
+        name: "一场远程对话：节目播放前二，抖音历史最高，小红书年度最高",
+        role: "十字路口 Crossing × 课代表立正",
+        note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成了 Koji 抖音历史点赞最高、小红书年度收藏最高的内容。录制只是简单远程，节目和切片也都由 Koji 独立制作、发布，没有从我的账号联发——这让内容本身的表现更容易看清。",
+        highlight:
+          "更重要的是，同一场对话同时在小宇宙、抖音、小红书和视频号成立。不少听众留下完整笔记，还写下自己准备怎样改变 AI 工作方式。",
+        metrics: [
+          { value: "6.7万", label: "小宇宙播放", signal: "节目播放前二" },
+          { value: "1.2万", label: "抖音点赞", signal: "账号历史最高" },
+          { value: "8,343", label: "小红书收藏", signal: "账号年度最高" },
+          { value: "6,502", label: "视频号转发", signal: "跨平台高转发" },
+        ],
+        proofNote:
+          "其他数据：小宇宙 132 条评论；小红书 4,709 赞；抖音 8,582 收藏、1,476 转发。",
+        quote:
+          "“很有帮助的一期，最近正在从 ChatGPT 转 Codex，也在积累上下文。”——小宇宙听众",
         href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        linkLabel: "去小宇宙听完整节目",
         image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
+        evidenceLabel: "查看平台数据截图（4 张）",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/koji-xiaoyuzhou.webp",
+            alt: "《十字路口》节目最受欢迎页面，显示 6.7 万播放和 132 条评论",
+            caption: "小宇宙 · 6.7 万播放 · 132 条评论",
+          },
+          {
+            src: "/collab/creator-proof/koji-xiaohongshu.webp",
+            alt: "Koji 小红书切片，显示 4,709 赞和 8,343 收藏",
+            caption: "小红书 · 4,709 赞 · 8,343 收藏",
+          },
+          {
+            src: "/collab/creator-proof/koji-douyin.webp",
+            alt: "Koji 抖音切片，显示 1.2 万赞、8,582 收藏和 1,476 转发",
+            caption: "抖音 · 1.2 万赞 · 账号历史最高",
+          },
+          {
+            src: "/collab/creator-proof/koji-wechat.webp",
+            alt: "Koji 视频号切片，显示 6,502 次转发",
+            caption: "视频号 · 6,502 转发",
+          },
+        ],
       },
       {
-        label: "做主持，一口气聊了近三小时",
+        priority: "lead",
+        label: "案例二 · 双方各做一版、共同分发",
+        name: "好内容再叠加双方受众，能走得更远",
+        role: "课代表立正 × 杨滢（屠龙）",
+        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们则从脑科学一路剪到创业现场，再为小红书和 B 站重新组织内容。双方各自保留编辑判断，也各自带来受众；我们这边的小红书、YouTube、B 站和社区还能承接后续分发，团队也能补上选题、剪辑和切片。",
+        highlight:
+          "我们的小红书版本获得 5.82 万赞、5.9 万收藏和 1.1 万转发；B 站正片 9 万+ 播放、近 7,000 收藏。这不只是曝光：收藏高于点赞，说明内容真的接住了这波流量。",
+        metrics: [
+          { value: "5.82万", label: "小红书点赞", signal: "联合发布" },
+          { value: "5.9万", label: "小红书收藏", signal: "收藏高于点赞" },
+          { value: "1.1万", label: "小红书转发", signal: "二次传播" },
+          { value: "1,066", label: "小红书评论", signal: "高讨论度" },
+        ],
+        proofNote: "",
+        quote: "",
+        href: "https://www.bilibili.com/video/BV1krM46BEpn",
+        linkLabel: "看我们的完整正片",
+        image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
+        evidenceLabel: "核对小红书数据（1 张截图）",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/tulong-performance.webp",
+            alt: "课代表立正与屠龙联合发布的小红书视频，显示 5.82 万赞、5.9 万收藏和 1,066 条评论",
+            caption: "我们的版本 · 5.82 万赞 · 5.9 万收藏 · 1,066 条评论",
+          },
+        ],
+      },
+      {
+        priority: "supporting",
+        label: "另一个样本 · 我做主持",
         name: "刘嘉教授：从脑科学聊到 AI 和教育",
         role: "清华大学心理与认知科学系主任",
-        note: "从智能、学习和意识，一路聊到具身智能、脑机接口和教育。话题很多，但一直追着同一个问题：我们到底该怎样理解智能？",
-        proof: "YouTube 13 万+ 观看 · 460+ 评论",
+        note: "近三小时的对话，从智能、学习和意识，一路聊到具身智能、脑机接口和教育。把它放在这里，是想说明我也坐过桌子的另一边，知道主持人为一场长访谈要做多少准备、花多少心思。",
+        highlight: "长对话不需要堆话题。它需要一个能一层层往下追的问题。",
+        metrics: [
+          { value: "13万+", label: "YouTube 观看", signal: "长视频" },
+          { value: "460+", label: "评论", signal: "深度讨论" },
+          { value: "近 3 小时", label: "一场连续对话", signal: "完整长谈" },
+        ],
+        proofNote: "",
+        quote: "",
         href: "https://www.youtube.com/watch?v=-Et3GJRSI_0",
+        linkLabel: "看完整对话",
         image: "https://img.youtube.com/vi/-Et3GJRSI_0/maxresdefault.jpg",
-      },
-      {
-        label: "同一场录制，两边各发自己的正片",
-        name: "我和屠龙，用一场对话做了两期不同的节目",
-        role: "课代表立正 × 杨滢（屠龙）",
-        note: "我这边从她的脑科学背景聊到创业；屠龙那边把主线定成“线性思维害死人”。同一场录制，双方各自定标题、结构和重点，最后剪成了两期不一样的完整节目。",
-        proof: "B站 8.5 万+ 播放 · 6,700+ 收藏",
-        href: "https://www.bilibili.com/video/BV1krM46BEpn",
-        image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
+        evidenceLabel: "",
+        evidenceImages: [],
       },
     ],
-    metricsNote: "播放与互动数据截至 2026 年 7 月。",
+    metricsNote: "数据来自 2026 年 7 月的平台页面与截图；各平台统计口径不同。",
     agreementsEyebrow: "怎么一起录",
     agreementsTitle: "录之前把边界说清，录的时候就可以放开聊。",
     agreements: [
@@ -301,9 +472,9 @@ const copy = {
           "原文、数据和案例我会准备，也会先想一遍，别人最可能从哪里反对我。不会准备逐字答案。",
       },
       {
-        title: "不同意也没关系。",
+        title: "分歧可以保留，判断也可以更新。",
         detail:
-          "可以反驳，也可以追问到我改口。我会说清楚哪些是事实，哪些是我的判断，哪些我确实不知道。",
+          "我会把观点讲清，也会说明什么证据能推翻它。最好的对话，是让我重新检查、甚至改变自己的想法。",
       },
       {
         title: "具体事实，发布前一起核对。",
@@ -410,7 +581,20 @@ export default function CreatorCollab() {
               <h1 className="mt-5 text-4xl font-semibold leading-[1.08] text-white md:text-6xl">
                 {t.h1}
               </h1>
-              <p className="mt-6 text-lg leading-8 text-zinc-300">{t.intro}</p>
+              <div className="mt-6 max-w-2xl space-y-3">
+                {t.intro.map((paragraph, index) => (
+                  <p
+                    key={paragraph}
+                    className={cn(
+                      index === 0
+                        ? "text-base leading-7 text-zinc-300 md:text-lg md:leading-8"
+                        : "text-sm leading-7 text-zinc-400"
+                    )}
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
               <div className="mt-7 grid grid-cols-2 gap-x-5 gap-y-3 border-y border-white/10 py-5">
                 {t.heroProofs.map(proof => (
                   <p
@@ -465,97 +649,8 @@ export default function CreatorCollab() {
             </figure>
           </div>
 
-          <section className="mt-20 border-y border-white/10 py-12 md:py-16">
-            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
-                  {t.stanceEyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {t.stanceTitle}
-                </h2>
-              </div>
-              <p className="self-end text-lg leading-8 text-zinc-300">
-                {t.stanceDetail}
-              </p>
-            </div>
-          </section>
-
-          <section id="conversations" className="scroll-mt-24 pt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {t.conversationsEyebrow}
-            </p>
-            <h2 className="mt-4 max-w-4xl text-3xl font-semibold text-white md:text-4xl">
-              {t.conversationsTitle}
-            </h2>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
-              {t.conversationsIntro}
-            </p>
-            <div className="mt-8 grid gap-5 lg:grid-cols-2">
-              {t.conversations.map((conversation, index) => (
-                <a
-                  key={conversation.name}
-                  href={conversation.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] transition hover:border-amber-300/35 hover:bg-white/[0.055]",
-                    index === 0 &&
-                      "lg:col-span-2 lg:grid lg:grid-cols-[1.14fr_0.86fr]"
-                  )}
-                >
-                  <div className="overflow-hidden bg-[#151A25]">
-                    <img
-                      src={conversation.image}
-                      alt=""
-                      className={cn(
-                        "aspect-video h-full w-full object-cover transition duration-500 group-hover:scale-[1.015]",
-                        index === 0 && "lg:aspect-auto"
-                      )}
-                      loading="lazy"
-                      width={1280}
-                      height={720}
-                    />
-                  </div>
-                  <div
-                    className={cn(
-                      "p-6",
-                      index === 0 &&
-                        "lg:flex lg:flex-col lg:justify-center lg:p-10"
-                    )}
-                  >
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
-                      {conversation.label}
-                    </p>
-                    <h3
-                      className={cn(
-                        "mt-3 flex items-start gap-2 text-xl font-semibold leading-snug text-white",
-                        index === 0 && "md:text-3xl"
-                      )}
-                    >
-                      <span>{conversation.name}</span>
-                      <ExternalLink className="mt-1.5 h-3.5 w-3.5 shrink-0 text-zinc-500" />
-                    </h3>
-                    <p className="mt-2 text-xs leading-5 text-amber-200/75">
-                      {conversation.role}
-                    </p>
-                    <p className="mt-4 text-sm leading-7 text-zinc-400">
-                      {conversation.note}
-                    </p>
-                    <p className="mt-5 border-t border-white/10 pt-4 font-mono text-[10px] uppercase tracking-[0.12em] text-zinc-300">
-                      {conversation.proof}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-            <p className="mt-4 text-xs leading-5 text-zinc-500">
-              {t.metricsNote}
-            </p>
-          </section>
-
-          <section className="mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+          <section className="mt-14 md:mt-20">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
               {t.formatsEyebrow}
             </p>
             <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
@@ -565,7 +660,7 @@ export default function CreatorCollab() {
               {t.formats.map(format => (
                 <article
                   key={format.number}
-                  className="rounded-2xl border border-white/10 bg-white/[0.035] p-6 md:p-7"
+                  className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.035] p-6 md:p-7"
                 >
                   <span className="font-mono text-xs text-amber-300">
                     {format.number}
@@ -576,12 +671,195 @@ export default function CreatorCollab() {
                   <p className="mt-3 text-sm leading-7 text-zinc-400">
                     {format.detail}
                   </p>
+                  <p className="mt-5 border-t border-white/10 pt-4 text-xs font-medium leading-5 text-amber-200/80">
+                    {format.proof}
+                  </p>
                 </article>
               ))}
             </div>
           </section>
 
-          <section id="questions" className="scroll-mt-24 pt-20">
+          <section id="conversations" className="scroll-mt-24 pt-14 md:pt-20">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+              {t.conversationsEyebrow}
+            </p>
+            <h2 className="mt-4 max-w-4xl text-3xl font-semibold text-white md:text-4xl">
+              {t.conversationsTitle}
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
+              {t.conversationsIntro}
+            </p>
+            <div className="mt-8 grid gap-6">
+              {t.conversations.map(conversation => (
+                <article
+                  key={conversation.name}
+                  className={cn(
+                    "overflow-hidden rounded-2xl border border-white/10 bg-white/[0.035] lg:grid",
+                    conversation.priority === "lead"
+                      ? "lg:grid-cols-[0.82fr_1.18fr]"
+                      : "lg:grid-cols-[0.64fr_1.36fr]"
+                  )}
+                >
+                  <a
+                    href={conversation.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block self-start overflow-hidden bg-[#151A25]"
+                    aria-label={conversation.linkLabel}
+                  >
+                    <img
+                      src={conversation.image}
+                      alt={conversation.role}
+                      className="aspect-video h-auto w-full object-cover transition duration-500 group-hover:scale-[1.015]"
+                      loading="lazy"
+                      width={1280}
+                      height={720}
+                    />
+                  </a>
+                  <div className="p-6 md:p-8 lg:p-10">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                      {conversation.label}
+                    </p>
+                    <h3 className="mt-3 text-2xl font-semibold leading-snug text-white md:text-3xl">
+                      {conversation.name}
+                    </h3>
+                    <p className="mt-2 text-xs leading-5 text-amber-200/75">
+                      {conversation.role}
+                    </p>
+
+                    <div
+                      className={cn(
+                        "mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10",
+                        conversation.metrics.length === 3 && "sm:grid-cols-3"
+                      )}
+                    >
+                      {conversation.metrics.map((metric, index) => (
+                        <div
+                          key={`${conversation.name}-${metric.label}`}
+                          className={cn(
+                            "min-w-0 bg-[#111622] p-3.5 sm:p-4",
+                            metric.signal && "bg-amber-300/[0.045]",
+                            conversation.metrics.length === 3 &&
+                              index === 2 &&
+                              "col-span-2 sm:col-span-1"
+                          )}
+                        >
+                          <p className="font-mono text-2xl font-semibold tabular-nums text-white">
+                            {metric.value}
+                          </p>
+                          <p className="mt-1 text-xs font-medium leading-5 text-zinc-300">
+                            {metric.label}
+                          </p>
+                          {metric.signal && (
+                            <span className="mt-2 inline-flex w-fit max-w-full rounded-full border border-amber-300/25 bg-amber-300/10 px-2 py-1 text-[10px] font-semibold leading-none text-amber-200 sm:text-[11px]">
+                              {metric.signal}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <p className="mt-4 text-sm leading-7 text-zinc-400">
+                      {conversation.note}
+                    </p>
+                    <p className="mt-5 rounded-xl border border-amber-300/15 bg-amber-300/[0.055] p-4 text-sm font-medium leading-7 text-amber-50/90">
+                      {conversation.highlight}
+                    </p>
+
+                    {conversation.proofNote && (
+                      <p className="mt-4 text-xs leading-6 text-zinc-400">
+                        {conversation.proofNote}
+                      </p>
+                    )}
+                    {conversation.quote && (
+                      <blockquote className="mt-4 border-l border-amber-300/40 pl-4 text-xs leading-6 text-zinc-300">
+                        {conversation.quote}
+                      </blockquote>
+                    )}
+
+                    <a
+                      href={conversation.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+                    >
+                      {conversation.linkLabel}
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
+                  </div>
+                  {conversation.evidenceImages.length > 0 && (
+                    <details className="mx-6 mb-6 overflow-hidden rounded-xl border border-white/10 bg-black/10 md:mx-8 md:mb-8 lg:col-span-2 lg:mx-10 lg:mb-10">
+                      <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-4 px-4 py-3 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.035]">
+                        <span>{conversation.evidenceLabel}</span>
+                        <ArrowDown className="h-3.5 w-3.5 shrink-0 text-zinc-500" />
+                      </summary>
+                      <div
+                        className={cn(
+                          "grid items-start gap-4 border-t border-white/10 p-4 sm:grid-cols-2",
+                          conversation.evidenceImages.length === 1 &&
+                            "sm:grid-cols-1"
+                        )}
+                      >
+                        {conversation.evidenceImages.map(evidence => (
+                          <figure
+                            key={evidence.src}
+                            className="self-start rounded-lg border border-white/10 bg-black/20 p-2"
+                          >
+                            <a
+                              href={evidence.src}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="group block overflow-hidden rounded-md bg-black/30"
+                            >
+                              <img
+                                src={evidence.src}
+                                alt={evidence.alt}
+                                className="mx-auto max-h-[34rem] w-full object-contain transition duration-300 group-hover:opacity-90"
+                                loading="lazy"
+                              />
+                            </a>
+                            <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 px-1 pb-1 pt-3 text-[11px] leading-5 text-zinc-400">
+                              <span>{evidence.caption}</span>
+                              <a
+                                href={evidence.src}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-zinc-500 transition hover:text-amber-300"
+                              >
+                                {lang === "zh"
+                                  ? "打开完整截图"
+                                  : "Open full screenshot"}
+                                <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                </article>
+              ))}
+            </div>
+            <p className="mt-4 text-xs leading-5 text-zinc-500">
+              {t.metricsNote}
+            </p>
+          </section>
+
+          <section className="mt-14 border-y border-white/10 py-10 md:mt-20 md:py-14">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              {t.stanceEyebrow}
+            </p>
+            <div className="mt-4 grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
+              <h2 className="text-3xl font-semibold leading-tight text-white md:text-4xl">
+                {t.stanceTitle}
+              </h2>
+              <p className="text-sm leading-7 text-zinc-300 md:text-base md:leading-8">
+                {t.stanceDetail}
+              </p>
+            </div>
+          </section>
+
+          <section id="questions" className="scroll-mt-24 pt-14 md:pt-20">
             <div className="grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
@@ -615,7 +893,7 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section className="mt-20 rounded-2xl border border-amber-300/20 bg-amber-300/[0.05] p-6 md:p-10">
+          <section className="mt-14 rounded-2xl border border-amber-300/20 bg-amber-300/[0.05] p-6 md:mt-20 md:p-10">
             <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
@@ -651,7 +929,7 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section className="mt-20">
+          <section className="mt-14 md:mt-20">
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
               {t.logisticsEyebrow}
             </p>
@@ -676,7 +954,7 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section id="host-kit" className="scroll-mt-24 pt-20">
+          <section id="host-kit" className="scroll-mt-24 pt-14 md:pt-20">
             <div className="rounded-2xl border border-white/10 bg-[#F2F0EA] p-6 text-[#191712] md:p-10">
               <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
                 <div>
@@ -757,7 +1035,10 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section className="mt-20 rounded-2xl border border-white/10 bg-white/[0.045] p-6 text-center md:p-10">
+          <section
+            id="contact"
+            className="mt-14 scroll-mt-24 rounded-2xl border border-white/10 bg-white/[0.045] p-6 text-center md:mt-20 md:p-10"
+          >
             <Mic2 className="mx-auto h-7 w-7 text-amber-300" />
             <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
               {t.contactEyebrow}

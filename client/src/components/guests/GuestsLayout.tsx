@@ -70,6 +70,13 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
           {lang === "en"
             ? "All interview content © original rights holders"
             : "访谈内容版权所有"}
+          <span className="mx-2 text-zinc-700">·</span>
+          <Link
+            href={withLanguage("/collab/creators", lang)}
+            className="text-zinc-400 transition hover:text-amber-300"
+          >
+            {lang === "en" ? "Invite me to your show" : "邀请我上节目"}
+          </Link>
         </p>
       </footer>
     </div>

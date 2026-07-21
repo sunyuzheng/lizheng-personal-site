@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, BookOpen, ExternalLink } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
+import { BOOKS_PAGE_META } from "@shared/page-meta";
 
 const books = {
   en: [
@@ -15,10 +16,15 @@ const books = {
       id: "growth",
       label: "English book",
       title: "Growth Data Analytics Playbook",
-      subtitle: "Data, growth, experimentation, and product judgment.",
+      subtitle:
+        "From product-market fit and growth accounting to retention, metrics, and experimentation.",
       description:
-        "A practical playbook for using analytics to understand growth, product-market fit, and the operating loops behind better product decisions.",
-      meta: ["WSJ CIO recommended", "English", "Data analytics"],
+        "A practical guide to product-market fit, growth accounting, metrics, retention, and experimentation—written for people making real product decisions.",
+      meta: [
+        "Featured in the 2025 WSJ CIO Journal reading list",
+        "English",
+        "Data analytics",
+      ],
       primary: {
         label: "View on Amazon",
         href: "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
@@ -29,9 +35,9 @@ const books = {
       id: "zbs",
       label: "Chinese book",
       title: "真本事：从会工作到会赚钱",
-      subtitle: "Career agency, capability building, and compounding work.",
+      subtitle: "Turning work into capability, leverage, and income.",
       description:
-        "A Chinese book about turning work, learning, side projects, and AI-era judgment into a durable personal asset.",
+        "A Chinese book about taking back agency at work, building capability through practice, and learning how value becomes income.",
       meta: ["人民邮电出版社", "中文", "职业与个人成长"],
       primary: {
         label: "Read the book page",
@@ -50,10 +56,10 @@ const books = {
       id: "growth",
       label: "英文书",
       title: "Growth Data Analytics Playbook",
-      subtitle: "数据、增长、实验和产品判断。",
+      subtitle: "从产品市场匹配、增长核算到留存、指标与实验。",
       description:
-        "这本书把增长、产品市场匹配、实验和数据分析放进同一套工作框架，讲的是如何用 analytics 改进真实产品决策。",
-      meta: ["WSJ CIO 推荐", "英文", "数据分析"],
+        "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。",
+      meta: ["入选《华尔街日报》CIO Journal 2025 年书单", "英文", "数据分析"],
       primary: {
         label: "Amazon 查看",
         href: "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
@@ -64,9 +70,9 @@ const books = {
       id: "zbs",
       label: "中文书",
       title: "真本事：从会工作到会赚钱",
-      subtitle: "职业主动性、能力建设和可复利的工作。",
+      subtitle: "把工作变成自己的能力、杠杆和收入。",
       description:
-        "这本书讲如何把工作能力、认知方式、副业实验和 AI 时代的行动系统，变成长期可复利的个人资产。",
+        "这本书讨论怎样拿回工作的主动权，在实践里练出本事，并逐步弄懂自己的价值如何变成收入。",
       meta: ["人民邮电出版社", "中文", "职业与个人成长"],
       primary: {
         label: "进入《真本事》页面",
@@ -146,13 +152,7 @@ export default function Books() {
 
   useEffect(() => {
     return applyPageSeo({
-      title: lang === "en" ? "Books · Yuzheng Sun" : "两本书 · 课代表立正",
-      description:
-        lang === "en"
-          ? "Books by Yuzheng Sun: Growth Data Analytics Playbook and 真本事：从会工作到会赚钱."
-          : "孙煜征的两本书：英文 Growth Data Analytics Playbook 与中文《真本事：从会工作到会赚钱》。",
-      canonical: "https://www.lizheng.ai/book",
-      ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
+      ...BOOKS_PAGE_META[lang],
       locale: lang === "zh" ? "zh_CN" : "en_US",
     });
   }, [lang]);
@@ -177,19 +177,7 @@ export default function Books() {
               </div>
             </div>
           </Link>
-          <div className="flex items-center gap-3">
-            <LanguageToggle size="sm" />
-            <Button
-              asChild
-              size="sm"
-              className="bg-amber-400 text-[#211300] hover:bg-amber-300"
-            >
-              <Link href={withLanguage("/guests", lang)}>
-                {lang === "en" ? "Guests" : "嘉宾"}
-                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          </div>
+          <LanguageToggle size="sm" />
         </div>
       </nav>
 
@@ -201,13 +189,13 @@ export default function Books() {
             </p>
             <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
               {lang === "en"
-                ? "Two books, one long-running question: how judgment becomes leverage."
-                : "两本书，一个问题：判断如何变成杠杆。"}
+                ? "One book asks how products find direction and grow. The other asks how work becomes capability."
+                : "一本讲产品怎样找到方向、推动增长；一本讲人怎样把工作变成自己的本事。"}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
               {lang === "en"
-                ? "One book is written for the data and growth world. The other is written for Chinese professionals trying to turn work into a compounding asset."
-                : "一本写给数据和增长世界，一本写给中文职场人。它们共享同一个问题，只是落在不同语境里。"}
+                ? "Growth Data Analytics Playbook is about product-market fit, metrics, and experimentation. 真本事 is about turning work into capability, leverage, and income of your own."
+                : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。"}
             </p>
           </div>
 

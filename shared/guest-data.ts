@@ -1,9 +1,8 @@
 import { guestVideoMetadata } from "./guest-video-metadata";
 import { guestRosterSnapshot } from "./guest-roster-snapshot";
+import type { PageMeta } from "./page-meta";
 
 export const SITE_URL = "https://www.lizheng.ai";
-export const GUESTS_DATA_URL =
-  "https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json";
 // Guest roster source of truth:
 // - kedaibiao-content-tools/guests.json
 //
@@ -12,7 +11,8 @@ export const GUESTS_DATA_URL =
 // - generation input: local kedaibiao-channel/tools/youtube/all_videos_full.json
 // - fallback: YouTube oEmbed for IDs missing from local metadata
 //
-// Deployed snapshot used by this repo:
+// Deployed snapshots used by this repo:
+// - shared/guest-roster-snapshot.ts
 // - shared/guest-video-metadata.ts
 //
 // See docs/guest-data.md for the full update workflow.
@@ -96,13 +96,6 @@ function compareGuestEpisodesByViews(a: GuestEpisode, b: GuestEpisode): number {
   if (dateA !== dateB) return dateB - dateA;
 
   return a.index - b.index;
-}
-
-export interface PageMeta {
-  title: string;
-  description: string;
-  canonical: string;
-  ogImage: string;
 }
 
 function toNumber(value?: number | string): number | undefined {
@@ -282,10 +275,10 @@ export async function fetchGuestDirectory(
   _fetchImpl: typeof fetch = fetch
 ): Promise<GuestProfile[]> {
   const rawGuests = guestRosterSnapshot.map(guest => ({
-      ...guest,
-      all_video_ids: [...guest.all_video_ids],
-      all_urls: [...guest.all_urls],
-    })) as RawGuest[];
+    ...guest,
+    all_video_ids: [...guest.all_video_ids],
+    all_urls: [...guest.all_urls],
+  })) as RawGuest[];
 
   return buildGuestDirectory(rawGuests, [...guestVideoMetadata]);
 }
@@ -296,20 +289,9 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
     (sum, guest) => sum + guest.episode_count,
     0
   );
-  const topCompanies = [
-    ...new Set(
-      guests
-        .slice(0, 30)
-        .map(guest => guest.guest_company)
-        .filter(Boolean)
-    ),
-  ]
-    .slice(0, 6)
-    .join("、");
-
   return {
-    title: `全部嘉宾 · 课代表立正 — ${totalGuests}位科技领袖访谈`,
-    description: `课代表立正访谈过的 ${totalGuests} 位嘉宾，${totalEpisodes} 期对话，涵盖 ${topCompanies} 等顶级科技公司的领袖、创始人与投资人。`,
+    title: `全部嘉宾 · 课代表立正 — ${totalGuests} 位嘉宾，${totalEpisodes} 期对话`,
+    description: `课代表立正的完整访谈嘉宾库：${totalGuests} 位研究者、创业者、管理者、投资人与各领域实践者，共 ${totalEpisodes} 期公开对话。`,
     canonical: `${SITE_URL}/guests`,
     ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };

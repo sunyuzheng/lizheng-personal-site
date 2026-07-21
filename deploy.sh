@@ -1,23 +1,25 @@
 #!/bin/bash
+set -euo pipefail
 
-# 部署脚本 - 推送到GitHub
-
-echo "🚀 开始部署到GitHub..."
-
-# 检查是否有未提交的更改
-if [[ -n $(git status -s) ]]; then
-    echo "📝 发现未提交的更改，正在提交..."
-    git add .
-    read -p "请输入提交信息 (默认: Update website): " commit_msg
-    commit_msg=${commit_msg:-"Update website"}
-    git commit -m "$commit_msg"
-else
-    echo "✅ 没有新的更改需要提交"
+if [[ "$(git branch --show-current)" != "main" ]]; then
+    echo "❌ 部署只允许从 main 分支执行。"
+    exit 1
 fi
 
-# 推送到GitHub
-echo "📤 推送到GitHub..."
-git push
+if [[ -n "$(git status --porcelain)" ]]; then
+    echo "❌ 工作区仍有未审阅或未提交的改动。"
+    echo "   本脚本不会自动 git add 或 commit；请先明确检查并提交目标文件。"
+    git status --short
+    exit 1
+fi
 
-echo "✨ 完成！Vercel会自动检测更改并重新部署"
-echo "🌐 请访问 https://vercel.com 查看部署状态"
+echo "🔎 TypeScript 检查"
+pnpm check
+
+echo "🏗️  生产构建"
+pnpm build
+
+echo "📤 推送已审阅的 main 提交"
+git push origin main
+
+echo "✅ 已推送。Vercel Git Integration 会自动触发生产部署。"

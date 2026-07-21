@@ -9,6 +9,7 @@ import {
   COLLAB_PAGE_META,
   CREATOR_COLLAB_PAGE_META,
 } from "../shared/collab-meta.ts";
+import { BOOKS_PAGE_META, ZHENBENSHI_PAGE_META } from "../shared/page-meta.ts";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -55,11 +56,15 @@ function stripExistingSeo(baseHtml: string) {
 
 function injectDocument(
   baseHtml: string,
-  options: { head: string; noscript: string }
+  options: { head: string; noscript: string; lang?: string }
 ) {
-  return baseHtml
+  const html = baseHtml
     .replace("</head>", `${options.head}\n</head>`)
     .replace('<div id="root">', `<div id="root">${options.noscript}`);
+
+  return options.lang
+    ? html.replace(/<html lang="[^"]+">/, `<html lang="${options.lang}">`)
+    : html;
 }
 
 function buildHead(meta: {
@@ -70,11 +75,18 @@ function buildHead(meta: {
   type?: string;
   locale?: string;
   jsonLd?: unknown;
+  alternates?: Array<{ hrefLang: string; href: string }>;
 }) {
   return `
   <title>${escapeHtml(meta.title)}</title>
   <meta name="description" content="${escapeHtml(meta.description)}" />
   <link rel="canonical" href="${escapeHtml(meta.canonical)}" />
+  ${(meta.alternates || [])
+    .map(
+      alternate =>
+        `<link rel="alternate" hreflang="${escapeHtml(alternate.hrefLang)}" href="${escapeHtml(alternate.href)}" />`
+    )
+    .join("\n  ")}
 
   <meta property="og:type" content="${escapeHtml(meta.type || "website")}" />
   <meta property="og:url" content="${escapeHtml(meta.canonical)}" />
@@ -212,10 +224,17 @@ function buildSitemapXml(guests: GuestProfile[]) {
   const urls = [
     { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0" },
     { loc: `${SITE_URL}/book`, changefreq: "monthly", priority: "0.8" },
+    { loc: `${SITE_URL}/zbs`, changefreq: "monthly", priority: "0.8" },
     { loc: `${SITE_URL}/guests`, changefreq: "weekly", priority: "0.8" },
     { loc: `${SITE_URL}/collab`, changefreq: "monthly", priority: "0.7" },
     {
       loc: `${SITE_URL}/collab/creators`,
+      changefreq: "monthly",
+      priority: "0.7",
+    },
+    { loc: `${SITE_URL}/zh/collab`, changefreq: "monthly", priority: "0.7" },
+    {
+      loc: `${SITE_URL}/zh/collab/creators`,
       changefreq: "monthly",
       priority: "0.7",
     },
@@ -250,18 +269,78 @@ if (!fs.existsSync(baseHtmlPath)) {
 
 const baseHtml = stripExistingSeo(fs.readFileSync(baseHtmlPath, "utf-8"));
 
+const collabAlternates = [
+  { hrefLang: "en", href: COLLAB_PAGE_META.en.canonical },
+  { hrefLang: "zh-CN", href: COLLAB_PAGE_META.zh.canonical },
+  { hrefLang: "x-default", href: COLLAB_PAGE_META.en.canonical },
+];
+
+const creatorCollabAlternates = [
+  { hrefLang: "en", href: CREATOR_COLLAB_PAGE_META.en.canonical },
+  { hrefLang: "zh-CN", href: CREATOR_COLLAB_PAGE_META.zh.canonical },
+  { hrefLang: "x-default", href: CREATOR_COLLAB_PAGE_META.en.canonical },
+];
+
 const staticPages = [
   {
     directory: path.join(ROOT, "dist", "public", "collab"),
     meta: COLLAB_PAGE_META.en,
+    locale: "en_US",
+    htmlLang: "en-US",
+    schemaType: "WebPage",
+    alternates: collabAlternates,
     linkLabel: "Podcast and creator invitations",
     linkHref: "/collab/creators",
   },
   {
     directory: path.join(ROOT, "dist", "public", "collab", "creators"),
     meta: CREATOR_COLLAB_PAGE_META.en,
+    locale: "en_US",
+    htmlLang: "en-US",
+    schemaType: "WebPage",
+    alternates: creatorCollabAlternates,
     linkLabel: "Email Yuzheng Sun",
     linkHref: "mailto:yz@superlinear.academy",
+  },
+  {
+    directory: path.join(ROOT, "dist", "public", "zh", "collab"),
+    meta: COLLAB_PAGE_META.zh,
+    locale: "zh_CN",
+    htmlLang: "zh-CN",
+    schemaType: "WebPage",
+    alternates: collabAlternates,
+    linkLabel: "播客与视频节目邀请",
+    linkHref: "/zh/collab/creators",
+  },
+  {
+    directory: path.join(ROOT, "dist", "public", "zh", "collab", "creators"),
+    meta: CREATOR_COLLAB_PAGE_META.zh,
+    locale: "zh_CN",
+    htmlLang: "zh-CN",
+    schemaType: "WebPage",
+    alternates: creatorCollabAlternates,
+    linkLabel: "邮件联系孙煜征",
+    linkHref: "mailto:yz@superlinear.academy",
+  },
+  {
+    directory: path.join(ROOT, "dist", "public", "book"),
+    meta: BOOKS_PAGE_META.en,
+    locale: "en_US",
+    htmlLang: "en-US",
+    schemaType: "CollectionPage",
+    linkLabel: "Read about 真本事",
+    linkHref: "/zbs",
+  },
+  {
+    directory: path.join(ROOT, "dist", "public", "zbs"),
+    meta: ZHENBENSHI_PAGE_META,
+    locale: "zh_CN",
+    htmlLang: "zh-CN",
+    schemaType: "Book",
+    ogType: "book",
+    linkLabel: "在微信读书阅读",
+    linkHref:
+      "https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff",
   },
 ];
 
@@ -269,13 +348,33 @@ for (const page of staticPages) {
   const html = injectDocument(baseHtml, {
     head: buildHead({
       ...page.meta,
-      locale: "en_US",
+      locale: page.locale,
+      type: page.ogType,
+      alternates: page.alternates,
       jsonLd: {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        name: page.meta.title,
+        "@type": page.schemaType,
+        name:
+          page.schemaType === "Book"
+            ? "真本事：从会工作到会赚钱"
+            : page.meta.title,
         description: page.meta.description,
         url: page.meta.canonical,
+        ...(page.schemaType === "Book"
+          ? {
+              author: {
+                "@type": "Person",
+                name: "Yuzheng Sun",
+                alternateName: ["孙煜征", "课代表立正"],
+                url: SITE_URL,
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "人民邮电出版社",
+              },
+              inLanguage: "zh-CN",
+            }
+          : {}),
       },
     }),
     noscript: buildStaticNoscript({
@@ -284,6 +383,7 @@ for (const page of staticPages) {
       linkLabel: page.linkLabel,
       linkHref: page.linkHref,
     }),
+    lang: page.htmlLang,
   });
   fs.mkdirSync(page.directory, { recursive: true });
   fs.writeFileSync(path.join(page.directory, "index.html"), html, "utf-8");
@@ -292,7 +392,7 @@ for (const page of staticPages) {
 let guests: GuestProfile[] = [];
 try {
   guests = await fetchGuestDirectory();
-  console.log(`   从 GitHub 拉取嘉宾数据：${guests.length} 条`);
+  console.log(`   从部署快照读取嘉宾数据：${guests.length} 条`);
 } catch (error) {
   console.error(
     `❌ 无法拉取 guest 数据：${error instanceof Error ? error.message : String(error)}`
@@ -307,6 +407,7 @@ const guestsListHtml = injectDocument(baseHtml, {
     jsonLd: buildGuestsListJsonLd(guests, guestsPageMeta.description),
   }),
   noscript: buildGuestsNoscript(guests, guestsPageMeta.description),
+  lang: "zh-CN",
 });
 
 const guestsDir = path.join(ROOT, "dist", "public", "guests");
@@ -322,6 +423,7 @@ for (const guest of guests) {
       jsonLd: buildGuestJsonLd(guest, guestPageMeta.description),
     }),
     noscript: buildGuestNoscript(guest, guestPageMeta.description),
+    lang: "zh-CN",
   });
 
   const guestDir = path.join(guestsDir, guest.slug);
@@ -336,6 +438,6 @@ fs.writeFileSync(
 );
 
 console.log(
-  `✅ 预渲染完成: 2 个 collab 页 + /guests + ${guests.length} 个 guest 子页`
+  `✅ 预渲染完成: 6 个静态入口页 + /guests + ${guests.length} 个 guest 子页`
 );
-console.log(`✅ sitemap 已更新，包含 ${guests.length + 5} 个 URL`);
+console.log(`✅ sitemap 已更新，包含 ${guests.length + 8} 个 URL`);

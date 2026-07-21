@@ -9,21 +9,21 @@ The homepage should make a serious visitor infer four things:
 1. Yuzheng has an unusual combination of technical depth, operating experience, judgment, and reach.
 2. His work has been tested in serious companies, rooms, products, and communities.
 3. He is part of a high-quality network of researchers, founders, operators, investors, and builders.
-4. He can help individuals and organizations act on the AI transition.
+4. His current work in education, community, and enterprise practice follows naturally from the career story without turning the page into a sales pitch.
 
 The page should establish this through selected facts, scenes, peers, work, and results. It should not announce that Yuzheng is impressive or explain why every signal is impressive.
 
-## Core Proposition
+## Hero Question
 
 English:
 
-> Build AI systems that compound.
+> From economics to AI: can a judgment change the result?
 
 Chinese:
 
-> 建立能够复利的 AI 系统。
+> 从经济学到 AI：一个判断，最后能不能改变结果？
 
-Supporting idea: help individuals and organizations move from using AI to building with it, turn new capabilities into action and durable systems, and capture the opportunities of the AI era.
+This is a personal throughline, not a service promise. AI Builders, Stay Superlinear, and enterprise work appear later as current expressions of the story; their full product arguments remain on their own sites.
 
 ## Narrative Spine
 
@@ -41,7 +41,7 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 1. Acquired conversation in the hero: peer context and international technology positioning.
 2. Cornell / Amazon / Meta / Tencent / Statsig: institutional and operating credibility.
-3. Dated public calls, led by the March 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
+3. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
 4. AI Builders / Stay Superlinear / enterprise work: evidence that ideas become capabilities, environments, and operating systems.
 5. 200+ conversations and selected guests: network quality before follower quantity.
 6. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.

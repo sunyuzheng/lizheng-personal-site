@@ -1,4 +1,4 @@
-import type { PageMeta } from "./guest-data.ts";
+import type { PageMeta } from "./page-meta.ts";
 
 export type CollabLang = "en" | "zh";
 
@@ -14,7 +14,7 @@ export const COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
     title: "合作 · 课代表立正",
     description:
       "与课代表立正合作：演讲、企业 AI 项目、顾问与长期合作。播客、视频与创作者邀请使用独立入口。",
-    canonical: "https://www.lizheng.ai/collab",
+    canonical: "https://www.lizheng.ai/zh/collab",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
   },
 };
@@ -31,7 +31,7 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
     title: "节目邀请 · 课代表立正｜播客与视频对谈",
     description:
       "邀请课代表立正参与播客、视频访谈与深度对谈。查看高质量对话如何跨音频与视频平台传播，以及联合制作、剪辑与分发资源。",
-    canonical: "https://www.lizheng.ai/collab/creators",
+    canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
   },
 };

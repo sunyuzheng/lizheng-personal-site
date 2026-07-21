@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
+import { applyPageSeo } from "@/lib/seo";
+import { ZHENBENSHI_PAGE_META } from "@shared/page-meta";
 import {
   ChevronDown,
   ChevronUp,
@@ -111,7 +113,7 @@ const FAQ = [
   },
   {
     q: "在哪里可以购买这本书？",
-    a: "现已全平台上架。微信读书：weread.qq.com（搜索《真本事》）；京东：item.jd.com/14667625.html。",
+    a: "已出版纸质书，并上线微信读书。可在微信读书搜索《真本事》，纸质书可在京东购买。",
   },
   {
     q: "副业会不会影响主业表现？",
@@ -119,12 +121,18 @@ const FAQ = [
   },
   {
     q: "是否提供线下活动或一对一辅导？",
-    a: "Superlinear 社群定期举办线下共创与远程冲刺营。如有合作或讲座需求，欢迎发邮件至 yz@superlinear.academy。",
+    a: "页面下方可以直接浏览 Superlinear Academy 免费社区，具体活动以社区当期公告为准。如有合作或讲座需求，欢迎发邮件至 yz@superlinear.academy。",
   },
 ];
 
 // ─── Accordion item ───────────────────────────────────────
-function ModuleItem({ mod, defaultOpen = false }: { mod: Module; defaultOpen?: boolean }) {
+function ModuleItem({
+  mod,
+  defaultOpen = false,
+}: {
+  mod: Module;
+  defaultOpen?: boolean;
+}) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="border-b border-white/10 last:border-0">
@@ -133,7 +141,9 @@ function ModuleItem({ mod, defaultOpen = false }: { mod: Module; defaultOpen?: b
         className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/5 transition-colors"
       >
         <div className="flex items-center gap-4">
-          <span className="text-amber-400 font-bold text-lg w-4">{mod.num}</span>
+          <span className="text-amber-400 font-bold text-lg w-4">
+            {mod.num}
+          </span>
           <span className="text-white font-semibold">{mod.title}</span>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
@@ -148,19 +158,24 @@ function ModuleItem({ mod, defaultOpen = false }: { mod: Module; defaultOpen?: b
       {open && (
         <ul className="pb-4 px-6 space-y-1">
           {mod.lessons.map((lesson, i) => (
-            <li key={i} className="flex gap-3 py-2 border-b border-white/[0.06] last:border-0">
+            <li
+              key={i}
+              className="flex gap-3 py-2 border-b border-white/[0.06] last:border-0"
+            >
               <span className="text-xs font-mono text-amber-400 pt-0.5 flex-shrink-0 w-6">
                 {String(
                   mod.num === "一"
                     ? i + 1
                     : mod.num === "二"
-                    ? i + 7
-                    : mod.num === "三"
-                    ? i + 11
-                    : i + 18
+                      ? i + 7
+                      : mod.num === "三"
+                        ? i + 11
+                        : i + 18
                 ).padStart(2, "0")}
               </span>
-              <span className="text-zinc-300 text-sm leading-relaxed">{lesson}</span>
+              <span className="text-zinc-300 text-sm leading-relaxed">
+                {lesson}
+              </span>
             </li>
           ))}
         </ul>
@@ -197,9 +212,20 @@ function renderInline(text: string): React.ReactNode {
   const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
   return parts.map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**"))
-      return <strong key={i} className="text-white font-semibold">{part.slice(2, -2)}</strong>;
+      return (
+        <strong key={i} className="text-white font-semibold">
+          {part.slice(2, -2)}
+        </strong>
+      );
     if (part.startsWith("`") && part.endsWith("`"))
-      return <code key={i} className="text-amber-300 bg-white/10 px-1 rounded text-xs font-mono">{part.slice(1, -1)}</code>;
+      return (
+        <code
+          key={i}
+          className="text-amber-300 bg-white/10 px-1 rounded text-xs font-mono"
+        >
+          {part.slice(1, -1)}
+        </code>
+      );
     return part;
   });
 }
@@ -211,7 +237,11 @@ function MarkdownMessage({ content }: { content: string }) {
 
   const flushList = () => {
     if (listBuffer.length) {
-      nodes.push(<ul key={`ul-${nodes.length}`} className="space-y-1 my-1">{listBuffer}</ul>);
+      nodes.push(
+        <ul key={`ul-${nodes.length}`} className="space-y-1 my-1">
+          {listBuffer}
+        </ul>
+      );
       listBuffer = [];
     }
   };
@@ -219,32 +249,52 @@ function MarkdownMessage({ content }: { content: string }) {
   lines.forEach((line, i) => {
     if (line.startsWith("## ")) {
       flushList();
-      nodes.push(<p key={i} className="text-white font-bold text-sm mt-3 mb-1">{renderInline(line.slice(3))}</p>);
+      nodes.push(
+        <p key={i} className="text-white font-bold text-sm mt-3 mb-1">
+          {renderInline(line.slice(3))}
+        </p>
+      );
     } else if (line.startsWith("### ")) {
       flushList();
-      nodes.push(<p key={i} className="text-white font-semibold text-sm mt-2 mb-0.5">{renderInline(line.slice(4))}</p>);
+      nodes.push(
+        <p key={i} className="text-white font-semibold text-sm mt-2 mb-0.5">
+          {renderInline(line.slice(4))}
+        </p>
+      );
     } else if (line.trim() === "---") {
       flushList();
       nodes.push(<hr key={i} className="border-white/10 my-2" />);
     } else if (/^[-*] /.test(line)) {
       listBuffer.push(
-        <li key={i} className="flex gap-2 text-sm text-zinc-300 leading-relaxed">
+        <li
+          key={i}
+          className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
+        >
           <span className="text-amber-400 flex-shrink-0 mt-0.5">•</span>
           <span>{renderInline(line.slice(2))}</span>
         </li>
       );
     } else if (/^\d+\. /.test(line)) {
       const m = line.match(/^(\d+)\. (.*)/);
-      if (m) listBuffer.push(
-        <li key={i} className="flex gap-2 text-sm text-zinc-300 leading-relaxed">
-          <span className="text-amber-400 font-mono text-xs flex-shrink-0 mt-0.5 w-4">{m[1]}.</span>
-          <span>{renderInline(m[2])}</span>
-        </li>
-      );
+      if (m)
+        listBuffer.push(
+          <li
+            key={i}
+            className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
+          >
+            <span className="text-amber-400 font-mono text-xs flex-shrink-0 mt-0.5 w-4">
+              {m[1]}.
+            </span>
+            <span>{renderInline(m[2])}</span>
+          </li>
+        );
     } else if (line.startsWith("> ")) {
       flushList();
       nodes.push(
-        <blockquote key={i} className="border-l-2 border-amber-400/40 pl-3 text-zinc-400 text-sm italic my-1">
+        <blockquote
+          key={i}
+          className="border-l-2 border-amber-400/40 pl-3 text-zinc-400 text-sm italic my-1"
+        >
           {renderInline(line.slice(2))}
         </blockquote>
       );
@@ -253,7 +303,11 @@ function MarkdownMessage({ content }: { content: string }) {
       nodes.push(<div key={i} className="h-1.5" />);
     } else {
       flushList();
-      nodes.push(<p key={i} className="text-sm text-zinc-300 leading-relaxed">{renderInline(line)}</p>);
+      nodes.push(
+        <p key={i} className="text-sm text-zinc-300 leading-relaxed">
+          {renderInline(line)}
+        </p>
+      );
     }
   });
   flushList();
@@ -271,11 +325,10 @@ const ADVISOR_STARTERS = [
   "怎么跟老板谈薪资才不吃亏？",
 ];
 
-const SKILL_INSTALL_URL =
-  "https://raw.githubusercontent.com/sunyuzheng/zhenbenshi-advisor/main/zhenbenshi-advisor.skill";
+const SKILL_REPOSITORY_URL = "https://github.com/sunyuzheng/zhenbenshi-advisor";
 
 const EXAMPLE_QUESTION =
-  '我在一家200人的互联网公司做产品经理，工作三年，去年和今年绩效都是B+，但两次晋升都被卡住了，上级说我\u201c影响力不足\u201d。我自认为项目交付没问题，但不太擅长向上汇报。我希望在年底前晋升，目前不考虑跳槽。';
+  "我在一家200人的互联网公司做产品经理，工作三年，去年和今年绩效都是B+，但两次晋升都被卡住了，上级说我\u201c影响力不足\u201d。我自认为项目交付没问题，但不太擅长向上汇报。我希望在年底前晋升，目前不考虑跳槽。";
 
 function AdvisorSection() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -287,20 +340,24 @@ function AdvisorSection() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const copyInstallLink = () => {
-    navigator.clipboard.writeText(SKILL_INSTALL_URL).then(() => {
+    navigator.clipboard.writeText(SKILL_REPOSITORY_URL).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
   };
 
   const prefillFromStarter = (starter: string) => {
-    const hint = "（在这里补充你的背景，建议越具体回答越准：所在行业/职级、工作年限、具体情况、已经试过什么、最希望达到什么）";
+    const hint =
+      "（在这里补充你的背景，建议越具体回答越准：所在行业/职级、工作年限、具体情况、已经试过什么、最希望达到什么）";
     setInput(`${starter}\n\n${hint}`);
     setTimeout(() => {
       if (!textareaRef.current) return;
       textareaRef.current.focus();
       // Place cursor right after the question so user types context naturally
-      textareaRef.current.setSelectionRange(starter.length + 2, starter.length + 2);
+      textareaRef.current.setSelectionRange(
+        starter.length + 2,
+        starter.length + 2
+      );
     }, 0);
   };
 
@@ -312,7 +369,10 @@ function AdvisorSection() {
     const trimmed = text.trim();
     if (!trimmed || loading) return;
 
-    const newMessages: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
+    const newMessages: ChatMessage[] = [
+      ...messages,
+      { role: "user", content: trimmed },
+    ];
     setMessages(newMessages);
     setInput("");
     setLoading(true);
@@ -323,11 +383,11 @@ function AdvisorSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: trimmed,
-          history: messages.map((m) => ({ role: m.role, content: m.content })),
+          history: messages.map(m => ({ role: m.role, content: m.content })),
         }),
       });
       if (!res.ok) throw new Error(`${res.status}`);
-      const data = await res.json() as { content: string };
+      const data = (await res.json()) as { content: string };
       return data.content;
     };
 
@@ -339,13 +399,13 @@ function AdvisorSection() {
       } catch (firstErr) {
         // Cold-start retry: wait 1.5s and try once more before giving up
         console.warn("Chat first attempt failed, retrying…", firstErr);
-        await new Promise((r) => setTimeout(r, 1500));
+        await new Promise(r => setTimeout(r, 1500));
         content = await callApi();
       }
-      setMessages((prev) => [...prev, { role: "assistant", content }]);
+      setMessages(prev => [...prev, { role: "assistant", content }]);
     } catch (err) {
       console.error("Chat failed after retry:", err);
-      setMessages((prev) => [
+      setMessages(prev => [
         ...prev,
         { role: "assistant", content: "抱歉，出现了一点问题，请稍后再试。" },
       ]);
@@ -355,6 +415,8 @@ function AdvisorSection() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
+
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(input);
@@ -382,13 +444,15 @@ function AdvisorSection() {
           <div className="mb-5 space-y-3">
             {/* Starter prompts — prefill only, do not send */}
             <div className="grid sm:grid-cols-2 gap-2">
-              {ADVISOR_STARTERS.map((s) => (
+              {ADVISOR_STARTERS.map(s => (
                 <button
                   key={s}
                   onClick={() => prefillFromStarter(s)}
                   className="text-left p-3.5 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-amber-400/40 transition-all text-sm text-zinc-300 group"
                 >
-                  <span className="text-amber-400 mr-2 group-hover:text-amber-300">▸</span>
+                  <span className="text-amber-400 mr-2 group-hover:text-amber-300">
+                    ▸
+                  </span>
                   {s}
                 </button>
               ))}
@@ -396,16 +460,22 @@ function AdvisorSection() {
 
             {/* Example question toggle */}
             <button
-              onClick={() => setShowExample((v) => !v)}
+              onClick={() => setShowExample(v => !v)}
               className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
             >
-              <span className={`transition-transform ${showExample ? "rotate-90" : ""}`}>▸</span>
+              <span
+                className={`transition-transform ${showExample ? "rotate-90" : ""}`}
+              >
+                ▸
+              </span>
               看看什么样的问题能得到最好的回答
             </button>
 
             {showExample && (
               <div className="border border-amber-400/15 bg-amber-500/[0.04] p-4 space-y-2">
-                <p className="text-[10px] text-amber-400/70 uppercase tracking-widest">优秀提问示范</p>
+                <p className="text-[10px] text-amber-400/70 uppercase tracking-widest">
+                  优秀提问示范
+                </p>
                 <p className="text-zinc-300 text-sm leading-relaxed">
                   "{EXAMPLE_QUESTION}"
                 </p>
@@ -418,10 +488,15 @@ function AdvisorSection() {
         ) : (
           <div className="border border-white/10 bg-white/[0.03] mb-4 max-h-[52vh] overflow-y-auto p-4 space-y-5">
             {messages.map((m, i) => (
-              <div key={i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={i}
+                className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}
+              >
                 {m.role === "assistant" && (
                   <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-amber-400 text-[10px] font-bold">真</span>
+                    <span className="text-amber-400 text-[10px] font-bold">
+                      真
+                    </span>
                   </div>
                 )}
                 <div
@@ -431,16 +506,20 @@ function AdvisorSection() {
                       : ""
                   }`}
                 >
-                  {m.role === "user"
-                    ? m.content
-                    : <MarkdownMessage content={m.content} />}
+                  {m.role === "user" ? (
+                    m.content
+                  ) : (
+                    <MarkdownMessage content={m.content} />
+                  )}
                 </div>
               </div>
             ))}
             {loading && (
               <div className="flex gap-3">
                 <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-400/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-400 text-[10px] font-bold">真</span>
+                  <span className="text-amber-400 text-[10px] font-bold">
+                    真
+                  </span>
                 </div>
                 <div className="text-zinc-500 text-sm">正在思考...</div>
               </div>
@@ -452,37 +531,46 @@ function AdvisorSection() {
         <div className="flex gap-2">
           <textarea
             ref={textareaRef}
+            aria-label="描述你的职场问题"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="说说你的情况：行业/职级/工作年限，遇到了什么问题，已经尝试过什么，希望达到什么目标——背景越具体，建议越准。"
             rows={3}
+            maxLength={2000}
             className="flex-1 bg-white/5 border border-white/10 text-white placeholder:text-zinc-600 text-sm px-3 py-2.5 resize-none focus:outline-none focus:border-amber-400/50 transition-colors"
           />
           <Button
             onClick={() => sendMessage(input)}
             disabled={loading || !input.trim()}
+            aria-label="发送问题"
             className="bg-amber-500 hover:bg-amber-600 text-black px-4 self-end disabled:opacity-40"
           >
             <Send className="w-4 h-4" />
           </Button>
         </div>
-        <p className="text-zinc-600 text-xs mt-1.5">按 Enter 发送 · Shift+Enter 换行</p>
+        <p className="text-zinc-600 text-xs mt-1.5">
+          按 Enter 发送 · Shift+Enter 换行 · 最多 2,000 字。请勿输入敏感信息。
+        </p>
 
         {/* Multi-tool install callout */}
         <div className="mt-3 border border-white/10 bg-white/[0.03] p-3">
           <div className="flex gap-3 items-stretch">
-            {/* 2×2 badge grid */}
-            <div className="grid grid-cols-2 gap-1.5 flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 flex-1">
               {[
-                ["Claude Desktop", "Cowork 模式一键安装"],
-                ["Claude.ai", "粘贴到 Project Instructions"],
-                ["ChatGPT", "创建 Custom GPT"],
-                ["其他 AI 工具", "复制系统提示词"],
+                ["Claude Code / Codex", "把仓库作为 Skill 使用"],
+                ["Claude / ChatGPT", "参考 SKILL.md 配置项目指令"],
               ].map(([tool, desc]) => (
-                <div key={tool} className="border border-white/[0.08] px-2.5 py-2">
-                  <p className="text-xs text-zinc-300 font-medium leading-none">{tool}</p>
-                  <p className="text-[10px] text-zinc-600 leading-tight mt-1">{desc}</p>
+                <div
+                  key={tool}
+                  className="border border-white/[0.08] px-2.5 py-2"
+                >
+                  <p className="text-xs text-zinc-300 font-medium leading-none">
+                    {tool}
+                  </p>
+                  <p className="text-[10px] text-zinc-600 leading-tight mt-1">
+                    {desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -492,15 +580,15 @@ function AdvisorSection() {
                 onClick={copyInstallLink}
                 className="text-xs border border-amber-400/40 text-amber-400 hover:bg-amber-400/10 px-3 py-2 transition-colors whitespace-nowrap"
               >
-                {copied ? "已复制 ✓" : "复制安装链接"}
+                {copied ? "已复制 ✓" : "复制仓库地址"}
               </button>
               <a
-                href="https://github.com/sunyuzheng/zhenbenshi-advisor"
+                href="https://github.com/sunyuzheng/zhenbenshi-advisor/blob/main/SKILL.md"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 px-3 py-2 transition-colors text-center whitespace-nowrap"
               >
-                查看完整教程 →
+                查看 Skill 源文件 →
               </a>
             </div>
           </div>
@@ -516,21 +604,17 @@ export default function ZhenbenShi() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const prevTitle = document.title;
-    const prevDesc = document.querySelector('meta[name="description"]')?.getAttribute("content") ?? "";
-    document.title = "《真本事》· 课代表立正 — 从会工作到会赚钱";
-    document.querySelector('meta[name="description"]')?.setAttribute(
-      "content",
-      "课代表立正孙煜征新书《真本事：从会工作到会赚钱》— B站职场类长期第一课程集结成书，人民邮电出版社出版。把自己变成稀缺资产，让个体价值持续变现。"
-    );
-    return () => {
-      document.title = prevTitle;
-      document.querySelector('meta[name="description"]')?.setAttribute("content", prevDesc);
-    };
+    return applyPageSeo({
+      ...ZHENBENSHI_PAGE_META,
+      type: "book",
+      locale: "zh_CN",
+    });
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
     setMobileMenuOpen(false);
   };
 
@@ -549,12 +633,17 @@ export default function ZhenbenShi() {
           <div className="flex items-center justify-between h-14">
             {/* Back + brand */}
             <div className="flex items-center gap-3">
-              <Link href={withLanguage("/", lang)} className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 transition-colors text-sm">
+              <Link
+                href={withLanguage("/", lang)}
+                className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 transition-colors text-sm"
+              >
                 <ArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">孙煜征</span>
               </Link>
               <span className="text-white/20">|</span>
-              <span className="text-white font-semibold text-sm">《真本事：从会工作到会赚钱》</span>
+              <span className="text-white font-semibold text-sm">
+                《真本事：从会工作到会赚钱》
+              </span>
             </div>
 
             {/* Desktop links */}
@@ -580,7 +669,11 @@ export default function ZhenbenShi() {
                 className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
                 asChild
               >
-                <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   微信读书
                 </a>
               </Button>
@@ -590,7 +683,11 @@ export default function ZhenbenShi() {
                 className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10"
                 asChild
               >
-                <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://item.jd.com/14667625.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   京东
                 </a>
               </Button>
@@ -602,7 +699,11 @@ export default function ZhenbenShi() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
 
@@ -650,60 +751,76 @@ export default function ZhenbenShi() {
         <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
           {/* Copy */}
           <div className="space-y-6 order-2 md:order-1">
-            {/* B站 badge */}
+            {/* Course origin */}
             <div className="inline-flex items-center gap-2 bg-sky-500 text-white text-xs font-semibold px-3 py-1.5 rounded-sm">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
                 <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.907-.373.336 0 .63.124.867.373L8.12 3.333h7.893l1.387-1.387c.253-.249.549-.373.867-.373.32 0 .613.124.867.373.249.249.373.551.373.907 0 .355-.124.657-.373.906z" />
               </svg>
-              B站职场类长期第一
+              由同名 B站课程扩写成书
             </div>
 
             <div>
               <h1 className="text-4xl md:text-5xl font-black leading-tight">
-                《真本事：<br />
+                《真本事：
+                <br />
                 从会工作<span className="text-amber-400">到会赚钱</span>》
               </h1>
-              <p className="text-zinc-400 mt-3 text-lg">把自己变成稀缺资产，让个体价值持续变现</p>
+              <p className="text-zinc-400 mt-3 text-lg">
+                把工作变成能力，把能力变成收入
+              </p>
               <div className="inline-block border border-white/10 text-zinc-500 text-xs px-2 py-1 mt-2">
                 人民邮电出版社 · 孙煜征 著
               </div>
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
-                <a href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff" target="_blank" rel="noopener noreferrer">
+              <Button
+                className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+                asChild
+              >
+                <a
+                  href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   微信读书
                 </a>
               </Button>
-              <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
-                <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
-                  京东购买 <span className="ml-1.5 text-amber-400 font-semibold">¥39.8</span>
+              <Button
+                variant="outline"
+                className="border-white/10 hover:bg-white/10 text-white"
+                asChild
+              >
+                <a
+                  href="https://item.jd.com/14667625.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  京东购买
                 </a>
               </Button>
-              <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
-                <a href="https://www.superlinear.academy/c/work-wealth/" target="_blank" rel="noopener noreferrer">
+              <Button
+                variant="outline"
+                className="border-white/10 hover:bg-white/10 text-white"
+                asChild
+              >
+                <a
+                  href="https://www.superlinear.academy/c/work-wealth/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <BookOpen className="w-4 h-4 mr-2" />
                   购买课程
                 </a>
               </Button>
             </div>
             <p className="text-zinc-500 text-xs">
-              现已全平台上架 · 人民邮电出版社出版
+              已出版纸质书，并上线微信读书 · 人民邮电出版社
             </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 border-t border-white/[0.08]">
-              {[
-                ["3,143", "B站购课人数"],
-                ["300+", "Superlinear 学员"],
-                ["739,563", "次播放 · 职场 #1"],
-              ].map(([num, label]) => (
-                <div key={label} className="space-y-0.5">
-                  <div className="text-xl md:text-2xl font-bold text-amber-400">{num}</div>
-                  <div className="text-xs text-zinc-500 leading-tight">{label}</div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Book 3D */}
@@ -719,17 +836,22 @@ export default function ZhenbenShi() {
                   filter: "drop-shadow(14px 28px 48px rgba(10,5,5,0.5))",
                   transition: "transform 0.45s ease",
                 }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "perspective(900px) rotateY(-6deg) scale(1.02)")
+                onMouseEnter={e =>
+                  (e.currentTarget.style.transform =
+                    "perspective(900px) rotateY(-6deg) scale(1.02)")
                 }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "perspective(900px) rotateY(-18deg)")
+                onMouseLeave={e =>
+                  (e.currentTarget.style.transform =
+                    "perspective(900px) rotateY(-18deg)")
                 }
               >
                 {/* Spine */}
                 <div
                   className="overflow-hidden flex-shrink-0"
-                  style={{ width: "22px", filter: "brightness(0.7) saturate(0.85)" }}
+                  style={{
+                    width: "22px",
+                    filter: "brightness(0.7) saturate(0.85)",
+                  }}
                 >
                   <img
                     src="/book/cover-spine.png"
@@ -761,9 +883,13 @@ export default function ZhenbenShi() {
               认知觉醒
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              你明明努力，<br />却仍在原地踏步？
+              你明明努力，
+              <br />
+              却仍在原地踏步？
             </h2>
-            <p className="text-zinc-400 mt-4 max-w-lg">很多时候，真正卡住人的，是努力方向和反馈质量。</p>
+            <p className="text-zinc-400 mt-4 max-w-lg">
+              很多时候，真正卡住人的，是努力方向和反馈质量。
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             {[
@@ -779,14 +905,18 @@ export default function ZhenbenShi() {
                 title: "副业无法起势",
                 body: "想做副业却找不到方向，赚钱技能无处积累。因为你还没搞清楚：你到底能提供什么市场真正需要的价值？",
               },
-            ].map((card) => (
+            ].map(card => (
               <Card
                 key={card.title}
                 className="bg-white/[0.03] border-l-2 border-l-amber-400 border-t-0 border-r-0 border-b-0 rounded-none"
               >
                 <CardContent className="pt-6">
-                  <h3 className="text-white font-bold text-lg mb-2">{card.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{card.body}</p>
+                  <h3 className="text-white font-bold text-lg mb-2">
+                    {card.title}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed">
+                    {card.body}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -803,12 +933,16 @@ export default function ZhenbenShi() {
               核心框架
               <span className="w-6 h-px bg-amber-400 inline-block" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">个人价值公式</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              个人价值公式
+            </h2>
           </div>
 
           {/* Formula */}
           <div className="border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center mb-8">
-            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-4">个人价值公式</p>
+            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-4">
+              个人价值公式
+            </p>
             <p className="text-2xl md:text-3xl font-bold text-white leading-loose">
               个人价值
               <span className="text-amber-400 mx-2">＝</span>
@@ -840,14 +974,16 @@ export default function ZhenbenShi() {
                 title: "成果放大十倍、百倍",
                 body: "借助平台、内容、AI 与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
               },
-            ].map((c) => (
+            ].map(c => (
               <Card key={c.num} className="bg-white/[0.03] border-white/10">
                 <CardContent className="pt-6 space-y-2">
                   <p className="text-xs font-mono text-amber-400 tracking-wider">
                     {c.num} · {c.tag}
                   </p>
                   <h3 className="text-white font-bold">{c.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{c.body}</p>
+                  <p className="text-zinc-400 text-sm leading-relaxed">
+                    {c.body}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -861,11 +997,13 @@ export default function ZhenbenShi() {
           <div className="mb-10">
             <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
               <span className="w-6 h-px bg-amber-400 inline-block" />
-              成长方法论
+              怎样练出本事
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">成长飞轮</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              从理解到会做
+            </h2>
             <p className="text-zinc-400 mt-3 max-w-lg">
-              认知不只是看书悟道，更要通过真实的体感和实战，形成持续滚动的成长复利。
+              光靠读书不够。你得在真实项目里试、得到反馈，再调整下一步。
             </p>
           </div>
 
@@ -879,15 +1017,15 @@ export default function ZhenbenShi() {
               },
               {
                 n: "02",
-                label: "请教体感",
-                title: "向结果显著的人学习",
-                body: '获得"只可意会"的判断力与心法。通过与真实案例和访谈嘉宾的对话，建立具身感知。',
+                label: "形成判断",
+                title: "向真正做出结果的人学",
+                body: "不只听结论，也看对方经历了什么、根据什么做出选择，再用真实案例检验自己的理解。",
               },
               {
                 n: "03",
-                label: "躬身入局",
-                title: "在真实项目中刻意练习",
-                body: "用高杠杆任务与副业试水完成价值闭环。理论只有落地才算真正掌握，飞轮才能转起来。",
+                label: "动手去做",
+                title: "在真实项目里练",
+                body: "用高价值任务或一个小型副业来试，看见结果，再调整下一步。理论真正用过，才会变成自己的本事。",
               },
             ].map((step, i) => (
               <div
@@ -901,7 +1039,9 @@ export default function ZhenbenShi() {
                   {step.label}
                 </p>
                 <h3 className="text-white font-bold mb-2">{step.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">{step.body}</p>
+                <p className="text-zinc-400 text-sm leading-relaxed">
+                  {step.body}
+                </p>
               </div>
             ))}
           </div>
@@ -919,7 +1059,9 @@ export default function ZhenbenShi() {
               <span className="w-6 h-px bg-amber-400 inline-block" />
               课程大纲
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">21课，4大模块</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              21课，4大模块
+            </h2>
             <p className="text-zinc-400 mt-3 max-w-lg">
               从认知觉醒到行动落地，完整路径清晰可循。课程与书相互映照，书是课程的深度延伸。
             </p>
@@ -932,7 +1074,11 @@ export default function ZhenbenShi() {
           </div>
 
           <div className="mt-6">
-            <Button variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
+            <Button
+              variant="outline"
+              className="border-white/10 hover:bg-white/10 text-white"
+              asChild
+            >
               <a
                 href="https://www.bilibili.com/cheese/play/ss300796438"
                 target="_blank"
@@ -954,11 +1100,13 @@ export default function ZhenbenShi() {
               封面推荐
               <span className="w-6 h-px bg-amber-400 inline-block" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">他们为这本书背书</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              他们为这本书背书
+            </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            {ENDORSEMENTS.map((e) => (
+            {ENDORSEMENTS.map(e => (
               <Card
                 key={e.name}
                 className="bg-white/[0.03] border-t-2 border-t-amber-400 border-x-0 border-b-0 rounded-none"
@@ -1005,22 +1153,29 @@ export default function ZhenbenShi() {
                   <span className="w-6 h-px bg-amber-400 inline-block" />
                   关于作者
                 </div>
-                <h2 className="text-3xl md:text-4xl font-black text-white">孙煜征</h2>
+                <h2 className="text-3xl md:text-4xl font-black text-white">
+                  孙煜征
+                </h2>
                 <p className="text-zinc-400 text-sm mt-1">
-                  康奈尔大学经济学博士 · Superlinear Academy 创始人 · AI 布道者
+                  康奈尔大学经济学博士 · Superlinear Academy 创始人 · 作者
                 </p>
               </div>
 
               <div className="space-y-3">
                 {[
-                  "在美17年，康奈尔经济学博士；前 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 副总监",
-                  "Statsig 早期成员，公司唯一 evangelist；Statsig 后被 OpenAI 收购",
-                  "Superlinear Academy 社群创始人，12,000+ 成员，付费学员中 50% 以上为硅谷大厂员工",
-                  "自研 Maven AI 理念课程全网口碑第一，受邀为多家 500 强企业做员工培训与 AI 策略顾问",
-                  "自媒体总计对话 200+ 位中美科技高管与顶级 AI 研究员，数篇转载量百万的前瞻文章，全网 30 万高质量粉丝（YouTube 10万 · 小红书 7万 · LinkedIn 3万）",
-                ].map((item) => (
-                  <div key={item} className="flex gap-3 text-sm text-zinc-300 leading-relaxed">
-                    <span className="text-amber-400 flex-shrink-0 mt-0.5">▸</span>
+                  "康奈尔大学经济学博士；曾任 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监",
+                  "曾任 Statsig 首席数据科学家与公司唯一 evangelist；Statsig 于 2025 年被 OpenAI 收购",
+                  "Superlinear Academy 与 AI Builders 创始人，长期从事 AI 教育、社区与企业实践",
+                  "截至 2026 年 7 月，累计完成 200+ 场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
+                  "现居西雅图",
+                ].map(item => (
+                  <div
+                    key={item}
+                    className="flex gap-3 text-sm text-zinc-300 leading-relaxed"
+                  >
+                    <span className="text-amber-400 flex-shrink-0 mt-0.5">
+                      ▸
+                    </span>
                     {item}
                   </div>
                 ))}
@@ -1028,15 +1183,28 @@ export default function ZhenbenShi() {
 
               <div className="bg-white/[0.04] border border-white/10 p-4">
                 <p className="text-sm text-zinc-400">
-                  📖 所著{" "}
-                  <span className="text-white font-semibold">《Growth Data Analytics Playbook》</span>{" "}
-                  获《华尔街日报》推荐为 2025 年 CIO 必读书籍
+                  📖 合著{" "}
+                  <span className="text-white font-semibold">
+                    《Growth Data Analytics Playbook》
+                  </span>{" "}
+                  入选《华尔街日报》CIO Journal 2025 年书单
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {["Cornell PhD", "Amazon", "Meta", "Tencent IEG", "Statsig → OpenAI"].map((b) => (
-                  <Badge key={b} variant="outline" className="border-white/20 text-zinc-400 text-xs">
+                {[
+                  "Cornell PhD",
+                  "Amazon",
+                  "Meta",
+                  "Tencent IEG",
+                  "Statsig",
+                  "Seattle",
+                ].map(b => (
+                  <Badge
+                    key={b}
+                    variant="outline"
+                    className="border-white/20 text-zinc-400 text-xs"
+                  >
                     {b}
                   </Badge>
                 ))}
@@ -1065,10 +1233,13 @@ export default function ZhenbenShi() {
               <span className="w-6 h-px bg-amber-400 inline-block" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              与 12,000+ 同行者<br />一起实践真本事
+              在免费社区里
+              <br />
+              把书里的方法用起来
             </h2>
             <p className="text-zinc-400 mt-4 max-w-lg mx-auto text-sm">
-              加入社群，获得个人价值公式地图、10% 高价值工作排程表、AI 杠杆清单，并与真实在实践这套方法论的人交流。其中 50% 以上为硅谷大厂员工。
+              Superlinear Academy
+              长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
             </p>
           </div>
           <div className="border border-white/10 overflow-hidden">
@@ -1090,10 +1261,12 @@ export default function ZhenbenShi() {
               <span className="w-6 h-px bg-amber-400 inline-block" />
               常见问题
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">你可能想问的</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              你可能想问的
+            </h2>
           </div>
           <div className="border border-white/10 bg-white/[0.03]">
-            {FAQ.map((item) => (
+            {FAQ.map(item => (
               <FaqItem key={item.q} q={item.q} a={item.a} />
             ))}
           </div>
@@ -1103,12 +1276,19 @@ export default function ZhenbenShi() {
       {/* ── Footer CTA ── */}
       <section id="purchase" className="bg-black/30 py-20 text-center relative">
         <div className="container mx-auto px-4 max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4">开启你的真本事之旅</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+            想继续读，从这里开始
+          </h2>
           <p className="text-zinc-400 mb-8">
-            现已全平台上架。立即购书，或加入社群，今天就开始实践。
+            可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入
+            Superlinear 社区。
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-black font-semibold" asChild>
+            <Button
+              size="lg"
+              className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+              asChild
+            >
               <a
                 href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
                 target="_blank"
@@ -1117,13 +1297,31 @@ export default function ZhenbenShi() {
                 微信读书
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
-              <a href="https://item.jd.com/14667625.html" target="_blank" rel="noopener noreferrer">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white/10 hover:bg-white/10 text-white"
+              asChild
+            >
+              <a
+                href="https://item.jd.com/14667625.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 京东购买
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/10 text-white" asChild>
-              <a href="https://www.superlinear.academy" target="_blank" rel="noopener noreferrer">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white/10 hover:bg-white/10 text-white"
+              asChild
+            >
+              <a
+                href="https://www.superlinear.academy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Users className="w-5 h-5 mr-2" />
                 加入 Superlinear 社群
               </a>
@@ -1136,9 +1334,15 @@ export default function ZhenbenShi() {
       <footer className="bg-black/30 border-t border-white/[0.06] py-6 relative">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-white/30">
-            <p>© 2025 Superlinear Academy · 《真本事》版权所有 · 孙煜征博士</p>
+            <p>
+              © {new Date().getFullYear()} Superlinear Academy ·
+              《真本事》版权所有 · 孙煜征
+            </p>
             <nav className="flex gap-4">
-              <a href="mailto:yz@superlinear.academy" className="hover:text-white/60 transition-colors">
+              <a
+                href="mailto:yz@superlinear.academy"
+                className="hover:text-white/60 transition-colors"
+              >
                 联系我们
               </a>
               <a

@@ -53,21 +53,28 @@ const ALLOWED_ORIGINS = [
   "http://localhost:5173",
 ];
 
-// Per-IP rate limit: max 20 requests per 10 minutes (Edge in-memory, resets on cold start)
+// Best-effort abuse control only. Edge instances do not share this in-memory state.
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 
 const MAX_MESSAGE_LENGTH = 2000;
 const MAX_HISTORY_TURNS = 10;
+const MAX_HISTORY_CHARACTERS = 12000;
+
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
 
 function getCorsHeaders(origin: string | null): Record<string, string> {
-  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const allowed =
+    origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
   return {
     "Access-Control-Allow-Origin": allowed,
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
-    "Vary": "Origin",
+    Vary: "Origin",
   };
 }
 
@@ -95,7 +102,10 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   if (req.method !== "POST") {
-    return new Response("Method not allowed", { status: 405, headers: corsHeaders });
+    return new Response("Method not allowed", {
+      status: 405,
+      headers: corsHeaders,
+    });
   }
 
   // Rate limiting by IP
@@ -107,7 +117,10 @@ export default async function handler(req: Request): Promise<Response> {
   if (!checkRateLimit(ip)) {
     return new Response(
       JSON.stringify({ error: "Too many requests, please try again later." }),
-      { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
   }
 
@@ -115,11 +128,14 @@ export default async function handler(req: Request): Promise<Response> {
   if (!apiKey) {
     return new Response(
       JSON.stringify({ error: "Service temporarily unavailable." }),
-      { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 503,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
   }
 
-  let body: { message: string; history?: Array<{ role: string; content: string }> };
+  let body: unknown;
   try {
     body = await req.json();
   } catch {
@@ -129,27 +145,77 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
-  const { message, history = [] } = body;
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return new Response(JSON.stringify({ error: "Invalid request." }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  const { message, history } = body as Record<string, unknown>;
 
   // Input validation
-  if (!message?.trim()) {
+  if (typeof message !== "string") {
+    return new Response(JSON.stringify({ error: "Message must be text." }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  const trimmedMessage = message.trim();
+  if (!trimmedMessage) {
     return new Response(JSON.stringify({ error: "Message is required." }), {
       status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-  if (typeof message !== "string" || message.length > MAX_MESSAGE_LENGTH) {
+  if (message.length > MAX_MESSAGE_LENGTH) {
     return new Response(
-      JSON.stringify({ error: `Message must be under ${MAX_MESSAGE_LENGTH} characters.` }),
-      { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({
+        error: `Message must be under ${MAX_MESSAGE_LENGTH} characters.`,
+      }),
+      {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
   }
 
+  if (history !== undefined && !Array.isArray(history)) {
+    return new Response(JSON.stringify({ error: "History must be a list." }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  const validHistory = (Array.isArray(history) ? history : [])
+    .filter(
+      (entry): entry is ChatMessage =>
+        !!entry &&
+        typeof entry === "object" &&
+        !Array.isArray(entry) &&
+        (entry.role === "user" || entry.role === "assistant") &&
+        typeof entry.content === "string"
+    )
+    .slice(-MAX_HISTORY_TURNS * 2)
+    .map(entry => ({
+      role: entry.role,
+      content: entry.content.slice(0, MAX_MESSAGE_LENGTH),
+    }));
+
+  const boundedHistory: ChatMessage[] = [];
+  let historyCharacters = 0;
+  for (let index = validHistory.length - 1; index >= 0; index -= 1) {
+    const entry = validHistory[index];
+    if (historyCharacters + entry.content.length > MAX_HISTORY_CHARACTERS)
+      break;
+    boundedHistory.unshift(entry);
+    historyCharacters += entry.content.length;
+  }
+
   const messages = [
-    ...history
-      .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string")
-      .slice(-MAX_HISTORY_TURNS * 2),
-    { role: "user", content: message.trim() },
+    ...boundedHistory,
+    { role: "user" as const, content: trimmedMessage },
   ];
 
   const upstream = await fetch("https://api.anthropic.com/v1/messages", {
@@ -170,11 +236,14 @@ export default async function handler(req: Request): Promise<Response> {
   if (!upstream.ok) {
     return new Response(
       JSON.stringify({ error: "Service temporarily unavailable." }),
-      { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      {
+        status: 502,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      }
     );
   }
 
-  const data = await upstream.json() as { content?: Array<{ text: string }> };
+  const data = (await upstream.json()) as { content?: Array<{ text: string }> };
   const content = data.content?.[0]?.text ?? "抱歉，没有收到回复，请重试。";
 
   return new Response(JSON.stringify({ content }), {

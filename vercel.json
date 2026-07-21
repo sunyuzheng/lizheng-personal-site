@@ -1,8 +1,20 @@
 {
-  "buildCommand": "pnpm install && pnpm build",
+  "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": "vite",
   "redirects": [
+    {
+      "source": "/collab",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "destination": "/zh/collab",
+      "permanent": true
+    },
+    {
+      "source": "/collab/creators",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "destination": "/zh/collab/creators",
+      "permanent": true
+    },
     {
       "source": "/collab/podcast-one-pager.pdf",
       "destination": "/collab/creators",

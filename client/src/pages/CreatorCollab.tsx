@@ -188,6 +188,10 @@ const guestAppearances = [
   },
 ] as const;
 
+const guestAppearanceShowCount = new Set(
+  guestAppearances.map(appearance => appearance.show)
+).size;
+
 const copy = {
   en: {
     navSub: "Podcast & video invitations",
@@ -200,8 +204,8 @@ const copy = {
     heroProofs: [
       "Cornell Economics PhD",
       "Amazon · Meta · Tencent · Statsig",
-      "200+ published conversations",
-      "400K+ across Xiaohongshu · YouTube · Bilibili",
+      "200+ published conversations · Jul 2026",
+      "400K+ across Xiaohongshu · YouTube · Bilibili · Jul 2026",
     ],
     questionCta: "See two proven collaborations",
     kitCta: "Open the host kit",
@@ -381,8 +385,6 @@ const copy = {
     metricsNote:
       "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
     appearancesEyebrow: "MORE GUEST APPEARANCES",
-    appearancesTitle:
-      "23 episodes across 21 shows—and more than one return invitation.",
     appearancesIntro:
       "These are the appearances I could verify on Xiaoyuzhou. Two were multi-guest panels; INDIGO TALK and The Build Log each invited me back.",
     panelLabel: "Panel",
@@ -438,10 +440,10 @@ const copy = {
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun is an economist, AI educator, and founder of Superlinear. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and focuses on turning judgment into testable, reusable systems that compound.",
+      "Yuzheng Sun is an economist, AI educator, and founder of Superlinear Academy and AI Builders. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and now works across AI education, content, and community.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. Today he builds Superlinear, teaches AI Builders, and co-leads Stay Superlinear with Yage. He has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) is a Cornell-trained economist, operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
@@ -464,7 +466,7 @@ const copy = {
       },
     ],
     audienceFact:
-      "Current public audience: 400K+ followers across YouTube, Bilibili, and Xiaohongshu.",
+      "As of July 2026: 400K+ followers across YouTube, Bilibili, and Xiaohongshu.",
     contactEyebrow: "PROGRAM INVITATIONS",
     contactTitle: "Start with the question you want to pursue.",
     contactDetail:
@@ -483,8 +485,8 @@ const copy = {
     heroProofs: [
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig",
-      "200+ 场公开对谈",
-      "小红书 · YouTube · B站 40 万+ 关注者",
+      "200+ 场公开对谈 · 2026.07",
+      "小红书 · YouTube · B站 40 万+ 关注者 · 2026.07",
     ],
     questionCta: "先看两个合作案例",
     kitCta: "查看嘉宾资料",
@@ -497,7 +499,7 @@ const copy = {
     formats: [
       {
         number: "01",
-        title: "研究、大厂、创业和内容，我都真正做过",
+        title: "这组经历，通常不在同一个嘉宾身上出现",
         detail:
           "康奈尔经济学博士；做过 Amazon 经济学家、Meta 数据科学家、腾讯数据与 AI 副总监，也在 Statsig 这样的创业公司一线干过。我既做过研究，也真正带过业务、做过产品和内容。",
         proof: "中美 · 研究与实战 · 大厂与创业",
@@ -542,7 +544,7 @@ const copy = {
         role: "十字路口 Crossing × 课代表立正",
         note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成了 Koji 抖音历史点赞最高、小红书年度收藏最高的内容。录制只是简单远程，节目和切片也都由 Koji 独立制作、发布，没有从我的账号联发——这让内容本身的表现更容易看清。",
         highlight:
-          "更重要的是，同一场对话同时在小宇宙、抖音、小红书和视频号成立。不少听众留下完整笔记，还写下自己准备怎样改变 AI 工作方式。",
+          "同一场对话，在小宇宙有人完整听完，到了抖音、小红书和视频号，也有人收藏、转发。不少听众留下完整笔记，还写下自己准备怎样改变 AI 工作方式。",
         metrics: [
           { value: "6.7万", label: "小宇宙播放", signal: "节目播放前二" },
           { value: "1.2万", label: "抖音点赞", signal: "账号历史最高" },
@@ -631,7 +633,6 @@ const copy = {
     ],
     metricsNote: "数据来自 2026 年 7 月的平台页面与截图；各平台统计口径不同。",
     appearancesEyebrow: "更多做客记录",
-    appearancesTitle: "我还做客过 21 档节目，共 23 期。",
     appearancesIntro:
       "这些是目前能在小宇宙查到的做客记录。其中两期是多人圆桌；INDIGO TALK 和 The Build Log 都邀请过我两次。",
     panelLabel: "圆桌",
@@ -686,10 +687,10 @@ const copy = {
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy 与 AI Builders 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。现在主理 Superlinear，开设 AI Builders 课程，并和鸭哥共同主理 Stay Superlinear。过去几年，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。他是 Superlinear Academy 与 AI Builders 创始人，并和鸭哥共同主理 Stay Superlinear。截至 2026 年 7 月，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     headshotLabel: "1200 × 1200 头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",
@@ -705,7 +706,7 @@ const copy = {
         href: "https://staysuperlinear.com",
       },
     ],
-    audienceFact: "YouTube、B 站和小红书共 40 万+ 关注者。",
+    audienceFact: "截至 2026 年 7 月，YouTube、B 站和小红书共 40 万+ 关注者。",
     contactEyebrow: "节目邀请",
     contactTitle: "邮件里先告诉我：你最想追问什么。",
     contactDetail:
@@ -1029,14 +1030,18 @@ export default function CreatorCollab() {
                   {t.appearancesEyebrow}
                 </p>
                 <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {t.appearancesTitle}
+                  {lang === "en"
+                    ? `${guestAppearances.length} episodes across ${guestAppearanceShowCount} shows—and more than one return invitation.`
+                    : `我还做客过 ${guestAppearanceShowCount} 档节目，共 ${guestAppearances.length} 期。`}
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
                   {t.appearancesIntro}
                 </p>
               </div>
               <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-300/80">
-                23 episodes · 21 shows
+                {lang === "en"
+                  ? `${guestAppearances.length} episodes · ${guestAppearanceShowCount} shows`
+                  : `${guestAppearances.length} 期 · ${guestAppearanceShowCount} 档节目`}
               </p>
             </div>
 

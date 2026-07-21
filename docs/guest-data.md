@@ -31,7 +31,7 @@ Deployed artifact in this repo:
 Important:
 
 - `shared/guest-roster-snapshot.ts` is not hand-maintained source of truth
-- it is a checked-in deployment snapshot generated from `kedaibiao-channel/guests.json`
+- it is a checked-in deployment snapshot generated from `guests.json` in the `sunyuzheng/kedaibiao-content-tools` repository (the local checkout is currently named `kedaibiao-channel`)
 - do not maintain a second editable guest roster in this repo
 
 ### 2. Guest page video metadata
@@ -43,7 +43,7 @@ This is the authority for:
 - episode view counts used for sorting on `/guests/:slug`
 - episode titles injected into guest-page SEO / JSON-LD
 
-Upstream authority:
+Upstream authority (repository `sunyuzheng/kedaibiao-content-tools`, local checkout `kedaibiao-channel`):
 
 - local content repo: `kedaibiao-channel/guest_video_metadata.json`
 - upstream generation input: `kedaibiao-channel/tools/youtube/all_videos_full.json`

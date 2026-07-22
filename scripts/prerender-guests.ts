@@ -9,17 +9,41 @@ import {
   COLLAB_PAGE_META,
   CREATOR_COLLAB_PAGE_META,
 } from "../shared/collab-meta.ts";
-import { BOOKS_PAGE_META, ZHENBENSHI_PAGE_META } from "../shared/page-meta.ts";
+import {
+  ABOUT_PAGE_META,
+  BOOKS_PAGE_META,
+  HOME_PAGE_META,
+  ZHENBENSHI_PAGE_META,
+  languageAlternates,
+  type PageMeta,
+  type SiteLang,
+} from "../shared/page-meta.ts";
+import {
+  buildAboutStructuredData,
+  buildBooksStructuredData,
+  buildGuestStructuredData,
+  buildGuestsListStructuredData,
+  buildHomeStructuredData,
+  buildPersonWebPageStructuredData,
+  buildZhenbenshiStructuredData,
+} from "../shared/structured-data.ts";
+import App from "../client/src/App.tsx";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { Router as WouterRouter } from "wouter";
 
 // Build-time SEO uses the same merged guest directory as the app runtime.
 // Source-of-truth details live in docs/guest-data.md.
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const TODAY = new Date().toISOString().slice(0, 10);
+
+// The Vite build uses the automatic JSX runtime. tsx executes these existing
+// TSX modules with the classic runtime during static generation.
+(globalThis as typeof globalThis & { React: typeof React }).React = React;
 
 function escapeHtml(value: string): string {
   return value
@@ -37,7 +61,10 @@ function serializeJsonLd(value: unknown): string {
 function stripExistingSeo(baseHtml: string) {
   return baseHtml
     .replace(/<title\b[^>]*>[\s\S]*?<\/title>\s*/gi, "")
-    .replace(/\s*<meta\b(?=[^>]*\bname=["']description["'])[^>]*>\s*/gi, "\n")
+    .replace(
+      /\s*<meta\b(?=[^>]*\bname=["'](?:description|robots)["'])[^>]*>\s*/gi,
+      "\n"
+    )
     .replace(/\s*<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>\s*/gi, "\n")
     .replace(/\s*<link\b(?=[^>]*\bhreflang=["'][^"']+["'])[^>]*>\s*/gi, "\n")
     .replace(
@@ -49,18 +76,37 @@ function stripExistingSeo(baseHtml: string) {
       "\n"
     )
     .replace(
-      /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/gi,
+      /\s*<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>[\s\S]*?<\/script>\s*/gi,
       "\n"
     );
 }
 
+function stripHomeHeroPreloads(baseHtml: string) {
+  return baseHtml.replace(
+    /\s*<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bhref=["']\/hero\/acquired-behind-scenes-(?:desktop|mobile)\.webp["'])[^>]*>\s*/gi,
+    "\n"
+  );
+}
+
 function injectDocument(
   baseHtml: string,
-  options: { head: string; noscript: string; lang?: string }
+  options: {
+    head: string;
+    bodyHtml: string;
+    lang?: string;
+    hydrate?: boolean;
+    keepHomeHeroPreloads?: boolean;
+  }
 ) {
-  const html = baseHtml
+  const sourceHtml = options.keepHomeHeroPreloads
+    ? baseHtml
+    : stripHomeHeroPreloads(baseHtml);
+  const html = sourceHtml
     .replace("</head>", `${options.head}\n</head>`)
-    .replace('<div id="root">', `<div id="root">${options.noscript}`);
+    .replace(
+      '<div id="root"></div>',
+      `<div id="root"${options.hydrate ? ' data-ssr="true"' : ""}>${options.bodyHtml}</div>`
+    );
 
   return options.lang
     ? html.replace(/<html lang="[^"]+">/, `<html lang="${options.lang}">`)
@@ -76,10 +122,13 @@ function buildHead(meta: {
   locale?: string;
   jsonLd?: unknown;
   alternates?: Array<{ hrefLang: string; href: string }>;
+  robots?: string;
+  imageAlt?: string;
 }) {
   return `
   <title>${escapeHtml(meta.title)}</title>
   <meta name="description" content="${escapeHtml(meta.description)}" />
+  <meta name="robots" content="${escapeHtml(meta.robots || "index, follow")}" />
   <link rel="canonical" href="${escapeHtml(meta.canonical)}" />
   ${(meta.alternates || [])
     .map(
@@ -93,85 +142,21 @@ function buildHead(meta: {
   <meta property="og:title" content="${escapeHtml(meta.title)}" />
   <meta property="og:description" content="${escapeHtml(meta.description)}" />
   <meta property="og:image" content="${escapeHtml(meta.ogImage)}" />
+  <meta property="og:image:alt" content="${escapeHtml(meta.imageAlt || meta.title)}" />
   <meta property="og:locale" content="${escapeHtml(meta.locale || "zh_CN")}" />
+  <meta property="og:site_name" content="课代表立正" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="${escapeHtml(meta.canonical)}" />
   <meta name="twitter:title" content="${escapeHtml(meta.title)}" />
   <meta name="twitter:description" content="${escapeHtml(meta.description)}" />
   <meta name="twitter:image" content="${escapeHtml(meta.ogImage)}" />
+  <meta name="twitter:image:alt" content="${escapeHtml(meta.imageAlt || meta.title)}" />
   ${
     meta.jsonLd
-      ? `<script type="application/ld+json">${serializeJsonLd(meta.jsonLd)}</script>`
+      ? `<script type="application/ld+json" data-page-structured-data="true">${serializeJsonLd(meta.jsonLd)}</script>`
       : ""
   }`;
-}
-
-function buildStaticNoscript(options: {
-  title: string;
-  description: string;
-  linkLabel: string;
-  linkHref: string;
-}) {
-  return `
-<noscript>
-  <div style="font-family:sans-serif;max-width:760px;margin:2rem auto;padding:1rem">
-    <h1>${escapeHtml(options.title)}</h1>
-    <p>${escapeHtml(options.description)}</p>
-    <p><a href="${escapeHtml(options.linkHref)}">${escapeHtml(options.linkLabel)}</a></p>
-  </div>
-</noscript>`;
-}
-
-function buildGuestsListJsonLd(guests: GuestProfile[], description: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "课代表立正 · 超级节点嘉宾库",
-    description,
-    url: `${SITE_URL}/guests`,
-    numberOfItems: guests.length,
-    itemListElement: guests.map((guest, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "Person",
-        name: guest.guest_name,
-        ...(guest.guest_en_name ? { alternateName: guest.guest_en_name } : {}),
-        ...(guest.guest_title ? { jobTitle: guest.guest_title } : {}),
-        ...(guest.guest_company
-          ? { worksFor: { "@type": "Organization", name: guest.guest_company } }
-          : {}),
-        url: guest.share_url,
-      },
-    })),
-  };
-}
-
-function buildGuestJsonLd(guest: GuestProfile, description: string) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    name: `${guest.guest_name} · 课代表立正`,
-    description,
-    url: guest.share_url,
-    mainEntity: {
-      "@type": "Person",
-      name: guest.guest_name,
-      ...(guest.guest_en_name ? { alternateName: guest.guest_en_name } : {}),
-      ...(guest.guest_title ? { jobTitle: guest.guest_title } : {}),
-      ...(guest.guest_company
-        ? { worksFor: { "@type": "Organization", name: guest.guest_company } }
-        : {}),
-    },
-    hasPart: guest.episodes.map(episode => ({
-      "@type": "VideoObject",
-      name: episode.title,
-      url: episode.url,
-      thumbnailUrl: episode.thumbnailUrl,
-      ...(episode.publishedAt ? { uploadDate: episode.publishedAt } : {}),
-    })),
-  };
 }
 
 function buildGuestsNoscript(guests: GuestProfile[], description: string) {
@@ -185,15 +170,13 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
     .join("\n        ");
 
   return `
-<noscript>
-  <div style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
+  <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
     <h1>课代表立正 · 全部嘉宾（${guests.length} 位）</h1>
     <p>${escapeHtml(description)}</p>
     <ul>
         ${items}
     </ul>
-  </div>
-</noscript>`;
+  </main>`;
 }
 
 function buildGuestNoscript(guest: GuestProfile, description: string) {
@@ -207,8 +190,7 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     .join("\n        ");
 
   return `
-<noscript>
-  <div style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
+  <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
     <p><a href="${SITE_URL}/guests">返回全部嘉宾</a></p>
     <h1>${escapeHtml(guest.guest_name)}</h1>
     <p>${escapeHtml(description)}</p>
@@ -216,32 +198,44 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     <ol>
         ${items}
     </ol>
-  </div>
-</noscript>`;
+  </main>`;
 }
 
 function buildSitemapXml(guests: GuestProfile[]) {
-  const urls = [
-    { loc: `${SITE_URL}/`, changefreq: "weekly", priority: "1.0" },
-    { loc: `${SITE_URL}/book`, changefreq: "monthly", priority: "0.8" },
-    { loc: `${SITE_URL}/zbs`, changefreq: "monthly", priority: "0.8" },
-    { loc: `${SITE_URL}/guests`, changefreq: "weekly", priority: "0.8" },
-    { loc: `${SITE_URL}/collab`, changefreq: "monthly", priority: "0.7" },
+  const latestGuestDate = latestDate(
+    guests.flatMap(guest => guest.episodes.map(episode => episode.publishedAt))
+  );
+  const urls: Array<{ loc: string; lastmod?: string }> = [
+    { loc: `${SITE_URL}/`, lastmod: HOME_PAGE_META.en.lastModified },
+    { loc: `${SITE_URL}/zh`, lastmod: HOME_PAGE_META.zh.lastModified },
+    { loc: `${SITE_URL}/about`, lastmod: ABOUT_PAGE_META.en.lastModified },
+    {
+      loc: `${SITE_URL}/zh/about`,
+      lastmod: ABOUT_PAGE_META.zh.lastModified,
+    },
+    { loc: `${SITE_URL}/book`, lastmod: BOOKS_PAGE_META.en.lastModified },
+    {
+      loc: `${SITE_URL}/zh/book`,
+      lastmod: BOOKS_PAGE_META.zh.lastModified,
+    },
+    { loc: `${SITE_URL}/zbs`, lastmod: ZHENBENSHI_PAGE_META.lastModified },
+    { loc: `${SITE_URL}/guests`, lastmod: latestGuestDate },
+    { loc: `${SITE_URL}/collab`, lastmod: COLLAB_PAGE_META.en.lastModified },
     {
       loc: `${SITE_URL}/collab/creators`,
-      changefreq: "monthly",
-      priority: "0.7",
+      lastmod: CREATOR_COLLAB_PAGE_META.en.lastModified,
     },
-    { loc: `${SITE_URL}/zh/collab`, changefreq: "monthly", priority: "0.7" },
+    {
+      loc: `${SITE_URL}/zh/collab`,
+      lastmod: COLLAB_PAGE_META.zh.lastModified,
+    },
     {
       loc: `${SITE_URL}/zh/collab/creators`,
-      changefreq: "monthly",
-      priority: "0.7",
+      lastmod: CREATOR_COLLAB_PAGE_META.zh.lastModified,
     },
     ...guests.map(guest => ({
       loc: guest.share_url,
-      changefreq: "monthly",
-      priority: "0.7",
+      lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),
     })),
   ];
 
@@ -251,14 +245,21 @@ ${urls
   .map(
     url => `  <url>
     <loc>${escapeHtml(url.loc)}</loc>
-    <lastmod>${TODAY}</lastmod>
-    <changefreq>${url.changefreq}</changefreq>
-    <priority>${url.priority}</priority>
-  </url>`
+${url.lastmod ? `    <lastmod>${url.lastmod}</lastmod>\n` : ""}  </url>`
   )
   .join("\n")}
 </urlset>
 `;
+}
+
+function latestDate(values: Array<string | undefined>): string | undefined {
+  const dates = values
+    .filter((value): value is string => Boolean(value))
+    .map(value => value.slice(0, 10))
+    .filter(value => /^\d{4}-\d{2}-\d{2}$/.test(value))
+    .sort();
+
+  return dates.at(-1);
 }
 
 const baseHtmlPath = path.join(ROOT, "dist", "public", "index.html");
@@ -269,125 +270,193 @@ if (!fs.existsSync(baseHtmlPath)) {
 
 const baseHtml = stripExistingSeo(fs.readFileSync(baseHtmlPath, "utf-8"));
 
-const collabAlternates = [
-  { hrefLang: "en", href: COLLAB_PAGE_META.en.canonical },
-  { hrefLang: "zh-CN", href: COLLAB_PAGE_META.zh.canonical },
-  { hrefLang: "x-default", href: COLLAB_PAGE_META.en.canonical },
-];
+function routeDirectory(route: string) {
+  const segments = route.split("/").filter(Boolean);
+  return path.join(ROOT, "dist", "public", ...segments);
+}
 
-const creatorCollabAlternates = [
-  { hrefLang: "en", href: CREATOR_COLLAB_PAGE_META.en.canonical },
-  { hrefLang: "zh-CN", href: CREATOR_COLLAB_PAGE_META.zh.canonical },
-  { hrefLang: "x-default", href: CREATOR_COLLAB_PAGE_META.en.canonical },
-];
+function renderApp(route: string, lang: SiteLang) {
+  const app = React.createElement(App, { defaultLang: lang });
+  return renderToString(
+    React.createElement(WouterRouter, { ssrPath: route, children: app })
+  );
+}
 
-const staticPages = [
+interface StaticPage {
+  route: string;
+  meta: PageMeta;
+  lang: SiteLang;
+  jsonLd: unknown;
+  alternates?: Array<{ hrefLang: string; href: string }>;
+  ogType?: string;
+  imageAlt?: string;
+}
+
+const homeAlternates = languageAlternates(
+  HOME_PAGE_META.en.canonical,
+  HOME_PAGE_META.zh.canonical
+);
+const aboutAlternates = languageAlternates(
+  ABOUT_PAGE_META.en.canonical,
+  ABOUT_PAGE_META.zh.canonical
+);
+const booksAlternates = languageAlternates(
+  BOOKS_PAGE_META.en.canonical,
+  BOOKS_PAGE_META.zh.canonical
+);
+const collabAlternates = languageAlternates(
+  COLLAB_PAGE_META.en.canonical,
+  COLLAB_PAGE_META.zh.canonical
+);
+const creatorCollabAlternates = languageAlternates(
+  CREATOR_COLLAB_PAGE_META.en.canonical,
+  CREATOR_COLLAB_PAGE_META.zh.canonical
+);
+
+const staticPages: StaticPage[] = [
   {
-    directory: path.join(ROOT, "dist", "public", "collab"),
-    meta: COLLAB_PAGE_META.en,
-    locale: "en_US",
-    htmlLang: "en-US",
-    schemaType: "WebPage",
-    alternates: collabAlternates,
-    linkLabel: "Podcast and creator invitations",
-    linkHref: "/collab/creators",
+    route: "/",
+    meta: HOME_PAGE_META.en,
+    lang: "en",
+    jsonLd: buildHomeStructuredData("en", HOME_PAGE_META.en.canonical),
+    alternates: homeAlternates,
+    ogType: "profile",
+    imageAlt: "Yuzheng Sun with the hosts of Acquired",
   },
   {
-    directory: path.join(ROOT, "dist", "public", "collab", "creators"),
-    meta: CREATOR_COLLAB_PAGE_META.en,
-    locale: "en_US",
-    htmlLang: "en-US",
-    schemaType: "WebPage",
-    alternates: creatorCollabAlternates,
-    linkLabel: "Email Yuzheng Sun",
-    linkHref: "mailto:yz@superlinear.academy",
+    route: "/zh",
+    meta: HOME_PAGE_META.zh,
+    lang: "zh",
+    jsonLd: buildHomeStructuredData("zh", HOME_PAGE_META.zh.canonical),
+    alternates: homeAlternates,
+    ogType: "profile",
+    imageAlt: "孙煜征与 Acquired 两位主播对谈",
   },
   {
-    directory: path.join(ROOT, "dist", "public", "zh", "collab"),
-    meta: COLLAB_PAGE_META.zh,
-    locale: "zh_CN",
-    htmlLang: "zh-CN",
-    schemaType: "WebPage",
-    alternates: collabAlternates,
-    linkLabel: "播客与视频节目邀请",
-    linkHref: "/zh/collab/creators",
+    route: "/about",
+    meta: ABOUT_PAGE_META.en,
+    lang: "en",
+    jsonLd: buildAboutStructuredData("en", ABOUT_PAGE_META.en.canonical),
+    alternates: aboutAlternates,
+    ogType: "profile",
+    imageAlt: "Portrait of Yuzheng Sun",
   },
   {
-    directory: path.join(ROOT, "dist", "public", "zh", "collab", "creators"),
-    meta: CREATOR_COLLAB_PAGE_META.zh,
-    locale: "zh_CN",
-    htmlLang: "zh-CN",
-    schemaType: "WebPage",
-    alternates: creatorCollabAlternates,
-    linkLabel: "邮件联系孙煜征",
-    linkHref: "mailto:yz@superlinear.academy",
+    route: "/zh/about",
+    meta: ABOUT_PAGE_META.zh,
+    lang: "zh",
+    jsonLd: buildAboutStructuredData("zh", ABOUT_PAGE_META.zh.canonical),
+    alternates: aboutAlternates,
+    ogType: "profile",
+    imageAlt: "孙煜征头像",
   },
   {
-    directory: path.join(ROOT, "dist", "public", "book"),
+    route: "/book",
     meta: BOOKS_PAGE_META.en,
-    locale: "en_US",
-    htmlLang: "en-US",
-    schemaType: "CollectionPage",
-    linkLabel: "Read about 真本事",
-    linkHref: "/zbs",
+    lang: "en",
+    jsonLd: buildBooksStructuredData("en", BOOKS_PAGE_META.en.canonical),
+    alternates: booksAlternates,
+    imageAlt: "Yuzheng Sun at the Growth Data Analytics Playbook launch",
   },
   {
-    directory: path.join(ROOT, "dist", "public", "zbs"),
-    meta: ZHENBENSHI_PAGE_META,
-    locale: "zh_CN",
-    htmlLang: "zh-CN",
-    schemaType: "Book",
-    ogType: "book",
-    linkLabel: "在微信读书阅读",
-    linkHref:
-      "https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff",
+    route: "/zh/book",
+    meta: BOOKS_PAGE_META.zh,
+    lang: "zh",
+    jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),
+    alternates: booksAlternates,
+    imageAlt: "孙煜征在 Growth Data Analytics Playbook 新书活动现场",
   },
+  {
+    route: "/zbs",
+    meta: ZHENBENSHI_PAGE_META,
+    lang: "zh",
+    jsonLd: buildZhenbenshiStructuredData(),
+    ogType: "book",
+    imageAlt: "《真本事：从会工作到会赚钱》封面",
+  },
+  ...(["en", "zh"] as const).flatMap(lang => {
+    const collabMeta = COLLAB_PAGE_META[lang];
+    const creatorMeta = CREATOR_COLLAB_PAGE_META[lang];
+    return [
+      {
+        route: lang === "en" ? "/collab" : "/zh/collab",
+        meta: collabMeta,
+        lang,
+        jsonLd: buildPersonWebPageStructuredData({
+          canonical: collabMeta.canonical,
+          name: collabMeta.title,
+          description: collabMeta.description,
+          lang,
+          lastModified: collabMeta.lastModified,
+        }),
+        alternates: collabAlternates,
+        imageAlt:
+          lang === "en"
+            ? "Yuzheng Sun leading an AI training session in Seattle"
+            : "孙煜征在西雅图进行 AI 培训",
+      },
+      {
+        route: lang === "en" ? "/collab/creators" : "/zh/collab/creators",
+        meta: creatorMeta,
+        lang,
+        jsonLd: buildPersonWebPageStructuredData({
+          canonical: creatorMeta.canonical,
+          name: creatorMeta.title,
+          description: creatorMeta.description,
+          lang,
+          lastModified: creatorMeta.lastModified,
+        }),
+        alternates: creatorCollabAlternates,
+        imageAlt:
+          lang === "en"
+            ? "Yuzheng Sun in a long-form public conversation"
+            : "孙煜征参与长访谈",
+      },
+    ];
+  }),
 ];
 
 for (const page of staticPages) {
   const html = injectDocument(baseHtml, {
     head: buildHead({
       ...page.meta,
-      locale: page.locale,
+      locale: page.lang === "en" ? "en_US" : "zh_CN",
       type: page.ogType,
       alternates: page.alternates,
-      jsonLd: {
-        "@context": "https://schema.org",
-        "@type": page.schemaType,
-        name:
-          page.schemaType === "Book"
-            ? "真本事：从会工作到会赚钱"
-            : page.meta.title,
-        description: page.meta.description,
-        url: page.meta.canonical,
-        ...(page.schemaType === "Book"
-          ? {
-              author: {
-                "@type": "Person",
-                name: "Yuzheng Sun",
-                alternateName: ["孙煜征", "课代表立正"],
-                url: SITE_URL,
-              },
-              publisher: {
-                "@type": "Organization",
-                name: "人民邮电出版社",
-              },
-              inLanguage: "zh-CN",
-            }
-          : {}),
-      },
+      jsonLd: page.jsonLd,
+      imageAlt: page.imageAlt,
     }),
-    noscript: buildStaticNoscript({
-      title: page.meta.title,
-      description: page.meta.description,
-      linkLabel: page.linkLabel,
-      linkHref: page.linkHref,
-    }),
-    lang: page.htmlLang,
+    bodyHtml: renderApp(page.route, page.lang),
+    lang: page.lang === "en" ? "en-US" : "zh-CN",
+    hydrate: true,
+    keepHomeHeroPreloads:
+      page.route === "/" ||
+      page.route === "/zh" ||
+      page.route.includes("/collab"),
   });
-  fs.mkdirSync(page.directory, { recursive: true });
-  fs.writeFileSync(path.join(page.directory, "index.html"), html, "utf-8");
+  const directory = routeDirectory(page.route);
+  fs.mkdirSync(directory, { recursive: true });
+  fs.writeFileSync(path.join(directory, "index.html"), html, "utf-8");
 }
+
+const notFoundHtml = injectDocument(baseHtml, {
+  head: buildHead({
+    title: "Page not found · Yuzheng Sun",
+    description: "This page does not exist.",
+    canonical: `${SITE_URL}/404`,
+    ogImage: HOME_PAGE_META.en.ogImage,
+    locale: "en_US",
+    robots: "noindex, follow",
+  }),
+  bodyHtml: renderApp("/404", "en"),
+  lang: "en-US",
+  hydrate: false,
+});
+fs.writeFileSync(
+  path.join(ROOT, "dist", "public", "404.html"),
+  notFoundHtml,
+  "utf-8"
+);
 
 let guests: GuestProfile[] = [];
 try {
@@ -404,9 +473,9 @@ const guestsPageMeta = getGuestsPageMeta(guests);
 const guestsListHtml = injectDocument(baseHtml, {
   head: buildHead({
     ...guestsPageMeta,
-    jsonLd: buildGuestsListJsonLd(guests, guestsPageMeta.description),
+    jsonLd: buildGuestsListStructuredData(guests, guestsPageMeta.description),
   }),
-  noscript: buildGuestsNoscript(guests, guestsPageMeta.description),
+  bodyHtml: buildGuestsNoscript(guests, guestsPageMeta.description),
   lang: "zh-CN",
 });
 
@@ -420,9 +489,9 @@ for (const guest of guests) {
     head: buildHead({
       ...guestPageMeta,
       type: "profile",
-      jsonLd: buildGuestJsonLd(guest, guestPageMeta.description),
+      jsonLd: buildGuestStructuredData(guest, guestPageMeta.description),
     }),
-    noscript: buildGuestNoscript(guest, guestPageMeta.description),
+    bodyHtml: buildGuestNoscript(guest, guestPageMeta.description),
     lang: "zh-CN",
   });
 
@@ -438,6 +507,6 @@ fs.writeFileSync(
 );
 
 console.log(
-  `✅ 预渲染完成: 6 个静态入口页 + /guests + ${guests.length} 个 guest 子页`
+  `✅ 预渲染完成: ${staticPages.length} 个完整静态页 + 404 + /guests + ${guests.length} 个 guest 子页`
 );
-console.log(`✅ sitemap 已更新，包含 ${guests.length + 8} 个 URL`);
+console.log(`✅ sitemap 已更新，包含 ${guests.length + 12} 个 URL`);

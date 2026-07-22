@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { hasCanonicalLanguagePath, withLanguage } from "@/lib/language-url";
 
 export type Lang = "en" | "zh";
 
@@ -16,9 +17,22 @@ const STORAGE_KEY = "lizheng-lang";
 
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
-  if (window.location.pathname.startsWith("/zh/")) return "zh";
+  if (
+    window.location.pathname === "/zh" ||
+    window.location.pathname.startsWith("/zh/")
+  ) {
+    return "zh";
+  }
+  if (
+    window.location.pathname === "/zbs" ||
+    window.location.pathname === "/guests" ||
+    window.location.pathname.startsWith("/guests/")
+  ) {
+    return "zh";
+  }
   const requested = new URLSearchParams(window.location.search).get("lang");
   if (requested === "en" || requested === "zh") return requested;
+  if (hasCanonicalLanguagePath(window.location.pathname)) return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "en" || stored === "zh") return stored;
   return defaultLang;
@@ -26,29 +40,8 @@ function readInitialLang(defaultLang: Lang): Lang {
 
 function syncLangParam(lang: Lang) {
   const url = new URL(window.location.href);
-
-  const isCollabPath =
-    url.pathname === "/collab" || url.pathname === "/collab/creators";
-  const isChinesePath = url.pathname.startsWith("/zh/");
-
-  if (lang === "zh" && isCollabPath) {
-    url.pathname = `/zh${url.pathname}`;
-    url.searchParams.delete("lang");
-  } else if (lang === "en" && isChinesePath) {
-    url.pathname = url.pathname.slice(3) || "/";
-    url.searchParams.delete("lang");
-  } else if (lang === "zh" && isChinesePath) {
-    url.searchParams.delete("lang");
-  } else if (lang === "zh") {
-    url.searchParams.set("lang", "zh");
-  } else {
-    url.searchParams.delete("lang");
-  }
-  window.history.replaceState(
-    window.history.state,
-    "",
-    `${url.pathname}${url.search}${url.hash}`
-  );
+  const nextUrl = withLanguage(`${url.pathname}${url.search}${url.hash}`, lang);
+  window.history.replaceState(window.history.state, "", nextUrl);
 }
 
 interface LanguageProviderProps {
@@ -72,7 +65,13 @@ export function LanguageProvider({
 
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.pathname.startsWith("/zh/")) {
+      if (
+        window.location.pathname === "/zh" ||
+        window.location.pathname.startsWith("/zh/") ||
+        window.location.pathname === "/zbs" ||
+        window.location.pathname === "/guests" ||
+        window.location.pathname.startsWith("/guests/")
+      ) {
         setLangState("zh");
         return;
       }

@@ -1,10 +1,31 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Home } from "lucide-react";
 import { useLocation } from "wouter";
+import { useEffect } from "react";
+import { applyPageSeo } from "@/lib/seo";
 
 export default function NotFound() {
   const { lang } = useLanguage();
   const [, setLocation] = useLocation();
+
+  useEffect(
+    () =>
+      applyPageSeo({
+        title:
+          lang === "en"
+            ? "Page not found · Yuzheng Sun"
+            : "页面不存在 · 孙煜征",
+        description:
+          lang === "en" ? "This page does not exist." : "你访问的页面不存在。",
+        canonical: "https://www.lizheng.ai/404",
+        ogImage:
+          "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
+        locale: lang === "en" ? "en_US" : "zh_CN",
+        robots: "noindex, follow",
+        jsonLd: null,
+      }),
+    [lang]
+  );
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#0B0F1A] text-zinc-100">

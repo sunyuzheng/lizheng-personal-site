@@ -1,4 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
+import { Link, useLocation } from "wouter";
 
 interface LanguageToggleProps {
   className?: string;
@@ -10,6 +12,7 @@ export default function LanguageToggle({
   size = "md",
 }: LanguageToggleProps) {
   const { lang, setLang } = useLanguage();
+  const [location] = useLocation();
   const pad = size === "sm" ? "px-2 py-1 text-[11px]" : "px-2.5 py-1 text-xs";
 
   return (
@@ -18,10 +21,11 @@ export default function LanguageToggle({
       role="group"
       aria-label="Language"
     >
-      <button
-        type="button"
+      <Link
+        href={withLanguage(location, "en")}
         onClick={() => setLang("en")}
-        aria-pressed={lang === "en"}
+        aria-current={lang === "en" ? "page" : undefined}
+        hrefLang="en"
         className={`${pad} whitespace-nowrap font-semibold uppercase tracking-wide transition ${
           lang === "en"
             ? "bg-amber-300 text-[#211300]"
@@ -29,11 +33,12 @@ export default function LanguageToggle({
         }`}
       >
         EN
-      </button>
-      <button
-        type="button"
+      </Link>
+      <Link
+        href={withLanguage(location, "zh")}
         onClick={() => setLang("zh")}
-        aria-pressed={lang === "zh"}
+        aria-current={lang === "zh" ? "page" : undefined}
+        hrefLang="zh-CN"
         className={`${pad} whitespace-nowrap font-semibold transition ${
           lang === "zh"
             ? "bg-amber-300 text-[#211300]"
@@ -41,7 +46,7 @@ export default function LanguageToggle({
         }`}
       >
         中文
-      </button>
+      </Link>
     </div>
   );
 }

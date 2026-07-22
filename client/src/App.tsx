@@ -13,8 +13,10 @@ import ZhenbenShi from "./pages/ZhenbenShi";
 import Books from "./pages/Books";
 import Collab from "./pages/Collab";
 import CreatorCollab from "./pages/CreatorCollab";
+import About from "./pages/About";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
+import type { Lang } from "./contexts/LanguageContext";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -32,12 +34,16 @@ function Router() {
       <ScrollToTop />
       <Switch>
         <Route path={"/"} component={Home} />
+        <Route path={"/zh"} component={Home} />
+        <Route path={"/about"} component={About} />
+        <Route path={"/zh/about"} component={About} />
         <Route path={"/guests/:slug"}>
           {params => <GuestDetail slug={params.slug} />}
         </Route>
         <Route path={"/guests"} component={Guests} />
         <Route path={"/zbs"} component={ZhenbenShi} />
         <Route path={"/book"} component={Books} />
+        <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />
         <Route path={"/zh/collab"} component={Collab} />
         <Route path={"/collab/creators"} component={CreatorCollab} />
@@ -50,10 +56,14 @@ function Router() {
   );
 }
 
-function App() {
+interface AppProps {
+  defaultLang?: Lang;
+}
+
+function App({ defaultLang = "en" }: AppProps) {
   return (
     <ErrorBoundary>
-      <LanguageProvider defaultLang="en">
+      <LanguageProvider defaultLang={defaultLang}>
         <ThemeProvider defaultTheme="dark">
           <TooltipProvider>
             <Toaster />

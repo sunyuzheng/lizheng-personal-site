@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
+import { buildHomeStructuredData } from "@shared/structured-data";
 
 const stats = [
   {
@@ -97,7 +99,7 @@ const ideas = {
       detail:
         "I like being challenged into changing my mind. That works only when assumptions and evidence are on the table and the discussion can move the work forward.",
       label: "Strong opinions, weakly held",
-      href: "https://www.youtube.com/watch?v=vYOogCGsIog",
+      href: "https://youtu.be/D_-hU1O7IVw",
     },
     {
       number: "03",
@@ -124,7 +126,7 @@ const ideas = {
       detail:
         "我喜欢被挑战到改变自己的想法。前提是双方都把假设和证据摊开，让讨论真的能推动事情向前。",
       label: "Strong opinions, weakly held",
-      href: "https://www.youtube.com/watch?v=vYOogCGsIog",
+      href: "https://youtu.be/D_-hU1O7IVw",
     },
     {
       number: "03",
@@ -483,17 +485,16 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    const meta = HOME_PAGE_META[lang];
     return applyPageSeo({
-      title: lang === "en" ? "Yuzheng Sun | 课代表立正" : "孙煜征 · 课代表立正",
-      description:
-        lang === "en"
-          ? "Yuzheng Sun (课代表立正) is a Seattle-based economist, operator, author, and founder of Superlinear Academy, working across AI education, communities, enterprise practice, and public conversations."
-          : "孙煜征（课代表立正），现居西雅图。经济学家、作者、Superlinear Academy 创始人，长期从事 AI 教育、社区、企业实践与公开对话。",
-      canonical: "https://www.lizheng.ai/",
-      ogImage:
-        "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
+      ...meta,
       type: "profile",
       locale: lang === "zh" ? "zh_CN" : "en_US",
+      alternates: languageAlternates(
+        HOME_PAGE_META.en.canonical,
+        HOME_PAGE_META.zh.canonical
+      ),
+      jsonLd: buildHomeStructuredData(lang, meta.canonical),
     });
   }, [lang]);
 
@@ -529,9 +530,11 @@ export default function Home() {
         <div className="container flex h-[72px] items-center justify-between">
           <button onClick={() => scrollToSection("hero")} className="text-left">
             <div className="text-base font-semibold text-white">
-              Yuzheng Sun
+              {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
             </div>
-            <div className="text-xs text-zinc-500">课代表立正</div>
+            <div className="text-xs text-zinc-500">
+              {lang === "en" ? "课代表立正" : "孙煜征 · Yuzheng Sun"}
+            </div>
           </button>
 
           <div className="hidden items-center gap-5 lg:flex">
@@ -665,11 +668,12 @@ export default function Home() {
 
           <div className="container relative z-10 flex min-h-[700px] items-end pb-10 pt-20 md:min-h-[calc(100svh-72px)] md:items-center md:pb-20 md:pt-20">
             <div className="max-w-3xl lg:ml-auto lg:w-96 lg:max-w-96 xl:w-[30rem] xl:max-w-[30rem]">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
-                Yuzheng Sun <span className="px-2 text-zinc-600">/</span>{" "}
-                课代表立正
-              </p>
-              <h1 className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.08] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem]">
+              <h1 className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
+                <span className="px-2 text-zinc-600">/</span>
+                {lang === "en" ? "课代表立正" : "孙煜征"}
+              </h1>
+              <p className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.08] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem]">
                 {lang === "en" ? (
                   "From economics to AI: can a judgment change the result?"
                 ) : (
@@ -680,11 +684,11 @@ export default function Home() {
                     </span>
                   </>
                 )}
-              </h1>
+              </p>
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "I’m Yuzheng Sun, also known as 课代表立正. I’ve worked as an economist, data scientist, and technology leader. Today I’m based in Seattle, where I teach AI, build communities, write books, and continue to host long-form conversations."
-                  : "我是孙煜征，也叫课代表立正。我做过经济学家、数据科学家和科技公司管理者；现在在西雅图做 AI 教育和社区、写书，也持续做访谈。"}
+                  ? "I’m Yuzheng Sun, also known as 课代表立正. I have a PhD in Economics from Cornell and have worked as an economist, data scientist, and technology leader. Today I’m based in Seattle, where I teach AI, build communities, write books, and host long-form conversations."
+                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士。做过经济学家、数据科学家和科技公司管理者；现在在西雅图做 AI 教育和社区、写书，也持续做访谈。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -1299,9 +1303,16 @@ export default function Home() {
             </div>
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
-                ? "Economist, operator, author, and founder of Superlinear Academy."
-                : "经济学家、作者，Superlinear Academy 创始人。"}
+                ? "PhD in Economics from Cornell, author, and founder of Superlinear Academy and AI Builders."
+                : "康奈尔大学经济学博士、作者，Superlinear Academy 与 AI Builders 创始人。"}
             </p>
+            <Link
+              href={withLanguage("/about", lang)}
+              className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+            >
+              {lang === "en" ? "Factual profile" : "关于课代表立正"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
           <div className="flex items-center gap-5 text-zinc-500">
             <a

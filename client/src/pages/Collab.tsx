@@ -17,6 +17,8 @@ import {
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { COLLAB_PAGE_META } from "../../../shared/collab-meta";
+import { languageAlternates } from "../../../shared/page-meta";
+import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 
 const copy = {
   en: {
@@ -198,6 +200,17 @@ export default function Collab() {
       applyPageSeo({
         ...COLLAB_PAGE_META[lang],
         locale: lang === "zh" ? "zh_CN" : "en_US",
+        alternates: languageAlternates(
+          COLLAB_PAGE_META.en.canonical,
+          COLLAB_PAGE_META.zh.canonical
+        ),
+        jsonLd: buildPersonWebPageStructuredData({
+          canonical: COLLAB_PAGE_META[lang].canonical,
+          name: COLLAB_PAGE_META[lang].title,
+          description: COLLAB_PAGE_META[lang].description,
+          lang,
+          lastModified: COLLAB_PAGE_META[lang].lastModified,
+        }),
       }),
     [lang]
   );

@@ -4,6 +4,7 @@ import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestsPageMeta } from "@shared/guest-data";
+import { buildGuestsListStructuredData } from "@shared/structured-data";
 import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
@@ -41,7 +42,12 @@ export default function Guests() {
           ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
         };
 
-    return applyPageSeo(meta);
+    return applyPageSeo({
+      ...meta,
+      jsonLd: guests.length
+        ? buildGuestsListStructuredData(guests, meta.description)
+        : null,
+    });
   }, [guests, lang]);
 
   const q = query.trim().toLowerCase();
@@ -61,9 +67,7 @@ export default function Guests() {
       <div className="container py-12 md:py-16">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl">
-            {lang === "en"
-              ? "Super Nodes · All Guests"
-              : "超级节点 · 全部嘉宾"}
+            {lang === "en" ? "Super Nodes · All Guests" : "超级节点 · 全部嘉宾"}
           </h1>
           {!loading && !error && (
             <p className="mt-3 text-zinc-400">

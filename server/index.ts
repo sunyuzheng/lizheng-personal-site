@@ -22,9 +22,10 @@ async function startServer() {
 
   app.use(express.static(staticPath));
 
-  // Handle client-side routing - serve index.html for all routes
+  // Unknown routes must remain real 404s. Every public route is emitted as a
+  // static index.html during the build.
   app.get("*", (_req, res) => {
-    res.sendFile(path.join(staticPath, "index.html"));
+    res.status(404).sendFile(path.join(staticPath, "404.html"));
   });
 
   const port = process.env.PORT || 3000;

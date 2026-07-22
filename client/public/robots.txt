@@ -1,36 +1,40 @@
-# Allow all crawlers including AI bots
+# Public pages are available to search and answer-retrieval crawlers.
 User-agent: *
 Allow: /
 
-# Explicitly allow major AI crawlers
-User-agent: GPTBot
+# ChatGPT search and user-requested visits
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: ClaudeBot
+# Claude search and user-requested visits
+User-agent: Claude-SearchBot
 Allow: /
 
-User-agent: anthropic-ai
+User-agent: Claude-User
 Allow: /
 
+# Perplexity search and user-requested visits
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Training controls are separate from search retrieval. The current policy
+# remains permissive; these entries do not imply a search-ranking benefit.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: CCBot
 Allow: /
 
 User-agent: Google-Extended
-Allow: /
-
-User-agent: Gemini
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://www.lizheng.ai/sitemap.xml

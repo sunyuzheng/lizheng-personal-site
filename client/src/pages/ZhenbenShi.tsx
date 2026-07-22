@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { ZHENBENSHI_PAGE_META } from "@shared/page-meta";
+import { buildZhenbenshiStructuredData } from "@shared/structured-data";
 import {
   ChevronDown,
   ChevronUp,
@@ -608,6 +609,7 @@ export default function ZhenbenShi() {
       ...ZHENBENSHI_PAGE_META,
       type: "book",
       locale: "zh_CN",
+      jsonLd: buildZhenbenshiStructuredData(),
     });
   }, []);
 
@@ -773,7 +775,7 @@ export default function ZhenbenShi() {
                 把工作变成能力，把能力变成收入
               </p>
               <div className="inline-block border border-white/10 text-zinc-500 text-xs px-2 py-1 mt-2">
-                人民邮电出版社 · 孙煜征 著
+                人民邮电出版社 · 2026 年 4 月 · ISBN 9787115690500
               </div>
             </div>
 
@@ -819,7 +821,7 @@ export default function ZhenbenShi() {
               </Button>
             </div>
             <p className="text-zinc-500 text-xs">
-              已出版纸质书，并上线微信读书 · 人民邮电出版社
+              孙煜征 著 · 已出版纸质书，并上线微信读书
             </p>
           </div>
 

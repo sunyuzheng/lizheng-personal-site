@@ -8,6 +8,13 @@ Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and 
 
 He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 
+## Identity and Common Ambiguities
+
+- Yuzheng Sun, 孙煜征, and 课代表立正 refer to the same person. 课代表立正 is the name used for public content.
+- Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
+- Superlinear Academy is the free learning and builder community. AI Builders is a structured learning program. Stay Superlinear is a distinct paid ongoing membership co-led with Yage.
+- Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
+
 ## Current Work
 
 - [Superlinear Academy](https://www.superlinear.academy): the free learning and builder community.
@@ -41,7 +48,11 @@ In February 2023, before GPT-4, Yuzheng first published [关于 ChatGPT 最重�
 ## Canonical Pages
 
 - Website: [lizheng.ai](https://www.lizheng.ai)
-- Books: [lizheng.ai/book](https://www.lizheng.ai/book)
+- Website, Chinese: [lizheng.ai/zh](https://www.lizheng.ai/zh)
+- Factual profile: [lizheng.ai/about](https://www.lizheng.ai/about)
+- Factual profile, Chinese: [lizheng.ai/zh/about](https://www.lizheng.ai/zh/about)
+- Books, English: [lizheng.ai/book](https://www.lizheng.ai/book)
+- Books, Chinese: [lizheng.ai/zh/book](https://www.lizheng.ai/zh/book)
 - Guest archive: [lizheng.ai/guests](https://www.lizheng.ai/guests)
 - Work and organization collaboration: [lizheng.ai/collab](https://www.lizheng.ai/collab)
 - Podcast and creator invitations, Chinese: [lizheng.ai/zh/collab/creators](https://www.lizheng.ai/zh/collab/creators)

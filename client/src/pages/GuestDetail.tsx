@@ -5,6 +5,7 @@ import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
+import { buildGuestStructuredData } from "@shared/structured-data";
 import { ArrowLeft, ExternalLink, Linkedin, Play } from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
@@ -18,7 +19,10 @@ function formatViews(views?: number): string | null {
   return views.toLocaleString("en-US");
 }
 
-function formatPublishedAt(value: string | undefined, lang: "en" | "zh"): string | null {
+function formatPublishedAt(
+  value: string | undefined,
+  lang: "en" | "zh"
+): string | null {
   if (!value) return null;
 
   const date = new Date(value);
@@ -60,7 +64,12 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
 
   useEffect(() => {
     if (!guest) return;
-    return applyPageSeo(getGuestPageMeta(guest));
+    const meta = getGuestPageMeta(guest);
+    return applyPageSeo({
+      ...meta,
+      type: "profile",
+      jsonLd: buildGuestStructuredData(guest, meta.description),
+    });
   }, [guest]);
 
   if (loading) {
@@ -102,7 +111,9 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               Guest Not Found
             </p>
             <h1 className="mt-4 text-3xl font-bold text-white">
-              {lang === "en" ? "This guest page doesn't exist" : "这个嘉宾页不存在"}
+              {lang === "en"
+                ? "This guest page doesn't exist"
+                : "这个嘉宾页不存在"}
             </h1>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
               {lang === "en"
@@ -124,7 +135,9 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
   }
 
   const displayName =
-    lang === "en" && guest.guest_en_name ? guest.guest_en_name : guest.guest_name;
+    lang === "en" && guest.guest_en_name
+      ? guest.guest_en_name
+      : guest.guest_name;
 
   return (
     <GuestsLayout>
@@ -270,7 +283,9 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   </span>
                 )}
                 {formatPublishedAt(guest.primary_episode.publishedAt, lang) && (
-                  <span>{formatPublishedAt(guest.primary_episode.publishedAt, lang)}</span>
+                  <span>
+                    {formatPublishedAt(guest.primary_episode.publishedAt, lang)}
+                  </span>
                 )}
               </div>
               <p className="mt-2 text-sm text-zinc-200">
@@ -330,7 +345,9 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   <div className="flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
                     <span>Top {rank + 1}</span>
                     {formatPublishedAt(episode.publishedAt, lang) && (
-                      <span>{formatPublishedAt(episode.publishedAt, lang)}</span>
+                      <span>
+                        {formatPublishedAt(episode.publishedAt, lang)}
+                      </span>
                     )}
                   </div>
                   <h3 className="line-clamp-3 text-base font-semibold leading-6 text-white">

@@ -21,6 +21,8 @@ import {
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { CREATOR_COLLAB_PAGE_META } from "../../../shared/collab-meta";
+import { languageAlternates } from "../../../shared/page-meta";
+import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 
 const guestAppearances = [
   {
@@ -737,6 +739,17 @@ export default function CreatorCollab() {
       applyPageSeo({
         ...CREATOR_COLLAB_PAGE_META[lang],
         locale: lang === "zh" ? "zh_CN" : "en_US",
+        alternates: languageAlternates(
+          CREATOR_COLLAB_PAGE_META.en.canonical,
+          CREATOR_COLLAB_PAGE_META.zh.canonical
+        ),
+        jsonLd: buildPersonWebPageStructuredData({
+          canonical: CREATOR_COLLAB_PAGE_META[lang].canonical,
+          name: CREATOR_COLLAB_PAGE_META[lang].title,
+          description: CREATOR_COLLAB_PAGE_META[lang].description,
+          lang,
+          lastModified: CREATOR_COLLAB_PAGE_META[lang].lastModified,
+        }),
       }),
     [lang]
   );

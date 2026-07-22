@@ -2,7 +2,27 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "destination": "/zh",
+      "permanent": true
+    },
+    {
+      "source": "/book",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "destination": "/zh/book",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "destination": "/zh/about",
+      "permanent": true
+    },
     {
       "source": "/collab",
       "has": [{ "type": "query", "key": "lang", "value": "zh" }],
@@ -19,12 +39,6 @@
       "source": "/collab/podcast-one-pager.pdf",
       "destination": "/collab/creators",
       "permanent": true
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
     }
   ]
 }

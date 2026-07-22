@@ -298,23 +298,26 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
 }
 
 export function getGuestPageMeta(guest: GuestProfile): PageMeta {
-  const leadTitles = guest.episodes
-    .slice(0, 3)
-    .map(episode => `《${episode.title}》`)
-    .join("、");
-  const companyAndTitle = [guest.guest_company, guest.guest_title]
-    .filter(Boolean)
-    .join(" · ");
-  const descriptionParts = [
-    `${guest.guest_name}${companyAndTitle ? `，${companyAndTitle}` : ""}。`,
-    `课代表立正共收录 ${guest.episode_count} 期相关访谈。`,
-    leadTitles ? `代表内容包括 ${leadTitles}。` : "",
-  ].filter(Boolean);
+  const companyAndTitle = truncateMetaText(
+    [guest.guest_company, guest.guest_title].filter(Boolean).join(" · "),
+    52
+  );
+  const leadTitle = guest.primary_episode?.title
+    ? truncateMetaText(guest.primary_episode.title, 56)
+    : "";
+  const identity = `${guest.guest_name}${companyAndTitle ? `，${companyAndTitle}` : ""}`;
+  const description = `${identity}。在「课代表立正」的 ${guest.episode_count} 期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,
-    description: descriptionParts.join(" "),
+    description,
     canonical: guest.share_url,
     ogImage: guest.primary_episode.thumbnailUrl || guest.thumbnail_url,
   };
+}
+
+function truncateMetaText(value: string, maxLength: number): string {
+  return value.length > maxLength
+    ? `${value.slice(0, maxLength - 1).trimEnd()}…`
+    : value;
 }

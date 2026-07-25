@@ -692,7 +692,7 @@ const copy = {
       "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy 与 AI Builders 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig 首席数据科学家和开发者布道师。他是 Superlinear Academy 与 AI Builders 创始人，并和鸭哥共同主理 Stay Superlinear。截至 2026 年 7 月，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig Principal Data Scientist、公司唯一布道师。他是 Superlinear Academy 与 AI Builders 创始人，并和鸭哥共同主理 Stay Superlinear。截至 2026 年 7 月，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     headshotLabel: "1200 × 1200 头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",

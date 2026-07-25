@@ -1166,7 +1166,7 @@ export default function ZhenbenShi() {
               <div className="space-y-3">
                 {[
                   "康奈尔大学经济学博士；曾任 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监",
-                  "曾任 Statsig 首席数据科学家与公司唯一 evangelist；Statsig 于 2025 年被 OpenAI 收购",
+                  "曾任 Statsig Principal Data Scientist 与公司唯一 evangelist；Statsig 于 2025 年被 OpenAI 收购",
                   "Superlinear Academy 与 AI Builders 创始人，长期从事 AI 教育、社区与企业实践",
                   "截至 2026 年 7 月，累计完成 200+ 场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
                   "现居西雅图",

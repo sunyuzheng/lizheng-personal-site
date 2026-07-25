@@ -28,7 +28,7 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
       "Invite Yuzheng Sun to a podcast, video, or long-form conversation. See selected appearances, audience response, and available co-production and distribution support.",
     canonical: "https://www.lizheng.ai/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-21",
+    lastModified: "2026-07-25",
   },
   zh: {
     title: "节目邀请 · 课代表立正｜播客与视频对谈",
@@ -36,6 +36,6 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
       "邀请课代表立正参与播客、视频访谈与深度对谈。查看中文节目案例、听众反馈，以及可提供的选题、剪辑、联合发布与跨平台分发支持。",
     canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-21",
+    lastModified: "2026-07-25",
   },
 };

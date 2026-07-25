@@ -33,7 +33,7 @@ The career is not presented as six unrelated credentials.
 - Amazon and Meta connect models to product and business decisions.
 - Leading a 30-person data and AI team at Tencent makes judgment an organizational problem.
 - Statsig turns experimentation and belief-updating into infrastructure.
-- AI Builders turns those lessons into building capability; Stay Superlinear makes continued practice social and durable; books and enterprise work carry them into public ideas and organizations.
+- AI Builders, co-taught with Yage, turns AI principles, building methods, and judgment about what is worth doing into capability people can reuse across real problems. Stay Superlinear makes continued practice social and durable; books and enterprise work carry the same throughline into public ideas and organizations.
 
 The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into systems that compound. These ideas support the story; they should not all become slogans.
 
@@ -53,7 +53,7 @@ The deeper throughline comes from the local axioms: build a better model of real
 
 - English remains the default language by design.
 - The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
-- In the Work section, AI Builders represents building capability, Stay Superlinear represents the long-term environment, and enterprise programs represent organizational application.
+- In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents the long-term practice environment, and enterprise programs show the same methods being tested against real organizational goals and constraints.
 - The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.
 - On desktop, keep all three participants in the Acquired scene visible by placing copy over the camera on the right. Mobile keeps the portrait crop and prioritizes copy legibility.
 - The homepage curates. Complete guest, book, content, and collaboration material belongs on dedicated pages.

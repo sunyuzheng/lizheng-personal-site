@@ -1,6 +1,6 @@
 # lizheng.ai SEO / GEO 维护说明
 
-最后核对：2026-07-21。
+最后核对：2026-07-25。
 
 ## 原则
 
@@ -12,6 +12,7 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 4. JSON-LD 只用来消除歧义，而不是堆关键词。所有页面共用 `https://www.lizheng.ai/#person`。
 5. 日期、数字与书目信息必须可核对；不知道真实更新日期时，sitemap 宁可不写 `lastmod`。
 6. `llms.txt` 是辅助索引，不代替网页正文。
+7. 人物事实以 `yuzheng-profile/facts.json` 与 `EVIDENCE.md` 为准；公开个人主线与各项目关系从 `CONTEXT.md`、`ECOSYSTEM.md` 选择性呈现。内部 `yuzheng-context-private/` 只帮助决策，不得被搜索引擎或公开页面直接读取。
 
 ## 当前路由
 

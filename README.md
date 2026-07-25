@@ -9,9 +9,9 @@ The site is organized around one throughline: form a view, let reality test it, 
 ## Public Content Model
 
 - **Homepage:** the personal throughline, dated judgments, current work, conversations, and books.
-- **AI Builders:** the structured learning program for building with AI.
+- **AI Builders:** a long-term learning system that turns AI understanding, building methods, and value judgment into reusable capability.
 - **Stay Superlinear:** the ongoing paid membership and long-term environment.
-- **Superlinear Academy:** the free community and public workshop.
+- **Superlinear Academy:** the free peer lab and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.
 - **Guest archive:** the complete conversation directory; the homepage carries the smaller, selected network signal.
 

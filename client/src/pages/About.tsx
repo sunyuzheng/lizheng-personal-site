@@ -32,7 +32,7 @@ const career = [
   {
     organization: "Statsig",
     en: "Principal Data Scientist and sole evangelist",
-    zh: "首席数据科学家与唯一布道师",
+    zh: "Principal Data Scientist、公司唯一布道师",
   },
   {
     organization: "Superlinear Academy & AI Builders",
@@ -45,43 +45,46 @@ const currentWork = {
   en: [
     {
       name: "Superlinear Academy",
-      role: "Open learning community",
+      role: "Free peer lab",
       detail:
-        "A free community where people share AI resources, projects, questions, and what they are learning.",
+        "A free community where projects, specific questions, first-hand experience, feedback, and opportunities circulate.",
       href: "https://www.superlinear.academy/",
     },
     {
       name: "AI Builders",
-      role: "Project-based learning program",
+      role: "Long-term AI learning system",
       detail:
-        "A structured way to learn by building real AI workflows, products, and systems.",
+        "AI principles, building methods, and judgment about what is worth doing, taught as capabilities people can reuse across real problems.",
       href: "https://ai-builders.com/",
     },
     {
       name: "Stay Superlinear",
       role: "Long-term membership",
       detail:
-        "A membership co-led with Yage for people who are already using AI in substantive work and want to keep improving together.",
+        "A paid ongoing environment, co-led with Yage, that organizes serious questions, feedback, tools, people, and opportunities around members' current work.",
       href: "https://staysuperlinear.com/",
     },
   ],
   zh: [
     {
       name: "Superlinear Academy",
-      role: "免费开放社区",
-      detail: "大家在这里分享 AI 资料、作品、问题和自己的学习进展。",
+      role: "免费实践社区",
+      detail:
+        "大家把真实作品、具体问题和一手经验拿出来，互相反馈，也一起找合作和机会。",
       href: "https://www.superlinear.academy/",
     },
     {
       name: "AI Builders",
-      role: "AI 实战学习项目",
-      detail: "从真实项目出发，学习搭建可靠的 AI 工作流、产品和系统。",
+      role: "长期 AI 学习体系",
+      detail:
+        "把 AI 的原理、构建方法和价值判断，教成一套能在真实问题中反复使用的能力。",
       href: "https://ai-builders.com/",
     },
     {
       name: "Stay Superlinear",
       role: "长期会员社区",
-      detail: "面向已经把 AI 用进真实工作的人，由立正和鸭哥共同主理。",
+      detail:
+        "面向已有专业积累、正在用 AI 的人，由立正和鸭哥共同主理。围绕会员正在做的事，认真聊问题、打磨作品，也连接合适的人和机会。",
       href: "https://staysuperlinear.com/",
     },
   ],
@@ -133,7 +136,7 @@ export default function About() {
         "He has worked as an economist, data scientist, and technology leader at Amazon, Meta, Tencent IEG, and Statsig. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
       currentTitle: "What he is building now",
       currentIntro:
-        "Three related but separate efforts around learning, building, and doing substantive work with AI.",
+        "Three related but distinct ways to turn judgment and building methods into capability, real work, and continued practice.",
       publicTitle: "Books and conversations",
       publicIntro:
         "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
@@ -142,7 +145,7 @@ export default function About() {
       statsigSource: "OpenAI acquisition announcement",
       sourcesTitle: "Sources and contact",
       reviewed:
-        "Facts last reviewed July 21, 2026. Changing figures retain their check date.",
+        "Facts last reviewed July 25, 2026. Changing figures retain their check date.",
       books: "Books",
       hosted: "People Yuzheng has interviewed",
       appeared: "Programs where Yuzheng appeared as a guest",
@@ -155,9 +158,10 @@ export default function About() {
         "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，创办了 Superlinear Academy 和 AI Builders，现居西雅图。",
       backgroundTitle: "经历",
       background:
-        "他在 Amazon 做过经济学家，在 Meta 做过数据科学家，后来任腾讯 IEG 数据与 AI 副总监，也曾任 Statsig 首席数据科学家与唯一布道师。现在主要做 AI 教育、社区和企业项目，同时写书、做访谈。",
+        "他在 Amazon 做过经济学家，在 Meta 做过数据科学家，后来任腾讯 IEG 数据与 AI 副总监，也曾任 Statsig Principal Data Scientist、公司唯一布道师。现在主要做 AI 教育、社区和企业项目，同时写书、做访谈。",
       currentTitle: "现在主要在做什么",
-      currentIntro: "三件事都围绕 AI 学习与实践展开，各自解决不同的问题。",
+      currentIntro:
+        "三件事彼此相关，但各有分工：公开实践、集中训练和长期环境。",
       publicTitle: "书与对话",
       publicIntro:
         "他合著了 Growth Data Analytics Playbook，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
@@ -165,7 +169,7 @@ export default function About() {
       statsigSource: "OpenAI 收购公告",
       sourcesTitle: "资料与联系",
       reviewed:
-        "事实最后核对：2026 年 7 月 21 日。会变化的数字保留各自的核对日期。",
+        "事实最后核对：2026 年 7 月 25 日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",

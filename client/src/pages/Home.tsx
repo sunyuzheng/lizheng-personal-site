@@ -73,7 +73,7 @@ const career = [
   {
     org: "Statsig",
     en: "Principal DS · Sole Evangelist",
-    zh: "首席数据科学家 · 唯一布道师",
+    zh: "Principal Data Scientist · 唯一布道师",
   },
   {
     org: "Superlinear",
@@ -209,8 +209,8 @@ const work = {
       label: "BUILDING CAPABILITY",
       title: "AI Builders",
       detail:
-        "Start with a real problem, learn to make AI carry complex work reliably, and turn the result into projects, workflows, and systems worth keeping.",
-      proof: "Courses · projects · hands-on practice",
+        "Turn AI principles, building methods, and judgment about what is worth doing into capabilities you can reuse across real problems.",
+      proof: "Build useful things with AI · Co-taught with Yage",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
     },
@@ -241,8 +241,8 @@ const work = {
       label: "建立能力",
       title: "AI Builders",
       detail:
-        "从真实问题出发，训练自己用 AI 完成复杂工作，再把有效做法做成作品、工作流和系统。",
-      proof: "课程 · 项目 · 动手实践",
+        "把 AI 的原理、构建方法和价值判断，教成一套能在真实问题中反复使用的能力。",
+      proof: "Build useful things with AI · 与鸭哥共同授课",
       href: "https://ai-builders.com",
       cta: "了解 AI Builders",
     },
@@ -953,8 +953,8 @@ export default function Home() {
               </div>
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
-                  ? "Courses help people build capability. Community gives them people to keep working alongside. Enterprise projects take the same methods into the messiness of a real team."
-                  : "课程练能力，社区让一群人长期一起做事，企业项目则把同样的方法拿到真实团队里去碰。"}
+                  ? "Courses turn judgment and methods into capability. Community lets that capability grow through continued practice. Enterprise work tests the same methods against real goals and constraints."
+                  : "课程把判断和方法教成能力，社区让这套能力在持续实践中生长，企业项目则用真实业务里的目标和约束，检验同样的方法是否管用。"}
               </p>
             </div>
 

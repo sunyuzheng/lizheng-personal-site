@@ -73,7 +73,7 @@ function organizationNodes() {
       name: "AI Builders",
       url: "https://ai-builders.com/",
       description:
-        "A structured program for moving from using AI tools to building reliable workflows, products, and systems.",
+        "A long-term learning system that turns AI principles, building methods, and judgment about what is worth doing into capabilities people can reuse across real problems.",
       creator: { "@id": PERSON_ID },
       provider: { "@id": SUPERLINEAR_ID },
       inLanguage: ["en", "zh-CN"],
@@ -84,7 +84,7 @@ function organizationNodes() {
       name: "Stay Superlinear",
       url: "https://staysuperlinear.com/",
       description:
-        "A paid ongoing membership for AI practitioners and professionals, co-led by Yuzheng Sun and Yage.",
+        "A paid ongoing environment for practitioners that organizes people, content, feedback, tools, and opportunities around members' current work, co-led by Yuzheng Sun and Yage.",
     },
   ];
 }
@@ -138,7 +138,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-21",
+        dateModified: "2026-07-25",
       },
       personNode(lang),
       ...organizationNodes(),
@@ -163,7 +163,7 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
         isPartOf: { "@id": WEBSITE_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-21",
+        dateModified: "2026-07-25",
       },
       personNode(lang),
       ...organizationNodes(),

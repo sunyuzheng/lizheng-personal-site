@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-07-21. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-07-25. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -12,14 +12,14 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 - Yuzheng Sun, 孙煜征, and 课代表立正 refer to the same person. 课代表立正 is the name used for public content.
 - Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
-- Superlinear Academy is the free learning and builder community. AI Builders is a structured learning program. Stay Superlinear is a distinct paid ongoing membership co-led with Yage.
+- Superlinear Academy is the free peer lab and builder community. AI Builders is a long-term AI learning system co-taught with Yage. Stay Superlinear is a distinct paid ongoing environment co-led with Yage.
 - Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
 
 ## Current Work
 
-- [Superlinear Academy](https://www.superlinear.academy): the free learning and builder community.
-- [AI Builders](https://ai-builders.com): a structured program for moving from using AI tools to building reliable workflows, products, and systems.
-- [Stay Superlinear](https://staysuperlinear.com): a paid ongoing membership for AI practitioners and professionals, co-led with Yage.
+- [Superlinear Academy](https://www.superlinear.academy): a free peer lab where projects, specific questions, first-hand experience, feedback, and opportunities circulate.
+- [AI Builders](https://ai-builders.com): a long-term learning system that turns AI principles, building methods, and judgment about what is worth doing into capabilities people can reuse across real problems; co-taught with Yage.
+- [Stay Superlinear](https://staysuperlinear.com): a paid ongoing environment that organizes people, content, feedback, tools, and opportunities around members' current work; co-led with Yage.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
@@ -32,9 +32,11 @@ Metrics change and should retain their dates.
 - 400K+ cross-platform audience as of 2026-07-12.
 - 3,000+ paying learners as of 2026-07-12.
 - 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
-- 4.9/5 AI Builders rating on Maven as of 2026-07-12.
-- 600+ public learner project posts as of 2026-07-08.
+- 4.9/5 AI Builders rating on Maven from 78 ratings, with 52 public named written reviews, as of 2026-07-12.
+- 55 selected AI Architect course projects as of 2026-07-25.
+- 600+ public project posts and nearly 7,000 project comments in the free Superlinear Academy community as of 2026-07-08. These are not counts of paid-course projects.
 - 19,180 members in the free Superlinear Academy community as of 2026-07-16; public copy generally says "nearly 20,000."
+- [AI Engineer](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) publicly named Yuzheng as a collaborator on the upcoming [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), scheduled for November 5-6, 2026. This establishes the announced collaboration, not a completed event outcome.
 
 ## Books
 

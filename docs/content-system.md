@@ -16,12 +16,14 @@
 | ------------------- | ------------------------------------ | ---------------------- |
 | Superlinear         | 整个教育、社区与实践体系的上位品牌   | 不单独做产品卡         |
 | Superlinear Academy | 长期免费的学习与 builder 社区        | 导航与页尾的低门槛入口 |
-| AI Builders         | 从使用 AI 到可靠构建的结构化课程     | `Work` 中的“建立能力”  |
+| AI Builders         | 把 AI 原理、构建方法与价值判断教成可迁移能力的结构化课程 | `Work` 中的“建立能力” |
 | Stay Superlinear    | 持续学习、反馈、作品与关系的付费会员 | `Work` 中的“长期环境”  |
 | Enterprise programs | 把方法接入团队工作流与组织约束       | `Work` 中的“组织实践”  |
 | 书与公开对话        | 形成、公开检验和长期保存判断         | 独立内容章节与子页面   |
 
 产品解释到“为什么属于这条主线”为止。价格、完整权益和转化论证留在各自产品站，避免个人主页变成 landing page。
+
+AI Builders 是最能代表这条主线的产品：它显示立正如何与鸭哥一起，把长期形成的技术理解、构建方法和价值判断，做成别人也能掌握的能力系统。个人主页可以讲这个转化，不复制课程站的 55 个项目、600+ 社区项目、评价墙或购买权益；需要展开时，优先做独立 Teaching / Education case，而不是继续拉长首页。
 
 ## 页面分工
 
@@ -38,15 +40,23 @@
 | `/collab/creators`     | 英文节目邀请与 host kit                | 泛合作入口                             |
 | `/zh/collab/creators`  | 面向中文播客与视频主的主要邀请页       | 产品销售页                             |
 
-旧 PDF 已退出；`/collab/podcast-one-pager.pdf` 只保留永久跳转。节目主资料以 creator 页面为唯一公开版本。
+creator 页面是公开、持续更新的 canonical host kit。新 PDF 是由该页面与个人事实源派生的离线商务附件，供商务负责人直接转发：
+
+- 当前 PDF：`output/pdf/课代表立正_播客与视频访谈资料_2026-07.pdf`
+- 生成源：`scripts/generate-podcast-collab-pdf.py`
+- 旧 `/collab/podcast-one-pager.pdf` 与旧 Stay collateral 继续退出，只保留永久跳转或历史归档。
+
+网页更新后应检查 PDF 是否需要重生成；PDF 不反向成为人物或产品事实源。
 
 ## 事实来源
 
 | 内容                                  | Canonical source                                                                                               |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | 身份、履历、数字、公开措辞边界        | [`sunyuzheng/yuzheng-profile`](https://github.com/sunyuzheng/yuzheng-profile) 的 `facts.json` 与 `EVIDENCE.md` |
+| 公开个人主线与各项目关系              | `yuzheng-profile` 的 `CONTEXT.md` 与 `ECOSYSTEM.md`；网站只选择性呈现                                          |
+| 内部核心竞争力、未来资产与 source map | `kedaibiao/yuzheng-context-private/`；仅供内部决策，不得复制到公开页面                                         |
 | 嘉宾名单与单集归属                    | [`sunyuzheng/kedaibiao-content-tools`](https://github.com/sunyuzheng/kedaibiao-content-tools) 的 `guests.json` |
-| AI Builders 当前产品事实              | `ai-builders-2027` 产品仓库与 `ai-builders.com`                                                                |
+| AI Builders 当前定位、方案与产品事实  | `course-marketing-system` 的 AI Builders 2027 positioning / offer / facts ledger；页面实现见 `ai-builders-2027` 产品仓库与 `ai-builders.com` |
 | Stay Superlinear 当前权益、价格与状态 | `stay-superlinear` 产品仓库与 `staysuperlinear.com`                                                            |
 | 网站页面取舍与信息层级                | 本仓库及本文档                                                                                                 |
 
@@ -54,13 +64,14 @@
 
 ## 当前可用口径
 
-最后核对：2026-07-21。
+最后核对：2026-07-25。
 
 - 400K+ 跨平台关注者（数据截至 2026-07-12）
 - 3,000+ 付费学员（数据截至 2026-07-12）
 - 200+ 场公开对话（数据截至 2026-07-12）
-- AI Builders Maven 评分 4.9/5（数据截至 2026-07-12）
-- 600+ 公开学员项目帖（数据截至 2026-07-08）
+- AI Builders Maven 评分 4.9/5，78 份评分、52 份公开署名文字评价（数据截至 2026-07-12）
+- 55 个入选展示的 AI Architect 课程项目（数据截至 2026-07-25）
+- Superlinear Academy 免费社区 600+ 公开项目帖、近 7,000 条项目评论（数据截至 2026-07-08；不是付费课程项目数）
 - Superlinear Academy 免费社区 19,180 人（数据截至 2026-07-16；公开表达“近 20,000 人”）
 - 2023 年 2 月、GPT-4 发布前首次写成《关于 ChatGPT 最重要的五个问题》
 - 现居西雅图；线下工作的默认地点是西雅图

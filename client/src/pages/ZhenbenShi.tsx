@@ -38,7 +38,7 @@ const MODULES: Module[] = [
   {
     num: "一",
     title: "认知觉醒",
-    count: "6 课",
+    count: "6课",
     lessons: [
       '你从"好学生 → 好工作 → 赚大钱"的梦中醒来了吗？',
       '信息爆炸时代，如何筛选"高价值"信息？',
@@ -51,7 +51,7 @@ const MODULES: Module[] = [
   {
     num: "二",
     title: "思维变革",
-    count: "4 课",
+    count: "4课",
     lessons: [
       '"财富自由"是可行的，前提是正确认识它',
       '破解财富自由迷思：三个常见的"破财陷阱"',
@@ -62,7 +62,7 @@ const MODULES: Module[] = [
   {
     num: "三",
     title: "行动升级 · 工作篇",
-    count: "7 课",
+    count: "7课",
     lessons: [
       "强者成事终极秘诀：道天地将法",
       "只有10%的工作是有意义的，工作如何抓主线？",
@@ -76,7 +76,7 @@ const MODULES: Module[] = [
   {
     num: "四",
     title: "行动升级 · 副业篇",
-    count: "4 课",
+    count: "4课",
     lessons: [
       "来自康奈尔金融博士的科普：为何韭菜总是你？",
       '搞钱第一步：放下"暴富"心态，打造赚钱技能',
@@ -103,7 +103,7 @@ const ENDORSEMENTS: Endorser[] = [
     quote:
       "我在硅谷做了二十多年高管和投资人，见过很多聪明人，煜征是少数让我印象深刻的学习能力极强、又很愿意分享学习结果的那一类。他不只履历漂亮，而更重要的是，他既能想明白，又能做到。我们做过十多次深度对话，每次他都能抓到问题的重点，进行深度思考，挖掘到我身上真正有价值的经验；并在工作、创业、投资中，把这些经验融会贯通。所以，他既能做出紧跟时代的选择，又能长期耕耘，做出有护城河的结果，而这本书是他真金白银换、长期思考带来的认知，值得每个人认真读。",
     name: "硅谷徐老师",
-    title: "财富五百强 GEN 首席AI官、投资人、斯坦福商学院客座讲师",
+    title: "GEN（财富500强企业）· 首席AI官、投资人、斯坦福商学院客座讲师",
   },
 ];
 
@@ -118,11 +118,11 @@ const FAQ = [
   },
   {
     q: "副业会不会影响主业表现？",
-    a: '书中强调"工作是资本，副业是实验室"。通过抓住 10% 高价值任务，你反而能在主业中更快成长，并将经验投射到副业变现。二者可以相互促进。',
+    a: '书中强调"工作是资本，副业是实验室"。通过抓住10%高价值任务，你反而能在主业中更快成长，并将经验投射到副业变现。二者可以相互促进。',
   },
   {
     q: "是否提供线下活动或一对一辅导？",
-    a: "页面下方可以直接浏览 Superlinear Academy 免费社区，具体活动以社区当期公告为准。如有合作或讲座需求，欢迎发邮件至 yz@superlinear.academy。",
+    a: "页面下方可以直接浏览Superlinear Academy免费社区，具体活动以社区当期公告为准。如有合作或讲座需求，欢迎发邮件至yz@superlinear.academy。",
   },
 ];
 
@@ -430,11 +430,11 @@ function AdvisorSection() {
         <div className="mb-8">
           <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
             <span className="w-6 h-px bg-amber-400 inline-block" />
-            AI 顾问
+            AI顾问
             <span className="w-6 h-px bg-amber-400 inline-block" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-            和真本事 AI 顾问对话
+            与《真本事》AI顾问对话
           </h2>
           <p className="text-zinc-400 mt-3 text-sm text-center max-w-lg mx-auto">
             基于书中七大框架，帮你诊断思维陷阱、做对职业选择、给出可执行建议。
@@ -551,7 +551,7 @@ function AdvisorSection() {
           </Button>
         </div>
         <p className="text-zinc-600 text-xs mt-1.5">
-          按 Enter 发送 · Shift+Enter 换行 · 最多 2,000 字。请勿输入敏感信息。
+          按Enter发送 · Shift+Enter换行 · 最多2,000字。请勿输入敏感信息。
         </p>
 
         {/* Multi-tool install callout */}
@@ -559,8 +559,8 @@ function AdvisorSection() {
           <div className="flex gap-3 items-stretch">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 flex-1">
               {[
-                ["Claude Code / Codex", "把仓库作为 Skill 使用"],
-                ["Claude / ChatGPT", "参考 SKILL.md 配置项目指令"],
+                ["Claude Code / Codex", "把仓库作为Skill使用"],
+                ["Claude / ChatGPT", "参考SKILL.md配置项目指令"],
               ].map(([tool, desc]) => (
                 <div
                   key={tool}
@@ -589,7 +589,7 @@ function AdvisorSection() {
                 rel="noopener noreferrer"
                 className="text-xs border border-white/10 text-zinc-400 hover:text-white hover:bg-white/5 px-3 py-2 transition-colors text-center whitespace-nowrap"
               >
-                查看 Skill 源文件 →
+                查看Skill源文件 →
               </a>
             </div>
           </div>
@@ -652,7 +652,7 @@ export default function ZhenbenShi() {
             <div className="hidden lg:flex items-center gap-6">
               {[
                 ["核心框架", "framework"],
-                ["AI 顾问", "advisor"],
+                ["AI顾问", "advisor"],
                 ["课程大纲", "outline"],
                 ["封面推荐", "endorsements"],
                 ["关于作者", "author"],
@@ -713,7 +713,7 @@ export default function ZhenbenShi() {
             <div className="lg:hidden py-4 space-y-3 border-t border-white/[0.08]">
               {[
                 ["核心框架", "framework"],
-                ["AI 顾问", "advisor"],
+                ["AI顾问", "advisor"],
                 ["课程大纲", "outline"],
                 ["封面推荐", "endorsements"],
                 ["关于作者", "author"],
@@ -762,7 +762,7 @@ export default function ZhenbenShi() {
               >
                 <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.907-.373.336 0 .63.124.867.373L8.12 3.333h7.893l1.387-1.387c.253-.249.549-.373.867-.373.32 0 .613.124.867.373.249.249.373.551.373.907 0 .355-.124.657-.373.906z" />
               </svg>
-              由同名 B站课程扩写成书
+              由同名B站课程扩写成书
             </div>
 
             <div>
@@ -775,7 +775,7 @@ export default function ZhenbenShi() {
                 把工作变成能力，把能力变成收入
               </p>
               <div className="inline-block border border-white/10 text-zinc-500 text-xs px-2 py-1 mt-2">
-                人民邮电出版社 · 2026 年 4 月 · ISBN 9787115690500
+                人民邮电出版社 · 2026年4月 · ISBN 9787115690500
               </div>
             </div>
 
@@ -974,7 +974,7 @@ export default function ZhenbenShi() {
                 num: "03",
                 tag: "利用杠杆",
                 title: "成果放大十倍、百倍",
-                body: "借助平台、内容、AI 与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
+                body: "借助平台、内容、AI与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
               },
             ].map(c => (
               <Card key={c.num} className="bg-white/[0.03] border-white/10">
@@ -1086,7 +1086,7 @@ export default function ZhenbenShi() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                在 B 站观看课程 →
+                在B站观看课程 →
               </a>
             </Button>
           </div>
@@ -1159,16 +1159,16 @@ export default function ZhenbenShi() {
                   孙煜征
                 </h2>
                 <p className="text-zinc-400 text-sm mt-1">
-                  康奈尔大学经济学博士 · Superlinear Academy 创始人 · 作者
+                  康奈尔大学经济学博士 · Superlinear Academy · 创始人 · 作者
                 </p>
               </div>
 
               <div className="space-y-3">
                 {[
-                  "康奈尔大学经济学博士；曾任 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监",
-                  "曾任 Statsig Principal Data Scientist 与公司唯一 evangelist；Statsig 于 2025 年被 OpenAI 收购",
-                  "Superlinear Academy 与 AI Builders 创始人，长期从事 AI 教育、社区与企业实践",
-                  "截至 2026 年 7 月，累计完成 200+ 场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
+                  "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监",
+                  "曾在Statsig任Principal Data Scientist及公司唯一evangelist；Statsig于2025年被OpenAI收购",
+                  "Superlinear Academy与AI Builders的创始人，长期从事AI教育、社区与企业实践",
+                  "截至2026年7月，累计完成200+场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
                   "现居西雅图",
                 ].map(item => (
                   <div
@@ -1189,7 +1189,7 @@ export default function ZhenbenShi() {
                   <span className="text-white font-semibold">
                     《Growth Data Analytics Playbook》
                   </span>{" "}
-                  入选《华尔街日报》CIO Journal 2025 年书单
+                  入选《华尔街日报》CIO Journal 2025年书单
                 </p>
               </div>
 
@@ -1218,7 +1218,7 @@ export default function ZhenbenShi() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm text-amber-400 hover:text-amber-300 transition-colors"
               >
-                个人主页 lizheng.ai →
+                个人主页：lizheng.ai →
               </a>
             </div>
           </div>
@@ -1231,7 +1231,7 @@ export default function ZhenbenShi() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
               <span className="w-6 h-px bg-amber-400 inline-block" />
-              Superlinear 社群
+              Superlinear社群
               <span className="w-6 h-px bg-amber-400 inline-block" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -1240,15 +1240,15 @@ export default function ZhenbenShi() {
               把书里的方法用起来
             </h2>
             <p className="text-zinc-400 mt-4 max-w-lg mx-auto text-sm">
-              Superlinear Academy
-              长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
+              Superlinear
+              Academy长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
             </p>
           </div>
           <div className="border border-white/10 overflow-hidden">
             <iframe
               style={{ border: 0, width: "100%", height: "75vh" }}
               src="https://www.superlinear.academy/feed?iframe=true"
-              title="Superlinear 社群"
+              title="Superlinear社群"
               loading="lazy"
             />
           </div>
@@ -1282,8 +1282,7 @@ export default function ZhenbenShi() {
             想继续读，从这里开始
           </h2>
           <p className="text-zinc-400 mb-8">
-            可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入
-            Superlinear 社区。
+            可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入Superlinear社区。
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button
@@ -1325,7 +1324,7 @@ export default function ZhenbenShi() {
                 rel="noopener noreferrer"
               >
                 <Users className="w-5 h-5 mr-2" />
-                加入 Superlinear 社群
+                加入Superlinear社群
               </a>
             </Button>
           </div>

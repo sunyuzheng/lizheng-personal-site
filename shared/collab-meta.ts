@@ -14,7 +14,7 @@ export const COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
   zh: {
     title: "合作 · 课代表立正",
     description:
-      "与课代表立正合作：演讲、企业 AI 项目、顾问与长期合作。播客、视频与创作者邀请使用独立入口。",
+      "与课代表立正合作：演讲、企业AI项目、顾问与长期合作。播客、视频与创作者邀请使用独立入口。",
     canonical: "https://www.lizheng.ai/zh/collab",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
     lastModified: "2026-07-20",

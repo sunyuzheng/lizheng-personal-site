@@ -118,7 +118,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <p className="mt-3 text-sm leading-6 text-zinc-400">
               {lang === "en"
                 ? "The link may be wrong, or the slug may not have been generated yet."
-                : "链接可能写错了，或者对应 slug 还没有生成。"}
+                : "链接可能写错了，或者对应slug还没有生成。"}
             </p>
             <Button
               asChild
@@ -156,13 +156,13 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <span className="rounded-full border border-white/10 px-2.5 py-1">
                 {lang === "en"
                   ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
-                  : `${guest.episode_count} 期访谈`}
+                  : `${guest.episode_count}期访谈`}
               </span>
               {formatViews(guest.max_views) && (
                 <span className="rounded-full border border-white/10 px-2.5 py-1">
                   {lang === "en"
                     ? `Top view count ${formatViews(guest.max_views)}`
-                    : `最高播放 ${formatViews(guest.max_views)}`}
+                    : `最高播放${formatViews(guest.max_views)}`}
                 </span>
               )}
             </div>
@@ -248,7 +248,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {lang === "en" ? "Open on YouTube" : "打开 YouTube"}
+                  {lang === "en" ? "Open on YouTube" : "打开YouTube"}
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
               </Button>
@@ -279,7 +279,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   <span>
                     {lang === "en"
                       ? `${formatViews(guest.primary_episode.viewCount)} views`
-                      : `${formatViews(guest.primary_episode.viewCount)} 次观看`}
+                      : `${formatViews(guest.primary_episode.viewCount)}次观看`}
                   </span>
                 )}
                 {formatPublishedAt(guest.primary_episode.publishedAt, lang) && (
@@ -291,7 +291,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <p className="mt-2 text-sm text-zinc-200">
                 {lang === "en"
                   ? "Click through to watch on YouTube"
-                  : "点开后直接跳转到 YouTube 播放页"}
+                  : "点开后直接跳转到YouTube播放页"}
               </p>
             </div>
           </a>
@@ -310,7 +310,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <p className="text-sm text-zinc-500">
               {lang === "en"
                 ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}, sorted by views`
-                : `${guest.episode_count} 期内容，按观看量排序`}
+                : `${guest.episode_count}期内容，按观看量排序`}
             </p>
           </div>
 
@@ -359,7 +359,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                       <span>
                         {lang === "en"
                           ? `${formatViews(episode.viewCount)} views`
-                          : `${formatViews(episode.viewCount)} 次观看`}
+                          : `${formatViews(episode.viewCount)}次观看`}
                       </span>
                     )}
                   </div>

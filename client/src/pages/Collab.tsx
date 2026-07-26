@@ -120,16 +120,16 @@ const copy = {
         number: "01",
         title: "演讲与活动",
         detail:
-          "Keynote、炉边对谈和圆桌，主题包括 AI 判断、用 AI 构建、增长与实验、职业杠杆。",
+          "Keynote、炉边对谈和圆桌，主题包括AI判断、用AI构建、增长与实验、职业杠杆。",
         fit: "最合适的情况：你说得清台下是谁，以及听完后希望他们发生什么变化。",
       },
       {
         icon: Building2,
         number: "02",
-        title: "企业 AI 项目",
+        title: "企业AI项目",
         detail:
-          "面向研发和非研发团队的成体系项目，从真实工作流和组织约束出发。曾为腾讯、美团、小红书、DoorDash、Pinterest 等团队提供项目与内部分享。",
-        fit: "最合适的情况：团队需要从讨论 AI，走到真正改变工作方式。",
+          "面向研发和非研发团队的成体系项目，从真实工作流和组织约束出发。曾为腾讯、美团、小红书、DoorDash、Pinterest等团队提供项目与内部分享。",
+        fit: "最合适的情况：团队需要从讨论AI，走到真正改变工作方式。",
         action: {
           label: "了解企业项目",
           href: "https://corp-training.ai-builders.com/",
@@ -146,7 +146,7 @@ const copy = {
     ],
     budgetTitle: "商业项目的范围",
     budgetDetail:
-      "便于预算判断：顾问 $2,000/小时；定制企业项目 $100k 起。演讲另行确定范围。节目邀请不在这里定价，也不与商业项目打包。",
+      "便于预算判断：顾问$2,000/小时；定制企业项目$100k起。演讲另行确定范围。节目邀请不在这里定价，也不与商业项目打包。",
     principlesEyebrow: "如何判断是否合适",
     principlesTitle: "有用的合作，应该从事情开始，不是从交易开始。",
     principles: [
@@ -244,7 +244,7 @@ export default function Collab() {
                 alt={
                   lang === "en"
                     ? "Yuzheng Sun in conversation with the hosts of Acquired"
-                    : "课代表立正与 Acquired 主播对谈"
+                    : "课代表立正与Acquired的主播对谈"
                 }
                 className="absolute inset-0 h-full w-full object-cover object-center"
                 width={2400}

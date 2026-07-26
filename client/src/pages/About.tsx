@@ -27,7 +27,7 @@ const career = [
   {
     organization: "Tencent IEG",
     en: "Vice Director, Data & AI",
-    zh: "数据与 AI 副总监",
+    zh: "数据与AI副总监",
   },
   {
     organization: "Statsig",
@@ -75,7 +75,7 @@ const currentWork = {
     },
     {
       name: "AI Builders",
-      role: "长期 AI 学习体系",
+      role: "长期AI学习体系",
       detail:
         "立正与鸭哥把对模型、工程、产品和组织的理解，转译成学员可以练习、纠错，再带回自己问题里的能力。",
       href: "https://ai-builders.com/",
@@ -84,7 +84,7 @@ const currentWork = {
       name: "Stay Superlinear",
       role: "长期会员社区",
       detail:
-        "面向已有专业积累、正在用 AI 的人，由立正和鸭哥共同主理。围绕会员正在做的事，认真聊问题、打磨作品，也连接合适的人和机会。",
+        "面向已有专业积累、正在用AI的人，由立正和鸭哥共同主理。围绕会员正在做的事，认真聊问题、打磨作品，也连接合适的人和机会。",
       href: "https://staysuperlinear.com/",
     },
   ],
@@ -155,21 +155,20 @@ export default function About() {
       back: "回到主页",
       eyebrow: "关于课代表立正",
       intro:
-        "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，创办了 Superlinear Academy 和 AI Builders，现居西雅图。",
+        "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，创办了Superlinear Academy和AI Builders，现居西雅图。",
       backgroundTitle: "经历",
       background:
-        "他在 Amazon 做过经济学家，在 Meta 做过数据科学家，后来任腾讯 IEG 数据与 AI 副总监，也曾任 Statsig Principal Data Scientist、公司唯一布道师。现在主要做 AI 教育、社区和企业项目，同时写书、做访谈。",
+        "他在Amazon做过经济学家，在Meta做过数据科学家，后来任腾讯IEG · 数据与AI副总监，也曾任Statsig · Principal Data Scientist、公司唯一布道师。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
       currentTitle: "现在主要在做什么",
       currentIntro:
         "三件事彼此相关，但各有分工：公开实践、集中训练和长期环境。",
       publicTitle: "书与对话",
       publicIntro:
-        "他合著了 Growth Data Analytics Playbook，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
-      statsigNote: "Statsig 于 2025 年被 OpenAI 收购；孙煜征在收购前已经离开。",
-      statsigSource: "OpenAI 收购公告",
+        "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
+      statsigNote: "Statsig于2025年被OpenAI收购；孙煜征在收购前已经离开。",
+      statsigSource: "OpenAI收购公告",
       sourcesTitle: "资料与联系",
-      reviewed:
-        "事实最后核对：2026 年 7 月 25 日。会变化的数字保留各自的核对日期。",
+      reviewed: "事实最后核对：2026年7月25日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",
@@ -256,7 +255,7 @@ export default function About() {
               >
                 {lang === "en"
                   ? "Cornell Economics placement record"
-                  : "Cornell Economics 博士去向记录"}
+                  : "康奈尔经济学博士去向记录"}
                 <ExternalLink className="h-4 w-4" />
               </a>
               <p className="mt-7 border-t border-[#D4D0C7] pt-5 text-sm leading-7 text-[#6E685D]">
@@ -352,7 +351,7 @@ export default function About() {
                 <Button
                   asChild
                   variant="outline"
-                  className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                  className="h-auto max-w-full whitespace-normal border-white/20 bg-white/[0.03] py-2 text-center text-white hover:bg-white/[0.08]"
                 >
                   <Link href={withLanguage("/guests", lang)}>
                     <Mic2 className="mr-2 h-4 w-4" />
@@ -362,7 +361,7 @@ export default function About() {
                 <Button
                   asChild
                   variant="outline"
-                  className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                  className="h-auto max-w-full whitespace-normal border-white/20 bg-white/[0.03] py-2 text-center text-white hover:bg-white/[0.08]"
                 >
                   <Link
                     href={`${withLanguage("/collab/creators", lang)}#conversations`}
@@ -387,7 +386,7 @@ export default function About() {
               <p className="bg-[#0B0F1A] p-4 text-xs leading-5 text-zinc-600 sm:col-span-3 lg:col-span-1">
                 {lang === "en"
                   ? "Figures checked July 12, 2026."
-                  : "数据核对日期：2026 年 7 月 12 日。"}
+                  : "数据核对日期：2026年7月12日。"}
               </p>
             </div>
           </div>

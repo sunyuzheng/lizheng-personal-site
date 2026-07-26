@@ -45,7 +45,7 @@ const career = [
   {
     org: "Tencent IEG",
     en: "Vice Director, Data & AI",
-    zh: "数据与 AI 副总监",
+    zh: "数据与AI副总监",
   },
   {
     org: "Statsig",
@@ -169,11 +169,11 @@ const featuredPrediction = {
   },
   zh: {
     date: "2023.02",
-    context: "GPT-4 发布前",
+    context: "GPT-4发布前",
     title:
-      "2023 年 2 月，在 GPT-4 发布前，我写下：ChatGPT 不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
+      "2023年2月，在GPT-4发布前，我当时的判断是：ChatGPT不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
     detail:
-      "文中讨论了推理成本骤降、工具调用与 agent、个人记忆与 private search（后来被称为 RAG）、Copilot，以及 AI-native 系统。",
+      "文中讨论了推理成本骤降、工具调用与agent、个人记忆与private search（后来被称为RAG）、Copilot，以及AI-native系统。",
     label: "阅读万字原文",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   },
@@ -202,18 +202,17 @@ const predictions = {
   zh: [
     {
       date: "2025.01",
-      title:
-        "Agentic AI 是 AI 当前最重要的方向，真正的机会窗口只有 10–18 个月。",
+      title: "Agentic AI是AI当前最重要的方向，真正的机会窗口只有10–18个月。",
       href: "https://youtu.be/FzbkAy0DcQk",
     },
     {
       date: "2025.03",
-      title: "MCP 有重大的结构性缺陷，实际价值远没有市场吹捧得那么高。",
+      title: "MCP有重大的结构性缺陷，实际价值远没有市场吹捧得那么高。",
       href: "https://youtu.be/kwwjR6HHJPM",
     },
     {
       date: "2026.03",
-      title: "OpenClaw 一定会凉，但现在仍值得亲自试一遍。",
+      title: "OpenClaw一定会凉，但现在仍值得亲自试一遍。",
       href: "https://youtu.be/h_yCYBRzbVw",
     },
   ],
@@ -258,10 +257,10 @@ const work = {
       label: "学习与实践",
       title: "AI Builders",
       detail:
-        "鸭哥追问技术为什么成立、怎样做到可靠；我追问为什么做、为谁做、怎样才算有用。AI Builders 把这两种经验放在一起。",
-      proof: "3,000+ 付费学员 · Maven 4.9/5 · 与鸭哥共同授课",
+        "鸭哥追问技术为什么成立、怎样做到可靠；我追问为什么做、为谁做、怎样才算有用。AI Builders把这两种经验放在一起。",
+      proof: "3,000+付费学员 · Maven 4.9/5 · 与鸭哥共同授课",
       href: "https://ai-builders.com",
-      cta: "了解 AI Builders",
+      cta: "了解AI Builders",
     },
     {
       icon: Users,
@@ -271,14 +270,14 @@ const work = {
         "成员带着手头的工作、作品和问题进来，用一手经验、反馈和关系，一起判断下一步。",
       proof: "认真问问题 · 打磨作品 · 遇见值得一起做事的人",
       href: "https://staysuperlinear.com",
-      cta: "了解 Stay Superlinear",
+      cta: "了解Stay Superlinear",
     },
     {
       icon: Building2,
       label: "组织实践",
-      title: "企业 AI 转型",
+      title: "企业AI转型",
       detail:
-        "我和团队一起找出最值得改变的工作，把 AI 放进实际流程，再用结果决定要不要扩展。",
+        "我和团队一起找出最值得改变的工作，把AI放进实际流程，再用结果决定要不要扩展。",
       proof: "腾讯 · DoorDash · Pinterest · 1Password · Amazon",
       href: "https://corp-training.ai-builders.com",
       cta: "了解企业合作",
@@ -345,20 +344,20 @@ const selectedGuests = {
   ],
   zh: [
     {
-      name: "贾扬清 Yangqing Jia",
-      role: "PyTorch 共同创始人 · Lepton AI 创始人",
+      name: "贾扬清（Yangqing Jia）",
+      role: "PyTorch · 共同创始人 · Lepton AI · 创始人",
       href: "/guests/yangqing-jia",
       image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
     },
     {
       name: "田渊栋",
-      role: "AI 研究者 · 前 Meta AI / FAIR",
+      role: "AI研究者 · 前Meta AI / FAIR",
       href: "/guests/tian-yuandong",
       image: "https://img.youtube.com/vi/dymM40bVIhQ/maxresdefault.jpg",
     },
     {
-      name: "硅谷徐老师 Howie Xu",
-      role: "GEN 首席 AI 官 · 斯坦福商学院客座讲师",
+      name: "硅谷徐老师（Howie Xu）",
+      role: "GEN · 首席AI官 · 斯坦福商学院客座讲师",
       href: "/guests/howie-xu",
       image: "https://img.youtube.com/vi/R8X4ClBY5tg/maxresdefault.jpg",
     },
@@ -369,20 +368,20 @@ const selectedGuests = {
       image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
     },
     {
-      name: "毕书超 Shuchao Bi",
+      name: "毕书超（Shuchao Bi）",
       role: "OpenAI Head of Post-Training · Multimodal",
       href: "/guests/shuchao-bi",
       image: "https://img.youtube.com/vi/7ej2r7XysKc/hqdefault.jpg",
     },
     {
       name: "Reynold Xin",
-      role: "Databricks 联合创始人",
+      role: "Databricks · 联合创始人",
       href: "/guests/reynold-xin",
       image: "https://img.youtube.com/vi/GIv0I-34aaI/hqdefault.jpg",
     },
     {
       name: "Vijaye Raji",
-      role: "Statsig 创始人 · OpenAI CTO of Applications",
+      role: "Statsig · 创始人 · OpenAI CTO of Applications",
       href: "/guests/vijaye-raji",
       image: "https://img.youtube.com/vi/iw2QYZeVlOQ/hqdefault.jpg",
     },
@@ -394,7 +393,7 @@ const selectedGuests = {
     },
     {
       name: "Gergely Orosz",
-      role: "The Pragmatic Engineer 创始人",
+      role: "The Pragmatic Engineer · 创始人",
       href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
       image: "/english-network/gergely-orosz.webp",
     },
@@ -441,7 +440,7 @@ const endorsements = {
       quote:
         "立正能把多年产品增长经验提炼成可执行的洞察，帮助数据科学家、产品经理和创始人更快看清关键问题。",
       name: "Vijaye Raji",
-      role: "Statsig 创始人 · OpenAI CTO of Applications",
+      role: "Statsig · 创始人 · OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
     },
@@ -449,7 +448,7 @@ const endorsements = {
       quote:
         "立正做的 AI 教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
       name: "Wei Manfredi",
-      role: "IHG Hotels & Resorts AI 与架构高级副总裁",
+      role: "IHG Hotels & Resorts · AI与架构高级副总裁",
       avatar: "/avatars/wei-manfredi.jpg",
       initials: "WM",
     },
@@ -673,7 +672,7 @@ export default function Home() {
               alt={
                 lang === "en"
                   ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
-                  : "孙煜征与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈"
+                  : "孙煜征与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
               }
               className="absolute inset-0 h-full w-full object-cover object-center lg:origin-right lg:scale-[1.12]"
               width={2400}
@@ -700,7 +699,7 @@ export default function Home() {
                   </>
                 ) : (
                   <>
-                    <span className="block">AI 让「做出来」</span>
+                    <span className="block">AI让「做出来」</span>
                     <span className="block">越来越容易。</span>
                     <span className="mt-3 block text-amber-200">
                       我研究的是：
@@ -712,7 +711,7 @@ export default function Home() {
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg md:leading-8">
                 {lang === "en"
                   ? "I'm Yuzheng Sun (课代表立正), a founder based in Seattle with a PhD in Economics from Cornell. Across economics, product, organizations, and AI education, I keep asking: who truly needs this, what outcome is useful, and what remains after it is built?"
-                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士，现居西雅图。从经济学、产品与组织，到 AI 教育，我一直在问：谁真正需要，什么结果才算有用，做完以后能留下些什么。"}
+                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士，现居西雅图。从经济学、产品与组织，到AI教育，我一直在问：谁真正需要，什么结果才算有用，做完以后能留下些什么。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -738,7 +737,7 @@ export default function Home() {
                 <p className="max-w-lg text-xs leading-5 text-zinc-400">
                   {lang === "en"
                     ? "In conversation with Ben Gilbert and David Rosenthal of Acquired · Significance Summit"
-                    : "与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈 · Significance Summit"}
+                    : "与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈 · Significance Summit"}
                 </p>
                 <div className="ml-auto hidden gap-3 sm:flex">
                   <a
@@ -809,12 +808,12 @@ export default function Home() {
                 <p>
                   {lang === "en"
                     ? "Economics taught me to study choice and causality. At Amazon and Meta, a signal mattered only if it changed a product decision. Leading a 30-person data and AI team at Tencent taught me that one person seeing the problem clearly was not enough; the organization still had to act on it. At Statsig, experiments gave teams a practical answer to a recurring question: should we keep going or stop?"
-                    : "经济学训练我研究选择与因果；在 Amazon 和 Meta，一个信号只有改变产品决策才有意义；在腾讯带 30 人团队，我发现一个人想明白还不够，团队还得能据此行动；到了 Statsig，实验每天都在回答一个很实际的问题：继续，还是停下。"}
+                    : "经济学训练我研究选择与因果；在Amazon和Meta，一个信号只有改变产品决策才有意义；在腾讯带30人团队，我发现一个人想明白还不够，团队还得能据此行动；到了Statsig，实验每天都在回答一个很实际的问题：继续，还是停下。"}
                 </p>
                 <p>
                   {lang === "en"
                     ? "AI is lowering the cost of execution. It does not answer why something should be built, who it is for, or what useful means. My current work is where I keep putting those questions in contact with reality."
-                    : "AI 把执行成本压得越来越低，却不会替我们回答为什么做、为谁做、怎样才算有用。今天的课程、社区和企业项目，就是我继续回答这些问题的地方。"}
+                    : "AI把执行成本压得越来越低，却不会替我们回答为什么做、为谁做、怎样才算有用。今天的课程、社区和企业项目，就是我继续回答这些问题的地方。"}
                 </p>
               </div>
             </div>
@@ -990,7 +989,7 @@ export default function Home() {
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
                   ? "Today I work with learners, community members, and enterprise teams. AI Builders helps people choose problems, judge value, and build reliably. Stay surrounds current work with continuing feedback and people who can help. Enterprise projects test the same questions against real goals, workflows, and constraints. The work keeps showing me where an idea holds up—and where it still needs work."
-                  : "今天，我和学员、社区成员、企业团队一起工作。AI Builders 练的是选问题、判断价值，再把东西可靠地做出来；Stay 让手头的工作不断得到反馈，也遇见能一起做事的人；企业项目则必须在真实目标、流程和约束里见结果。做的过程中，我也会不断发现，原来哪些地方想对了，哪些还得改。"}
+                  : "今天，我和学员、社区成员、企业团队一起工作。AI Builders练的是选问题、判断价值，再把东西可靠地做出来；Stay让手头的工作不断得到反馈，也遇见能一起做事的人；企业项目则必须在真实目标、流程和约束里见结果。做的过程中，我也会不断发现，原来哪些地方想对了，哪些还得改。"}
               </p>
             </div>
 
@@ -1041,7 +1040,7 @@ export default function Home() {
                     alt={
                       lang === "en"
                         ? "Yuzheng Sun leading an AI training session at a DoorDash team offsite in Seattle"
-                        : "孙煜征在西雅图 DoorDash 团队 offsite 进行 AI 培训"
+                        : "孙煜征在西雅图为DoorDash团队做AI培训"
                     }
                     className="aspect-[4/3] w-full object-cover md:aspect-[16/10] lg:aspect-[4/3]"
                     loading="lazy"
@@ -1053,7 +1052,7 @@ export default function Home() {
                   <span>
                     {lang === "en"
                       ? "DoorDash team offsite · AI training"
-                      : "DoorDash 团队 offsite · AI 培训"}
+                      : "DoorDash团队线下活动 · AI培训"}
                   </span>
                   <span>{lang === "en" ? "Seattle" : "西雅图"}</span>
                 </figcaption>
@@ -1103,12 +1102,12 @@ export default function Home() {
                 <p>
                   {lang === "en"
                     ? "These conversations are one way I answer what has actually changed. I am less interested in collecting a guest's conclusions than in understanding why they believe them, what evidence supports the view, and where it might fail. More than 200 public conversations have become a source of first-hand input."
-                    : "这些对话，也是我判断“什么真的变了”的办法。比起收集嘉宾的正确答案，我更想追问：他为什么这样判断，证据是什么，哪里可能错。200+ 场公开对话，也成了我持续获得一手信息的方式。"}
+                    : "这些对话，也是我判断“什么真的变了”的办法。比起收集嘉宾的正确答案，我更想追问：他为什么这样判断，证据是什么，哪里可能错。200+场公开对话，也成了我持续获得一手信息的方式。"}
                 </p>
                 <p className="text-sm leading-7 text-zinc-500">
                   {lang === "en"
                     ? "These conversations reach a 400K+ audience across YouTube, Bilibili, and Xiaohongshu, including engineers, data scientists, founders, investors, and operators across China and the U.S."
-                    : "这些对话通过 YouTube、B站和小红书触达 400K+ 关注者，其中包括大量中美工程师、数据科学家、创始人、投资人与管理者。"}
+                    : "这些对话通过YouTube、B站和小红书触达400K+关注者，其中包括大量中美工程师、数据科学家、创始人、投资人与管理者。"}
                 </p>
               </div>
             </div>
@@ -1224,7 +1223,7 @@ export default function Home() {
                   alt={
                     lang === "en"
                       ? "Yuzheng Sun, co-authors Mengying Li and Joe Kumar, and Julie Zhuo at the Growth Data Analytics Playbook launch"
-                      : "孙煜征与共同作者李梦颖、Joe Kumar 及 Julie Zhuo 在 Growth Data Analytics Playbook 发布活动现场"
+                      : "孙煜征、共同作者李梦颖和Joe Kumar，以及Julie Zhuo在《Growth Data Analytics Playbook》发布活动现场"
                   }
                   className="aspect-[16/10] w-full object-cover object-center md:aspect-[16/8.5]"
                   loading="lazy"
@@ -1236,12 +1235,12 @@ export default function Home() {
                 <span>
                   {lang === "en"
                     ? "At the launch of Growth Data Analytics Playbook, with co-authors Mengying Li and Joe Kumar, and Julie Zhuo."
-                    : "《Growth Data Analytics Playbook》发布活动，与共同作者李梦颖、Joe Kumar 及 Julie Zhuo。"}
+                    : "《Growth Data Analytics Playbook》发布活动，与共同作者李梦颖和Joe Kumar，以及Julie Zhuo。"}
                 </span>
                 <span>
                   {lang === "en"
                     ? "Featured in a 2025 WSJ CIO Journal reading list"
-                    : "入选《华尔街日报》CIO Journal 2025 年书单"}
+                    : "入选《华尔街日报》CIO Journal 2025年书单"}
                 </span>
               </figcaption>
             </figure>
@@ -1299,12 +1298,12 @@ export default function Home() {
               <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
                 {lang === "en"
                   ? "Superlinear Academy gives me more than agreement. People bring counterexamples and constraints I missed; some projects meet their first users, then return later with what happened. Work and questions can enter before they look finished."
-                  : "Superlinear Academy 给我的不只是认同。有人拿出反例，指出我没看到的限制；有些项目遇到第一批用户，过一段时间再回来讲结果。项目还没做完、问题还没想透，也都可以拿进来。"}
+                  : "Superlinear Academy给我的不只是认同。有人拿出反例，指出我没看到的限制；有些项目遇到第一批用户，过一段时间再回来讲结果。项目还没做完、问题还没想透，也都可以拿进来。"}
               </p>
               <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">
                 {lang === "en"
                   ? "Nearly 20,000 members · 600+ project posts · nearly 7,000 project comments"
-                  : "近 20,000 名成员 · 600+ 项目帖 · 近 7,000 条项目评论"}
+                  : "近20,000名成员 · 600+项目帖 · 近7,000条项目评论"}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
@@ -1345,7 +1344,7 @@ export default function Home() {
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
                 ? "PhD in Economics from Cornell, author, and founder of Superlinear Academy and AI Builders."
-                : "康奈尔大学经济学博士、作者，Superlinear Academy 与 AI Builders 创始人。"}
+                : "康奈尔大学经济学博士、作者，Superlinear Academy与AI Builders的创始人。"}
             </p>
             <Link
               href={withLanguage("/about", lang)}

@@ -78,7 +78,7 @@ export default function Guests() {
                 </>
               ) : (
                 <>
-                  {guests.length} 位嘉宾 · {multiEp} 位多期深访 ·
+                  {guests.length}位嘉宾 · {multiEp}位多期深访 ·
                   每位嘉宾都有独立分享页
                 </>
               )}
@@ -208,7 +208,7 @@ export default function Guests() {
                       <span>
                         {lang === "en"
                           ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
-                          : `${guest.episode_count} 期访谈`}
+                          : `${guest.episode_count}期访谈`}
                       </span>
                       <span className="rounded-full border border-white/10 px-2 py-0.5">
                         {lang === "en" ? "Dedicated page" : "独立页"}

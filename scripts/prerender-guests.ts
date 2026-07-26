@@ -171,7 +171,7 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
 
   return `
   <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
-    <h1>课代表立正 · 全部嘉宾（${guests.length} 位）</h1>
+    <h1>课代表立正 · 全部嘉宾（${guests.length}位）</h1>
     <p>${escapeHtml(description)}</p>
     <ul>
         ${items}
@@ -183,9 +183,9 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
   const items = guest.episodes
     .map(
       (episode, index) =>
-        `<li><a href="${escapeHtml(episode.url)}">${escapeHtml(episode.title)}</a>（第 ${
+        `<li><a href="${escapeHtml(episode.url)}">${escapeHtml(episode.title)}</a>（第${
           index + 1
-        } 期${episode.isPrimary ? "，精选" : ""}）</li>`
+        }期${episode.isPrimary ? "，精选" : ""}）</li>`
     )
     .join("\n        ");
 
@@ -330,7 +330,7 @@ const staticPages: StaticPage[] = [
     jsonLd: buildHomeStructuredData("zh", HOME_PAGE_META.zh.canonical),
     alternates: homeAlternates,
     ogType: "profile",
-    imageAlt: "孙煜征与 Acquired 两位主播对谈",
+    imageAlt: "孙煜征与Acquired的两位主播对谈",
   },
   {
     route: "/about",
@@ -364,7 +364,7 @@ const staticPages: StaticPage[] = [
     lang: "zh",
     jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),
     alternates: booksAlternates,
-    imageAlt: "孙煜征在 Growth Data Analytics Playbook 新书活动现场",
+    imageAlt: "孙煜征在《Growth Data Analytics Playbook》新书活动现场",
   },
   {
     route: "/zbs",
@@ -393,7 +393,7 @@ const staticPages: StaticPage[] = [
         imageAlt:
           lang === "en"
             ? "Yuzheng Sun leading an AI training session in Seattle"
-            : "孙煜征在西雅图进行 AI 培训",
+            : "孙煜征在西雅图进行AI培训",
       },
       {
         route: lang === "en" ? "/collab/creators" : "/zh/collab/creators",

@@ -13,7 +13,7 @@ interface GuestsLayoutProps {
 export default function GuestsLayout({ children }: GuestsLayoutProps) {
   const { lang } = useLanguage();
   return (
-    <div className="relative min-h-screen bg-[#0B0F1A] text-zinc-100">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0B0F1A] text-zinc-100">
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute -left-32 top-0 h-[32rem] w-[32rem] rounded-full bg-amber-500/15 blur-3xl" />
         <div className="absolute -right-40 top-40 h-[28rem] w-[28rem] rounded-full bg-sky-500/10 blur-3xl" />

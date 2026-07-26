@@ -61,12 +61,12 @@ const books = {
       description:
         "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。",
       meta: [
-        "入选《华尔街日报》CIO Journal 2025 年书单",
+        "入选《华尔街日报》CIO Journal 2025年书单",
         "Statsig · 2025",
         "ISBN 9781544549828",
       ],
       primary: {
-        label: "Amazon 查看",
+        label: "在Amazon查看",
         href: "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
         external: true,
       },

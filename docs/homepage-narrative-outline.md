@@ -21,7 +21,7 @@ English:
 
 Chinese:
 
-> AI 让「做出来」越来越容易。我研究的是：什么值得做。
+> AI让「做出来」越来越容易。我研究的是：什么值得做。
 
 This is the current AI-facing expression of the longer personal thesis, not a service promise or a claim that implementation, reliability, adoption, or organizational change has become easy. It establishes a clear presentation hierarchy:
 

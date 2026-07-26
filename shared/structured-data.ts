@@ -8,7 +8,7 @@ export const SUPERLINEAR_ID = "https://www.superlinear.academy/#organization";
 
 const PERSON_DESCRIPTION = {
   en: "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy and AI Builders. He previously worked at Amazon, Meta, Tencent IEG, and Statsig.",
-  zh: "课代表立正，本名孙煜征，康奈尔大学经济学博士，Superlinear Academy 与 AI Builders 创始人，现居西雅图。他曾在 Amazon、Meta、腾讯 IEG 和 Statsig 工作。",
+  zh: "课代表立正，本名孙煜征，康奈尔大学经济学博士，Superlinear Academy与AI Builders的创始人，现居西雅图。他曾在Amazon、Meta、腾讯IEG和Statsig工作。",
 } satisfies Record<SiteLang, string>;
 
 function personNode(lang: SiteLang) {

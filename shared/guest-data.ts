@@ -109,7 +109,7 @@ function toNumber(value?: number | string): number | undefined {
 }
 
 function fallbackEpisodeTitle(index: number): string {
-  return `第 ${index + 1} 期`;
+  return `第${index + 1}期`;
 }
 
 function buildVideoLookup(
@@ -290,8 +290,8 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
     0
   );
   return {
-    title: `全部嘉宾 · 课代表立正 — ${totalGuests} 位嘉宾，${totalEpisodes} 期对话`,
-    description: `课代表立正的完整访谈嘉宾库：${totalGuests} 位研究者、创业者、管理者、投资人与各领域实践者，共 ${totalEpisodes} 期公开对话。`,
+    title: `全部嘉宾 · 课代表立正 — ${totalGuests}位嘉宾，${totalEpisodes}期对话`,
+    description: `课代表立正的完整访谈嘉宾库：${totalGuests}位研究者、创业者、管理者、投资人与各领域实践者，共${totalEpisodes}期公开对话。`,
     canonical: `${SITE_URL}/guests`,
     ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };
@@ -306,7 +306,7 @@ export function getGuestPageMeta(guest: GuestProfile): PageMeta {
     ? truncateMetaText(guest.primary_episode.title, 56)
     : "";
   const identity = `${guest.guest_name}${companyAndTitle ? `，${companyAndTitle}` : ""}`;
-  const description = `${identity}。在「课代表立正」的 ${guest.episode_count} 期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
+  const description = `${identity}。在「课代表立正」的${guest.episode_count}期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

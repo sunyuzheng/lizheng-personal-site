@@ -6,7 +6,7 @@ This is a factual index for Yuzheng Sun's public website. It was reviewed on 202
 
 AI makes building easier. My focus is studying what's worth building.
 
-In Chinese: AI 让「做出来」越来越容易。我研究的是：什么值得做。
+In Chinese: AI让「做出来」越来越容易。我研究的是：什么值得做。
 
 Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His work studies what is worth building, who it should serve, and what makes the result genuinely useful.
 

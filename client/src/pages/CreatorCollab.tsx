@@ -481,14 +481,14 @@ const copy = {
     eyebrow: "播客 · 视频访谈 · 长对话",
     h1: "你定问题，我带着判断和证据来。",
     intro: [
-      "我是课代表立正。康奈尔经济学博士，先后在 Amazon、Meta、腾讯和 Statsig 做过经济学、数据和 AI；现在主理 AI Builders 和 Stay Superlinear。",
-      "我最常聊三件事：AI 到底怎么改变工作，公司怎么做判断，人又怎么在变化里长出真本事。",
+      "我是课代表立正。康奈尔经济学博士，先后在Amazon、Meta、腾讯和Statsig做过经济学、数据和AI工作；现在主理AI Builders和Stay Superlinear。",
+      "我最常聊三件事：AI到底怎么改变工作，公司怎么做判断，人又怎么在变化里长出真本事。",
     ],
     heroProofs: [
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig",
-      "200+ 场公开对谈 · 2026.07",
-      "小红书 · YouTube · B站 40 万+ 关注者 · 2026.07",
+      "200+场公开对谈 · 2026.07",
+      "小红书 · YouTube · B站40万+关注者 · 2026.07",
     ],
     questionCta: "先看两个合作案例",
     kitCta: "查看嘉宾资料",
@@ -503,50 +503,50 @@ const copy = {
         number: "01",
         title: "这组经历，通常不在同一个嘉宾身上出现",
         detail:
-          "康奈尔经济学博士；做过 Amazon 经济学家、Meta 数据科学家、腾讯数据与 AI 副总监，也在 Statsig 这样的创业公司一线干过。我既做过研究，也真正带过业务、做过产品和内容。",
+          "康奈尔经济学博士；在Amazon做过经济学家、在Meta做过数据科学家、在腾讯IEG任数据与AI副总监，也在Statsig这样的创业公司一线干过。我既做过研究，也真正带过业务、做过产品和内容。",
         proof: "中美 · 研究与实战 · 大厂与创业",
       },
       {
         number: "02",
         title: "有立场，也最喜欢被挑战",
         detail:
-          "我信奉 strong opinions, weakly held：观点要讲得足够明确，理由、案例和反方也都摆出来；一个好问题真能让我改变想法，我会很开心。",
+          "我信奉“strong opinions, weakly held”：观点要讲得足够明确，理由、案例和反方也都摆出来；一个好问题真能让我改变想法，我会很开心。",
         proof: "有判断，不护答案 · 观众能带走一个可用的观点",
       },
       {
         number: "03",
         title: "内容能自己跑，联发还能放大",
         detail:
-          "我在小红书、YouTube 和 B 站都有长期经营的社区，团队也能做长视频、切片和分发。但流量和团队只是放大器：Koji 独立发布的节目，已经同时在音频和三个视频平台跑了出来。",
-        proof: "Koji：内容自己跑 · 屠龙：联合制作 5.82 万赞",
+          "我在小红书、YouTube和B站都有长期经营的社区，团队也能做长视频、切片和分发。但流量和团队只是放大器：Koji独立发布的节目，已经同时在音频和三个视频平台跑了出来。",
+        proof: "Koji：内容自己跑 · 屠龙：联合制作5.82万赞",
       },
     ],
     questionsEyebrow: "可以聊什么",
     questionsTitle: "不用列十个话题。挑一个真有分歧的，往下聊。",
     questionsIntro: "下面这些问题，我最近一直在想，其中不少还没想明白。",
     questions: [
-      "AI 模型越来越强，为什么大多数人的实际产出几乎没变？",
-      "AI 把执行变得越来越便宜以后，人和公司真正值钱的东西还剩什么？",
-      "我为什么说“停止使用 ChatGPT”？从聊天框到 Agent，工作方式到底变了什么？",
-      "在 Amazon、Meta、腾讯和 Statsig，我见过的大公司和创业公司，通常怎么做判断，又怎么把自己带偏？",
-      "回头看我过去的 AI 判断，哪些说对了，哪些现在需要重新判断？",
+      "AI模型越来越强，为什么大多数人的实际产出几乎没变？",
+      "AI把执行变得越来越便宜以后，人和公司真正值钱的东西还剩什么？",
+      "我为什么说“停止使用 ChatGPT”？从聊天框到Agent，工作方式到底变了什么？",
+      "在Amazon、Meta、腾讯和Statsig，我见过的大公司和创业公司，通常怎么做判断，又怎么把自己带偏？",
+      "回头看我过去的AI判断，哪些说对了，哪些现在需要重新判断？",
       "一门课、一个社区，到底是在帮人长本事，还是让人越来越离不开老师和圈子？",
     ],
     otherDirections:
-      "增长实验、创作者怎么赚钱、科技创业也都能聊。AI Builders 和 Stay Superlinear 是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
+      "增长实验、创作者怎么赚钱、科技创业也都能聊。AI Builders和Stay Superlinear是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
     conversationsEyebrow: "两个合作案例",
     conversationsTitle: "先看内容自己能不能跑，再看双方能把它推多远。",
     conversationsIntro:
-      "Koji 那期先证明，一场好对话能同时在音频和多个视频平台成立。屠龙的合作则把好内容、双方受众和制作资源叠在一起，看它还能被放大到哪里。",
+      "Koji那期先证明，一场好对话能同时在音频和多个视频平台成立。屠龙的合作则把好内容、双方受众和制作资源叠在一起，看它还能被放大到哪里。",
     conversations: [
       {
         priority: "lead",
         label: "案例一 · 内容自己能跑",
         name: "一场远程对话：节目播放前二，抖音历史最高，小红书年度最高",
         role: "十字路口 Crossing × 课代表立正",
-        note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成了 Koji 抖音历史点赞最高、小红书年度收藏最高的内容。录制只是简单远程，节目和切片也都由 Koji 独立制作、发布，没有从我的账号联发——这让内容本身的表现更容易看清。",
+        note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成了Koji的抖音历史点赞最高、小红书年度收藏最高的内容。录制只是简单远程，节目和切片也都由Koji独立制作、发布，没有从我的账号联发——这让内容本身的表现更容易看清。",
         highlight:
-          "同一场对话，在小宇宙有人完整听完，到了抖音、小红书和视频号，也有人收藏、转发。不少听众留下完整笔记，还写下自己准备怎样改变 AI 工作方式。",
+          "同一场对话，在小宇宙有人完整听完，到了抖音、小红书和视频号，也有人收藏、转发。不少听众留下完整笔记，还写下自己准备怎样改变AI工作方式。",
         metrics: [
           { value: "6.7万", label: "小宇宙播放", signal: "节目播放前二" },
           { value: "1.2万", label: "抖音点赞", signal: "账号历史最高" },
@@ -554,33 +554,33 @@ const copy = {
           { value: "6,502", label: "视频号转发", signal: "跨平台高转发" },
         ],
         proofNote:
-          "其他数据：小宇宙 132 条评论；小红书 4,709 赞；抖音 8,582 收藏、1,476 转发。",
+          "其他数据：小宇宙132条评论；小红书4,709赞；抖音8,582收藏、1,476转发。",
         quote:
           "“很有帮助的一期，最近正在从 ChatGPT 转 Codex，也在积累上下文。”——小宇宙听众",
         href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
         linkLabel: "去小宇宙听完整节目",
         image: "https://img.youtube.com/vi/4hi93cDfVls/maxresdefault.jpg",
-        evidenceLabel: "查看平台数据截图（4 张）",
+        evidenceLabel: "查看平台数据截图（4张）",
         evidenceImages: [
           {
             src: "/collab/creator-proof/koji-xiaoyuzhou.webp",
-            alt: "《十字路口》节目最受欢迎页面，显示 6.7 万播放和 132 条评论",
-            caption: "小宇宙 · 6.7 万播放 · 132 条评论",
+            alt: "《十字路口》节目最受欢迎页面，显示6.7万播放和132条评论",
+            caption: "小宇宙 · 6.7万播放 · 132条评论",
           },
           {
             src: "/collab/creator-proof/koji-xiaohongshu.webp",
-            alt: "Koji 小红书切片，显示 4,709 赞和 8,343 收藏",
-            caption: "小红书 · 4,709 赞 · 8,343 收藏",
+            alt: "Koji的小红书切片，显示4,709赞和8,343收藏",
+            caption: "小红书 · 4,709赞 · 8,343收藏",
           },
           {
             src: "/collab/creator-proof/koji-douyin.webp",
-            alt: "Koji 抖音切片，显示 1.2 万赞、8,582 收藏和 1,476 转发",
-            caption: "抖音 · 1.2 万赞 · 账号历史最高",
+            alt: "Koji的抖音切片，显示1.2万赞、8,582收藏和1,476转发",
+            caption: "抖音 · 1.2万赞 · 账号历史最高",
           },
           {
             src: "/collab/creator-proof/koji-wechat.webp",
-            alt: "Koji 视频号切片，显示 6,502 次转发",
-            caption: "视频号 · 6,502 转发",
+            alt: "Koji的视频号切片，显示6,502次转发",
+            caption: "视频号 · 6,502转发",
           },
         ],
       },
@@ -589,9 +589,9 @@ const copy = {
         label: "案例二 · 双方各做一版、共同分发",
         name: "好内容再叠加双方受众，能走得更远",
         role: "课代表立正 × 杨滢（屠龙）",
-        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们则从脑科学一路剪到创业现场，再为小红书和 B 站重新组织内容。双方各自保留编辑判断，也各自带来受众；我们这边的小红书、YouTube、B 站和社区还能承接后续分发，团队也能补上选题、剪辑和切片。",
+        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们则从脑科学一路剪到创业现场，再为小红书和B站重新组织内容。双方各自保留编辑判断，也各自带来受众；我们这边的小红书、YouTube、B站和社区还能承接后续分发，团队也能补上选题、剪辑和切片。",
         highlight:
-          "我们的小红书版本获得 5.82 万赞、5.9 万收藏和 1.1 万转发；B 站正片 9 万+ 播放、近 7,000 收藏。这不只是曝光：收藏高于点赞，说明内容真的接住了这波流量。",
+          "我们的小红书版本获得5.82万赞、5.9万收藏和1.1万转发；B站正片9万+播放、近7,000收藏。这不只是曝光：收藏高于点赞，说明内容真的接住了这波流量。",
         metrics: [
           { value: "5.82万", label: "小红书点赞", signal: "联合发布" },
           { value: "5.9万", label: "小红书收藏", signal: "收藏高于点赞" },
@@ -603,26 +603,26 @@ const copy = {
         href: "https://www.bilibili.com/video/BV1krM46BEpn",
         linkLabel: "看我们的完整正片",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
-        evidenceLabel: "核对小红书数据（1 张截图）",
+        evidenceLabel: "核对小红书数据（1张截图）",
         evidenceImages: [
           {
             src: "/collab/creator-proof/tulong-performance.webp",
-            alt: "课代表立正与屠龙联合发布的小红书视频，显示 5.82 万赞、5.9 万收藏和 1,066 条评论",
-            caption: "我们的版本 · 5.82 万赞 · 5.9 万收藏 · 1,066 条评论",
+            alt: "课代表立正与屠龙联合发布的小红书视频，显示5.82万赞、5.9万收藏和1,066条评论",
+            caption: "我们的版本 · 5.82万赞 · 5.9万收藏 · 1,066条评论",
           },
         ],
       },
       {
         priority: "supporting",
         label: "另一个样本 · 我做主持",
-        name: "刘嘉教授：从脑科学聊到 AI 和教育",
+        name: "刘嘉教授：从脑科学聊到AI和教育",
         role: "清华大学心理与认知科学系主任",
         note: "近三小时的对话，从智能、学习和意识，一路聊到具身智能、脑机接口和教育。把它放在这里，是想说明我也坐过桌子的另一边，知道主持人为一场长访谈要做多少准备、花多少心思。",
         highlight: "长对话不需要堆话题。它需要一个能一层层往下追的问题。",
         metrics: [
-          { value: "13万+", label: "YouTube 观看", signal: "长视频" },
+          { value: "13万+", label: "YouTube观看", signal: "长视频" },
           { value: "460+", label: "评论", signal: "深度讨论" },
-          { value: "近 3 小时", label: "一场连续对话", signal: "完整长谈" },
+          { value: "近3小时", label: "一场连续对话", signal: "完整长谈" },
         ],
         proofNote: "",
         quote: "",
@@ -633,10 +633,10 @@ const copy = {
         evidenceImages: [],
       },
     ],
-    metricsNote: "数据来自 2026 年 7 月的平台页面与截图；各平台统计口径不同。",
+    metricsNote: "数据来自2026年7月的平台页面与截图；各平台统计口径不同。",
     appearancesEyebrow: "更多做客记录",
     appearancesIntro:
-      "这些是目前能在小宇宙查到的做客记录。其中两期是多人圆桌；INDIGO TALK 和 The Build Log 都邀请过我两次。",
+      "这些是目前能在小宇宙查到的做客记录。其中两期是多人圆桌；INDIGO TALK和The Build Log都邀请过我两次。",
     panelLabel: "圆桌",
     agreementsEyebrow: "怎么一起录",
     agreementsTitle: "录之前把边界说清，录的时候就可以放开聊。",
@@ -676,7 +676,7 @@ const copy = {
       {
         icon: Clock3,
         label: "时长",
-        value: "通常聊 60–120 分钟，按你的节目调整",
+        value: "通常聊60–120分钟，按你的节目调整",
       },
       {
         icon: MapPin,
@@ -689,26 +689,26 @@ const copy = {
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy 与 AI Builders 创始人。曾在 Amazon、Meta、腾讯和 Statsig 从事经济学、数据与 AI 工作，现在主要做 AI 教育、内容和社区，关心个人和公司怎样把 AI 真正用进工作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders的创始人。曾在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作，现在主要做AI教育、内容和社区，关心个人和公司怎样把AI真正用进工作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后做过 Amazon 经济学家、Meta 数据科学家、腾讯 IEG 数据与 AI 副总监，以及 Statsig Principal Data Scientist、公司唯一布道师。他是 Superlinear Academy 与 AI Builders 创始人，并和鸭哥共同主理 Stay Superlinear。截至 2026 年 7 月，他教过 3,000 多名付费学员，也主持或参与了 200 多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
-    headshotLabel: "1200 × 1200 头像",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，并曾在Statsig任Principal Data Scientist及公司唯一布道师。他是Superlinear Academy与AI Builders的创始人，并和鸭哥共同主理Stay Superlinear。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+    headshotLabel: "1200 × 1200头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",
     facts: [
-      { label: "过去公开做过的 AI 判断", href: "/#ideas" },
-      { label: "200+ 场公开对谈", href: "/guests" },
+      { label: "过去公开做过的AI判断", href: "/#ideas" },
+      { label: "200+场公开对谈", href: "/guests" },
       {
-        label: "AI Builders · 3,000+ 付费学员",
+        label: "AI Builders · 3,000+付费学员",
         href: "https://ai-builders.com",
       },
       {
-        label: "Stay Superlinear 会员社区",
+        label: "Stay Superlinear · 会员社区",
         href: "https://staysuperlinear.com",
       },
     ],
-    audienceFact: "截至 2026 年 7 月，YouTube、B 站和小红书共 40 万+ 关注者。",
+    audienceFact: "截至2026年7月，YouTube、B站和小红书共40万+关注者。",
     contactEyebrow: "节目邀请",
     contactTitle: "邮件里先告诉我：你最想追问什么。",
     contactDetail:
@@ -825,7 +825,7 @@ export default function CreatorCollab() {
                   alt={
                     lang === "en"
                       ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
-                      : "课代表立正与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈"
+                      : "课代表立正与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
                   }
                   className="aspect-[4/3] w-full object-cover object-center"
                   width={2400}
@@ -835,7 +835,7 @@ export default function CreatorCollab() {
               <figcaption className="mt-3 text-xs leading-5 text-zinc-400">
                 {lang === "en"
                   ? "With Ben Gilbert and David Rosenthal of Acquired · Significance Summit"
-                  : "与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈 · Significance Summit"}
+                  : "与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈 · Significance Summit"}
               </figcaption>
             </figure>
           </div>
@@ -1045,7 +1045,7 @@ export default function CreatorCollab() {
                 <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
                   {lang === "en"
                     ? `${guestAppearances.length} episodes across ${guestAppearanceShowCount} shows—and more than one return invitation.`
-                    : `我还做客过 ${guestAppearanceShowCount} 档节目，共 ${guestAppearances.length} 期。`}
+                    : `我还做客过${guestAppearanceShowCount}档节目，共${guestAppearances.length}期。`}
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
                   {t.appearancesIntro}
@@ -1054,7 +1054,7 @@ export default function CreatorCollab() {
               <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-300/80">
                 {lang === "en"
                   ? `${guestAppearances.length} episodes · ${guestAppearanceShowCount} shows`
-                  : `${guestAppearances.length} 期 · ${guestAppearanceShowCount} 档节目`}
+                  : `${guestAppearances.length}期 · ${guestAppearanceShowCount}档节目`}
               </p>
             </div>
 

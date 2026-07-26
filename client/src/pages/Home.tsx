@@ -474,14 +474,17 @@ const endorsements = {
 function SectionLabel({
   children,
   dark = false,
+  preserveCase = false,
 }: {
   children: string;
   dark?: boolean;
+  preserveCase?: boolean;
 }) {
   return (
     <p
       className={cn(
-        "font-mono text-[11px] uppercase tracking-[0.2em]",
+        "font-mono text-[11px] tracking-[0.2em]",
+        !preserveCase && "uppercase",
         dark ? "text-amber-300" : "text-[#8B4A19]"
       )}
     >
@@ -870,8 +873,10 @@ export default function Home() {
         >
           <div className="container grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
             <div>
-              <SectionLabel dark>
-                {lang === "en" ? "A FEW WORKING VIEWS" : "我的几个判断"}
+              <SectionLabel dark preserveCase={lang === "zh"}>
+                {lang === "en"
+                  ? "A FEW WORKING VIEWS"
+                  : "Strong opinions, weakly held"}
               </SectionLabel>
               <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.15] text-white md:text-5xl">
                 {lang === "en" ? (

@@ -18,7 +18,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 ## Current Work
 
 - [Superlinear Academy](https://www.superlinear.academy): a free peer lab where projects, specific questions, first-hand experience, feedback, and opportunities circulate.
-- [AI Builders](https://ai-builders.com): a long-term learning system that turns AI principles, building methods, and judgment about what is worth doing into capabilities people can reuse across real problems; co-taught with Yage.
+- [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://staysuperlinear.com): a paid ongoing environment that organizes people, content, feedback, tools, and opportunities around members' current work; co-led with Yage.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.

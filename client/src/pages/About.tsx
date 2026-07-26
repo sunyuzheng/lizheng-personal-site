@@ -54,7 +54,7 @@ const currentWork = {
       name: "AI Builders",
       role: "Long-term AI learning system",
       detail:
-        "AI principles, building methods, and judgment about what is worth doing, taught as capabilities people can reuse across real problems.",
+        "Co-taught with Yage, it translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.",
       href: "https://ai-builders.com/",
     },
     {
@@ -77,7 +77,7 @@ const currentWork = {
       name: "AI Builders",
       role: "长期 AI 学习体系",
       detail:
-        "把 AI 的原理、构建方法和价值判断，教成一套能在真实问题中反复使用的能力。",
+        "立正与鸭哥把对模型、工程、产品和组织的理解，转译成学员可以练习、纠错，再带回自己问题里的能力。",
       href: "https://ai-builders.com/",
     },
     {

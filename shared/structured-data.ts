@@ -73,7 +73,7 @@ function organizationNodes() {
       name: "AI Builders",
       url: "https://ai-builders.com/",
       description:
-        "A long-term learning system that turns AI principles, building methods, and judgment about what is worth doing into capabilities people can reuse across real problems.",
+        "A long-term AI learning system co-taught by Yuzheng Sun and Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.",
       creator: { "@id": PERSON_ID },
       provider: { "@id": SUPERLINEAR_ID },
       inLanguage: ["en", "zh-CN"],

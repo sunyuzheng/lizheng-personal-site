@@ -17,13 +17,13 @@ The page should establish this through selected facts, scenes, peers, work, and 
 
 English:
 
-> From economics to AI: can a judgment change the result?
+> Make the judgment clear. Then let reality challenge it.
 
 Chinese:
 
-> 从经济学到 AI：一个判断，最后能不能改变结果？
+> 先把判断说清楚，再让现实来挑错。
 
-This is a personal throughline, not a service promise. AI Builders, Stay Superlinear, and enterprise work appear later as current expressions of the story; their full product arguments remain on their own sites.
+This is a personal working principle, not a service promise or a claim of permanent correctness. AI Builders, Stay Superlinear, and enterprise work appear later as current expressions of the story; their full product arguments remain on their own sites.
 
 ## Narrative Spine
 
@@ -33,27 +33,42 @@ The career is not presented as six unrelated credentials.
 - Amazon and Meta connect models to product and business decisions.
 - Leading a 30-person data and AI team at Tencent makes judgment an organizational problem.
 - Statsig turns experimentation and belief-updating into infrastructure.
-- AI Builders, co-taught with Yage, turns AI principles, building methods, and judgment about what is worth doing into capability people can reuse across real problems. Stay Superlinear makes continued practice social and durable; books and enterprise work carry the same throughline into public ideas and organizations.
+- AI Builders, co-taught with Yage, translates understanding from models, engineering, products, and organizations into capability another person can understand, practice, correct, and transfer. Stay Superlinear keeps work, feedback, relationships, and opportunities in motion over time; books and enterprise work carry the same throughline into public ideas and organizations.
 
 The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into systems that compound. These ideas support the story; they should not all become slogans.
 
 ## Evidence Order
 
-1. Acquired conversation in the hero: peer context and international technology positioning.
-2. Cornell / Amazon / Meta / Tencent / Statsig: institutional and operating credibility.
-3. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
-4. AI Builders / Stay Superlinear / enterprise work: evidence that ideas become capabilities, environments, and operating systems.
-5. 200+ conversations and selected guests: network quality before follower quantity.
-6. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
-7. Independent endorsements: external validation.
+1. A testable working principle and the Acquired conversation in the hero: judgment first, with peer context visible rather than explained.
+2. Cornell / Amazon / Meta / Tencent / Statsig: where the method was formed and what each setting taught.
+3. A three-step working method: find the real question, meet reality early, preserve what proves useful.
+4. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence of independent judgment.
+5. AI Builders / Stay Superlinear / enterprise work: evidence that ideas become capabilities, continuing environments, and organizational practice.
+6. 200+ conversations and selected guests: a source of first-hand input and network quality before follower quantity.
+7. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
+8. Community behavior and independent endorsements: repeated application and external validation.
 
 `400K+` is current and may be stated, but it is intentionally subordinate to guest quality, audience composition, and substantive work.
+
+## Authority By Inference
+
+The homepage follows `show → frame → let the reader conclude`.
+
+- A fact or scene comes first.
+- The page explains only what that fact demonstrates and why it belongs there.
+- The conclusion is left to the visitor.
+- Every proof has one job and appears where its question naturally arises.
+- Employer names establish training and operating context; they are not endorsements.
+- Reach establishes distribution; it does not establish correctness.
+- Dated calls establish inspectable judgment; they do not establish permanent foresight.
+
+For this reason, the standalone statistics strip has been removed. Teaching proof now sits with AI Builders, audience proof with conversations, community proof with the community, and publication proof with the books.
 
 ## Durable Decisions
 
 - English remains the default language by design.
 - The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
-- In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents the long-term practice environment, and enterprise programs show the same methods being tested against real organizational goals and constraints.
+- In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents a long-term environment around members' current work, and enterprise programs show the same methods being tested against real organizational goals and constraints.
 - The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.
 - On desktop, keep all three participants in the Acquired scene visible by placing copy over the camera on the right. Mobile keeps the portrait crop and prioritizes copy legibility.
 - The homepage curates. Complete guest, book, content, and collaboration material belongs on dedicated pages.

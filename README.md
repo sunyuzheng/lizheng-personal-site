@@ -9,7 +9,7 @@ The site is organized around one throughline: form a view, let reality test it, 
 ## Public Content Model
 
 - **Homepage:** the personal throughline, dated judgments, current work, conversations, and books.
-- **AI Builders:** a long-term learning system that turns AI understanding, building methods, and value judgment into reusable capability.
+- **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear:** the ongoing paid membership and long-term environment.
 - **Superlinear Academy:** the free peer lab and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.

@@ -26,29 +26,6 @@ import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 
-const stats = [
-  {
-    value: "200+",
-    en: "conversations with researchers, founders, and operators",
-    zh: "与研究者、创始人和一线管理者的深度对话",
-  },
-  {
-    value: "3,000+",
-    en: "paying learners across AI, data, and growth",
-    zh: "来自 AI、数据与增长领域的付费学员",
-  },
-  {
-    value: "WSJ 2025",
-    en: "featured in a CIO Journal reading list",
-    zh: "入选 CIO Journal 书单",
-  },
-  {
-    value: "400K+",
-    en: "cross-platform audience",
-    zh: "全网关注者",
-  },
-];
-
 const career = [
   {
     org: "Cornell",
@@ -82,6 +59,48 @@ const career = [
   },
 ];
 
+const workingMethod = {
+  en: [
+    {
+      number: "01",
+      title: "Find the real question",
+      detail:
+        "Start with causes and constraints, who will use the result, and which decision it should change.",
+    },
+    {
+      number: "02",
+      title: "Put the view in contact with reality",
+      detail:
+        "Let users, products, organizations, experiments, and public disagreement expose what is missing.",
+    },
+    {
+      number: "03",
+      title: "Keep what proves useful",
+      detail:
+        "Turn it into a capability, course, workflow, product, book, tool, or relationship that can keep working.",
+    },
+  ],
+  zh: [
+    {
+      number: "01",
+      title: "看清真正的问题",
+      detail: "先弄明白因果、约束、谁会用，以及这件事做成以后究竟该改变什么。",
+    },
+    {
+      number: "02",
+      title: "尽早拿到现实里试",
+      detail:
+        "让用户、产品、组织、实验和公开讨论来挑错，不在纸面上把自己说服。",
+    },
+    {
+      number: "03",
+      title: "把有用的部分留下来",
+      detail:
+        "做成能力、课程、流程、产品、书、工具或关系，让一次投入不只用一次。",
+    },
+  ],
+};
+
 const ideas = {
   en: [
     {
@@ -113,26 +132,25 @@ const ideas = {
   zh: [
     {
       number: "01",
-      title: "世界模型比知识量更重要。",
+      title: "知识多，不等于看得准。",
       detail:
-        "知识多不等于看得准。重要的是你能不能解释事情为什么发生；现实不符合预期时，能不能真的改掉自己的模型。",
+        "我更在意一套解释能不能说清事情为什么发生，以及现实不按预期走时，能不能真的改掉它。",
       label: "世界模型",
       href: "https://www.youtube.com/watch?v=r0nsW3nIFgk",
     },
     {
       number: "02",
-      title:
-        "Strong opinions, weakly held：先把观点说清楚，也真心欢迎它被推翻。",
+      title: "Strong opinions, weakly held：观点说得明确，脑子保持开放。",
       detail:
-        "我喜欢被挑战到改变自己的想法。前提是双方都把假设和证据摊开，让讨论真的能推动事情向前。",
+        "我喜欢把判断摆到桌面上，也最喜欢有人拿出更好的事实和推理，让我改主意。讨论的目标不是赢，而是把事情往前推。",
       label: "Strong opinions, weakly held",
       href: "https://youtu.be/D_-hU1O7IVw",
     },
     {
       number: "03",
-      title: "AI 时代，最值得做的升级是从 user 走到 builder。",
+      title: "AI 时代，最值得做的升级，是从 user 走到 builder。",
       detail:
-        "工具会越来越便宜，真正值钱的是选对问题、设计系统，再把一次性的结果变成可以反复使用的东西。",
+        "工具会越来越便宜。真正值钱的，是选对问题、设计系统，再把一次性的结果变成可以反复使用的东西。",
       label: "从 Users 到 Builders",
       href: "https://www.superlinear.academy/c/ai-resources/ai-mastery",
     },
@@ -156,7 +174,7 @@ const featuredPrediction = {
     title:
       "2023 年 2 月，在 GPT-4 发布前，我写下：ChatGPT 不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
     detail:
-      "文中提前推演了推理成本骤降、工具调用与 agent、个人记忆与 private search（后来被称为 RAG）、Copilot，以及 AI-native 系统。",
+      "文中讨论了推理成本骤降、工具调用与 agent、个人记忆与 private search（后来被称为 RAG）、Copilot，以及 AI-native 系统。",
     label: "阅读万字原文",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   },
@@ -209,8 +227,8 @@ const work = {
       label: "BUILDING CAPABILITY",
       title: "AI Builders",
       detail:
-        "Turn AI principles, building methods, and judgment about what is worth doing into capabilities you can reuse across real problems.",
-      proof: "Build useful things with AI · Co-taught with Yage",
+        "Yage and I turn what we have learned across models, engineering, products, and organizations into something other people can understand, practice, correct, and apply to their own problems.",
+      proof: "3,000+ paying learners · 4.9/5 on Maven · co-taught with Yage",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
     },
@@ -219,8 +237,8 @@ const work = {
       label: "LONG-TERM ENVIRONMENT",
       title: "Stay Superlinear",
       detail:
-        "A paid membership for people already using AI and bringing real expertise. Members ask serious questions, sharpen their work, and find people worth building alongside.",
-      proof: "Paid membership · co-led with Yage",
+        "A paid community Yage and I run for the long term. Members bring current work, artifacts, and questions, exchange first-hand experience, and find people who can help them think through the next move.",
+      proof: "Serious questions · work feedback · people and opportunities",
       href: "https://staysuperlinear.com",
       cta: "Explore Stay Superlinear",
     },
@@ -229,8 +247,8 @@ const work = {
       label: "ORGANIZATIONS",
       title: "Enterprise AI transformation",
       detail:
-        "Talks, workshops, and custom programs for teams including Tencent, DoorDash, Pinterest, 1Password, and Amazon. The work starts with what a team actually needs to change, not a tour of AI tools.",
-      proof: "Talks · workshops · custom programs",
+        "I work with teams to choose the work worth changing, put AI into the actual workflow, and use results to decide whether it deserves to scale.",
+      proof: "Tencent · DoorDash · Pinterest · 1Password · Amazon",
       href: "https://corp-training.ai-builders.com",
       cta: "Explore enterprise work",
     },
@@ -241,8 +259,8 @@ const work = {
       label: "建立能力",
       title: "AI Builders",
       detail:
-        "把 AI 的原理、构建方法和价值判断，教成一套能在真实问题中反复使用的能力。",
-      proof: "Build useful things with AI · 与鸭哥共同授课",
+        "我和鸭哥把对模型、工程、产品和组织的理解，拆成学员能练习、纠错，再带回自己问题里的能力。",
+      proof: "3,000+ 付费学员 · Maven 4.9/5 · 与鸭哥共同授课",
       href: "https://ai-builders.com",
       cta: "了解 AI Builders",
     },
@@ -251,8 +269,8 @@ const work = {
       label: "长期环境",
       title: "Stay Superlinear",
       detail:
-        "一个给已经在用 AI、也有自己专业积累的人准备的付费会员社区。认真聊问题、打磨作品，也一起做事。",
-      proof: "付费会员社区 · 立正与鸭哥共同主理",
+        "我和鸭哥长期主理的付费社区。成员带着手头的工作、作品和问题进来，交换一手经验，找人把问题讲透，也让下一步少一点盲试。",
+      proof: "认真问问题 · 打磨作品 · 遇见值得一起做事的人",
       href: "https://staysuperlinear.com",
       cta: "了解 Stay Superlinear",
     },
@@ -261,8 +279,8 @@ const work = {
       label: "组织实践",
       title: "企业 AI 转型",
       detail:
-        "曾为腾讯、DoorDash、Pinterest、1Password、Amazon 等团队做 AI 分享、工作坊和定制项目。重点不是再讲一遍工具，而是解决团队实际工作里的问题。",
-      proof: "分享 · 工作坊 · 定制项目",
+        "我会和团队一起选出真正值得改的工作，把 AI 放进实际流程，再用结果判断它是否值得扩展，而不是从一张工具清单讲起。",
+      proof: "腾讯 · DoorDash · Pinterest · 1Password · Amazon",
       href: "https://corp-training.ai-builders.com",
       cta: "了解企业合作",
     },
@@ -675,20 +693,18 @@ export default function Home() {
               </h1>
               <p className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.08] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[3.25rem] xl:text-[4rem]">
                 {lang === "en" ? (
-                  "From economics to AI: can a judgment change the result?"
+                  "Make the judgment clear. Then let reality challenge it."
                 ) : (
                   <>
-                    <span className="block">从经济学到 AI：</span>
-                    <span className="block">
-                      一个判断，最后能不能改变结果？
-                    </span>
+                    <span className="block">先把判断说清楚，</span>
+                    <span className="block">再让现实来挑错。</span>
                   </>
                 )}
               </p>
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "I’m Yuzheng Sun, also known as 课代表立正. I have a PhD in Economics from Cornell and have worked as an economist, data scientist, and technology leader. Today I’m based in Seattle, where I teach AI, build communities, write books, and host long-form conversations."
-                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士。做过经济学家、数据科学家和科技公司管理者；现在在西雅图做 AI 教育和社区、写书，也持续做访谈。"}
+                  ? "I'm Yuzheng Sun, also known as 课代表立正. I have a PhD in Economics from Cornell and am based in Seattle. Across economics, data, product, and now AI education and community, I keep returning to the same work: choose a consequential problem, test the view in real work, and make what survives useful to other people."
+                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士，现居西雅图。从经济学、数据和产品，到今天的 AI 教育与社区，我一直在做同一件事：找到真正值得做的问题，拿到真实世界里试，再把有效的部分变成别人也能用的东西。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -697,8 +713,8 @@ export default function Home() {
                   className="bg-amber-400 text-[#211300] hover:bg-amber-300 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
                 >
                   {lang === "en"
-                    ? "How these chapters connect"
-                    : "这些经历怎么连起来"}
+                    ? "How the work connects"
+                    : "这条主线怎么连起来"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 <Button
@@ -707,7 +723,7 @@ export default function Home() {
                   onClick={() => scrollToSection("work")}
                   className="border-white/25 bg-black/20 text-white hover:bg-white/10 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
                 >
-                  {lang === "en" ? "What I’m working on" : "我现在在做什么"}
+                  {lang === "en" ? "What I'm working on" : "我现在在做什么"}
                 </Button>
               </div>
               <div className="mt-8 flex items-center gap-4 border-t border-white/15 pt-5">
@@ -759,34 +775,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-[#101521]">
-          <div className="container grid grid-cols-2 md:grid-cols-4">
-            {stats.map((item, index) => (
-              <div
-                key={item.value}
-                className={cn(
-                  "min-h-32 border-white/10 px-4 py-6 md:min-h-36 md:px-6 md:py-8",
-                  index % 2 === 1 && "border-l",
-                  index > 1 && "border-t md:border-t-0",
-                  index > 0 && "md:border-l"
-                )}
-              >
-                <div className="text-xl font-semibold text-white md:text-2xl">
-                  {item.value}
-                </div>
-                <p className="mt-2 max-w-[14rem] text-xs leading-5 text-zinc-400 md:text-sm">
-                  {lang === "en" ? item.en : item.zh}
-                </p>
-              </div>
-            ))}
-          </div>
-          <div className="container border-t border-white/10 py-2 text-right text-[10px] tracking-wide text-zinc-600">
-            {lang === "en"
-              ? "Figures last checked July 2026"
-              : "数据最后核对：2026 年 7 月"}
-          </div>
-        </section>
-
         <section
           id="throughline"
           className="scroll-mt-[72px] bg-[#F2F0EA] py-16 text-[#191712] md:py-24"
@@ -798,26 +786,56 @@ export default function Home() {
                   {lang === "en" ? "THE THROUGHLINE" : "这条主线"}
                 </SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] [text-wrap:balance] md:text-5xl">
-                  {lang === "en"
-                    ? "I changed roles several times. The thing I cared about kept getting more concrete."
-                    : "我换过几次角色，真正关心的事却越来越具体。"}
+                  {lang === "en" ? (
+                    "The roles changed. The question underneath them did not."
+                  ) : (
+                    <>
+                      <span className="block">换过几次角色，</span>
+                      <span className="block">追的始终是</span>
+                      <span className="block">同一个问题。</span>
+                    </>
+                  )}
                 </h2>
               </div>
               <div className="space-y-6 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
                 <p>
                   {lang === "en"
-                    ? "Economics trained me to ask about incentives and causality. At Amazon and Meta, a model mattered only if it changed a decision. Leading a 30-person data and AI team at Tencent taught me that one person understanding the problem is not enough—the judgment has to travel through an organization. At Statsig, experimentation became infrastructure for continuous correction."
-                    : "读经济学时，我学的是激励和因果；在 Amazon、Meta 做数据，我开始关心模型能不能改变决策；在腾讯带 30 人团队，我才知道，个人想明白远远不够，判断还得能被一个组织执行；到了 Statsig，实验本身变成了帮助公司持续纠错的基础设施。"}
+                    ? "Economics taught me to ask about incentives and causality. At Amazon and Meta, a model mattered only if it changed a decision. Leading a 30-person data and AI team at Tencent showed me that one person understanding the problem is not enough; the organization has to be able to act on it. At Statsig, I saw how a willingness to change one's mind in the face of evidence could become infrastructure companies used every day."
+                    : "经济学教我追问因果和激励；在 Amazon 和 Meta，模型只有改变决策才算有用；在腾讯带 30 人团队，我发现个人想明白还不够，组织得跟得上；到了 Statsig，我看到实验和数据怎样成为公司日常改主意的基础设施。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "Courses, communities, books, interviews, and enterprise work may look different, but I still approach them the same way: understand the problem, test the idea in real work, and pass on what survives."
-                    : "现在我做课程、社区，写书、做访谈，也给企业做项目，还是在做这件事：把问题想清楚，到真实工作里验证，再把有效的方法交给更多人用。"}
+                    ? "Courses, communities, books, conversations, and enterprise work may look different. I still approach them the same way: choose a real problem, act early, listen to what reality says, and turn the useful parts into something other people can keep using."
+                    : "现在做课程、社区、访谈、书和企业项目，看起来分散，做法其实一样：先选一个真问题，尽早动手，听现实怎么回答；有用的部分，再变成课程、工具、作品，或一套别人能继续用的系统。"}
                 </p>
               </div>
             </div>
 
-            <div className="mt-14 grid grid-cols-2 border-t border-[#D4D0C7] lg:grid-cols-6">
+            <div className="mt-14 grid border-y border-[#D4D0C7] md:grid-cols-3">
+              {workingMethod[lang].map((item, index) => (
+                <article
+                  key={item.number}
+                  className={cn(
+                    "grid grid-cols-[2.5rem_1fr] gap-3 border-[#D4D0C7] py-6 md:block md:px-6 md:py-8",
+                    index > 0 && "border-t md:border-l md:border-t-0"
+                  )}
+                >
+                  <div className="font-mono text-xs text-[#9A673D]">
+                    {item.number}
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-[#191712] md:text-lg">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#6E685D]">
+                      {item.detail}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-10 grid grid-cols-2 border-t border-[#D4D0C7] lg:grid-cols-6">
               {career.map((item, index) => (
                 <div
                   key={item.org}
@@ -849,9 +867,14 @@ export default function Home() {
                 {lang === "en" ? "A FEW WORKING VIEWS" : "我的几个判断"}
               </SectionLabel>
               <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.15] text-white md:text-5xl">
-                {lang === "en"
-                  ? "I would rather state a view clearly—and let reality overturn it."
-                  : "我愿意先把判断说清楚，也欢迎现实把它推翻。"}
+                {lang === "en" ? (
+                  "Vague views are safe. They rarely move the work forward."
+                ) : (
+                  <>
+                    <span className="block">含糊的观点很安全，</span>
+                    <span className="block">却很难推动事情往前。</span>
+                  </>
+                )}
               </h2>
 
               <div className="mt-10 border-t border-white/10">
@@ -946,15 +969,20 @@ export default function Home() {
                   {lang === "en" ? "CURRENT WORK" : "现在在做"}
                 </SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] md:text-5xl">
-                  {lang === "en"
-                    ? "I spend most of my time on three kinds of work."
-                    : "我现在主要把时间花在三件事上。"}
+                  {lang === "en" ? (
+                    "The same method, in three different settings."
+                  ) : (
+                    <>
+                      <span className="block">同一套方法，</span>
+                      <span className="block">放进三种场景。</span>
+                    </>
+                  )}
                 </h2>
               </div>
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
-                  ? "Courses turn judgment and methods into capability. Community lets that capability grow through continued practice. Enterprise work tests the same methods against real goals and constraints."
-                  : "课程把判断和方法教成能力，社区让这套能力在持续实践中生长，企业项目则用真实业务里的目标和约束，检验同样的方法是否管用。"}
+                  ? "AI Builders provides concentrated training. Stay Superlinear lets practice, feedback, and relationships continue over time. Enterprise work puts the same method inside real goals, workflows, and constraints. They reinforce one another, but each has to be useful on its own."
+                  : "AI Builders 做集中训练；Stay 让实践、反馈和关系长期发生；企业项目则把同一套方法放进组织的真实目标、流程和约束里。它们彼此连接，但各自都要先对参与者有用。"}
               </p>
             </div>
 
@@ -1066,8 +1094,8 @@ export default function Home() {
               <div className="space-y-4 text-base leading-8 text-zinc-400">
                 <p>
                   {lang === "en"
-                    ? "Across 200+ public conversations, I am less interested in collecting conclusions than in understanding how a judgment formed, what evidence supports it, and where it might fail."
-                    : "在 200+ 场公开对话里，我最想追问的不是结论，而是一个判断怎样形成，靠什么证据成立，又会在哪些地方失效。"}
+                    ? "I am less interested in collecting a guest's conclusions than in understanding why they believe them, what evidence supports the view, and where it might fail. The 200+ public conversations are content, but they are also one of the ways I learn how technology and business are changing."
+                    : "我不太想收集嘉宾的正确答案，更想知道：他为什么这样判断，证据是什么，哪里可能错。200+ 场公开对话既是内容，也是我理解技术和商业变化的一种方法。"}
                 </p>
                 <p className="text-sm leading-7 text-zinc-500">
                   {lang === "en"
@@ -1257,13 +1285,18 @@ export default function Home() {
               </p>
               <h2 className="mt-4 max-w-3xl text-2xl font-semibold leading-tight text-white md:text-4xl">
                 {lang === "en"
-                  ? "Many ideas only became useful after people in Superlinear Academy tried them, questioned them, and changed them."
-                  : "很多想法，都是在 Superlinear Academy 里被问明白、做出来，再改过一轮。"}
+                  ? "Many ideas only revealed what held up—and what did not—after people tried them in Superlinear Academy."
+                  : "很多想法，都是到了 Superlinear Academy，才知道哪里站不住、哪里真有用。"}
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
                 {lang === "en"
-                  ? "It is the free community I continue to maintain: a place to see what people are building and bring a real question of your own."
-                  : "这是我长期维护的免费社区。你可以看看大家正在做什么，也可以带来一个自己真正想解决的问题。"}
+                  ? "It is the free community I continue to maintain. People bring projects, first-hand experience, and specific questions; serious work does not have to wait until it looks finished."
+                  : "这是我长期维护的免费社区。大家带着项目、一手经验和具体问题进来；认真做事，也不用等到万事俱备才开口。"}
+              </p>
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">
+                {lang === "en"
+                  ? "Nearly 20,000 members · 600+ project posts · nearly 7,000 project comments"
+                  : "近 20,000 名成员 · 600+ 项目帖 · 近 7,000 条项目评论"}
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

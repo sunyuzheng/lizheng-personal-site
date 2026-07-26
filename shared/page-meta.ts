@@ -28,7 +28,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun · 孙煜征 · 课代表立正",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy and AI Builders.",
+      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is based in Seattle. AI makes building easier; his focus is studying what's worth building.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-07-25",
@@ -36,7 +36,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   zh: {
     title: "课代表立正（孙煜征）｜Yuzheng Sun",
     description:
-      "课代表立正，本名孙煜征。康奈尔大学经济学博士，现居西雅图；Superlinear Academy 与 AI Builders 创始人，著有《真本事》。这里有他的经历、书、访谈与合作方式。",
+      "课代表立正，本名孙煜征，康奈尔大学经济学博士，现居西雅图。AI 让「做出来」越来越容易；我研究的是：什么值得做。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-07-25",

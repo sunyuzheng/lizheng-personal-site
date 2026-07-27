@@ -226,7 +226,7 @@ const work = {
       title: "AI Builders",
       detail:
         "Yage asks why the technology works and how to make it reliable; I ask why to build, for whom, and what useful means. AI Builders brings those two kinds of experience together.",
-      proof: "3,000+ paying learners · 4.9/5 on Maven · co-taught with Yage",
+      proof: "3,000+ paying learners · 5.0/5 on Maven · co-taught with Yage",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
     },
@@ -258,7 +258,7 @@ const work = {
       title: "AI Builders",
       detail:
         "鸭哥追问技术为什么成立、怎样做到可靠；我追问为什么做、为谁做、怎样才算有用。AI Builders把这两种经验放在一起。",
-      proof: "3,000+付费学员 · Maven 4.9/5 · 与鸭哥共同授课",
+      proof: "3,000+付费学员 · Maven 5.0/5 · 与鸭哥共同授课",
       href: "https://ai-builders.com",
       cta: "了解AI Builders",
     },

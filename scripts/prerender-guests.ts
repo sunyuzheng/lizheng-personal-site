@@ -13,6 +13,7 @@ import {
   ABOUT_PAGE_META,
   BOOKS_PAGE_META,
   HOME_PAGE_META,
+  PODCAST_PAGE_META,
   ZHENBENSHI_PAGE_META,
   languageAlternates,
   type PageMeta,
@@ -25,6 +26,7 @@ import {
   buildGuestsListStructuredData,
   buildHomeStructuredData,
   buildPersonWebPageStructuredData,
+  buildPodcastStructuredData,
   buildZhenbenshiStructuredData,
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
@@ -373,6 +375,13 @@ const staticPages: StaticPage[] = [
     jsonLd: buildZhenbenshiStructuredData(),
     ogType: "book",
     imageAlt: "《真本事：从会工作到会赚钱》封面",
+  },
+  {
+    route: "/podcast",
+    meta: PODCAST_PAGE_META,
+    lang: "zh",
+    jsonLd: buildPodcastStructuredData(),
+    imageAlt: "课代表立正Podcast节目封面",
   },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];

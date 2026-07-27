@@ -5,6 +5,7 @@ export const SITE_URL = "https://www.lizheng.ai";
 export const PERSON_ID = `${SITE_URL}/#person`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const SUPERLINEAR_ID = "https://www.superlinear.academy/#organization";
+export const PODCAST_URL = "https://podcast.lizheng.ai";
 
 const PERSON_DESCRIPTION = {
   en: "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy and AI Builders. He previously worked at Amazon, Meta, Tencent IEG, and Statsig.",
@@ -142,6 +143,49 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
       },
       personNode(lang),
       ...organizationNodes(),
+    ],
+  };
+}
+
+export function buildPodcastStructuredData() {
+  const podcastId = `${PODCAST_URL}/#podcast`;
+  const cover =
+    "https://img.transistorcdn.com/_uKueNmEg-Ah4w9L4nrA6Mw-NP5fl0crXikpxBcfSbM/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS9jYzZl/YWYzMjA5NzJiMDY4/MjIxOGE0ZjYwMzY0/ODQ1ZC5qcGc.jpg";
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "PodcastSeries",
+        "@id": podcastId,
+        name: "课代表立正",
+        url: `${PODCAST_URL}/`,
+        description:
+          "课代表立正的官方Podcast。深度访谈，有用干货，亲身验证的「真本事」。",
+        image: cover,
+        webFeed: "https://feeds.transistor.fm/kedaibiao",
+        author: { "@id": PERSON_ID },
+        inLanguage: "zh-CN",
+        sameAs: [
+          "https://podcasts.apple.com/us/podcast/%E8%AF%BE%E4%BB%A3%E8%A1%A8%E7%AB%8B%E6%AD%A3/id1859339631",
+          "https://open.spotify.com/show/4YoFrN0YArKCIqZq46yHr3",
+          "https://www.xiaoyuzhoufm.com/podcast/6934fbe84ef12f9fe94eed5f",
+          "https://www.youtube.com/@kedaibiao",
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${PODCAST_URL}/#webpage`,
+        url: `${PODCAST_URL}/`,
+        name: "课代表立正Podcast",
+        description:
+          "收听关于AI、职业、商业和真实世界选择的深度访谈与亲身实践。",
+        mainEntity: { "@id": podcastId },
+        about: { "@id": PERSON_ID },
+        inLanguage: "zh-CN",
+        dateModified: "2026-07-27",
+      },
+      personNode("zh"),
     ],
   };
 }

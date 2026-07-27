@@ -17,6 +17,7 @@ const STORAGE_KEY = "lizheng-lang";
 
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
+  if (window.location.hostname === "podcast.lizheng.ai") return "zh";
   if (
     window.location.pathname === "/zh" ||
     window.location.pathname.startsWith("/zh/")
@@ -25,6 +26,7 @@ function readInitialLang(defaultLang: Lang): Lang {
   }
   if (
     window.location.pathname === "/zbs" ||
+    window.location.pathname === "/podcast" ||
     window.location.pathname === "/guests" ||
     window.location.pathname.startsWith("/guests/")
   ) {
@@ -66,9 +68,11 @@ export function LanguageProvider({
   useEffect(() => {
     const handlePopState = () => {
       if (
+        window.location.hostname === "podcast.lizheng.ai" ||
         window.location.pathname === "/zh" ||
         window.location.pathname.startsWith("/zh/") ||
         window.location.pathname === "/zbs" ||
+        window.location.pathname === "/podcast" ||
         window.location.pathname === "/guests" ||
         window.location.pathname.startsWith("/guests/")
       ) {

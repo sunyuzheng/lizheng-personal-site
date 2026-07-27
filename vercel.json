@@ -4,6 +4,32 @@
   "framework": "vite",
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "podcast.lizheng.ai" }],
+      "destination": "/podcast"
+    },
+    {
+      "source": "/podcast-feed.xml",
+      "destination": "https://feeds.transistor.fm/kedaibiao"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/podcast-feed.xml",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "1"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/",

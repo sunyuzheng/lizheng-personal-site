@@ -89,3 +89,12 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
   ogImage: "https://www.lizheng.ai/book/cover-front.png",
   lastModified: "2026-07-25",
 };
+
+export const PODCAST_PAGE_META: PageMeta = {
+  title: "课代表立正Podcast｜深度访谈、有用干货与真本事",
+  description:
+    "课代表立正的官方Podcast。收听关于AI、职业、商业和真实世界选择的深度访谈与亲身实践。",
+  canonical: "https://podcast.lizheng.ai/",
+  ogImage: "https://podcast.lizheng.ai/podcast/og.png",
+  lastModified: "2026-07-27",
+};

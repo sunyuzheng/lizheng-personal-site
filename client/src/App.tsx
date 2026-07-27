@@ -14,6 +14,7 @@ import Books from "./pages/Books";
 import Collab from "./pages/Collab";
 import CreatorCollab from "./pages/CreatorCollab";
 import About from "./pages/About";
+import Podcast from "./pages/Podcast";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import type { Lang } from "./contexts/LanguageContext";
@@ -29,6 +30,14 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const isPodcastHost =
+    typeof window !== "undefined" &&
+    window.location.hostname === "podcast.lizheng.ai";
+
+  if (isPodcastHost) {
+    return <Podcast />;
+  }
+
   return (
     <>
       <ScrollToTop />
@@ -42,6 +51,7 @@ function Router() {
         </Route>
         <Route path={"/guests"} component={Guests} />
         <Route path={"/zbs"} component={ZhenbenShi} />
+        <Route path={"/podcast"} component={Podcast} />
         <Route path={"/book"} component={Books} />
         <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />

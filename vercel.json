@@ -4,67 +4,60 @@
   "framework": "vite",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "has": [{ "type": "host", "value": "podcast.lizheng.ai" }],
-      "destination": "/podcast"
-    },
-    {
-      "source": "/podcast-feed.xml",
-      "destination": "https://feeds.transistor.fm/kedaibiao"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/podcast-feed.xml",
-      "headers": [
+      "src": "/",
+      "has": [
         {
-          "key": "x-vercel-enable-rewrite-caching",
-          "value": "1"
-        },
-        {
-          "key": "CDN-Cache-Control",
-          "value": "public, s-maxage=300, stale-while-revalidate=86400"
+          "type": "host",
+          "value": "podcast\\.lizheng\\.ai"
         }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "destination": "/zh",
-      "permanent": true
+      ],
+      "dest": "/podcast"
     },
     {
-      "source": "/book",
+      "src": "/",
       "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "destination": "/zh/book",
-      "permanent": true
+      "status": 308,
+      "headers": { "Location": "/zh" }
     },
     {
-      "source": "/about",
+      "src": "/book",
       "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "destination": "/zh/about",
-      "permanent": true
+      "status": 308,
+      "headers": { "Location": "/zh/book" }
     },
     {
-      "source": "/collab",
+      "src": "/about",
       "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "destination": "/zh/collab",
-      "permanent": true
+      "status": 308,
+      "headers": { "Location": "/zh/about" }
     },
     {
-      "source": "/collab/creators",
+      "src": "/collab",
       "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "destination": "/zh/collab/creators",
-      "permanent": true
+      "status": 308,
+      "headers": { "Location": "/zh/collab" }
     },
     {
-      "source": "/collab/podcast-one-pager.pdf",
-      "destination": "/collab/creators",
-      "permanent": true
-    }
+      "src": "/collab/creators",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "status": 308,
+      "headers": { "Location": "/zh/collab/creators" }
+    },
+    {
+      "src": "/collab/podcast-one-pager\\.pdf",
+      "status": 308,
+      "headers": { "Location": "/collab/creators" }
+    },
+    {
+      "src": "/podcast-feed\\.xml",
+      "dest": "https://feeds.transistor.fm/kedaibiao",
+      "headers": {
+        "x-vercel-enable-rewrite-caching": "1",
+        "CDN-Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400"
+      }
+    },
+    { "handle": "filesystem" }
   ]
 }

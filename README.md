@@ -4,6 +4,8 @@ The personal website and public profile of Yuzheng Sun (孙煜征 / 课代表立
 
 The site is organized around one throughline: form a view, let reality test it, and turn what survives into capabilities, work, and systems that other people can use. [AI Builders](https://ai-builders.com), [Stay Superlinear](https://staysuperlinear.com), enterprise programs, books, and public conversations appear as evidence and applications of that work—not as competing homepages.
 
+Superlinear Academy's confirmed English parent-brand command is **MAKE WHAT LASTS.** It can frame the Superlinear work on this site, but it does not replace the personal Hero or the more specific promise of any product. The canonical meaning and use hierarchy live in the private course-marketing repository at `00_strategy/superlinear-brand-platform.md`.
+
 **Live site:** [www.lizheng.ai](https://www.lizheng.ai)
 
 ## Public Content Model

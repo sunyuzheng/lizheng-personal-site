@@ -1,14 +1,16 @@
 # Yuzheng Sun / 孙煜征 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-07-25. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-07-31. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
-AI makes building easier. My focus is studying what's worth building.
+AI makes building easier. I study what's worth building.
 
 In Chinese: AI让「做出来」越来越容易。我研究的是：什么值得做。
 
 Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His work studies what is worth building, who it should serve, and what makes the result genuinely useful.
+
+Superlinear Academy carries the same throughline as a shared standard: MAKE WHAT LASTS. In this context, lasting work keeps creating value for the people who use it and keeps compounding into capability, reputation, freedom, and new possibilities for the person who made it.
 
 He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 
@@ -23,11 +25,11 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 - [Superlinear Academy](https://www.superlinear.academy): a free peer lab where projects, specific questions, first-hand experience, feedback, and opportunities circulate.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
-- [Stay Superlinear](https://staysuperlinear.com): a paid ongoing environment that organizes people, content, feedback, tools, and opportunities around members' current work; co-led with Yage.
+- [Stay Superlinear](https://stay.superlinear.academy): a paid ongoing environment that organizes people, content, feedback, tools, and opportunities around members' current work; co-led with Yage.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
-These are related parts of one body of work, not separate identities. AI Builders develops capability; Stay Superlinear provides a continuing environment; enterprise programs apply the methods inside organizations; books and public conversations make the underlying judgment inspectable and reusable.
+These are related parts of one body of work, not separate identities. Together they put the same sequence into different forms: choose what is worth building, let reality test it, and preserve what works as capability, products, systems, and relationships.
 
 ## Current Public Evidence
 

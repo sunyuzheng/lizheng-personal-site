@@ -17,7 +17,7 @@ The page should establish this through selected facts, scenes, peers, work, and 
 
 English:
 
-> AI makes building easier. My focus is studying what’s worth building.
+> AI makes building easier. I study what’s worth building.
 
 Chinese:
 
@@ -28,9 +28,9 @@ This is the current AI-facing expression of the longer personal thesis, not a se
 1. **AI makes building easier:** more ideas can reach a working form with less execution cost.
 2. **Study what is worth building:** the personal focus is problem selection—who a result is for, what it should change, and why it matters.
 3. **Let reality test the judgment:** users, products, experiments, organizations, and public disagreement reveal whether the choice holds up.
-4. **Let useful parts compound:** what survives becomes capability, curriculum, workflows, products, books, tools, relationships, or other reusable systems.
+4. **Make what lasts:** what survives keeps creating value for the people who use it and compounds into capability, reputation, freedom, and more ambitious choices for the person who made it.
 
-The hero states only the first two layers. The next sections demonstrate the latter two through work and evidence rather than adding more competing slogans. AI Builders, Stay Superlinear, and enterprise work appear later as current expressions of the story; their full product arguments remain on their own sites.
+The hero states only the first two layers. The next sections show judgment meeting reality. The Work section then reveals Superlinear Academy’s command, `Make what lasts.`, as the conclusion of that sequence—not as a second personal Hero. AI Builders, Stay Superlinear, and enterprise work appear there as three current expressions of the standard; their full product arguments remain on their own sites.
 
 ## Narrative Spine
 
@@ -42,15 +42,15 @@ The career is not presented as six unrelated credentials.
 - Statsig turns experimentation and belief-updating into infrastructure.
 - AI Builders, co-taught with Yage, translates understanding from models, engineering, products, and organizations into capability another person can understand, practice, correct, and transfer. Stay Superlinear keeps work, feedback, relationships, and opportunities in motion over time; books and enterprise work carry the same throughline into public ideas and organizations.
 
-The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into systems that compound. The new hero is the front door into that sequence: easier building raises the value of choosing well; reality tests the choice; useful results become durable assets. These ideas support the story and its evidence hierarchy; they should not all become slogans.
+The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into work that compounds. The hero is the front door into that sequence: easier building raises the value of choosing well; reality tests the choice; useful work should keep working after the first effort—both in the world and for the person who made it. `Make what lasts.` gives that final movement a memorable Superlinear name without replacing the personal question.
 
 ## Evidence Order
 
 1. The AI-era premise and personal question in the hero: building is becoming easier; the focus is what deserves to be built. The Acquired conversation supplies peer context without being presented as proof of the thesis.
 2. Cornell / Amazon / Meta / Tencent / Statsig: where the judgment behind problem selection was formed and what each setting taught.
-3. Three questions that make “worth building” concrete: what actually changed, who it is useful for, and what remains after it is built.
+3. Three questions that make “worth building” concrete: what actually changed, who it is useful for, and whether the result keeps creating value and compounding for its maker after the first effort.
 4. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence that the premise about cheaper execution and the resulting judgments were stated in public.
-5. AI Builders / Stay Superlinear / enterprise work: evidence that ideas become capabilities, continuing environments, and organizational practice.
+5. `Make what lasts.` at the Work transition: the Superlinear standard that connects AI Builders, Stay Superlinear, and enterprise work without turning the homepage into three sales pitches.
 6. 200+ conversations and selected guests: a source of first-hand input and network quality before follower quantity.
 7. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
 8. Community behavior and independent endorsements: repeated application and external validation.
@@ -74,7 +74,8 @@ For this reason, the standalone statistics strip has been removed. Teaching proo
 ## Durable Decisions
 
 - English remains the default language by design.
-- The hero is the current AI-facing entry point. The durable personal throughline remains judgment meeting reality and becoming systems that compound.
+- The hero is the current AI-facing entry point. The durable personal throughline remains judgment meeting reality and becoming work that compounds both in the world and for its maker.
+- `Make what lasts.` appears once as the English Work heading, paired with `SUPERLINEAR ACADEMY`. It names what the personal throughline is trying to produce; it does not replace the Hero or repeat in the footer.
 - The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
 - In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents a long-term environment around members' current work, and enterprise programs show the same methods being tested against real organizational goals and constraints.
 - The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.

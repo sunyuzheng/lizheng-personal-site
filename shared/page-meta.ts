@@ -28,10 +28,10 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun · 孙煜征 · 课代表立正",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is based in Seattle. AI makes building easier; his focus is studying what's worth building.",
+      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is a founder based in Seattle. He studies what's worth building—and how to make useful work last.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-25",
+    lastModified: "2026-07-31",
   },
   zh: {
     title: "课代表立正（孙煜征）｜Yuzheng Sun",

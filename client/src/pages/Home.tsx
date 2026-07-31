@@ -75,9 +75,9 @@ const workingMethod = {
     },
     {
       number: "03",
-      title: "What remains after it is built?",
+      title: "What keeps working after the first effort?",
       detail:
-        "A useful result should leave behind capability, a product, a system, or a relationship that makes the next move better.",
+        "The best work leaves behind more than an output. It keeps creating value for the people who use it—and compounds into capability, reputation, freedom, and a more ambitious next move for its maker.",
     },
   ],
   zh: [
@@ -225,7 +225,7 @@ const work = {
       label: "LEARNING AND PRACTICE",
       title: "AI Builders",
       detail:
-        "Yage asks why the technology works and how to make it reliable; I ask why to build, for whom, and what useful means. AI Builders brings those two kinds of experience together.",
+        "Yage asks why the technology works and how to make it reliable; I ask what is worth building, for whom, and what useful means. AI Builders turns both kinds of expertise into capability learners can carry to new problems.",
       proof: "3,000+ paying learners · 5.0/5 on Maven · co-taught with Yage",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
@@ -235,9 +235,9 @@ const work = {
       label: "CONTINUING FEEDBACK",
       title: "Stay Superlinear",
       detail:
-        "Members bring current work, artifacts, and questions. First-hand experience, feedback, and relationships help them judge the next move.",
+        "Members bring current work, artifacts, and questions. First-hand experience, feedback, and relationships sharpen the next move and help serious work keep moving.",
       proof: "Serious questions · work feedback · people and opportunities",
-      href: "https://staysuperlinear.com",
+      href: "https://stay.superlinear.academy",
       cta: "Explore Stay Superlinear",
     },
     {
@@ -245,7 +245,7 @@ const work = {
       label: "ORGANIZATIONAL PRACTICE",
       title: "Enterprise AI transformation",
       detail:
-        "I work with teams to find the work most worth changing, put AI into the actual workflow, and use results to decide whether it deserves to scale.",
+        "I work with teams to find the work most worth changing, put AI into the actual workflow, and turn successful experiments into reliable systems that can scale.",
       proof: "Tencent · DoorDash · Pinterest · 1Password · Amazon",
       href: "https://corp-training.ai-builders.com",
       cta: "Explore enterprise work",
@@ -269,7 +269,7 @@ const work = {
       detail:
         "成员带着手头的工作、作品和问题进来，用一手经验、反馈和关系，一起判断下一步。",
       proof: "认真问问题 · 打磨作品 · 遇见值得一起做事的人",
-      href: "https://staysuperlinear.com",
+      href: "https://stay.superlinear.academy",
       cta: "了解Stay Superlinear",
     },
     {
@@ -663,13 +663,23 @@ export default function Home() {
       <main>
         <section
           id="hero"
-          className="relative isolate min-h-[700px] scroll-mt-[72px] overflow-hidden md:min-h-[calc(100svh-72px)]"
+          className="relative isolate scroll-mt-[72px] bg-[#070A12] lg:min-h-[calc(100svh-72px)] lg:overflow-hidden"
         >
-          <picture>
-            <source
-              media="(max-width: 767px)"
-              srcSet="/hero/acquired-behind-scenes-mobile.webp"
+          <div className="relative aspect-[3/2] w-full overflow-hidden lg:hidden">
+            <img
+              src="/hero/acquired-behind-scenes-desktop.webp"
+              alt={
+                lang === "en"
+                  ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
+                  : "孙煜征与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
+              }
+              className="h-full w-full object-cover object-center"
+              width={2400}
+              height={1600}
             />
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#070A12] to-transparent" />
+          </div>
+          <picture className="absolute inset-0 hidden lg:block">
             <img
               src="/hero/acquired-behind-scenes-desktop.webp"
               alt={
@@ -682,10 +692,10 @@ export default function Home() {
               height={1600}
             />
           </picture>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.91)_38%,rgba(7,10,18,0.42)_67%,rgba(7,10,18,0.2)_100%)] md:bg-[linear-gradient(90deg,rgba(7,10,18,0.98)_0%,rgba(7,10,18,0.9)_38%,rgba(7,10,18,0.18)_75%,rgba(7,10,18,0.08)_100%)] lg:bg-[linear-gradient(90deg,rgba(7,10,18,0.01)_0%,rgba(7,10,18,0.04)_48%,rgba(7,10,18,0.72)_66%,rgba(7,10,18,0.98)_100%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(7,10,18,0.94)_0%,transparent_36%)] md:bg-[linear-gradient(0deg,rgba(7,10,18,0.72)_0%,transparent_30%)] lg:bg-[linear-gradient(0deg,rgba(7,10,18,0.82)_0%,transparent_28%)]" />
+          <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(7,10,18,0.01)_0%,rgba(7,10,18,0.04)_48%,rgba(7,10,18,0.72)_66%,rgba(7,10,18,0.98)_100%)] lg:block" />
+          <div className="absolute inset-0 hidden bg-[linear-gradient(0deg,rgba(7,10,18,0.82)_0%,transparent_28%)] lg:block" />
 
-          <div className="container relative z-10 flex min-h-[700px] items-end pb-10 pt-20 md:min-h-[calc(100svh-72px)] md:items-center md:pb-20 md:pt-20">
+          <div className="container relative z-10 py-10 md:py-14 lg:flex lg:min-h-[calc(100svh-72px)] lg:items-center lg:pb-20 lg:pt-20">
             <div className="max-w-3xl lg:ml-auto lg:w-[27rem] lg:max-w-[27rem] xl:w-[34rem] xl:max-w-[34rem]">
               <h1 className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
                 {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
@@ -697,7 +707,7 @@ export default function Home() {
                   <>
                     <span className="block">AI makes building easier.</span>
                     <span className="mt-3 block text-amber-200">
-                      My focus is studying what's worth building.
+                      I study what's worth building.
                     </span>
                   </>
                 ) : (
@@ -713,7 +723,7 @@ export default function Home() {
               </p>
               <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "I'm Yuzheng Sun (课代表立正), a founder based in Seattle with a PhD in Economics from Cornell. Across economics, product, organizations, and AI education, I keep asking: who truly needs this, what outcome is useful, and what remains after it is built?"
+                  ? "I'm Yuzheng Sun (课代表立正), a founder based in Seattle with a PhD in Economics from Cornell. Across economics, product, organizations, and AI education, I keep asking: what has actually changed, who is it useful for, and what will keep working after the first effort?"
                   : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士，现居西雅图。从经济学、产品与组织，到AI教育，我一直在问：谁真正需要，什么结果才算有用，做完以后能留下些什么。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -815,7 +825,7 @@ export default function Home() {
                 </p>
                 <p>
                   {lang === "en"
-                    ? "AI is lowering the cost of execution. It does not answer why something should be built, who it is for, or what useful means. My current work is where I keep putting those questions in contact with reality."
+                    ? "AI is lowering the cost of execution. That does not settle what is worth building, who it is for, or what useful means. My current work is where those judgments meet reality—and where I learn what keeps working beyond the first result."
                     : "AI把执行成本压得越来越低，却不会替我们回答为什么做、为谁做、怎样才算有用。今天的课程、社区和企业项目，就是我继续回答这些问题的地方。"}
                 </p>
               </div>
@@ -978,11 +988,11 @@ export default function Home() {
             <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-20">
               <div>
                 <SectionLabel>
-                  {lang === "en" ? "CURRENT WORK" : "现在在做"}
+                  {lang === "en" ? "SUPERLINEAR ACADEMY" : "现在在做"}
                 </SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] md:text-5xl">
                   {lang === "en" ? (
-                    "Studying what is worth building also means building it."
+                    "Make what lasts."
                   ) : (
                     <>
                       <span className="block">研究什么值得做，</span>
@@ -993,7 +1003,7 @@ export default function Home() {
               </div>
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
-                  ? "Today I work with learners, community members, and enterprise teams. AI Builders helps people choose problems, judge value, and build reliably. Stay surrounds current work with continuing feedback and people who can help. Enterprise projects test the same questions against real goals, workflows, and constraints. The work keeps showing me where an idea holds up—and where it still needs work."
+                  ? "This is the standard behind Superlinear. Across a learning system, an ongoing membership, and enterprise programs, the aim is the same: make work that keeps creating value in the world—and keeps compounding for the person who made it."
                   : "今天，我和学员、社区成员、企业团队一起工作。AI Builders练的是选问题、判断价值，再把东西可靠地做出来；Stay让手头的工作不断得到反馈，也遇见能一起做事的人；企业项目则必须在真实目标、流程和约束里见结果。做的过程中，我也会不断发现，原来哪些地方想对了，哪些还得改。"}
               </p>
             </div>

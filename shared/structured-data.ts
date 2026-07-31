@@ -66,6 +66,7 @@ function organizationNodes() {
       "@id": SUPERLINEAR_ID,
       name: "Superlinear Academy",
       url: "https://www.superlinear.academy/",
+      slogan: "Make what lasts.",
       founder: { "@id": PERSON_ID },
     },
     {
@@ -81,9 +82,9 @@ function organizationNodes() {
     },
     {
       "@type": "Organization",
-      "@id": "https://staysuperlinear.com/#organization",
+      "@id": "https://stay.superlinear.academy/#organization",
       name: "Stay Superlinear",
-      url: "https://staysuperlinear.com/",
+      url: "https://stay.superlinear.academy/",
       description:
         "A paid ongoing environment for practitioners that organizes people, content, feedback, tools, and opportunities around members' current work, co-led by Yuzheng Sun and Yage.",
     },
@@ -139,7 +140,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-25",
+        dateModified: lang === "en" ? "2026-07-31" : "2026-07-25",
       },
       personNode(lang),
       ...organizationNodes(),

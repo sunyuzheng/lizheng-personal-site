@@ -200,12 +200,12 @@ const copy = {
     eyebrow: "Podcasts · Video · Long-form",
     h1: "You set the question. I’ll bring a view and the evidence.",
     intro: [
-      "I’m Yuzheng Sun. I have a PhD in Economics from Cornell, worked across Amazon, Meta, Tencent, and Statsig, and now build AI Builders and Stay Superlinear.",
-      "I most often talk about three things: how AI actually changes work, how companies make decisions, and how people keep getting better while the ground moves under them.",
+      "I’m Yuzheng Sun. I have a PhD in Economics from Cornell and have worked at Amazon, Meta, Tencent, and Statsig, the experimentation company later acquired by OpenAI. Today, my work at Superlinear Academy spans AI Builders, Stay Superlinear, and enterprise programs.",
+      "I most often talk about what happens after AI makes the first draft easy: how people decide what is worth making, how companies learn whether a judgment is right, and how one-off effort becomes work that is unmistakably yours.",
     ],
     heroProofs: [
       "Cornell Economics PhD",
-      "Amazon · Meta · Tencent · Statsig",
+      "Amazon · Meta · Tencent · Statsig (acquired by OpenAI)",
       "200+ published conversations · Jul 2026",
       "400K+ across Xiaohongshu · YouTube · Bilibili · Jul 2026",
     ],
@@ -222,7 +222,7 @@ const copy = {
         number: "01",
         title: "A background that is hard to duplicate",
         detail:
-          "Cornell Economics PhD; economist at Amazon, data scientist at Meta, Data & AI leader at Tencent, and an early operator at Statsig. I now build courses, community, and media—across research, big tech, startup, and creator work.",
+          "Cornell Economics PhD; economist at Amazon, data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, later acquired by OpenAI. I have worked across research, product decisions, organizational leadership, startups, and creator work.",
         proof: "China & U.S. · research & operating · big tech & startup",
       },
       {
@@ -230,7 +230,8 @@ const copy = {
         title: "A point of view, not a performance",
         detail:
           "I like stating a judgment clearly enough for a host to push against it. Strong opinions, weakly held: I bring reasons, cases, and the strongest counterargument—and I genuinely enjoy the question that changes my mind.",
-        proof: "A useful judgment, plus room for the conversation to change it",
+        proof:
+          "Before GPT-4: publicly mapped agents, memory, tool use, and private search",
       },
       {
         number: "03",
@@ -242,24 +243,25 @@ const copy = {
       },
     ],
     questionsEyebrow: "QUESTIONS WITH REAL TENSION",
-    questionsTitle: "A sharp question matters more than a complete topic list.",
+    questionsTitle:
+      "AI makes it easier to finish tasks. That makes it more important to have something that shows what you actually made.",
     questionsIntro:
-      "Every one of these can be challenged, and any one can carry the episode on its own.",
+      "AI makes first drafts cheaper—and ordinary output easier to drown in more ordinary output. What separates people is not how much they can generate, but what they choose, what they leave out, and whether they make something people keep using—and remember who made it.",
     questions: [
-      "Why do stronger AI models leave most people’s real output nearly unchanged?",
-      "As execution approaches zero cost, where do human value, organizational moats, and career leverage move?",
+      "If AI lets everyone produce a first draft, why is work that truly represents its maker becoming rarer?",
+      "If your days are full of efficient delivery but none of the work is truly yours, where does the value of a career accumulate?",
+      "Does pursuing a signature work lead back to perfectionism? How do you expose work to reality early and still stay with it long enough?",
       "What is ‘stop using ChatGPT’ actually arguing against—and what does agentic work change?",
       "Across Amazon, Meta, Tencent, and Statsig, how do technology organizations make decisions and systematically get them wrong?",
       "Which of my public AI calls have aged well, which require a correction, and why?",
-      "Can education and community build judgment without creating a new form of dependency?",
     ],
     otherDirections:
-      "There are also grounded cases in experimentation, creator economics, China–U.S. technology, and the operating decisions behind AI Builders and Stay Superlinear. An episode does not need to cover them all; one good question is usually stronger.",
+      "There are also grounded cases in experimentation, creator economics, China–U.S. technology, and whether education and community build judgment or create a new form of dependency. An episode does not need to cover them all; one good question is usually stronger.",
     conversationsEyebrow: "CONTENT, THEN AMPLIFICATION",
     conversationsTitle:
       "First prove the content holds. Then see how far production and distribution can push it.",
     conversationsIntro:
-      "Koji first shows that one strong conversation can work in long-form audio and across video platforms. Tulong then layers strong content, both audiences, and co-production to see how much farther it can go.",
+      "A good conversation should outlive release day. Koji shows that one conversation can hold up across long-form audio and short video. Tulong shows what happens when strong content is joined by both audiences and a full production stack.",
     conversations: [
       {
         priority: "lead",
@@ -442,10 +444,13 @@ const copy = {
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun is an economist, AI educator, and founder of Superlinear Academy and AI Builders. A Cornell PhD, he has worked across Amazon, Meta, Tencent, and Statsig, and now works across AI education, content, and community.",
+      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His current question is simple: as AI makes first drafts easier, how do we choose what is worth making—and turn it into work that lasts?",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is an operator, author, and AI educator based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and evangelist at Statsig. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. His work asks what remains worth making as AI makes first drafts easier—and how one-off effort becomes work that remains useful after the first result. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+    brandLineLabel: "One line for the introduction",
+    brandLine:
+      "At Superlinear Academy, our principle is simple: make what lasts.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
@@ -464,7 +469,7 @@ const copy = {
       },
       {
         label: "Stay Superlinear membership",
-        href: "https://staysuperlinear.com",
+        href: "https://stay.superlinear.academy",
       },
     ],
     audienceFact:
@@ -481,12 +486,12 @@ const copy = {
     eyebrow: "播客 · 视频访谈 · 长对话",
     h1: "你定问题，我带着判断和证据来。",
     intro: [
-      "我是课代表立正。康奈尔经济学博士，先后在Amazon、Meta、腾讯和Statsig做过经济学、数据和AI工作；现在主理AI Builders和Stay Superlinear。",
-      "我最常聊三件事：AI到底怎么改变工作，公司怎么做判断，人又怎么在变化里长出真本事。",
+      "我是课代表立正。康奈尔经济学博士，先后在Amazon、Meta、腾讯，以及后来被OpenAI收购的Statsig做过经济学、数据和AI工作；现在是Superlinear Academy创始人，主理AI Builders和Stay Superlinear，也做企业AI项目。",
+      "我最常聊的，是AI让第一版越来越容易以后发生的事：人怎么判断什么值得做，公司怎么知道自己的判断到底对不对，一个人又怎样从不断完成任务，走到做出真正属于自己的作品。",
     ],
     heroProofs: [
       "康奈尔经济学博士",
-      "Amazon · Meta · 腾讯 · Statsig",
+      "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
       "200+场公开对谈 · 2026.07",
       "小红书 · YouTube · B站40万+关注者 · 2026.07",
     ],
@@ -503,7 +508,7 @@ const copy = {
         number: "01",
         title: "这组经历，通常不在同一个嘉宾身上出现",
         detail:
-          "康奈尔经济学博士；在Amazon做过经济学家、在Meta做过数据科学家、在腾讯IEG任数据与AI副总监，也在Statsig这样的创业公司一线干过。我既做过研究，也真正带过业务、做过产品和内容。",
+          "康奈尔经济学博士；在Amazon做过经济学家、在Meta做过数据科学家、在腾讯IEG任数据与AI副总监，也在后来被OpenAI收购的Statsig任Principal Data Scientist及公司唯一布道师。我既做过研究和产品判断，也带过团队、在创业公司一线干过，现在自己做课程、社区和内容。",
         proof: "中美 · 研究与实战 · 大厂与创业",
       },
       {
@@ -511,7 +516,7 @@ const copy = {
         title: "有立场，也最喜欢被挑战",
         detail:
           "我信奉“strong opinions, weakly held”：观点要讲得足够明确，理由、案例和反方也都摆出来；一个好问题真能让我改变想法，我会很开心。",
-        proof: "有判断，不护答案 · 观众能带走一个可用的观点",
+        proof: "GPT-4发布前，已公开推演Agent、记忆、工具调用与private search",
       },
       {
         number: "03",
@@ -522,22 +527,24 @@ const copy = {
       },
     ],
     questionsEyebrow: "可以聊什么",
-    questionsTitle: "不用列十个话题。挑一个真有分歧的，往下聊。",
-    questionsIntro: "下面这些问题，我最近一直在想，其中不少还没想明白。",
+    questionsTitle:
+      "AI越能替人完成任务，人越需要有一件东西证明：我真正做成过什么。",
+    questionsIntro:
+      "AI让第一版越来越便宜，也让普通产出更快淹没在更多普通产出里。真正拉开差距的，不是一天生成多少，而是你选了什么、舍掉什么，最后有没有做成一件别人会继续用、也会记得是你做的东西。",
     questions: [
-      "AI模型越来越强，为什么大多数人的实际产出几乎没变？",
-      "AI把执行变得越来越便宜以后，人和公司真正值钱的东西还剩什么？",
-      "我为什么说“停止使用 ChatGPT”？从聊天框到Agent，工作方式到底变了什么？",
+      "AI让每个人都能快速做出第一版，为什么真正能代表一个人的作品反而更稀缺了？",
+      "如果每天都在高效交付，却没有一件东西真正属于自己，一个人的职业价值最后沉淀在哪里？",
+      "追求代表作，会不会把人带回完美主义？怎样让作品尽早遇到现实，又值得长期做下去？",
+      "我为什么说“停止使用ChatGPT”？从聊天框到Agent，工作方式到底变了什么？",
       "在Amazon、Meta、腾讯和Statsig，我见过的大公司和创业公司，通常怎么做判断，又怎么把自己带偏？",
       "回头看我过去的AI判断，哪些说对了，哪些现在需要重新判断？",
-      "一门课、一个社区，到底是在帮人长本事，还是让人越来越离不开老师和圈子？",
     ],
     otherDirections:
-      "增长实验、创作者怎么赚钱、科技创业也都能聊。AI Builders和Stay Superlinear是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
+      "增长实验、创作者怎么赚钱、科技创业，以及一门课、一个社区到底是在帮人长本事，还是让人越来越离不开老师和圈子，也都能聊。AI Builders和Stay Superlinear是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
     conversationsEyebrow: "两个合作案例",
     conversationsTitle: "先看内容自己能不能跑，再看双方能把它推多远。",
     conversationsIntro:
-      "Koji那期先证明，一场好对话能同时在音频和多个视频平台成立。屠龙的合作则把好内容、双方受众和制作资源叠在一起，看它还能被放大到哪里。",
+      "一场好对话，不该只活在上线那天。Koji那期证明，好内容换到音频、长视频和切片里仍然成立；屠龙的合作则说明，内容先站住，再叠加双方受众和制作资源，能走得更远。",
     conversations: [
       {
         priority: "lead",
@@ -689,10 +696,12 @@ const copy = {
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders的创始人。曾在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作，现在主要做AI教育、内容和社区，关心个人和公司怎样把AI真正用进工作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他现在最关心的是：AI让第一版越来越容易以后，我们怎样选对值得做的事，做出自己的代表作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，并曾在Statsig任Principal Data Scientist及公司唯一布道师。他是Superlinear Academy与AI Builders的创始人，并和鸭哥共同主理Stay Superlinear。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人，并和鸭哥共同主理Stay Superlinear。他关注的是：AI让第一版越来越容易以后，人和公司怎样判断什么值得做，又怎样把一次性交付做成持续有用、真正属于自己的作品。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+    brandLineLabel: "节目介绍可用的一句话",
+    brandLine: "Superlinear Academy相信，人应该做出自己的代表作。",
     headshotLabel: "1200 × 1200头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",
@@ -705,7 +714,7 @@ const copy = {
       },
       {
         label: "Stay Superlinear · 会员社区",
-        href: "https://staysuperlinear.com",
+        href: "https://stay.superlinear.academy",
       },
     ],
     audienceFact: "截至2026年7月，YouTube、B站和小红书共40万+关注者。",
@@ -1036,6 +1045,54 @@ export default function CreatorCollab() {
             </p>
           </section>
 
+          <section className="mt-14 border-y border-white/10 py-10 md:mt-20 md:py-14">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              {t.stanceEyebrow}
+            </p>
+            <div className="mt-4 grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
+              <h2 className="text-3xl font-semibold leading-tight text-white md:text-4xl">
+                {t.stanceTitle}
+              </h2>
+              <p className="text-sm leading-7 text-zinc-300 md:text-base md:leading-8">
+                {t.stanceDetail}
+              </p>
+            </div>
+          </section>
+
+          <section id="questions" className="scroll-mt-24 pt-14 md:pt-20">
+            <div className="grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+                  {t.questionsEyebrow}
+                </p>
+                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
+                  {t.questionsTitle}
+                </h2>
+                <p className="mt-4 text-sm leading-7 text-zinc-400">
+                  {t.questionsIntro}
+                </p>
+              </div>
+              <div className="border-t border-white/10">
+                {t.questions.map((question, index) => (
+                  <div
+                    key={question}
+                    className="grid gap-3 border-b border-white/10 py-5 sm:grid-cols-[2.5rem_1fr]"
+                  >
+                    <span className="font-mono text-xs text-zinc-400">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-lg font-medium leading-8 text-zinc-200">
+                      {question}
+                    </p>
+                  </div>
+                ))}
+                <p className="mt-6 text-sm leading-7 text-zinc-400">
+                  {t.otherDirections}
+                </p>
+              </div>
+            </div>
+          </section>
+
           <section className="mt-14 md:mt-20">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
               <div>
@@ -1088,54 +1145,6 @@ export default function CreatorCollab() {
                   </p>
                 </a>
               ))}
-            </div>
-          </section>
-
-          <section className="mt-14 border-y border-white/10 py-10 md:mt-20 md:py-14">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
-              {t.stanceEyebrow}
-            </p>
-            <div className="mt-4 grid gap-5 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
-              <h2 className="text-3xl font-semibold leading-tight text-white md:text-4xl">
-                {t.stanceTitle}
-              </h2>
-              <p className="text-sm leading-7 text-zinc-300 md:text-base md:leading-8">
-                {t.stanceDetail}
-              </p>
-            </div>
-          </section>
-
-          <section id="questions" className="scroll-mt-24 pt-14 md:pt-20">
-            <div className="grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
-                  {t.questionsEyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {t.questionsTitle}
-                </h2>
-                <p className="mt-4 text-sm leading-7 text-zinc-400">
-                  {t.questionsIntro}
-                </p>
-              </div>
-              <div className="border-t border-white/10">
-                {t.questions.map((question, index) => (
-                  <div
-                    key={question}
-                    className="grid gap-3 border-b border-white/10 py-5 sm:grid-cols-[2.5rem_1fr]"
-                  >
-                    <span className="font-mono text-xs text-zinc-400">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-lg font-medium leading-8 text-zinc-200">
-                      {question}
-                    </p>
-                  </div>
-                ))}
-                <p className="mt-6 text-sm leading-7 text-zinc-400">
-                  {t.otherDirections}
-                </p>
-              </div>
             </div>
           </section>
 
@@ -1248,6 +1257,14 @@ export default function CreatorCollab() {
                     </p>
                     <p className="mt-3 text-sm leading-7 text-[#48443B]">
                       {t.longBio}
+                    </p>
+                  </div>
+                  <div className="border-t border-[#D4D0C7] py-6">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8B4A19]">
+                      {t.brandLineLabel}
+                    </p>
+                    <p className="mt-3 border-l-2 border-[#B4672A] pl-4 text-lg font-semibold leading-8 text-[#29251F]">
+                      {t.brandLine}
                     </p>
                   </div>
                   <div className="border-t border-[#D4D0C7] py-6">

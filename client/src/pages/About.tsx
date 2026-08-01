@@ -62,7 +62,7 @@ const currentWork = {
       role: "Long-term membership",
       detail:
         "A paid ongoing environment, co-led with Yage, that organizes serious questions, feedback, tools, people, and opportunities around members' current work.",
-      href: "https://staysuperlinear.com/",
+      href: "https://stay.superlinear.academy/",
     },
   ],
   zh: [
@@ -85,7 +85,7 @@ const currentWork = {
       role: "长期会员社区",
       detail:
         "面向已有专业积累、正在用AI的人，由立正和鸭哥共同主理。围绕会员正在做的事，认真聊问题、打磨作品，也连接合适的人和机会。",
-      href: "https://staysuperlinear.com/",
+      href: "https://stay.superlinear.academy/",
     },
   ],
 };

@@ -308,9 +308,9 @@ def draw_cover(c: canvas.Canvas) -> None:
     proof_y = H - 232
     proofs = [
         "康奈尔大学经济学博士",
-        "Amazon · Meta · 腾讯 · Statsig",
-        "200+ 场公开对谈 · 截至 2026.07",
-        "小红书 · YouTube · B站 40万+ 关注者 · 截至 2026.07",
+        "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
+        "200+场公开对谈 · 截至2026.07",
+        "小红书 · YouTube · B站40万+关注者 · 截至2026.07",
     ]
     for index, text in enumerate(proofs):
         col = index % 2
@@ -338,7 +338,7 @@ def draw_cover(c: canvas.Canvas) -> None:
     c.roundRect(M + 16, image_y + 16, 340, 42, 8, fill=1, stroke=0)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 8.8)
-    c.drawString(M + 28, image_y + 40, "与 Acquired 主播 Ben Gilbert、David Rosenthal 对谈")
+    c.drawString(M + 28, image_y + 40, "与Acquired主播Ben Gilbert、David Rosenthal对谈")
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.8)
     c.drawString(M + 28, image_y + 25, "Significance Summit")
@@ -360,7 +360,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(M, H - 91, "这组经历，通常不在同一个嘉宾身上出现。")
     draw_paragraph(
         c,
-        "我既做过研究，也在中美大厂和创业公司一线做过业务、产品，也带过团队。现在长期做课程、社区和内容。同一个问题，我能从机制讲到现场，也愿意把做错过的判断摆出来。",
+        "我既做过研究，也在中美大厂和创业公司一线做过业务、产品，也带过团队。现在我关心的是：AI让第一版越来越容易以后，人和公司怎样判断什么值得做，再把它做成真正属于自己的作品。同一个问题，我能从机制讲到现场，也愿意把做错过的判断摆出来。",
         M,
         H - 122,
         W - 2 * M,
@@ -375,9 +375,9 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         ("Cornell", "经济学博士"),
         ("Amazon", "经济学家"),
         ("Meta", "数据科学家"),
-        ("腾讯 IEG", "数据与 AI 副总监"),
-        ("Statsig", "首席数据科学家与布道师"),
-        ("现在", "Superlinear Academy / AI Builders 创始人"),
+        ("腾讯IEG", "数据与AI副总监"),
+        ("Statsig", "Principal Data Scientist · 公司唯一布道师"),
+        ("现在", "Superlinear Academy / AI Builders创始人"),
     ]
     c.setStrokeColor(HexColor("#BDB5A9"))
     c.setLineWidth(1)
@@ -433,14 +433,14 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     draw_qr(c, URL_GROWTH, W - M - 70, box_y + 20, 55)
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.5)
-    c.drawRightString(W - M - 82, box_y + 21, "Growth Mindset 相关视频")
+    c.drawRightString(W - M - 82, box_y + 21, "Growth Mindset相关视频")
     c.linkURL(URL_GROWTH, (M, box_y, W - M, box_y + box_h), relative=0)
 
     draw_label(c, "三个常聊方向", M, 204, color=AMBER_DARK, font=FONT_BOLD)
     topics = [
-        ("01", "AI 怎样真正改变工作"),
-        ("02", "公司怎样做判断"),
-        ("03", "人怎样在变化里长出真本事"),
+        ("01", "AI怎样改变工作的价值"),
+        ("02", "公司怎样知道判断对不对"),
+        ("03", "从完成任务，到做出代表作"),
     ]
     gap = 9
     card_w = (W - 2 * M - 2 * gap) / 3
@@ -472,12 +472,12 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "02 / CASE STUDY · KOJI · REMOTE", M, H - 50, color=AMBER)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "内容本身先站住了。")
+    c.drawString(M, H - 91, "一场好对话，不只活在上线那天。")
     c.setFont(FONT_BOLD, 19)
-    c.drawString(M, H - 120, "长音频有人听完，短视频有人收藏、转发。")
+    c.drawString(M, H - 120, "长音频有人听完，换成短视频也有人收藏、转发。")
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 9.5)
-    c.drawString(M, H - 146, "《十字路口 Crossing》× 课代表立正")
+    c.drawString(M, H - 146, "《十字路口Crossing》×课代表立正")
 
     metrics = [
         ("6.7万", "小宇宙播放", "该节目播放量前二*"),
@@ -535,7 +535,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     )
     draw_paragraph(
         c,
-        "同一场对话，在小宇宙有人完整听完。到了抖音、小红书和视频号，又有人收藏、转发。内容换了平台，依然成立。",
+        "同一场对话，在小宇宙有人完整听完；换到抖音、小红书和视频号，又有人收藏、转发。平台变了，内容仍然成立。",
         panel_x + 14,
         evidence_y + evidence_h - 112,
         panel_w - 28,
@@ -546,7 +546,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     )
     draw_paragraph(
         c,
-        "录制只是一次简单的远程连线，由 Koji 团队独立制作发布。我的账号没有参与联合发布，但内容仍在音频与多个视频平台获得高播放、收藏和转发。",
+        "一次简单的远程连线，由Koji团队独立制作发布。我的账号没有参与联合发布——这个小点说明，成绩首先来自嘉宾的稀缺背景和内容质量，而不是我的账号流量。",
         panel_x + 14,
         evidence_y + 148,
         panel_w - 28,
@@ -560,7 +560,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(panel_x + 80, evidence_y + 62, "去小宇宙听完整节目")
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.2)
-    c.drawString(panel_x + 80, evidence_y + 46, "远程录制 · 63 分钟")
+    c.drawString(panel_x + 80, evidence_y + 46, "远程录制 · 63分钟")
     c.linkURL(URL_KOJI, (panel_x + 75, evidence_y + 36, W - M, evidence_y + 80))
 
     c.setFillColor(Color(1, 1, 1, alpha=0.08))
@@ -582,7 +582,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(
         M,
         69,
-        "数据核对至 2026-07-22；*播放排名、账号历史/年度最高据合作方提供的账号数据。平台口径不同。",
+        "数据核对至2026-07-22；*播放排名、账号历史/年度最高据合作方提供的账号数据。平台口径不同。",
     )
     draw_footer(c, page, dark=True)
 
@@ -648,10 +648,10 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "跨平台承接", left_x + 15, 431, color=AMBER, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 13)
-    c.drawString(left_x + 15, 401, "B站 9万+ 播放 · 7,000+ 收藏")
+    c.drawString(left_x + 15, 401, "B站9万+播放 · 7,000+收藏")
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 9)
-    c.drawString(left_x + 15, 378, "YouTube 同版长片 9.8万+ 观看")
+    c.drawString(left_x + 15, 378, "YouTube同版长片9.8万+观看")
 
     c.setFillColor(HexColor("#FFF4D6"))
     c.setStrokeColor(HexColor("#E6C46B"))
@@ -673,16 +673,16 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     draw_qr(c, URL_TULONG_BILI, left_x, 133, 63)
     c.setFillColor(AMBER_DARK)
     c.setFont(FONT_BOLD, 8.5)
-    c.drawString(left_x + 79, 176, "看 B站完整正片")
+    c.drawString(left_x + 79, 176, "看B站完整正片")
     c.linkURL(URL_TULONG_BILI, (left_x + 75, 166, left_x + 170, 188), relative=0)
     c.setFillColor(MUTED)
     c.setFont(FONT_REGULAR, 7.8)
-    c.drawString(left_x + 79, 159, "另有 YouTube 版本")
+    c.drawString(left_x + 79, 159, "另有YouTube版本")
     c.linkURL(URL_TULONG_YT, (left_x + 75, 145, left_x + 210, 174), relative=0)
 
     c.setFillColor(MUTED)
     c.setFont(FONT_REGULAR, 7.3)
-    c.drawString(M, 72, "数据核对至 2026-07-22；各平台统计口径不同。")
+    c.drawString(M, 72, "数据核对至2026-07-22；各平台统计口径不同。")
     draw_footer(c, page)
 
 
@@ -692,17 +692,17 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "04 / EDITORIAL DIRECTIONS", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "挑一个真有分歧的问题，往下聊。")
+    c.drawString(M, H - 91, "为什么AI越强，代表作越重要？")
     c.setFillColor(BODY)
     c.setFont(FONT_REGULAR, 10)
-    c.drawString(M, H - 118, "不用把十个话题塞进一期。下面任何一个，都能单独撑起一场长谈。")
+    c.drawString(M, H - 118, "普通产出会越来越多；真正稀缺的，是你选择了什么，最后又做成了什么。")
 
     questions = [
-        "AI 模型越来越强，为什么大多数人的实际产出几乎没变？",
-        "执行越来越便宜以后，人和公司真正值钱的东西还剩什么？",
-        "为什么“停止使用 ChatGPT”？从聊天框到 Agent，工作方式到底变了什么？",
-        "Amazon、Meta、腾讯和 Statsig 通常怎样做判断，又怎样把自己带偏？",
-        "回头看过去公开做过的 AI 判断，哪些说对了，哪些现在需要重新判断？",
+        "AI让每个人都能快速做出第一版，为什么真正能代表一个人的作品反而更稀缺？",
+        "如果每天都在高效交付，却没有一件东西真正属于自己，职业价值最后沉淀在哪里？",
+        "追求代表作，会不会把人带回完美主义？怎样让作品尽早遇到现实？",
+        "Amazon、Meta、腾讯和Statsig通常怎样做判断，又怎样把自己带偏？",
+        "回头看过去公开做过的AI判断，哪些说对了，哪些现在需要重新判断？",
     ]
     y = 670
     for index, question in enumerate(questions, 1):
@@ -729,10 +729,10 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "做客记录", M + 16, 229, color=AMBER, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 17)
-    c.drawString(M + 16, 199, "目前核实到 21 档节目 · 23 期")
+    c.drawString(M + 16, 199, "目前核实到21档节目 · 23期")
     draw_paragraph(
         c,
-        "硅谷101 · What’s Next 科技早知道 · 十字路口 Crossing · 屠龙大实话 · INDIGO TALK · 牛油果烤面包 · AI炼金术 · 创见",
+        "硅谷101 · What’s Next科技早知道 · 十字路口Crossing · 屠龙大实话 · INDIGO TALK · 牛油果烤面包 · AI炼金术 · 创见",
         M + 16,
         173,
         350,
@@ -742,7 +742,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     )
     c.setFillColor(AMBER)
     c.setFont(FONT_BOLD, 8)
-    c.drawString(M + 16, 139, "INDIGO TALK 与 The Build Log 均再次邀请")
+    c.drawString(M + 16, 139, "INDIGO TALK与The Build Log均再次邀请")
     draw_qr(c, URL_COLLAB, W - M - 72, 151, 58)
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.2)
@@ -756,7 +756,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(M + 14, 91, "我也坐过桌子的另一边")
     c.setFillColor(BODY)
     c.setFont(FONT_REGULAR, 7.8)
-    c.drawString(M + 143, 91, "刘嘉教授：YouTube 剪辑版 13万+观看；B站完整版 2小时53分")
+    c.drawString(M + 143, 91, "刘嘉教授：YouTube剪辑版13万+观看；B站完整版2小时53分")
     c.linkURL(URL_LIU_JIA_YT, (M + 140, 80, M + 360, 104), relative=0)
     c.linkURL(URL_LIU_JIA_BILI, (M + 360, 80, W - M, 104), relative=0)
     draw_footer(c, page)
@@ -784,12 +784,12 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy 与 AI Builders 创始人。曾在 Amazon、Meta、腾讯和 Statsig 做经济学、数据与 AI；目前专注 AI 教育、内容与社区。",
+        "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。曾在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他关注的是：AI让第一版越来越容易以后，我们怎样选对值得做的事，做出自己的代表作。",
         228,
         668,
         W - M - 228,
-        size=10.4,
-        leading=18,
+        size=9.4,
+        leading=16,
         color=BODY,
     )
     c.setFillColor(AMBER_DARK)
@@ -803,7 +803,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     logistics = [
         ("语言", "中文或英文"),
         ("形式", "远程或西雅图线下"),
-        ("时长", "通常 60-120 分钟"),
+        ("时长", "通常60–120分钟"),
         ("时区", "美国太平洋时间"),
     ]
     gap = 8
@@ -827,6 +827,16 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
             leading=13,
             color=INK,
         )
+
+    draw_label(
+        c,
+        "SUPERLINEAR ACADEMY · 做出你的代表作。",
+        M,
+        510,
+        color=AMBER_DARK,
+        font=FONT_BOLD,
+        size=8.5,
+    )
 
     draw_label(c, "怎么一起录", M, 393, color=AMBER_DARK, font=FONT_BOLD)
     principles = [
@@ -887,7 +897,9 @@ def generate() -> Path:
     c.setAuthor("孙煜征（课代表立正）")
     c.setCreator("课代表立正 / Superlinear Academy")
     c.setSubject("Podcast and video guest collaboration kit")
-    c.setKeywords("课代表立正, 孙煜征, 播客, 视频访谈, 嘉宾资料")
+    c.setKeywords(
+        "课代表立正, 孙煜征, 播客, 视频访谈, 嘉宾资料, 做出你的代表作, Make what lasts"
+    )
 
     draw_cover(c)
     c.showPage()

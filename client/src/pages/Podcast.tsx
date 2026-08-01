@@ -832,7 +832,7 @@ export default function Podcast() {
               关于我
             </a>
             <a
-              href="https://staysuperlinear.com"
+              href="https://stay.superlinear.academy"
               target="_blank"
               rel="noopener noreferrer"
               className="transition hover:text-amber-300"

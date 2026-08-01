@@ -86,6 +86,10 @@ Stay Superlinear 不是“课程之后继续付费”的尾巴，也不是用来
 
 creator 页面是公开、持续更新的 canonical host kit。新 PDF 是由该页面与个人事实源派生的离线商务附件，供商务负责人直接转发：
 
+- 页面Hero继续回答主持人的直接问题：`你定问题，我带着判断和证据来。`，不替换成母品牌命令句。
+- `做出你的代表作 / Make what lasts`在这里首先是一个值得追问的节目命题：AI让第一版与普通产出越来越便宜，作品因此更需要公开证明选择、判断与作者自己的积累。
+- Host kit只使用一次固定品牌签名；Koji与屠龙案例证明内容可以跨媒介成立和被进一步放大，不把短期传播数据直接包装成“经受了时间检验”。
+
 - 当前 PDF：`output/pdf/课代表立正_播客与视频访谈资料_2026-07.pdf`
 - 生成源：`scripts/generate-podcast-collab-pdf.py`
 - 旧 `/collab/podcast-one-pager.pdf` 与旧 Stay collateral 继续退出，只保留永久跳转或历史归档。
@@ -101,7 +105,7 @@ creator 页面是公开、持续更新的 canonical host kit。新 PDF 是由该
 | 内部核心竞争力、未来资产与 source map | `kedaibiao/yuzheng-context-private/`；仅供内部决策，不得复制到公开页面                                                                       |
 | 嘉宾名单与单集归属                    | [`sunyuzheng/kedaibiao-content-tools`](https://github.com/sunyuzheng/kedaibiao-content-tools) 的 `guests.json`                               |
 | AI Builders 当前定位、方案与产品事实  | `course-marketing-system` 的 AI Builders 2027 positioning / offer / facts ledger；页面实现见 `ai-builders-2027` 产品仓库与 `ai-builders.com` |
-| Stay Superlinear 当前权益、价格与状态 | `stay-superlinear` 产品仓库与 `staysuperlinear.com`                                                                                          |
+| Stay Superlinear 当前权益、价格与状态 | `stay-superlinear` 产品仓库与 `stay.superlinear.academy`                                                                                     |
 | 权威表达与证据编排方法                | `course-marketing-system/00_strategy/authority-by-inference.md`；本仓库只保存首页应用规则                                                    |
 | 网站页面取舍与信息层级                | 本仓库及本文档                                                                                                                               |
 
@@ -120,7 +124,7 @@ creator 页面是公开、持续更新的 canonical host kit。新 PDF 是由该
 - Superlinear Academy 免费社区 19,180 人（数据截至 2026-07-16；公开表达“近 20,000 人”）
 - 2023 年 2 月、GPT-4 发布前首次写成《关于 ChatGPT 最重要的五个问题》
 - 现居西雅图；线下工作的默认地点是西雅图
-- Stay Superlinear canonical URL：`https://staysuperlinear.com`
+- Stay Superlinear canonical URL：`https://stay.superlinear.academy`
 - AI Builders canonical URL：`https://ai-builders.com`
 
 ## GitHub 的任务
@@ -137,7 +141,7 @@ Profile README 只需要：一句身份、当前三项工作、精选公共项�
 2. 是否误把 Statsig 被 OpenAI 收购写成孙煜征加入 OpenAI。
 3. 是否混淆免费 Superlinear Academy 与付费 Stay Superlinear。
 4. 是否把对话场次写成嘉宾人数。
-5. 是否使用 `staysuperlinear.com`、`ai-builders.com` 和 `www.lizheng.ai`。
+5. 是否使用 `stay.superlinear.academy`、`ai-builders.com`和`www.lizheng.ai`。
 6. 页面 title、description、canonical、OG、sitemap 与正文是否一致。
 7. 核心页源 HTML 是否包含真实正文，中英文页是否 reciprocal hreflang。
 8. sitemap `lastmod` 是否只反映真实内容变更，不是构建日期。

@@ -59,8 +59,8 @@ docs/             ← 数据结构和嘉宾维护说明
 
 编辑 `client/src/pages/Home.tsx`：
 
-- `ideas` / `featuredPrediction` / `predictions` → 判断与公开记录
-- `work` → AI Builders、Stay Superlinear 与企业项目
+- `method` / `careerChapters` / `featuredJudgment` → 母题之下的方法、经历与一个最强公开记录
+- `work` → 免费社区、AI Builders、Stay Superlinear会员与企业项目
 - `selectedGuests` / `endorsements` → 首页精选证据
 
 页面的取舍与品牌关系见 `docs/content-system.md` 和 `docs/homepage-narrative-outline.md`。

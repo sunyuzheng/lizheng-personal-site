@@ -837,7 +837,7 @@ export default function Podcast() {
               rel="noopener noreferrer"
               className="transition hover:text-amber-300"
             >
-              Stay Superlinear
+              Stay Superlinear会员
             </a>
             <a
               href="https://ai-builders.com"

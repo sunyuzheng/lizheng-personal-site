@@ -1,94 +1,154 @@
 # Homepage Narrative
 
-This is the current rationale for the homepage. It records decisions and facts, not a general writing framework.
+This file records the homepage's current narrative architecture. It is a page brief, not the canonical owner of Yuzheng's full philosophy or Superlinear's complete product argument.
+
+## The One Memory
+
+A serious visitor should leave with one clear association:
+
+> Yuzheng Sun stands for `MAKE WHAT LASTS. / 做出你的代表作。` Superlinear Academy is the defining work he is building around that belief.
+
+The homepage no longer introduces one personal thesis and later reveals a separate Superlinear slogan. The brand idea is the personal idea. Career, public judgment, conversations, books, products, and proof all help the visitor infer why Yuzheng has earned the right to stand behind it.
+
+The sentence is a standard and an invitation, not a promise that every project will become famous, permanent, or commercially successful. `Lasts` means work that solves something real, withstands use and change, and continues to create value after its first moment. `代表作` adds authorship and aspiration: work that clearly carries its maker's judgment and craft. Such work may also enlarge what that person is able to do next, but that return is not part of the definition.
 
 ## Job Of The Page
 
-The homepage should make a serious visitor infer four things:
+The page should make the visitor understand five things, in this order:
 
-1. Yuzheng has an unusual combination of technical depth, operating experience, judgment, and reach.
-2. His work has been tested in serious companies, rooms, products, and communities.
-3. He is part of a high-quality network of researchers, founders, operators, investors, and builders.
-4. His current work in education, community, and enterprise practice follows naturally from the career story without turning the page into a sales pitch.
+1. What Yuzheng believes and aspires to make.
+2. How that standard was earned through real work rather than invented as a slogan.
+3. That his judgment has been stated publicly and left open to inspection.
+4. Why Superlinear is the institution he is building to pursue the same standard with more people.
+5. Where a visitor can enter: the free community, AI Builders, the membership, enterprise work, or a direct collaboration.
 
-The page should establish this through selected facts, scenes, peers, work, and results. It should not announce that Yuzheng is impressive or explain why every signal is impressive.
+Authority should emerge from selected facts, scenes, peers, work, and results. The page should not announce that Yuzheng is impressive, nor explain why every signal is impressive.
 
-## Hero Question
+## Narrative Sequence
+
+### 1. Hero — state the belief
 
 English:
 
-> AI makes building easier. I study what’s worth building.
+> **MAKE WHAT LASTS.**
 
 Chinese:
 
-> AI让「做出来」越来越容易。我研究的是：什么值得做。
+> **做出你的代表作。**
 
-This is the current AI-facing expression of the longer personal thesis, not a service promise or a claim that implementation, reliability, adoption, or organizational change has become easy. It establishes a clear presentation hierarchy:
+The supporting copy establishes the relationship directly: Superlinear Academy is Yuzheng's defining work and the institution he is building around this belief.
 
-1. **AI makes building easier:** more ideas can reach a working form with less execution cost.
-2. **Study what is worth building:** the personal focus is problem selection—who a result is for, what it should change, and why it matters.
-3. **Let reality test the judgment:** users, products, experiments, organizations, and public disagreement reveal whether the choice holds up.
-4. **Make what lasts / 做出你的代表作:** what survives keeps creating value for the people who use it, becomes meaningfully associated with its maker, and compounds into capability, reputation, freedom, and more ambitious choices.
+The Acquired scene includes Yuzheng, Ben Gilbert, and David Rosenthal in full. Its role is quiet authority and peer context; it is not evidence that the belief is correct.
 
-The hero states only the first two layers. The next sections show judgment meeting reality. The Work section then reveals Superlinear Academy’s language-specific command—`Make what lasts.` in English and `做出你的代表作。` in Chinese—as the conclusion of that sequence, not as a second personal Hero. AI Builders, Stay Superlinear, and enterprise work appear there as three current expressions of the standard; their full product arguments remain on their own sites.
+### 2. Belief — name the distinction
 
-## Narrative Spine
+AI is making first versions cheaper across many kinds of digital work. That is a useful change. It also makes one distinction harder to ignore: output is plentiful; work carrying judgment, craft, authorship, and continued value is not.
 
-The career is not presented as six unrelated credentials.
+The homepage gives the belief one compact practice loop:
 
-- Economics provides the language of incentives and causal structure.
-- Amazon and Meta connect models to product and business decisions.
-- Leading a 30-person data and AI team at Tencent makes judgment an organizational problem.
-- Statsig turns experimentation and belief-updating into infrastructure.
-- AI Builders, co-taught with Yage, translates understanding from models, engineering, products, and organizations into capability another person can understand, practice, correct, and transfer. Stay Superlinear keeps work, feedback, relationships, and opportunities in motion over time; books and enterprise work carry the same throughline into public ideas and organizations.
+> **Choose with judgment → make with craft → let reality answer → preserve what proves valuable**
+>
+> **看准 → 做成 → 交给现实 → 留下**
 
-The deeper throughline comes from the local axioms: build a better model of reality, keep conviction testable, move from users to builders, and turn what survives reality into work that compounds. The hero is the front door into that sequence: easier building raises the value of choosing well; reality tests the choice; useful work should keep working after the first effort—both in the world and for the person who made it. `Make what lasts.` gives that final movement a memorable Superlinear name without replacing the personal question.
+This is iterative, not a fixed production line. Not all valuable work must become a reusable asset, and not everything preserved will compound. The purpose is to describe Yuzheng's discipline without turning it into a universal law.
 
-## Evidence Order
+### 3. Story — show where the standard came from
 
-1. The AI-era premise and personal question in the hero: building is becoming easier; the focus is what deserves to be built. The Acquired conversation supplies peer context without being presented as proof of the thesis.
-2. Cornell / Amazon / Meta / Tencent / Statsig: where the judgment behind problem selection was formed and what each setting taught.
-3. Three questions that make “worth building” concrete: what actually changed, who it is useful for, and whether the result keeps creating value and compounding for its maker after the first effort.
-4. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence that the premise about cheaper execution and the resulting judgments were stated in public.
-5. The English or Chinese Superlinear command at the Work transition: the parent-brand standard that connects AI Builders, Stay Superlinear, and enterprise work without turning the homepage into three sales pitches.
-6. 200+ conversations and selected guests: a source of first-hand input and network quality before follower quantity.
-7. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
-8. Community behavior and independent endorsements: repeated application and external validation.
+The career is presented as four formative chapters rather than a credential wall:
 
-`400K+` is current and may be stated, but it is intentionally subordinate to guest quality, audience composition, and substantive work.
+- Cornell: look beneath visible results to causes, incentives, choices, and constraints.
+- Amazon and Meta: analysis matters when it changes the next decision.
+- Tencent and Statsig: judgment must travel through an organization and remain answerable to evidence.
+- Superlinear: turn understanding held by one person into work other people can use, test, and extend.
+
+The titles matter as proof of environment. The lessons matter because they explain the present work.
+
+### 4. Public judgment — leave one inspectable record
+
+The homepage leads with the February 2023 essay on ChatGPT, written before GPT-4. It proves only a narrow point: Yuzheng was willing to publish a consequential view before the outcome was obvious, and the reasoning remains available for inspection.
+
+The homepage does not maintain a gallery of supposedly timeless insights. Other dated views belong in their original articles and in the personal thesis system's dated-view register.
+
+### 5. Superlinear — make the belief institutional
+
+This is the page's main reveal. Superlinear is not a product catalogue attached to the personal brand. It is the defining work through which Yuzheng is attempting to make the belief real.
+
+The four entries have distinct jobs:
+
+- **Free community:** open public value, real projects, questions, first-hand experience, collaboration, and opportunity.
+- **AI Builders:** systematic training across AI principles, engineering reliability, product judgment, and practice.
+- **Stay Superlinear membership:** a year-round, high-craft content and practitioner environment with deep analysis, masterclasses, Q&A, courses, Skills, recordings, and a searchable archive.
+- **Enterprise programs:** contact with real workflows, evaluation, ownership, and organizational constraints.
+
+These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; price and complete conversion arguments stay on the product sites.
+
+### 6. Conversations — show the quality of input and network
+
+Two hundred-plus public conversations show a sustained habit of learning from people who have built consequential things. Six selected guests demonstrate the range and quality of that network; the complete archive belongs on `/guests`.
+
+`400K+` is reach, not proof that a judgment is correct. It stays subordinate to the quality of the people, questions, and work.
+
+### 7. Books — show understanding that can leave the author
+
+The two books are framed as durable forms of judgment, not as another sales category. The launch photo and WSJ CIO Journal reading-list mention provide public and peer context.
+
+### 8. Endorsements — let informed outsiders speak
+
+Testimonials sit near the work they help a visitor interpret. They establish teaching quality, practical usefulness, and intellectual depth; they do not substitute for product outcomes.
+
+### 9. Final invitation — return authorship to the visitor
+
+The final line is:
+
+> **Your defining work will not arrive finished.**
+>
+> **你的代表作，不会一开始就是代表作。**
+
+The visitor can enter through the free community, explore AI Builders, or collaborate directly. The page ends with possibility and action, not another abstract explanation.
+
+## What Does Not Belong On The Homepage
+
+The following may remain useful elsewhere but no longer compete with the mother idea on this page:
+
+- `AI makes building easier. I study what's worth building.` as a second Hero;
+- world models as a standalone brand pillar;
+- `Strong opinions, weakly held` as a universal doctrine;
+- `User → Builder → Architect` as a universal hierarchy;
+- the claim that AI always moves scarcity upward;
+- the claim that all valuable work should become a system or asset;
+- AI-native execution heuristics and enterprise operating models;
+- a list of dated predictions;
+- a general statistics wall.
+
+These are lenses, dated hypotheses, product frameworks, or evidence. They are not parallel identities.
 
 ## Authority By Inference
 
-The homepage follows `show → frame → let the reader conclude`.
+The page follows `show → frame → let the reader conclude`.
 
 - A fact or scene comes first.
 - The page explains only what that fact demonstrates and why it belongs there.
-- The conclusion is left to the visitor.
 - Every proof has one job and appears where its question naturally arises.
-- Employer names establish training and operating context; they are not endorsements.
+- Employer names establish operating context; they are not endorsements.
 - Reach establishes distribution; it does not establish correctness.
 - Dated calls establish inspectable judgment; they do not establish permanent foresight.
+- Product goals are not written as guaranteed member outcomes.
 
-For this reason, the standalone statistics strip has been removed. Teaching proof now sits with AI Builders, audience proof with conversations, community proof with the community, and publication proof with the books.
+## Durable Implementation Decisions
 
-## Durable Decisions
-
-- English remains the default language by design.
-- The hero is the current AI-facing entry point. The durable personal throughline remains judgment meeting reality and becoming work that compounds both in the world and for its maker.
-- `Make what lasts.` and `做出你的代表作。` each appear once as the Work heading in their respective language, paired with `SUPERLINEAR ACADEMY`. They name what the personal throughline is trying to produce; neither replaces the Hero or repeats in the footer.
-- The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
-- In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents a long-term environment around members' current work, and enterprise programs show the same methods being tested against real organizational goals and constraints.
-- The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.
-- On desktop, keep all three participants in the Acquired scene visible by placing copy over the camera on the right. Mobile keeps the portrait crop and prioritizes copy legibility.
-- The homepage curates. Complete guest, book, content, and collaboration material belongs on dedicated pages.
-- Keep mobile length near 11 screens or less at a 390 x 844 viewport.
-- Prefer factual captions and recognizable scenes over adjectives or self-described virtues.
-- Do not feature a personal anecdote merely because it is vivid. Use it only when it proves the central identity more efficiently than the available public work does.
+- English remains the default language.
+- The brand command is the real `<h1>` in both languages.
+- The full Acquired image appears without zoom or cropping so Ben Gilbert and David Rosenthal remain visibly present.
+- The Superlinear section uses a real working image of Yuzheng and Yage and introduces Yage in language a non-technical visitor can understand.
+- The public community CTA points to `https://www.superlinear.academy`.
+- Chinese first mentions use `Stay Superlinear会员`; subsequent references may use `会员`. English uses `the Stay Superlinear membership` or `the membership`.
+- The homepage curates. Complete guest, book, content, membership, course, and collaboration arguments live on their dedicated pages.
+- Prefer real scenes, works, names, dates, and captions over icons or self-described virtues.
 
 ## Active Assets
 
-- Hero desktop: `/hero/acquired-behind-scenes-desktop.webp`
-- Hero mobile: `/hero/acquired-behind-scenes-mobile.webp`
+- Hero: `/hero/acquired-behind-scenes-desktop.webp`
+- Yuzheng and Yage: `/superlinear/yuzheng-yage-conversation.webp`
 - Enterprise work: `/english-network/doordash-ai-training.webp`
 - Book launch: `/book/growth-data-launch.webp`
 

@@ -45,7 +45,7 @@ const currentWork = {
   en: [
     {
       name: "Superlinear Academy",
-      role: "Free peer lab",
+      role: "Open learning and builder community",
       detail:
         "A free community where projects, specific questions, first-hand experience, feedback, and opportunities circulate.",
       href: "https://www.superlinear.academy/",
@@ -58,11 +58,18 @@ const currentWork = {
       href: "https://ai-builders.com/",
     },
     {
-      name: "Stay Superlinear",
+      name: "Stay Superlinear membership",
       role: "Long-term membership",
       detail:
-        "A paid ongoing environment, co-led with Yage, that organizes serious questions, feedback, tools, people, and opportunities around members' current work.",
+        "A paid, year-round content and practitioner environment with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.",
       href: "https://stay.superlinear.academy/",
+    },
+    {
+      name: "Enterprise AI programs",
+      role: "Organizational practice",
+      detail:
+        "Work with teams to connect AI capability to real workflows, evaluation, ownership, incentives, and organizational constraints.",
+      href: "https://corp-training.ai-builders.com/",
     },
   ],
   zh: [
@@ -81,11 +88,17 @@ const currentWork = {
       href: "https://ai-builders.com/",
     },
     {
-      name: "Stay Superlinear",
+      name: "Stay Superlinear会员",
       role: "长期会员社区",
       detail:
-        "面向已有专业积累、正在用AI的人，由立正和鸭哥共同主理。围绕会员正在做的事，认真聊问题、打磨作品，也连接合适的人和机会。",
+        "面向已有专业积累、正在用AI的人，持续提供深度解析、闭门大师课、答疑、课程、Skills、回放、讨论与可检索的内容库。鸭哥作为长期核心教学伙伴与技术权威参与内容建设。",
       href: "https://stay.superlinear.academy/",
+    },
+    {
+      name: "企业AI项目",
+      role: "组织实践",
+      detail: "把AI能力放进团队的真实工作流、评估、责任、激励与组织约束里。",
+      href: "https://corp-training.ai-builders.com/",
     },
   ],
 };
@@ -131,12 +144,14 @@ export default function About() {
       eyebrow: "About Yuzheng Sun",
       intro:
         "Yuzheng Sun (孙煜征), also known publicly as 课代表立正, has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He is based in Seattle.",
+      belief:
+        "His defining idea is MAKE WHAT LASTS: make work that keeps creating value and clearly bears its maker's distinctive judgment and craft. Such work may also enlarge what its maker can do next.",
       backgroundTitle: "Background",
       background:
         "He has worked as an economist, data scientist, and technology leader at Amazon, Meta, Tencent IEG, and Statsig. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
       currentTitle: "What he is building now",
       currentIntro:
-        "Three related but distinct ways to turn judgment and building methods into capability, real work, and continued practice.",
+        "Superlinear is the defining work he is building around that belief. Its free community, structured learning, year-round membership, and enterprise practice give the same ambition different forms.",
       publicTitle: "Books and conversations",
       publicIntro:
         "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
@@ -145,7 +160,7 @@ export default function About() {
       statsigSource: "OpenAI acquisition announcement",
       sourcesTitle: "Sources and contact",
       reviewed:
-        "Facts last reviewed July 25, 2026. Changing figures retain their check date.",
+        "Facts last reviewed August 1, 2026. Changing figures retain their check date.",
       books: "Books",
       hosted: "People Yuzheng has interviewed",
       appeared: "Programs where Yuzheng appeared as a guest",
@@ -156,19 +171,21 @@ export default function About() {
       eyebrow: "关于课代表立正",
       intro:
         "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，创办了Superlinear Academy和AI Builders，现居西雅图。",
+      belief:
+        "他所代表的主张是：做出你的代表作——把判断和本事，做成完成以后还在创造价值、也清楚承载自己判断与手艺的作品。这样的作品，也可能继续成就作者。",
       backgroundTitle: "经历",
       background:
         "他在Amazon做过经济学家，在Meta做过数据科学家，后来任腾讯IEG · 数据与AI副总监，也曾任Statsig · Principal Data Scientist、公司唯一布道师。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
       currentTitle: "现在主要在做什么",
       currentIntro:
-        "三件事彼此相关，但各有分工：公开实践、集中训练和长期环境。",
+        "Superlinear是他正在做的代表作。免费社区、系统训练、全年会员和企业实践，各自对这套信念承担不同的现实责任。",
       publicTitle: "书与对话",
       publicIntro:
         "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
       statsigNote: "Statsig于2025年被OpenAI收购；孙煜征在收购前已经离开。",
       statsigSource: "OpenAI收购公告",
       sourcesTitle: "资料与联系",
-      reviewed: "事实最后核对：2026年7月25日。会变化的数字保留各自的核对日期。",
+      reviewed: "事实最后核对：2026年8月1日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",
@@ -208,6 +225,9 @@ export default function About() {
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
                 {copy.intro}
+              </p>
+              <p className="mt-5 max-w-3xl border-l border-amber-300/40 pl-5 text-base leading-8 text-zinc-400">
+                {copy.belief}
               </p>
             </div>
             <div className="grid grid-cols-2 gap-px bg-white/10">
@@ -299,7 +319,7 @@ export default function About() {
                 {copy.currentIntro}
               </p>
             </div>
-            <div className="mt-8 grid gap-px bg-white/10 lg:grid-cols-3">
+            <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-2">
               {currentWork[lang].map(item => (
                 <article key={item.name} className="bg-[#111722] p-6">
                   <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-amber-300">

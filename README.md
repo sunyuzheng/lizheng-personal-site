@@ -2,18 +2,18 @@
 
 The personal website and public profile of Yuzheng Sun (孙煜征 / 课代表立正).
 
-The site is organized around one throughline: form a view, let reality test it, and turn what survives into capabilities, work, and systems that other people can use. [AI Builders](https://ai-builders.com), [Stay Superlinear](https://stay.superlinear.academy), enterprise programs, books, and public conversations appear as evidence and applications of that work—not as competing homepages.
+The site is organized around one defining idea shared by Yuzheng and Superlinear Academy: **MAKE WHAT LASTS. / 做出你的代表作。** Yuzheng is the idea's author, practitioner, and public representative. Superlinear is his defining work in progress and the institution he is building so more people can pursue work of their own.
 
-Superlinear Academy's confirmed parent-brand commands are **MAKE WHAT LASTS.** and **做出你的代表作。** They frame the Superlinear work on the English and Chinese versions of this site, but do not replace the personal Hero or the more specific promise of any product. The canonical meaning and use hierarchy live in the private course-marketing repository at `00_strategy/superlinear-brand-platform.md`.
+Judgment, craft, reality, and what deserves to be preserved explain how Yuzheng practices that belief. [AI Builders](https://ai-builders.com), the [Stay Superlinear membership](https://stay.superlinear.academy), enterprise programs, books, tools, and public conversations show different parts of the work; they are not separate personal themes or competing homepages. The canonical meaning and use hierarchy live in `course-marketing-system/00_strategy/superlinear-brand-platform.md`.
 
 **Live site:** [www.lizheng.ai](https://www.lizheng.ai)
 
 ## Public Content Model
 
-- **Homepage:** the personal throughline, dated judgments, current work, conversations, and books.
+- **Homepage:** the defining idea, the choices and work that make Yuzheng a credible representative of it, one inspectable dated judgment, Superlinear as its institutional expression, conversations, books, and an invitation back to the visitor's own work.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
-- **Stay Superlinear:** the ongoing paid membership and long-term environment.
-- **Superlinear Academy:** the free peer lab and builder community.
+- **Stay Superlinear membership:** the paid year-round content and practitioner environment.
+- **Superlinear Academy:** the open, free learning and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.
 - **Guest archive:** the complete conversation directory; the homepage carries the smaller, selected network signal.
 

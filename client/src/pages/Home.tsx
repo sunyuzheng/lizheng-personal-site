@@ -8,10 +8,8 @@ import { cn } from "@/lib/utils";
 import {
   ArrowRight,
   BookOpen,
-  Building2,
   ExternalLink,
   Github,
-  GraduationCap,
   Handshake,
   Linkedin,
   Mail,
@@ -26,259 +24,216 @@ import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 
-const career = [
-  {
-    org: "Cornell",
-    en: "PhD, Economics",
-    zh: "经济学博士",
-  },
-  {
-    org: "Amazon",
-    en: "Economist",
-    zh: "经济学家",
-  },
-  {
-    org: "Meta",
-    en: "Data Scientist",
-    zh: "数据科学家",
-  },
-  {
-    org: "Tencent IEG",
-    en: "Vice Director, Data & AI",
-    zh: "数据与AI副总监",
-  },
-  {
-    org: "Statsig",
-    en: "Principal DS · Sole Evangelist",
-    zh: "Principal Data Scientist · 唯一布道师",
-  },
-  {
-    org: "Superlinear",
-    en: "Founder",
-    zh: "创始人",
-  },
-];
-
-const workingMethod = {
+const method = {
   en: [
     {
       number: "01",
-      title: "What actually changed?",
+      title: "Choose with judgment",
       detail:
-        "Separate a real shift in cost, capability, or behavior from a new layer of hype.",
+        "What is worth the effort, for whom, and what would count as useful?",
     },
     {
       number: "02",
-      title: "Who is it useful for?",
+      title: "Make with craft",
       detail:
-        "Name the person, the decision, and the outcome. Technical possibility is not the same as value.",
+        "Carry the idea through technical depth, taste, patience, and revision.",
     },
     {
       number: "03",
-      title: "What keeps working after the first effort?",
+      title: "Let reality answer",
       detail:
-        "The best work leaves behind more than an output. It keeps creating value for the people who use it—and compounds into capability, reputation, freedom, and a more ambitious next move for its maker.",
+        "Put the work in front of users, constraints, consequences, and evidence.",
+    },
+    {
+      number: "04",
+      title: "Preserve what proves valuable",
+      detail:
+        "When it is worth keeping, leave something the next move can build on.",
     },
   ],
   zh: [
     {
       number: "01",
-      title: "什么真的变了？",
-      detail: "先分清哪些成本、能力或行为真的变了，哪些只是多了一层热闹。",
+      title: "看准",
+      detail: "什么值得投入、为谁做，怎样才算真的有用？",
     },
     {
       number: "02",
-      title: "它在谁的现实里有用？",
-      detail: "说清楚谁会用、哪项决定会因此改变，以及怎样才算真的有用。",
+      title: "做成",
+      detail: "用技术、手艺、品位和耐心，把想法一路做到成立。",
     },
     {
       number: "03",
-      title: "做完以后留下什么？",
-      detail:
-        "一件事做完，最好不只留下当下的结果，还留下能力、产品、系统或关系，让下一步更有把握。",
+      title: "交给现实",
+      detail: "让用户、约束、后果和证据回答，也允许它们改变判断。",
+    },
+    {
+      number: "04",
+      title: "留下",
+      detail: "在值得时，把有效部分做成下一步可以继续使用的东西。",
     },
   ],
 };
 
-const ideas = {
+const careerChapters = {
   en: [
     {
-      number: "01",
-      title: "A good world model matters more than knowing more facts.",
+      marker: "CORNELL · ECONOMICS",
+      title: "Look beneath the visible result.",
       detail:
-        "The real test is whether you can explain why something happened—and change your model when reality refuses to cooperate.",
-      label: "World models",
-      href: "https://www.youtube.com/watch?v=r0nsW3nIFgk",
+        "Economics trained me to ask about causes, choices, incentives, and constraints—not to mistake a correlation or a loud story for what actually changed.",
     },
     {
-      number: "02",
-      title:
-        "Strong opinions, weakly held: state the view clearly, then welcome a better one.",
+      marker: "AMAZON · META",
+      title: "A model matters when it changes the next decision.",
       detail:
-        "I like being challenged into changing my mind. That works only when assumptions and evidence are on the table and the discussion can move the work forward.",
-      label: "Strong opinions, weakly held",
-      href: "https://youtu.be/D_-hU1O7IVw",
+        "Inside large technology products, analysis was not complete when the chart was right. It was complete when the signal changed allocation, prioritization, or design.",
     },
     {
-      number: "03",
-      title: "As execution gets cheaper, choosing well matters more.",
+      marker: "TENCENT · STATSIG",
+      title: "Good judgment has to travel—and remain testable.",
       detail:
-        "Code, content, and research are getting cheaper. Choosing the problem, designing the system, judging the result, and reaching the right people matter more.",
-      label: "Choosing well",
-      href: "https://www.superlinear.academy/c/ai-resources/ai-mastery",
+        "Leading a 30-person data and AI team taught me that one person seeing clearly was not enough. At Statsig, experiments made conviction answerable to evidence built into the product workflow.",
+    },
+    {
+      marker: "SUPERLINEAR · NOW",
+      title: "Turn what is in one head into work other people can use.",
+      detail:
+        "Courses, community, books, tools, and public conversations are my attempt to make judgment inspectable, teachable, challengeable, and able to keep working without me in the room.",
     },
   ],
   zh: [
     {
-      number: "01",
-      title: "知识多，不等于看得准。",
+      marker: "康奈尔 · 经济学",
+      title: "先看清结果背后的因果。",
       detail:
-        "我更在意一套解释能不能说清事情为什么发生，以及现实不按预期走时，能不能真的改掉它。",
-      label: "世界模型",
-      href: "https://www.youtube.com/watch?v=r0nsW3nIFgk",
+        "经济学训练我追问选择、激励与约束，不把相关性、热闹或一个好听的故事，当成真正发生的变化。",
     },
     {
-      number: "02",
-      title: "Strong opinions, weakly held：观点说得明确，脑子保持开放。",
+      marker: "AMAZON · META",
+      title: "一个模型，只有改变下一步决策才算完成。",
       detail:
-        "我喜欢把判断摆到桌面上，也最喜欢有人拿出更好的事实和推理，让我改主意。讨论的目标不是赢，而是把事情往前推。",
-      label: "Strong opinions, weakly held",
-      href: "https://youtu.be/D_-hU1O7IVw",
+        "在大型科技产品里，图表做对还不够；一个信号必须真正改变资源分配、优先级或产品设计。",
     },
     {
-      number: "03",
-      title: "执行越来越便宜，选对问题越来越重要。",
+      marker: "腾讯 · STATSIG",
+      title: "好的判断要能穿过组织，也要经得起推翻。",
       detail:
-        "代码、内容和研究都在变便宜。选什么问题、怎么设计系统、如何评价结果、能不能找到真正需要的人，反而更重要。",
-      label: "选对问题",
-      href: "https://www.superlinear.academy/c/ai-resources/ai-mastery",
+        "在腾讯带30人数据与AI团队，让我看到一个人想明白远远不够；到了Statsig，实验把观点是否成立写进了产品工作流。",
+    },
+    {
+      marker: "SUPERLINEAR · 现在",
+      title: "把一个人脑中的理解，做成别人可以使用的东西。",
+      detail:
+        "课程、社区、书、工具与公开对话，都是我把判断变得可检验、可学习、可质疑，并让它离开我以后继续工作的尝试。",
     },
   ],
 };
 
-const featuredPrediction = {
+const featuredJudgment = {
   en: {
-    date: "2023.02",
-    context: "BEFORE GPT-4",
+    date: "FEBRUARY 2023 · BEFORE GPT-4",
     title:
-      "Before GPT-4, I argued that ChatGPT was not a better chatbot, but a new natural-language interface to data and compute.",
+      "I argued that ChatGPT was not simply a better chatbot, but a new natural-language interface to data and computation.",
     detail:
-      "The essay anticipated collapsing inference costs; tool use and agents; personal memory and private search; copilots; and AI-native systems.",
-    label: "Read Five Questions about ChatGPT",
+      "The essay examined collapsing inference costs, tool use and agents, persistent memory, private search, copilots, and AI-native systems. The date matters because the reasoning was public before the outcome was obvious—and remains available to inspect.",
+    cta: "Read The Five Most Important Questions About ChatGPT",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   },
   zh: {
-    date: "2023.02",
-    context: "GPT-4发布前",
+    date: "2023年2月 · GPT-4发布前",
     title:
-      "2023年2月，在GPT-4发布前，我当时的判断是：ChatGPT不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
+      "我当时的判断是：ChatGPT不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
     detail:
-      "文中讨论了推理成本骤降、工具调用与agent、个人记忆与private search（后来被称为RAG）、Copilot，以及AI-native系统。",
-    label: "阅读万字原文",
+      "文章讨论了推理成本骤降、工具调用与agent、长期记忆、private search、Copilot和AI-native系统。重要的不只是后来发生了什么，而是当时的推理至今仍公开可查。",
+    cta: "阅读《关于ChatGPT最重要的五个问题》",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   },
-};
-
-const predictions = {
-  en: [
-    {
-      date: "2025.01",
-      title:
-        "Agentic AI is the most important shift in AI—and the opportunity window is only 10–18 months.",
-      href: "https://youtu.be/FzbkAy0DcQk",
-    },
-    {
-      date: "2025.03",
-      title:
-        "MCP has major structural flaws. The hype outruns what it can actually deliver.",
-      href: "https://youtu.be/kwwjR6HHJPM",
-    },
-    {
-      date: "2026.03",
-      title: "OpenClaw will not last—even though it is still worth trying.",
-      href: "https://youtu.be/h_yCYBRzbVw",
-    },
-  ],
-  zh: [
-    {
-      date: "2025.01",
-      title: "Agentic AI是AI当前最重要的方向，真正的机会窗口只有10–18个月。",
-      href: "https://youtu.be/FzbkAy0DcQk",
-    },
-    {
-      date: "2025.03",
-      title: "MCP有重大的结构性缺陷，实际价值远没有市场吹捧得那么高。",
-      href: "https://youtu.be/kwwjR6HHJPM",
-    },
-    {
-      date: "2026.03",
-      title: "OpenClaw一定会凉，但现在仍值得亲自试一遍。",
-      href: "https://youtu.be/h_yCYBRzbVw",
-    },
-  ],
 };
 
 const work = {
   en: [
     {
-      icon: GraduationCap,
-      label: "LEARNING AND PRACTICE",
+      number: "01",
+      label: "OPEN, PUBLIC VALUE",
+      title: "The free community",
+      detail:
+        "A community of 20,000+ people seriously using AI, where deep public analysis, real projects, specific questions, first-hand experience, collaboration, and opportunities circulate.",
+      proof:
+        "20,000+ members · 600+ public project posts · nearly 7,000 project comments",
+      href: "https://www.superlinear.academy",
+      cta: "Join for free",
+    },
+    {
+      number: "02",
+      label: "STRUCTURED LEARNING",
       title: "AI Builders",
       detail:
-        "Yage asks why the technology works and how to make it reliable; I ask what is worth building, for whom, and what useful means. AI Builders turns both kinds of expertise into capability learners can carry to new problems.",
-      proof: "3,000+ paying learners · 5.0/5 on Maven · co-taught with Yage",
+        "A structured learning system I teach with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work published at leading AI conferences such as CVPR, NeurIPS, and KDD. We connect technical depth, product judgment, and practice on real problems.",
+      proof: "3,000+ paying learners · 5.0/5 on Maven",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
     },
     {
-      icon: Users,
-      label: "CONTINUING FEEDBACK",
-      title: "Stay Superlinear",
+      number: "03",
+      label: "YEAR-ROUND MEMBERSHIP",
+      title: "Stay Superlinear membership",
       detail:
-        "Members bring current work, artifacts, and questions. First-hand experience, feedback, and relationships sharpen the next move and help serious work keep moving.",
-      proof: "Serious questions · work feedback · people and opportunities",
+        "A high-craft content and practitioner environment with deep analysis, guest masterclasses, monthly Q&A, core courses, Skills, recordings, and a searchable archive to return to when the next decision matters.",
+      proof:
+        "12+ masterclasses · monthly Q&A · 3 core courses · selected Skills",
       href: "https://stay.superlinear.academy",
-      cta: "Explore Stay Superlinear",
+      cta: "Explore the membership",
     },
     {
-      icon: Building2,
+      number: "04",
       label: "ORGANIZATIONAL PRACTICE",
-      title: "Enterprise AI transformation",
+      title: "Enterprise AI programs",
       detail:
-        "I work with teams to find the work most worth changing, put AI into the actual workflow, and turn successful experiments into reliable systems that can scale.",
-      proof: "Tencent · DoorDash · Pinterest · 1Password · Amazon",
+        "We work with teams to connect new AI capability to real workflows, evaluation, ownership, and organizational constraints—so a promising experiment has a chance to become reliable practice.",
+      proof: "Tencent · Xiaohongshu · Meituan · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "Explore enterprise work",
     },
   ],
   zh: [
     {
-      icon: GraduationCap,
-      label: "学习与实践",
+      number: "01",
+      label: "免费开放",
+      title: "免费社区",
+      detail:
+        "两万多名认真用AI做事的人在这里相遇：主理人的深度解析、成员的真实项目、具体问题、一手经验、合作与机会，都在公共讨论里流动。",
+      proof: "20,000+名成员 · 600+项目帖 · 近7,000条项目评论",
+      href: "https://www.superlinear.academy",
+      cta: "免费加入",
+    },
+    {
+      number: "02",
+      label: "系统训练",
       title: "AI Builders",
       detail:
-        "鸭哥追问技术为什么成立、怎样做到可靠；我追问为什么做、为谁做、怎样才算有用。AI Builders把这两种经验放在一起。",
-      proof: "3,000+付费学员 · Maven 5.0/5 · 与鸭哥共同授课",
+        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究发表于CVPR、NeurIPS、KDD等AI顶会。我们把技术原理、工程可靠性、产品判断与真实练习放在同一套学习体系里。",
+      proof: "3,000+付费学员 · Maven 5.0/5",
       href: "https://ai-builders.com",
       cta: "了解AI Builders",
     },
     {
-      icon: Users,
-      label: "持续反馈",
-      title: "Stay Superlinear",
+      number: "03",
+      label: "全年会员",
+      title: "Stay Superlinear会员",
       detail:
-        "成员带着手头的工作、作品和问题进来，用一手经验、反馈和关系，一起判断下一步。",
-      proof: "认真问问题 · 打磨作品 · 遇见值得一起做事的人",
+        "一个高质量、可长期回来的内容与实践环境：深度解析、闭门大师课、每月答疑、三门核心课、精选Skills、活动回放与可检索的内容库。",
+      proof: "12+场闭门大师课 · 每月深度答疑 · 三门核心课 · 精选Skills",
       href: "https://stay.superlinear.academy",
-      cta: "了解Stay Superlinear",
+      cta: "了解会员",
     },
     {
-      icon: Building2,
+      number: "04",
       label: "组织实践",
-      title: "企业AI转型",
+      title: "企业AI项目",
       detail:
-        "我和团队一起找出最值得改变的工作，把AI放进实际流程，再用结果决定要不要扩展。",
-      proof: "腾讯 · DoorDash · Pinterest · 1Password · Amazon",
+        "我们把新的AI能力放进团队的真实工作流、评估、责任与组织约束里，让一次有希望的实验有机会变成可靠的工作方式。",
+      proof: "腾讯 · 小红书 · 美团 · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "了解企业合作",
     },
@@ -289,27 +244,9 @@ const selectedGuests = {
   en: [
     {
       name: "Yangqing Jia",
-      role: "PyTorch co-creator · Founder, Lepton AI",
+      role: "Co-lead, PyTorch 1.0 · Founder, Lepton AI",
       href: "/guests/yangqing-jia",
       image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
-    },
-    {
-      name: "Tian Yuandong",
-      role: "AI researcher · Former Meta AI / FAIR",
-      href: "/guests/tian-yuandong",
-      image: "https://img.youtube.com/vi/dymM40bVIhQ/maxresdefault.jpg",
-    },
-    {
-      name: "Howie Xu",
-      role: "Chief AI Officer, Gen · Stanford GSB guest lecturer",
-      href: "/guests/howie-xu",
-      image: "https://img.youtube.com/vi/R8X4ClBY5tg/maxresdefault.jpg",
-    },
-    {
-      name: "Yang Ying · Tulong Dashihua",
-      role: "Neuroscience PhD · Serial entrepreneur",
-      href: "/guests/yang-ying",
-      image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
     },
     {
       name: "Shuchao Bi",
@@ -333,7 +270,7 @@ const selectedGuests = {
       name: "Ryo Lu",
       role: "Head of Design, Cursor",
       href: "/guests/ryo-lu",
-      image: "https://img.youtube.com/vi/BnL5qaBzmR0/hqdefault.jpg",
+      image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
     },
     {
       name: "Gergely Orosz",
@@ -345,27 +282,9 @@ const selectedGuests = {
   zh: [
     {
       name: "贾扬清（Yangqing Jia）",
-      role: "PyTorch · 共同创始人 · Lepton AI · 创始人",
+      role: "PyTorch 1.0共同负责人 · Lepton AI创始人",
       href: "/guests/yangqing-jia",
       image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
-    },
-    {
-      name: "田渊栋",
-      role: "AI研究者 · 前Meta AI / FAIR",
-      href: "/guests/tian-yuandong",
-      image: "https://img.youtube.com/vi/dymM40bVIhQ/maxresdefault.jpg",
-    },
-    {
-      name: "硅谷徐老师（Howie Xu）",
-      role: "GEN · 首席AI官 · 斯坦福商学院客座讲师",
-      href: "/guests/howie-xu",
-      image: "https://img.youtube.com/vi/R8X4ClBY5tg/maxresdefault.jpg",
-    },
-    {
-      name: "杨滢 · 屠龙大实话",
-      role: "神经科学博士 · 连续创业者",
-      href: "/guests/yang-ying",
-      image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
     },
     {
       name: "毕书超（Shuchao Bi）",
@@ -375,13 +294,13 @@ const selectedGuests = {
     },
     {
       name: "Reynold Xin",
-      role: "Databricks · 联合创始人",
+      role: "Databricks联合创始人",
       href: "/guests/reynold-xin",
       image: "https://img.youtube.com/vi/GIv0I-34aaI/hqdefault.jpg",
     },
     {
       name: "Vijaye Raji",
-      role: "Statsig · 创始人 · OpenAI CTO of Applications",
+      role: "Statsig创始人 · OpenAI CTO of Applications",
       href: "/guests/vijaye-raji",
       image: "https://img.youtube.com/vi/iw2QYZeVlOQ/hqdefault.jpg",
     },
@@ -389,11 +308,11 @@ const selectedGuests = {
       name: "Ryo Lu",
       role: "Cursor Head of Design",
       href: "/guests/ryo-lu",
-      image: "https://img.youtube.com/vi/BnL5qaBzmR0/hqdefault.jpg",
+      image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
     },
     {
       name: "Gergely Orosz",
-      role: "The Pragmatic Engineer · 创始人",
+      role: "The Pragmatic Engineer创始人",
       href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
       image: "/english-network/gergely-orosz.webp",
     },
@@ -426,47 +345,31 @@ const endorsements = {
       avatar: "/avatars/liu-jia.jpg",
       initials: "LJ",
     },
-    {
-      quote:
-        "Yuzheng is a true AI-native pioneer. With his distinctive way of thinking, he helps more people achieve superlinear growth in the AI era.",
-      name: "Dai Yusen",
-      role: "Partner, ZhenFund",
-      avatar: "/avatars/dai-yusen.jpg",
-      initials: "DY",
-    },
   ],
   zh: [
     {
       quote:
         "立正能把多年产品增长经验提炼成可执行的洞察，帮助数据科学家、产品经理和创始人更快看清关键问题。",
       name: "Vijaye Raji",
-      role: "Statsig · 创始人 · OpenAI CTO of Applications",
+      role: "Statsig创始人 · OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
     },
     {
       quote:
-        "立正做的 AI 教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
+        "立正做的AI教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
       name: "Wei Manfredi",
-      role: "IHG Hotels & Resorts · AI与架构高级副总裁",
+      role: "IHG Hotels & Resorts AI与架构高级副总裁",
       avatar: "/avatars/wei-manfredi.jpg",
       initials: "WM",
     },
     {
       quote:
-        "立正分享的不只是工具，而是思维哲学——这才是 AI 时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
+        "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
       name: "刘嘉",
       role: "清华大学讲席教授 ·《最强大脑》总科学顾问",
       avatar: "/avatars/liu-jia.jpg",
       initials: "刘嘉",
-    },
-    {
-      quote:
-        "立正是真正的 AI Native Pioneer——他用独特的思维框架，带领更多人在 AI 时代实现超线性成长。",
-      name: "戴雨森",
-      role: "真格基金合伙人",
-      avatar: "/avatars/dai-yusen.jpg",
-      initials: "雨森",
     },
   ],
 };
@@ -474,17 +377,14 @@ const endorsements = {
 function SectionLabel({
   children,
   dark = false,
-  preserveCase = false,
 }: {
   children: string;
   dark?: boolean;
-  preserveCase?: boolean;
 }) {
   return (
     <p
       className={cn(
-        "font-mono text-[11px] tracking-[0.2em]",
-        !preserveCase && "uppercase",
+        "font-mono text-[11px] uppercase tracking-[0.2em]",
         dark ? "text-amber-300" : "text-[#8B4A19]"
       )}
     >
@@ -519,18 +419,18 @@ export default function Home() {
 
   const nav = pick(lang, {
     en: {
-      throughline: "Throughline",
-      ideas: "Ideas",
-      work: "Work",
+      belief: "Belief",
+      story: "Story",
+      work: "Superlinear",
       conversations: "Conversations",
       books: "Books",
       collaborate: "Collaborate",
       community: "Free community",
     },
     zh: {
-      throughline: "主线",
-      ideas: "判断",
-      work: "实践",
+      belief: "主张",
+      story: "经历",
+      work: "Superlinear",
       conversations: "对话",
       books: "书",
       collaborate: "合作",
@@ -558,9 +458,9 @@ export default function Home() {
 
           <div className="hidden items-center gap-5 lg:flex">
             {[
-              ["throughline", nav.throughline],
-              ["ideas", nav.ideas],
-              ["work", nav.work],
+              ["belief", nav.belief],
+              ["story", nav.story],
+              ["superlinear", nav.work],
               ["conversations", nav.conversations],
             ].map(([id, label]) => (
               <button
@@ -620,9 +520,9 @@ export default function Home() {
           <div className="container border-t border-white/10 py-4 lg:hidden">
             <div className="grid gap-3 text-sm">
               {[
-                ["throughline", nav.throughline],
-                ["ideas", nav.ideas],
-                ["work", nav.work],
+                ["belief", nav.belief],
+                ["story", nav.story],
+                ["superlinear", nav.work],
                 ["conversations", nav.conversations],
               ].map(([id, label]) => (
                 <button
@@ -663,410 +563,357 @@ export default function Home() {
       <main>
         <section
           id="hero"
-          className="relative isolate scroll-mt-[72px] bg-[#070A12] lg:min-h-[calc(100svh-72px)] lg:overflow-hidden"
+          className="scroll-mt-[72px] border-b border-white/10 bg-[#070A12]"
         >
-          <div className="relative aspect-[3/2] w-full overflow-hidden lg:hidden">
-            <img
-              src="/hero/acquired-behind-scenes-desktop.webp"
-              alt={
-                lang === "en"
-                  ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
-                  : "孙煜征与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
-              }
-              className="h-full w-full object-cover object-center"
-              width={2400}
-              height={1600}
-            />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#070A12] to-transparent" />
-          </div>
-          <picture className="absolute inset-0 hidden lg:block">
-            <img
-              src="/hero/acquired-behind-scenes-desktop.webp"
-              alt={
-                lang === "en"
-                  ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
-                  : "孙煜征与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
-              }
-              className="absolute inset-0 h-full w-full object-cover object-center lg:origin-right lg:scale-[1.12]"
-              width={2400}
-              height={1600}
-            />
-          </picture>
-          <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(7,10,18,0.01)_0%,rgba(7,10,18,0.04)_48%,rgba(7,10,18,0.72)_66%,rgba(7,10,18,0.98)_100%)] lg:block" />
-          <div className="absolute inset-0 hidden bg-[linear-gradient(0deg,rgba(7,10,18,0.82)_0%,transparent_28%)] lg:block" />
-
-          <div className="container relative z-10 py-10 md:py-14 lg:flex lg:min-h-[calc(100svh-72px)] lg:items-center lg:pb-20 lg:pt-20">
-            <div className="max-w-3xl lg:ml-auto lg:w-[27rem] lg:max-w-[27rem] xl:w-[34rem] xl:max-w-[34rem]">
-              <h1 className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
-                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
-                <span className="px-2 text-zinc-600">/</span>
-                {lang === "en" ? "课代表立正" : "孙煜征"}
-              </h1>
-              <p className="mt-6 max-w-3xl text-[2.65rem] font-semibold leading-[1.06] text-white [text-wrap:balance] sm:text-5xl md:text-6xl lg:text-[3.15rem] xl:text-[3.6rem]">
-                {lang === "en" ? (
-                  <>
-                    <span className="block">AI makes building easier.</span>
-                    <span className="mt-3 block text-amber-200">
-                      I study what's worth building.
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="block">AI让「做出来」</span>
-                    <span className="block">越来越容易。</span>
-                    <span className="mt-3 block text-amber-200">
-                      我研究的是：
-                    </span>
-                    <span className="block text-amber-200">什么值得做。</span>
-                  </>
-                )}
-              </p>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-200 md:text-lg md:leading-8">
+          <div className="container grid min-h-[calc(100svh-72px)] gap-10 py-12 md:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14 lg:py-20">
+            <div className="max-w-2xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
                 {lang === "en"
-                  ? "I'm Yuzheng Sun (课代表立正), a founder based in Seattle with a PhD in Economics from Cornell. Across economics, product, organizations, and AI education, I keep asking: what has actually changed, who is it useful for, and what will keep working after the first effort?"
-                  : "我是孙煜征，也叫课代表立正，康奈尔大学经济学博士，现居西雅图。从经济学、产品与组织，到AI教育，我一直在问：谁真正需要，什么结果才算有用，做完以后能留下些什么。"}
+                  ? "YUZHENG SUN · 课代表立正"
+                  : "课代表立正 · 孙煜征"}
+              </p>
+              <h1 className="mt-6 text-[3.1rem] font-semibold leading-[0.96] tracking-[-0.04em] text-white [text-wrap:balance] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]">
+                {lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。"}
+              </h1>
+              <p className="mt-7 max-w-xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
+                {lang === "en"
+                  ? "I believe the best work keeps creating value after the first effort—and clearly bears the judgment and craft of the person who made it. Such work may also enlarge what its maker can do next. Superlinear Academy is the defining work I am building around that belief."
+                  : "我相信，最好的工作会在完成以后继续创造价值，也清楚承载做出它的人的判断与手艺。这样的作品，也可能继续成就作者。Superlinear Academy是我正在做的代表作，也是我为更多人追求自己的代表作建立的长期机构。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
                   size="lg"
-                  onClick={() => scrollToSection("throughline")}
-                  className="bg-amber-400 text-[#211300] hover:bg-amber-300 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
+                  onClick={() => scrollToSection("superlinear")}
+                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
                 >
                   {lang === "en"
-                    ? "Where this question came from"
-                    : "这个问题从哪里来"}
+                    ? "See what I am building"
+                    : "看看我正在做什么"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 <Button
+                  asChild
                   size="lg"
                   variant="outline"
-                  onClick={() => scrollToSection("work")}
-                  className="border-white/25 bg-black/20 text-white hover:bg-white/10 lg:px-3 lg:text-xs xl:px-6 xl:text-sm"
+                  className="border-white/25 bg-white/[0.03] text-white hover:bg-white/[0.08]"
                 >
-                  {lang === "en" ? "What I'm working on" : "我现在在做什么"}
+                  <a
+                    href="https://www.superlinear.academy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en" ? "Join the free community" : "免费加入社区"}
+                  </a>
                 </Button>
               </div>
-              <div className="mt-8 flex items-center gap-4 border-t border-white/15 pt-5">
-                <p className="max-w-lg text-xs leading-5 text-zinc-400">
-                  {lang === "en"
-                    ? "In conversation with Ben Gilbert and David Rosenthal of Acquired · Significance Summit"
-                    : "与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈 · Significance Summit"}
-                </p>
-                <div className="ml-auto hidden gap-3 sm:flex">
-                  <a
-                    href="https://www.youtube.com/@kedaibiao"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="YouTube"
-                    className="text-zinc-400 transition hover:text-white"
-                  >
-                    <Youtube className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/yuzhengsun/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                    className="text-zinc-400 transition hover:text-white"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://yuzheng.substack.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Substack"
-                    className="text-zinc-400 transition hover:text-white"
-                  >
-                    <Rss className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://github.com/sunyuzheng"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub"
-                    className="text-zinc-400 transition hover:text-white"
-                  >
-                    <Github className="h-5 w-5" />
-                  </a>
-                </div>
-              </div>
+              <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-zinc-500">
+                {lang === "en"
+                  ? "Cornell Economics PhD · Former Amazon, Meta, Tencent & Statsig · Founder and author"
+                  : "康奈尔经济学博士 · 曾任职Amazon、Meta、腾讯与Statsig（后被OpenAI收购）· 创始人、作者"}
+              </p>
             </div>
+
+            <figure>
+              <div className="overflow-hidden border border-white/10 bg-black">
+                <img
+                  src="/hero/acquired-behind-scenes-desktop.webp"
+                  alt={
+                    lang === "en"
+                      ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
+                      : "孙煜征与Acquired的Ben Gilbert、David Rosenthal对谈"
+                  }
+                  className="h-auto w-full"
+                  width={2400}
+                  height={1600}
+                  loading="eager"
+                />
+              </div>
+              <figcaption className="mt-3 flex items-start justify-between gap-4 text-xs leading-5 text-zinc-500">
+                <span>
+                  {lang === "en"
+                    ? "In conversation with Ben Gilbert and David Rosenthal of Acquired"
+                    : "与Acquired的Ben Gilbert、David Rosenthal对谈"}
+                </span>
+                <span className="shrink-0">Significance Summit</span>
+              </figcaption>
+              <div className="mt-5 flex gap-4 border-t border-white/10 pt-4">
+                <a
+                  href="https://www.youtube.com/@kedaibiao"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="text-zinc-500 transition hover:text-white"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/yuzhengsun/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="text-zinc-500 transition hover:text-white"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://yuzheng.substack.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Substack"
+                  className="text-zinc-500 transition hover:text-white"
+                >
+                  <Rss className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://github.com/sunyuzheng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="text-zinc-500 transition hover:text-white"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+              </div>
+            </figure>
           </div>
         </section>
 
         <section
-          id="throughline"
+          id="belief"
           className="scroll-mt-[72px] bg-[#F2F0EA] py-16 text-[#191712] md:py-24"
         >
           <div className="container">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
               <div>
                 <SectionLabel>
-                  {lang === "en" ? "THE THROUGHLINE" : "这条主线"}
+                  {lang === "en" ? "WHAT I BELIEVE" : "我相信"}
                 </SectionLabel>
-                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] [text-wrap:balance] md:text-5xl">
-                  {lang === "en" ? (
-                    "This question came from doing the work, not standing outside it."
-                  ) : (
-                    <>
-                      <span className="block">这个问题，</span>
-                      <span className="block">不是想出来的，</span>
-                      <span className="block">是一路做出来的。</span>
-                    </>
-                  )}
+                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
+                  {lang === "en"
+                    ? "Most work disappears. The work I admire keeps working."
+                    : "大多数工作，做完就消失了。我敬佩的作品，完成以后还在工作。"}
                 </h2>
               </div>
-              <div className="space-y-6 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
+              <div className="space-y-5 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
                 <p>
                   {lang === "en"
-                    ? "Economics taught me to study choice and causality. At Amazon and Meta, a signal mattered only if it changed a product decision. Leading a 30-person data and AI team at Tencent taught me that one person seeing the problem clearly was not enough; the organization still had to act on it. At Statsig, experiments gave teams a practical answer to a recurring question: should we keep going or stop?"
-                    : "经济学训练我研究选择与因果；在Amazon和Meta，一个信号只有改变产品决策才有意义；在腾讯带30人团队，我发现一个人想明白还不够，团队还得能据此行动；到了Statsig，实验每天都在回答一个很实际的问题：继续，还是停下。"}
+                    ? "AI is making first versions cheaper across much of digital work. That is a gift: more people can turn an idea into something real. It also makes one distinction harder to ignore. Output is plentiful. Work that carries judgment, craft, authorship, and remains worth choosing is not."
+                    : "AI正在让许多数字工作的第一版越来越便宜。这是一份礼物：更多人可以把想法做成真的。它也让一个区别变得越来越无法忽视——产出很多，能在第一次投入后继续创造价值、又清楚承载作者判断与手艺的作品，仍然很少。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "AI is lowering the cost of execution. That does not settle what is worth building, who it is for, or what useful means. My current work is where those judgments meet reality—and where I learn what keeps working beyond the first result."
-                    : "AI把执行成本压得越来越低，却不会替我们回答为什么做、为谁做、怎样才算有用。今天的课程、社区和企业项目，就是我继续回答这些问题的地方。"}
+                    ? "Lasting does not mean immortal, famous, or endlessly scalable. It means the work solves something real, can withstand use and change, and keeps creating value beyond its first moment. In return, it can build its maker's capability, reputation, freedom, and next opportunity."
+                    : "留下来，不等于永恒、爆红或无限规模化。它意味着作品解决真实问题，经得起使用和变化，在第一次完成以后继续创造价值；而当这些价值被现实认可时，也可能为作者带回更深的能力、信誉、自由和下一次机会。"}
                 </p>
               </div>
             </div>
 
-            <div className="mt-14 grid border-y border-[#D4D0C7] md:grid-cols-3">
-              {workingMethod[lang].map((item, index) => (
+            <div className="mt-14 grid border-y border-[#D4D0C7] sm:grid-cols-2 lg:grid-cols-4">
+              {method[lang].map((item, index) => (
                 <article
                   key={item.number}
                   className={cn(
-                    "grid grid-cols-[2.5rem_1fr] gap-3 border-[#D4D0C7] py-6 md:block md:px-6 md:py-8",
-                    index > 0 && "border-t md:border-l md:border-t-0"
+                    "border-[#D4D0C7] py-6 sm:px-5 lg:py-8",
+                    index > 0 && "border-t lg:border-l lg:border-t-0",
+                    index % 2 === 1 && "sm:border-l",
+                    index === 1 && "sm:border-t-0"
                   )}
                 >
                   <div className="font-mono text-xs text-[#9A673D]">
                     {item.number}
                   </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-[#191712] md:text-lg">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-6 text-[#6E685D]">
-                      {item.detail}
-                    </p>
-                  </div>
+                  <h3 className="mt-3 text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#6E685D]">
+                    {item.detail}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="story"
+          className="scroll-mt-[72px] bg-[#0B0F1A] py-16 md:py-24"
+        >
+          <div className="container">
+            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end lg:gap-20">
+              <div>
+                <SectionLabel dark>
+                  {lang === "en" ? "THE STORY" : "这条路"}
+                </SectionLabel>
+                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
+                  {lang === "en"
+                    ? "I did not begin with the slogan. I arrived at the standard by doing the work."
+                    : "这不是一句先想出来的口号，是一路做出来的标准。"}
+                </h2>
+              </div>
+              <p className="max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
+                {lang === "en"
+                  ? "The titles are less important than what each environment forced me to learn: how a view becomes a decision, how a decision travels through an organization, and how useful judgment can take a form other people can keep using."
+                  : "比职位更重要的，是每一段经历逼我学会了什么：一个观点怎样变成决策，决策怎样穿过组织，有用的判断又怎样被做成别人可以继续使用的东西。"}
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-2">
+              {careerChapters[lang].map(item => (
+                <article key={item.marker} className="bg-[#101521] p-6 md:p-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                    {item.marker}
+                  </p>
+                  <h3 className="mt-4 text-xl font-semibold leading-8 text-white md:text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-zinc-400">
+                    {item.detail}
+                  </p>
                 </article>
               ))}
             </div>
 
-            <div className="mt-10 grid grid-cols-2 border-t border-[#D4D0C7] lg:grid-cols-6">
-              {career.map((item, index) => (
-                <div
-                  key={item.org}
-                  className={cn(
-                    "border-b border-[#D4D0C7] px-3 py-5 sm:px-5 lg:border-b-0 lg:px-4",
-                    index % 2 === 1 && "border-l",
-                    index > 0 && "lg:border-l"
-                  )}
-                >
-                  <div className="text-sm font-semibold text-[#191712]">
-                    {item.org}
-                  </div>
-                  <div className="mt-1 text-xs leading-5 text-[#6E685D]">
-                    {lang === "en" ? item.en : item.zh}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="ideas"
-          className="scroll-mt-[72px] bg-[#0B0F1A] py-16 md:py-24"
-        >
-          <div className="container grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
-            <div>
-              <SectionLabel dark preserveCase={lang === "zh"}>
-                {lang === "en"
-                  ? "A FEW WORKING VIEWS"
-                  : "Strong opinions, weakly held"}
-              </SectionLabel>
-              <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.15] text-white md:text-5xl">
-                {lang === "en" ? (
-                  "What I believe now—and am willing to revisit later."
-                ) : (
-                  <>
-                    <span className="block">这些是我现在相信、</span>
-                    <span className="block">也愿意以后回来检查的事。</span>
-                  </>
-                )}
-              </h2>
-
-              <div className="mt-10 border-t border-white/10">
-                {ideas[lang].map(item => (
-                  <a
-                    key={item.number}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group grid gap-3 border-b border-white/10 py-6 transition md:grid-cols-[3rem_1fr_auto] md:gap-5"
-                  >
-                    <span className="font-mono text-xs text-zinc-600">
-                      {item.number}
-                    </span>
-                    <span>
-                      <span className="block text-lg font-semibold leading-7 text-white group-hover:text-amber-200 md:text-xl">
-                        {item.title}
-                      </span>
-                      <span className="mt-2 block max-w-2xl text-sm leading-7 text-zinc-400">
-                        {item.detail}
-                      </span>
-                    </span>
-                    <span className="flex items-center gap-1 self-start text-xs text-zinc-500 transition group-hover:text-amber-300 md:justify-self-end">
-                      {item.label}
-                      <ExternalLink className="h-3.5 w-3.5" />
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <aside className="border-t border-amber-300/35 bg-[#121824] px-5 py-7 md:px-7 md:py-9 lg:self-start">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
-                {lang === "en" ? "ON THE RECORD" : "公开判断"}
-              </p>
-              <h3 className="mt-4 text-2xl font-semibold text-white">
-                {lang === "en" ? "A few dated calls" : "几次有时间戳的判断"}
-              </h3>
-              <a
-                href={featuredPrediction[lang].href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-7 block border-y border-amber-300/25 py-6"
-              >
-                <span className="font-mono text-xs text-amber-300">
-                  {featuredPrediction[lang].date}
-                  <span className="px-2 text-zinc-600">·</span>
-                  {featuredPrediction[lang].context}
-                </span>
-                <span className="mt-3 block text-lg font-semibold leading-7 text-white group-hover:text-amber-100">
-                  {featuredPrediction[lang].title}
-                </span>
-                <span className="mt-3 block text-sm leading-6 text-zinc-400">
-                  {featuredPrediction[lang].detail}
-                </span>
-                <span className="mt-4 flex items-center gap-2 text-xs font-semibold text-amber-300 group-hover:text-amber-200">
-                  {featuredPrediction[lang].label}
-                  <ArrowRight className="h-4 w-4 shrink-0" />
-                </span>
-              </a>
+            <article
+              id="judgment"
+              className="mt-12 scroll-mt-[88px] border-y border-amber-300/25 py-8 md:grid md:grid-cols-[0.72fr_1.28fr] md:gap-14 md:py-10"
+            >
               <div>
-                {predictions[lang].map(item => (
-                  <a
-                    key={item.date}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block border-b border-white/10 py-5"
-                  >
-                    <span className="font-mono text-xs text-zinc-500">
-                      {item.date}
-                    </span>
-                    <span className="mt-2 flex gap-3 text-sm font-medium leading-6 text-zinc-200 group-hover:text-white">
-                      <span>{item.title}</span>
-                      <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-zinc-600 group-hover:text-amber-300" />
-                    </span>
-                  </a>
-                ))}
+                <SectionLabel dark>
+                  {lang === "en" ? "JUDGMENT ON THE RECORD" : "公开留下的判断"}
+                </SectionLabel>
+                <p className="mt-4 font-mono text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  {featuredJudgment[lang].date}
+                </p>
               </div>
-            </aside>
+              <div className="mt-6 md:mt-0">
+                <h3 className="max-w-3xl text-2xl font-semibold leading-9 text-white md:text-3xl md:leading-10">
+                  {featuredJudgment[lang].title}
+                </h3>
+                <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
+                  {featuredJudgment[lang].detail}
+                </p>
+                <a
+                  href={featuredJudgment[lang].href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+                >
+                  {featuredJudgment[lang].cta}
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </article>
           </div>
         </section>
 
         <section
-          id="work"
+          id="superlinear"
           className="scroll-mt-[72px] bg-white py-16 text-[#171611] md:py-24"
         >
           <div className="container">
             <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-20">
               <div>
                 <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
-                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] md:text-5xl">
-                  {lang === "en" ? (
-                    "Make what lasts."
-                  ) : (
-                    "做出你的代表作。"
-                  )}
+                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
+                  {lang === "en"
+                    ? "My defining work is still in progress."
+                    : "我自己的代表作，也还在做。"}
                 </h2>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
-                {lang === "en"
-                  ? "This is the standard behind Superlinear. Across a learning system, an ongoing membership, and enterprise programs, the aim is the same: make work that keeps creating value in the world—and keeps compounding for the person who made it."
-                  : "这是Superlinear共同遵循的标准。课程、会员和企业项目的做法不同，目标相同：让值得做的东西真正成为作品；它完成以后继续为别人创造价值，也继续为做出它的人积累能力、信誉和下一次更大的机会。"}
-              </p>
+              <div className="space-y-4 text-base leading-8 text-[#5C574D] md:text-lg">
+                <p>
+                  {lang === "en"
+                    ? "Superlinear is the institution I am building around one belief: people should have a real chance to make work that keeps creating value and clearly bears their judgment and craft."
+                    : "Superlinear是我围绕同一个信念建立的长期机构：让更多有专业积累的人，有机会把自己的判断和本事，做成在第一次投入后仍继续创造价值、也清楚承载自己的作品。"}
+                </p>
+                <p>
+                  {lang === "en"
+                    ? "Public work, structured learning, a year-round membership, and enterprise practice form one institution. Each gives the same ambition a different place to grow: open exchange, systematic training, sustained exposure to strong work, and contact with organizational reality."
+                    : "免费公共价值、系统训练、全年会员与企业实践，共同组成这所学院。它们让同一种追求在不同地方生长：开放交流、系统学习、持续接触好作品，以及进入组织现实。"}
+                </p>
+              </div>
             </div>
 
-            <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
-              <div className="border-t border-[#DDD9D0]">
-                {work[lang].map(item => {
-                  const Icon = item.icon;
-                  return (
-                    <article
-                      key={item.title}
-                      className="grid gap-4 border-b border-[#DDD9D0] py-7 sm:grid-cols-[2.75rem_1fr]"
-                    >
-                      <div className="flex h-10 w-10 items-center justify-center border border-[#D5D0C6] text-[#8B4A19]">
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8B4A19]">
-                          {item.label}
-                        </p>
-                        <h3 className="mt-2 text-2xl font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="mt-3 text-sm leading-7 text-[#5C574D]">
-                          {item.detail}
-                        </p>
-                        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-[#777064]">
-                          {item.proof}
-                        </p>
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#743B13] transition hover:text-[#A65318]"
-                        >
-                          {item.cta}
-                          <ArrowRight className="h-4 w-4" />
-                        </a>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-
-              <figure className="lg:sticky lg:top-24 lg:self-start">
-                <div className="overflow-hidden bg-[#E8E4DC]">
+            <div className="mt-12 grid gap-4 md:grid-cols-[1.38fr_0.62fr]">
+              <figure>
+                <div className="overflow-hidden bg-[#E9E4DA]">
+                  <img
+                    src="/superlinear/yuzheng-yage-conversation.webp"
+                    alt={
+                      lang === "en"
+                        ? "Yuzheng Sun and Yage discussing AI Builders"
+                        : "立正与鸭哥讨论AI Builders"
+                    }
+                    className="aspect-[16/9] w-full object-cover"
+                    loading="lazy"
+                    width={1672}
+                    height={941}
+                  />
+                </div>
+                <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
+                  {lang === "en"
+                    ? "With Yage (Wang Yan), long-term teaching partner and technical authority for AI Builders."
+                    : "与鸭哥（王言），AI Builders长期核心教学伙伴与技术权威。"}
+                </figcaption>
+              </figure>
+              <figure>
+                <div className="overflow-hidden bg-[#E9E4DA]">
                   <img
                     src="/english-network/doordash-ai-training.webp"
                     alt={
                       lang === "en"
-                        ? "Yuzheng Sun leading an AI training session at a DoorDash team offsite in Seattle"
-                        : "孙煜征在西雅图为DoorDash团队做AI培训"
+                        ? "Yuzheng Sun leading an AI training session for DoorDash"
+                        : "孙煜征为DoorDash团队做AI培训"
                     }
-                    className="aspect-[4/3] w-full object-cover md:aspect-[16/10] lg:aspect-[4/3]"
+                    className="aspect-[16/9] w-full object-cover md:aspect-auto md:h-full"
                     loading="lazy"
                     width={1280}
                     height={720}
                   />
                 </div>
-                <figcaption className="mt-3 flex justify-between gap-4 text-xs leading-5 text-[#777064]">
-                  <span>
-                    {lang === "en"
-                      ? "DoorDash team offsite · AI training"
-                      : "DoorDash团队线下活动 · AI培训"}
-                  </span>
-                  <span>{lang === "en" ? "Seattle" : "西雅图"}</span>
+                <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
+                  {lang === "en"
+                    ? "DoorDash team offsite · Seattle"
+                    : "DoorDash团队线下AI培训 · 西雅图"}
                 </figcaption>
               </figure>
+            </div>
+
+            <div className="mt-12 grid border-t border-[#DDD9D0] lg:grid-cols-2">
+              {work[lang].map((item, index) => (
+                <article
+                  key={item.title}
+                  className={cn(
+                    "grid grid-cols-[2.6rem_1fr] gap-4 border-b border-[#DDD9D0] py-7 lg:px-8",
+                    index % 2 === 1 && "lg:border-l"
+                  )}
+                >
+                  <div className="font-mono text-xs text-[#9A673D]">
+                    {item.number}
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8B4A19]">
+                      {item.label}
+                    </p>
+                    <h3 className="mt-2 text-2xl font-semibold">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-7 text-[#5C574D]">
+                      {item.detail}
+                    </p>
+                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#777064]">
+                      {item.proof}
+                    </p>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#743B13] transition hover:text-[#A65318]"
+                    >
+                      {item.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -1100,24 +947,24 @@ export default function Home() {
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
               <div>
                 <SectionLabel dark>
-                  {lang === "en" ? "CONVERSATIONS" : "长期对话"}
+                  {lang === "en" ? "200+ CONVERSATIONS" : "200+场公开对话"}
                 </SectionLabel>
-                <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-[1.12] text-white md:text-5xl">
+                <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "I keep looking for people who have actually built the thing."
-                    : "这些年，我一直在找真正把事情做出来的人聊。"}
+                    ? "I keep learning from people who have actually built the thing."
+                    : "我一直向真正把事情做出来的人学习。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-zinc-400">
                 <p>
                   {lang === "en"
-                    ? "These conversations are one way I answer what has actually changed. I am less interested in collecting a guest's conclusions than in understanding why they believe them, what evidence supports the view, and where it might fail. More than 200 public conversations have become a source of first-hand input."
-                    : "这些对话，也是我判断“什么真的变了”的办法。比起收集嘉宾的正确答案，我更想追问：他为什么这样判断，证据是什么，哪里可能错。200+场公开对话，也成了我持续获得一手信息的方式。"}
+                    ? "These conversations are a source of first-hand input. I care less about collecting a guest's conclusions than understanding how they formed a standard, where the work failed, and why it eventually held together."
+                    : "这些对话，是我持续获得一手信息的方式。比起收集嘉宾的结论，我更想知道：他的标准怎样形成，作品在哪里失败，又为什么最后能够成立。"}
                 </p>
                 <p className="text-sm leading-7 text-zinc-500">
                   {lang === "en"
-                    ? "These conversations reach a 400K+ audience across YouTube, Bilibili, and Xiaohongshu, including engineers, data scientists, founders, investors, and operators across China and the U.S."
-                    : "这些对话通过YouTube、B站和小红书触达400K+关注者，其中包括大量中美工程师、数据科学家、创始人、投资人与管理者。"}
+                    ? "The work reaches a 400K+ audience across YouTube, Bilibili, and Xiaohongshu, including engineers, researchers, founders, investors, and operators across China and the U.S."
+                    : "这些内容通过YouTube、B站和小红书触达400K+关注者，其中包括大量中美工程师、研究者、创始人、投资人与管理者。"}
                 </p>
               </div>
             </div>
@@ -1183,7 +1030,7 @@ export default function Home() {
               >
                 <Link href={withLanguage("/guests", lang)}>
                   {lang === "en"
-                    ? "Browse all guest conversations"
+                    ? "Browse all conversations"
                     : "查看全部嘉宾访谈"}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -1202,17 +1049,17 @@ export default function Home() {
                 <SectionLabel>
                   {lang === "en" ? "BOOKS" : "两本书"}
                 </SectionLabel>
-                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.12] md:text-5xl">
+                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "One book asks how products find direction and grow. The other asks how work becomes capability."
-                    : "一本讲产品怎样找到方向、推动增长；一本讲人怎样把工作变成自己的本事。"}
+                    ? "Some understanding should be able to keep working without its author in the room."
+                    : "有些理解，应该能够离开作者继续工作。"}
                 </h2>
               </div>
               <div>
                 <p className="text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "Growth Data Analytics Playbook covers product-market fit, metrics, and experimentation. 真本事 is about turning work into capability, leverage, and income of your own."
-                    : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。"}
+                    ? "Growth Data Analytics Playbook covers product-market fit, metrics, and experimentation. 真本事 asks how work becomes capability, leverage, and income of your own. Different subjects, same attempt: preserve judgment in a form another person can use."
+                    : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。主题不同，做的是同一件事：把判断留下来，变成别人也可以使用的作品。"}
                 </p>
                 <Button
                   asChild
@@ -1257,12 +1104,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#101521] py-16 md:py-24">
+        <section className="bg-[#101521] py-14 md:py-20">
           <div className="container">
             <SectionLabel dark>
-              {lang === "en" ? "INDEPENDENT SIGNAL" : "来自同行的评价"}
+              {lang === "en"
+                ? "FROM PEOPLE WHO KNOW THE WORK"
+                : "来自了解这件事的人"}
             </SectionLabel>
-            <div className="mt-8 grid border-t border-white/10 lg:grid-cols-3">
+            <div className="mt-8 grid border-t border-white/10 lg:grid-cols-2">
               {endorsements[lang].slice(1).map((item, index) => (
                 <blockquote
                   key={item.name}
@@ -1294,52 +1143,61 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#0B0F1A] py-14 md:py-20">
-          <div className="container grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
-                {lang === "en" ? "FREE COMMUNITY" : "免费社区"}
-              </p>
-              <h2 className="mt-4 max-w-3xl text-2xl font-semibold leading-tight text-white md:text-4xl">
-                {lang === "en"
-                  ? "A judgment only reveals whether it holds up when it meets someone else's reality."
-                  : "一个判断，放到别人的真实处境里，才知道站不站得住。"}
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
-                {lang === "en"
-                  ? "Superlinear Academy gives me more than agreement. People bring counterexamples and constraints I missed; some projects meet their first users, then return later with what happened. Work and questions can enter before they look finished."
-                  : "Superlinear Academy给我的不只是认同。有人拿出反例，指出我没看到的限制；有些项目遇到第一批用户，过一段时间再回来讲结果。项目还没做完、问题还没想透，也都可以拿进来。"}
-              </p>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em] text-zinc-500">
-                {lang === "en"
-                  ? "Nearly 20,000 members · 600+ project posts · nearly 7,000 project comments"
-                  : "近20,000名成员 · 600+项目帖 · 近7,000条项目评论"}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
-              <Button
-                asChild
-                className="bg-amber-400 text-[#211300] hover:bg-amber-300"
-              >
-                <a
-                  href="https://www.superlinear.academy"
-                  target="_blank"
-                  rel="noopener noreferrer"
+        <section className="bg-[#0B0F1A] py-16 md:py-24">
+          <div className="container border-y border-white/10 py-12 md:py-16">
+            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+                  {lang === "en" ? "YOUR WORK" : "轮到你的作品"}
+                </p>
+                <h2 className="mt-5 max-w-4xl text-3xl font-semibold leading-[1.08] text-white [text-wrap:balance] md:text-5xl">
+                  {lang === "en"
+                    ? "Your defining work will not arrive finished."
+                    : "你的代表作，不会一开始就是代表作。"}
+                </h2>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
+                  {lang === "en"
+                    ? "You do not need a complete answer before you begin. Come see what people here are making, or bring an unfinished question and put it in contact with knowledge, peers, and reality."
+                    : "你不必先拥有完整答案。可以先来看看这里的人正在做什么，也可以把还没做完的问题和作品带进来，让它早点遇到知识、同行和现实。"}
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
+                <Button
+                  asChild
+                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
                 >
-                  {lang === "en" ? "Join the community" : "加入社区"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-              >
-                <Link href={withLanguage("/collab", lang)}>
-                  <Handshake className="mr-2 h-4 w-4" />
-                  {lang === "en" ? "Collaborate" : "合作"}
+                  <a
+                    href="https://www.superlinear.academy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en"
+                      ? "Join Superlinear Academy for free"
+                      : "免费加入Superlinear Academy"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                >
+                  <a
+                    href="https://ai-builders.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en" ? "Explore AI Builders" : "了解AI Builders"}
+                  </a>
+                </Button>
+                <Link
+                  href={withLanguage("/collab", lang)}
+                  className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-zinc-500 transition hover:text-white"
+                >
+                  <Handshake className="h-4 w-4" />
+                  {lang === "en" ? "Collaborate with me" : "与我合作"}
                 </Link>
-              </Button>
+              </div>
             </div>
           </div>
         </section>
@@ -1353,8 +1211,8 @@ export default function Home() {
             </div>
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
-                ? "PhD in Economics from Cornell, author, and founder of Superlinear Academy and AI Builders."
-                : "康奈尔大学经济学博士、作者，Superlinear Academy与AI Builders的创始人。"}
+                ? "Cornell Economics PhD, author, and founder of Superlinear Academy and AI Builders. Make what lasts."
+                : "康奈尔大学经济学博士、作者，Superlinear Academy与AI Builders创始人。做出你的代表作。"}
             </p>
             <Link
               href={withLanguage("/about", lang)}

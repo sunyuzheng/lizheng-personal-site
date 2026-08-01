@@ -200,8 +200,8 @@ const copy = {
     eyebrow: "Podcasts · Video · Long-form",
     h1: "You set the question. I’ll bring a view and the evidence.",
     intro: [
-      "I’m Yuzheng Sun. I have a PhD in Economics from Cornell and have worked at Amazon, Meta, Tencent, and Statsig, the experimentation company later acquired by OpenAI. Today, my work at Superlinear Academy spans AI Builders, Stay Superlinear, and enterprise programs.",
-      "I most often talk about what happens after AI makes the first draft easy: how people decide what is worth making, how companies learn whether a judgment is right, and how one-off effort becomes work that is unmistakably yours.",
+      "I’m Yuzheng Sun. I have a PhD in Economics from Cornell and have worked at Amazon, Meta, Tencent, and Statsig, the experimentation company later acquired by OpenAI. Today, my work at Superlinear Academy spans AI Builders, the Stay Superlinear membership, and enterprise programs.",
+      "The idea behind all of it is MAKE WHAT LASTS. As AI makes first drafts easier, I’m interested in how people choose what deserves the work, how companies learn whether a judgment is right, and how one-off effort becomes work that is unmistakably yours.",
     ],
     heroProofs: [
       "Cornell Economics PhD",
@@ -214,7 +214,7 @@ const copy = {
     stanceEyebrow: "STRONG OPINIONS, WEAKLY HELD",
     stanceTitle: "A clear view, without the need to defend a persona.",
     stanceDetail:
-      "I like making a view clear enough to challenge. You can question the premise, keep the disagreement, or press until new evidence changes how I think. Those are often my favorite moments in a conversation. AI Builders and Stay Superlinear only enter when they genuinely help explain the issue.",
+      "I like making a view clear enough to challenge. You can question the premise, keep the disagreement, or press until new evidence changes how I think. Those are often my favorite moments in a conversation. AI Builders and the membership only enter when they genuinely help explain the issue.",
     formatsEyebrow: "WHY THIS EPISODE IS WORTH MAKING",
     formatsTitle: "Three things I can bring to the conversation.",
     formats: [
@@ -358,8 +358,7 @@ const copy = {
           "Also: 11.3K Xiaohongshu shares and 1,088 comments; 3.6K YouTube likes and 481 comments; 8,026 Bilibili saves.",
         quote:
           "“I hadn’t known her before, but she’s incredibly cool. I hope they talk every year so we can see how her thinking changes.” — YouTube viewer (translated)",
-        href:
-          "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
+        href: "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
         linkLabel: "Watch the YouTube cut and comments",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
         evidenceLabel: "Verify the latest Xiaohongshu result (1 screenshot)",
@@ -456,20 +455,19 @@ const copy = {
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His current question is simple: as AI makes first drafts easier, how do we choose what is worth making—and turn it into work that lasts?",
+      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders, and co-leads Stay Superlinear with Yage. His work asks what remains worth making as AI makes first drafts easier—and how one-off effort becomes work that remains useful after the first result. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. Yage is a long-term teaching partner and technical authority across AI Builders and the membership. Yuzheng's defining idea is MAKE WHAT LASTS: make work that remains useful after the first result and clearly bears its maker's distinctive judgment and craft. Such work may also enlarge what its maker can do next. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     brandLineLabel: "One line for the introduction",
-    brandLine:
-      "At Superlinear Academy, our principle is simple: make what lasts.",
+    brandLine: "Superlinear Academy stands for one idea: MAKE WHAT LASTS.",
     headshotLabel: "1200 × 1200 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
     facts: [
       {
         label: "Dated public AI calls",
-        href: "/#ideas",
+        href: "/#judgment",
       },
       {
         label: "200+ published conversations",
@@ -498,8 +496,8 @@ const copy = {
     eyebrow: "播客 · 视频访谈 · 长对话",
     h1: "你定问题，我带着判断和证据来。",
     intro: [
-      "我是课代表立正。康奈尔经济学博士，先后在Amazon、Meta、腾讯，以及后来被OpenAI收购的Statsig做过经济学、数据和AI工作；现在是Superlinear Academy创始人，主理AI Builders和Stay Superlinear，也做企业AI项目。",
-      "我最常聊的，是AI让第一版越来越容易以后发生的事：人怎么判断什么值得做，公司怎么知道自己的判断到底对不对，一个人又怎样从不断完成任务，走到做出真正属于自己的作品。",
+      "我是课代表立正。康奈尔经济学博士，先后在Amazon、Meta、腾讯，以及后来被OpenAI收购的Statsig做过经济学、数据和AI工作；现在是Superlinear Academy创始人，主理AI Builders与Stay Superlinear会员，也做企业AI项目。",
+      "这些工作背后只有一个主张：做出你的代表作。AI让第一版越来越容易以后，我更关心人怎么判断什么值得做，公司怎么知道自己的判断到底对不对，一个人又怎样从不断完成任务，走到做出真正属于自己的作品。",
     ],
     heroProofs: [
       "康奈尔经济学博士",
@@ -552,7 +550,7 @@ const copy = {
       "回头看我过去的AI判断，哪些说对了，哪些现在需要重新判断？",
     ],
     otherDirections:
-      "增长实验、创作者怎么赚钱、科技创业，以及一门课、一个社区到底是在帮人长本事，还是让人越来越离不开老师和圈子，也都能聊。AI Builders和Stay Superlinear是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
+      "增长实验、创作者怎么赚钱、科技创业，以及一门课、一个社区到底是在帮人长本事，还是让人越来越离不开老师和圈子，也都能聊。AI Builders和Stay Superlinear会员是怎么做起来的、哪里做错过，我也可以讲得很具体。不用一口气全塞进去，挑一个问题聊透就够了。",
     conversationsEyebrow: "两个合作案例",
     conversationsTitle: "先看内容自己能不能跑，再看双方能把它推多远。",
     conversationsIntro:
@@ -621,8 +619,7 @@ const copy = {
           "其他数据：小红书1.13万转发、1,088条评论；YouTube3,600赞、481条评论；B站8,026收藏。",
         quote:
           "“之前並不認識這位女士，但她太酷了！希望能每年都和她聊一下一年的回顧和明年的展望，想窺視她的思想變化。”——YouTube观众",
-        href:
-          "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
+        href: "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
         linkLabel: "看YouTube完整正片与评论",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
         evidenceLabel: "核对最新小红书数据（1张截图）",
@@ -711,24 +708,24 @@ const copy = {
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他现在最关心的是：AI让第一版越来越容易以后，我们怎样选对值得做的事，做出自己的代表作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他所代表的主张是：做出你的代表作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人，并和鸭哥共同主理Stay Superlinear。他关注的是：AI让第一版越来越容易以后，人和公司怎样判断什么值得做，又怎样把一次性交付做成持续有用、真正属于自己的作品。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人；鸭哥作为长期核心教学伙伴与技术权威，参与AI Builders与会员内容建设。他所代表的主张是“做出你的代表作”：把判断和本事，做成完成以后继续创造价值、也清楚承载自己判断与手艺的作品；这样的作品，也可能继续成就作者。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
-    brandLine: "Superlinear Academy相信，人应该做出自己的代表作。",
+    brandLine: "Superlinear Academy的主张是：做出你的代表作。",
     headshotLabel: "1200 × 1200头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",
     facts: [
-      { label: "过去公开做过的AI判断", href: "/#ideas" },
+      { label: "过去公开做过的AI判断", href: "/#judgment" },
       { label: "200+场公开对谈", href: "/guests" },
       {
         label: "AI Builders · 3,000+付费学员",
         href: "https://ai-builders.com",
       },
       {
-        label: "Stay Superlinear · 会员社区",
+        label: "Stay Superlinear会员",
         href: "https://stay.superlinear.academy",
       },
     ],

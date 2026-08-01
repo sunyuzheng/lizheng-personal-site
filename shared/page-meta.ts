@@ -26,20 +26,20 @@ export function languageAlternates(
 
 export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
-    title: "Yuzheng Sun · 孙煜征 · 课代表立正",
+    title: "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is a founder based in Seattle. He studies what's worth building—and how to make useful work last.",
+      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. His defining idea: MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-31",
+    lastModified: "2026-08-01",
   },
   zh: {
-    title: "课代表立正（孙煜征）｜Yuzheng Sun",
+    title: "课代表立正（孙煜征）｜做出你的代表作",
     description:
-      "课代表立正，本名孙煜征，康奈尔大学经济学博士，现居西雅图。AI让「做出来」越来越容易；我研究的是：什么值得做。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。他所代表的主张是：做出你的代表作。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-31",
+    lastModified: "2026-08-01",
   },
 };
 
@@ -50,7 +50,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "A factual profile of Yuzheng Sun (孙煜征, 课代表立正): Cornell Economics PhD, career, books, current work, public conversations, and Seattle base.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-07-25",
+    lastModified: "2026-08-01",
   },
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
@@ -58,7 +58,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，现居西雅图，创办了Superlinear Academy和AI Builders。",
     canonical: "https://www.lizheng.ai/zh/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-07-25",
+    lastModified: "2026-08-01",
   },
 };
 
@@ -96,5 +96,5 @@ export const PODCAST_PAGE_META: PageMeta = {
     "课代表立正的官方Podcast。收听关于AI、职业、商业和真实世界选择的深度访谈与亲身实践。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/og.png",
-  lastModified: "2026-07-27",
+  lastModified: "2026-08-01",
 };

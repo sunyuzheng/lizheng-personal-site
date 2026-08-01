@@ -1,16 +1,16 @@
 # Yuzheng Sun / 孙煜征 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-07-31. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-01. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
-AI makes building easier. I study what's worth building.
+MAKE WHAT LASTS.
 
-In Chinese: AI让「做出来」越来越容易。我研究的是：什么值得做。
+In Chinese: 做出你的代表作。
 
-Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His work studies what is worth building, who it should serve, and what makes the result genuinely useful.
+Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His defining idea is to make work that keeps creating value after the first effort and clearly bears the maker's distinctive judgment and craft.
 
-Superlinear Academy carries the same throughline through two language-specific brand commands: MAKE WHAT LASTS. and 做出你的代表作。 They are not literal translations. The English line emphasizes work that keeps working; the Chinese line emphasizes making something distinctly yours that earns lasting recognition and continues to represent and reward its maker. Both point to work that keeps creating value in the world and compounding for the person who made it.
+MAKE WHAT LASTS. and 做出你的代表作。 are the one defining idea shared by Yuzheng and Superlinear Academy. They are not literal translations. The English line emphasizes work that keeps working; the Chinese line emphasizes making something distinctly yours that carries your judgment and craft. Such work may also bring capability, reputation, freedom, recognition, or a more ambitious next move back to its maker. Those are hoped-for returns, not part of the definition or a guarantee that every work will endure or make its author successful.
 
 He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 
@@ -18,18 +18,18 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 - Yuzheng Sun, 孙煜征, and 课代表立正 refer to the same person. 课代表立正 is the name used for public content.
 - Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
-- Superlinear Academy is the free peer lab and builder community. AI Builders is a long-term AI learning system co-taught with Yage. Stay Superlinear is a distinct paid ongoing environment co-led with Yage.
+- Superlinear Academy is the free community and institution Yuzheng is building around this belief. AI Builders is a structured learning system co-taught with Yage. Stay Superlinear is the distinct paid year-round membership. Yage is a long-term teaching partner and technical authority; Yuzheng is the founder and public steward of the institution.
 - Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
 
 ## Current Work
 
-- [Superlinear Academy](https://www.superlinear.academy): a free peer lab where projects, specific questions, first-hand experience, feedback, and opportunities circulate.
+- [Superlinear Academy](https://www.superlinear.academy): an open, free learning and builder community where deep analysis, projects, specific questions, first-hand experience, feedback, and opportunities circulate.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
-- [Stay Superlinear](https://stay.superlinear.academy): a paid ongoing environment that organizes people, content, feedback, tools, and opportunities around members' current work; co-led with Yage.
+- [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
-These are related parts of one body of work, not separate identities. Together they put the same sequence into different forms: choose what is worth building, let reality test it, and preserve what works as capability, products, systems, and relationships.
+These are related parts of one body of work, not separate identities. Together they practice the same iterative loop: choose what is worth doing, use craft to make it work, let reality answer, and preserve what proves worth keeping. This is not a guaranteed pipeline, and not every valuable act needs to become a system or asset.
 
 ## Current Public Evidence
 
@@ -38,10 +38,10 @@ Metrics change and should retain their dates.
 - 400K+ cross-platform audience as of 2026-07-12.
 - 3,000+ paying learners as of 2026-07-12.
 - 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
-- 5.0/5 AI Builders rating on Maven from 81 ratings, with 53 public named written reviews, as of 2026-07-27.
+- 5.0/5 AI Builders rating on Maven from 82 ratings, with 54 public named written reviews, as of 2026-07-27.
 - 55 selected AI Architect course projects as of 2026-07-25.
 - 600+ public project posts and nearly 7,000 project comments in the free Superlinear Academy community as of 2026-07-08. These are not counts of paid-course projects.
-- 19,180 members in the free Superlinear Academy community as of 2026-07-16; public copy generally says "nearly 20,000."
+- 20,202 members who completed profile setup in the free Superlinear Academy community as of 2026-07-30; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
 - [AI Engineer](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) publicly named Yuzheng as a collaborator on the upcoming [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), scheduled for November 5-6, 2026. This establishes the announced collaboration, not a completed event outcome.
 
 ## Books

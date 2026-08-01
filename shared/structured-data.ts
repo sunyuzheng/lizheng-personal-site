@@ -21,6 +21,7 @@ function personNode(lang: SiteLang) {
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
     description: PERSON_DESCRIPTION[lang],
+    slogan: lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。",
     jobTitle:
       "Founder of Superlinear Academy and AI Builders; educator and author",
     hasCredential: {
@@ -66,7 +67,7 @@ function organizationNodes(lang: SiteLang) {
       "@id": SUPERLINEAR_ID,
       name: "Superlinear Academy",
       url: "https://www.superlinear.academy/",
-      slogan: lang === "en" ? "Make what lasts." : "做出你的代表作。",
+      slogan: lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。",
       founder: { "@id": PERSON_ID },
     },
     {
@@ -86,7 +87,7 @@ function organizationNodes(lang: SiteLang) {
       name: "Stay Superlinear",
       url: "https://stay.superlinear.academy/",
       description:
-        "A paid ongoing environment for practitioners that organizes people, content, feedback, tools, and opportunities around members' current work, co-led by Yuzheng Sun and Yage.",
+        "A paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.",
     },
   ];
 }
@@ -134,13 +135,13 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         url: canonical,
         name:
           lang === "en"
-            ? "Yuzheng Sun · 孙煜征 · 课代表立正"
-            : "课代表立正（孙煜征）｜Yuzheng Sun",
+            ? "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS"
+            : "课代表立正（孙煜征）｜做出你的代表作",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-31",
+        dateModified: "2026-08-01",
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -184,7 +185,7 @@ export function buildPodcastStructuredData() {
         mainEntity: { "@id": podcastId },
         about: { "@id": PERSON_ID },
         inLanguage: "zh-CN",
-        dateModified: "2026-07-27",
+        dateModified: "2026-08-01",
       },
       personNode("zh"),
     ],
@@ -208,7 +209,7 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
         isPartOf: { "@id": WEBSITE_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-25",
+        dateModified: "2026-08-01",
       },
       personNode(lang),
       ...organizationNodes(lang),

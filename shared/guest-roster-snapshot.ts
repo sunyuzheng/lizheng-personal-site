@@ -2541,7 +2541,7 @@ export const guestRosterSnapshot = [
   {
     "guest_name": "贾扬清",
     "guest_en_name": "Yangqing Jia",
-    "guest_title": "PyTorch创始人之一，前Meta Director，阿里VP，Lepton AI创始人",
+    "guest_title": "PyTorch 1.0共同负责人，Caffe/Caffe2作者，ONNX共同作者，Lepton AI创始人",
     "guest_company": "Lepton AI",
     "primary_video_id": "Lt-lVe957hc",
     "all_video_ids": [

@@ -987,24 +987,19 @@ export default function Home() {
           <div className="container">
             <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-20">
               <div>
-                <SectionLabel>
-                  {lang === "en" ? "SUPERLINEAR ACADEMY" : "现在在做"}
-                </SectionLabel>
+                <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.12] md:text-5xl">
                   {lang === "en" ? (
                     "Make what lasts."
                   ) : (
-                    <>
-                      <span className="block">研究什么值得做，</span>
-                      <span className="block">也要亲自把它做出来。</span>
-                    </>
+                    "做出你的代表作。"
                   )}
                 </h2>
               </div>
               <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
                 {lang === "en"
                   ? "This is the standard behind Superlinear. Across a learning system, an ongoing membership, and enterprise programs, the aim is the same: make work that keeps creating value in the world—and keeps compounding for the person who made it."
-                  : "今天，我和学员、社区成员、企业团队一起工作。AI Builders练的是选问题、判断价值，再把东西可靠地做出来；Stay让手头的工作不断得到反馈，也遇见能一起做事的人；企业项目则必须在真实目标、流程和约束里见结果。做的过程中，我也会不断发现，原来哪些地方想对了，哪些还得改。"}
+                  : "这是Superlinear共同遵循的标准。课程、会员和企业项目的做法不同，目标相同：让值得做的东西真正成为作品；它完成以后继续为别人创造价值，也继续为做出它的人积累能力、信誉和下一次更大的机会。"}
               </p>
             </div>
 

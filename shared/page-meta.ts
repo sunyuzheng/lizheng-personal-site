@@ -39,7 +39,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正，本名孙煜征，康奈尔大学经济学博士，现居西雅图。AI让「做出来」越来越容易；我研究的是：什么值得做。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-07-25",
+    lastModified: "2026-07-31",
   },
 };
 

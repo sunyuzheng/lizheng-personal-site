@@ -59,14 +59,14 @@ function personNode(lang: SiteLang) {
   };
 }
 
-function organizationNodes() {
+function organizationNodes(lang: SiteLang) {
   return [
     {
       "@type": "EducationalOrganization",
       "@id": SUPERLINEAR_ID,
       name: "Superlinear Academy",
       url: "https://www.superlinear.academy/",
-      slogan: "Make what lasts.",
+      slogan: lang === "en" ? "Make what lasts." : "做出你的代表作。",
       founder: { "@id": PERSON_ID },
     },
     {
@@ -140,10 +140,10 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: lang === "en" ? "2026-07-31" : "2026-07-25",
+        dateModified: "2026-07-31",
       },
       personNode(lang),
-      ...organizationNodes(),
+      ...organizationNodes(lang),
     ],
   };
 }
@@ -211,7 +211,7 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
         dateModified: "2026-07-25",
       },
       personNode(lang),
-      ...organizationNodes(),
+      ...organizationNodes(lang),
       breadcrumbNode(
         canonical,
         name,

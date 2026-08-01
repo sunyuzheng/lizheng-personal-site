@@ -28,9 +28,9 @@ This is the current AI-facing expression of the longer personal thesis, not a se
 1. **AI makes building easier:** more ideas can reach a working form with less execution cost.
 2. **Study what is worth building:** the personal focus is problem selection—who a result is for, what it should change, and why it matters.
 3. **Let reality test the judgment:** users, products, experiments, organizations, and public disagreement reveal whether the choice holds up.
-4. **Make what lasts:** what survives keeps creating value for the people who use it and compounds into capability, reputation, freedom, and more ambitious choices for the person who made it.
+4. **Make what lasts / 做出你的代表作:** what survives keeps creating value for the people who use it, becomes meaningfully associated with its maker, and compounds into capability, reputation, freedom, and more ambitious choices.
 
-The hero states only the first two layers. The next sections show judgment meeting reality. The Work section then reveals Superlinear Academy’s command, `Make what lasts.`, as the conclusion of that sequence—not as a second personal Hero. AI Builders, Stay Superlinear, and enterprise work appear there as three current expressions of the standard; their full product arguments remain on their own sites.
+The hero states only the first two layers. The next sections show judgment meeting reality. The Work section then reveals Superlinear Academy’s language-specific command—`Make what lasts.` in English and `做出你的代表作。` in Chinese—as the conclusion of that sequence, not as a second personal Hero. AI Builders, Stay Superlinear, and enterprise work appear there as three current expressions of the standard; their full product arguments remain on their own sites.
 
 ## Narrative Spine
 
@@ -50,7 +50,7 @@ The deeper throughline comes from the local axioms: build a better model of real
 2. Cornell / Amazon / Meta / Tencent / Statsig: where the judgment behind problem selection was formed and what each setting taught.
 3. Three questions that make “worth building” concrete: what actually changed, who it is useful for, and whether the result keeps creating value and compounding for its maker after the first effort.
 4. Dated public calls, led by the February 2023 essay on ChatGPT written before GPT-4: evidence that the premise about cheaper execution and the resulting judgments were stated in public.
-5. `Make what lasts.` at the Work transition: the Superlinear standard that connects AI Builders, Stay Superlinear, and enterprise work without turning the homepage into three sales pitches.
+5. The English or Chinese Superlinear command at the Work transition: the parent-brand standard that connects AI Builders, Stay Superlinear, and enterprise work without turning the homepage into three sales pitches.
 6. 200+ conversations and selected guests: a source of first-hand input and network quality before follower quantity.
 7. Two books and the launch photo with co-authors and Julie Zhuo: public intellectual output and peer context.
 8. Community behavior and independent endorsements: repeated application and external validation.
@@ -75,7 +75,7 @@ For this reason, the standalone statistics strip has been removed. Teaching proo
 
 - English remains the default language by design.
 - The hero is the current AI-facing entry point. The durable personal throughline remains judgment meeting reality and becoming work that compounds both in the world and for its maker.
-- `Make what lasts.` appears once as the English Work heading, paired with `SUPERLINEAR ACADEMY`. It names what the personal throughline is trying to produce; it does not replace the Hero or repeat in the footer.
+- `Make what lasts.` and `做出你的代表作。` each appear once as the Work heading in their respective language, paired with `SUPERLINEAR ACADEMY`. They name what the personal throughline is trying to produce; neither replaces the Hero or repeats in the footer.
 - The public community CTA still points to `https://www.superlinear.academy`; the free community remains a major proof point.
 - In the Work section, AI Builders represents judgment and methods taught into reusable capability, Stay Superlinear represents a long-term environment around members' current work, and enterprise programs show the same methods being tested against real organizational goals and constraints.
 - The hero's secondary CTA moves deeper into the personal story by scrolling to Work; it does not send first-time visitors directly to a product landing page.

@@ -10,7 +10,7 @@ In Chinese: AI让「做出来」越来越容易。我研究的是：什么值得
 
 Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His work studies what is worth building, who it should serve, and what makes the result genuinely useful.
 
-Superlinear Academy carries the same throughline as a shared standard: MAKE WHAT LASTS. In this context, lasting work keeps creating value for the people who use it and keeps compounding into capability, reputation, freedom, and new possibilities for the person who made it.
+Superlinear Academy carries the same throughline through two language-specific brand commands: MAKE WHAT LASTS. and 做出你的代表作。 They are not literal translations. The English line emphasizes work that keeps working; the Chinese line emphasizes making something distinctly yours that earns lasting recognition and continues to represent and reward its maker. Both point to work that keeps creating value in the world and compounding for the person who made it.
 
 He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 

@@ -56,6 +56,10 @@ URL_GROWTH = "https://youtu.be/D_-hU1O7IVw"
 URL_KOJI = "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897"
 URL_TULONG_BILI = "https://www.bilibili.com/video/BV1krM46BEpn"
 URL_TULONG_YT = "https://youtu.be/vd_oYgwQSBM"
+URL_TULONG_COMMENT = (
+    "https://www.youtube.com/watch?v=vd_oYgwQSBM"
+    "&lc=UgxFa4IYFTFcAJUFOsd4AaABAg"
+)
 URL_LIU_JIA_YT = "https://www.youtube.com/watch?v=-Et3GJRSI_0"
 URL_LIU_JIA_BILI = "https://www.bilibili.com/video/BV1VvQ1BmE4T"
 EMAIL = "yz@superlinear.academy"
@@ -593,16 +597,17 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "03 / CASE STUDY · TULONG", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "好内容，再叠加双方的制作和分发。")
+    c.drawString(M, H - 91, "在小红书破圈，")
+    c.drawString(M, H - 125, "也让YouTube的新观众认识屠龙。")
     c.setFillColor(BODY)
     c.setFont(FONT_REGULAR, 9.5)
-    c.drawString(M, H - 118, "屠龙 × 课代表立正｜双方各做一版，各自保留编辑判断")
+    c.drawString(M, H - 153, "屠龙×课代表立正｜一次录制，两套编辑判断，多平台分发")
 
     metrics = [
-        ("5.82万", "小红书点赞", "联合发布"),
-        ("5.9万", "小红书收藏", "收藏高于点赞"),
-        ("1.1万", "小红书转发", "二次传播"),
-        ("1,066", "小红书评论", "高讨论度"),
+        ("5.87万", "小红书点赞", "联合发布"),
+        ("5.96万", "小红书收藏", "收藏高于点赞"),
+        ("11万+", "YouTube观看", "新观众"),
+        ("10.8万+", "B站播放", "长视频承接"),
     ]
     metric_gap = 8
     metric_w = (W - 2 * M - 3 * metric_gap) / 4
@@ -610,14 +615,14 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
         draw_metric(
             c,
             M + index * (metric_w + metric_gap),
-            612,
+            577,
             metric_w,
-            92,
+            88,
             *metric,
             dark=False,
         )
 
-    phone_x, phone_y, phone_w, phone_h = 339, 198, 214, 384
+    phone_x, phone_y, phone_w, phone_h = 339, 94, 214, 466
     draw_image(
         c,
         TULONG_SCREENSHOT,
@@ -625,18 +630,17 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
         phone_y,
         phone_w,
         phone_h,
-        crop=(0, 580, 1206, 2580),
         fit="contain",
         radius=24,
     )
 
     left_x, left_w = M, 272
-    draw_label(c, "同一场录制，两套编辑判断", left_x, 562, color=AMBER_DARK, font=FONT_BOLD)
+    draw_label(c, "同一场录制，多种内容形态", left_x, 548, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "屠龙团队保留自己的节目语言；我们另做长版与切片，再由双方各自的受众继续分发。需要时，我们可以补上选题打磨、长视频剪辑、切片，以及小红书、YouTube、B站和社群分发。",
+        "屠龙团队保留自己的节目语言；我们另做长版与切片，分别放到小红书、YouTube、B站和社群。不是把同一个文件机械搬运，而是让一场好对话用不同形态继续走。",
         left_x,
-        535,
+        521,
         left_w,
         size=10,
         leading=17,
@@ -644,45 +648,47 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     )
 
     c.setFillColor(INK)
-    c.roundRect(left_x, 355, left_w, 105, 10, fill=1, stroke=0)
-    draw_label(c, "跨平台承接", left_x + 15, 431, color=AMBER, font=FONT_BOLD)
+    c.roundRect(left_x, 326, left_w, 105, 10, fill=1, stroke=0)
+    draw_label(c, "三个平台，各自成立", left_x + 15, 406, color=AMBER, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 13)
-    c.drawString(left_x + 15, 401, "B站9万+播放 · 7,000+收藏")
+    c.drawString(left_x + 15, 377, "YouTube11万+观看·3,600赞")
     c.setFillColor(SOFT_WHITE)
-    c.setFont(FONT_REGULAR, 9)
-    c.drawString(left_x + 15, 378, "YouTube同版长片9.8万+观看")
+    c.setFont(FONT_REGULAR, 8.5)
+    c.drawString(left_x + 15, 353, "小红书1.13万转发·1,088条评论")
+    c.drawString(left_x + 15, 336, "B站10.8万+播放·8,026收藏")
 
     c.setFillColor(HexColor("#FFF4D6"))
     c.setStrokeColor(HexColor("#E6C46B"))
-    c.roundRect(left_x, 238, left_w, 90, 10, fill=1, stroke=1)
+    c.roundRect(left_x, 199, left_w, 106, 10, fill=1, stroke=1)
     c.setFillColor(AMBER_DARK)
     c.setFont(FONT_BOLD, 12)
-    c.drawString(left_x + 15, 299, "收藏高于点赞")
+    c.drawString(left_x + 15, 277, "新观众真的认识了她")
     draw_paragraph(
         c,
-        "收藏超过点赞，说明不少人不只看完，还想留下来以后再看。",
+        "“之前並不認識這位女士，但她太酷了！希望能每年都和她聊一下一年的回顧和明年的展望，想窺視她的思想變化。”——YouTube观众",
         left_x + 15,
-        276,
+        254,
         left_w - 30,
-        size=8.8,
-        leading=14,
+        size=8.2,
+        leading=13,
         color=BODY,
     )
+    c.linkURL(URL_TULONG_COMMENT, (left_x, 199, left_x + left_w, 305), relative=0)
 
-    draw_qr(c, URL_TULONG_BILI, left_x, 133, 63)
+    draw_qr(c, URL_TULONG_YT, left_x, 102, 63)
     c.setFillColor(AMBER_DARK)
     c.setFont(FONT_BOLD, 8.5)
-    c.drawString(left_x + 79, 176, "看B站完整正片")
-    c.linkURL(URL_TULONG_BILI, (left_x + 75, 166, left_x + 170, 188), relative=0)
+    c.drawString(left_x + 79, 145, "看YouTube完整正片与评论")
+    c.linkURL(URL_TULONG_YT, (left_x + 75, 135, left_x + 220, 157), relative=0)
     c.setFillColor(MUTED)
     c.setFont(FONT_REGULAR, 7.8)
-    c.drawString(left_x + 79, 159, "另有YouTube版本")
-    c.linkURL(URL_TULONG_YT, (left_x + 75, 145, left_x + 210, 174), relative=0)
+    c.drawString(left_x + 79, 126, "B站正片也已10万+播放")
+    c.linkURL(URL_TULONG_BILI, (left_x + 75, 114, left_x + 205, 137), relative=0)
 
     c.setFillColor(MUTED)
     c.setFont(FONT_REGULAR, 7.3)
-    c.drawString(M, 72, "数据核对至2026-07-22；各平台统计口径不同。")
+    c.drawString(M, 72, "数据核对至2026-07-31；各平台统计口径不同。")
     draw_footer(c, page)
 
 

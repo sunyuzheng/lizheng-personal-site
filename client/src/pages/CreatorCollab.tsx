@@ -239,7 +239,7 @@ const copy = {
         detail:
           "My communities span Xiaohongshu, YouTube, and Bilibili, and our team can edit long-form video and clips. But audience and production are amplifiers, not the premise: Koji’s independently published episode already traveled across audio and three video platforms.",
         proof:
-          "Koji: content traveled independently · Tulong: co-production reached 58.2K likes",
+          "Koji: content traveled independently · Tulong: 58.7K Xiaohongshu likes + 110K+ YouTube views",
       },
     ],
     questionsEyebrow: "QUESTIONS WITH REAL TENSION",
@@ -326,37 +326,49 @@ const copy = {
       },
       {
         priority: "lead",
-        label: "CASE 02 · CONTENT + PRODUCTION + BOTH AUDIENCES",
-        name: "Once the content holds, both sides can make it much bigger",
+        label: "CASE 02 · ONE RECORDING, NEW AUDIENCES",
+        name: "It broke out on Xiaohongshu—and introduced Tulong to new viewers on YouTube",
         role: "Yuzheng × Yang Ying (Tulong)",
-        note: "Each side chose its own title, structure, and emphasis. Tulong kept the language of her show; our team built a second long-form cut and Xiaohongshu clips. When a joint release fits, my communities on Xiaohongshu, YouTube, and Bilibili can carry the work farther, while our team adds topic development, editing, clipping, and distribution support.",
+        note: "Tulong’s team made one cut in the voice of her show; our team produced a second long-form version and clips, then carried them across Xiaohongshu, YouTube, Bilibili, and our community. The point is not to mirror the same file everywhere—it is to give one good conversation several ways to travel.",
         highlight:
-          "Our Xiaohongshu version reached 58.2K likes, 59K saves, and 11K shares; the Bilibili long-form cut added 90K+ plays and nearly 7,000 saves. This was more than exposure: saves exceeded likes, which shows that the content held the attention the joint reach created.",
+          "The co-published Xiaohongshu release reached 58.7K likes and 59.6K saves; the YouTube long-form cut passed 110K views. One first-time viewer was already asking for an annual follow-up. The collaboration did more than add plays; it introduced Tulong to a new audience.",
         metrics: [
           {
-            value: "58.2K",
+            value: "58.7K",
             label: "Xiaohongshu likes",
             signal: "Co-published",
           },
           {
-            value: "59K",
+            value: "59.6K",
             label: "Xiaohongshu saves",
             signal: "More saves than likes",
           },
-          { value: "11K", label: "shares", signal: "Secondary reach" },
-          { value: "1,066", label: "comments", signal: "High discussion" },
+          {
+            value: "110K+",
+            label: "YouTube views",
+            signal: "New viewers discovered Tulong",
+          },
+          {
+            value: "108K+",
+            label: "Bilibili views",
+            signal: "Long-form reach",
+          },
         ],
-        proofNote: "",
-        quote: "",
-        href: "https://www.bilibili.com/video/BV1krM46BEpn",
-        linkLabel: "Watch our full cut",
+        proofNote:
+          "Also: 11.3K Xiaohongshu shares and 1,088 comments; 3.6K YouTube likes and 481 comments; 8,026 Bilibili saves.",
+        quote:
+          "“I hadn’t known her before, but she’s incredibly cool. I hope they talk every year so we can see how her thinking changes.” — YouTube viewer (translated)",
+        href:
+          "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
+        linkLabel: "Watch the YouTube cut and comments",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
-        evidenceLabel: "Verify the Xiaohongshu result (1 screenshot)",
+        evidenceLabel: "Verify the latest Xiaohongshu result (1 screenshot)",
         evidenceImages: [
           {
             src: "/collab/creator-proof/tulong-performance.webp",
-            alt: "Yuzheng and Tulong co-created Xiaohongshu video with 58.2K likes, 59K saves and 1,066 comments",
-            caption: "Our cut · 58.2K likes · 59K saves · 1,066 comments",
+            alt: "Yuzheng and Tulong co-created Xiaohongshu video with 58.7K likes, 59.6K saves, 11.3K shares and 1,088 comments",
+            caption:
+              "Our cut · 58.7K likes · 59.6K saves · 11.3K shares · 1,088 comments",
           },
         ],
       },
@@ -523,7 +535,7 @@ const copy = {
         title: "内容能自己跑，联发还能放大",
         detail:
           "我在小红书、YouTube和B站都有长期经营的社区，团队也能做长视频、切片和分发。但流量和团队只是放大器：Koji独立发布的节目，已经同时在音频和三个视频平台跑了出来。",
-        proof: "Koji：内容自己跑 · 屠龙：联合制作5.82万赞",
+        proof: "Koji：内容自己跑·屠龙：小红书5.87万赞·YouTube11万+观看",
       },
     ],
     questionsEyebrow: "可以聊什么",
@@ -593,29 +605,32 @@ const copy = {
       },
       {
         priority: "lead",
-        label: "案例二 · 双方各做一版、共同分发",
-        name: "好内容再叠加双方受众，能走得更远",
+        label: "案例二·一次录制，跨平台找到新观众",
+        name: "在小红书破圈，也让YouTube的新观众认识屠龙",
         role: "课代表立正 × 杨滢（屠龙）",
-        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们则从脑科学一路剪到创业现场，再为小红书和B站重新组织内容。双方各自保留编辑判断，也各自带来受众；我们这边的小红书、YouTube、B站和社区还能承接后续分发，团队也能补上选题、剪辑和切片。",
+        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们另做一版长片和切片，分别放到小红书、YouTube、B站和社区。不是把同一个文件机械搬到各个平台，而是让一场好对话用不同形态继续走。",
         highlight:
-          "我们的小红书版本获得5.82万赞、5.9万收藏和1.1万转发；B站正片9万+播放、近7,000收藏。这不只是曝光：收藏高于点赞，说明内容真的接住了这波流量。",
+          "小红书联合发布获得5.87万赞、5.96万收藏；YouTube长片也有11万+观看。评论区里，有人第一次认识屠龙，已经希望她以后每年都回来聊。这说明合作带来的不只是播放，还有原本不认识她的新观众。",
         metrics: [
-          { value: "5.82万", label: "小红书点赞", signal: "联合发布" },
-          { value: "5.9万", label: "小红书收藏", signal: "收藏高于点赞" },
-          { value: "1.1万", label: "小红书转发", signal: "二次传播" },
-          { value: "1,066", label: "小红书评论", signal: "高讨论度" },
+          { value: "5.87万", label: "小红书点赞", signal: "联合发布" },
+          { value: "5.96万", label: "小红书收藏", signal: "收藏高于点赞" },
+          { value: "11万+", label: "YouTube观看", signal: "新观众认识嘉宾" },
+          { value: "10.8万+", label: "B站播放", signal: "长视频承接" },
         ],
-        proofNote: "",
-        quote: "",
-        href: "https://www.bilibili.com/video/BV1krM46BEpn",
-        linkLabel: "看我们的完整正片",
+        proofNote:
+          "其他数据：小红书1.13万转发、1,088条评论；YouTube3,600赞、481条评论；B站8,026收藏。",
+        quote:
+          "“之前並不認識這位女士，但她太酷了！希望能每年都和她聊一下一年的回顧和明年的展望，想窺視她的思想變化。”——YouTube观众",
+        href:
+          "https://www.youtube.com/watch?v=vd_oYgwQSBM&lc=UgxFa4IYFTFcAJUFOsd4AaABAg",
+        linkLabel: "看YouTube完整正片与评论",
         image: "https://img.youtube.com/vi/vd_oYgwQSBM/maxresdefault.jpg",
-        evidenceLabel: "核对小红书数据（1张截图）",
+        evidenceLabel: "核对最新小红书数据（1张截图）",
         evidenceImages: [
           {
             src: "/collab/creator-proof/tulong-performance.webp",
-            alt: "课代表立正与屠龙联合发布的小红书视频，显示5.82万赞、5.9万收藏和1,066条评论",
-            caption: "我们的版本 · 5.82万赞 · 5.9万收藏 · 1,066条评论",
+            alt: "课代表立正与屠龙联合发布的小红书视频，显示5.87万赞、5.96万收藏、1.13万转发和1,088条评论",
+            caption: "我们的版本·5.87万赞·5.96万收藏·1.13万转发·1,088条评论",
           },
         ],
       },

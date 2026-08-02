@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
+    "verify:domain": "tsx scripts/verify-domain.ts",
     "sync:guest-video-metadata": "tsx scripts/sync-guest-video-metadata.ts",
     "refresh:guests": "pnpm sync:guest-video-metadata && pnpm check && pnpm build",
     "format": "prettier --write ."

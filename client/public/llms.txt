@@ -38,7 +38,7 @@ Metrics change and should retain their dates.
 - 400K+ cross-platform audience as of 2026-07-12.
 - 3,000+ paying learners as of 2026-07-12.
 - 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
-- 5.0/5 AI Builders rating on Maven from 82 ratings, with 54 public named written reviews, as of 2026-07-27.
+- 5.0/5 AI Builders rating on Maven from 83 ratings as of 2026-08-02. Separately, 54 public named written reviews had been archived as of 2026-07-27; the two counts measure different things and should not be subtracted to infer a current review gap.
 - 55 selected AI Architect course projects as of 2026-07-25.
 - 600+ public project posts and nearly 7,000 project comments in the free Superlinear Academy community as of 2026-07-08. These are not counts of paid-course projects.
 - 20,202 members who completed profile setup in the free Superlinear Academy community as of 2026-07-30; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.

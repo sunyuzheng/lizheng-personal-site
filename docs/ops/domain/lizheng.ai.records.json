@@ -1,0 +1,113 @@
+{
+  "domain": "lizheng.ai",
+  "lifecyclePhase": "godaddy-active",
+  "nameservers": {
+    "current": ["ns43.domaincontrol.com", "ns44.domaincontrol.com"],
+    "target": ["ns1.vercel-dns.com", "ns2.vercel-dns.com"]
+  },
+  "routingRecords": {
+    "current": [
+      {
+        "name": "@",
+        "type": "A",
+        "ttl": 600,
+        "values": ["216.198.79.1"]
+      },
+      {
+        "name": "www",
+        "type": "CNAME",
+        "ttl": 1800,
+        "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
+      },
+      {
+        "name": "podcast",
+        "type": "CNAME",
+        "ttl": 3600,
+        "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
+      }
+    ],
+    "target": [
+      {
+        "name": "@",
+        "type": "A",
+        "minimumValues": 1
+      },
+      {
+        "name": "www",
+        "type": "A",
+        "minimumValues": 1
+      },
+      {
+        "name": "podcast",
+        "type": "A",
+        "minimumValues": 1
+      }
+    ]
+  },
+  "records": [
+    {
+      "name": "resend._domainkey.notify",
+      "type": "TXT",
+      "ttl": 3600,
+      "valueSha256": "1abe8fc04859747c160f560f4a3d8aa4fbefb021a26520e2638f73eb24681e25"
+    },
+    {
+      "name": "send.notify",
+      "type": "TXT",
+      "ttl": 3600,
+      "values": ["v=spf1 include:amazonses.com ~all"]
+    },
+    {
+      "name": "_dmarc",
+      "type": "TXT",
+      "ttl": 3600,
+      "values": [
+        "v=DMARC1; p=reject; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"
+      ]
+    },
+    {
+      "name": "send.notify",
+      "type": "MX",
+      "ttl": 3600,
+      "values": [
+        {
+          "priority": 10,
+          "exchange": "feedback-smtp.us-east-1.amazonses.com"
+        }
+      ]
+    }
+  ],
+  "httpChecks": [
+    {
+      "url": "https://lizheng.ai",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/",
+      "titleContains": "Yuzheng Sun",
+      "canonical": "https://www.lizheng.ai/"
+    },
+    {
+      "url": "https://www.lizheng.ai/",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/",
+      "titleContains": "课代表立正",
+      "canonical": "https://www.lizheng.ai/"
+    },
+    {
+      "url": "https://podcast.lizheng.ai/",
+      "status": 200,
+      "finalUrl": "https://podcast.lizheng.ai/",
+      "titleContains": "课代表立正Podcast",
+      "canonical": "https://podcast.lizheng.ai/"
+    },
+    {
+      "url": "https://www.lizheng.ai/robots.txt",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/robots.txt"
+    },
+    {
+      "url": "https://www.lizheng.ai/sitemap.xml",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/sitemap.xml"
+    }
+  ]
+}

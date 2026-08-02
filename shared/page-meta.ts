@@ -28,7 +28,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. His defining idea: MAKE WHAT LASTS.",
+      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. MAKE WHAT LASTS: turn hard-won judgment into work people keep using.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-08-01",
@@ -36,7 +36,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   zh: {
     title: "课代表立正（孙煜征）｜做出你的代表作",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。他所代表的主张是：做出你的代表作。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。做出你的代表作：把判断和本事，做成别人真正会用、也能继续代表自己的作品。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-08-01",

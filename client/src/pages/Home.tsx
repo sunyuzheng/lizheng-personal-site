@@ -24,129 +24,74 @@ import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 
-const waysOfKnowing = {
-  en: [
-    {
-      eyebrow: "EXPLICIT UNDERSTANDING",
-      title: "Build a world model.",
-      detail:
-        "Make as much of the causal model explicit as possible. Predict what should happen, then actively look for what would prove it wrong.",
-    },
-    {
-      eyebrow: "TACIT, RESULT-ANSWERABLE KNOWING",
-      title: "Develop craft.",
-      detail:
-        "Keep updating the same understanding where rules run out. Practice, apprenticeship, comparison, and consequence turn models into feel—and feel back into better models.",
-    },
-  ],
-  zh: [
-    {
-      eyebrow: "显性的理解",
-      title: "建立自己的世界模型。",
-      detail:
-        "尽可能把因果、激励与约束说清楚；做出预测，主动寻找能够推翻模型的证据。",
-    },
-    {
-      eyebrow: "长在身上、又对结果负责的理解",
-      title: "让知识长成手艺。",
-      detail:
-        "在规则装不下的复杂性中，继续更新同一份理解。真实问题、师承、比较与后果，让模型长成体感，也让体感反过来修正模型。",
-    },
-  ],
-};
-
-const convictionAndAuthorship = {
+const horizon = {
   en: {
-    conviction: {
-      eyebrow: "CONVICTION",
-      title: "When understanding accepts the cost of action.",
-      detail:
-        "A borrowed idea can be repeated without changing a choice. Once understanding is internalized enough to carry a stake, it can support action before certainty arrives—and still change when better evidence appears.",
-    },
-    authorship: {
-      eyebrow: "RESPONSIBLE AUTHORSHIP",
-      title: "Stay responsible for what the work becomes.",
-      detail:
-        "Authorship begins with defining what should exist, whom it should serve, which standards matter, and what evidence should change it. It can belong to a person, a team, or an institution; responsibility cannot disappear inside the collaboration.",
-    },
-    test: {
-      title: "Reality keeps testing. Time gradually reveals.",
-      detail:
-        "Neither is an infallible judge. But a maker cannot be the work's only witness. What people keep using, trusting, adapting, and remembering shows whether it is still alive.",
-    },
+    title: "I admire people whose work and lives became impossible to separate.",
+    detail:
+      "The products of Steve Jobs and Zhang Xiaolong. Lionel Messi's football. Christopher Nolan's films. Geoffrey Hinton's and Warren Buffett's convictions surviving decades of disagreement. Tsunekazu Nishioka's craft, giving ancient timber another thousand years of life. Different fields and temperaments; the same unmistakable result: the work carries the maker.",
+    structure:
+      "People shape work, and work shapes people. A defining work is not something you think right once; through version after version, materials, masters, users, markets, and time answer back until it slowly becomes real.",
   },
   zh: {
-    conviction: {
-      eyebrow: "确信",
-      title: "当理解开始承担行动的代价。",
-      detail:
-        "借来的观点可以说得漂亮，却不改变选择。理解真正被内化以后，才可能在确定性到来之前支撑行动，也仍然愿意被更好的证据改变。",
-    },
-    authorship: {
-      eyebrow: "负责任的作者性",
-      title: "从定义问题开始，对作品负责。",
-      detail:
-        "什么值得存在、服务谁、坚持什么标准、因为什么而修改，都属于作者性。作品可以由个人、团队或机构完成；责任不能在协作中消失。",
-    },
-    test: {
-      title: "现实持续检验，时间逐渐显露。",
-      detail:
-        "它们都不是无误的终审；但作者不能成为作品唯一的证人。人们仍在使用、信任、改进和记住什么，会逐渐显露作品是否还活着。",
-    },
+    title: "我敬佩的，是作品与人最终变得无法分开。",
+    detail:
+      "乔布斯与张小龙的产品，梅西的足球，诺兰的电影，Hinton与巴菲特经受时间的非共识，以及西冈常一让千年木材再活一千年的手艺。领域不同，性格不同；作品里都无法抹掉那个做出它的人。",
+    structure:
+      "人塑造作品，作品也塑造人。真正的代表作不是一次想对的；它在一个个版本里，经过材料、高手、用户、市场和时间的回答，才慢慢成立。",
   },
 };
 
 const careerChapters = {
   en: [
     {
-      marker: "CORNELL · ECONOMICS",
-      title: "Make the invisible model explicit.",
+      marker: "CORNELL · AMAZON · META",
+      title: "See the structure beneath the visible result.",
       detail:
-        "Economics trained me to ask about causes, choices, incentives, and constraints, then make a prediction specific enough to challenge—not mistake correlation or a loud story for understanding.",
+        "Economics trained me to ask about causes, choices, incentives, and constraints. Product work made those explanations answer to a harder question: did they change a real decision for real users?",
     },
     {
-      marker: "AMAZON · META",
-      title: "Learn what the model cannot hold.",
+      marker: "TENCENT · 30-PERSON DATA & AI TEAM",
+      title: "Make judgment travel through people and responsibility.",
       detail:
-        "Inside large technology products, a correct model still met users, interfaces, incentives, timing, and imperfect information. Some consequential judgment could only be earned in the work.",
+        "Leading a team taught me that one person seeing clearly was not enough. Priorities, incentives, standards, and ownership had to hold together before an idea could change an organization.",
     },
     {
-      marker: "TENCENT · STATSIG",
-      title: "Let conviction travel without becoming dogma.",
+      marker: "2022 · A DIFFERENT BET",
+      title: "Leave a path I already knew how to win.",
       detail:
-        "Leading a 30-person data and AI team taught me that one person seeing clearly was not enough. At Statsig, experiments kept consequential views answerable to evidence built into the workflow.",
+        "After leading Tencent's 30-person Data & AI team and repeatedly earning its highest performance rating, I left a clear management path, returned to the U.S. as an individual contributor, and began turning work I had built outside my day job into something I was willing to carry for the long term.",
     },
     {
-      marker: "SUPERLINEAR · NOW",
-      title: "Take authorship of a body of work.",
+      marker: "STATSIG · SUPERLINEAR",
+      title: "Keep the wager answerable to reality.",
       detail:
-        "Courses, community, books, tools, and public conversations are my attempt to remain responsible for one coherent body of work: what it is for, how it should evolve, and whether it remains useful without me in the room.",
+        "At Statsig, experiments made belief revision part of the product workflow. At Superlinear, courses, community, books, tools, and public work remain open to the same question: are they genuinely useful after the first release?",
     },
   ],
   zh: [
     {
-      marker: "康奈尔 · 经济学",
-      title: "把看不见的模型说清楚。",
+      marker: "康奈尔 · AMAZON · META",
+      title: "看见结果背后的结构。",
       detail:
-        "经济学训练我追问因果、选择、激励与约束，再做出足够具体、可以被挑战的预测；不把相关性、热闹或一个好听的故事当成理解。",
+        "经济学训练我追问因果、选择、激励与约束；产品工作又让这些解释面对一个更硬的问题：它有没有改变真实用户和真实决定？",
     },
     {
-      marker: "AMAZON · META",
-      title: "看见模型装不下的复杂性。",
+      marker: "腾讯 · 30人数据与AI团队",
+      title: "让判断穿过人、组织与责任。",
       detail:
-        "在大型科技产品里，正确的模型还要穿过用户、界面、激励、时机与不完整信息。有些关键判断，只能在真实工作里长出来。",
+        "带团队让我明白，一个人想清楚远远不够。优先级、激励、标准与责任必须彼此咬合，一个想法才可能真正改变组织。",
     },
     {
-      marker: "腾讯 · STATSIG",
-      title: "让确信穿过组织，又不变成教条。",
+      marker: "2022年 · 换一种下注",
+      title: "离开一条我已经知道怎样赢的路。",
       detail:
-        "在腾讯带30人数据与AI团队，让我看到一个人想明白远远不够；到了Statsig，实验让重要判断持续对产品工作流里的证据负责。",
+        "在腾讯带领30人数据与AI团队、连续获得最高绩效之后，我离开那条清晰的管理晋升路径，回美国从IC重新开始，也把原先在主业之外积累的内容与事业，变成自己愿意长期承担的工作。",
     },
     {
-      marker: "SUPERLINEAR · 现在",
-      title: "对一整套作品承担作者责任。",
+      marker: "STATSIG · SUPERLINEAR",
+      title: "让下注持续面对现实。",
       detail:
-        "课程、社区、书、工具与公开对话，是我长期负责的一整套作品：它为什么存在、怎样演进，以及离开我以后是否仍然有用。",
+        "在Statsig，实验把不断更新判断变成产品工作流的一部分；到了Superlinear，课程、社区、书、工具与公开内容，也一直面对同一个问题：第一次发布以后，它们是否仍然有用？",
     },
   ],
 };
@@ -179,7 +124,7 @@ const work = {
       label: "OPEN, PUBLIC VALUE",
       title: "The free community",
       detail:
-        "A community of 20,000+ people seriously using AI, where deep public analysis, real projects, specific questions, first-hand experience, collaboration, and opportunities circulate.",
+        "A community of 20,000+ people seriously using AI. Unfinished work can meet deep analysis, real projects, first-hand experience, complementary people, collaboration, and opportunity.",
       proof:
         "20,000+ members · 600+ public project posts · nearly 7,000 project comments",
       href: "https://www.superlinear.academy",
@@ -190,7 +135,7 @@ const work = {
       label: "STRUCTURED LEARNING",
       title: "AI Builders",
       detail:
-        "A structured learning system I teach with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work published at leading AI conferences such as CVPR, NeurIPS, and KDD. We connect technical depth, product judgment, and practice on real problems.",
+        "A structured learning system I teach with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at leading AI conferences such as CVPR, NeurIPS, and KDD. The aim is to understand AI deeply enough to make reliable choices and build beyond a tutorial.",
       proof: "3,000+ paying learners · 5.0/5 on Maven",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
@@ -200,7 +145,7 @@ const work = {
       label: "YEAR-ROUND MEMBERSHIP",
       title: "Stay Superlinear membership",
       detail:
-        "A high-craft content and practitioner environment with deep analysis, guest masterclasses, monthly Q&A, core courses, Skills, recordings, and a searchable archive to return to when the next decision matters.",
+        "A year-round source of deep analysis, guest masterclasses, monthly Q&A, core courses, Skills, recordings, and practitioner context—so the next important decision can begin from a higher place.",
       proof:
         "12+ masterclasses · monthly Q&A · 3 core courses · selected Skills",
       href: "https://stay.superlinear.academy",
@@ -211,7 +156,7 @@ const work = {
       label: "ORGANIZATIONAL PRACTICE",
       title: "Enterprise AI programs",
       detail:
-        "We work with teams to connect new AI capability to real workflows, evaluation, ownership, and organizational constraints—so a promising experiment has a chance to become reliable practice.",
+        "We work with teams to bring new AI capability into real workflows, evaluation, ownership, and organizational constraints—so an experiment can become a way of working the organization can trust.",
       proof: "Tencent · Xiaohongshu · Meituan · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "Explore enterprise work",
@@ -223,7 +168,7 @@ const work = {
       label: "免费开放",
       title: "免费社区",
       detail:
-        "两万多名认真用AI做事的人在这里相遇：主理人的深度解析、成员的真实项目、具体问题、一手经验、合作与机会，都在公共讨论里流动。",
+        "两万多名认真用AI做事的人在这里相遇。还没完成的作品，可以尽早遇到深度解析、真实项目、一手经验、互补的人、合作与机会。",
       proof: "20,000+名成员 · 600+项目帖 · 近7,000条项目评论",
       href: "https://www.superlinear.academy",
       cta: "免费加入",
@@ -233,7 +178,7 @@ const work = {
       label: "系统训练",
       title: "AI Builders",
       detail:
-        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究发表于CVPR、NeurIPS、KDD等AI顶会。我们把技术原理、工程可靠性、产品判断与真实练习放在同一套学习体系里。",
+        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究发表于CVPR、NeurIPS、KDD等AI顶会。我们的目标，是让人把AI理解到足以做出可靠判断，面对没有教程的新问题，也能独立做成可靠的东西。",
       proof: "3,000+付费学员 · Maven 5.0/5",
       href: "https://ai-builders.com",
       cta: "了解AI Builders",
@@ -243,7 +188,7 @@ const work = {
       label: "全年会员",
       title: "Stay Superlinear会员",
       detail:
-        "一个高质量、可长期回来的内容与实践环境：深度解析、闭门大师课、每月答疑、三门核心课、精选Skills、活动回放与可检索的内容库。",
+        "全年持续更新深度解析、闭门大师课、每月答疑、三门核心课、精选Skills、活动回放与一线实践语境，让下一次重要判断从更高处开始。",
       proof: "12+场闭门大师课 · 每月深度答疑 · 三门核心课 · 精选Skills",
       href: "https://stay.superlinear.academy",
       cta: "了解会员",
@@ -253,7 +198,7 @@ const work = {
       label: "组织实践",
       title: "企业AI项目",
       detail:
-        "我们把新的AI能力放进团队的真实工作流、评估、责任与组织约束里，让一次有希望的实验有机会变成可靠的工作方式。",
+        "我们把新的AI能力放进团队的真实工作流、评估、责任与组织约束里，让一次实验变成组织可以信任的工作方式。",
       proof: "腾讯 · 小红书 · 美团 · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "了解企业合作",
@@ -370,7 +315,7 @@ const endorsements = {
   zh: [
     {
       quote:
-        "立正能把多年产品增长经验提炼成可执行的洞察，帮助数据科学家、产品经理和创始人更快看清关键问题。",
+        "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略，也帮助创始人找到能够持续复利的PMF路径。",
       name: "Vijaye Raji",
       role: "Statsig创始人 · OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
@@ -598,8 +543,8 @@ export default function Home() {
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
                 {lang === "en"
-                  ? "I believe the best work keeps creating value beyond the moment it is made—and clearly bears the judgment and craft of the person who made it. Such work may also enlarge what its maker can do next. Superlinear Academy is the defining work I am building around that belief."
-                  : "我相信，最好的作品，不会随着制作与发布结束；它会继续创造价值，也清楚承载做出它的人的判断与手艺。这样的作品，也可能继续成就作者。Superlinear Academy是我正在做的代表作，也是我为更多人追求自己的代表作建立的长期机构。"}
+                  ? "Some work ends when it ships. Some keeps changing what others can do—and keeps representing the person who made it. I am building Superlinear Academy to become the latter."
+                  : "有些工作，交付以后就结束了。有些会继续改变别人能做什么，也继续代表做出它的人。我正在把Superlinear Academy做成后者。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -630,7 +575,7 @@ export default function Home() {
               <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-zinc-500">
                 {lang === "en"
                   ? "Cornell Economics PhD · Former Amazon, Meta, Tencent & Statsig · Founder and author"
-                  : "康奈尔经济学博士 · 曾任职Amazon、Meta、腾讯与Statsig（后被OpenAI收购）· 创始人、作者"}
+                  : "康奈尔经济学博士 · 曾任职Amazon、Meta、腾讯与Statsig（后被OpenAI收购）· 创始人、作者、访谈者"}
               </p>
             </div>
 
@@ -711,92 +656,52 @@ export default function Home() {
                 </SectionLabel>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "Most work disappears. The work I admire keeps working."
-                    : "大多数工作，做完就消失了。我敬佩的作品，完成以后还在工作。"}
+                    ? "You can be capable all your life—and still leave no work that truly carries your judgment or name."
+                    : "一个人可以一生都很能干，最后却没有一件作品真正带着自己的判断和名字。"}
                 </h2>
               </div>
               <div className="space-y-5 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
                 <p>
                   {lang === "en"
-                    ? "AI is making first versions cheaper across much of digital work. That is a gift: more people can turn an idea into something real. It also makes one distinction harder to ignore. Output is plentiful. Work that carries judgment, craft, authorship, and remains worth choosing is not."
-                    : "AI正在让许多数字工作的第一版越来越便宜。这是一份礼物：更多人可以把想法做成真的。它也让一个区别变得越来越无法忽视——产出很多，完成或首次发布以后仍继续创造价值、又清楚承载作者判断与手艺的作品，仍然很少。"}
+                    ? "Many capable people learn, rise, manage, and deliver. Then the task resets, the title moves on, and it becomes hard to say what their best attention added to the world. The deeper desire is to make something that could only have taken this shape through their own way of seeing and working."
+                    : "许多有能力的人不断学习、升级、管理和交付。任务却会重置，职位会移交；当这些标签拿走以后，很难回答自己最好的注意力究竟为世界增加了什么。更深的渴望，是做出一种只有经过自己，才会成为这个样子的东西。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "A defining work does not always begin with conviction. Often you enter the fog, make something, and use the gap between expectation and result to learn what the problem actually is—and what you are willing to stand behind."
-                    : "代表作也不总是从确信开始。人常常要先进入迷雾、动手、撞到失败，再从预期与结果的差距里，逐渐知道问题究竟是什么，自己又愿意为什么负责。"}
+                    ? "AI is making the first version cheap, but it will not make a defining work for you. New leverage should not lower our standard; it should let one person or a small team finish what used to be entirely beyond reach."
+                    : "AI正在让第一版变得廉价，却不会自动替你做出一件能代表你的作品。新的杠杆，不该让我们降低标准，而应该让一个人或一个小团队，完成过去根本够不到的东西。"}
                 </p>
               </div>
             </div>
 
             <div className="mt-14 border-y border-[#D4D0C7]">
-              <div className="grid lg:grid-cols-[0.34fr_0.66fr]">
-                <div className="py-7 lg:border-r lg:border-[#D4D0C7] lg:pr-8">
+              <div className="grid gap-8 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14 lg:py-10">
+                <div>
                   <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9A673D]">
-                    {lang === "en"
-                      ? "TWO MODES, ONE UNDERSTANDING"
-                      : "同一份理解，两种生长方式"}
+                    {lang === "en" ? "THE HORIZON" : "我敬佩的作品"}
                   </p>
-                  <p className="mt-3 max-w-sm text-sm leading-7 text-[#6E685D]">
+                  <h3 className="mt-4 max-w-md text-2xl font-semibold leading-9 md:text-3xl md:leading-10">
                     {lang === "en"
-                      ? "Some understanding can be stated and tested; some is earned inside the complexity of doing. They overlap, translate, and correct each other."
-                      : "有些理解可以被说清、预测和检验；有些只能在真实复杂性中长出来。两者彼此渗透、转译，也彼此修正。"}
-                  </p>
+                      ? "The standard is visible in the work."
+                      : "标准，就在作品里。"}
+                  </h3>
                 </div>
-                <div className="grid sm:grid-cols-2">
-                  {waysOfKnowing[lang].map((item, index) => (
-                    <article
-                      key={item.eyebrow}
-                      className={cn(
-                        "border-[#D4D0C7] py-7 lg:px-8",
-                        index > 0 && "border-t sm:border-l sm:border-t-0"
-                      )}
-                    >
-                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
-                        {item.eyebrow}
-                      </p>
-                      <h3 className="mt-3 text-xl font-semibold leading-8">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-7 text-[#6E685D]">
-                        {item.detail}
-                      </p>
-                    </article>
-                  ))}
+                <div>
+                  <h4 className="text-2xl font-semibold leading-9">
+                    {horizon[lang].title}
+                  </h4>
+                  <p className="mt-4 max-w-4xl text-base leading-8 text-[#5E584E]">
+                    {horizon[lang].detail}
+                  </p>
                 </div>
               </div>
 
-              <div className="grid border-t border-[#D4D0C7] lg:grid-cols-[0.42fr_0.58fr]">
-                <article className="py-7 lg:border-r lg:border-[#D4D0C7] lg:pr-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
-                    {convictionAndAuthorship[lang].conviction.eyebrow}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold leading-8">
-                    {convictionAndAuthorship[lang].conviction.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-7 text-[#6E685D]">
-                    {convictionAndAuthorship[lang].conviction.detail}
-                  </p>
-                </article>
-                <article className="border-t border-[#D4D0C7] py-7 lg:border-t-0 lg:pl-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
-                    {convictionAndAuthorship[lang].authorship.eyebrow}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold leading-8">
-                    {convictionAndAuthorship[lang].authorship.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-7 text-[#6E685D]">
-                    {convictionAndAuthorship[lang].authorship.detail}
-                  </p>
-                </article>
-              </div>
-
-              <div className="grid border-t border-[#D4D0C7] py-7 lg:grid-cols-[0.42fr_0.58fr] lg:gap-8">
-                <h3 className="text-xl font-semibold leading-8">
-                  {convictionAndAuthorship[lang].test.title}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-[#6E685D] lg:mt-0">
-                  {convictionAndAuthorship[lang].test.detail}
+              <div className="grid border-t border-[#D4D0C7] py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9A673D]">
+                  {lang === "en" ? "WHAT LASTS" : "作品怎样成立"}
+                </p>
+                <p className="max-w-4xl text-base leading-8 text-[#5E584E]">
+                  {horizon[lang].structure}
                 </p>
               </div>
             </div>
@@ -815,14 +720,14 @@ export default function Home() {
                 </SectionLabel>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "I did not begin with the slogan. I arrived at the standard by doing the work."
-                    : "这不是一句先想出来的口号，是一路做出来的标准。"}
+                    ? "Being good at the game did not answer whose work my life was building."
+                    : "很会赢，并不能回答我的生命究竟在为谁的作品积累。"}
                 </h2>
               </div>
               <p className="max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
                 {lang === "en"
-                  ? "The titles matter less than what each environment forced me to learn: how explicit models and tacit craft correct each other, how understanding becomes conviction, and how authorship keeps responsibility with the work."
-                  : "比职位更重要的，是每一段经历逼我学会了什么：显性的模型与隐性的手艺怎样互相修正，理解怎样变成确信，作者性又怎样让责任始终留在作品里。"}
+                  ? "I learned how to succeed inside schools and companies. The harder change was to put my best attention behind problems, standards, and work I had chosen—and accept responsibility for what happened next."
+                  : "我曾经很擅长在学校和公司里取得好结果。更难的变化，是把最好的注意力放到自己选择的问题、标准与作品上，并承担接下来发生的一切。"}
               </p>
             </div>
 
@@ -885,20 +790,20 @@ export default function Home() {
                 <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "My defining work is still in progress."
-                    : "我自己的代表作，也还在做。"}
+                    ? "I want to build a real academy."
+                    : "我想认真做一所真正的学院。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-[#5C574D] md:text-lg">
                 <p>
                   {lang === "en"
-                    ? "Superlinear is the institution I am building around one belief: people should have a real chance to make work whose value outlives the moment of making and clearly bears their judgment and craft."
-                    : "Superlinear是我围绕同一个信念建立的长期机构：让更多有专业积累的人，有机会把自己的判断和本事，做成在完成或首次发布以后仍继续创造价值、也清楚承载自己的作品。"}
+                    ? "Not merely a course, and not merely a community. I want people with professional depth to come here and turn their judgment into products, work, and ventures. Superlinear is the most important long-term work I have chosen—and it is still far from finished."
+                    : "它不是一门课，也不只是一个社区。我希望有专业积累的人来到这里以后，能把自己的判断变成作品、产品和事业。Superlinear是我选择长期做的、最重要的作品，也还远没有做完。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "Public work, structured learning, a year-round membership, and enterprise practice form one institution. Each gives the same ambition a different place to grow: open exchange, systematic training, sustained exposure to strong work, and contact with organizational reality."
-                    : "免费公共价值、系统训练、全年会员与企业实践，共同组成这所学院。它们让同一种追求在不同地方生长：开放交流、系统学习、持续接触好作品，以及进入组织现实。"}
+                    ? "The free community, AI Builders, the membership, and our enterprise programs each solve a different part of that problem. The pages below show what each one is responsible for—and what already exists."
+                    : "免费社区、AI Builders、会员与企业项目，分别为这件事解决不同的问题。下面这四部分，说清它们各自负责什么，也告诉你现在已经有什么。"}
                 </p>
               </div>
             </div>
@@ -921,8 +826,8 @@ export default function Home() {
                 </div>
                 <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
                   {lang === "en"
-                    ? "With Yage (Wang Yan), long-term teaching partner and technical authority for AI Builders."
-                    : "与鸭哥（王言），AI Builders长期核心教学伙伴与技术权威。"}
+                    ? "With Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at leading AI conferences such as CVPR, NeurIPS, and KDD—and my long-term teaching partner across AI Builders and the membership."
+                    : "与鸭哥（王言）。他是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD等AI顶会；也是AI Builders与会员内容的长期共同建设者。"}
                 </figcaption>
               </figure>
               <figure>
@@ -1022,15 +927,15 @@ export default function Home() {
                 </SectionLabel>
                 <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "I keep learning from people who have actually built the thing."
-                    : "我一直向真正把事情做出来的人学习。"}
+                    ? "I return to people whose work changed what others thought possible."
+                    : "我一直回到那些真正改变了“什么是可能”的人。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-zinc-400">
                 <p>
                   {lang === "en"
-                    ? "These conversations are a source of first-hand input. I care less about collecting a guest's conclusions than understanding how they formed a standard, where the work failed, and why it eventually held together."
-                    : "这些对话，是我持续获得一手信息的方式。比起收集嘉宾的结论，我更想知道：他的标准怎样形成，作品在哪里失败，又为什么最后能够成立。"}
+                    ? "I talk with them about technology, products, and companies, but also about the moments that changed a consequential choice: what they saw, why they were willing to bet, and how reality rewrote the answer. These conversations keep raising my own standard for good work."
+                    : "我与他们谈技术、产品和公司，也谈真正改变过选择的时刻：他们看见了什么，为什么愿意下注，现实又怎样改写答案。一次次这样的对话，也在抬高我对好作品的判断。"}
                 </p>
                 <p className="text-sm leading-7 text-zinc-500">
                   {lang === "en"

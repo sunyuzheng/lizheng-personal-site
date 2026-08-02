@@ -459,7 +459,7 @@ const copy = {
       "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. Yage is a long-term teaching partner and technical authority across AI Builders and the membership. Yuzheng's defining idea is MAKE WHAT LASTS: make work that remains useful after the first result and clearly bears its maker's distinctive judgment and craft. Such work may also enlarge what its maker can do next. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. Yage, a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at leading AI conferences such as CVPR, NeurIPS, and KDD, is the long-term teaching partner across AI Builders and the membership. Yuzheng's defining idea is MAKE WHAT LASTS: make work that remains useful after the first result and clearly bears its maker's distinctive judgment and craft. Such work may also enlarge what its maker can do next. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     brandLineLabel: "One line for the introduction",
     brandLine: "Superlinear Academy stands for one idea: MAKE WHAT LASTS.",
     headshotLabel: "1200 × 1200 headshot",
@@ -710,10 +710,10 @@ const copy = {
     pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他所代表的主张是：做出你的代表作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他提出并长期倡导的主张是：做出你的代表作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人；鸭哥作为长期核心教学伙伴与技术权威，参与AI Builders与会员内容建设。他所代表的主张是“做出你的代表作”：把判断和本事，做成完成以后继续创造价值、也清楚承载自己判断与手艺的作品；这样的作品，也可能继续成就作者。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人；鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD等AI顶会，并作为长期核心教学伙伴参与AI Builders与会员内容建设。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
     brandLine: "Superlinear Academy的主张是：做出你的代表作。",
     headshotLabel: "1200 × 1200头像",

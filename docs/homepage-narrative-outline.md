@@ -6,7 +6,7 @@ This file records the homepage's current narrative architecture. It is a page br
 
 A serious visitor should leave with one clear association:
 
-> Yuzheng Sun stands for `MAKE WHAT LASTS. / 做出你的代表作。` Superlinear Academy is the defining work he is building around that belief.
+> Yuzheng Sun named and publicly advocates `MAKE WHAT LASTS. / 做出你的代表作。` He places his own work under that standard and is building Superlinear Academy as the most important long-term work he is betting on.
 
 The homepage no longer introduces one personal thesis and later reveals a separate Superlinear slogan. The brand idea is the personal idea. Career, public judgment, conversations, books, products, and proof all help the visitor infer why Yuzheng has earned the right to stand behind it.
 
@@ -36,33 +36,32 @@ Chinese:
 
 > **做出你的代表作。**
 
-The supporting copy establishes the relationship directly: Superlinear Academy is Yuzheng's defining work and the institution he is building around this belief.
+The supporting copy establishes the relationship directly without awarding the result in advance: Superlinear Academy is Yuzheng's most important long-term wager and the institution he is building under this belief.
 
 The Acquired scene includes Yuzheng, Ben Gilbert, and David Rosenthal in full. Its role is quiet authority and peer context; it is not evidence that the belief is correct.
 
-### 2. Belief — name the distinction
+### 2. Belief — awaken the desire and set the horizon
 
-AI is making first versions cheaper across many kinds of digital work. That is a useful change. It also makes one distinction harder to ignore: output is plentiful; work carrying judgment, craft, authorship, and continued value is not.
+The page first names the fear underneath the idea: a person can be highly capable and still spend a life on work that never truly becomes theirs. The desired opposite is not merely “long-term thinking.” It is work that carries a particular way of seeing, acts on the world, and can return use, recognition, freedom, and a more ambitious next move to its maker.
 
-The homepage then gives the belief intellectual weight without inventing a second slogan or a numbered success method. Its asymmetrical layout reflects the actual relationships:
+Concrete people then establish the height of that possibility, but the homepage does not classify them into virtue cards. It names the work inseparable from each person: Jobs and Zhang Xiaolong's products, Messi's football, Nolan's films, Hinton's and Buffett's convictions surviving time, and Tsunekazu Nishioka's temple craft. They are not endorsements. Yuzheng's choice to honor their work reveals the standard he recognizes and invites the audience to want the same relationship between a life and its work.
 
-- a brief opening restores uncertainty and exploration: defining work may emerge from making, failure, and weak signals rather than begin with conviction;
-- **world models and scientific testing** try to make more of the understanding explicit and challengeable;
-- **craft** keeps updating overlapping causal and perceptual understanding where rules cannot contain the whole problem; the two modes translate and correct one another;
-- **conviction** is the bridge when internalized understanding has to bear the cost of action;
-- **responsible authorship** retains agency and accountability for the work's purpose, standards, compromises, and consequences;
-- **reality keeps testing; time gradually reveals**—neither is an infallible judge, but the maker cannot be the work's only witness.
+AI then makes the conflict immediate: first versions are becoming abundant; discovery, standards, craft, authorship, and work people keep choosing are not. The answer is to raise what one person or small group can responsibly bring into the world.
 
-These are not parallel pillars or a hidden production sequence. Building can produce understanding; conviction can begin a work or emerge from it; failure can change the model, the craft, and the work itself. Systems, institutions, maintenance, and distribution can be inputs or part of the work; compounding remains a possible result rather than a universal method.
+The homepage gives the belief intellectual weight without inventing a second slogan or a numbered success method. It compresses the full architecture into one relationship:
 
-### 3. Story — show where the standard came from
+> People shape work, and work shapes people. A defining work is not something one thinks right once; materials, masters, users, markets, and time answer it through version after version until it slowly becomes real.
 
-The career is presented as four formative chapters rather than a credential wall:
+World models, scientific testing, craft, conviction, authorship, distribution, and compounding remain part of the deeper thesis. They no longer appear as a grid of abstract concepts on the homepage. Building can produce understanding; conviction can begin a work or emerge from it; failure can change the maker and the work itself.
 
-- Cornell: look beneath visible results to causes, incentives, choices, and constraints.
-- Amazon and Meta: analysis matters when it changes the next decision.
-- Tencent and Statsig: judgment must travel through an organization and remain answerable to evidence.
-- Superlinear: turn understanding held by one person into work other people can use, test, and extend.
+### 3. Story — show why the wager is genuine
+
+The story does not prove the belief. It shows why Yuzheng means it, what he has placed at stake, and what capacity he brings to the work. The career is presented as four formative chapters rather than a credential wall:
+
+- Cornell, Amazon, and Meta: see the structure beneath a visible result, then make explanation answer to real users and decisions.
+- Tencent: make judgment travel through a 30-person team, incentives, standards, and responsibility.
+- 2022: after leading a 30-person team and repeatedly earning the highest performance rating, leave a visible management path and return to an IC role in the U.S.; the cost makes the choice legible without turning it into proof of greatness.
+- Statsig and Superlinear: keep consequential views answerable to evidence, then carry that discipline into a body of work of one's own.
 
 The titles matter as proof of environment. The lessons matter because they explain the present work.
 
@@ -74,7 +73,9 @@ The homepage does not maintain a gallery of supposedly timeless insights. Other 
 
 ### 5. Superlinear — make the belief institutional
 
-This is the page's main reveal. Superlinear is not a product catalogue attached to the personal brand. It is the defining work through which Yuzheng is attempting to make the belief real.
+This is the page's main reveal. Superlinear is not a product catalogue attached to the personal brand. It is the academy Yuzheng has chosen to build for the long term and the institution through which he is attempting to make the belief useful to other people. The heading is the plain sentence “I want to build a real academy,” not an already-completed claim or a dramatic self-description.
+
+The institutional ambition appears before the product map in ordinary language: help people with professional depth turn judgment into products, work, and ventures. The full range of social and commercial results belongs in the deeper brand thesis, not in a mission-statement list on the homepage.
 
 The four entries have distinct jobs:
 
@@ -85,9 +86,9 @@ The four entries have distinct jobs:
 
 These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; price and complete conversion arguments stay on the product sites.
 
-### 6. Conversations — show the quality of input and network
+### 6. Conversations — show whom Yuzheng chooses to honor
 
-Two hundred-plus public conversations show a sustained habit of learning from people who have built consequential things. Six selected guests demonstrate the range and quality of that network; the complete archive belongs on `/guests`.
+Two hundred-plus public conversations show a sustained habit of learning from people who have built consequential things. They range across technology, products, companies, and the moments that changed important choices: what a guest saw, why they were willing to bet, and how reality rewrote the answer. The archive is not retroactively forced into one new question framework. Six selected guests demonstrate the range and quality of the network; the complete archive belongs on `/guests`.
 
 `400K+` is reach, not proof that a judgment is correct. It stays subordinate to the quality of the people, questions, and work.
 
@@ -142,7 +143,7 @@ The page follows `show → frame → let the reader conclude`.
 - English remains the default language.
 - The brand command is the real `<h1>` in both languages.
 - The full Acquired image appears without zoom or cropping so Ben Gilbert and David Rosenthal remain visibly present.
-- The Superlinear section uses a real working image of Yuzheng and Yage and introduces Yage in language a non-technical visitor can understand.
+- The Superlinear section uses a real working image of Yuzheng and Yage and introduces Yage in language a non-technical visitor can understand. It calls Superlinear the most important long-term wager, never a self-awarded defining work.
 - The public community CTA points to `https://www.superlinear.academy`.
 - Chinese first mentions use `Stay Superlinear会员`; subsequent references may use `会员`. English uses `the Stay Superlinear membership` or `the membership`.
 - The homepage curates. Complete guest, book, content, membership, course, and collaboration arguments live on their dedicated pages.

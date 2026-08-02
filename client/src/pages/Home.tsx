@@ -24,108 +24,129 @@ import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 
-const method = {
+const waysOfKnowing = {
   en: [
     {
-      number: "01",
-      title: "Choose with judgment",
+      eyebrow: "EXPLICIT UNDERSTANDING",
+      title: "Build a world model.",
       detail:
-        "What is worth the effort, for whom, and what would count as useful?",
+        "Make as much of the causal model explicit as possible. Predict what should happen, then actively look for what would prove it wrong.",
     },
     {
-      number: "02",
-      title: "Make with craft",
+      eyebrow: "TACIT, RESULT-ANSWERABLE KNOWING",
+      title: "Develop craft.",
       detail:
-        "Carry the idea through technical depth, taste, patience, and revision.",
-    },
-    {
-      number: "03",
-      title: "Let reality answer",
-      detail:
-        "Put the work in front of users, constraints, consequences, and evidence.",
-    },
-    {
-      number: "04",
-      title: "Preserve what proves valuable",
-      detail:
-        "When it is worth keeping, leave something the next move can build on.",
+        "Keep updating the same understanding where rules run out. Practice, apprenticeship, comparison, and consequence turn models into feel—and feel back into better models.",
     },
   ],
   zh: [
     {
-      number: "01",
-      title: "看准",
-      detail: "什么值得投入、为谁做，怎样才算真的有用？",
+      eyebrow: "显性的理解",
+      title: "建立自己的世界模型。",
+      detail:
+        "尽可能把因果、激励与约束说清楚；做出预测，主动寻找能够推翻模型的证据。",
     },
     {
-      number: "02",
-      title: "做成",
-      detail: "用技术、手艺、品位和耐心，把想法一路做到成立。",
-    },
-    {
-      number: "03",
-      title: "交给现实",
-      detail: "让用户、约束、后果和证据回答，也允许它们改变判断。",
-    },
-    {
-      number: "04",
-      title: "留下",
-      detail: "在值得时，把有效部分做成下一步可以继续使用的东西。",
+      eyebrow: "长在身上、又对结果负责的理解",
+      title: "让知识长成手艺。",
+      detail:
+        "在规则装不下的复杂性中，继续更新同一份理解。真实问题、师承、比较与后果，让模型长成体感，也让体感反过来修正模型。",
     },
   ],
+};
+
+const convictionAndAuthorship = {
+  en: {
+    conviction: {
+      eyebrow: "CONVICTION",
+      title: "When understanding accepts the cost of action.",
+      detail:
+        "A borrowed idea can be repeated without changing a choice. Once understanding is internalized enough to carry a stake, it can support action before certainty arrives—and still change when better evidence appears.",
+    },
+    authorship: {
+      eyebrow: "RESPONSIBLE AUTHORSHIP",
+      title: "Stay responsible for what the work becomes.",
+      detail:
+        "Authorship begins with defining what should exist, whom it should serve, which standards matter, and what evidence should change it. It can belong to a person, a team, or an institution; responsibility cannot disappear inside the collaboration.",
+    },
+    test: {
+      title: "Reality keeps testing. Time gradually reveals.",
+      detail:
+        "Neither is an infallible judge. But a maker cannot be the work's only witness. What people keep using, trusting, adapting, and remembering shows whether it is still alive.",
+    },
+  },
+  zh: {
+    conviction: {
+      eyebrow: "确信",
+      title: "当理解开始承担行动的代价。",
+      detail:
+        "借来的观点可以说得漂亮，却不改变选择。理解真正被内化以后，才可能在确定性到来之前支撑行动，也仍然愿意被更好的证据改变。",
+    },
+    authorship: {
+      eyebrow: "负责任的作者性",
+      title: "从定义问题开始，对作品负责。",
+      detail:
+        "什么值得存在、服务谁、坚持什么标准、因为什么而修改，都属于作者性。作品可以由个人、团队或机构完成；责任不能在协作中消失。",
+    },
+    test: {
+      title: "现实持续检验，时间逐渐显露。",
+      detail:
+        "它们都不是无误的终审；但作者不能成为作品唯一的证人。人们仍在使用、信任、改进和记住什么，会逐渐显露作品是否还活着。",
+    },
+  },
 };
 
 const careerChapters = {
   en: [
     {
       marker: "CORNELL · ECONOMICS",
-      title: "Look beneath the visible result.",
+      title: "Make the invisible model explicit.",
       detail:
-        "Economics trained me to ask about causes, choices, incentives, and constraints—not to mistake a correlation or a loud story for what actually changed.",
+        "Economics trained me to ask about causes, choices, incentives, and constraints, then make a prediction specific enough to challenge—not mistake correlation or a loud story for understanding.",
     },
     {
       marker: "AMAZON · META",
-      title: "A model matters when it changes the next decision.",
+      title: "Learn what the model cannot hold.",
       detail:
-        "Inside large technology products, analysis was not complete when the chart was right. It was complete when the signal changed allocation, prioritization, or design.",
+        "Inside large technology products, a correct model still met users, interfaces, incentives, timing, and imperfect information. Some consequential judgment could only be earned in the work.",
     },
     {
       marker: "TENCENT · STATSIG",
-      title: "Good judgment has to travel—and remain testable.",
+      title: "Let conviction travel without becoming dogma.",
       detail:
-        "Leading a 30-person data and AI team taught me that one person seeing clearly was not enough. At Statsig, experiments made conviction answerable to evidence built into the product workflow.",
+        "Leading a 30-person data and AI team taught me that one person seeing clearly was not enough. At Statsig, experiments kept consequential views answerable to evidence built into the workflow.",
     },
     {
       marker: "SUPERLINEAR · NOW",
-      title: "Turn what is in one head into work other people can use.",
+      title: "Take authorship of a body of work.",
       detail:
-        "Courses, community, books, tools, and public conversations are my attempt to make judgment inspectable, teachable, challengeable, and able to keep working without me in the room.",
+        "Courses, community, books, tools, and public conversations are my attempt to remain responsible for one coherent body of work: what it is for, how it should evolve, and whether it remains useful without me in the room.",
     },
   ],
   zh: [
     {
       marker: "康奈尔 · 经济学",
-      title: "先看清结果背后的因果。",
+      title: "把看不见的模型说清楚。",
       detail:
-        "经济学训练我追问选择、激励与约束，不把相关性、热闹或一个好听的故事，当成真正发生的变化。",
+        "经济学训练我追问因果、选择、激励与约束，再做出足够具体、可以被挑战的预测；不把相关性、热闹或一个好听的故事当成理解。",
     },
     {
       marker: "AMAZON · META",
-      title: "一个模型，只有改变下一步决策才算完成。",
+      title: "看见模型装不下的复杂性。",
       detail:
-        "在大型科技产品里，图表做对还不够；一个信号必须真正改变资源分配、优先级或产品设计。",
+        "在大型科技产品里，正确的模型还要穿过用户、界面、激励、时机与不完整信息。有些关键判断，只能在真实工作里长出来。",
     },
     {
       marker: "腾讯 · STATSIG",
-      title: "好的判断要能穿过组织，也要经得起推翻。",
+      title: "让确信穿过组织，又不变成教条。",
       detail:
-        "在腾讯带30人数据与AI团队，让我看到一个人想明白远远不够；到了Statsig，实验把观点是否成立写进了产品工作流。",
+        "在腾讯带30人数据与AI团队，让我看到一个人想明白远远不够；到了Statsig，实验让重要判断持续对产品工作流里的证据负责。",
     },
     {
       marker: "SUPERLINEAR · 现在",
-      title: "把一个人脑中的理解，做成别人可以使用的东西。",
+      title: "对一整套作品承担作者责任。",
       detail:
-        "课程、社区、书、工具与公开对话，都是我把判断变得可检验、可学习、可质疑，并让它离开我以后继续工作的尝试。",
+        "课程、社区、书、工具与公开对话，是我长期负责的一整套作品：它为什么存在、怎样演进，以及离开我以后是否仍然有用。",
     },
   ],
 };
@@ -577,8 +598,8 @@ export default function Home() {
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
                 {lang === "en"
-                  ? "I believe the best work keeps creating value after the first effort—and clearly bears the judgment and craft of the person who made it. Such work may also enlarge what its maker can do next. Superlinear Academy is the defining work I am building around that belief."
-                  : "我相信，最好的工作会在完成以后继续创造价值，也清楚承载做出它的人的判断与手艺。这样的作品，也可能继续成就作者。Superlinear Academy是我正在做的代表作，也是我为更多人追求自己的代表作建立的长期机构。"}
+                  ? "I believe the best work keeps creating value beyond the moment it is made—and clearly bears the judgment and craft of the person who made it. Such work may also enlarge what its maker can do next. Superlinear Academy is the defining work I am building around that belief."
+                  : "我相信，最好的作品，不会随着制作与发布结束；它会继续创造价值，也清楚承载做出它的人的判断与手艺。这样的作品，也可能继续成就作者。Superlinear Academy是我正在做的代表作，也是我为更多人追求自己的代表作建立的长期机构。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -698,36 +719,86 @@ export default function Home() {
                 <p>
                   {lang === "en"
                     ? "AI is making first versions cheaper across much of digital work. That is a gift: more people can turn an idea into something real. It also makes one distinction harder to ignore. Output is plentiful. Work that carries judgment, craft, authorship, and remains worth choosing is not."
-                    : "AI正在让许多数字工作的第一版越来越便宜。这是一份礼物：更多人可以把想法做成真的。它也让一个区别变得越来越无法忽视——产出很多，能在第一次投入后继续创造价值、又清楚承载作者判断与手艺的作品，仍然很少。"}
+                    : "AI正在让许多数字工作的第一版越来越便宜。这是一份礼物：更多人可以把想法做成真的。它也让一个区别变得越来越无法忽视——产出很多，完成或首次发布以后仍继续创造价值、又清楚承载作者判断与手艺的作品，仍然很少。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "Lasting does not mean immortal, famous, or endlessly scalable. It means the work solves something real, can withstand use and change, and keeps creating value beyond its first moment. In return, it can build its maker's capability, reputation, freedom, and next opportunity."
-                    : "留下来，不等于永恒、爆红或无限规模化。它意味着作品解决真实问题，经得起使用和变化，在第一次完成以后继续创造价值；而当这些价值被现实认可时，也可能为作者带回更深的能力、信誉、自由和下一次机会。"}
+                    ? "A defining work does not always begin with conviction. Often you enter the fog, make something, and use the gap between expectation and result to learn what the problem actually is—and what you are willing to stand behind."
+                    : "代表作也不总是从确信开始。人常常要先进入迷雾、动手、撞到失败，再从预期与结果的差距里，逐渐知道问题究竟是什么，自己又愿意为什么负责。"}
                 </p>
               </div>
             </div>
 
-            <div className="mt-14 grid border-y border-[#D4D0C7] sm:grid-cols-2 lg:grid-cols-4">
-              {method[lang].map((item, index) => (
-                <article
-                  key={item.number}
-                  className={cn(
-                    "border-[#D4D0C7] py-6 sm:px-5 lg:py-8",
-                    index > 0 && "border-t lg:border-l lg:border-t-0",
-                    index % 2 === 1 && "sm:border-l",
-                    index === 1 && "sm:border-t-0"
-                  )}
-                >
-                  <div className="font-mono text-xs text-[#9A673D]">
-                    {item.number}
-                  </div>
-                  <h3 className="mt-3 text-lg font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#6E685D]">
-                    {item.detail}
+            <div className="mt-14 border-y border-[#D4D0C7]">
+              <div className="grid lg:grid-cols-[0.34fr_0.66fr]">
+                <div className="py-7 lg:border-r lg:border-[#D4D0C7] lg:pr-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9A673D]">
+                    {lang === "en"
+                      ? "TWO MODES, ONE UNDERSTANDING"
+                      : "同一份理解，两种生长方式"}
+                  </p>
+                  <p className="mt-3 max-w-sm text-sm leading-7 text-[#6E685D]">
+                    {lang === "en"
+                      ? "Some understanding can be stated and tested; some is earned inside the complexity of doing. They overlap, translate, and correct each other."
+                      : "有些理解可以被说清、预测和检验；有些只能在真实复杂性中长出来。两者彼此渗透、转译，也彼此修正。"}
+                  </p>
+                </div>
+                <div className="grid sm:grid-cols-2">
+                  {waysOfKnowing[lang].map((item, index) => (
+                    <article
+                      key={item.eyebrow}
+                      className={cn(
+                        "border-[#D4D0C7] py-7 lg:px-8",
+                        index > 0 && "border-t sm:border-l sm:border-t-0"
+                      )}
+                    >
+                      <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
+                        {item.eyebrow}
+                      </p>
+                      <h3 className="mt-3 text-xl font-semibold leading-8">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-7 text-[#6E685D]">
+                        {item.detail}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid border-t border-[#D4D0C7] lg:grid-cols-[0.42fr_0.58fr]">
+                <article className="py-7 lg:border-r lg:border-[#D4D0C7] lg:pr-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
+                    {convictionAndAuthorship[lang].conviction.eyebrow}
+                  </p>
+                  <h3 className="mt-3 text-xl font-semibold leading-8">
+                    {convictionAndAuthorship[lang].conviction.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-[#6E685D]">
+                    {convictionAndAuthorship[lang].conviction.detail}
                   </p>
                 </article>
-              ))}
+                <article className="border-t border-[#D4D0C7] py-7 lg:border-t-0 lg:pl-8">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#9A673D]">
+                    {convictionAndAuthorship[lang].authorship.eyebrow}
+                  </p>
+                  <h3 className="mt-3 text-xl font-semibold leading-8">
+                    {convictionAndAuthorship[lang].authorship.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-[#6E685D]">
+                    {convictionAndAuthorship[lang].authorship.detail}
+                  </p>
+                </article>
+              </div>
+
+              <div className="grid border-t border-[#D4D0C7] py-7 lg:grid-cols-[0.42fr_0.58fr] lg:gap-8">
+                <h3 className="text-xl font-semibold leading-8">
+                  {convictionAndAuthorship[lang].test.title}
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-[#6E685D] lg:mt-0">
+                  {convictionAndAuthorship[lang].test.detail}
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -750,8 +821,8 @@ export default function Home() {
               </div>
               <p className="max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
                 {lang === "en"
-                  ? "The titles are less important than what each environment forced me to learn: how a view becomes a decision, how a decision travels through an organization, and how useful judgment can take a form other people can keep using."
-                  : "比职位更重要的，是每一段经历逼我学会了什么：一个观点怎样变成决策，决策怎样穿过组织，有用的判断又怎样被做成别人可以继续使用的东西。"}
+                  ? "The titles matter less than what each environment forced me to learn: how explicit models and tacit craft correct each other, how understanding becomes conviction, and how authorship keeps responsibility with the work."
+                  : "比职位更重要的，是每一段经历逼我学会了什么：显性的模型与隐性的手艺怎样互相修正，理解怎样变成确信，作者性又怎样让责任始终留在作品里。"}
               </p>
             </div>
 
@@ -821,8 +892,8 @@ export default function Home() {
               <div className="space-y-4 text-base leading-8 text-[#5C574D] md:text-lg">
                 <p>
                   {lang === "en"
-                    ? "Superlinear is the institution I am building around one belief: people should have a real chance to make work that keeps creating value and clearly bears their judgment and craft."
-                    : "Superlinear是我围绕同一个信念建立的长期机构：让更多有专业积累的人，有机会把自己的判断和本事，做成在第一次投入后仍继续创造价值、也清楚承载自己的作品。"}
+                    ? "Superlinear is the institution I am building around one belief: people should have a real chance to make work whose value outlives the moment of making and clearly bears their judgment and craft."
+                    : "Superlinear是我围绕同一个信念建立的长期机构：让更多有专业积累的人，有机会把自己的判断和本事，做成在完成或首次发布以后仍继续创造价值、也清楚承载自己的作品。"}
                 </p>
                 <p>
                   {lang === "en"

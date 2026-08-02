@@ -21,7 +21,7 @@ from reportlab.pdfgen import canvas
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "client" / "public"
-OUTPUT = ROOT / "output" / "pdf" / "课代表立正_播客与视频访谈资料_2026-07.pdf"
+OUTPUT = PUBLIC / "collab" / "podcast-kit-zh.pdf"
 IMAGE_CACHE = ROOT / "tmp" / "pdfs" / "image-cache"
 TULONG_SCREENSHOT = ROOT / "scripts" / "assets" / "tulong-xiaohongshu-performance.png"
 
@@ -52,7 +52,8 @@ FONT_MONO_BOLD = "Courier-Bold"
 URL_COLLAB = "https://www.lizheng.ai/zh/collab/creators"
 URL_ABOUT = "https://www.lizheng.ai/zh/about"
 URL_HEADSHOT = "https://www.lizheng.ai/yuzheng-sun-headshot.jpg"
-URL_GROWTH = "https://youtu.be/D_-hU1O7IVw"
+URL_CHATGPT = "https://www.superlinear.academy/c/ai-resources/chatgpt"
+URL_PUBLIC_TRAINING = "https://www.superlinear.academy/c/public"
 URL_KOJI = "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897"
 URL_TULONG_BILI = "https://www.bilibili.com/video/BV1krM46BEpn"
 URL_TULONG_YT = "https://youtu.be/vd_oYgwQSBM"
@@ -252,7 +253,7 @@ def draw_footer(c: canvas.Canvas, page: int, dark: bool = False) -> None:
     color = Color(1, 1, 1, alpha=0.42) if dark else MUTED
     c.setFillColor(color)
     c.setFont(FONT_REGULAR, 7.2)
-    c.drawString(M, 24, "课代表立正 · 播客与视频访谈资料 · 2026.07")
+    c.drawString(M, 24, "课代表立正 · 播客与视频访谈资料 · 2026.08")
     c.setFont(FONT_MONO, 7.2)
     c.drawRightString(W - M, 24, f"{page:02d} / 06")
 
@@ -314,7 +315,7 @@ def draw_cover(c: canvas.Canvas) -> None:
         "康奈尔大学经济学博士",
         "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
         "200+场公开对谈 · 截至2026.07",
-        "小红书 · YouTube · B站40万+关注者 · 截至2026.07",
+        "全网40万+关注者 · 三平台各10万+ · 截至2026.07",
     ]
     for index, text in enumerate(proofs):
         col = index % 2
@@ -346,13 +347,16 @@ def draw_cover(c: canvas.Canvas) -> None:
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.8)
     c.drawString(M + 28, image_y + 25, "Significance Summit")
+    c.setFillColor(WHITE)
+    c.setFont(FONT_BOLD, 10.5)
+    c.drawRightString(W - M, 94, "做出你的代表作。")
+    c.setFillColor(AMBER)
+    c.setFont(FONT_MONO_BOLD, 7.2)
+    c.drawRightString(W - M, 77, "MAKE WHAT LASTS. · lizheng.ai")
+    c.linkURL("https://www.lizheng.ai", (W - 200, 66, W - M, 104), relative=0)
     c.setFillColor(Color(1, 1, 1, alpha=0.52))
     c.setFont(FONT_MONO, 7.5)
-    c.drawString(M, 75, "SEATTLE · MANDARIN / ENGLISH · REMOTE / IN PERSON")
-    c.setFillColor(AMBER)
-    c.setFont(FONT_BOLD, 8.5)
-    c.drawRightString(W - M, 75, "lizheng.ai")
-    c.linkURL("https://www.lizheng.ai", (W - 105, 65, W - M, 84), relative=0)
+    c.drawString(M, 77, "SEATTLE · MANDARIN / ENGLISH · REMOTE / IN PERSON")
 
 
 def draw_background_page(c: canvas.Canvas, page: int) -> None:
@@ -364,7 +368,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(M, H - 91, "这组经历，通常不在同一个嘉宾身上出现。")
     draw_paragraph(
         c,
-        "我既做过研究，也在中美大厂和创业公司一线做过业务、产品，也带过团队。现在我关心的是：AI让第一版越来越容易以后，人和公司怎样判断什么值得做，再把它做成真正属于自己的作品。同一个问题，我能从机制讲到现场，也愿意把做错过的判断摆出来。",
+        "经济学让我先问机制和激励；Amazon、Meta、腾讯和Statsig让我在产品、组织和创业现场承担判断。此后的课程、企业项目和公开对谈，又让我看到同一个问题在不同人身上怎样成立、怎样失败。",
         M,
         H - 122,
         W - 2 * M,
@@ -412,61 +416,66 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     c.setFont(FONT_REGULAR, 7.5)
     c.drawRightString(W - M, portrait_y - 13, "现居西雅图")
 
-    box_y, box_h = 248, 112
+    box_y, box_h = 117, 245
     c.setFillColor(INK)
     c.roundRect(M, box_y, W - 2 * M, box_h, 12, fill=1, stroke=0)
     draw_label(
         c,
-        "STRONG OPINIONS, WEAKLY HELD",
+        "2023.02 · GPT-4发布前 · 一条可检查的判断",
         M + 18,
         box_y + box_h - 26,
         color=AMBER,
+        font=FONT_BOLD,
         size=8,
     )
     draw_paragraph(
         c,
-        "观点要讲得足够明确，理由和反方也都摆出来。一个好问题真能改变我的判断，我会很高兴。",
+        "“ChatGPT是‘自然语言计算机’，是人类调用数据与算力的近乎完美的形态。”",
         M + 18,
-        box_y + box_h - 51,
-        352,
+        box_y + box_h - 55,
+        375,
         font=FONT_BOLD,
-        size=11,
+        size=12,
         leading=18,
         color=WHITE,
     )
-    draw_qr(c, URL_GROWTH, W - M - 70, box_y + 20, 55)
+    draw_paragraph(
+        c,
+        "同一篇文章还给出“每个人的数字学徒”“把编程提效十倍”“替我打工”等两年推演，并为每项标出概率。后来的复盘也保留了判断错误。",
+        M + 18,
+        box_y + box_h - 116,
+        375,
+        size=8.6,
+        leading=14,
+        color=SOFT_WHITE,
+    )
+    draw_qr(c, URL_CHATGPT, W - M - 70, box_y + 131, 55)
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.5)
-    c.drawRightString(W - M - 82, box_y + 21, "Growth Mindset相关视频")
-    c.linkURL(URL_GROWTH, (M, box_y, W - M, box_y + box_h), relative=0)
+    c.drawRightString(W - M - 82, box_y + 134, "扫码读原文与复盘")
+    c.linkURL(URL_CHATGPT, (M + 10, box_y + 98, W - M, box_y + box_h), relative=0)
 
-    draw_label(c, "三个常聊方向", M, 204, color=AMBER_DARK, font=FONT_BOLD)
-    topics = [
-        ("01", "AI怎样改变工作的价值"),
-        ("02", "公司怎样知道判断对不对"),
-        ("03", "从完成任务，到做出代表作"),
-    ]
-    gap = 9
-    card_w = (W - 2 * M - 2 * gap) / 3
-    for index, (number, title) in enumerate(topics):
-        x = M + index * (card_w + gap)
-        c.setFillColor(WHITE)
-        c.setStrokeColor(LINE_LIGHT)
-        c.roundRect(x, 102, card_w, 82, 9, fill=1, stroke=1)
-        c.setFillColor(AMBER_DARK)
-        c.setFont(FONT_MONO_BOLD, 8)
-        c.drawString(x + 12, 161, number)
-        draw_paragraph(
-            c,
-            title,
-            x + 12,
-            140,
-            card_w - 24,
-            font=FONT_BOLD,
-            size=10,
-            leading=16,
-            color=INK,
-        )
+    c.setStrokeColor(Color(1, 1, 1, alpha=0.14))
+    c.line(M + 18, box_y + 74, W - M - 18, box_y + 74)
+    draw_label(
+        c,
+        "STRONG OPINIONS, WEAKLY HELD",
+        M + 18,
+        box_y + 52,
+        color=AMBER,
+        size=7.7,
+    )
+    draw_paragraph(
+        c,
+        "观点讲清，证据也摆上桌；一个好问题真能改变我的判断，我会很高兴。",
+        M + 18,
+        box_y + 29,
+        W - 2 * M - 36,
+        font=FONT_BOLD,
+        size=9.6,
+        leading=14,
+        color=WHITE,
+    )
     draw_footer(c, page)
 
 
@@ -698,73 +707,101 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "04 / EDITORIAL DIRECTIONS", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "为什么AI越强，代表作越重要？")
+    c.drawString(M, H - 91, "三个方向，选一个问题聊透。")
     c.setFillColor(BODY)
     c.setFont(FONT_REGULAR, 10)
-    c.drawString(M, H - 118, "普通产出会越来越多；真正稀缺的，是你选择了什么，最后又做成了什么。")
+    c.drawString(M, H - 118, "母题提供入口；真正的节目，从主持人的观众和问题出发。")
 
-    questions = [
-        "AI让每个人都能快速做出第一版，为什么真正能代表一个人的作品反而更稀缺？",
-        "如果每天都在高效交付，却没有一件东西真正属于自己，职业价值最后沉淀在哪里？",
-        "追求代表作，会不会把人带回完美主义？怎样让作品尽早遇到现实？",
-        "Amazon、Meta、腾讯和Statsig通常怎样做判断，又怎样把自己带偏？",
-        "回头看过去公开做过的AI判断，哪些说对了，哪些现在需要重新判断？",
+    topics = [
+        (
+            "方向一",
+            "做出你的代表作：AI把第一版变便宜之后，什么还能代表你？",
+            "从产品、系统、内容和职业工作谈判断、craft、作者性与长期价值。",
+            "适合：职业、个人成长、创作者与泛科技节目",
+        ),
+        (
+            "方向二",
+            "把2023年以来的公开判断摊开对答案",
+            "哪些说对了，哪些看错了节奏、公司或采用路径；当时为什么这样判断，后来又怎样修正。",
+            "适合：AI、科技、投资与趋势节目",
+        ),
+        (
+            "方向三",
+            "AI到底怎样进入真实工作",
+            "为什么“会用工具”和“能把复杂事情做成”是两种能力；个人与组织分别卡在哪里。",
+            "适合：产品、管理、企业与技术节目",
+        ),
     ]
-    y = 670
-    for index, question in enumerate(questions, 1):
+    card_y = [568, 431, 294]
+    card_h = 119
+    for index, ((label, title, detail, fit), y) in enumerate(zip(topics, card_y), 1):
+        c.setFillColor(WHITE)
         c.setStrokeColor(LINE_LIGHT)
-        c.line(M, y - 15, W - M, y - 15)
-        c.setFillColor(AMBER_DARK)
-        c.setFont(FONT_MONO_BOLD, 9)
-        c.drawString(M, y - 42, f"{index:02d}")
+        c.roundRect(M, y, W - 2 * M, card_h, 11, fill=1, stroke=1)
+        draw_label(c, label, M + 16, y + card_h - 24, color=AMBER_DARK, font=FONT_BOLD)
+        title_bottom = draw_paragraph(
+            c,
+            title,
+            M + 16,
+            y + card_h - 48,
+            W - 2 * M - 32,
+            font=FONT_BOLD,
+            size=12.5,
+            leading=17,
+            color=INK,
+            max_lines=2,
+        )
         draw_paragraph(
             c,
-            question,
-            M + 38,
-            y - 36,
-            W - 2 * M - 38,
-            font=FONT_BOLD,
-            size=13,
-            leading=20,
-            color=INK,
+            detail,
+            M + 16,
+            title_bottom - 4,
+            W - 2 * M - 32,
+            size=8.6,
+            leading=13,
+            color=BODY,
+            max_lines=2,
         )
-        y -= 82
+        c.setFillColor(AMBER_DARK)
+        c.setFont(FONT_BOLD, 7.6)
+        c.drawString(M + 16, y + 14, fit)
 
+    proof_y, proof_h = 68, 202
     c.setFillColor(INK)
-    c.roundRect(M, 126, W - 2 * M, 132, 12, fill=1, stroke=0)
-    draw_label(c, "做客记录", M + 16, 229, color=AMBER, font=FONT_BOLD)
+    c.roundRect(M, proof_y, W - 2 * M, proof_h, 12, fill=1, stroke=0)
+    draw_label(c, "这些不是空想", M + 16, proof_y + proof_h - 26, color=AMBER, font=FONT_BOLD)
     c.setFillColor(WHITE)
-    c.setFont(FONT_BOLD, 17)
-    c.drawString(M + 16, 199, "目前核实到21档节目 · 23期")
-    draw_paragraph(
-        c,
-        "硅谷101 · What’s Next科技早知道 · 十字路口Crossing · 屠龙大实话 · INDIGO TALK · 牛油果烤面包 · AI炼金术 · 创见",
-        M + 16,
-        173,
-        350,
-        size=8.5,
-        leading=14,
-        color=SOFT_WHITE,
-    )
-    c.setFillColor(AMBER)
-    c.setFont(FONT_BOLD, 8)
-    c.drawString(M + 16, 139, "INDIGO TALK与The Build Log均再次邀请")
-    draw_qr(c, URL_COLLAB, W - M - 72, 151, 58)
-    c.setFillColor(SOFT_WHITE)
-    c.setFont(FONT_REGULAR, 7.2)
-    c.drawRightString(W - M - 86, 139, "查看完整清单")
-    c.linkURL(URL_COLLAB, (W - M - 175, 130, W - M - 82, 150), relative=0)
+    c.setFont(FONT_BOLD, 15)
+    c.drawString(M + 16, proof_y + proof_h - 53, "长期教学、企业现场与公开对话，持续给这些问题提供样本。")
 
-    c.setFillColor(HexColor("#E7E2D8"))
-    c.roundRect(M, 68, W - 2 * M, 42, 9, fill=1, stroke=0)
-    c.setFillColor(AMBER_DARK)
-    c.setFont(FONT_BOLD, 8.5)
-    c.drawString(M + 14, 91, "我也坐过桌子的另一边")
-    c.setFillColor(BODY)
+    proof_metrics = [
+        ("两年半·13期", "AI Builders持续迭代"),
+        ("3,000+", "付费学员"),
+        ("5.0/5", "82份Maven评分"),
+    ]
+    metric_y = proof_y + 77
+    metric_w = 126
+    for index, (value, label) in enumerate(proof_metrics):
+        x = M + 16 + index * (metric_w + 8)
+        c.setFillColor(NAVY_2)
+        c.setStrokeColor(Color(1, 1, 1, alpha=0.13))
+        c.roundRect(x, metric_y, metric_w, 58, 8, fill=1, stroke=1)
+        c.setFillColor(WHITE)
+        c.setFont(FONT_BOLD, 13 if index == 0 else 17)
+        c.drawString(x + 10, metric_y + 33, value)
+        c.setFillColor(SOFT_WHITE)
+        c.setFont(FONT_REGULAR, 7.3)
+        c.drawString(x + 10, metric_y + 14, label)
+
+    draw_qr(c, URL_PUBLIC_TRAINING, W - M - 58, proof_y + 78, 46)
+    c.setFillColor(WHITE)
+    c.setFont(FONT_BOLD, 8.2)
+    c.drawString(M + 16, proof_y + 48, "企业现场：腾讯 · 小红书 · 美团 · DoorDash；三场培训实录公开可看")
+    c.linkURL(URL_PUBLIC_TRAINING, (M + 12, proof_y + 36, W - M - 72, proof_y + 61), relative=0)
+    c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.8)
-    c.drawString(M + 143, 91, "刘嘉教授：YouTube剪辑版13万+观看；B站完整版2小时53分")
-    c.linkURL(URL_LIU_JIA_YT, (M + 140, 80, M + 360, 104), relative=0)
-    c.linkURL(URL_LIU_JIA_BILI, (M + 360, 80, W - M, 104), relative=0)
+    c.drawString(M + 16, proof_y + 25, "主持样本：与刘嘉教授近3小时对谈；YouTube剪辑版13万+观看")
+    c.linkURL(URL_LIU_JIA_YT, (M + 12, proof_y + 13, W - M - 72, proof_y + 36), relative=0)
     draw_footer(c, page)
 
 

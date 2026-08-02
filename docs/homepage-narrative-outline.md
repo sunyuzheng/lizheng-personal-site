@@ -44,13 +44,16 @@ The Acquired scene includes Yuzheng, Ben Gilbert, and David Rosenthal in full. I
 
 AI is making first versions cheaper across many kinds of digital work. That is a useful change. It also makes one distinction harder to ignore: output is plentiful; work carrying judgment, craft, authorship, and continued value is not.
 
-The homepage gives the belief one compact practice loop:
+The homepage then gives the belief intellectual weight without inventing a second slogan or a numbered success method. Its asymmetrical layout reflects the actual relationships:
 
-> **Choose with judgment → make with craft → let reality answer → preserve what proves valuable**
->
-> **看准 → 做成 → 交给现实 → 留下**
+- a brief opening restores uncertainty and exploration: defining work may emerge from making, failure, and weak signals rather than begin with conviction;
+- **world models and scientific testing** try to make more of the understanding explicit and challengeable;
+- **craft** keeps updating overlapping causal and perceptual understanding where rules cannot contain the whole problem; the two modes translate and correct one another;
+- **conviction** is the bridge when internalized understanding has to bear the cost of action;
+- **responsible authorship** retains agency and accountability for the work's purpose, standards, compromises, and consequences;
+- **reality keeps testing; time gradually reveals**—neither is an infallible judge, but the maker cannot be the work's only witness.
 
-This is iterative, not a fixed production line. Not all valuable work must become a reusable asset, and not everything preserved will compound. The purpose is to describe Yuzheng's discipline without turning it into a universal law.
+These are not parallel pillars or a hidden production sequence. Building can produce understanding; conviction can begin a work or emerge from it; failure can change the model, the craft, and the work itself. Systems, institutions, maintenance, and distribution can be inputs or part of the work; compounding remains a possible result rather than a universal method.
 
 ### 3. Story — show where the standard came from
 

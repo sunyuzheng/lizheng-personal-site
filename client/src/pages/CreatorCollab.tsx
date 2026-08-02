@@ -453,6 +453,7 @@ const copy = {
     kitTitle: "A producer can build the introduction from this page.",
     kitIntro:
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
+    pdfCta: "Download the six-page Chinese guest kit",
     shortBioLabel: "Short bio",
     shortBio:
       "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
@@ -503,7 +504,7 @@ const copy = {
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
       "200+场公开对谈 · 2026.07",
-      "小红书 · YouTube · B站40万+关注者 · 2026.07",
+      "小红书 · YouTube · B站 · 全网40万+关注者 · 2026.07",
     ],
     questionCta: "先看两个合作案例",
     kitCta: "查看嘉宾资料",
@@ -706,6 +707,7 @@ const copy = {
     kitEyebrow: "嘉宾资料",
     kitTitle: "做节目介绍需要的资料，都在这里。",
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
+    pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
       "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他所代表的主张是：做出你的代表作。",
@@ -1234,6 +1236,15 @@ export default function CreatorCollab() {
                   <p className="mt-4 text-sm leading-7 text-[#5C574D]">
                     {t.kitIntro}
                   </p>
+                  <a
+                    href="/collab/podcast-kit-zh.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 border border-[#C8BDAE] bg-white/55 px-4 py-3 text-sm font-semibold text-[#743B13] transition hover:border-[#A88E72] hover:bg-white"
+                  >
+                    <Download className="h-4 w-4" />
+                    {t.pdfCta}
+                  </a>
                   <img
                     src="/yuzheng-sun-headshot.jpg"
                     alt={lang === "en" ? "Yuzheng Sun" : "孙煜征（课代表立正）"}

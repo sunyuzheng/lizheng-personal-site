@@ -4,7 +4,7 @@ The personal website and public profile of Yuzheng Sun (孙煜征 / 课代表立
 
 The site is organized around one defining idea shared by Yuzheng and Superlinear Academy: **MAKE WHAT LASTS. / 做出你的代表作。** Yuzheng is the idea's author, practitioner, and public representative. Superlinear is his defining work in progress and the institution he is building so more people can pursue work of their own.
 
-Judgment, craft, reality, and what deserves to be preserved explain how Yuzheng practices that belief. [AI Builders](https://ai-builders.com), the [Stay Superlinear membership](https://stay.superlinear.academy), enterprise programs, books, tools, and public conversations show different parts of the work; they are not separate personal themes or competing homepages. The canonical meaning and use hierarchy live in `course-marketing-system/00_strategy/superlinear-brand-platform.md`.
+The site connects that belief to the intellectual foundations Yuzheng has actually developed and taught: interpenetrating world models and tacit but result-answerable craft; conviction when understanding has to bear the cost of action; and responsible authorship over the work's standards and consequences. [AI Builders](https://ai-builders.com), the [Stay Superlinear membership](https://stay.superlinear.academy), enterprise programs, books, tools, and public conversations show different parts of the work; they are not separate personal themes or competing homepages. The canonical meaning and use hierarchy live in `course-marketing-system/00_strategy/superlinear-brand-platform.md`.
 
 **Live site:** [www.lizheng.ai](https://www.lizheng.ai)
 

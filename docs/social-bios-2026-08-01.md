@@ -1,10 +1,26 @@
 # Social Profiles — Ready To Paste
 
-**Status:** local review draft · 2026-08-01
+**Status:** approved adapter set · partial platform rollout verified 2026-08-02
 
 **Owner inputs:** `yuzheng-profile/BIOS.md`, `THESIS.md`, `EVIDENCE.md`, and `facts.json`
 
 The profiles share one first memory, then adapt proof and invitation to the job of each platform. They do not all repeat the same paragraph.
+
+## 2026-08-02 rollout record
+
+Published and verified on the public profile:
+
+- YouTube channel description: exact copy from this document;
+- X: exact bio, `Seattle` location, and `https://lizheng.ai` link;
+- LinkedIn: exact headline and substantive About copy; LinkedIn renders the final two links as separate paragraphs;
+- Substack publication one-line description: exact copy from this document.
+
+Not overwritten in this rollout:
+
+- Bilibili already carried a newer, platform-specific line—`做出你的代表作｜免费加入两万多用AI认真做事的人：Superlinear.Academy｜App：超线性学院`—so the older planned signature below was not allowed to replace it;
+- Xiaohongshu uses the owner-confirmed 159-character version below, but its current platform state was not changed in this run;
+- WeChat and email signatures are private/manual surfaces;
+- the Substack author bio below remains the desired copy, but Substack's web profile editor did not persist the change after repeated value and public-page checks. The publication description did persist.
 
 ## One memory everywhere
 

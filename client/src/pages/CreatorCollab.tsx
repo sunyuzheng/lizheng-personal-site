@@ -231,7 +231,7 @@ const copy = {
         detail:
           "I like stating a judgment clearly enough for a host to push against it. Strong opinions, weakly held: I bring reasons, cases, and the strongest counterargument—and I genuinely enjoy the question that changes my mind.",
         proof:
-          "Before GPT-4: publicly mapped agents, memory, tool use, and private search",
+          "Before GPT-4: publicly mapped falling costs, tool-connected workflows, persistent memory, and AI-native systems",
       },
       {
         number: "03",
@@ -527,7 +527,7 @@ const copy = {
         title: "有立场，也最喜欢被挑战",
         detail:
           "我信奉“strong opinions, weakly held”：观点要讲得足够明确，理由、案例和反方也都摆出来；一个好问题真能让我改变想法，我会很开心。",
-        proof: "GPT-4发布前，已公开推演Agent、记忆、工具调用与private search",
+        proof: "GPT-4发布前，已公开推演成本下降、工具连接、长期记忆与AI-native系统",
       },
       {
         number: "03",

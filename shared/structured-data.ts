@@ -141,7 +141,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-01",
+        dateModified: "2026-08-03",
       },
       personNode(lang),
       ...organizationNodes(lang),

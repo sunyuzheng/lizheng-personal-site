@@ -98,22 +98,72 @@ const careerChapters = {
 
 const featuredJudgment = {
   en: {
-    date: "FEBRUARY 2023 · BEFORE GPT-4",
     title:
-      "I argued that ChatGPT was not simply a better chatbot, but a new natural-language interface to data and computation.",
+      "In 2021, I laid out the limits of the dominant AI paradigm. In February 2023, before GPT-4, I argued that AI had begun to break that ceiling.",
     detail:
-      "The essay examined collapsing inference costs, tool use and agents, persistent memory, private search, copilots, and AI-native systems. The date matters because the reasoning was public before the outcome was obvious—and remains available to inspect.",
-    cta: "Read The Five Most Important Questions About ChatGPT",
+      "Two public videos in 2021 located the earlier model's boundary in its mechanism: it learned mappings from labeled data and automated narrow settings well, but lacked general understanding. ChatGPT's instruction following, in-context learning, and apparent reasoning changed that model. From there I reasoned forward to falling inference costs, tool-connected workflows, persistent memory, direct result delivery, and ChatGPT-native systems. The original probabilities remain on the page; so do the two major errors added later.",
+    cta: "Read the original argument and later review",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+    timeline: [
+      {
+        date: "APRIL 2021",
+        label: "Define the limits of the dominant AI paradigm",
+        links: [
+          {
+            label: "Why the Turing Test misses intelligence",
+            href: "https://youtu.be/M2Yv3D8NDHY",
+          },
+          {
+            label: "Which machine-learning systems actually work",
+            href: "https://youtu.be/sNJ09NOqBXk",
+          },
+        ],
+      },
+      {
+        date: "FEBRUARY 2023 · BEFORE GPT-4",
+        label: "Explain what changed—and reason forward",
+        links: [
+          {
+            label: "Open the pre-GPT-4 public snapshot",
+            href: "https://www.huxiu.com/article/812076.html",
+          },
+        ],
+      },
+    ],
   },
   zh: {
-    date: "2023年2月 · GPT-4发布前",
     title:
-      "我当时的判断是：ChatGPT不只是更好的聊天机器人，而是用自然语言调用数据与算力的新界面。",
+      "2021年，我解释了旧AI的能力上限。2023年2月、GPT-4发布前，我判断AI已经开始突破那道上限。",
     detail:
-      "文章讨论了推理成本骤降、工具调用与agent、长期记忆、private search、Copilot和AI-native系统。重要的不只是后来发生了什么，而是当时的推理至今仍公开可查。",
-    cta: "阅读《关于ChatGPT最重要的五个问题》",
+      "2021年的两期视频先把上一代AI的边界落到机制上：它擅长从标注数据中学习对应关系，能很好地自动化窄场景，却缺少对世界的通用理解。ChatGPT出现以后，指令遵循、in-context learning与看似出现的推理能力改变了这个模型；我由此推演推理成本、工具连接、长期记忆、直接交付结果与ChatGPT Native系统。原文里的概率仍在，后来复盘的两处错误也仍在。",
+    cta: "阅读原文与后续复盘",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+    timeline: [
+      {
+        date: "2021年4月",
+        label: "先说明旧AI范式的能力边界",
+        links: [
+          {
+            label: "为什么图灵测试不能检测人工智能？",
+            href: "https://youtu.be/M2Yv3D8NDHY",
+          },
+          {
+            label: "什么样的机器学习真正有效？",
+            href: "https://youtu.be/sNJ09NOqBXk",
+          },
+        ],
+      },
+      {
+        date: "2023年2月 · GPT-4发布前",
+        label: "再说明哪一层上限已经被打破",
+        links: [
+          {
+            label: "查看GPT-4前公开版本",
+            href: "https://www.huxiu.com/article/812076.html",
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -755,9 +805,32 @@ export default function Home() {
                 <SectionLabel dark>
                   {lang === "en" ? "JUDGMENT ON THE RECORD" : "公开留下的判断"}
                 </SectionLabel>
-                <p className="mt-4 font-mono text-xs uppercase tracking-[0.14em] text-zinc-500">
-                  {featuredJudgment[lang].date}
-                </p>
+                <div className="mt-5 space-y-5 border-l border-amber-300/20 pl-4">
+                  {featuredJudgment[lang].timeline.map((item) => (
+                    <div key={item.date}>
+                      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+                        {item.date}
+                      </p>
+                      <p className="mt-1.5 max-w-xs text-sm font-medium leading-6 text-zinc-300">
+                        {item.label}
+                      </p>
+                      <div className="mt-2 space-y-1.5">
+                        {item.links.map((link) => (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-amber-300"
+                          >
+                            <ExternalLink className="mt-1 h-3 w-3 shrink-0" />
+                            <span>{link.label}</span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="mt-6 md:mt-0">
                 <h3 className="max-w-3xl text-2xl font-semibold leading-9 text-white md:text-3xl md:leading-10">

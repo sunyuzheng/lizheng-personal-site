@@ -67,7 +67,9 @@ The titles matter as proof of environment. The lessons matter because they expla
 
 ### 4. Public judgment — leave one inspectable record
 
-The homepage leads with the February 2023 essay on ChatGPT, written before GPT-4. It proves only a narrow point: Yuzheng was willing to publish a consequential view before the outcome was obvious, and the reasoning remains available for inspection.
+The homepage keeps one judgment case rather than a prediction gallery, but shows the causal chain inside it. Two public videos in April 2021 explained the limits of the dominant AI paradigm; the February 2023 ChatGPT essay, written and publicly archived before GPT-4, argued that part of that ceiling had been broken and reasoned forward from the mechanism. The living article also keeps its original probabilities and later error review.
+
+This establishes a more specific capability than merely publishing early: form a model, recognize evidence that requires it to change, derive consequences, and leave later misses open to inspection. It is still not a claim of permanent foresight. The pre-GPT-4 snapshot and current living article are linked separately so later additions are not projected backward.
 
 The homepage does not maintain a gallery of supposedly timeless insights. Other dated views belong in their original articles and in the personal thesis system's dated-view register.
 

@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-01. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-03. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -51,7 +51,7 @@ Metrics change and should retain their dates.
 
 ## Dated Public Judgment
 
-In February 2023, before GPT-4, Yuzheng first published [关于 ChatGPT 最重要的五个问题](https://www.superlinear.academy/c/ai-resources/chatgpt). It argued that ChatGPT was a new natural-language interface to data and computation, and discussed falling inference costs, tool use and agents, persistent memory, private search, copilots, and AI-native systems.
+Two public videos in April 2021 explained the limits of the dominant AI paradigm and how to distinguish useful machine-learning applications from impressive-looking demonstrations. In February 2023, before GPT-4, Yuzheng wrote [关于ChatGPT最重要的五个问题](https://www.superlinear.academy/c/ai-resources/chatgpt). A [public snapshot available by 2023-03-06](https://www.huxiu.com/article/812076.html) argued that ChatGPT was a new natural-language interface to data and computation and reasoned forward to falling inference costs, tool-connected workflows, persistent memory, direct result delivery, and ChatGPT-native systems. The living article preserves its original probabilities and later records two major errors. Private search and the Microsoft 365 Copilot section were later additions, not part of the pre-GPT-4 snapshot.
 
 ## Canonical Pages
 

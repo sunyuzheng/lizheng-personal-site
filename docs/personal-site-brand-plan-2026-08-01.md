@@ -2,7 +2,7 @@
 
 **Status:** local review plan; implementation owner for `lizheng.ai`
 
-**Upstream owners:** public `yuzheng-profile/{THESIS,PROFILE,DEFINING_WORKS,BIOS,EVIDENCE,facts.json}` and private `yuzheng-context-private/PERSONAL_BRAND.md`
+**Upstream owners:** public `yuzheng-profile/{THESIS,PROFILE,BIOS,EVIDENCE,facts.json}` and private `yuzheng-context-private/{CORE_ASSETS.md,个人品牌与核心资产总纲.md}`
 
 ## The job of the personal site
 
@@ -58,8 +58,9 @@ The page uses four different kinds of evidence for four different jobs:
 
 ### 4. Public judgment — leave something inspectable
 
-- Keep one dated record: the February 2023 ChatGPT essay written before GPT-4.
-- It demonstrates willingness to reason publicly before the outcome was obvious. It is not a claim of permanent foresight.
+- Keep one judgment case, but show its two-stage public record: April 2021 videos defined the limits of the dominant AI paradigm; the February 2023 ChatGPT essay, written and publicly archived before GPT-4, explained what had changed and reasoned forward from the mechanism.
+- The case demonstrates more than willingness to publish early. It makes Yuzheng's world-model discipline inspectable: define the old ceiling, notice which evidence requires a model update, derive consequences, then preserve later errors. It still does not claim permanent foresight.
+- Link the pre-GPT-4 public snapshot separately from the living article so later additions are not misremembered as part of the original record.
 
 ### 5. Superlinear — reveal the institution and the wager
 

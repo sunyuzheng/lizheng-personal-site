@@ -202,10 +202,6 @@ const guestAppearances = [
   },
 ] as const;
 
-const guestAppearanceShowCount = new Set(
-  guestAppearances.map(appearance => appearance.show)
-).size;
-
 const featuredGuestAppearanceHrefs = new Set([
   "https://www.xiaoyuzhoufm.com/episode/6a135fde2507d98728e967e4",
   "https://www.xiaoyuzhoufm.com/episode/6a0efed2fe904f38739093d9",
@@ -225,12 +221,10 @@ function AppearanceCard({
   appearance,
   lang,
   panelLabel,
-  showRepeatBadge = false,
 }: {
   appearance: GuestAppearance;
   lang: "en" | "zh";
   panelLabel: string;
-  showRepeatBadge?: boolean;
 }) {
   const title =
     lang === "en" && "titleEn" in appearance
@@ -252,11 +246,6 @@ function AppearanceCard({
           {appearance.date}
         </time>
         <span className="flex flex-wrap items-center justify-end gap-2">
-          {showRepeatBadge && (
-            <span className="rounded-full border border-amber-300/25 bg-amber-300/[0.06] px-2 py-1 text-[10px] font-medium leading-none text-amber-200">
-              {lang === "en" ? "Invited back" : "再次邀请"}
-            </span>
-          )}
           {appearance.format === "panel" && (
             <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-medium leading-none text-zinc-400">
               {panelLabel}
@@ -282,22 +271,22 @@ const copy = {
   en: {
     navSub: "Podcast & video invitations",
     eyebrow: "Podcasts · Video · Long-form",
-    h1: "AI will keep changing. Let’s talk about what is worth making—and what will last.",
+    h1: "AI will keep changing. What is worth making—and what will last?",
     intro: [
-      "You set the question. I’ll bring a view, first-hand cases, and evidence you can press on. I have worked across economics, data, and AI at Amazon, Meta, Tencent, and Statsig—and now build courses, a 20,000+ member community, enterprise programs, and long-form media through Superlinear Academy.",
+      "You set the question. I’ll bring first-hand cases, public evidence, and a clear point of view. My work has spanned economics, data, and AI at Amazon, Meta, Tencent, and Statsig; today I build courses, community, enterprise programs, and long-form media through Superlinear Academy.",
       "The idea behind that work is MAKE WHAT LASTS. It keeps leading me back to the same tensions: what becomes more valuable as execution gets cheaper, how organizations learn whether a judgment is right, and what turns a first result into lasting work.",
     ],
     heroProofs: [
       "Cornell Economics PhD",
       "Amazon · Meta · Tencent · Statsig (acquired by OpenAI)",
       "Superlinear Academy · 20,000+ community members",
-      "200+ public conversations · multiple shows invited me back",
+      "YouTube · Bilibili · Xiaohongshu · 400K+ followers",
     ],
     questionCta: "See where an episode could begin",
     kitCta: "Open the host kit",
     formatsEyebrow: "WHERE THE VIEW COMES FROM",
     formatsTitle:
-      "I can follow an AI question all the way into products, organizations, and real human choices.",
+      "An AI question rarely ends with the model. It eventually enters products, organizations, and real human choices.",
     formats: [
       {
         number: "01",
@@ -318,17 +307,14 @@ const copy = {
         title: "Build, teach, and test the ideas in public",
         detail:
           "At Superlinear, the ideas have to survive contact with a system I am building: a free community, AI Builders, a year-round membership, enterprise programs, and more than 200 public conversations with researchers, founders, and operators.",
-        proof:
-          "20,000+ community members · 3,000+ paying learners · enterprise AI programs",
+        proof: "Superlinear Academy · AI Builders · enterprise AI programs",
       },
     ],
     questionsEyebrow: "WHERE AN EPISODE COULD BEGIN",
     questionsTitle:
       "A strong conversation needs a question that can keep opening up.",
     questionsIntro:
-      "There is no need to fit my entire background into one episode. Pick one tension your audience genuinely faces; we can follow it through mechanisms, first-hand cases, counterarguments, and consequences.",
-    questionsPrinciple:
-      "I will make the view clear, put the strongest case against it on the table, and say what evidence would change my mind. Disagreement does not need to disappear in the final cut.",
+      "There is no need to fit my entire background into one episode. Pick one tension your audience genuinely faces; we can follow it through mechanisms, first-hand cases, and consequences.",
     questions: [
       {
         title:
@@ -360,14 +346,9 @@ const copy = {
     ],
     otherDirections:
       "Other grounded directions include experimentation, creator economics, China–U.S. technology, and how AI education and community should be built. One real question is usually stronger than a complete tour.",
-    selectionSignals: [
-      "INDIGO TALK and The Build Log each invited me back",
-      "A partner-published episode became Koji’s all-time most-liked Douyin post and annual Xiaohongshu save high",
-      "Across 200+ public conversations, I have worked from both sides of the table",
-    ],
     conversationsEyebrow: "TWO COLLABORATIONS, TWO DIFFERENT TESTS",
     conversationsTitle:
-      "The same conversation held across formats—and reached people who did not know one side before.",
+      "The same conversation kept traveling as the medium changed.",
     conversationsIntro:
       "Koji’s team produced and published the first collaboration independently. The Tulong collaboration used both teams, two edits, and several channels. Together they answer different questions: whether the conversation holds on its own, and what can happen when both sides build around it.",
     conversations: [
@@ -376,9 +357,7 @@ const copy = {
         label: "CASE 01 · PARTNER-PRODUCED AND PUBLISHED",
         name: "One conversation crossed long-form audio and three video platforms",
         role: "Crossing with Koji × Yuzheng Sun",
-        note: "The episode reached 67K Xiaoyuzhou plays, then produced high-save and high-share clips on Douyin, Xiaohongshu, and WeChat Channels. The Douyin clip became Koji’s all-time most-liked post; Xiaohongshu reached an annual save high. Only then does the smaller point matter: this was a simple remote recording, edited and published by Koji, without co-publishing from my accounts.",
-        highlight:
-          "Nothing was co-published from my accounts. The episode first held with Koji’s own audience, then kept working as the medium changed.",
+        note: "The episode reached 67K Xiaoyuzhou plays. Its clips became Koji’s all-time most-liked Douyin post and annual Xiaohongshu save high. The episode and every clip were produced and published independently by Koji, without co-publishing from my accounts.",
         metrics: [
           {
             value: "67K",
@@ -437,9 +416,7 @@ const copy = {
         label: "CASE 02 · CO-PRODUCED AND CO-PUBLISHED",
         name: "Two teams made different cuts—and one conversation found new audiences",
         role: "Yuzheng × Yang Ying (Tulong)",
-        note: "Tulong’s team made one cut in the voice of her show; our team produced a second long-form version and clips, then carried them across Xiaohongshu, YouTube, Bilibili, and our community. The point is not to mirror the same file everywhere—it is to give one good conversation several ways to travel.",
-        highlight:
-          "The co-published Xiaohongshu release reached 58.7K likes and 59.6K saves; the YouTube long-form cut passed 110K views. One first-time viewer was already asking for an annual follow-up. The collaboration did more than add plays; it introduced Tulong to a new audience.",
+        note: "Tulong’s team made one cut in the voice of her show; our team produced a second long-form version and clips, then published them across Xiaohongshu, YouTube, Bilibili, and our community.",
         metrics: [
           {
             value: "58.7K",
@@ -484,9 +461,7 @@ const copy = {
         label: "ANOTHER SAMPLE · I AM THE HOST",
         name: "Professor Liu Jia: from neuroscience to AI and education",
         role: "Chair, Department of Psychology and Cognitive Science, Tsinghua University",
-        note: "This nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education. Working from the other side of the table has taught me how much preparation a long interview requires—and when to press further versus when to listen.",
-        highlight:
-          "A long conversation does not need a pile of topics. It needs one question that can keep unfolding.",
+        note: "This nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education. It has reached 130K+ YouTube views and 460+ comments.",
         metrics: [
           { value: "130K+", label: "YouTube views", signal: "Long-form" },
           { value: "460+", label: "comments", signal: "Deep discussion" },
@@ -509,7 +484,7 @@ const copy = {
       "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
     appearancesEyebrow: "GUEST APPEARANCES",
     appearancesIntro:
-      "The conversations have ranged from AI and technology organizations to careers, creator businesses, and personal growth. Six are selected below; the complete archive of 23 verified episodes remains available on this page.",
+      "Six guest appearances are selected below. Outside media, I also work on AI training and programs with teams at Tencent, Xiaohongshu, Meituan, and DoorDash; the complete 23-episode archive remains at the end of the page.",
     appearancesArchive: "Open all 23 verified guest appearances",
     appearancesArchiveDetail:
       "The full Xiaoyuzhou archive is preserved here for producers who want to check topics, formats, and earlier work.",
@@ -594,33 +569,31 @@ const copy = {
         href: "https://stay.superlinear.academy",
       },
     ],
-    audienceFact:
-      "As of July 2026: 400K+ followers across YouTube, Bilibili, and Xiaohongshu.",
     contactEyebrow: "PROGRAM INVITATIONS",
     contactTitle: "If you already have the question, send it over.",
     contactDetail:
-      "Send the show or channel, the core question, why it matters to your audience, and a rough recording window. We will first make sure the question and the guest fit; then we can prepare around your editorial direction.",
+      "Send the show or channel, the question you most want to pursue, and a rough format and timing. If I have something genuinely new to add, we can set a time and prepare around the show.",
     contactButton: "Discuss an episode",
     back: "Back to all collaboration options",
   },
   zh: {
     navSub: "播客与视频节目邀请",
     eyebrow: "播客 · 视频访谈 · 长对话",
-    h1: "AI会继续变。我们来聊什么值得做，什么会留下来。",
+    h1: "AI会继续变。\n什么值得做，\n什么会留下来？",
     intro: [
-      "你定问题，我带着判断、案例和证据来，也欢迎你一路追问。我曾在Amazon、Meta、腾讯和Statsig做经济学、数据与AI工作，如今自己做课程、社区、企业项目和长内容。一个AI话题，我通常会从技术一路追到产品、组织和人的真实选择。",
+      "你定问题。我带着亲历的案例、公开证据和明确的判断来。我曾在Amazon、Meta、腾讯和Statsig做经济学、数据与AI工作；如今，我在Superlinear Academy继续做课程、社区、企业项目和长内容。",
       "这些工作背后有一个共同主张：做出你的代表作。它让我反复追问：当执行越来越便宜，什么判断更值钱；一个人、一家公司，又怎样把一次结果变成长期积累。",
     ],
     heroProofs: [
       "康奈尔经济学博士",
       "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
       "Superlinear Academy · 20,000+社区成员",
-      "200+场公开对谈 · 多档节目复邀",
+      "YouTube · B站 · 小红书 · 40万+关注者",
     ],
     questionCta: "看看这期可以从哪里开始",
     kitCta: "查看嘉宾资料",
     formatsEyebrow: "这些判断从哪里来",
-    formatsTitle: "我能把一个AI话题，从技术追到产品、组织和人的真实选择。",
+    formatsTitle: "AI问题很少只停在技术里。它最终会进入产品、组织和人的真实选择。",
     formats: [
       {
         number: "01",
@@ -641,15 +614,13 @@ const copy = {
         title: "把判断放进自己建设的系统里",
         detail:
           "Superlinear Academy免费社区、AI Builders、会员、企业AI项目，以及200+场与研究者、创始人和一线实践者的公开对谈，都是我持续建设和校准判断的地方。",
-        proof: "20,000+社区成员 · 3,000+付费学员 · 企业AI项目",
+        proof: "Superlinear Academy · AI Builders · 企业AI项目",
       },
     ],
     questionsEyebrow: "这期可以从哪里开始",
     questionsTitle: "一场好对话，从一个值得不断往下追的问题开始。",
     questionsIntro:
-      "不用把我的全部经历塞进一期节目。挑一个你的听众真的面对的问题，我们可以一路追到背后的机制、亲历的案例、最强的反方，以及它最后会把人带到哪里。",
-    questionsPrinciple:
-      "我会把判断讲清，把最强的反方也摆出来，并说明什么证据能让我改变想法。分歧不必在成片里消失。",
+      "不用把我的全部经历塞进一期节目。挑一个你的听众真的面对的问题，我们可以一路追到背后的机制、亲历的案例，以及它最后会把人带到哪里。",
     questions: [
       {
         title: "AI让每个人都能迅速做出第一版，为什么真正能代表一个人的作品反而更稀缺？",
@@ -678,13 +649,8 @@ const copy = {
     ],
     otherDirections:
       "增长实验、创作者商业、科技创业，以及AI教育和社区该怎样设计，也都有亲历的案例可以往下谈。一个真问题，通常比一张完整的话题清单更有力量。",
-    selectionSignals: [
-      "INDIGO TALK与The Build Log都再次邀请过我",
-      "节目方独立发布的一期对谈，成为其抖音历史点赞最高、小红书年度收藏最高的内容",
-      "200+场公开对谈里，我既做嘉宾，也长期坐在主持人这一边",
-    ],
     conversationsEyebrow: "两次合作，两种检验",
-    conversationsTitle: "同一场对话，在不同媒介里都有人愿意听完、收藏和转发。",
+    conversationsTitle: "同一场对话，换了媒介，仍能继续传播。",
     conversationsIntro:
       "与Koji的合作由节目方独立制作和发布；与屠龙的合作则动用了双方团队、两种剪法和多个渠道。它们分别回答两个问题：对话本身能不能成立，以及双方认真投入以后，它还能走到哪里。",
     conversations: [
@@ -693,9 +659,7 @@ const copy = {
         label: "案例一 · 节目方独立制作与发布",
         name: "同一场对话，跨过音频和三个视频平台",
         role: "十字路口 Crossing × 课代表立正",
-        note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成了Koji的抖音历史点赞最高、小红书年度收藏最高的内容。录制只是简单远程，节目和切片也都由Koji独立制作、发布，没有从我的账号联发——这让内容本身的表现更容易看清。",
-        highlight:
-          "这期没有从我的账号联发。它先在Koji自己的受众里成立，换到抖音、小红书和视频号以后，又继续有人收藏、转发。",
+        note: "这期在《十字路口》的节目列表里排到播放量前二；切片分别成为Koji抖音历史点赞最高、小红书年度收藏最高的内容。整期节目和所有切片均由Koji独立制作、发布，没有从我的账号联发。",
         metrics: [
           { value: "6.7万", label: "小宇宙播放", signal: "节目播放前二" },
           { value: "1.2万", label: "抖音点赞", signal: "账号历史最高" },
@@ -738,9 +702,7 @@ const copy = {
         label: "案例二 · 双方制作与联合发布",
         name: "双方各做一版，同一场对话找到了新观众",
         role: "课代表立正 × 杨滢（屠龙）",
-        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们另做一版长片和切片，分别放到小红书、YouTube、B站和社区。不是把同一个文件机械搬到各个平台，而是让一场好对话用不同形态继续走。",
-        highlight:
-          "小红书联合发布获得5.87万赞、5.96万收藏；YouTube长片也有11万+观看。评论区里，有人第一次认识屠龙，已经希望她以后每年都回来聊。这说明合作带来的不只是播放，还有原本不认识她的新观众。",
+        note: "同一场录制，屠龙团队按自己的节目语言剪成《线性思维害死人》；我们另做一版长片和切片，分别发布到小红书、YouTube、B站和社区。",
         metrics: [
           { value: "5.87万", label: "小红书点赞", signal: "联合发布" },
           { value: "5.96万", label: "小红书收藏", signal: "收藏高于点赞" },
@@ -768,8 +730,7 @@ const copy = {
         label: "另一个样本 · 我做主持",
         name: "刘嘉教授：从脑科学聊到AI和教育",
         role: "清华大学心理与认知科学系主任",
-        note: "这场近三小时的对话，从智能、学习和意识，一路追到具身智能、脑机接口与教育。长期坐在桌子的另一边，让我知道主持人为一场长访谈要做多少准备，也知道什么时候该继续追问、什么时候该听。",
-        highlight: "长对话不需要堆话题。它需要一个能一层层往下追的问题。",
+        note: "这场近三小时的对话，从智能、学习和意识，一路追到具身智能、脑机接口与教育；在YouTube获得13万+观看和460+评论。",
         metrics: [
           { value: "13万+", label: "YouTube观看", signal: "长视频" },
           { value: "460+", label: "评论", signal: "深度讨论" },
@@ -787,7 +748,7 @@ const copy = {
     metricsNote: "数据来自2026年7月的平台页面与截图；各平台统计口径不同。",
     appearancesEyebrow: "节目做客",
     appearancesIntro:
-      "话题从AI、技术组织和职业选择，到创作者商业与个人成长。下面精选六期；完整23期记录也保留在这里。",
+      "下面精选六期做客记录。节目之外，我也为腾讯、小红书、美团、DoorDash等企业的一线团队做AI培训与项目；完整23期记录保留在页面末尾。",
     appearancesArchive: "展开全部23期做客记录",
     appearancesArchiveDetail:
       "完整的小宇宙记录保留在这里，方便制作人核对过往话题、节目形式和成片。",
@@ -865,11 +826,10 @@ const copy = {
         href: "https://stay.superlinear.academy",
       },
     ],
-    audienceFact: "截至2026年7月，YouTube、B站和小红书共40万+关注者。",
     contactEyebrow: "节目邀请",
     contactTitle: "如果你已经想到那个问题，发给我。",
     contactDetail:
-      "发来节目或频道链接、你最想追的那个问题、听众为什么会在意，以及大致时间。我们先确认这个问题是否适合由我来聊，再按你的节目方向准备。",
+      "发来节目或频道链接、你最想追的那个问题，以及大概的形式和时间。我先看看自己是否真有新的东西可以讲；有，我们就约时间，把它聊透。",
     contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
   },
@@ -932,7 +892,7 @@ export default function CreatorCollab() {
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
                 {t.eyebrow}
               </p>
-              <h1 className="mt-5 text-4xl font-semibold leading-[1.08] text-white md:text-6xl">
+              <h1 className="mt-5 whitespace-pre-line text-4xl font-semibold leading-[1.08] text-white md:text-[3.5rem]">
                 {t.h1}
               </h1>
             </div>
@@ -1017,9 +977,6 @@ export default function CreatorCollab() {
                 <p className="mt-4 text-sm leading-7 text-zinc-400">
                   {t.questionsIntro}
                 </p>
-                <p className="mt-6 border-l border-amber-300/40 pl-4 text-sm leading-7 text-zinc-300">
-                  {t.questionsPrinciple}
-                </p>
               </div>
               <div className="border-t border-white/10">
                 {t.questions.map((question, index) => (
@@ -1081,47 +1038,27 @@ export default function CreatorCollab() {
           </section>
 
           <section className="mt-14 border-y border-white/10 py-10 md:mt-20 md:py-14">
-            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-                  {t.appearancesEyebrow}
-                </p>
-                <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {lang === "en"
-                    ? "I have appeared on twenty-one shows—and led AI training for teams at Tencent, Xiaohongshu, Meituan, and DoorDash."
-                    : "我做客过21档节目，也为腾讯、小红书、美团、DoorDash等企业的一线团队做过AI培训。"}
-                </h2>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
-                  {t.appearancesIntro}
-                </p>
-              </div>
-              <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.16em] text-amber-300/80">
-                {lang === "en" ? "23 episodes" : "23期对谈"}
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+                {t.appearancesEyebrow}
+              </p>
+              <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white md:text-4xl">
+                {lang === "en"
+                  ? "Selected conversations across AI, organizations, careers, and creator businesses."
+                  : "从AI与技术组织，到职业选择与创作者商业。"}
+              </h2>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
+                {t.appearancesIntro}
               </p>
             </div>
 
-            <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3">
-              {t.selectionSignals.map(signal => (
-                <p
-                  key={signal}
-                  className="bg-[#111622] p-4 text-xs font-medium leading-6 text-zinc-300 md:p-5"
-                >
-                  {signal}
-                </p>
-              ))}
-            </div>
-
-            <div className="mt-5 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-3">
               {featuredGuestAppearances.map(appearance => (
                 <AppearanceCard
                   key={appearance.href}
                   appearance={appearance}
                   lang={lang}
                   panelLabel={t.panelLabel}
-                  showRepeatBadge={
-                    appearance.show === "INDIGO TALK" ||
-                    appearance.show === "The Build Log"
-                  }
                 />
               ))}
             </div>
@@ -1240,10 +1177,6 @@ export default function CreatorCollab() {
                     <p className="mt-4 text-sm leading-7 text-zinc-400">
                       {conversation.note}
                     </p>
-                    <p className="mt-5 rounded-xl border border-amber-300/15 bg-amber-300/[0.055] p-4 text-sm font-medium leading-7 text-amber-50/90">
-                      {conversation.highlight}
-                    </p>
-
                     {conversation.proofNote && (
                       <p className="mt-4 text-xs leading-6 text-zinc-400">
                         {conversation.proofNote}
@@ -1543,9 +1476,6 @@ export default function CreatorCollab() {
                         </a>
                       ))}
                     </div>
-                    <p className="mt-5 text-xs leading-6 text-[#6E685D]">
-                      {t.audienceFact}
-                    </p>
                   </div>
                 </div>
               </div>

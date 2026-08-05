@@ -507,7 +507,7 @@ const copy = {
     ],
     metricsNote:
       "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
-    appearancesEyebrow: "GUEST APPEARANCES · RETURN INVITATIONS",
+    appearancesEyebrow: "GUEST APPEARANCES",
     appearancesIntro:
       "The conversations have ranged from AI and technology organizations to careers, creator businesses, and personal growth. Six are selected below; the complete archive of 23 verified episodes remains available on this page.",
     appearancesArchive: "Open all 23 verified guest appearances",
@@ -785,7 +785,7 @@ const copy = {
       },
     ],
     metricsNote: "数据来自2026年7月的平台页面与截图；各平台统计口径不同。",
-    appearancesEyebrow: "做客与复邀",
+    appearancesEyebrow: "节目做客",
     appearancesIntro:
       "话题从AI、技术组织和职业选择，到创作者商业与个人成长。下面精选六期；完整23期记录也保留在这里。",
     appearancesArchive: "展开全部23期做客记录",
@@ -1088,8 +1088,8 @@ export default function CreatorCollab() {
                 </p>
                 <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white md:text-4xl">
                   {lang === "en"
-                    ? "Twenty-one shows have invited me to the table. Two invited me back."
-                    : "21档节目邀请过我，其中两档聊完又请了一次。"}
+                    ? "I have appeared on twenty-one shows—and led AI training for teams at Tencent, Xiaohongshu, Meituan, and DoorDash."
+                    : "我做客过21档节目，也为腾讯、小红书、美团、DoorDash等企业的一线团队做过AI培训。"}
                 </h2>
                 <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400">
                   {t.appearancesIntro}

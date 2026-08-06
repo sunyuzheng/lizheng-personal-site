@@ -24,6 +24,12 @@
         "type": "CNAME",
         "ttl": 3600,
         "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
+      },
+      {
+        "name": "creators",
+        "type": "CNAME",
+        "ttl": 3600,
+        "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
       }
     ],
     "target": [
@@ -39,6 +45,11 @@
       },
       {
         "name": "podcast",
+        "type": "A",
+        "minimumValues": 1
+      },
+      {
+        "name": "creators",
         "type": "A",
         "minimumValues": 1
       }
@@ -98,6 +109,13 @@
       "finalUrl": "https://podcast.lizheng.ai/",
       "titleContains": "课代表立正Podcast",
       "canonical": "https://podcast.lizheng.ai/"
+    },
+    {
+      "url": "https://creators.lizheng.ai/",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/zh/collab/creators",
+      "titleContains": "节目邀请",
+      "canonical": "https://www.lizheng.ai/zh/collab/creators"
     },
     {
       "url": "https://www.lizheng.ai/robots.txt",

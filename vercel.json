@@ -10,6 +10,19 @@
       "has": [
         {
           "type": "host",
+          "value": "creators\\.lizheng\\.ai"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://www.lizheng.ai/zh/collab/creators"
+      }
+    },
+    {
+      "src": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "podcast\\.lizheng\\.ai"
         }
       ],

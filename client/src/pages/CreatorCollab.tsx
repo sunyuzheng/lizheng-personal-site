@@ -573,6 +573,7 @@ const copy = {
     contactTitle: "If you already have the question, send it over.",
     contactDetail:
       "Send the show or channel, the question you most want to pursue, and a rough format and timing. If I have something genuinely new to add, we can set a time and prepare around the show.",
+    businessContact: "Business contact: Miao (喵老师) | WeChat: FM13870617",
     contactButton: "Discuss an episode",
     back: "Back to all collaboration options",
   },
@@ -830,6 +831,7 @@ const copy = {
     contactTitle: "如果你已经想到那个问题，发给我。",
     contactDetail:
       "发来节目或频道链接、你最想追的那个问题，以及大概的形式和时间。我先看看自己是否真有新的东西可以讲；有，我们就约时间，把它聊透。",
+    businessContact: "商务负责人：喵老师｜微信：FM13870617",
     contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
   },
@@ -1088,9 +1090,12 @@ export default function CreatorCollab() {
               <Mail className="mr-2 h-4 w-4" />
               {t.contactButton}
             </a>
-            <div className="mt-5 flex items-center justify-center gap-2 text-xs text-zinc-400">
-              <ShieldCheck className="h-4 w-4" />
-              <span>yz@superlinear.academy</span>
+            <div className="mt-5 space-y-2 text-xs text-zinc-400">
+              <div className="flex items-center justify-center gap-2">
+                <ShieldCheck className="h-4 w-4" />
+                <span>yz@superlinear.academy</span>
+              </div>
+              <p>{t.businessContact}</p>
             </div>
           </section>
 

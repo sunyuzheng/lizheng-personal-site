@@ -10,6 +10,7 @@
 - 关键Host：
   - `lizheng.ai`
   - `www.lizheng.ai`
+  - `creators.lizheng.ai`
   - `podcast.lizheng.ai`
   - `notify.lizheng.ai`
 - DNS期望状态：[`lizheng.ai.records.json`](lizheng.ai.records.json)
@@ -24,6 +25,8 @@ GoDaddy仍是注册商与权威DNS；`lizheng.ai.records.json`中的`lifecyclePh
 ## 为什么DNS不能只看网站
 
 `lizheng.ai`除了主站和Podcast子域，还有`notify.lizheng.ai`的发信认证。更换Nameserver时，必须同时保留SPF、DKIM、MX与DMARC；网站能打开不等于迁移已经成功。
+
+`creators.lizheng.ai`是中文播客与视频合作页的传播短入口；它以308永久跳转到`https://www.lizheng.ai/zh/collab/creators`，避免维护两份页面状态。
 
 ## 验证命令
 

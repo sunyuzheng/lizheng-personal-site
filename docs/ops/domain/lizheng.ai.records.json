@@ -30,12 +30,6 @@
         "type": "CNAME",
         "ttl": 3600,
         "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
-      },
-      {
-        "name": "speaker",
-        "type": "CNAME",
-        "ttl": 3600,
-        "values": ["03a6f470c1f68ad2.vercel-dns-017.com"]
       }
     ],
     "target": [
@@ -127,13 +121,6 @@
       "finalUrl": "https://www.lizheng.ai/zh/collab/creators",
       "titleContains": "节目邀请",
       "canonical": "https://www.lizheng.ai/zh/collab/creators"
-    },
-    {
-      "url": "https://speaker.lizheng.ai/",
-      "status": 200,
-      "finalUrl": "https://speaker.lizheng.ai/",
-      "titleContains": "来和课代表立正谈一个真正重要的问题",
-      "canonical": "https://speaker.lizheng.ai/"
     },
     {
       "url": "https://www.lizheng.ai/robots.txt",

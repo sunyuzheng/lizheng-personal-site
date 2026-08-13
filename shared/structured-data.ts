@@ -203,9 +203,9 @@ export function buildPodcastGuestInvitationStructuredData() {
         "@type": "WebPage",
         "@id": `${canonical}#webpage`,
         url: canonical,
-        name: "来和课代表立正谈一个真正重要的问题",
+        name: "和课代表立正把一个重要的问题谈透",
         description:
-          "课代表立正的定向嘉宾邀请：从作品和原始材料开始，用一场长对话把一个真正重要的问题谈清楚。",
+          "课代表立正的定向嘉宾邀请：提前读你的作品与公开表达，录制时让你的答案决定下一问。",
         isPartOf: { "@id": podcastId },
         about: { "@id": PERSON_ID },
         author: { "@id": PERSON_ID },

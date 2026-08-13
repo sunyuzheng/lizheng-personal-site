@@ -100,9 +100,9 @@ export const PODCAST_PAGE_META: PageMeta = {
 };
 
 export const GUEST_INVITATION_PAGE_META: PageMeta = {
-  title: "来和课代表立正谈一个真正重要的问题",
+  title: "和课代表立正把一个重要的问题谈透",
   description:
-    "课代表立正的定向嘉宾邀请：从书、论文和原始材料开始，让答案改写下一问，把一个值得长期留下的问题谈清楚。",
+    "课代表立正的定向嘉宾邀请：提前读你的作品与公开表达，录制时让你的答案决定下一问。",
   canonical: "https://speaker.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/og.png",
   lastModified: "2026-08-13",

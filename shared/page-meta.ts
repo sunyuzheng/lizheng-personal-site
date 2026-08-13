@@ -98,3 +98,12 @@ export const PODCAST_PAGE_META: PageMeta = {
   ogImage: "https://podcast.lizheng.ai/podcast/og.png",
   lastModified: "2026-08-01",
 };
+
+export const GUEST_INVITATION_PAGE_META: PageMeta = {
+  title: "来和课代表立正谈一个真正重要的问题",
+  description:
+    "课代表立正的定向嘉宾邀请：从书、论文和原始材料开始，让答案改写下一问，把一个值得长期留下的问题谈清楚。",
+  canonical: "https://speaker.lizheng.ai/",
+  ogImage: "https://podcast.lizheng.ai/podcast/og.png",
+  lastModified: "2026-08-13",
+};

@@ -14,6 +14,7 @@ import {
   BOOKS_PAGE_META,
   HOME_PAGE_META,
   PODCAST_PAGE_META,
+  GUEST_INVITATION_PAGE_META,
   ZHENBENSHI_PAGE_META,
   languageAlternates,
   type PageMeta,
@@ -27,6 +28,7 @@ import {
   buildHomeStructuredData,
   buildPersonWebPageStructuredData,
   buildPodcastStructuredData,
+  buildPodcastGuestInvitationStructuredData,
   buildZhenbenshiStructuredData,
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
@@ -382,6 +384,13 @@ const staticPages: StaticPage[] = [
     lang: "zh",
     jsonLd: buildPodcastStructuredData(),
     imageAlt: "课代表立正Podcast节目封面",
+  },
+  {
+    route: "/speaker",
+    meta: GUEST_INVITATION_PAGE_META,
+    lang: "zh",
+    jsonLd: buildPodcastGuestInvitationStructuredData(),
+    imageAlt: "课代表立正Podcast嘉宾邀请",
   },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];

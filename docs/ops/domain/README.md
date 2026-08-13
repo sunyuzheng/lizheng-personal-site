@@ -12,6 +12,7 @@
   - `www.lizheng.ai`
   - `creators.lizheng.ai`
   - `podcast.lizheng.ai`
+  - `speaker.lizheng.ai`
   - `notify.lizheng.ai`
 - DNS期望状态：[`lizheng.ai.records.json`](lizheng.ai.records.json)
 - 自动验证：[`scripts/verify-domain.ts`](../../../scripts/verify-domain.ts)
@@ -27,6 +28,8 @@ GoDaddy仍是注册商与权威DNS；`lizheng.ai.records.json`中的`lifecyclePh
 `lizheng.ai`除了主站和Podcast子域，还有`notify.lizheng.ai`的发信认证。更换Nameserver时，必须同时保留SPF、DKIM、MX与DMARC；网站能打开不等于迁移已经成功。
 
 `creators.lizheng.ai`是中文播客与视频合作页的传播短入口；它以308永久跳转到`https://www.lizheng.ai/zh/collab/creators`，避免维护两份页面状态。
+
+`speaker.lizheng.ai`是定向嘉宾邀请页的独立入口；它承载邀请别人来到立正节目中的页面，与邀请立正参加别人节目的`creators.lizheng.ai`分工相反。
 
 ## 验证命令
 

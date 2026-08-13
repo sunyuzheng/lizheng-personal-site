@@ -15,6 +15,8 @@ const ZH_TO_EN_PATH = Object.fromEntries(
 function isChineseCanonicalOnlyPath(pathname: string): boolean {
   return (
     pathname === "/zbs" ||
+    pathname === "/podcast" ||
+    pathname === "/speaker" ||
     pathname === "/guests" ||
     pathname.startsWith("/guests/")
   );

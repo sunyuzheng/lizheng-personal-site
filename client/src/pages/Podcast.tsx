@@ -826,6 +826,12 @@ export default function Podcast() {
           </div>
           <div className="flex flex-wrap items-center gap-5">
             <a
+              href="https://speaker.lizheng.ai"
+              className="transition hover:text-amber-300"
+            >
+              嘉宾邀请
+            </a>
+            <a
               href="https://www.lizheng.ai"
               className="transition hover:text-amber-300"
             >

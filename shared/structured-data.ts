@@ -192,6 +192,40 @@ export function buildPodcastStructuredData() {
   };
 }
 
+export function buildPodcastGuestInvitationStructuredData() {
+  const canonical = "https://speaker.lizheng.ai/";
+  const podcastId = `${PODCAST_URL}/#podcast`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: "来和课代表立正谈一个真正重要的问题",
+        description:
+          "课代表立正的定向嘉宾邀请：从作品和原始材料开始，用一场长对话把一个真正重要的问题谈清楚。",
+        isPartOf: { "@id": podcastId },
+        about: { "@id": PERSON_ID },
+        author: { "@id": PERSON_ID },
+        inLanguage: "zh-CN",
+        dateModified: "2026-08-13",
+      },
+      {
+        "@type": "PodcastSeries",
+        "@id": podcastId,
+        name: "课代表立正",
+        url: `${PODCAST_URL}/`,
+        webFeed: "https://feeds.transistor.fm/kedaibiao",
+        author: { "@id": PERSON_ID },
+        inLanguage: "zh-CN",
+      },
+      personNode("zh"),
+    ],
+  };
+}
+
 export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
   const name =
     lang === "en" ? "Profile of Yuzheng Sun" : "课代表立正（孙煜征）人物简介";

@@ -10,6 +10,29 @@
       "has": [
         {
           "type": "host",
+          "value": "speaker\\.lizheng\\.ai"
+        }
+      ],
+      "dest": "/speaker"
+    },
+    {
+      "src": "/guest",
+      "has": [
+        {
+          "type": "host",
+          "value": "podcast\\.lizheng\\.ai"
+        }
+      ],
+      "status": 308,
+      "headers": {
+        "Location": "https://speaker.lizheng.ai/"
+      }
+    },
+    {
+      "src": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "creators\\.lizheng\\.ai"
         }
       ],

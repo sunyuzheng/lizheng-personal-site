@@ -15,9 +15,17 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 
 const STORAGE_KEY = "lizheng-lang";
 
+function isStandaloneChineseHost(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.location.hostname === "podcast.lizheng.ai" ||
+    window.location.hostname === "speaker.lizheng.ai"
+  );
+}
+
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
-  if (window.location.hostname === "podcast.lizheng.ai") return "zh";
+  if (isStandaloneChineseHost()) return "zh";
   if (
     window.location.pathname === "/zh" ||
     window.location.pathname.startsWith("/zh/")
@@ -26,6 +34,7 @@ function readInitialLang(defaultLang: Lang): Lang {
   }
   if (
     window.location.pathname === "/zbs" ||
+    window.location.pathname === "/speaker" ||
     window.location.pathname === "/podcast" ||
     window.location.pathname === "/guests" ||
     window.location.pathname.startsWith("/guests/")
@@ -62,16 +71,17 @@ export function LanguageProvider({
   useEffect(() => {
     document.documentElement.lang = lang === "en" ? "en-US" : "zh-CN";
     window.localStorage.setItem(STORAGE_KEY, lang);
-    syncLangParam(lang);
+    if (!isStandaloneChineseHost()) syncLangParam(lang);
   }, [lang]);
 
   useEffect(() => {
     const handlePopState = () => {
       if (
-        window.location.hostname === "podcast.lizheng.ai" ||
+        isStandaloneChineseHost() ||
         window.location.pathname === "/zh" ||
         window.location.pathname.startsWith("/zh/") ||
         window.location.pathname === "/zbs" ||
+        window.location.pathname === "/speaker" ||
         window.location.pathname === "/podcast" ||
         window.location.pathname === "/guests" ||
         window.location.pathname.startsWith("/guests/")

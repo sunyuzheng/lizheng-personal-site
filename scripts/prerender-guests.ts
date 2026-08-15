@@ -15,6 +15,8 @@ import {
   HOME_PAGE_META,
   PODCAST_PAGE_META,
   GUEST_INVITATION_PAGE_META,
+  DECKS_LANGUAGE_ALTERNATES,
+  DECKS_PAGE_META,
   ZHENBENSHI_PAGE_META,
   languageAlternates,
   type PageMeta,
@@ -29,6 +31,7 @@ import {
   buildPersonWebPageStructuredData,
   buildPodcastStructuredData,
   buildPodcastGuestInvitationStructuredData,
+  buildDeckLibraryStructuredData,
   buildZhenbenshiStructuredData,
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
@@ -316,7 +319,6 @@ const creatorCollabAlternates = languageAlternates(
   CREATOR_COLLAB_PAGE_META.en.canonical,
   CREATOR_COLLAB_PAGE_META.zh.canonical
 );
-
 const staticPages: StaticPage[] = [
   {
     route: "/",
@@ -391,6 +393,23 @@ const staticPages: StaticPage[] = [
     lang: "zh",
     jsonLd: buildPodcastGuestInvitationStructuredData(),
     imageAlt: "课代表立正Podcast嘉宾邀请",
+  },
+  {
+    route: "/decks",
+    meta: DECKS_PAGE_META.en,
+    lang: "en",
+    jsonLd: buildDeckLibraryStructuredData("en"),
+    alternates: DECKS_LANGUAGE_ALTERNATES,
+    imageAlt:
+      "Yuzheng Sun leading an enterprise AI training session in Seattle",
+  },
+  {
+    route: "/zh/decks",
+    meta: DECKS_PAGE_META.zh,
+    lang: "zh",
+    jsonLd: buildDeckLibraryStructuredData("zh"),
+    alternates: DECKS_LANGUAGE_ALTERNATES,
+    imageAlt: "课代表立正在西雅图进行企业AI培训",
   },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];
@@ -518,13 +537,34 @@ for (const guest of guests) {
   fs.writeFileSync(path.join(guestDir, "index.html"), guestHtml, "utf-8");
 }
 
+const sitemapXml = buildSitemapXml(guests);
 fs.writeFileSync(
   path.join(ROOT, "dist", "public", "sitemap.xml"),
-  buildSitemapXml(guests),
+  sitemapXml,
+  "utf-8"
+);
+
+const decksSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${DECKS_PAGE_META.zh.canonical}</loc>
+    <lastmod>${DECKS_PAGE_META.zh.lastModified}</lastmod>
+  </url>
+  <url>
+    <loc>${DECKS_PAGE_META.en.canonical}</loc>
+    <lastmod>${DECKS_PAGE_META.en.lastModified}</lastmod>
+  </url>
+</urlset>
+`;
+fs.writeFileSync(
+  path.join(ROOT, "dist", "public", "decks-sitemap.xml"),
+  decksSitemapXml,
   "utf-8"
 );
 
 console.log(
   `✅ 预渲染完成: ${staticPages.length} 个完整静态页 + 404 + /guests + ${guests.length} 个 guest 子页`
 );
-console.log(`✅ sitemap 已更新，包含 ${guests.length + 12} 个 URL`);
+console.log(
+  `✅ sitemap 已更新，包含 ${(sitemapXml.match(/<url>/g) || []).length} 个 URL`
+);

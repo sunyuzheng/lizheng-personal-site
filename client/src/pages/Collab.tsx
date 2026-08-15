@@ -53,6 +53,8 @@ const copy = {
         action: {
           label: "Explore enterprise work",
           href: "https://corp-training.ai-builders.com/",
+          secondaryLabel: "Browse selected decks",
+          secondaryHref: "https://decks.lizheng.ai/",
         },
       },
       {
@@ -133,6 +135,8 @@ const copy = {
         action: {
           label: "了解企业项目",
           href: "https://corp-training.ai-builders.com/",
+          secondaryLabel: "看过往deck",
+          secondaryHref: "https://decks.lizheng.ai/",
         },
       },
       {
@@ -305,14 +309,25 @@ export default function Collab() {
                       {path.fit}
                     </p>
                     {"action" in path && path.action ? (
-                      <a
-                        href={path.action.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-auto pt-6 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
-                      >
-                        {path.action.label} <span aria-hidden="true">↗</span>
-                      </a>
+                      <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-6">
+                        <a
+                          href={path.action.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+                        >
+                          {path.action.label} <span aria-hidden="true">↗</span>
+                        </a>
+                        <a
+                          href={path.action.secondaryHref}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold text-zinc-400 transition hover:text-zinc-200"
+                        >
+                          {path.action.secondaryLabel}{" "}
+                          <span aria-hidden="true">↗</span>
+                        </a>
+                      </div>
                     ) : null}
                   </article>
                 );

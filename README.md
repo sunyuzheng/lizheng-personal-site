@@ -15,6 +15,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
 - **Superlinear Academy:** the open, free learning and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.
+- **Deck index:** a curated, searchable view of enterprise AI sessions and selected public workshops at `decks.lizheng.ai`; each deck remains owned by its original delivery project.
 - **Guest archive:** the complete conversation directory; the homepage carries the smaller, selected network signal.
 
 See [`docs/content-system.md`](docs/content-system.md) for ownership, fact sources, and maintenance rules.
@@ -42,9 +43,9 @@ pnpm dev        # → http://localhost:3000
 ## Project Structure
 
 ```
-client/src/pages/    ← Home, books, guest archive, collaboration pages, NotFound
+client/src/pages/    ← Home, books, deck index, guest archive, collaboration pages, NotFound
 client/public/       ← Static assets (avatars, book cover, profile photo)
-shared/              ← Canonical page metadata and deployed guest snapshots
+shared/              ← Canonical page metadata, public deck index, and deployed guest snapshots
 server/              ← Optional Express static host
 api/                 ← Vercel Edge Function (AI chat endpoint)
 scripts/             ← Guest sync and static-page prerender scripts

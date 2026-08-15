@@ -6,6 +6,7 @@ const EN_TO_ZH_PATH: Record<string, string> = {
   "/book": "/zh/book",
   "/collab": "/zh/collab",
   "/collab/creators": "/zh/collab/creators",
+  "/decks": "/zh/decks",
 };
 
 const ZH_TO_EN_PATH = Object.fromEntries(

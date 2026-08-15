@@ -16,6 +16,7 @@ import CreatorCollab from "./pages/CreatorCollab";
 import About from "./pages/About";
 import Podcast from "./pages/Podcast";
 import GuestInvitation from "./pages/GuestInvitation";
+import Decks from "./pages/Decks";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import type { Lang } from "./contexts/LanguageContext";
@@ -36,6 +37,10 @@ function Router() {
 
   if (hostname === "speaker.lizheng.ai") {
     return <GuestInvitation />;
+  }
+
+  if (hostname === "decks.lizheng.ai") {
+    return <Decks />;
   }
 
   const isPodcastHost = hostname === "podcast.lizheng.ai";
@@ -59,6 +64,8 @@ function Router() {
         <Route path={"/zbs"} component={ZhenbenShi} />
         <Route path={"/podcast"} component={Podcast} />
         <Route path={"/speaker"} component={GuestInvitation} />
+        <Route path={"/decks"} component={Decks} />
+        <Route path={"/zh/decks"} component={Decks} />
         <Route path={"/book"} component={Books} />
         <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />

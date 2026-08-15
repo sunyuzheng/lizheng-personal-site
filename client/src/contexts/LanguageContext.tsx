@@ -23,8 +23,16 @@ function isStandaloneChineseHost(): boolean {
   );
 }
 
+function isDecksHost(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    window.location.hostname === "decks.lizheng.ai"
+  );
+}
+
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
+  if (isDecksHost()) return window.location.pathname === "/en" ? "en" : "zh";
   if (isStandaloneChineseHost()) return "zh";
   if (
     window.location.pathname === "/zh" ||
@@ -50,6 +58,14 @@ function readInitialLang(defaultLang: Lang): Lang {
 }
 
 function syncLangParam(lang: Lang) {
+  if (isDecksHost()) {
+    window.history.replaceState(
+      window.history.state,
+      "",
+      lang === "en" ? "/en" : "/"
+    );
+    return;
+  }
   const url = new URL(window.location.href);
   const nextUrl = withLanguage(`${url.pathname}${url.search}${url.hash}`, lang);
   window.history.replaceState(window.history.state, "", nextUrl);
@@ -76,6 +92,10 @@ export function LanguageProvider({
 
   useEffect(() => {
     const handlePopState = () => {
+      if (isDecksHost()) {
+        setLangState(window.location.pathname === "/en" ? "en" : "zh");
+        return;
+      }
       if (
         isStandaloneChineseHost() ||
         window.location.pathname === "/zh" ||

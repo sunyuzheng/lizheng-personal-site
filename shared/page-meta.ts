@@ -107,3 +107,28 @@ export const GUEST_INVITATION_PAGE_META: PageMeta = {
   ogImage: "https://podcast.lizheng.ai/podcast/og.png",
   lastModified: "2026-08-13",
 };
+
+export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
+  en: {
+    title: "Enterprise AI Decks · Yuzheng Sun",
+    description:
+      "A curated index of Yuzheng Sun's enterprise AI briefings, team programs, public talks, and workshops across data, engineering, investment, knowledge work, and AI-native building.",
+    canonical: "https://decks.lizheng.ai/en",
+    ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
+    lastModified: "2026-08-14",
+  },
+  zh: {
+    title: "课代表立正的企业AI Deck索引",
+    description:
+      "课代表立正为不同团队定制的企业AI分享、战略briefing、公开演讲与工作坊，覆盖数据、研发、投资、知识工作与AI Builder。",
+    canonical: "https://decks.lizheng.ai/",
+    ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
+    lastModified: "2026-08-14",
+  },
+};
+
+export const DECKS_LANGUAGE_ALTERNATES: LanguageAlternate[] = [
+  { hrefLang: "en", href: DECKS_PAGE_META.en.canonical },
+  { hrefLang: "zh-CN", href: DECKS_PAGE_META.zh.canonical },
+  { hrefLang: "x-default", href: DECKS_PAGE_META.zh.canonical },
+];

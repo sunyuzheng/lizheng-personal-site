@@ -6,6 +6,8 @@ const root = document.getElementById("root")!;
 const isChineseContentPath =
   window.location.hostname === "podcast.lizheng.ai" ||
   window.location.hostname === "speaker.lizheng.ai" ||
+  (window.location.hostname === "decks.lizheng.ai" &&
+    window.location.pathname !== "/en") ||
   window.location.pathname === "/zbs" ||
   window.location.pathname === "/speaker" ||
   window.location.pathname === "/podcast" ||

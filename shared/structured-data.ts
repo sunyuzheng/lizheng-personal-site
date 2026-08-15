@@ -1,5 +1,6 @@
 import type { SiteLang } from "./page-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
+import { DECK_LIBRARY, localized } from "./deck-index.ts";
 
 export const SITE_URL = "https://www.lizheng.ai";
 export const PERSON_ID = `${SITE_URL}/#person`;
@@ -391,6 +392,58 @@ export function buildPersonWebPageStructuredData(options: {
         options.name,
         options.lang === "en" ? "Yuzheng Sun" : "课代表立正"
       ),
+    ],
+  };
+}
+
+export function buildDeckLibraryStructuredData(lang: SiteLang) {
+  const canonical =
+    lang === "en" ? "https://decks.lizheng.ai/en" : "https://decks.lizheng.ai/";
+  const name =
+    lang === "en"
+      ? "Enterprise AI Decks · Yuzheng Sun"
+      : "课代表立正的企业AI Deck索引";
+  const description =
+    lang === "en"
+      ? "A curated index of enterprise AI briefings, team programs, public talks, and workshops by Yuzheng Sun."
+      : "课代表立正为不同团队定制的企业AI分享、战略briefing、公开演讲与工作坊。";
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name,
+        description,
+        about: { "@id": PERSON_ID },
+        author: { "@id": PERSON_ID },
+        inLanguage: lang === "en" ? "en-US" : "zh-CN",
+        dateModified: "2026-08-14",
+        mainEntity: { "@id": `${canonical}#decks` },
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${canonical}#decks`,
+        name,
+        numberOfItems: DECK_LIBRARY.length,
+        itemListElement: DECK_LIBRARY.map((deck, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          item: {
+            "@type": "CreativeWork",
+            name: deck.title,
+            ...(deck.href ? { url: deck.href } : {}),
+            datePublished: deck.date,
+            inLanguage: deck.language === "en" ? "en" : "zh-CN",
+            description: localized(deck.takeaway, lang),
+            creator: { "@id": PERSON_ID },
+          },
+        })),
+      },
+      websiteNode(),
+      personNode(lang),
     ],
   };
 }

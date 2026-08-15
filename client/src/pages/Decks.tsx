@@ -40,7 +40,7 @@ const copy = {
     eyebrow: "YUZHENG SUN · ENTERPRISE AI DECKS · 2026",
     h1: "I don't take one generic AI talk from company to company.",
     intro:
-      "Engineering leaders, data analysts, portfolio managers, cross-functional teams, and founders are stuck on different problems. Every deck below was rebuilt around the work, constraints, and people involved.",
+      "I design enterprise AI training, strategic briefings, and hands-on workshops around the team in the room. Engineering leaders, data analysts, portfolio managers, cross-functional teams, and founders face different constraints, so every deck here was built around a specific organization, workflow, and decision.",
     photoCaption: "DoorDash team offsite · Seattle",
     enterpriseMetric: "enterprise programs & briefings",
     publicMetric: "public talks & workshops",
@@ -80,7 +80,7 @@ const copy = {
     eyebrow: "课代表立正 · 企业AI DECKS · 2026",
     h1: "我不拿一套通用课，到处讲。",
     intro:
-      "研发负责人、数据分析师、投资经理、非研发团队和创业者，真正卡住的地方完全不同。下面这些deck，都是围绕实际团队、实际问题重新做的。",
+      "我做企业AI培训、战略汇报和工作坊，通常先问：这支团队到底卡在哪里？研发负责人、数据分析师、投资经理、非研发团队和创业者面对的问题不同，所以这里每一套课件，都围绕具体团队、业务场景和要解决的问题重新设计。",
     photoCaption: "DoorDash团队线下AI培训 · 西雅图",
     enterpriseMetric: "套企业定制材料",
     publicMetric: "场公开演讲与工作坊",
@@ -475,10 +475,14 @@ export default function Decks() {
               <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-zinc-900 shadow-[0_32px_90px_rgba(0,0,0,.42)]">
                 <img
                   src="/english-network/doordash-ai-training.webp"
+                  srcSet="/english-network/doordash-ai-training-640.webp 640w, /english-network/doordash-ai-training-768.webp 768w, /english-network/doordash-ai-training.webp 1280w"
+                  sizes="(min-width: 1024px) 46vw, 100vw"
                   alt={t.photoCaption}
                   className="aspect-[4/3] w-full object-cover grayscale-[0.18] lg:aspect-[5/4]"
                   width={1280}
                   height={720}
+                  loading="eager"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#090D16] via-transparent to-transparent" />
                 <figcaption className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-4 p-5 sm:p-6">

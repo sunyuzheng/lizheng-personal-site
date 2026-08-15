@@ -131,6 +131,8 @@ function buildHead(meta: {
   alternates?: Array<{ hrefLang: string; href: string }>;
   robots?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }) {
   return `
   <title>${escapeHtml(meta.title)}</title>
@@ -150,6 +152,8 @@ function buildHead(meta: {
   <meta property="og:description" content="${escapeHtml(meta.description)}" />
   <meta property="og:image" content="${escapeHtml(meta.ogImage)}" />
   <meta property="og:image:alt" content="${escapeHtml(meta.imageAlt || meta.title)}" />
+  ${meta.imageWidth ? `<meta property="og:image:width" content="${meta.imageWidth}" />` : ""}
+  ${meta.imageHeight ? `<meta property="og:image:height" content="${meta.imageHeight}" />` : ""}
   <meta property="og:locale" content="${escapeHtml(meta.locale || "zh_CN")}" />
   <meta property="og:site_name" content="课代表立正" />
 
@@ -305,6 +309,8 @@ interface StaticPage {
   alternates?: Array<{ hrefLang: string; href: string }>;
   ogType?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }
 
 const homeAlternates = languageAlternates(
@@ -409,6 +415,8 @@ const staticPages: StaticPage[] = [
     jsonLd: buildDeckLibraryStructuredData("zh"),
     alternates: DECKS_LANGUAGE_ALTERNATES,
     imageAlt: "课代表立正在西雅图进行企业AI培训",
+    imageWidth: 1280,
+    imageHeight: 720,
   },
   {
     route: "/en/decks",
@@ -418,6 +426,8 @@ const staticPages: StaticPage[] = [
     alternates: DECKS_LANGUAGE_ALTERNATES,
     imageAlt:
       "Yuzheng Sun leading an enterprise AI training session in Seattle",
+    imageWidth: 1280,
+    imageHeight: 720,
   },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];
@@ -470,6 +480,8 @@ for (const page of staticPages) {
       alternates: page.alternates,
       jsonLd: page.jsonLd,
       imageAlt: page.imageAlt,
+      imageWidth: page.imageWidth,
+      imageHeight: page.imageHeight,
     }),
     bodyHtml: renderApp(page.route, page.lang),
     lang: page.lang === "en" ? "en-US" : "zh-CN",

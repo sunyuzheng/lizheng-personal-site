@@ -398,14 +398,7 @@ export function buildPersonWebPageStructuredData(options: {
 
 export function buildDeckLibraryStructuredData(lang: SiteLang) {
   const canonical = DECKS_PAGE_META[lang].canonical;
-  const name =
-    lang === "en"
-      ? "Enterprise AI Decks · Yuzheng Sun"
-      : "课代表立正的企业AI Deck索引";
-  const description =
-    lang === "en"
-      ? "A curated index of enterprise AI briefings, team programs, public talks, and workshops by Yuzheng Sun."
-      : "课代表立正为不同团队定制的企业AI分享、战略briefing、公开演讲与工作坊。";
+  const { title: name, description } = DECKS_PAGE_META[lang];
 
   return {
     "@context": "https://schema.org",
@@ -443,6 +436,11 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
       },
       websiteNode(),
       personNode(lang),
+      breadcrumbNode(
+        canonical,
+        name,
+        lang === "en" ? "Yuzheng Sun" : "课代表立正"
+      ),
     ],
   };
 }

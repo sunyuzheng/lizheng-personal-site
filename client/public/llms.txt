@@ -27,6 +27,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
+- [Enterprise AI training and deck library, Chinese](https://www.lizheng.ai/decks) and [English](https://www.lizheng.ai/en/decks): a curated index of custom enterprise AI programs, strategic briefings, team workshops, and selected public talks across data, engineering, investment, knowledge work, and AI-native building. Each deck keeps its original presentation language.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
 These are related parts of one body of work, not separate identities. The intellectual foundations join interpenetrating explicit world models and tacit, result-answerable craft; conviction matters when understanding has to bear the cost of action, while responsible authorship keeps agency and accountability with the work. Reality keeps testing it, and time gradually reveals what continues to matter.
@@ -63,6 +64,8 @@ Two public videos in April 2021 explained the limits of the dominant AI paradigm
 - Books, Chinese: [lizheng.ai/zh/book](https://www.lizheng.ai/zh/book)
 - Guest archive: [lizheng.ai/guests](https://www.lizheng.ai/guests)
 - Work and organization collaboration: [lizheng.ai/collab](https://www.lizheng.ai/collab)
+- Enterprise AI training and deck library, Chinese: [lizheng.ai/decks](https://www.lizheng.ai/decks)
+- Enterprise AI training and deck library, English: [lizheng.ai/en/decks](https://www.lizheng.ai/en/decks)
 - Podcast and creator invitations, Chinese: [lizheng.ai/zh/collab/creators](https://www.lizheng.ai/zh/collab/creators)
 - Podcast and creator invitations, English: [lizheng.ai/collab/creators](https://www.lizheng.ai/collab/creators)
 - GitHub: [github.com/sunyuzheng](https://github.com/sunyuzheng)

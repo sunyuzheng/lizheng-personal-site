@@ -1,4 +1,4 @@
-import type { SiteLang } from "./page-meta.ts";
+import { DECKS_PAGE_META, type SiteLang } from "./page-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
 import { DECK_LIBRARY, localized } from "./deck-index.ts";
 
@@ -397,8 +397,7 @@ export function buildPersonWebPageStructuredData(options: {
 }
 
 export function buildDeckLibraryStructuredData(lang: SiteLang) {
-  const canonical =
-    lang === "en" ? "https://decks.lizheng.ai/en" : "https://decks.lizheng.ai/";
+  const canonical = DECKS_PAGE_META[lang].canonical;
   const name =
     lang === "en"
       ? "Enterprise AI Decks · Yuzheng Sun"
@@ -420,7 +419,7 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
         about: { "@id": PERSON_ID },
         author: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-14",
+        dateModified: DECKS_PAGE_META[lang].lastModified,
         mainEntity: { "@id": `${canonical}#decks` },
       },
       {

@@ -113,17 +113,17 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
     title: "Enterprise AI Decks · Yuzheng Sun",
     description:
       "A curated index of Yuzheng Sun's enterprise AI briefings, team programs, public talks, and workshops across data, engineering, investment, knowledge work, and AI-native building.",
-    canonical: "https://decks.lizheng.ai/en",
+    canonical: "https://www.lizheng.ai/en/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-14",
+    lastModified: "2026-08-15",
   },
   zh: {
     title: "课代表立正的企业AI Deck索引",
     description:
-      "课代表立正为不同团队定制的企业AI分享、战略briefing、公开演讲与工作坊，覆盖数据、研发、投资、知识工作与AI Builder。",
-    canonical: "https://decks.lizheng.ai/",
+      "课代表立正为不同团队定制的企业AI培训、方案、战略briefing、公开演讲与工作坊，覆盖数据、研发、投资、知识工作与AI Builder。",
+    canonical: "https://www.lizheng.ai/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-14",
+    lastModified: "2026-08-15",
   },
 };
 

@@ -54,7 +54,7 @@ const copy = {
           label: "Explore enterprise work",
           href: "https://corp-training.ai-builders.com/",
           secondaryLabel: "Browse selected decks",
-          secondaryHref: "https://decks.lizheng.ai/",
+          secondaryHref: "https://www.lizheng.ai/en/decks",
         },
       },
       {
@@ -136,7 +136,7 @@ const copy = {
           label: "了解企业项目",
           href: "https://corp-training.ai-builders.com/",
           secondaryLabel: "看过往deck",
-          secondaryHref: "https://decks.lizheng.ai/",
+          secondaryHref: "https://www.lizheng.ai/decks",
         },
       },
       {

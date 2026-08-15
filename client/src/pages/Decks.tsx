@@ -40,9 +40,9 @@ const copy = {
     eyebrow: "YUZHENG SUN · ENTERPRISE AI DECKS · 2026",
     h1: "I don't take one generic AI talk from company to company.",
     intro:
-      "Engineering leaders, data analysts, portfolio managers, cross-functional teams, and founders are stuck on different problems. Every deck below was rebuilt for the people in that room.",
+      "Engineering leaders, data analysts, portfolio managers, cross-functional teams, and founders are stuck on different problems. Every deck below was rebuilt around the work, constraints, and people involved.",
     photoCaption: "DoorDash team offsite · Seattle",
-    enterpriseMetric: "enterprise talks & briefings",
+    enterpriseMetric: "enterprise programs & briefings",
     publicMetric: "public talks & workshops",
     languageMetric: "working languages",
     thesisEyebrow: "ONE THROUGH-LINE · MANY REAL ROOMS",
@@ -53,7 +53,7 @@ const copy = {
     indexEyebrow: "THE LIBRARY",
     indexTitle: "Find a deck by problem, team, or room.",
     indexIntro:
-      "The collection includes enterprise sessions and selected public workshops. Original deck language is preserved.",
+      "The collection includes enterprise programs, briefings, and selected public workshops. Original deck language is preserved.",
     searchPlaceholder: "Search an organization, topic, or audience",
     all: "All",
     results: (count: number) => `${count} ${count === 1 ? "item" : "items"}`,
@@ -80,9 +80,9 @@ const copy = {
     eyebrow: "课代表立正 · 企业AI DECKS · 2026",
     h1: "我不拿一套通用课，到处讲。",
     intro:
-      "研发负责人、数据分析师、投资经理、非研发团队和创业者，真正卡住的地方完全不同。下面这些deck，都是为当时在场的那群人重新做的。",
+      "研发负责人、数据分析师、投资经理、非研发团队和创业者，真正卡住的地方完全不同。下面这些deck，都是围绕实际团队、实际问题重新做的。",
     photoCaption: "DoorDash团队线下AI培训 · 西雅图",
-    enterpriseMetric: "场企业分享与briefing",
+    enterpriseMetric: "套企业定制材料",
     publicMetric: "场公开演讲与工作坊",
     languageMetric: "种工作语言",
     thesisEyebrow: "一条主线 · 很多种现场",
@@ -93,7 +93,7 @@ const copy = {
     indexEyebrow: "全部材料",
     indexTitle: "按问题、团队或场合，找到那套deck。",
     indexIntro:
-      "这里收录企业定制分享，也收录一部分公开演讲和工作坊。deck保留原始语言。",
+      "这里收录企业培训、定制方案，也收录一部分公开演讲和工作坊。deck保留原始语言。",
     searchPlaceholder: "搜索客户、主题或受众",
     all: "全部",
     results: (count: number) => `${count}套材料`,
@@ -211,6 +211,10 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
   const category = categoryDefinition(deck.category);
   const primaryLabel = deck.linkKind === "replay" ? t.watchReplay : t.openDeck;
   const PrimaryIcon = deck.linkKind === "replay" ? PlayCircle : ExternalLink;
+  const secondaryLabel =
+    deck.secondaryLinkKind === "replay" ? t.watchReplay : t.openDeck;
+  const SecondaryIcon =
+    deck.secondaryLinkKind === "replay" ? PlayCircle : ExternalLink;
 
   return (
     <article className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.035] p-3 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.055]">
@@ -267,6 +271,17 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
               <FileClock className="h-3.5 w-3.5" />
             </span>
           )}
+          {deck.secondaryHref ? (
+            <a
+              href={deck.secondaryHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 transition hover:text-amber-200"
+            >
+              {secondaryLabel}
+              <SecondaryIcon className="h-3.5 w-3.5" />
+            </a>
+          ) : null}
           {deck.sourceHref ? (
             <a
               href={deck.sourceHref}
@@ -368,7 +383,7 @@ export default function Decks() {
               aria-label="Language"
             >
               <a
-                href="/en"
+                href="/en/decks"
                 aria-current={lang === "en" ? "page" : undefined}
                 className={cn(
                   "px-2 py-1 text-[11px] font-semibold uppercase tracking-wide transition",
@@ -380,7 +395,7 @@ export default function Decks() {
                 EN
               </a>
               <a
-                href="/"
+                href="/decks"
                 aria-current={lang === "zh" ? "page" : undefined}
                 className={cn(
                   "px-2 py-1 text-[11px] font-semibold transition",

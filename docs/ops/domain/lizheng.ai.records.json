@@ -136,6 +136,27 @@
       "canonical": "https://speaker.lizheng.ai/"
     },
     {
+      "url": "https://www.lizheng.ai/decks",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/decks",
+      "titleContains": "课代表立正的企业AI Deck索引",
+      "canonical": "https://www.lizheng.ai/decks"
+    },
+    {
+      "url": "https://www.lizheng.ai/en/decks",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/en/decks",
+      "titleContains": "Enterprise AI Decks",
+      "canonical": "https://www.lizheng.ai/en/decks"
+    },
+    {
+      "url": "https://www.lizheng.ai/zh/decks",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/decks",
+      "titleContains": "课代表立正的企业AI Deck索引",
+      "canonical": "https://www.lizheng.ai/decks"
+    },
+    {
       "url": "https://www.lizheng.ai/robots.txt",
       "status": 200,
       "finalUrl": "https://www.lizheng.ai/robots.txt"

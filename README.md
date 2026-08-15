@@ -15,7 +15,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
 - **Superlinear Academy:** the open, free learning and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.
-- **Deck index:** a curated, searchable view of enterprise AI sessions and selected public workshops at `decks.lizheng.ai`; each deck remains owned by its original delivery project.
+- **Deck index:** a curated, searchable view of enterprise AI programs, briefings, and selected public workshops at `/decks` (Chinese) and `/en/decks` (English); each deck remains owned by its original delivery project.
 - **Guest archive:** the complete conversation directory; the homepage carries the smaller, selected network signal.
 
 See [`docs/content-system.md`](docs/content-system.md) for ownership, fact sources, and maintenance rules.

@@ -6,44 +6,9 @@
   "trailingSlash": false,
   "routes": [
     {
-      "src": "/robots.txt",
-      "has": [
-        {
-          "type": "host",
-          "value": "decks\\.lizheng\\.ai"
-        }
-      ],
-      "dest": "/decks-robots.txt"
-    },
-    {
-      "src": "/sitemap.xml",
-      "has": [
-        {
-          "type": "host",
-          "value": "decks\\.lizheng\\.ai"
-        }
-      ],
-      "dest": "/decks-sitemap.xml"
-    },
-    {
-      "src": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "decks\\.lizheng\\.ai"
-        }
-      ],
-      "dest": "/zh/decks"
-    },
-    {
-      "src": "/en",
-      "has": [
-        {
-          "type": "host",
-          "value": "decks\\.lizheng\\.ai"
-        }
-      ],
-      "dest": "/decks"
+      "src": "/zh/decks",
+      "status": 308,
+      "headers": { "Location": "/decks" }
     },
     {
       "src": "/",

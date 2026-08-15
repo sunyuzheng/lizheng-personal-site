@@ -6,7 +6,7 @@ const EN_TO_ZH_PATH: Record<string, string> = {
   "/book": "/zh/book",
   "/collab": "/zh/collab",
   "/collab/creators": "/zh/collab/creators",
-  "/decks": "/zh/decks",
+  "/en/decks": "/decks",
 };
 
 const ZH_TO_EN_PATH = Object.fromEntries(
@@ -39,6 +39,8 @@ export function withLanguage(href: string, lang: Lang): string {
     lang === "zh" &&
     (url.pathname === "/zh" || url.pathname.startsWith("/zh/"))
   ) {
+    url.searchParams.delete("lang");
+  } else if (lang === "zh" && ZH_TO_EN_PATH[url.pathname]) {
     url.searchParams.delete("lang");
   } else if (lang === "zh" && isChineseCanonicalOnlyPath(url.pathname)) {
     url.searchParams.delete("lang");

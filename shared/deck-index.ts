@@ -31,6 +31,8 @@ export interface DeckEntry {
   takeaway: LocalizedText;
   href?: string;
   linkKind: DeckLinkKind;
+  secondaryHref?: string;
+  secondaryLinkKind?: Exclude<DeckLinkKind, "pending">;
   sourceHref?: string;
   featured?: boolean;
   accent: string;
@@ -142,16 +144,19 @@ export const DECK_LIBRARY: DeckEntry[] = [
     category: "strategy-knowledge",
     organization: "Tencent IEG",
     occasion: {
-      en: "AI-native strategy briefing",
-      zh: "AI Native战略汇报",
+      en: "Delivered · Judgment Engineering strategy briefing",
+      zh: "已交付 · Judgment Engineering战略汇报",
     },
-    title: "AI Native战略汇报：Judgment Engineering",
+    title: "什么是好的战略分析？",
     date: "2026-07-09",
     language: "zh",
-    audience: { en: "Strategy and AI leaders", zh: "战略与AI负责人" },
+    audience: {
+      en: "Strategy, business analysis, and AI leaders",
+      zh: "战略、商业分析与AI负责人",
+    },
     takeaway: {
-      en: "The scarce layer in an AI-native organization is not another tool. It is judgment that can be made explicit, evaluated, and improved.",
-      zh: "AI Native组织真正稀缺的，不是更多工具，而是能够被说清、被评估、被改进的判断。",
+      en: "A strong strategic analysis challenges the starting view, clarifies what is tangled, and turns judgment into action. AI can build the 60-point factual base; people must push the judgment to 90.",
+      zh: "好的战略分析，不只是把信息写得更完整。它要颠覆原有判断、讲清混乱，再把判断推到行动。AI把事实底座做到60分，人负责把判断推到90分。",
     },
     linkKind: "pending",
     featured: true,
@@ -160,8 +165,11 @@ export const DECK_LIBRARY: DeckEntry[] = [
       "tencent",
       "judgment engineering",
       "strategy",
+      "strategic analysis",
       "AI native",
       "腾讯",
+      "什么是好的战略分析",
+      "战略分析",
     ],
   },
   {
@@ -269,8 +277,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
     category: "engineering-organization",
     organization: "腾讯学堂",
     occasion: {
-      en: "Engineering AI transformation session",
-      zh: "研发团队AI转型分享",
+      en: "Delivered enterprise session for engineering leaders",
+      zh: "已交付 · 研发管理者企业培训",
     },
     title: "研发团队AI转型的常见误区与正确坐标系",
     date: "2026-05-27",
@@ -285,8 +293,21 @@ export const DECK_LIBRARY: DeckEntry[] = [
     },
     href: "https://html-deck-beta.vercel.app",
     linkKind: "deck",
+    secondaryHref:
+      "https://www.superlinear.academy/c/public/sections/900177/lessons/3964350",
+    secondaryLinkKind: "replay",
+    featured: true,
     accent: "#5EEAD4",
-    keywords: ["tencent", "engineering", "transformation", "研发", "腾讯学堂"],
+    keywords: [
+      "tencent",
+      "engineering",
+      "transformation",
+      "enterprise training",
+      "研发",
+      "腾讯学堂",
+      "企业培训",
+      "已交付",
+    ],
   },
   {
     id: "amazon-stop-chatting",
@@ -327,8 +348,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
     date: "2026-06-10",
     language: "zh",
     audience: {
-      en: "Cross-functional, non-engineering teams",
-      zh: "跨岗位非研发团队",
+      en: "Company-wide, cross-functional teams",
+      zh: "全员，以非研发团队为主",
     },
     takeaway: {
       en: "When non-engineers can build, the ceiling moves from using a tool well to redesigning an entire workflow.",
@@ -392,6 +413,73 @@ export const DECK_LIBRARY: DeckEntry[] = [
     keywords: ["creator", "small business", "AI value", "内训", "私董"],
   },
   {
+    id: "tencent-ieg-intensive-bootcamp",
+    collection: "enterprise",
+    category: "product-delivery",
+    organization: "腾讯游戏IEG",
+    occasion: {
+      en: "Three-track custom training proposal · public-safe edition",
+      zh: "三方向定制培训方案 · 脱敏公开版",
+    },
+    title: "腾讯游戏AI Intensive Bootcamp",
+    date: "2026-03-16",
+    language: "zh",
+    audience: {
+      en: "Game development teams and learning leaders",
+      zh: "游戏开发团队与人才发展负责人",
+    },
+    takeaway: {
+      en: "Enterprise AI training should start with real role-level constraints, then connect capability progression, project practice, and reusable organizational assets.",
+      zh: "企业AI培训不该从通用工具清单开始，而要从真实岗位瓶颈出发，把能力进阶、项目实践和组织沉淀设计在一起。",
+    },
+    href: "https://ai-coding-app-deck.ai-builders.space/assets/Superlinear_x_IEG_Desensitized.pdf",
+    linkKind: "deck",
+    featured: true,
+    accent: "#6EE7B7",
+    keywords: [
+      "tencent",
+      "IEG",
+      "bootcamp",
+      "enterprise training",
+      "context",
+      "agent",
+      "腾讯游戏",
+      "企业培训",
+      "定制课程",
+    ],
+  },
+  {
+    id: "tsvc-netease-ai-learning",
+    collection: "public",
+    category: "builder-work",
+    organization: "TSVC×网易新闻",
+    occasion: {
+      en: "Joint public online session",
+      zh: "联合线上公开分享",
+    },
+    title: "普通人应该怎么学AI",
+    date: "2026-06-26",
+    language: "zh",
+    audience: {
+      en: "Professionals and investors without a technical background",
+      zh: "非技术背景的职场人与投资者",
+    },
+    takeaway: {
+      en: "The useful leap is not from one chatbot to another. It is from isolated conversations to a personal AI work system that compounds.",
+      zh: "真正有用的跨越，不是从一个聊天工具换到另一个，而是从零散对话走向能够复利的个人AI工作系统。",
+    },
+    linkKind: "pending",
+    accent: "#FDE68A",
+    keywords: [
+      "TSVC",
+      "NetEase News",
+      "AI learning",
+      "网易新闻",
+      "普通人学AI",
+      "个人AI系统",
+    ],
+  },
+  {
     id: "fde-enterprise-engineering",
     collection: "public",
     category: "product-delivery",
@@ -446,7 +534,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "现场工作坊",
     },
     title: "Learning to Code When AI Does the Heavy Lifting",
-    date: "2026-06-11",
+    date: "2026-04-01",
     language: "en",
     audience: {
       en: "Founders and first-time builders",

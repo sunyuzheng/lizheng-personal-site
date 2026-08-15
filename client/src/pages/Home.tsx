@@ -26,7 +26,8 @@ import { buildHomeStructuredData } from "@shared/structured-data";
 
 const horizon = {
   en: {
-    title: "I admire people whose work and lives became impossible to separate.",
+    title:
+      "I admire people whose work and lives became impossible to separate.",
     detail:
       "The products of Steve Jobs and Zhang Xiaolong. Lionel Messi's football. Christopher Nolan's films. Geoffrey Hinton's and Warren Buffett's convictions surviving decades of disagreement. Tsunekazu Nishioka's craft, giving ancient timber another thousand years of life. Different fields and temperaments; the same unmistakable result: the work carries the maker.",
     structure:
@@ -439,6 +440,7 @@ export default function Home() {
       story: "Story",
       work: "Superlinear",
       conversations: "Conversations",
+      decks: "Decks",
       books: "Books",
       collaborate: "Collaborate",
       community: "Free community",
@@ -448,6 +450,7 @@ export default function Home() {
       story: "经历",
       work: "Superlinear",
       conversations: "对话",
+      decks: "Decks",
       books: "书",
       collaborate: "合作",
       community: "免费社区",
@@ -487,6 +490,12 @@ export default function Home() {
                 {label}
               </button>
             ))}
+            <Link
+              href={withLanguage("/decks", lang)}
+              className="text-sm text-zinc-400 transition hover:text-white"
+            >
+              {nav.decks}
+            </Link>
             <Link
               href={withLanguage("/book", lang)}
               className="text-sm text-zinc-400 transition hover:text-white"
@@ -549,6 +558,13 @@ export default function Home() {
                   {label}
                 </button>
               ))}
+              <Link
+                href={withLanguage("/decks", lang)}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-zinc-300"
+              >
+                {nav.decks}
+              </Link>
               <Link
                 href={withLanguage("/book", lang)}
                 onClick={() => setMobileMenuOpen(false)}
@@ -806,7 +822,7 @@ export default function Home() {
                   {lang === "en" ? "JUDGMENT ON THE RECORD" : "公开留下的判断"}
                 </SectionLabel>
                 <div className="mt-5 space-y-5 border-l border-amber-300/20 pl-4">
-                  {featuredJudgment[lang].timeline.map((item) => (
+                  {featuredJudgment[lang].timeline.map(item => (
                     <div key={item.date}>
                       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
                         {item.date}
@@ -815,7 +831,7 @@ export default function Home() {
                         {item.label}
                       </p>
                       <div className="mt-2 space-y-1.5">
-                        {item.links.map((link) => (
+                        {item.links.map(link => (
                           <a
                             key={link.href}
                             href={link.href}

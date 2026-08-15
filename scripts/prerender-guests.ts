@@ -240,6 +240,14 @@ function buildSitemapXml(guests: GuestProfile[]) {
       loc: `${SITE_URL}/zh/collab/creators`,
       lastmod: CREATOR_COLLAB_PAGE_META.zh.lastModified,
     },
+    {
+      loc: DECKS_PAGE_META.zh.canonical,
+      lastmod: DECKS_PAGE_META.zh.lastModified,
+    },
+    {
+      loc: DECKS_PAGE_META.en.canonical,
+      lastmod: DECKS_PAGE_META.en.lastModified,
+    },
     ...guests.map(guest => ({
       loc: guest.share_url,
       lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),
@@ -396,20 +404,20 @@ const staticPages: StaticPage[] = [
   },
   {
     route: "/decks",
+    meta: DECKS_PAGE_META.zh,
+    lang: "zh",
+    jsonLd: buildDeckLibraryStructuredData("zh"),
+    alternates: DECKS_LANGUAGE_ALTERNATES,
+    imageAlt: "课代表立正在西雅图进行企业AI培训",
+  },
+  {
+    route: "/en/decks",
     meta: DECKS_PAGE_META.en,
     lang: "en",
     jsonLd: buildDeckLibraryStructuredData("en"),
     alternates: DECKS_LANGUAGE_ALTERNATES,
     imageAlt:
       "Yuzheng Sun leading an enterprise AI training session in Seattle",
-  },
-  {
-    route: "/zh/decks",
-    meta: DECKS_PAGE_META.zh,
-    lang: "zh",
-    jsonLd: buildDeckLibraryStructuredData("zh"),
-    alternates: DECKS_LANGUAGE_ALTERNATES,
-    imageAlt: "课代表立正在西雅图进行企业AI培训",
   },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];
@@ -541,24 +549,6 @@ const sitemapXml = buildSitemapXml(guests);
 fs.writeFileSync(
   path.join(ROOT, "dist", "public", "sitemap.xml"),
   sitemapXml,
-  "utf-8"
-);
-
-const decksSitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${DECKS_PAGE_META.zh.canonical}</loc>
-    <lastmod>${DECKS_PAGE_META.zh.lastModified}</lastmod>
-  </url>
-  <url>
-    <loc>${DECKS_PAGE_META.en.canonical}</loc>
-    <lastmod>${DECKS_PAGE_META.en.lastModified}</lastmod>
-  </url>
-</urlset>
-`;
-fs.writeFileSync(
-  path.join(ROOT, "dist", "public", "decks-sitemap.xml"),
-  decksSitemapXml,
   "utf-8"
 );
 

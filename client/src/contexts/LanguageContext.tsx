@@ -23,17 +23,11 @@ function isStandaloneChineseHost(): boolean {
   );
 }
 
-function isDecksHost(): boolean {
-  return (
-    typeof window !== "undefined" &&
-    window.location.hostname === "decks.lizheng.ai"
-  );
-}
-
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
-  if (isDecksHost()) return window.location.pathname === "/en" ? "en" : "zh";
   if (isStandaloneChineseHost()) return "zh";
+  if (window.location.pathname === "/decks") return "zh";
+  if (window.location.pathname === "/en/decks") return "en";
   if (
     window.location.pathname === "/zh" ||
     window.location.pathname.startsWith("/zh/")
@@ -49,23 +43,15 @@ function readInitialLang(defaultLang: Lang): Lang {
   ) {
     return "zh";
   }
+  if (hasCanonicalLanguagePath(window.location.pathname)) return "en";
   const requested = new URLSearchParams(window.location.search).get("lang");
   if (requested === "en" || requested === "zh") return requested;
-  if (hasCanonicalLanguagePath(window.location.pathname)) return "en";
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "en" || stored === "zh") return stored;
   return defaultLang;
 }
 
 function syncLangParam(lang: Lang) {
-  if (isDecksHost()) {
-    window.history.replaceState(
-      window.history.state,
-      "",
-      lang === "en" ? "/en" : "/"
-    );
-    return;
-  }
   const url = new URL(window.location.href);
   const nextUrl = withLanguage(`${url.pathname}${url.search}${url.hash}`, lang);
   window.history.replaceState(window.history.state, "", nextUrl);
@@ -92,8 +78,12 @@ export function LanguageProvider({
 
   useEffect(() => {
     const handlePopState = () => {
-      if (isDecksHost()) {
-        setLangState(window.location.pathname === "/en" ? "en" : "zh");
+      if (window.location.pathname === "/decks") {
+        setLangState("zh");
+        return;
+      }
+      if (window.location.pathname === "/en/decks") {
+        setLangState("en");
         return;
       }
       if (
@@ -107,6 +97,10 @@ export function LanguageProvider({
         window.location.pathname.startsWith("/guests/")
       ) {
         setLangState("zh");
+        return;
+      }
+      if (hasCanonicalLanguagePath(window.location.pathname)) {
+        setLangState("en");
         return;
       }
       const requested = new URLSearchParams(window.location.search).get("lang");

@@ -39,10 +39,6 @@ function Router() {
     return <GuestInvitation />;
   }
 
-  if (hostname === "decks.lizheng.ai") {
-    return <Decks />;
-  }
-
   const isPodcastHost = hostname === "podcast.lizheng.ai";
 
   if (isPodcastHost) {
@@ -65,7 +61,7 @@ function Router() {
         <Route path={"/podcast"} component={Podcast} />
         <Route path={"/speaker"} component={GuestInvitation} />
         <Route path={"/decks"} component={Decks} />
-        <Route path={"/zh/decks"} component={Decks} />
+        <Route path={"/en/decks"} component={Decks} />
         <Route path={"/book"} component={Books} />
         <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />

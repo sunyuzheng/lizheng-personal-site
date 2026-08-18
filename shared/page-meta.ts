@@ -4,6 +4,7 @@ export interface PageMeta {
   canonical: string;
   ogImage: string;
   lastModified?: string;
+  robots?: string;
 }
 
 export type SiteLang = "en" | "zh";

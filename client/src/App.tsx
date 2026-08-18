@@ -17,9 +17,28 @@ import About from "./pages/About";
 import Podcast from "./pages/Podcast";
 import GuestInvitation from "./pages/GuestInvitation";
 import Decks from "./pages/Decks";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "wouter";
 import type { Lang } from "./contexts/LanguageContext";
+
+const HomeExperiment = lazy(() => import("./pages/HomeExperiment"));
+const HomeExperimentEmil = lazy(() => import("./pages/HomeExperimentEmil"));
+
+function VercelExperimentRoute() {
+  return (
+    <Suspense fallback={null}>
+      <HomeExperiment />
+    </Suspense>
+  );
+}
+
+function EmilExperimentRoute() {
+  return (
+    <Suspense fallback={null}>
+      <HomeExperimentEmil />
+    </Suspense>
+  );
+}
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -62,6 +81,13 @@ function Router() {
         <Route path={"/speaker"} component={GuestInvitation} />
         <Route path={"/decks"} component={Decks} />
         <Route path={"/en/decks"} component={Decks} />
+        <Route path={"/experiment/vercel"} component={VercelExperimentRoute} />
+        <Route
+          path={"/zh/experiment/vercel"}
+          component={VercelExperimentRoute}
+        />
+        <Route path={"/experiment/emil"} component={EmilExperimentRoute} />
+        <Route path={"/zh/experiment/emil"} component={EmilExperimentRoute} />
         <Route path={"/book"} component={Books} />
         <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />

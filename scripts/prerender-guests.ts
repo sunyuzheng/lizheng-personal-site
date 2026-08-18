@@ -39,7 +39,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import React from "react";
-import { renderToString } from "react-dom/server";
+import { renderToReadableStream } from "react-dom/server.browser";
 import { Router as WouterRouter } from "wouter";
 
 // Build-time SEO uses the same merged guest directory as the app runtime.
@@ -133,12 +133,16 @@ function buildHead(meta: {
   imageAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
+  stylesheets?: string[];
 }) {
   return `
   <title>${escapeHtml(meta.title)}</title>
   <meta name="description" content="${escapeHtml(meta.description)}" />
   <meta name="robots" content="${escapeHtml(meta.robots || "index, follow")}" />
   <link rel="canonical" href="${escapeHtml(meta.canonical)}" />
+  ${(meta.stylesheets || [])
+    .map(href => `<link rel="stylesheet" href="${escapeHtml(href)}" />`)
+    .join("\n  ")}
   ${(meta.alternates || [])
     .map(
       alternate =>
@@ -294,11 +298,22 @@ function routeDirectory(route: string) {
   return path.join(ROOT, "dist", "public", ...segments);
 }
 
-function renderApp(route: string, lang: SiteLang) {
+async function renderApp(route: string, lang: SiteLang): Promise<string> {
   const app = React.createElement(App, { defaultLang: lang });
-  return renderToString(
-    React.createElement(WouterRouter, { ssrPath: route, children: app })
-  );
+  const tree = React.createElement(WouterRouter, {
+    ssrPath: route,
+    children: app,
+  });
+  let renderError: unknown;
+  const stream = await renderToReadableStream(tree, {
+    onError(error) {
+      renderError ||= error;
+      console.error(`SSR failed for ${route}:`, error);
+    },
+  });
+  await stream.allReady;
+  if (renderError) throw renderError;
+  return new Response(stream).text();
 }
 
 interface StaticPage {
@@ -311,6 +326,18 @@ interface StaticPage {
   imageAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
+  stylesheets?: string[];
+}
+
+function findBuiltStylesheet(pattern: RegExp): string {
+  const assetsDirectory = path.join(ROOT, "dist", "public", "assets");
+  const filename = fs
+    .readdirSync(assetsDirectory)
+    .find(asset => pattern.test(asset));
+  if (!filename) {
+    throw new Error(`Built stylesheet not found for ${pattern}`);
+  }
+  return `/assets/${filename}`;
 }
 
 const homeAlternates = languageAlternates(
@@ -332,6 +359,62 @@ const collabAlternates = languageAlternates(
 const creatorCollabAlternates = languageAlternates(
   CREATOR_COLLAB_PAGE_META.en.canonical,
   CREATOR_COLLAB_PAGE_META.zh.canonical
+);
+const experimentMeta = {
+  vercel: {
+    en: {
+      title: "Vercel Design Study · Yuzheng Sun",
+      description:
+        "A design experiment for Yuzheng Sun's personal site, applying the editorial and evidence-led principles of Vercel design.md.",
+      canonical: `${SITE_URL}/experiment/vercel`,
+      ogImage: HOME_PAGE_META.en.ogImage,
+      lastModified: "2026-08-17",
+      robots: "noindex, nofollow",
+    },
+    zh: {
+      title: "Vercel设计原生实验 · 课代表立正",
+      description:
+        "课代表立正个人主页的Vercel design.md原生设计实验：编辑式构图、证据优先与近乎静态的阅读体验。",
+      canonical: `${SITE_URL}/zh/experiment/vercel`,
+      ogImage: HOME_PAGE_META.zh.ogImage,
+      lastModified: "2026-08-17",
+      robots: "noindex, nofollow",
+    },
+  },
+  emil: {
+    en: {
+      title: "Emil Motion Study · Yuzheng Sun",
+      description:
+        "A design experiment for Yuzheng Sun's personal site, applying Emil Kowalski's interaction and motion principles.",
+      canonical: `${SITE_URL}/experiment/emil`,
+      ogImage: HOME_PAGE_META.en.ogImage,
+      lastModified: "2026-08-17",
+      robots: "noindex, nofollow",
+    },
+    zh: {
+      title: "Emil动效原生实验 · 课代表立正",
+      description:
+        "课代表立正个人主页的Emil Kowalski原生设计实验：以短促、可中断的状态切换组织内容与交互。",
+      canonical: `${SITE_URL}/zh/experiment/emil`,
+      ogImage: HOME_PAGE_META.zh.ogImage,
+      lastModified: "2026-08-17",
+      robots: "noindex, nofollow",
+    },
+  },
+} satisfies Record<"vercel" | "emil", Record<SiteLang, PageMeta>>;
+const vercelExperimentAlternates = languageAlternates(
+  experimentMeta.vercel.en.canonical,
+  experimentMeta.vercel.zh.canonical
+);
+const emilExperimentAlternates = languageAlternates(
+  experimentMeta.emil.en.canonical,
+  experimentMeta.emil.zh.canonical
+);
+const vercelExperimentStylesheet = findBuiltStylesheet(
+  /^home-experiment-(?!emil-).+\.css$/
+);
+const emilExperimentStylesheet = findBuiltStylesheet(
+  /^home-experiment-emil-.+\.css$/
 );
 const staticPages: StaticPage[] = [
   {
@@ -429,6 +512,42 @@ const staticPages: StaticPage[] = [
     imageWidth: 1280,
     imageHeight: 720,
   },
+  {
+    route: "/experiment/vercel",
+    meta: experimentMeta.vercel.en,
+    lang: "en",
+    jsonLd: null,
+    alternates: vercelExperimentAlternates,
+    imageAlt: "Vercel-inspired personal-site design study for Yuzheng Sun",
+    stylesheets: [vercelExperimentStylesheet],
+  },
+  {
+    route: "/zh/experiment/vercel",
+    meta: experimentMeta.vercel.zh,
+    lang: "zh",
+    jsonLd: null,
+    alternates: vercelExperimentAlternates,
+    imageAlt: "课代表立正个人主页的Vercel设计实验",
+    stylesheets: [vercelExperimentStylesheet],
+  },
+  {
+    route: "/experiment/emil",
+    meta: experimentMeta.emil.en,
+    lang: "en",
+    jsonLd: null,
+    alternates: emilExperimentAlternates,
+    imageAlt: "Emil-inspired interaction and motion study for Yuzheng Sun",
+    stylesheets: [emilExperimentStylesheet],
+  },
+  {
+    route: "/zh/experiment/emil",
+    meta: experimentMeta.emil.zh,
+    lang: "zh",
+    jsonLd: null,
+    alternates: emilExperimentAlternates,
+    imageAlt: "课代表立正个人主页的Emil动效实验",
+    stylesheets: [emilExperimentStylesheet],
+  },
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];
     const creatorMeta = CREATOR_COLLAB_PAGE_META[lang];
@@ -482,8 +601,9 @@ for (const page of staticPages) {
       imageAlt: page.imageAlt,
       imageWidth: page.imageWidth,
       imageHeight: page.imageHeight,
+      stylesheets: page.stylesheets,
     }),
-    bodyHtml: renderApp(page.route, page.lang),
+    bodyHtml: await renderApp(page.route, page.lang),
     lang: page.lang === "en" ? "en-US" : "zh-CN",
     hydrate: true,
     keepHomeHeroPreloads:
@@ -505,7 +625,7 @@ const notFoundHtml = injectDocument(baseHtml, {
     locale: "en_US",
     robots: "noindex, follow",
   }),
-  bodyHtml: renderApp("/404", "en"),
+  bodyHtml: await renderApp("/404", "en"),
   lang: "en-US",
   hydrate: false,
 });

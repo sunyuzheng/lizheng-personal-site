@@ -9,8 +9,8 @@ export const SUPERLINEAR_ID = "https://www.superlinear.academy/#organization";
 export const PODCAST_URL = "https://podcast.lizheng.ai";
 
 const PERSON_DESCRIPTION = {
-  en: "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy and AI Builders. He previously worked at Amazon, Meta, Tencent IEG, and Statsig.",
-  zh: "课代表立正，本名孙煜征，康奈尔大学经济学博士，Superlinear Academy与AI Builders的创始人，现居西雅图。他曾在Amazon、Meta、腾讯IEG和Statsig工作。",
+  en: "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy. He previously worked at Amazon, Meta, Tencent IEG, and Statsig.",
+  zh: "课代表立正，本名孙煜征，康奈尔大学经济学博士，Superlinear Academy创始人，现居西雅图。他曾在Amazon、Meta、腾讯IEG和Statsig工作。",
 } satisfies Record<SiteLang, string>;
 
 function personNode(lang: SiteLang) {
@@ -24,7 +24,7 @@ function personNode(lang: SiteLang) {
     description: PERSON_DESCRIPTION[lang],
     slogan: lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。",
     jobTitle:
-      "Founder of Superlinear Academy and AI Builders; educator and author",
+      "Founder of Superlinear Academy; educator and author",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "PhD in Economics",

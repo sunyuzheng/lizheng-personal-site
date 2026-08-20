@@ -385,7 +385,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         ("Meta", "数据科学家"),
         ("腾讯IEG", "数据与AI副总监"),
         ("Statsig", "Principal Data Scientist · 公司唯一布道师"),
-        ("现在", "Superlinear Academy / AI Builders创始人"),
+        ("现在", "Superlinear Academy创始人"),
     ]
     c.setStrokeColor(HexColor("#BDB5A9"))
     c.setLineWidth(1)

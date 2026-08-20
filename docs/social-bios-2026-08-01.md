@@ -83,7 +83,7 @@ MAKE WHAT LASTS. 做出你的代表作。
 
 这里有对AI技术本质、产品、商业与个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
 
-康奈尔经济学博士｜Superlinear Academy与AI Builders创始人｜曾任职Amazon、Meta、腾讯与Statsig
+康奈尔经济学博士｜Superlinear Academy创始人｜曾任职Amazon、Meta、腾讯与Statsig
 
 免费社区：https://superlinear.academy
 个人主页：https://lizheng.ai
@@ -94,7 +94,7 @@ MAKE WHAT LASTS. 做出你的代表作。
 **Job:** make the founder role and idea legible in search results, comments, connection requests, and speaker discovery.
 
 ```text
-Founder, Superlinear Academy & AI Builders | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
+Founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
 ```
 
 ## LinkedIn About
@@ -123,7 +123,7 @@ Free community: https://superlinear.academy
 **Job:** create a sharp English association in replies and discovery; route deeper interest to the personal site.
 
 ```text
-MAKE WHAT LASTS. Building Superlinear Academy & AI Builders. Cornell Economics PhD. AI, product judgment, craft—and work that outlives the task.
+MAKE WHAT LASTS. Building Superlinear Academy. Cornell Economics PhD. AI, product judgment, craft—and work that outlives the task.
 ```
 
 144 characters, within X's 160-character bio limit.
@@ -143,7 +143,7 @@ Essays on AI, product judgment, craft, and making work that outlives the task.
 **Author bio:**
 
 ```text
-Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and AI Builders and a Cornell Economics PhD. He writes about AI, products, organizations, and the work people choose to make their own.
+Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornell Economics PhD. He writes about AI, products, organizations, and the work people choose to make their own.
 ```
 
 ## WeChat / private profile
@@ -179,13 +179,13 @@ lizheng.ai · superlinear.academy
 **One sentence, Chinese:**
 
 ```text
-孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy与AI Builders创始人。他长期研究AI时代什么值得做，也在用一句话概括自己和Superlinear的方向：做出你的代表作。
+孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy创始人。他长期研究AI时代什么值得做，也在用一句话概括自己和Superlinear的方向：做出你的代表作。
 ```
 
 **One sentence, English:**
 
 ```text
-Yuzheng Sun is a Cornell Economics PhD and the founder of Superlinear Academy and AI Builders. His work asks what deserves to be built in the AI era—and is guided by one line: MAKE WHAT LASTS.
+Yuzheng Sun is a Cornell Economics PhD and the founder of Superlinear Academy. His work asks what deserves to be built in the AI era—and is guided by one line: MAKE WHAT LASTS.
 ```
 
 For a longer event introduction, use the current `yuzheng-profile/BIOS.md` rather than extending these short lines from memory.

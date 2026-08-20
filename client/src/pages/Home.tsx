@@ -1276,8 +1276,8 @@ export default function Home() {
             </div>
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
-                ? "Cornell Economics PhD, author, and founder of Superlinear Academy and AI Builders. Make what lasts."
-                : "康奈尔大学经济学博士、作者，Superlinear Academy与AI Builders创始人。做出你的代表作。"}
+                ? "Cornell Economics PhD, author, and founder of Superlinear Academy. Make what lasts."
+                : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。做出你的代表作。"}
             </p>
             <Link
               href={withLanguage("/about", lang)}

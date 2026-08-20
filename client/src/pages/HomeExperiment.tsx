@@ -129,7 +129,7 @@ export const pageCopy = {
     builders: "Explore AI Builders",
     collaborate: "Collaborate with me",
     footer:
-      "Cornell Economics PhD, author, and founder of Superlinear Academy and AI Builders.",
+      "Cornell Economics PhD, author, and founder of Superlinear Academy.",
   },
   zh: {
     nav: { thesis: "主张", record: "经历", work: "作品", more: "目录" },
@@ -186,7 +186,7 @@ export const pageCopy = {
     builders: "了解AI Builders",
     collaborate: "与我合作",
     footer:
-      "康奈尔大学经济学博士、作者，Superlinear Academy与AI Builders创始人。",
+      "康奈尔大学经济学博士、作者，Superlinear Academy创始人。",
   },
 };
 

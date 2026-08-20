@@ -8,7 +8,7 @@ MAKE WHAT LASTS.
 
 In Chinese: 做出你的代表作。
 
-Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy and AI Builders. His defining idea is to make work whose value outlives the moment of making and clearly bears the maker's distinctive judgment and craft.
+Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy, the parent institution for its free community, AI Builders learning system, and Stay Superlinear membership. His defining idea is to make work whose value outlives the moment of making and clearly bears the maker's distinctive judgment and craft.
 
 MAKE WHAT LASTS. and 做出你的代表作。 are the one defining idea shared by Yuzheng and Superlinear Academy. They are not literal translations. The English line emphasizes work that keeps working; the Chinese line emphasizes making something distinctly yours that carries your judgment and craft. Such work may also bring capability, reputation, freedom, recognition, or a more ambitious next move back to its maker. Those are hoped-for returns, not part of the definition or a guarantee that every work will endure or make its author successful.
 
@@ -18,7 +18,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 - Yuzheng Sun, 孙煜征, and 课代表立正 refer to the same person. 课代表立正 is the name used for public content.
 - Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
-- Superlinear Academy is the free community and institution Yuzheng is building around this belief. AI Builders is a structured learning system co-taught with Yage. Stay Superlinear is the distinct paid year-round membership. Yage is a long-term teaching partner and technical authority; Yuzheng is the founder and public steward of the institution.
+- Superlinear Academy is the parent institution and master brand Yuzheng is building around this belief; its free community is the open public entry point. AI Builders is its structured learning product, co-taught with Yage. Stay Superlinear is its paid year-round membership product. Yage is a long-term teaching partner and technical authority; Yuzheng is the founder and public steward of the institution.
 - Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
 
 ## Current Work

@@ -35,7 +35,7 @@ const career = [
     zh: "Principal Data Scientist、公司唯一布道师",
   },
   {
-    organization: "Superlinear Academy & AI Builders",
+    organization: "Superlinear Academy",
     en: "Founder",
     zh: "创始人",
   },
@@ -45,7 +45,7 @@ const currentWork = {
   en: [
     {
       name: "Superlinear Academy",
-      role: "Open learning and builder community",
+      role: "Parent institution and open community",
       detail:
         "A free community of 20,000+ members where real work and first-hand judgment stay visible across fields: 700+ project posts, 8,000+ comments, and a living frame of reference for what serious AI practice looks like.",
       href: "https://www.superlinear.academy/",
@@ -75,7 +75,7 @@ const currentWork = {
   zh: [
     {
       name: "Superlinear Academy",
-      role: "免费实践社区",
+      role: "母体机构与免费实践社区",
       detail:
         "2万+成员把真实工作和一手判断留在这里：700+项目帖、8,000+条评论，持续提供一个看见不同领域AI实践水位的参照系。",
       href: "https://www.superlinear.academy/",
@@ -143,7 +143,7 @@ export default function About() {
       back: "Back to homepage",
       eyebrow: "About Yuzheng Sun",
       intro:
-        "Yuzheng Sun (孙煜征), also known publicly as 课代表立正, has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He is based in Seattle.",
+        "Yuzheng Sun (孙煜征), also known publicly as 课代表立正, has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He is based in Seattle.",
       belief:
         "His defining belief is MAKE WHAT LASTS: make work that keeps creating value and clearly bears its maker's judgment and craft. He has placed his own work, and Superlinear Academy, under the same standard.",
       backgroundTitle: "Background",
@@ -167,7 +167,7 @@ export default function About() {
       back: "回到主页",
       eyebrow: "关于课代表立正",
       intro:
-        "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，创办了Superlinear Academy和AI Builders，现居西雅图。",
+        "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，是Superlinear Academy创始人，现居西雅图。",
       belief:
         "他提出并长期倡导的主张是：做出你的代表作——把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。他也把自己的工作与Superlinear Academy放在同一条标准之下。",
       backgroundTitle: "经历",

@@ -541,10 +541,10 @@ const copy = {
     pdfCta: "Download the six-page Chinese guest kit",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He was an economist at Amazon, a data scientist at Meta, a vice director at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
+      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He was an economist at Amazon, a data scientist at Meta, a vice director at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result and unmistakably bears its maker’s choices. As of August 2026, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of 20,000+ members with 700+ shared real-world projects. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. He is the founder of Superlinear Academy, the parent institution for its free community, AI Builders, and Stay Superlinear. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result and unmistakably bears its maker’s choices. As of August 2026, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of 20,000+ members with 700+ shared real-world projects. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     brandLineLabel: "One line for the introduction",
     brandLine: "Superlinear Academy stands for one idea: MAKE WHAT LASTS.",
     headshotLabel: "1280 × 1280 headshot",
@@ -807,10 +807,10 @@ const copy = {
     pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他提出并长期倡导的主张是：做出你的代表作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他提出并长期倡导的主张是：做出你的代表作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。他是Superlinear Academy与AI Builders创始人。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。他是Superlinear Academy创始人；AI Builders课程与Stay Superlinear会员都是这个母体下的产品。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
     brandLine: "Superlinear Academy的主张是：做出你的代表作。",
     headshotLabel: "1280 × 1280头像",

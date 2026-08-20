@@ -207,7 +207,7 @@ export default function GuestInvitation() {
                 场公开对话
               </span>
               <span>康奈尔经济学博士</span>
-              <span>Amazon · Meta · 腾讯 · Statsig</span>
+              <span>Amazon · Meta · 腾讯 · OpenAI收购团队早期成员</span>
               <span>
                 <strong className="mr-1 text-sm text-white">40万+</strong>
                 跨平台关注者

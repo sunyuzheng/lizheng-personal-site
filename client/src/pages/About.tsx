@@ -47,7 +47,7 @@ const currentWork = {
       name: "Superlinear Academy",
       role: "Open learning and builder community",
       detail:
-        "A free community where projects, specific questions, first-hand experience, feedback, and opportunities circulate.",
+        "A free community of 20,000+ members where real work and first-hand judgment stay visible across fields: 700+ project posts, 8,000+ comments, and a living frame of reference for what serious AI practice looks like.",
       href: "https://www.superlinear.academy/",
     },
     {
@@ -77,7 +77,7 @@ const currentWork = {
       name: "Superlinear Academy",
       role: "免费实践社区",
       detail:
-        "大家把真实作品、具体问题和一手经验拿出来，互相反馈，也一起找合作和机会。",
+        "2万+成员把真实工作和一手判断留在这里：700+项目帖、8,000+条评论，持续提供一个看见不同领域AI实践水位的参照系。",
       href: "https://www.superlinear.academy/",
     },
     {
@@ -106,8 +106,8 @@ const currentWork = {
 const publicFacts = [
   {
     value: "200+",
-    en: "public conversations hosted; this is a conversation count, not a count of unique guests",
-    zh: "主持的公开对话场次；这是对话数，不是独立嘉宾数",
+    en: "public conversations with technology leaders and AI researchers",
+    zh: "与科技领袖和AI研究者的公开对话",
   },
   {
     value: "400K+",
@@ -148,19 +148,16 @@ export default function About() {
         "His defining belief is MAKE WHAT LASTS: make work that keeps creating value and clearly bears its maker's judgment and craft. He has placed his own work, and Superlinear Academy, under the same standard.",
       backgroundTitle: "Background",
       background:
-        "He has worked as an economist, data scientist, and technology leader at Amazon, Meta, Tencent IEG, and Statsig. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
+        "He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
       currentTitle: "What he is building now",
       currentIntro:
-        "Superlinear is the academy he has chosen to build for the long term. It now includes a free community, structured learning through AI Builders, a year-round membership, and enterprise AI programs.",
+        "Superlinear is the academy he has chosen to build for the long term. It now includes a free community, structured learning through AI Builders, a year-round membership, and enterprise AI programs. One current research agenda asks what should count as AI-native work and talent once the capability and cost frontier changes.",
       publicTitle: "Books and conversations",
       publicIntro:
         "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
-      statsigNote:
-        "Statsig was acquired by OpenAI in 2025, after Yuzheng had left the company.",
-      statsigSource: "OpenAI acquisition announcement",
       sourcesTitle: "Sources and contact",
       reviewed:
-        "Facts last reviewed August 1, 2026. Changing figures retain their check date.",
+        "Facts last reviewed August 20, 2026. Changing figures retain their check date.",
       books: "Books",
       hosted: "People Yuzheng has interviewed",
       appeared: "Programs where Yuzheng appeared as a guest",
@@ -175,17 +172,15 @@ export default function About() {
         "他提出并长期倡导的主张是：做出你的代表作——把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。他也把自己的工作与Superlinear Academy放在同一条标准之下。",
       backgroundTitle: "经历",
       background:
-        "他在Amazon做过经济学家，在Meta做过数据科学家，后来任腾讯IEG · 数据与AI副总监，也曾任Statsig · Principal Data Scientist、公司唯一布道师。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
+        "他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
       currentTitle: "现在主要在做什么",
       currentIntro:
-        "Superlinear是他选择长期建设的学院。现在包括免费社区、AI Builders系统课程、全年会员和企业AI项目。",
+        "Superlinear是他选择长期建设的学院。现在包括免费社区、AI Builders系统课程、全年会员和企业AI项目。他当前的一项公开研究议程，是AI改变能力与成本以后，到底什么才算AI Native工作与人才。",
       publicTitle: "书与对话",
       publicIntro:
         "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
-      statsigNote: "Statsig于2025年被OpenAI收购；孙煜征在收购前已经离开。",
-      statsigSource: "OpenAI收购公告",
       sourcesTitle: "资料与联系",
-      reviewed: "事实最后核对：2026年8月1日。会变化的数字保留各自的核对日期。",
+      reviewed: "事实最后核对：2026年8月20日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",
@@ -278,17 +273,6 @@ export default function About() {
                   : "康奈尔经济学博士去向记录"}
                 <ExternalLink className="h-4 w-4" />
               </a>
-              <p className="mt-7 border-t border-[#D4D0C7] pt-5 text-sm leading-7 text-[#6E685D]">
-                {copy.statsigNote}{" "}
-                <a
-                  href="https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-[#743B13]"
-                >
-                  {copy.statsigSource}
-                </a>
-              </p>
             </div>
             <div className="grid border-t border-[#D4D0C7] sm:grid-cols-2 lg:grid-cols-3">
               {career.map(item => (

@@ -29,7 +29,7 @@ export const heroCopy = {
     primary: "See the work",
     secondary: "Join the free community",
     credentials:
-      "Cornell Economics PhD · Amazon, Meta, Tencent & Statsig (acquired by OpenAI) · Founder, author & interviewer",
+      "Cornell Economics PhD · Amazon, Meta & Tencent · Early Statsig team, later acquired by OpenAI · Founder, author & interviewer",
     imageAlt:
       "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired",
     caption: "With Ben Gilbert & David Rosenthal of Acquired",
@@ -47,7 +47,7 @@ export const heroCopy = {
     primary: "看我正在做什么",
     secondary: "免费加入社区",
     credentials:
-      "康奈尔经济学博士·曾任职Amazon、Meta、腾讯与Statsig（后被OpenAI收购）·创始人、作者、访谈者",
+      "康奈尔经济学博士·Amazon、Meta、腾讯经历·OpenAI收购团队早期成员·创始人、作者、访谈者",
     imageAlt: "孙煜征与Acquired的Ben Gilbert、David Rosenthal对谈",
     caption: "与Acquired的Ben Gilbert、David Rosenthal对谈",
     location: "SIGNIFICANCE SUMMIT",
@@ -242,7 +242,7 @@ export const workItems = {
     [
       "01",
       "The free community",
-      "20,000+ members · 600+ public project posts · nearly 7,000 project comments",
+      "20,000+ members · 700+ public project posts · 8,000+ project comments",
       "Unfinished work meets analysis, real projects, first-hand experience, complementary people, collaboration, and opportunity.",
       "https://www.superlinear.academy",
       "Join for free",
@@ -276,7 +276,7 @@ export const workItems = {
     [
       "01",
       "免费社区",
-      "20,000+名成员·600+项目帖·近7,000条项目评论",
+      "20,000+名成员·700+项目帖·8,000+条项目评论",
       "让还没完成的作品，尽早遇到深度解析、真实项目、一手经验、互补的人、合作与机会。",
       "https://www.superlinear.academy",
       "免费加入",

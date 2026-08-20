@@ -175,9 +175,9 @@ const work = {
       label: "OPEN, PUBLIC VALUE",
       title: "The free community",
       detail:
-        "A community of 20,000+ people seriously using AI. Unfinished work can meet deep analysis, real projects, first-hand experience, complementary people, collaboration, and opportunity.",
+        "A free community of 20,000+ people seriously using AI. Real work stays visible: what people tried, what failed, how they judged, and what changed. That gives unfinished work a better frame of reference—and a place to meet feedback, users, collaborators, and opportunity.",
       proof:
-        "20,000+ members · 600+ public project posts · nearly 7,000 project comments",
+        "20,000+ members · 700+ public project posts · 8,000+ project comments",
       href: "https://www.superlinear.academy",
       cta: "Join for free",
     },
@@ -219,8 +219,8 @@ const work = {
       label: "免费开放",
       title: "免费社区",
       detail:
-        "两万多名认真用AI做事的人在这里相遇。还没完成的作品，可以尽早遇到深度解析、真实项目、一手经验、互补的人、合作与机会。",
-      proof: "20,000+名成员 · 600+项目帖 · 近7,000条项目评论",
+        "2万+认真用AI做事的人，把真实项目、一手判断、失败和进展留在这里。你能持续看见做过的人怎样判断、怎样把事情做成；未完成的作品也能尽早遇到反馈、用户、同行与机会。",
+      proof: "20,000+名成员 · 700+项目帖 · 8,000+条项目评论",
       href: "https://www.superlinear.academy",
       cta: "免费加入",
     },
@@ -640,8 +640,8 @@ export default function Home() {
               </div>
               <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-zinc-500">
                 {lang === "en"
-                  ? "Cornell Economics PhD · Former Amazon, Meta, Tencent & Statsig · Founder and author"
-                  : "康奈尔经济学博士 · 曾任职Amazon、Meta、腾讯与Statsig（后被OpenAI收购）· 创始人、作者、访谈者"}
+                  ? "Cornell Economics PhD · Amazon, Meta & Tencent · Early Statsig team, later acquired by OpenAI"
+                  : "康奈尔经济学博士 · Amazon、Meta、腾讯经历 · OpenAI收购团队早期成员 · 创始人、作者、访谈者"}
               </p>
             </div>
 

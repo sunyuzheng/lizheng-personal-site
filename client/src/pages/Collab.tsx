@@ -24,9 +24,11 @@ const copy = {
   en: {
     navSub: "Collaborate",
     eyebrow: "Talks · Team programs · Long-term work",
-    h1: "Have something worth building together?",
+    h1: "Turn what AI makes possible into work that actually happens.",
     intro:
-      "Different collaborations need different starting points. Below are the kinds of work where I can contribute most, and the context that helps us decide. Podcast, video, and creator invitations have their own page.",
+      "I am most useful when new technical capability has to become a judgment about what is worth doing, a redesigned way of working, or an organizational choice that can survive reality. We can begin with a talk, an enterprise program, or a longer partnership. Podcast and video invitations have their own page.",
+    proofLine:
+      "Cornell Economics PhD · Former Tencent AI leader · Early Statsig team, later acquired by OpenAI · 200+ public conversations",
     creatorLabel: "PODCASTS & CREATOR INVITATIONS",
     creatorTitle: "Inviting me to a podcast or video?",
     creatorDetail:
@@ -40,7 +42,7 @@ const copy = {
         number: "01",
         title: "Talks & events",
         detail:
-          "Keynotes, fireside conversations, and panels on AI judgment, building with AI, growth and experimentation, and career leverage.",
+          "Keynotes, fireside conversations, and panels on what AI changes, AI-native work and talent, building reliable systems, organizational judgment, and career value.",
         fit: "Most useful when you can name who is in the room and what should change for them afterward.",
       },
       {
@@ -48,7 +50,7 @@ const copy = {
         number: "02",
         title: "Enterprise AI programs",
         detail:
-          "Structured work for engineering and non-engineering teams, grounded in real workflows and organizational constraints. Previous programs and internal sessions include Tencent, Meituan, Xiaohongshu, DoorDash, Pinterest, and others.",
+          "Structured work for engineering and non-engineering teams: start from the result and constraints, redesign the division of labor among people, models, and tools, then build evaluation, feedback, and ownership into the system. Previous programs and internal sessions include Tencent, Meituan, Xiaohongshu, DoorDash, Pinterest, and others.",
         fit: "Best when a team needs to move from discussing AI to changing how work actually gets done.",
         action: {
           label: "Explore enterprise work",
@@ -62,7 +64,7 @@ const copy = {
         number: "03",
         title: "Advisory & long-term partnerships",
         detail:
-          "Focused work on product, AI, data, growth, or organizational decisions where first-principles judgment and operating context both matter.",
+          "Focused work on product, AI, data, growth, or organizational decisions where there is no ready-made playbook and first-principles judgment has to meet operating reality.",
         fit: "Long-term advisory or investment conversations can begin here. They remain separate from editorial coverage.",
       },
     ],
@@ -106,9 +108,11 @@ const copy = {
   zh: {
     navSub: "合作",
     eyebrow: "演讲 · 企业项目 · 长期合作",
-    h1: "有一件值得一起做的事？",
+    h1: "把AI的变化，变成真正发生的工作。",
     intro:
-      "不同合作需要不同的开始。下面写清我最能帮上忙的几类事情，以及联系时最有用的信息。播客、视频与创作者邀请，请走单独页面。",
+      "我最能发挥价值的地方，是把技术变化翻译成值得做的判断、重新设计的工作方式，以及经得起现实检验的组织选择。可以从一场演讲、一个企业项目，或一段长期合作开始。播客和视频邀请另有入口。",
+    proofLine:
+      "康奈尔经济学博士 · 前腾讯总监 · OpenAI收购团队早期成员 · 200+场科技领袖与AI研究者对话",
     creatorLabel: "播客与创作者邀请",
     creatorTitle: "想邀请我上播客或视频节目？",
     creatorDetail:
@@ -122,7 +126,7 @@ const copy = {
         number: "01",
         title: "演讲与活动",
         detail:
-          "Keynote、炉边对谈和圆桌，主题包括AI判断、用AI构建、增长与实验、职业杠杆。",
+          "Keynote、炉边对谈和圆桌，主题包括AI到底改变了什么、AI Native工作与人才、可靠系统、组织判断与职业价值。",
         fit: "最合适的情况：你说得清台下是谁，以及听完后希望他们发生什么变化。",
       },
       {
@@ -130,7 +134,7 @@ const copy = {
         number: "02",
         title: "企业AI项目",
         detail:
-          "面向研发和非研发团队的成体系项目，从真实工作流和组织约束出发。曾为腾讯、美团、小红书、DoorDash、Pinterest等团队提供项目与内部分享。",
+          "面向研发和非研发团队的成体系项目：先回到工作要产生的结果和现实约束，再重做人、模型与工具的分工，把评估、反馈和责任写进系统。曾为腾讯、美团、小红书、DoorDash、Pinterest等团队提供项目与内部分享。",
         fit: "最合适的情况：团队需要从讨论AI，走到真正改变工作方式。",
         action: {
           label: "了解企业项目",
@@ -144,7 +148,7 @@ const copy = {
         number: "03",
         title: "顾问与长期合作",
         detail:
-          "聚焦产品、AI、数据、增长或组织决策；既需要从原理上判断，也需要理解真实业务约束。",
+          "聚焦产品、AI、数据、增长或组织决策；尤其适合没有现成答案，需要从原理重新定义问题、拆开约束，再回到真实业务里做判断的事情。",
         fit: "长期顾问或投资对话可以从这里开始，但与节目选题和内容露出彼此独立。",
       },
     ],
@@ -230,11 +234,22 @@ export default function Collab() {
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
               {t.eyebrow}
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.08] text-white md:text-6xl">
-              {t.h1}
+            <h1 className="mt-5 max-w-3xl text-[34px] font-semibold leading-[1.08] text-white md:text-6xl">
+              {lang === "zh" ? (
+                <>
+                  把AI的变化，
+                  <br />
+                  变成真正发生的工作。
+                </>
+              ) : (
+                t.h1
+              )}
             </h1>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">
               {t.intro}
+            </p>
+            <p className="mt-6 max-w-3xl border-l border-amber-300/50 pl-4 text-xs font-medium leading-6 text-zinc-400">
+              {t.proofLine}
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-03. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-20. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -23,7 +23,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 ## Current Work
 
-- [Superlinear Academy](https://www.superlinear.academy): an open, free learning and builder community where deep analysis, projects, specific questions, first-hand experience, feedback, and opportunities circulate.
+- [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
 - [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
@@ -31,6 +31,8 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
 These are related parts of one body of work, not separate identities. The intellectual foundations join interpenetrating explicit world models and tacit, result-answerable craft; conviction matters when understanding has to bear the cost of action, while responsible authorship keeps agency and accountability with the work. Reality keeps testing it, and time gradually reveals what continues to matter.
+
+One current, revisable AI-era research agenda asks what should count as AI-native work and talent. Yuzheng's working view starts from the result that matters, identifies which old process choices compensated for old constraints, and redesigns the work when AI changes capability and relative cost. It treats professional judgment as something AI can amplify while recognizing that experienced people may have more to unlearn when old constraints have hardened into unquestioned best practices.
 
 ## Current Public Evidence
 
@@ -41,8 +43,8 @@ Metrics change and should retain their dates.
 - 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
 - 5.0/5 AI Builders rating on Maven from 83 ratings as of 2026-08-02. Separately, 54 public named written reviews had been archived as of 2026-07-27; the two counts measure different things and should not be subtracted to infer a current review gap.
 - 55 selected AI Architect course projects as of 2026-07-25.
-- 600+ public project posts and nearly 7,000 project comments in the free Superlinear Academy community as of 2026-07-08. These are not counts of paid-course projects.
-- 20,202 members who completed profile setup in the free Superlinear Academy community as of 2026-07-30; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
+- 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.
+- 21,686 members who completed profile setup in the free Superlinear Academy community as of 2026-08-20; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
 - [AI Engineer](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) publicly named Yuzheng as a collaborator on the upcoming [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), scheduled for November 5-6, 2026. This establishes the announced collaboration, not a completed event outcome.
 
 ## Books

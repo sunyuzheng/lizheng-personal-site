@@ -32,7 +32,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. MAKE WHAT LASTS: turn hard-won judgment into work people keep using.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-03",
+    lastModified: "2026-08-20",
   },
   zh: {
     title: "课代表立正（孙煜征）｜做出你的代表作",
@@ -40,7 +40,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。做出你的代表作：把判断和本事，做成别人真正会用、也能继续代表自己的作品。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-03",
+    lastModified: "2026-08-20",
   },
 };
 
@@ -48,18 +48,18 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Profile · Yuzheng Sun · 孙煜征",
     description:
-      "A factual profile of Yuzheng Sun (孙煜征, 课代表立正): Cornell Economics PhD, career, books, current work, public conversations, and Seattle base.",
+      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-08-01",
+    lastModified: "2026-08-20",
   },
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
     description:
-      "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，现居西雅图，创办了Superlinear Academy和AI Builders。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。",
     canonical: "https://www.lizheng.ai/zh/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-08-01",
+    lastModified: "2026-08-20",
   },
 };
 
@@ -88,7 +88,7 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
     "孙煜征所著《真本事：从会工作到会赚钱》，由人民邮电出版社出版。关于工作、能力、副业与长期价值的一套实践框架。",
   canonical: "https://www.lizheng.ai/zbs",
   ogImage: "https://www.lizheng.ai/book/cover-front.png",
-  lastModified: "2026-07-25",
+  lastModified: "2026-08-20",
 };
 
 export const PODCAST_PAGE_META: PageMeta = {

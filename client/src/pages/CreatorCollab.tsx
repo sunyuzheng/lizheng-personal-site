@@ -149,8 +149,7 @@ const guestAppearances = [
     date: "2025.06.10",
     show: "硅谷101",
     title: "E195｜从工具到伙伴：七位 AI Agent 深度使用者的思考",
-    titleEn:
-      "E195 · From tool to partner: seven experienced AI agent users",
+    titleEn: "E195 · From tool to partner: seven experienced AI agent users",
     href: "https://www.xiaoyuzhoufm.com/episode/684775cbcdecf72d4ca2fcc5",
     format: "panel",
   },
@@ -278,8 +277,8 @@ const copy = {
     ],
     heroProofs: [
       "Cornell Economics PhD",
-      "Amazon · Meta · Tencent · Statsig (acquired by OpenAI)",
-      "Superlinear Academy · 20,000+ community members",
+      "Amazon · Meta · Tencent · Early Statsig team (acquired by OpenAI)",
+      "Superlinear Academy · 20,000+ members · 700+ projects",
       "YouTube · Bilibili · Xiaohongshu · 400K+ followers",
     ],
     questionCta: "See where an episode could begin",
@@ -338,10 +337,10 @@ const copy = {
       },
       {
         title:
-          "When free courses and AI tutors are everywhere, why have 3,000+ people still paid to learn—and 20,000+ joined the same community?",
+          "What should count as AI-native talent—and why can experienced professionals have more to unlearn?",
         detail:
-          "What people are really paying for in education: structure, judgment, feedback, trust, and a peer environment—and how to preserve the quality of that environment as it grows.",
-        proof: "AI Builders · Superlinear Academy · courses, community, and membership",
+          "Start with the work: which best practices were responses to old constraints, what AI has changed, and how people recompute the best way to reach the result without outsourcing judgment.",
+        proof: "AI Builders · 700+ community projects · enterprise programs",
       },
     ],
     otherDirections:
@@ -542,13 +541,13 @@ const copy = {
     pdfCta: "Download the six-page Chinese guest kit",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He has worked at Amazon, Meta, Tencent, and Statsig, which was later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
+      "Yuzheng Sun has a PhD in Economics from Cornell and is the founder of Superlinear Academy and AI Builders. He was an economist at Amazon, a data scientist at Meta, a vice director at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He has worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig, which was later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result and unmistakably bears its maker’s choices. As of July 2026, he has taught 3,000+ paying learners and held 200+ public conversations with researchers, founders, and operators. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. He is the founder of Superlinear Academy and AI Builders. His defining idea is MAKE WHAT LASTS: turn judgment and craft into work that remains useful after the first result and unmistakably bears its maker’s choices. As of August 2026, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of 20,000+ members with 700+ shared real-world projects. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     brandLineLabel: "One line for the introduction",
     brandLine: "Superlinear Academy stands for one idea: MAKE WHAT LASTS.",
-    headshotLabel: "1200 × 1200 headshot",
+    headshotLabel: "1280 × 1280 headshot",
     headshotCta: "Download headshot",
     factsTitle: "Public facts & source links",
     facts: [
@@ -587,14 +586,15 @@ const copy = {
     ],
     heroProofs: [
       "康奈尔经济学博士",
-      "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
-      "Superlinear Academy · 20,000+社区成员",
+      "Amazon · Meta · 腾讯 · OpenAI收购团队早期成员",
+      "Superlinear Academy · 20,000+成员 · 700+真实项目",
       "YouTube · B站 · 小红书 · 40万+关注者",
     ],
     questionCta: "看看这期可以从哪里开始",
     kitCta: "查看嘉宾资料",
     formatsEyebrow: "这些判断从哪里来",
-    formatsTitle: "AI问题很少只停在技术里。它最终会进入产品、组织和人的真实选择。",
+    formatsTitle:
+      "AI问题很少只停在技术里。它最终会进入产品、组织和人的真实选择。",
     formats: [
       {
         number: "01",
@@ -624,7 +624,8 @@ const copy = {
       "不用把我的全部经历塞进一期节目。挑一个你的听众真的面对的问题，我们可以一路追到背后的机制、亲历的案例，以及它最后会把人带到哪里。",
     questions: [
       {
-        title: "AI让每个人都能迅速做出第一版，为什么真正能代表一个人的作品反而更稀缺？",
+        title:
+          "AI让每个人都能迅速做出第一版，为什么真正能代表一个人的作品反而更稀缺？",
         detail:
           "从“停止使用ChatGPT”到Agent工作方式：当执行越来越便宜，判断、手艺和长期投入为什么重新成为差异。",
         proof: "AI Builders · 创作者实践 · 社区真实项目",
@@ -642,10 +643,10 @@ const copy = {
         proof: "2021年与2023年2月的公开记录",
       },
       {
-        title: "免费资料和AI导师随手可得，为什么仍有3,000多人付费学习，又有20,000+人加入同一个社区？",
+        title: "到底什么算AI Native人才？为什么有经验的人，反而可能更难？",
         detail:
-          "从课程结构、判断、反馈、信任和同行环境，聊教育产品真正出售的是什么，以及规模增长以后怎样守住水位。",
-        proof: "AI Builders · Superlinear Academy · 课程、社区与会员",
+          "先回到工作本身：哪些最佳实践只是旧约束下的办法，AI改变了什么，人又怎样在不外包判断的前提下，把工作重新算一遍。",
+        proof: "AI Builders · 700+社区项目 · 企业AI项目",
       },
     ],
     otherDirections:
@@ -806,13 +807,13 @@ const copy = {
     pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。此前先后在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他提出并长期倡导的主张是：做出你的代表作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他提出并长期倡导的主张是：做出你的代表作。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他先后在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监，也曾在Statsig任Principal Data Scientist及公司唯一布道师；该公司后来被OpenAI收购。他是Superlinear Academy与AI Builders创始人。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年7月，他教过3,000多名付费学员，也主持或参与了200多场公开对谈。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。他是Superlinear Academy与AI Builders创始人。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
     brandLine: "Superlinear Academy的主张是：做出你的代表作。",
-    headshotLabel: "1200 × 1200头像",
+    headshotLabel: "1280 × 1280头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",
     facts: [

@@ -313,9 +313,9 @@ def draw_cover(c: canvas.Canvas) -> None:
     proof_y = H - 232
     proofs = [
         "康奈尔大学经济学博士",
-        "Amazon · Meta · 腾讯 · Statsig（后被OpenAI收购）",
-        "200+场公开对谈 · 截至2026.07",
-        "全网40万+关注者 · 三平台各10万+ · 截至2026.07",
+        "Amazon · Meta · 腾讯 · OpenAI收购团队早期成员",
+        "200+场公开对谈 · 截至2026.08",
+        "全网40万+关注者 · 三平台各10万+ · 截至2026.08",
     ]
     for index, text in enumerate(proofs):
         col = index % 2
@@ -404,7 +404,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     portrait_x, portrait_y, portrait_w, portrait_h = 343, 395, 210, 245
     draw_image(
         c,
-        PUBLIC / "book" / "author.jpg",
+        PUBLIC / "yuzheng-sun-headshot.jpg",
         portrait_x,
         portrait_y,
         portrait_w,
@@ -727,8 +727,8 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
         ),
         (
             "方向三",
-            "AI到底怎样进入真实工作",
-            "为什么“会用工具”和“能把复杂事情做成”是两种能力；个人与组织分别卡在哪里。",
+            "到底什么算AI Native人才？",
+            "不是年龄或工具频率。回到工作结果，识别旧流程补偿的约束，再在AI改变能力与成本以后，把工作重新算一遍。",
             "适合：产品、管理、企业与技术节目",
         ),
     ]
@@ -777,7 +777,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     proof_metrics = [
         ("两年半·13期", "AI Builders持续迭代"),
         ("3,000+", "付费学员"),
-        ("5.0/5", "82份Maven评分"),
+        ("5.0/5", "83份Maven评分"),
     ]
     metric_y = proof_y + 77
     metric_w = 126
@@ -827,7 +827,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy与AI Builders创始人。曾在Amazon、Meta、腾讯和Statsig从事经济学、数据与AI工作；Statsig后来被OpenAI收购。他关注的是：AI让第一版越来越容易以后，我们怎样选对值得做的事，做出自己的代表作。",
+        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他主持200+场科技领袖与AI研究者对话，课程服务3,000+付费学员，并建立了2万+人的免费社区。如今，他追问AI改变能力边界以后，个人与组织怎样重新设计工作，做出自己的代表作。",
         228,
         668,
         W - M - 228,

@@ -152,8 +152,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
 
 export function buildPodcastStructuredData() {
   const podcastId = `${PODCAST_URL}/#podcast`;
-  const cover =
-    "https://img.transistorcdn.com/_uKueNmEg-Ah4w9L4nrA6Mw-NP5fl0crXikpxBcfSbM/rs:fill:0:0:1/w:1400/h:1400/q:60/mb:500000/aHR0cHM6Ly9pbWct/dXBsb2FkLXByb2R1/Y3Rpb24udHJhbnNp/c3Rvci5mbS9jYzZl/YWYzMjA5NzJiMDY4/MjIxOGE0ZjYwMzY0/ODQ1ZC5qcGc.jpg";
+  const cover = "https://podcast.lizheng.ai/podcast/avatar.png";
 
   return {
     "@context": "https://schema.org",
@@ -164,7 +163,7 @@ export function buildPodcastStructuredData() {
         name: "课代表立正",
         url: `${PODCAST_URL}/`,
         description:
-          "课代表立正的官方Podcast。深度访谈，有用干货，亲身验证的「真本事」。",
+          "《课代表立正》是一档关于AI、职业与商业的中文播客。这里既有与AI研究者、科技创业者、一线管理者和真实实践者的深度对话，也有课代表立正对产品、增长、创业与职业选择的亲身复盘。我们不只追逐新工具，更关心：当AI改变能力和成本，个人与组织怎样重新设计工作，把判断和本事做成真正进入现实、值得留下的作品。",
         image: cover,
         webFeed: "https://feeds.transistor.fm/kedaibiao",
         author: { "@id": PERSON_ID },
@@ -182,11 +181,11 @@ export function buildPodcastStructuredData() {
         url: `${PODCAST_URL}/`,
         name: "课代表立正Podcast",
         description:
-          "收听关于AI、职业、商业和真实世界选择的深度访谈与亲身实践。",
+          "课代表立正（孙煜征）的官方中文播客：与AI研究者、科技创业者、一线管理者和真实实践者深度对话，讨论AI、职业、商业与真实世界的判断。",
         mainEntity: { "@id": podcastId },
         about: { "@id": PERSON_ID },
         inLanguage: "zh-CN",
-        dateModified: "2026-08-01",
+        dateModified: "2026-08-20",
       },
       personNode("zh"),
     ],

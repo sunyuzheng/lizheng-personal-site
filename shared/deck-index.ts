@@ -472,7 +472,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/ai-side-income-2026",
     featured: true,
-    accent: "#D7FF64",
+    accent: "#238343",
     keywords: [
       "AI side income",
       "side project",

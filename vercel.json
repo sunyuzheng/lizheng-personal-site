@@ -13,6 +13,22 @@
       "continue": true
     },
     {
+      "src": "/decks/ai-side-income-career-capital",
+      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital"
+    },
+    {
+      "src": "/decks/ai-side-income-career-capital/(.+)",
+      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital/$1"
+    },
+    {
+      "src": "/decks/ai-side-income-commercial-gates",
+      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates"
+    },
+    {
+      "src": "/decks/ai-side-income-commercial-gates/(.+)",
+      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1"
+    },
+    {
       "src": "/zh/decks",
       "status": 308,
       "headers": { "Location": "/decks" }

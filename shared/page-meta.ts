@@ -116,7 +116,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "Enterprise AI training, strategic briefings, and workshop decks by Yuzheng Sun, designed for teams across data, engineering, investment, and knowledge work.",
     canonical: "https://www.lizheng.ai/en/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-15",
+    lastModified: "2026-08-21",
   },
   zh: {
     title: "企业AI培训与课件｜课代表立正（孙煜征）",
@@ -124,7 +124,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征）的企业AI培训与课件索引：为数据、研发、投资与知识工作团队定制的战略汇报、工作坊和公开分享。",
     canonical: "https://www.lizheng.ai/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-15",
+    lastModified: "2026-08-21",
   },
 };
 

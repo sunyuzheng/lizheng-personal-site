@@ -20,6 +20,7 @@ function isChineseCanonicalOnlyPath(pathname: string): boolean {
     pathname === "/zbs" ||
     pathname === "/podcast" ||
     pathname === "/speaker" ||
+    pathname.startsWith("/decks/") ||
     pathname === "/guests" ||
     pathname.startsWith("/guests/")
   );

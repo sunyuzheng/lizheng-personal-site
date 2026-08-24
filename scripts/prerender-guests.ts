@@ -11,6 +11,7 @@ import {
 } from "../shared/collab-meta.ts";
 import {
   ABOUT_PAGE_META,
+  AIE_SHANGHAI_DECK_PAGE_META,
   BOOKS_PAGE_META,
   HOME_PAGE_META,
   PODCAST_PAGE_META,
@@ -24,6 +25,7 @@ import {
 } from "../shared/page-meta.ts";
 import {
   buildAboutStructuredData,
+  buildAieShanghaiDeckStructuredData,
   buildBooksStructuredData,
   buildGuestStructuredData,
   buildGuestsListStructuredData,
@@ -255,6 +257,10 @@ function buildSitemapXml(guests: GuestProfile[]) {
     {
       loc: DECKS_PAGE_META.en.canonical,
       lastmod: DECKS_PAGE_META.en.lastModified,
+    },
+    {
+      loc: AIE_SHANGHAI_DECK_PAGE_META.canonical,
+      lastmod: AIE_SHANGHAI_DECK_PAGE_META.lastModified,
     },
     ...guests.map(guest => ({
       loc: guest.share_url,
@@ -498,6 +504,16 @@ const staticPages: StaticPage[] = [
     jsonLd: buildDeckLibraryStructuredData("zh"),
     alternates: DECKS_LANGUAGE_ALTERNATES,
     imageAlt: "课代表立正在西雅图进行企业AI培训",
+    imageWidth: 1280,
+    imageHeight: 720,
+  },
+  {
+    route: "/decks/aie-shanghai-2026",
+    meta: AIE_SHANGHAI_DECK_PAGE_META,
+    lang: "zh",
+    jsonLd: buildAieShanghaiDeckStructuredData(),
+    ogType: "article",
+    imageAlt: "AIE Shanghai 2026合作会谈deck封面",
     imageWidth: 1280,
     imageHeight: 720,
   },

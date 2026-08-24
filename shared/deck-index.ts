@@ -90,6 +90,41 @@ export const DECK_CATEGORIES: DeckCategoryDefinition[] = [
 
 export const DECK_LIBRARY: DeckEntry[] = [
   {
+    id: "aie-shanghai-2026",
+    collection: "enterprise",
+    category: "product-delivery",
+    organization: "AI Engineer Shanghai",
+    occasion: {
+      en: "Partnership briefing for the Shanghai AI industry association",
+      zh: "上海市人工智能行业协会合作会谈",
+    },
+    title: "让上海的AI工程实践进入全球同行网络",
+    date: "2026-08-24",
+    language: "zh",
+    audience: {
+      en: "Industry associations, technology companies, and ecosystem partners",
+      zh: "产业协会、技术企业与生态合作方",
+    },
+    takeaway: {
+      en: "Connect Shanghai's industrial and engineering depth with AIE's global network of AI engineers, researchers, and technology companies through one focused program and delivery mechanism.",
+      zh: "把上海的产业与工程实践，通过一套清楚的议程和交付机制，接入AIE的全球AI工程师、研究者与技术公司网络。",
+    },
+    href: "https://www.lizheng.ai/decks/aie-shanghai-2026",
+    linkKind: "deck",
+    featured: true,
+    accent: "#238343",
+    keywords: [
+      "AI Engineer",
+      "AIE Shanghai",
+      "open source",
+      "AI infrastructure",
+      "physical AI",
+      "上海",
+      "产业合作",
+      "技术会议",
+    ],
+  },
+  {
     id: "binance-data-analytics-ai",
     collection: "enterprise",
     category: "data-decision",

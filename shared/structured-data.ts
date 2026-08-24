@@ -1,4 +1,8 @@
-import { DECKS_PAGE_META, type SiteLang } from "./page-meta.ts";
+import {
+  AIE_SHANGHAI_DECK_PAGE_META,
+  DECKS_PAGE_META,
+  type SiteLang,
+} from "./page-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
 import { DECK_LIBRARY, localized } from "./deck-index.ts";
 
@@ -440,6 +444,59 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
         name,
         lang === "en" ? "Yuzheng Sun" : "课代表立正"
       ),
+    ],
+  };
+}
+
+export function buildAieShanghaiDeckStructuredData() {
+  const canonical = AIE_SHANGHAI_DECK_PAGE_META.canonical;
+  const documentId = `${canonical}#deck`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonical}#webpage`,
+        url: canonical,
+        name: AIE_SHANGHAI_DECK_PAGE_META.title,
+        description: AIE_SHANGHAI_DECK_PAGE_META.description,
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: { "@id": documentId },
+        inLanguage: "zh-CN",
+        dateModified: AIE_SHANGHAI_DECK_PAGE_META.lastModified,
+      },
+      {
+        "@type": "PresentationDigitalDocument",
+        "@id": documentId,
+        name: "让上海的AI工程实践进入全球同行网络",
+        description: AIE_SHANGHAI_DECK_PAGE_META.description,
+        url: canonical,
+        image: AIE_SHANGHAI_DECK_PAGE_META.ogImage,
+        datePublished: "2026-08-24",
+        inLanguage: "zh-CN",
+        author: { "@id": PERSON_ID },
+        about: {
+          "@type": "Event",
+          name: "AI Engineer Shanghai 2026",
+          startDate: "2026-11-05",
+          endDate: "2026-11-06",
+          eventAttendanceMode:
+            "https://schema.org/OfflineEventAttendanceMode",
+          location: {
+            "@type": "Place",
+            name: "上海虹桥希尔顿",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "上海",
+              addressCountry: "CN",
+            },
+          },
+        },
+      },
+      websiteNode(),
+      personNode("zh"),
+      breadcrumbNode(canonical, "AIE Shanghai 2026合作会谈", "课代表立正"),
     ],
   };
 }

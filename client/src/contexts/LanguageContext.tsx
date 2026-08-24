@@ -26,7 +26,11 @@ function isStandaloneChineseHost(): boolean {
 function readInitialLang(defaultLang: Lang): Lang {
   if (typeof window === "undefined") return defaultLang;
   if (isStandaloneChineseHost()) return "zh";
-  if (window.location.pathname === "/decks") return "zh";
+  if (
+    window.location.pathname === "/decks" ||
+    window.location.pathname.startsWith("/decks/")
+  )
+    return "zh";
   if (window.location.pathname === "/en/decks") return "en";
   if (
     window.location.pathname === "/zh" ||
@@ -78,7 +82,10 @@ export function LanguageProvider({
 
   useEffect(() => {
     const handlePopState = () => {
-      if (window.location.pathname === "/decks") {
+      if (
+        window.location.pathname === "/decks" ||
+        window.location.pathname.startsWith("/decks/")
+      ) {
         setLangState("zh");
         return;
       }

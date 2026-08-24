@@ -23,6 +23,7 @@ import type { Lang } from "./contexts/LanguageContext";
 
 const HomeExperiment = lazy(() => import("./pages/HomeExperiment"));
 const HomeExperimentEmil = lazy(() => import("./pages/HomeExperimentEmil"));
+const AieShanghaiDeck = lazy(() => import("./pages/AieShanghaiDeck"));
 
 function VercelExperimentRoute() {
   return (
@@ -36,6 +37,14 @@ function EmilExperimentRoute() {
   return (
     <Suspense fallback={null}>
       <HomeExperimentEmil />
+    </Suspense>
+  );
+}
+
+function AieShanghaiDeckRoute() {
+  return (
+    <Suspense fallback={<div className="h-[100svh] bg-[#0f2f1d]" />}>
+      <AieShanghaiDeck />
     </Suspense>
   );
 }
@@ -79,6 +88,10 @@ function Router() {
         <Route path={"/zbs"} component={ZhenbenShi} />
         <Route path={"/podcast"} component={Podcast} />
         <Route path={"/speaker"} component={GuestInvitation} />
+        <Route
+          path={"/decks/aie-shanghai-2026"}
+          component={AieShanghaiDeckRoute}
+        />
         <Route path={"/decks"} component={Decks} />
         <Route path={"/en/decks"} component={Decks} />
         <Route path={"/experiment/vercel"} component={VercelExperimentRoute} />

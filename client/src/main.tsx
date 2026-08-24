@@ -7,6 +7,7 @@ const isChineseContentPath =
   window.location.hostname === "podcast.lizheng.ai" ||
   window.location.hostname === "speaker.lizheng.ai" ||
   window.location.pathname === "/decks" ||
+  window.location.pathname.startsWith("/decks/") ||
   window.location.pathname === "/zbs" ||
   window.location.pathname === "/speaker" ||
   window.location.pathname === "/podcast" ||

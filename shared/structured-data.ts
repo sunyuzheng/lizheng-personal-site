@@ -469,7 +469,7 @@ export function buildAieShanghaiDeckStructuredData() {
       {
         "@type": "PresentationDigitalDocument",
         "@id": documentId,
-        name: "让上海的AI工程实践进入全球同行网络",
+        name: "把全球AI工程师网络与上海产业生态连接起来",
         description: AIE_SHANGHAI_DECK_PAGE_META.description,
         url: canonical,
         image: AIE_SHANGHAI_DECK_PAGE_META.ogImage,

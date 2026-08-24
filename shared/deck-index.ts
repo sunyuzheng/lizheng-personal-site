@@ -98,7 +98,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "Partnership briefing for the Shanghai AI industry association",
       zh: "上海市人工智能行业协会合作会谈",
     },
-    title: "让上海的AI工程实践进入全球同行网络",
+    title: "把全球AI工程师网络与上海产业生态连接起来",
     date: "2026-08-24",
     language: "zh",
     audience: {
@@ -106,8 +106,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "产业协会、技术企业与生态合作方",
     },
     takeaway: {
-      en: "Connect Shanghai's industrial and engineering depth with AIE's global network of AI engineers, researchers, and technology companies through one focused program and delivery mechanism.",
-      zh: "把上海的产业与工程实践，通过一套清楚的议程和交付机制，接入AIE的全球AI工程师、研究者与技术公司网络。",
+      en: "Introduce the joint operating team, explain how AIE complements Shanghai's existing AI platforms, and define a focused first cooperation package with the association.",
+      zh: "介绍共同运营团队，说明AIE如何补充上海已有的AI产业与开发者平台，并与协会确认一个边界清楚的首轮合作包。",
     },
     href: "https://www.lizheng.ai/decks/aie-shanghai-2026",
     linkKind: "deck",

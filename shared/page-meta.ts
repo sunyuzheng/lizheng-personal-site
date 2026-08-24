@@ -137,7 +137,7 @@ export const DECKS_LANGUAGE_ALTERNATES: LanguageAlternate[] = [
 export const AIE_SHANGHAI_DECK_PAGE_META: PageMeta = {
   title: "AIE Shanghai 2026｜上海市人工智能行业协会合作会谈",
   description:
-    "AI Engineer Shanghai 2026合作会谈材料：把上海产业与工程实践接入全球AI工程师、研究者和技术公司的同行网络。",
+    "AI Engineer Shanghai 2026合作会谈材料：介绍共同运营团队、AIE与上海站，以及与上海市人工智能行业协会的首轮合作方案。",
   canonical: "https://www.lizheng.ai/decks/aie-shanghai-2026",
   ogImage:
     "https://www.lizheng.ai/decks/aie-shanghai-2026/assets/og.png",

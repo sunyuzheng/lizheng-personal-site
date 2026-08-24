@@ -485,7 +485,7 @@ export function buildAieShanghaiDeckStructuredData() {
             "https://schema.org/OfflineEventAttendanceMode",
           location: {
             "@type": "Place",
-            name: "上海虹桥希尔顿",
+            name: "上海虹桥祥源希尔顿",
             address: {
               "@type": "PostalAddress",
               addressLocality: "上海",

@@ -106,8 +106,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "产业协会、技术企业与生态合作方",
     },
     takeaway: {
-      en: "Introduce the joint operating team, explain how AIE complements Shanghai's existing AI platforms, and define a focused first cooperation package with the association.",
-      zh: "介绍共同运营团队，说明AIE如何补充上海已有的AI产业与开发者平台，并与协会确认一个边界清楚的首轮合作包。",
+      en: "Introduce the joint operating team, show how AIE creates a two-way bridge between Shanghai and the global AI engineering network, and define a focused first cooperation package with the association.",
+      zh: "介绍共同运营团队，说明AIE如何让全球工程资源进入上海、也帮助中国AI企业连接国际市场，并与协会确认一个边界清楚的首轮合作包。",
     },
     href: "https://www.lizheng.ai/decks/aie-shanghai-2026",
     linkKind: "deck",

@@ -30,9 +30,10 @@ const FONT =
 export const SLIDE_META = [
   "把全球AI工程师网络与上海产业生态连接起来",
   "上海站由三组长期积累共同推进",
-  "孟颖、Yuzheng和Jolin各自负责一块不可替代的工作",
+  "李孟颖、孙煜征和盛玥各自负责一块不可替代的工作",
   "AIE把工程师、研究者、创始人与CTO带到同一个技术现场",
   "上海站不是一场海外会议的平移",
+  "不只把全球资源带进来，也帮助中国AI企业走向全球",
   "在协会已有平台上，再增加一层高密度工程实践交流",
   "上海站已启动，并进入更深的本地协作阶段",
   "合作方案应该从协会会员企业的真实需求出发",
@@ -265,7 +266,7 @@ function Slide01() {
       </Text>
       <Rule x={72} y={430} w={62} h={7} color={C.coral} />
       <Text x={72} y={468} w={650} h={32} size={21} color={C.white} weight={700}>
-        2026年11月5–6日  ·  上海虹桥希尔顿  ·  800人
+        2026年11月5–6日  ·  上海虹桥祥源希尔顿  ·  800人
       </Text>
       <Text x={72} y={514} w={650} h={24} size={13} color="rgba(255,255,255,.72)" weight={700}>
         OPEN SOURCE MODELS & AI INFRA  /  PHYSICAL AI
@@ -317,7 +318,7 @@ function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name
   return (
     <div>
       <Rect x={x} y={190} w={340} h={8} color={color} />
-      <Text x={x} y={222} w={340} h={42} size={29} color={C.ink} weight={700}>{name}</Text>
+      <Text x={x} y={222} w={340} h={42} size={24} color={C.ink} weight={700}>{name}</Text>
       <Text x={x} y={274} w={340} h={52} size={17} color={color} weight={700} lineHeight={1.22}>{identity}</Text>
       <Rule x={x} y={340} w={340} />
       <Text x={x} y={368} w={340} h={126} size={19} color={C.body} lineHeight={1.28}>{proof}</Text>
@@ -330,10 +331,10 @@ function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name
 function Slide03() {
   return (
     <SlideShell page={3} section="02  /  CORE TEAM">
-      <SlideTitle size={43}>孟颖、Yuzheng和Jolin，各自负责一块不可替代的工作</SlideTitle>
-      <TeamColumn x={72} name="李孟颖  Mengying Li" identity="增长 · 数据 · 商业化" proof="曾在Notion、MotherDuck、Braintrust等科技公司负责增长与数据；长期服务developer tools与B2B SaaS，也是a16z Scout和天使投资人。" role="AIE Shanghai：国际增长、赞助商合作、数据与商业化机制" color={C.brand} />
-      <TeamColumn x={470} name="孙煜征  Yuzheng Sun" identity="PROGRAM · 技术内容 · 中美连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：program方向、内容判断、技术嘉宾与开发者社区连接" color={C.deep} />
-      <TeamColumn x={868} name="Jolin  ·  Arogo" identity="上海产业合作 · 项目落地" proof="13年微软中国工作经历，覆盖解决方案销售、企业客户与总裁办公室业务运营；组织过多次2,000+人大型活动。" role="AIE Shanghai：本地企业与产业合作、高层沟通、会务与落地" color={C.coral} />
+      <SlideTitle size={43}>李孟颖、孙煜征和盛玥，各自负责一块不可替代的工作</SlideTitle>
+      <TeamColumn x={72} name="李孟颖 · Standup Partners" identity="增长 · 数据 · 商业化" proof="曾在Notion、MotherDuck、Braintrust等科技公司负责增长与数据；长期服务developer tools与B2B SaaS，也是a16z Scout和天使投资人。" role="AIE Shanghai：国际增长、赞助商合作、数据与商业化机制" color={C.brand} />
+      <TeamColumn x={470} name="孙煜征 · Standup Partners" identity="PROGRAM · 技术内容 · 中美连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：program方向、内容统筹、技术嘉宾与开发者社区连接" color={C.deep} />
+      <TeamColumn x={868} name="盛玥 · Arogo Intelligence" identity="上海产业合作 · 项目落地" proof="13年微软中国工作经历，曾担任解决方案销售、企业客户经理，并负责总裁办公室业务运营；组织过多次2,000+人大型活动。" role="AIE Shanghai：本地企业与产业合作、高层沟通、会务与落地" color={C.coral} />
     </SlideShell>
   );
 }
@@ -380,24 +381,55 @@ function Slide05() {
       <Text x={72} y={86} w={1136} h={76} size={51} color={C.white} weight={700} lineHeight={1.02}>上海站不是一场海外会议的平移</Text>
       <Rule x={640} y={208} w={2} h={280} color="rgba(255,255,255,.35)" />
       <Rect x={633} y={337} w={16} h={16} color={C.coral} />
-      <Text x={92} y={220} w={460} h={34} size={21} color="rgba(255,255,255,.72)" weight={700}>中国团队带到现场</Text>
+      <Text x={92} y={220} w={460} h={34} size={21} color="rgba(255,255,255,.72)" weight={700}>中国工程师带来的实践</Text>
       <Text x={92} y={274} w={460} h={212} size={34} color={C.white} weight={700} lineHeight={1.22}>{"产业条件与算力\n数据、评测与场景\n规模化部署经验\n快速演进的应用生态"}</Text>
-      <Text x={724} y={220} w={460} h={34} size={21} color="rgba(255,255,255,.72)" weight={700}>国际团队带到现场</Text>
+      <Text x={724} y={220} w={460} h={34} size={21} color="rgba(255,255,255,.72)" weight={700}>国际工程师带来的实践</Text>
       <Text x={724} y={274} w={460} h={212} size={34} color={C.white} weight={700} lineHeight={1.22}>{"模型、推理与架构\n开发者工具与平台\n生产系统可靠性\n全球工程师同行网络"}</Text>
       <Rect x={72} y={540} w={1136} h={88} color={C.deep} />
-      <Text x={104} y={558} w={1072} h={52} size={29} color={C.white} weight={700} align="center" valign="center">让中西方团队围绕同一组工程问题，面对面展示、比较与追问。</Text>
+      <Text x={104} y={558} w={1072} h={52} size={29} color={C.white} weight={700} align="center" valign="center">让中西方工程师围绕同一组工程问题，面对面展示、比较与追问。</Text>
     </SlideShell>
   );
 }
 
 function Slide06() {
+  const paths = [
+    { x: 72, number: "01", title: "直接接触全球网络", body: "与模型、AI基础设施、开发者平台和Physical AI企业的技术负责人同场交流。", color: C.brand },
+    { x: 367, number: "02", title: "延伸技术与商业合作", body: "从工程讨论出发，连接潜在的海外客户、合作伙伴、投资机构与开发者社区。", color: C.deep },
+    { x: 662, number: "03", title: "理解全球市场", body: "更直接地理解开发者生态、技术标准、商业模式与产业协作方式。", color: C.coral },
+    { x: 957, number: "04", title: "形成长期连接", body: "借助AIE的内容传播与全球会议网络，让上海现场延伸为持续关系。", color: C.brand },
+  ];
+
+  return (
+    <SlideShell page={6} section="05  /  TWO-WAY VALUE">
+      <SlideTitle size={42}>不只把全球资源带进来，也帮助中国AI企业走向全球</SlideTitle>
+      <Text x={72} y={164} w={1136} h={54} size={21} color={C.body} lineHeight={1.24}>
+        从一次现场交流开始，延伸到技术合作、商业拓展、全球市场理解与长期关系。
+      </Text>
+      <Rule x={86} y={286} w={1090} h={3} color={C.line} />
+      {paths.map(path => (
+        <div key={path.number}>
+          <Text x={path.x} y={232} w={250} h={24} size={14} color={path.color} weight={700}>{path.number}</Text>
+          <Rect x={path.x} y={277} w={20} h={20} color={path.color} radius={10} />
+          <Text x={path.x} y={324} w={250} h={60} size={24} color={C.ink} weight={700} lineHeight={1.15}>{path.title}</Text>
+          <Text x={path.x} y={398} w={250} h={118} size={18} color={C.body} lineHeight={1.3}>{path.body}</Text>
+        </div>
+      ))}
+      <Rect x={72} y={556} w={1136} h={76} color={C.pale} />
+      <Text x={100} y={574} w={1080} h={40} size={28} color={C.deep} weight={700} align="center" valign="center">
+        “带进来”和“走出去”，在同一个工程师网络里发生。
+      </Text>
+    </SlideShell>
+  );
+}
+
+function Slide07() {
   const rows = [
     { y: 204, label: "WAIC", title: "全球产业、战略、治理与政产学研广度", detail: "让上海成为全球人工智能产业与治理的重要交流平台", color: C.deep },
-    { y: 330, label: "GDC", title: "开发者生态、前沿探索与社区倡议", detail: "连接开发者、开源项目、青年人才与创新实践", color: C.brand },
+    { y: 330, label: "GDPS", title: "开发者生态、前沿探索与社区倡议", detail: "连接开发者、开源项目、青年人才与创新实践", color: C.brand },
     { y: 456, label: "AIE SHANGHAI", title: "高密度工程实践、准备充分的stage talk与全球内容传播", detail: "在800人规模里深入生产系统、技术判断、demo与failure case", color: C.coral },
   ];
   return (
-    <SlideShell page={6} section="05  /  COMPLEMENTARY POSITIONING">
+    <SlideShell page={7} section="06  /  COMPLEMENTARY POSITIONING">
       <SlideTitle size={42}>在协会已有平台上，再增加一层高密度工程实践交流</SlideTitle>
       {rows.map(row => (
         <div key={row.label}>
@@ -413,28 +445,30 @@ function Slide06() {
   );
 }
 
-function Slide07() {
+function Slide08() {
   return (
-    <SlideShell page={7} section="06  /  CURRENT PROGRESS">
+    <SlideShell page={8} section="07  /  CURRENT PROGRESS">
       <SlideTitle size={44}>上海站已启动，并进入更深的本地协作阶段</SlideTitle>
       <Text x={72} y={190} w={96} h={30} size={14} color={C.coral} weight={700}>EVENT</Text>
-      <Text x={72} y={228} w={510} h={92} size={27} color={C.ink} weight={700} lineHeight={1.26}>{"11月5–6日  ·  上海虹桥希尔顿\n800人  ·  中英双语现场"}</Text>
+      <Text x={72} y={228} w={510} h={92} size={27} color={C.ink} weight={700} lineHeight={1.26}>{"11月5–6日  ·  上海虹桥祥源希尔顿\n800人  ·  中英双语现场"}</Text>
       <Rule x={72} y={342} w={510} />
       <Text x={72} y={374} w={230} h={72} size={64} color={C.brand} weight={700}>20+</Text>
       <Text x={214} y={407} w={280} h={34} size={23} color={C.ink} weight={700}>位已确认嘉宾</Text>
       <Text x={72} y={472} w={230} h={72} size={64} color={C.deep} weight={700}>7</Text>
       <Text x={178} y={505} w={320} h={34} size={23} color={C.ink} weight={700}>家已确认赞助合作方</Text>
-      <Text x={72} y={574} w={510} h={54} size={16} color={C.muted} lineHeight={1.22}>已确认嘉宾来自World Labs、Cursor、Vercel、Kimi等团队；公开名单以最终官宣为准。</Text>
+      <Text x={72} y={564} w={510} h={54} size={16} color={C.muted} lineHeight={1.22}>已确认嘉宾来自World Labs、Cursor、Vercel、Kimi等团队；公开名单以最终官宣为准。</Text>
       <ImageAsset src="launch.png" alt="AI Engineer Shanghai 2026官方发布图" x={632} y={178} w={576} h={324} />
-      <Rect x={632} y={530} w={276} h={98} color={C.pale} />
-      <Text x={654} y={548} w={232} h={64} size={18} color={C.deep} weight={700} lineHeight={1.18}>{"TRACK A\nOpen Source Models & AI Infra"}</Text>
-      <Rect x={932} y={530} w={276} h={98} color="#FFF0EB" />
-      <Text x={954} y={548} w={232} h={64} size={18} color="#8B4638" weight={700} lineHeight={1.18}>{"TRACK B\nPhysical AI"}</Text>
+      <Rect x={632} y={524} w={276} h={88} color={C.pale} />
+      <Text x={654} y={540} w={232} h={60} size={18} color={C.deep} weight={700} lineHeight={1.18}>{"TRACK A\nOpen Source Models & AI Infra"}</Text>
+      <Rect x={932} y={524} w={276} h={88} color="#FFF0EB" />
+      <Text x={954} y={540} w={232} h={60} size={18} color="#8B4638" weight={700} lineHeight={1.18}>{"TRACK B\nPhysical AI"}</Text>
+      <Rect x={72} y={630} w={1136} h={38} color={C.pale} />
+      <Text x={92} y={639} w={1096} h={20} size={14} color={C.deep} weight={700} align="center">活动落地执行由安锐提供支持；安锐曾服务Microsoft、Google、AWS等企业活动，项目也与相关AI及开发者社区联动。</Text>
     </SlideShell>
   );
 }
 
-function Slide08() {
+function Slide09() {
   const questions = [
     { x: 72, y: 210, number: "01", title: "今年优先项", body: "在协会今年的企业服务、国际合作与开发者活动中，AIE Shanghai最能补上哪一块？" },
     { x: 658, y: 210, number: "02", title: "会员企业匹配", body: "围绕两条track，哪些企业最能代表上海正在发生的技术进展？" },
@@ -442,7 +476,7 @@ function Slide08() {
     { x: 658, y: 390, number: "04", title: "合作与审批机制", body: "合作称谓、官方渠道、定向邀约与国际合作，各自需要怎样的流程和排期？" },
   ];
   return (
-    <SlideShell page={8} section="07  /  LISTEN FIRST" background={C.deep} dark>
+    <SlideShell page={9} section="08  /  LISTEN FIRST" background={C.deep} dark>
       <Text x={72} y={86} w={1136} h={90} size={47} color={C.white} weight={700} lineHeight={1.02}>合作方案应该从协会会员企业的真实需求出发</Text>
       {questions.map(question => (
         <div key={question.number}>
@@ -458,11 +492,11 @@ function Slide08() {
   );
 }
 
-function Slide09() {
-  const association = ["确认协办单位 / 生态合作伙伴称谓及审批路径", "通过官方公众号、会员群与定向通知触达企业", "围绕两条track推荐会员企业与3–5位技术人选", "共同确认渠道排期与会员福利的对外口径"];
-  const aie = ["协会会员专属8折票务福利，适用范围待确认", "为入选内容提供专业录制与会后全球传播", "提供经审批的宣传素材、专属链接与使用报告", "在容量内安排选择性的国际嘉宾 / 产业交流"];
+function Slide10() {
+  const association = ["确认协办单位 / 生态合作伙伴称谓及审批路径", "通过官方公众号、会员群与定向通知触达企业", "围绕两条track推荐会员企业与3–5位技术人选", "共同确认公众号、会员群的发布时间与会员专属票务福利"];
+  const aie = ["协会会员专属8折票务福利，适用范围待确认", "为入选内容提供专业录制与会后全球传播", "提供经审批的宣传素材、专属链接与使用报告", "在嘉宾同意且闭门晚宴有席位的前提下，邀请部分协会代表参与定向交流"];
   return (
-    <SlideShell page={9} section="08  /  FIRST COOPERATION PACKAGE">
+    <SlideShell page={10} section="09  /  FIRST COOPERATION PACKAGE">
       <SlideTitle size={43}>双方先从一个边界清楚、能执行的合作包开始</SlideTitle>
       <Text x={72} y={190} w={520} h={34} size={20} color={C.brand} weight={700}>协会可以提供</Text>
       <Text x={668} y={190} w={520} h={34} size={20} color={C.deep} weight={700}>AIE Shanghai可以提供</Text>
@@ -475,23 +509,23 @@ function Slide09() {
   );
 }
 
-function Slide10() {
-  const decisions = [["01", "合作称谓与审批路径"], ["02", "双方各1位日常执行联系人"], ["03", "第一批目标企业与3–5位技术人选"], ["04", "渠道排期、会员福利与商务规则"]];
-  const owners = [["Mengying", "AIE授权、国际合作、赞助与公开名单"], ["Jolin / Arogo", "协会接口、上海产业合作与项目落地"], ["Yuzheng", "program、内容判断与高价值技术连接"], ["高宁团队BD owner", "合同、票务、折扣码与商务往返"]];
+function Slide11() {
+  const decisions = [["01", "合作称谓与审批路径"], ["02", "双方各1位日常执行联系人"], ["03", "第一批目标企业与3–5位技术人选"], ["04", "公众号 / 会员群发布时间与会员专属票务福利"]];
+  const owners = [["李孟颖", "AIE授权、国际合作、赞助商与公开名单"], ["盛玥", "协会对接、上海产业合作与活动落地"], ["孙煜征", "议程设计、内容统筹与高价值技术连接"]];
   return (
-    <SlideShell page={10} section="09  /  DECISION & NEXT STEP" background={C.deep} dark>
+    <SlideShell page={11} section="10  /  DECISION & NEXT STEP" background={C.deep} dark>
       <Text x={72} y={86} w={1136} h={82} size={50} color={C.white} weight={700} lineHeight={1.02}>先确认四件事，再用一周跑通第一轮</Text>
       {decisions.map((decision, index) => { const y = 212 + index * 78; return <div key={decision[0]}><Text x={82} y={y} w={62} h={38} size={20} color={C.coral} weight={700} valign="center">{decision[0]}</Text><Text x={158} y={y} w={514} h={38} size={25} color={C.white} weight={700} valign="center">{decision[1]}</Text><Rule x={82} y={y + 50} w={590} color="rgba(255,255,255,.22)" /></div>; })}
       <Rect x={720} y={202} w={488} h={338} color={C.brand} />
-      <Text x={750} y={226} w={428} h={26} size={15} color="rgba(255,255,255,.7)" weight={700}>PROJECT OWNERS</Text>
-      {owners.map((owner, index) => { const y = 274 + index * 64; return <div key={owner[0]}><Text x={750} y={y} w={158} h={24} size={17} color={C.white} weight={700}>{owner[0]}</Text><Text x={920} y={y} w={258} h={42} size={15} color="rgba(255,255,255,.82)" lineHeight={1.18}>{owner[1]}</Text></div>; })}
+      <Text x={750} y={226} w={428} h={26} size={15} color="rgba(255,255,255,.7)" weight={700}>项目分工</Text>
+      {owners.map((owner, index) => { const y = 286 + index * 86; return <div key={owner[0]}><Text x={750} y={y} w={128} h={30} size={20} color={C.white} weight={700}>{owner[0]}</Text><Text x={892} y={y} w={286} h={54} size={17} color="rgba(255,255,255,.84)" lineHeight={1.22}>{owner[1]}</Text></div>; })}
       <Rect x={72} y={582} w={1136} h={58} color={C.canvas} />
       <Text x={96} y={598} w={1088} h={28} size={25} color={C.deep} weight={700} align="center">跑通第一轮，再决定如何扩大。</Text>
     </SlideShell>
   );
 }
 
-const SLIDES = [Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09, Slide10] as const;
+const SLIDES = [Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09, Slide10, Slide11] as const;
 
 export function NativeSlide({ index }: { index: number }) {
   const Component = SLIDES[index] ?? Slide01;

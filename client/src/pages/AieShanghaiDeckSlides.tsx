@@ -30,7 +30,7 @@ const FONT =
 export const SLIDE_META = [
   "把全球AI工程师网络与上海产业生态连接起来",
   "上海站由三组长期积累共同推进",
-  "李孟颖、孙煜征和盛玥各自负责一块不可替代的工作",
+  "李孟颖、孙煜征博士和盛玥各自负责一块不可替代的工作",
   "AIE把工程师、研究者、创始人与CTO带到同一个技术现场",
   "上海站不是一场海外会议的平移",
   "不只把全球资源带进来，也帮助中国AI企业走向全球",
@@ -318,7 +318,7 @@ function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name
   return (
     <div>
       <Rect x={x} y={190} w={340} h={8} color={color} />
-      <Text x={x} y={222} w={340} h={42} size={24} color={C.ink} weight={700}>{name}</Text>
+      <Text x={x} y={222} w={340} h={42} size={22} color={C.ink} weight={700}>{name}</Text>
       <Text x={x} y={274} w={340} h={52} size={17} color={color} weight={700} lineHeight={1.22}>{identity}</Text>
       <Rule x={x} y={340} w={340} />
       <Text x={x} y={368} w={340} h={126} size={19} color={C.body} lineHeight={1.28}>{proof}</Text>
@@ -331,9 +331,9 @@ function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name
 function Slide03() {
   return (
     <SlideShell page={3} section="02  /  CORE TEAM">
-      <SlideTitle size={43}>李孟颖、孙煜征和盛玥，各自负责一块不可替代的工作</SlideTitle>
+      <SlideTitle size={43}>李孟颖、孙煜征博士和盛玥，各自负责一块不可替代的工作</SlideTitle>
       <TeamColumn x={72} name="李孟颖 · Standup Partners" identity="增长 · 数据 · 商业化" proof="曾在Notion、MotherDuck、Braintrust等科技公司负责增长与数据；长期服务developer tools与B2B SaaS，也是a16z Scout和天使投资人。" role="AIE Shanghai：国际增长、赞助商合作、数据与商业化机制" color={C.brand} />
-      <TeamColumn x={470} name="孙煜征 · Standup Partners" identity="PROGRAM · 技术内容 · 中美连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：program方向、内容统筹、技术嘉宾与开发者社区连接" color={C.deep} />
+      <TeamColumn x={470} name="孙煜征博士 · Standup Partners" identity="架构设计 · 内容统筹 · 社区连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：架构设计、内容统筹、社区连接" color={C.deep} />
       <TeamColumn x={868} name="盛玥 · Arogo Intelligence" identity="上海产业合作 · 项目落地" proof="13年微软中国工作经历，曾担任解决方案销售、企业客户经理，并负责总裁办公室业务运营；组织过多次2,000+人大型活动。" role="AIE Shanghai：本地企业与产业合作、高层沟通、会务与落地" color={C.coral} />
     </SlideShell>
   );
@@ -511,7 +511,7 @@ function Slide10() {
 
 function Slide11() {
   const decisions = [["01", "合作称谓与审批路径"], ["02", "双方各1位日常执行联系人"], ["03", "第一批目标企业与3–5位技术人选"], ["04", "公众号 / 会员群发布时间与会员专属票务福利"]];
-  const owners = [["李孟颖", "AIE授权、国际合作、赞助商与公开名单"], ["盛玥", "协会对接、上海产业合作与活动落地"], ["孙煜征", "议程设计、内容统筹与高价值技术连接"]];
+  const owners = [["李孟颖", "AIE授权、国际合作、赞助商与公开名单"], ["盛玥", "协会对接、上海产业合作与活动落地"], ["孙煜征博士", "架构设计、内容统筹、社区连接"]];
   return (
     <SlideShell page={11} section="10  /  DECISION & NEXT STEP" background={C.deep} dark>
       <Text x={72} y={86} w={1136} h={82} size={50} color={C.white} weight={700} lineHeight={1.02}>先确认四件事，再用一周跑通第一轮</Text>

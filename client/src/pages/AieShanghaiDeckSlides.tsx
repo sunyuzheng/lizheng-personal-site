@@ -38,7 +38,6 @@ export const SLIDE_META = [
   "上海站已启动，并进入更深的本地协作阶段",
   "合作方案应该从协会会员企业的真实需求出发",
   "双方先从一个边界清楚、能执行的合作包开始",
-  "先确认四件事，再用一周跑通第一轮",
 ] as const;
 
 type TextProps = {
@@ -462,32 +461,14 @@ function Slide08() {
       <Text x={654} y={540} w={232} h={60} size={18} color={C.deep} weight={700} lineHeight={1.18}>{"TRACK A\nOpen Source Models & AI Infra"}</Text>
       <Rect x={932} y={524} w={276} h={88} color="#FFF0EB" />
       <Text x={954} y={540} w={232} h={60} size={18} color="#8B4638" weight={700} lineHeight={1.18}>{"TRACK B\nPhysical AI"}</Text>
-      <Rect x={72} y={630} w={1136} h={38} color={C.pale} />
-      <Text x={92} y={639} w={1096} h={20} size={14} color={C.deep} weight={700} align="center">活动落地执行由安锐提供支持；安锐曾服务Microsoft、Google、AWS等企业活动，项目也与相关AI及开发者社区联动。</Text>
     </SlideShell>
   );
 }
 
 function Slide09() {
-  const questions = [
-    { x: 72, y: 210, number: "01", title: "今年优先项", body: "在协会今年的企业服务、国际合作与开发者活动中，AIE Shanghai最能补上哪一块？" },
-    { x: 658, y: 210, number: "02", title: "会员企业匹配", body: "围绕两条track，哪些企业最能代表上海正在发生的技术进展？" },
-    { x: 72, y: 390, number: "03", title: "技术领军人", body: "哪些创始人、CTO、研究或工程负责人，有一项值得向同行讲清楚的进展？" },
-    { x: 658, y: 390, number: "04", title: "合作与审批机制", body: "合作称谓、官方渠道、定向邀约与国际合作，各自需要怎样的流程和排期？" },
-  ];
   return (
     <SlideShell page={9} section="08  /  LISTEN FIRST" background={C.deep} dark>
-      <Text x={72} y={86} w={1136} h={90} size={47} color={C.white} weight={700} lineHeight={1.02}>合作方案应该从协会会员企业的真实需求出发</Text>
-      {questions.map(question => (
-        <div key={question.number}>
-          <Text x={question.x} y={question.y} w={72} h={24} size={14} color={C.coral} weight={700}>{question.number}</Text>
-          <Text x={question.x} y={question.y + 32} w={510} h={36} size={25} color={C.white} weight={700}>{question.title}</Text>
-          <Text x={question.x} y={question.y + 80} w={510} h={78} size={19} color="rgba(255,255,255,.74)" lineHeight={1.25}>{question.body}</Text>
-          <Rule x={question.x} y={question.y + 158} w={510} color="rgba(255,255,255,.22)" />
-        </div>
-      ))}
-      <Rect x={72} y={584} w={1136} h={54} color={C.brand} />
-      <Text x={96} y={599} w={1088} h={26} size={21} color={C.white} weight={700} align="center">我们先听协会判断，再共同确定合作范围。</Text>
+      <Text x={150} y={250} w={980} h={220} size={54} color={C.white} weight={700} lineHeight={1.12} align="center" valign="center">合作方案应该从协会会员企业的真实需求出发</Text>
     </SlideShell>
   );
 }
@@ -509,23 +490,7 @@ function Slide10() {
   );
 }
 
-function Slide11() {
-  const decisions = [["01", "合作称谓与审批路径"], ["02", "双方各1位日常执行联系人"], ["03", "第一批目标企业与3–5位技术人选"], ["04", "公众号 / 会员群发布时间与会员专属票务福利"]];
-  const owners = [["李孟颖", "AIE授权、国际合作、赞助商与公开名单"], ["盛玥", "协会对接、上海产业合作与活动落地"], ["孙煜征博士", "架构设计、内容统筹、社区连接"]];
-  return (
-    <SlideShell page={11} section="10  /  DECISION & NEXT STEP" background={C.deep} dark>
-      <Text x={72} y={86} w={1136} h={82} size={50} color={C.white} weight={700} lineHeight={1.02}>先确认四件事，再用一周跑通第一轮</Text>
-      {decisions.map((decision, index) => { const y = 212 + index * 78; return <div key={decision[0]}><Text x={82} y={y} w={62} h={38} size={20} color={C.coral} weight={700} valign="center">{decision[0]}</Text><Text x={158} y={y} w={514} h={38} size={25} color={C.white} weight={700} valign="center">{decision[1]}</Text><Rule x={82} y={y + 50} w={590} color="rgba(255,255,255,.22)" /></div>; })}
-      <Rect x={720} y={202} w={488} h={338} color={C.brand} />
-      <Text x={750} y={226} w={428} h={26} size={15} color="rgba(255,255,255,.7)" weight={700}>项目分工</Text>
-      {owners.map((owner, index) => { const y = 286 + index * 86; return <div key={owner[0]}><Text x={750} y={y} w={128} h={30} size={20} color={C.white} weight={700}>{owner[0]}</Text><Text x={892} y={y} w={286} h={54} size={17} color="rgba(255,255,255,.84)" lineHeight={1.22}>{owner[1]}</Text></div>; })}
-      <Rect x={72} y={582} w={1136} h={58} color={C.canvas} />
-      <Text x={96} y={598} w={1088} h={28} size={25} color={C.deep} weight={700} align="center">跑通第一轮，再决定如何扩大。</Text>
-    </SlideShell>
-  );
-}
-
-const SLIDES = [Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09, Slide10, Slide11] as const;
+const SLIDES = [Slide01, Slide02, Slide03, Slide04, Slide05, Slide06, Slide07, Slide08, Slide09, Slide10] as const;
 
 export function NativeSlide({ index }: { index: number }) {
   const Component = SLIDES[index] ?? Slide01;

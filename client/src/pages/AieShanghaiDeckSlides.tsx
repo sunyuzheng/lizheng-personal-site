@@ -314,7 +314,7 @@ function Slide02() {
   );
 }
 
-function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name: string; identity: string; proof: string; role: string; color: string }) {
+function TeamColumn({ x, name, identity, proof, role, color }: { x: number; name: ReactNode; identity: string; proof: string; role: string; color: string }) {
   return (
     <div>
       <Rect x={x} y={190} w={340} h={8} color={color} />
@@ -333,7 +333,7 @@ function Slide03() {
     <SlideShell page={3} section="02  /  CORE TEAM">
       <SlideTitle size={43}>李孟颖、孙煜征博士和盛玥，各自负责一块不可替代的工作</SlideTitle>
       <TeamColumn x={72} name="李孟颖 · Standup Partners" identity="增长 · 数据 · 商业化" proof="曾在Notion、MotherDuck、Braintrust等科技公司负责增长与数据；长期服务developer tools与B2B SaaS，也是a16z Scout和天使投资人。" role="AIE Shanghai：国际增长、赞助商合作、数据与商业化机制" color={C.brand} />
-      <TeamColumn x={470} name="孙煜征博士 · Standup Partners" identity="架构设计 · 内容统筹 · 社区连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：架构设计、内容统筹、社区连接" color={C.deep} />
+      <TeamColumn x={470} name={<span>孙煜征博士<span style={{ fontSize: 18 }}> · Superlinear Academy</span></span>} identity="架构设计 · 内容统筹 · 社区连接" proof="曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；OpenAI收购团队早期成员；现为Superlinear Academy创始人。" role="AIE Shanghai：架构设计、内容统筹、社区连接" color={C.deep} />
       <TeamColumn x={868} name="盛玥 · Arogo Intelligence" identity="上海产业合作 · 项目落地" proof="13年微软中国工作经历，曾担任解决方案销售、企业客户经理，并负责总裁办公室业务运营；组织过多次2,000+人大型活动。" role="AIE Shanghai：本地企业与产业合作、高层沟通、会务与落地" color={C.coral} />
     </SlideShell>
   );

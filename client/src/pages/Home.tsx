@@ -653,8 +653,8 @@ export default function Home() {
               </h1>
               <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "I moved from big-tech leadership into an early startup, then into building Superlinear full time—not because work outside institutions is automatically more real, but to let users, markets, and consequences answer more directly. Superlinear Academy is the work I am placing under that test."
-                  : "我从大厂带团队，走到早期创业公司，再全职做Superlinear。不是因为组织外天然更真，而是想让自己的判断更直接地接受用户、市场和现实的回答。Superlinear Academy是我正在做的答案。"}
+                  ? "I moved from big-tech leadership into an early startup, then into building Superlinear full time. The throughline is simple: put judgment in front of reality. Do people want it, use it, and choose it again? Superlinear Academy is the answer I am building."
+                  : "我从大厂带团队，走到早期创业公司，再全职做Superlinear。一路上，我把判断交给现实：有没有人要，有没有人用，做出来的东西能不能留下来。Superlinear Academy是我正在做的答案。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button

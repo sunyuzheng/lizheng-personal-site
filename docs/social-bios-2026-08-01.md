@@ -30,6 +30,14 @@ Not overwritten in this rollout:
 
 The personal pair names Yuzheng's career thread: capability that survives beyond credentials, followed by work that survives beyond internal scoreboards. The institutional line gives Superlinear one short command. Career credentials answer “why pay attention”; Superlinear and the link answer “where can I go next.”
 
+## Canonical Chinese paragraph
+
+Use this when the surface allows one compact paragraph. Platform versions below preserve the same logic while adapting to length and link behavior.
+
+```text
+学点真本事，做点真东西。把AI、产品、商业和个人选择讲到底，也和真正把事情做出来的人深聊。我创办了Superlinear Academy，2万+认真用AI做事的人正在这里分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
+```
+
 ## 小红书
 
 **Job:** make the idea memorable, establish authority quickly, and convert interested viewers into the free community or app.
@@ -38,12 +46,12 @@ The personal pair names Yuzheng's career thread: capability that survives beyond
 
 ```text
 学点真本事，做点真东西。
-AI、产品、商业与个人选择；把事情讲到底层，也看真实的人怎样做成。
+把AI、产品、商业和个人选择讲到底，也和真正把事情做出来的人深聊。
 康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队早期成员
-Superlinear Academy创始人｜免费加入：superlinear.academy｜App：超线性学院
+Superlinear Academy创始人｜加入2万+认真用AI做事的人：主页链接｜App搜「超线性学院」
 ```
 
-The copy is 134 Unicode code points including line breaks. The first line now carries Yuzheng's personal thread; the remaining lines establish subject, authority, institution, and next action without turning the bio into a community landing page.
+The copy is 139 Unicode code points including line breaks. The first line carries Yuzheng's personal thread; the remaining lines establish subject, authority, institution, and a concrete reason to follow the community route.
 
 This replaces the previously owner-confirmed 159-code-point version only after a separate live publication approval.
 
@@ -54,20 +62,21 @@ This replaces the previously owner-confirmed 159-code-point version only after a
 **个人签名：**
 
 ```text
-学点真本事，做点真东西。AI、产品、商业与个人选择；把事情讲到底层，也看真实的人怎样做成。
+学点真本事，做点真东西。把AI、产品、商业和个人选择讲到底｜Superlinear Academy创始人｜加入2万+认真用AI做事的人：App搜「超线性学院」
 ```
+
+79 Unicode code points. It preserves the main memory, the channel subject, the institution, and the next action inside an 80-character surface.
 
 **频道长简介（如当前栏目支持）：**
 
 ```text
 学点真本事，做点真东西。
 
-学校和公司会给人一张清楚的记分牌。我更关心，拿掉证书、职位和内部评分以后，一个人真正会什么，又做出了什么仍有人需要的东西。
+我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有对AI技术本质、产品、商业和个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
 
-这里有对AI技术本质、产品、商业与个人选择的深度分析，也有200+场与真正把事情做出来的人的对话。
+我是孙煜征（课代表立正），康奈尔经济学博士、Superlinear Academy创始人。
 
-孙煜征（课代表立正）｜康奈尔经济学博士｜Superlinear Academy创始人
-免费社区：superlinear.academy
+2万+认真用AI做事的人正在Superlinear Academy分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
 ```
 
 ## YouTube channel
@@ -75,15 +84,16 @@ This replaces the previously owner-confirmed 159-code-point version only after a
 **Job:** explain the channel to a mixed Chinese / international audience while remaining searchable.
 
 ```text
-MAKE WHAT LASTS. 学点真本事，做点真东西。
+MAKE WHAT LASTS.
+学点真本事，做点真东西。
 
-我是孙煜征，也叫课代表立正。我从大公司进入早期创业公司，再全职建设Superlinear，一直在做同一个选择：让用户和现实，而不只是一张内部记分牌，回答我的工作。
+我是孙煜征，也叫课代表立正。我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有我对AI技术本质、产品、商业和个人选择的分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的深度对话。
 
-这里有对AI技术本质、产品、商业与个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
+我创办了Superlinear Academy。2万+认真用AI做事的人正在这里分享700+真实项目、技术判断与一手经验。
+免费加入：https://superlinear.academy
+App Store / Google Play搜索「超线性学院」
 
 康奈尔经济学博士｜Superlinear Academy创始人｜曾任职Amazon、Meta、腾讯与Statsig
-
-免费社区：https://superlinear.academy
 个人主页：https://lizheng.ai
 ```
 
@@ -148,12 +158,28 @@ Essays on AI, product judgment, craft, and making work that outlives the task.
 Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornell Economics PhD. He writes about AI, products, organizations, and the work people choose to make their own.
 ```
 
+## WeChat 视频号 / 公众号
+
+**Job:** preserve the personal memory, explain the content in one breath, and make the in-platform search route obvious.
+
+```text
+学点真本事，做点真东西。深聊AI、产品、商业和个人选择。Superlinear Academy创始人｜加入2万+认真用AI做事的人：搜索「超线性学院」
+```
+
 ## WeChat / private profile
 
 **Job:** make a new contact remember the idea without turning a personal contact surface into an advertisement.
 
 ```text
-学点真本事，做点真东西｜Superlinear Academy创始人
+学点真本事，做点真东西｜App搜「超线性学院」
+```
+
+## Superlinear Academy official profiles
+
+**Job:** let the institutional subject speak in its own voice, establish what kind of place this is, and give one direct route in.
+
+```text
+做点真东西。Superlinear Academy是一所为认真用AI做事的人建立的长期学院。2万+认真用AI做事的人在这里分享700+真实项目、技术判断与一手经验。免费加入：superlinear.academy｜App搜索「超线性学院」
 ```
 
 ## Email signature

@@ -1,6 +1,6 @@
 # Social Profiles — Ready To Paste
 
-**Status:** 2026-08-27 Chinese revision candidate · pending publication approval; 2026-08-02 rollout retained below as history
+**Status:** 2026-08-27 ready for owner manual update; no social account was changed in this release. The 2026-08-02 rollout is retained below as history.
 
 **Owner inputs:** `yuzheng-profile/BIOS.md`, `THESIS.md`, `EVIDENCE.md`, and `facts.json`
 

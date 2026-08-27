@@ -5,15 +5,25 @@ import { Link, useLocation } from "wouter";
 interface LanguageToggleProps {
   className?: string;
   size?: "sm" | "md";
+  tone?: "gold" | "superlinear";
 }
 
 export default function LanguageToggle({
   className = "",
   size = "md",
+  tone = "gold",
 }: LanguageToggleProps) {
   const { lang, setLang } = useLanguage();
   const [location] = useLocation();
   const pad = size === "sm" ? "px-2 py-1 text-[11px]" : "px-2.5 py-1 text-xs";
+  const activeTone =
+    tone === "superlinear"
+      ? "bg-superlinear text-white"
+      : "bg-amber-300 text-[#211300]";
+  const inactiveTone =
+    tone === "superlinear"
+      ? "text-zinc-400 hover:text-superlinear-light"
+      : "text-zinc-400 hover:text-amber-200";
 
   return (
     <div
@@ -27,9 +37,7 @@ export default function LanguageToggle({
         aria-current={lang === "en" ? "page" : undefined}
         hrefLang="en"
         className={`${pad} whitespace-nowrap font-semibold uppercase tracking-wide transition ${
-          lang === "en"
-            ? "bg-amber-300 text-[#211300]"
-            : "text-zinc-400 hover:text-amber-200"
+          lang === "en" ? activeTone : inactiveTone
         }`}
       >
         EN
@@ -40,9 +48,7 @@ export default function LanguageToggle({
         aria-current={lang === "zh" ? "page" : undefined}
         hrefLang="zh-CN"
         className={`${pad} whitespace-nowrap font-semibold transition ${
-          lang === "zh"
-            ? "bg-amber-300 text-[#211300]"
-            : "text-zinc-400 hover:text-amber-200"
+          lang === "zh" ? activeTone : inactiveTone
         }`}
       >
         中文

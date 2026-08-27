@@ -5,9 +5,14 @@
 
 @theme {
   --font-sans:
-    "Geist", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui,
+    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
     sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+  --font-mono:
+    "Geist Mono", "PingFang SC", "Microsoft YaHei", ui-monospace, "SF Mono",
+    Menlo, Monaco, monospace;
+  --color-superlinear: #238343;
+  --color-superlinear-deep: #1b6b35;
+  --color-superlinear-light: #85d164;
 }
 
 @theme inline {
@@ -50,8 +55,12 @@
 }
 
 :root {
-  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: "Geist", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --font-sans:
+    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
+    sans-serif;
+  --font-display:
+    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
+    sans-serif;
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-blue-50);
   --sidebar-primary: var(--color-blue-600);
@@ -129,6 +138,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    font-kerning: normal;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1,

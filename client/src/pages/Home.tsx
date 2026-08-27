@@ -15,6 +15,7 @@ import {
   Mail,
   Menu,
   Rss,
+  ShoppingBag,
   Users,
   X,
   Youtube,
@@ -398,11 +399,14 @@ function SectionLabel({
   children: string;
   dark?: boolean;
 }) {
+  const { lang } = useLanguage();
+
   return (
     <p
       className={cn(
-        "font-mono text-[11px] uppercase tracking-[0.2em]",
-        dark ? "text-amber-300" : "text-[#8B4A19]"
+        "font-mono text-xs leading-5",
+        lang === "en" ? "uppercase tracking-[0.2em]" : "tracking-[0.1em]",
+        dark ? "text-superlinear-light" : "text-superlinear-deep"
       )}
     >
       {children}
@@ -442,6 +446,7 @@ export default function Home() {
       conversations: "Conversations",
       decks: "Decks",
       books: "Books",
+      shop: "Shop",
       collaborate: "Collaborate",
       community: "Free community",
     },
@@ -452,6 +457,7 @@ export default function Home() {
       conversations: "对话",
       decks: "Decks",
       books: "书",
+      shop: "周边店",
       collaborate: "合作",
       community: "免费社区",
     },
@@ -475,7 +481,7 @@ export default function Home() {
             </div>
           </button>
 
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center gap-4 xl:flex">
             {[
               ["belief", nav.belief],
               ["story", nav.story],
@@ -502,17 +508,25 @@ export default function Home() {
             >
               {nav.books}
             </Link>
+            <a
+              href="https://shop.lizheng.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-zinc-400 transition hover:text-white"
+            >
+              {nav.shop}
+            </a>
             <Link
               href={withLanguage("/collab", lang)}
               className="text-sm text-zinc-400 transition hover:text-white"
             >
               {nav.collaborate}
             </Link>
-            <LanguageToggle size="sm" />
+            <LanguageToggle size="sm" tone="superlinear" />
             <Button
               asChild
               size="sm"
-              className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+              className="bg-superlinear text-white hover:bg-superlinear-deep"
             >
               <a
                 href="https://www.superlinear.academy"
@@ -525,8 +539,8 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className="flex items-center gap-3 lg:hidden">
-            <LanguageToggle size="sm" />
+          <div className="flex items-center gap-3 xl:hidden">
+            <LanguageToggle size="sm" tone="superlinear" />
             <button
               onClick={() => setMobileMenuOpen(value => !value)}
               className="p-1 text-zinc-300"
@@ -542,7 +556,7 @@ export default function Home() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="container border-t border-white/10 py-4 lg:hidden">
+          <div className="container border-t border-white/10 py-4 xl:hidden">
             <div className="grid gap-3 text-sm">
               {[
                 ["belief", nav.belief],
@@ -572,6 +586,15 @@ export default function Home() {
               >
                 {nav.books}
               </Link>
+              <a
+                href="https://shop.lizheng.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-zinc-300"
+              >
+                {nav.shop}
+              </a>
               <Link
                 href={withLanguage("/collab", lang)}
                 onClick={() => setMobileMenuOpen(false)}
@@ -583,7 +606,7 @@ export default function Home() {
                 href="https://www.superlinear.academy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-300"
+                className="text-superlinear-light"
               >
                 {nav.community} <span aria-hidden="true">→</span>
               </a>
@@ -599,15 +622,29 @@ export default function Home() {
         >
           <div className="container grid min-h-[calc(100svh-72px)] gap-10 py-12 md:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14 lg:py-20">
             <div className="max-w-2xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+              <p
+                className={cn(
+                  "font-mono text-xs leading-5 text-superlinear-light",
+                  lang === "en"
+                    ? "uppercase tracking-[0.2em]"
+                    : "tracking-[0.1em]"
+                )}
+              >
                 {lang === "en"
                   ? "YUZHENG SUN · 课代表立正"
                   : "课代表立正 · 孙煜征"}
               </p>
-              <h1 className="mt-6 text-[3.1rem] font-semibold leading-[0.96] tracking-[-0.04em] text-white [text-wrap:balance] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]">
+              <h1
+                className={cn(
+                  "mt-6 text-[3.1rem] font-semibold text-white [text-wrap:balance] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]",
+                  lang === "en"
+                    ? "leading-[0.96] tracking-[-0.04em]"
+                    : "leading-[1.04] tracking-[-0.015em]"
+                )}
+              >
                 {lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。"}
               </h1>
-              <p className="mt-7 max-w-xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
+              <p className="mt-7 max-w-xl text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
                 {lang === "en"
                   ? "Some work ends when it ships. Some keeps changing what others can do—and keeps representing the person who made it. I am building Superlinear Academy to become the latter."
                   : "有些工作，交付以后就结束了。有些会继续改变别人能做什么，也继续代表做出它的人。我正在把Superlinear Academy做成后者。"}
@@ -616,7 +653,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={() => scrollToSection("superlinear")}
-                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+                  className="bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   {lang === "en"
                     ? "See what I am building"
@@ -743,7 +780,14 @@ export default function Home() {
             <div className="mt-14 border-y border-[#D4D0C7]">
               <div className="grid gap-8 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14 lg:py-10">
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9A673D]">
+                  <p
+                    className={cn(
+                      "font-mono text-[11px] leading-5 text-superlinear-deep",
+                      lang === "en"
+                        ? "uppercase tracking-[0.18em]"
+                        : "tracking-[0.1em]"
+                    )}
+                  >
                     {lang === "en" ? "THE HORIZON" : "我敬佩的作品"}
                   </p>
                   <h3 className="mt-4 max-w-md text-2xl font-semibold leading-9 md:text-3xl md:leading-10">
@@ -763,7 +807,14 @@ export default function Home() {
               </div>
 
               <div className="grid border-t border-[#D4D0C7] py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#9A673D]">
+                <p
+                  className={cn(
+                    "font-mono text-[11px] leading-5 text-superlinear-deep",
+                    lang === "en"
+                      ? "uppercase tracking-[0.18em]"
+                      : "tracking-[0.1em]"
+                  )}
+                >
                   {lang === "en" ? "WHAT LASTS" : "作品怎样成立"}
                 </p>
                 <p className="max-w-4xl text-base leading-8 text-[#5E584E]">
@@ -800,7 +851,14 @@ export default function Home() {
             <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-2">
               {careerChapters[lang].map(item => (
                 <article key={item.marker} className="bg-[#101521] p-6 md:p-8">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                  <p
+                    className={cn(
+                      "font-mono text-[11px] leading-5 text-superlinear-light",
+                      lang === "en"
+                        ? "uppercase tracking-[0.18em]"
+                        : "tracking-[0.1em]"
+                    )}
+                  >
                     {item.marker}
                   </p>
                   <h3 className="mt-4 text-xl font-semibold leading-8 text-white md:text-2xl">
@@ -815,13 +873,13 @@ export default function Home() {
 
             <article
               id="judgment"
-              className="mt-12 scroll-mt-[88px] border-y border-amber-300/25 py-8 md:grid md:grid-cols-[0.72fr_1.28fr] md:gap-14 md:py-10"
+              className="mt-12 scroll-mt-[88px] border-y border-superlinear/30 py-8 md:grid md:grid-cols-[0.72fr_1.28fr] md:gap-14 md:py-10"
             >
               <div>
                 <SectionLabel dark>
                   {lang === "en" ? "JUDGMENT ON THE RECORD" : "公开留下的判断"}
                 </SectionLabel>
-                <div className="mt-5 space-y-5 border-l border-amber-300/20 pl-4">
+                <div className="mt-5 space-y-5 border-l border-superlinear/30 pl-4">
                   {featuredJudgment[lang].timeline.map(item => (
                     <div key={item.date}>
                       <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
@@ -837,7 +895,7 @@ export default function Home() {
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-amber-300"
+                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-superlinear-light"
                           >
                             <ExternalLink className="mt-1 h-3 w-3 shrink-0" />
                             <span>{link.label}</span>
@@ -859,7 +917,7 @@ export default function Home() {
                   href={featuredJudgment[lang].href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-light transition hover:text-white"
                 >
                   {featuredJudgment[lang].cta}
                   <ArrowRight className="h-4 w-4" />
@@ -951,11 +1009,18 @@ export default function Home() {
                     index % 2 === 1 && "lg:border-l"
                   )}
                 >
-                  <div className="font-mono text-xs text-[#9A673D]">
+                  <div className="font-mono text-xs text-superlinear-deep">
                     {item.number}
                   </div>
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8B4A19]">
+                    <p
+                      className={cn(
+                        "font-mono text-[11px] leading-5 text-superlinear-deep",
+                        lang === "en"
+                          ? "uppercase tracking-[0.18em]"
+                          : "tracking-[0.1em]"
+                      )}
+                    >
                       {item.label}
                     </p>
                     <h3 className="mt-2 text-2xl font-semibold">
@@ -964,14 +1029,21 @@ export default function Home() {
                     <p className="mt-3 text-sm leading-7 text-[#5C574D]">
                       {item.detail}
                     </p>
-                    <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#777064]">
+                    <p
+                      className={cn(
+                        "mt-3 font-mono text-[11px] leading-5 text-[#777064]",
+                        lang === "en"
+                          ? "uppercase tracking-[0.12em]"
+                          : "tracking-[0.05em]"
+                      )}
+                    >
                       {item.proof}
                     </p>
                     <a
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#743B13] transition hover:text-[#A65318]"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
                     >
                       {item.cta}
                       <ArrowRight className="h-4 w-4" />
@@ -1212,7 +1284,14 @@ export default function Home() {
           <div className="container border-y border-white/10 py-12 md:py-16">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+                <p
+                  className={cn(
+                    "font-mono text-xs leading-5 text-superlinear-light",
+                    lang === "en"
+                      ? "uppercase tracking-[0.2em]"
+                      : "tracking-[0.1em]"
+                  )}
+                >
                   {lang === "en" ? "YOUR WORK" : "轮到你的作品"}
                 </p>
                 <h2 className="mt-5 max-w-4xl text-3xl font-semibold leading-[1.08] text-white [text-wrap:balance] md:text-5xl">
@@ -1229,7 +1308,7 @@ export default function Home() {
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
                 <Button
                   asChild
-                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+                  className="bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   <a
                     href="https://www.superlinear.academy"
@@ -1279,13 +1358,24 @@ export default function Home() {
                 ? "Cornell Economics PhD, author, and founder of Superlinear Academy. Make what lasts."
                 : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。做出你的代表作。"}
             </p>
-            <Link
-              href={withLanguage("/about", lang)}
-              className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-amber-300 transition hover:text-amber-200"
-            >
-              {lang === "en" ? "Factual profile" : "关于课代表立正"}
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
+              <Link
+                href={withLanguage("/about", lang)}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-light transition hover:text-white"
+              >
+                {lang === "en" ? "Factual profile" : "关于课代表立正"}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href="https://shop.lizheng.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-light"
+              >
+                <ShoppingBag className="h-4 w-4" />
+                {nav.shop}
+              </a>
+            </div>
           </div>
           <div className="flex items-center gap-5 text-zinc-500">
             <a

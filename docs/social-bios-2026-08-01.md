@@ -25,6 +25,8 @@ Not overwritten in this rollout:
 ## One memory everywhere
 
 - Yuzheng's Chinese personal signature: `学点真本事，做点真东西。`
+- Yuzheng's recurring editorial question: `真正把事做成的人，到底做对了什么？`
+- The reader transformation: `把他们做对的，变成你做得到的。`
 - Superlinear's Chinese institutional signature: `做点真东西。`
 - English: `MAKE WHAT LASTS.`
 
@@ -35,7 +37,7 @@ The personal pair names Yuzheng's career thread: capability that survives beyond
 Use this when the surface allows one compact paragraph. Platform versions below preserve the same logic while adapting to length and link behavior.
 
 ```text
-学点真本事，做点真东西。把AI、产品、商业和个人选择讲到底，也和真正把事情做出来的人深聊。我创办了Superlinear Academy，2万+认真用AI做事的人正在这里分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
+学点真本事，做点真东西。我一直追问：真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。我创办了Superlinear Academy，2万+认真用AI做事的人正在这里分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
 ```
 
 ## 小红书
@@ -46,12 +48,13 @@ Use this when the surface allows one compact paragraph. Platform versions below 
 
 ```text
 学点真本事，做点真东西。
-把AI、产品、商业和个人选择讲到底，也和真正把事情做出来的人深聊。
+真正把事做成的人，到底做对了什么？
+把他们做对的，变成你做得到的。
 康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队早期成员
-Superlinear Academy创始人｜加入2万+认真用AI做事的人：主页链接｜App搜「超线性学院」
+Superlinear Academy创始人｜2万+认真用AI做事的人：主页链接｜App搜「超线性学院」
 ```
 
-The copy is 139 Unicode code points including line breaks. The first line carries Yuzheng's personal thread; the remaining lines establish subject, authority, institution, and a concrete reason to follow the community route.
+The copy is 128 Unicode code points including line breaks. The first three lines establish the personal thread, editorial question, and reader transformation; the final two provide authority, institution, and a concrete community route.
 
 This replaces the previously owner-confirmed 159-code-point version only after a separate live publication approval.
 
@@ -62,17 +65,17 @@ This replaces the previously owner-confirmed 159-code-point version only after a
 **个人签名：**
 
 ```text
-学点真本事，做点真东西。把AI、产品、商业和个人选择讲到底｜Superlinear Academy创始人｜加入2万+认真用AI做事的人：App搜「超线性学院」
+学点真本事，做点真东西。把高手做对的，变成你做得到的｜Superlinear Academy创始人｜App搜「超线性学院」
 ```
 
-79 Unicode code points. It preserves the main memory, the channel subject, the institution, and the next action inside an 80-character surface.
+61 Unicode code points. It preserves the personal memory, makes the audience benefit explicit, and leaves room for the institution and next action inside an 80-character surface.
 
 **频道长简介（如当前栏目支持）：**
 
 ```text
 学点真本事，做点真东西。
 
-我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有对AI技术本质、产品、商业和个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
+我一直追问：真正把事做成的人，到底做对了什么？这里有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话，也有我对AI时代工作与选择的长期研究。把他们做对的，变成你做得到的。
 
 我是孙煜征（课代表立正），康奈尔经济学博士、Superlinear Academy创始人。
 
@@ -87,7 +90,7 @@ This replaces the previously owner-confirmed 159-code-point version only after a
 MAKE WHAT LASTS.
 学点真本事，做点真东西。
 
-我是孙煜征，也叫课代表立正。我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有我对AI技术本质、产品、商业和个人选择的分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的深度对话。
+我是孙煜征，也叫课代表立正。我一直追问：真正把事做成的人，到底做对了什么？这里有200+场与AI研究者、创始人、投资人和一线操盘者的深度对话，也有我对AI时代工作与选择的长期研究。把他们做对的，变成你做得到的。
 
 我创办了Superlinear Academy。2万+认真用AI做事的人正在这里分享700+真实项目、技术判断与一手经验。
 免费加入：https://superlinear.academy
@@ -163,7 +166,7 @@ Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornel
 **Job:** preserve the personal memory, explain the content in one breath, and make the in-platform search route obvious.
 
 ```text
-学点真本事，做点真东西。深聊AI、产品、商业和个人选择。Superlinear Academy创始人｜加入2万+认真用AI做事的人：搜索「超线性学院」
+学点真本事，做点真东西。真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。Superlinear Academy创始人｜搜索「超线性学院」
 ```
 
 ## WeChat / private profile

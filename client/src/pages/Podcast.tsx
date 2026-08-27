@@ -412,10 +412,10 @@ export default function Podcast() {
                 课代表立正
               </h1>
               <p className="mt-5 text-xl font-medium leading-8 text-amber-100 sm:text-2xl">
-                深度访谈，有用干货，亲身验证的「真本事」
+                真正把事做成的人，到底做对了什么？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-                《课代表立正》是一档关于AI、职业与商业的中文播客。这里既有与AI研究者、科技创业者、一线管理者和真实实践者的深度对话，也有课代表立正对产品、增长、创业与职业选择的亲身复盘。我们不只追逐新工具，更关心：当AI改变能力和成本，个人与组织怎样重新设计工作，把判断和本事做成真正进入现实、值得留下的作品。
+                《课代表立正》是一档中文深度访谈。200+场对话里，我和AI研究者、科技创业者、一线管理者与各领域实践者反复追问一件事：一件事究竟是怎样被做成的。把他们做对的，变成你做得到的。
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">

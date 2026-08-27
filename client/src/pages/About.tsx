@@ -145,7 +145,7 @@ export default function About() {
       intro:
         "Yuzheng Sun (孙煜征), also known publicly as 课代表立正, has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He is based in Seattle.",
       belief:
-        "His defining belief is MAKE WHAT LASTS: make work that keeps creating value and clearly bears its maker's judgment and craft. He has placed his own work, and Superlinear Academy, under the same standard.",
+        "His defining belief is MAKE WHAT LASTS: learn capability that remains real beyond a credential, then make work that remains valuable beyond the system that scores it. He has placed his own work, and Superlinear Academy, under that test.",
       backgroundTitle: "Background",
       background:
         "He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
@@ -157,7 +157,7 @@ export default function About() {
         "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
       sourcesTitle: "Sources and contact",
       reviewed:
-        "Facts last reviewed August 20, 2026. Changing figures retain their check date.",
+        "Facts last reviewed August 27, 2026. Changing figures retain their check date.",
       books: "Books",
       hosted: "People Yuzheng has interviewed",
       appeared: "Programs where Yuzheng appeared as a guest",
@@ -169,7 +169,7 @@ export default function About() {
       intro:
         "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，是Superlinear Academy创始人，现居西雅图。",
       belief:
-        "他提出并长期倡导的主张是：做出你的代表作——把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。他也把自己的工作与Superlinear Academy放在同一条标准之下。",
+        "他的个人主线是：学点真本事，做点真东西。前半句问拿掉学历、职位和平台后还会什么，后半句问拿掉内部评分后，做的东西是否仍有人需要、使用和选择。Superlinear Academy是他把后半句做成机构的长期实践。",
       backgroundTitle: "经历",
       background:
         "他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
@@ -180,7 +180,7 @@ export default function About() {
       publicIntro:
         "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
       sourcesTitle: "资料与联系",
-      reviewed: "事实最后核对：2026年8月20日。会变化的数字保留各自的核对日期。",
+      reviewed: "事实最后核对：2026年8月27日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",

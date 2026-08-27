@@ -6,11 +6,11 @@ This file records the homepage's current narrative architecture. It is a page br
 
 A serious visitor should leave with one clear association:
 
-> Yuzheng Sun named and publicly advocates `MAKE WHAT LASTS. / 做出你的代表作。` He places his own work under that standard and is building Superlinear Academy as the most important long-term work he is betting on.
+> Yuzheng Sun's personal thread is `学点真本事，做点真东西。` He has repeatedly moved closer to work that users and reality can answer directly; Superlinear Academy is the institution through which he carries `做点真东西` into the world. `MAKE WHAT LASTS` names the horizon.
 
 The homepage no longer introduces one personal thesis and later reveals a separate Superlinear slogan. The brand idea is the personal idea. Career, public judgment, conversations, books, products, and proof all help the visitor infer why Yuzheng has earned the right to stand behind it.
 
-The sentence is a standard and an invitation, not a promise that every project will become famous, permanent, or commercially successful. `Lasts` means work that solves something real, withstands use and change, and continues to create value after its first moment. `代表作` adds authorship and aspiration: work that clearly carries its maker's judgment and craft. Such work may also enlarge what that person is able to do next, but that return is not part of the definition.
+The line is a standard and an invitation, not a promise that every project will become famous, permanent, or commercially successful. `真本事` asks what capability survives beyond credentials and titles. `真东西` asks whether work still matters beyond the system that scores it. `Lasts` asks whether that value continues through use and time. `做出你的代表作` remains the expanded aspiration: work that carries the maker's judgment and craft, not the primary Chinese signature.
 
 ## Job Of The Page
 
@@ -34,9 +34,11 @@ English:
 
 Chinese:
 
-> **做出你的代表作。**
+> **学点真本事，**
+>
+> **做点真东西。**
 
-The supporting copy establishes the relationship directly without awarding the result in advance: Superlinear Academy is Yuzheng's most important long-term wager and the institution he is building under this belief.
+The supporting copy explains the career arc without romanticizing organization form: moving from big-tech leadership to an early startup and then to building Superlinear full time shortened the distance between judgment and the answer from users, markets, collaborators, and consequences. Superlinear Academy is Yuzheng's most important long-term wager and the institution carrying the second half of the line.
 
 The Acquired scene includes Yuzheng, Ben Gilbert, and David Rosenthal in full. Its role is quiet authority and peer context; it is not evidence that the belief is correct.
 

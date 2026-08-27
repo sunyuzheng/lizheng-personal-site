@@ -26,7 +26,8 @@ function personNode(lang: SiteLang) {
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
     description: PERSON_DESCRIPTION[lang],
-    slogan: lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。",
+    slogan:
+      lang === "en" ? "MAKE WHAT LASTS." : "学点真本事，做点真东西。",
     jobTitle:
       "Founder of Superlinear Academy; educator and author",
     hasCredential: {
@@ -72,7 +73,7 @@ function organizationNodes(lang: SiteLang) {
       "@id": SUPERLINEAR_ID,
       name: "Superlinear Academy",
       url: "https://www.superlinear.academy/",
-      slogan: lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。",
+      slogan: lang === "en" ? "MAKE WHAT LASTS." : "做点真东西。",
       founder: { "@id": PERSON_ID },
     },
     {
@@ -141,12 +142,12 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         name:
           lang === "en"
             ? "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS"
-            : "课代表立正（孙煜征）｜做出你的代表作",
+            : "课代表立正（孙煜征）｜学点真本事，做点真东西",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-03",
+        dateModified: "2026-08-27",
       },
       personNode(lang),
       ...organizationNodes(lang),

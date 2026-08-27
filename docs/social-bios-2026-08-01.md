@@ -1,6 +1,6 @@
 # Social Profiles — Ready To Paste
 
-**Status:** approved adapter set · partial platform rollout verified 2026-08-02
+**Status:** 2026-08-27 Chinese revision candidate · pending publication approval; 2026-08-02 rollout retained below as history
 
 **Owner inputs:** `yuzheng-profile/BIOS.md`, `THESIS.md`, `EVIDENCE.md`, and `facts.json`
 
@@ -24,10 +24,11 @@ Not overwritten in this rollout:
 
 ## One memory everywhere
 
-- Chinese: `做出你的代表作`
+- Yuzheng's Chinese personal signature: `学点真本事，做点真东西。`
+- Superlinear's Chinese institutional signature: `做点真东西。`
 - English: `MAKE WHAT LASTS.`
 
-The line should be the first line or first clause wherever the format permits. Career credentials answer “why pay attention”; Superlinear and the link answer “where can I go next.” Neither should displace the idea.
+The personal pair names Yuzheng's career thread: capability that survives beyond credentials, followed by work that survives beyond internal scoreboards. The institutional line gives Superlinear one short command. Career credentials answer “why pay attention”; Superlinear and the link answer “where can I go next.”
 
 ## 小红书
 
@@ -36,16 +37,15 @@ The line should be the first line or first clause wherever the format permits. C
 **Recommended：**
 
 ```text
-做出你的代表作
-AI时代，执行越来越便宜。拉开差距的，是看得准，做得成。
-来「超线性学院」，和2万+认真用AI做事的人一起：技术本质·真实项目·反馈与同行；腾讯/小红书/美团AI培训，社区里免费看
-康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队
-免费加入：superlinear.academy；App：超线性学院
+学点真本事，做点真东西。
+AI、产品、商业与个人选择；把事情讲到底层，也看真实的人怎样做成。
+康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队早期成员
+Superlinear Academy创始人｜免费加入：superlinear.academy｜App：超线性学院
 ```
 
-The mother line carries aspiration; the second line stays compact and memorable. It does not attempt to unpack the full brand architecture inside a 160-character surface.
+The copy is 134 Unicode code points including line breaks. The first line now carries Yuzheng's personal thread; the remaining lines establish subject, authority, institution, and next action without turning the bio into a community landing page.
 
-The copy is 159 Unicode code points including line breaks, an intentionally conservative upper bound; Xiaohongshu's own counting of English words is looser. This is the owner-confirmed version and should not be silently polished again.
+This replaces the previously owner-confirmed 159-code-point version only after a separate live publication approval.
 
 ## Bilibili
 
@@ -54,17 +54,15 @@ The copy is 159 Unicode code points including line breaks, an intentionally cons
 **个人签名：**
 
 ```text
-做出你的代表作。AI、产品、商业与个人选择；不追着热点跑，把事情讲到底层，也看真实的人怎样做成。
+学点真本事，做点真东西。AI、产品、商业与个人选择；把事情讲到底层，也看真实的人怎样做成。
 ```
-
-48 Unicode code points.
 
 **频道长简介（如当前栏目支持）：**
 
 ```text
-做出你的代表作。
+学点真本事，做点真东西。
 
-AI让第一版越来越容易。我更关心，一个人怎样把自己的判断和本事，做成别人真正会用、也能继续代表自己的作品。
+学校和公司会给人一张清楚的记分牌。我更关心，拿掉证书、职位和内部评分以后，一个人真正会什么，又做出了什么仍有人需要的东西。
 
 这里有对AI技术本质、产品、商业与个人选择的深度分析，也有200+场与真正把事情做出来的人的对话。
 
@@ -77,9 +75,9 @@ AI让第一版越来越容易。我更关心，一个人怎样把自己的判断
 **Job:** explain the channel to a mixed Chinese / international audience while remaining searchable.
 
 ```text
-MAKE WHAT LASTS. 做出你的代表作。
+MAKE WHAT LASTS. 学点真本事，做点真东西。
 
-我是孙煜征，也叫课代表立正。AI让第一版越来越容易；我更关心，一个人怎样把自己的判断和本事，做成别人真正会用、也能继续代表自己的作品。
+我是孙煜征，也叫课代表立正。我从大公司进入早期创业公司，再全职建设Superlinear，一直在做同一个选择：让用户和现实，而不只是一张内部记分牌，回答我的工作。
 
 这里有对AI技术本质、产品、商业与个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
 
@@ -104,7 +102,11 @@ Founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former 
 ```text
 MAKE WHAT LASTS.
 
-Some work ends when it ships. Some keeps changing what others can do—and keeps representing the person who made it. I am building Superlinear Academy around that distinction.
+Schools and companies need scoreboards. But grades, titles, roadmaps, and internal narratives can become substitutes for a simpler question: did you make something anyone outside the system still wants?
+
+My career has been a gradual move toward that question. I learned enormously at Amazon, Meta, and Tencent. Leaving a senior Tencent role and a 30-person team for early-stage Statsig, then leaving employment to build Superlinear full time, shortened the distance between my judgment and the answer from users, markets, collaborators, and the work itself.
+
+That is why I build Superlinear Academy around one belief: learn capabilities that remain real beyond credentials, then make work that remains valuable beyond the system that scores it. In Chinese: 学点真本事，做点真东西. In English: MAKE WHAT LASTS.
 
 AI makes first drafts cheap. It does not choose what deserves to exist, set the standard, or earn continued use. I care about helping people with hard-won expertise turn judgment into products, systems, and work that can survive contact with reality.
 
@@ -151,7 +153,7 @@ Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornel
 **Job:** make a new contact remember the idea without turning a personal contact surface into an advertisement.
 
 ```text
-做出你的代表作｜Superlinear Academy创始人｜AI、产品、商业与真实作品
+学点真本事，做点真东西｜Superlinear Academy创始人
 ```
 
 ## Email signature
@@ -170,7 +172,7 @@ lizheng.ai · superlinear.academy
 ```text
 孙煜征 / 课代表立正
 Superlinear Academy创始人
-做出你的代表作。
+学点真本事，做点真东西。
 lizheng.ai · superlinear.academy
 ```
 
@@ -179,7 +181,7 @@ lizheng.ai · superlinear.academy
 **One sentence, Chinese:**
 
 ```text
-孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy创始人。他长期研究AI时代什么值得做，也在用一句话概括自己和Superlinear的方向：做出你的代表作。
+孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy创始人。他从腾讯管理岗位进入早期创业公司，再全职建设Superlinear；他的个人主线是：学点真本事，做点真东西。
 ```
 
 **One sentence, English:**
@@ -194,5 +196,5 @@ For a longer event introduction, use the current `yuzheng-profile/BIOS.md` rathe
 
 - The short profiles do not explain the complete maker–work–world–time architecture.
 - `AI越会做题，人越要会出题` remains a strong content thesis, but it does not compete for the first line.
-- `看得准，做得成` remains the compact explanation on Xiaohongshu, where the mother line already carries the aspiration and the next job is clarity rather than a second manifesto.
+- `学点真本事，做点真东西` is used on Yuzheng's own Chinese profiles because it carries both the book and career arc. Superlinear organization and product surfaces use the shorter `做点真东西` instead.
 - `OpenAI收购团队` appears only in the already-approved compressed Chinese social context. Detailed pages continue to name Statsig and preserve the chronology.

@@ -32,15 +32,15 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. MAKE WHAT LASTS: turn hard-won judgment into work people keep using.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-08-27",
   },
   zh: {
-    title: "课代表立正（孙煜征）｜做出你的代表作",
+    title: "课代表立正（孙煜征）｜学点真本事，做点真东西",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。做出你的代表作：把判断和本事，做成别人真正会用、也能继续代表自己的作品。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。学点真本事，做点真东西：让能力离开履历仍然成立，让作品接受用户与现实的回答。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-08-27",
   },
 };
 

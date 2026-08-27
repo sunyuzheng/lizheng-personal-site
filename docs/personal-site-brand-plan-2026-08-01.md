@@ -8,7 +8,7 @@
 
 The personal site is neither a complete philosophy archive nor a catalogue of four Superlinear products. It should leave a visitor with one association and four supporting inferences:
 
-> **Yuzheng Sun is the person who names, explains, and builds under `MAKE WHAT LASTS. / 做出你的代表作。`**
+> **Yuzheng Sun is the person behind `学点真本事，做点真东西。`: capability beyond credentials, work beyond internal scoreboards, and `MAKE WHAT LASTS` as the horizon.**
 
 1. He recognizes the difference between output and a work that carries a maker's judgment, craft, and responsibility.
 2. This is a real personal wager, not a virtue he has awarded himself.

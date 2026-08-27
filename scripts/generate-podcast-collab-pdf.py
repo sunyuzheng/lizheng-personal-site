@@ -349,7 +349,7 @@ def draw_cover(c: canvas.Canvas) -> None:
     c.drawString(M + 28, image_y + 25, "Significance Summit")
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 10.5)
-    c.drawRightString(W - M, 94, "做出你的代表作。")
+    c.drawRightString(W - M, 94, "学点真本事，做点真东西。")
     c.setFillColor(AMBER)
     c.setFont(FONT_MONO_BOLD, 7.2)
     c.drawRightString(W - M, 77, "MAKE WHAT LASTS. · lizheng.ai")
@@ -715,8 +715,8 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     topics = [
         (
             "方向一",
-            "做出你的代表作：AI把第一版变便宜之后，什么还能代表你？",
-            "从产品、系统、内容和职业工作谈判断、craft、作者性与长期价值。",
+            "学点真本事，做点真东西",
+            "拿掉学历、title和公司logo以后，什么能力还成立；拿掉内部评分以后，做的东西还有谁会选择？",
             "适合：职业、个人成长、创作者与泛科技节目",
         ),
         (
@@ -827,7 +827,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他主持200+场科技领袖与AI研究者对话，课程服务3,000+付费学员，并建立了2万+人的免费社区。如今，他追问AI改变能力边界以后，个人与组织怎样重新设计工作，做出自己的代表作。",
+        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他主持200+场科技领袖与AI研究者对话，课程服务3,000+付费学员，并建立了2万+人的免费社区。他把自己的职业主线概括为：学点真本事，做点真东西。",
         228,
         668,
         W - M - 228,
@@ -873,7 +873,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
 
     draw_label(
         c,
-        "SUPERLINEAR ACADEMY · 做出你的代表作。",
+        "SUPERLINEAR ACADEMY · 做点真东西。",
         M,
         510,
         color=AMBER_DARK,
@@ -941,7 +941,7 @@ def generate() -> Path:
     c.setCreator("课代表立正 / Superlinear Academy")
     c.setSubject("Podcast and video guest collaboration kit")
     c.setKeywords(
-        "课代表立正, 孙煜征, 播客, 视频访谈, 嘉宾资料, 做出你的代表作, Make what lasts"
+        "课代表立正, 孙煜征, 播客, 视频访谈, 嘉宾资料, 学点真本事, 做点真东西, Make what lasts"
     )
 
     draw_cover(c)

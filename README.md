@@ -2,7 +2,7 @@
 
 The personal website and public profile of Yuzheng Sun (孙煜征 / 课代表立正).
 
-The site is organized around one defining idea shared by Yuzheng and Superlinear Academy: **MAKE WHAT LASTS. / 做出你的代表作。** Yuzheng named and publicly advocates the idea, places his own work under its standard, and has chosen to build Superlinear for the long term. The site shows the work and leaves the verdict to others and to time.
+The site is organized around one defining idea shared by Yuzheng and Superlinear Academy: **MAKE WHAT LASTS. / 做点真东西。** Yuzheng's personal thread is **学点真本事，做点真东西。** It connects his book, career choices, and the institution he is building: capability beyond credentials, followed by work beyond internal scoreboards. The site shows the work and leaves the verdict to users, reality, and time.
 
 The site connects that belief to the intellectual foundations Yuzheng has actually developed and taught, and to the public choices and work that make the commitment inspectable. [AI Builders](https://ai-builders.com), the [Stay Superlinear membership](https://stay.superlinear.academy), enterprise programs, books, tools, and public conversations show different parts of the work; they are not separate personal themes or competing homepages. The public meaning lives in `yuzheng-profile/THESIS.md`; its institutional application within Superlinear lives in `course-marketing-system/00_strategy/superlinear-brand-platform.md`.
 
@@ -24,6 +24,7 @@ Current local review materials:
 
 - [`docs/personal-site-brand-plan-2026-08-01.md`](docs/personal-site-brand-plan-2026-08-01.md): homepage job, emotional sequence, authority pattern, and implementation decisions
 - [`docs/social-bios-2026-08-01.md`](docs/social-bios-2026-08-01.md): platform-specific signatures and bios ready to paste after review
+- [`docs/creator-collaboration-invitation-power.md`](docs/creator-collaboration-invitation-power.md): the objective, evidence logic, technical system, and success signals for podcast and creator invitation surfaces
 
 ## Stack
 

@@ -582,7 +582,7 @@ const copy = {
     h1: "AI会继续变。\n什么值得做，\n什么会留下来？",
     intro: [
       "你定问题。我带着亲历的案例、公开证据和明确的判断来。我曾在Amazon、Meta、腾讯和Statsig做经济学、数据与AI工作；如今，我在Superlinear Academy继续做课程、社区、企业项目和长内容。",
-      "这些工作背后有一个共同主张：做出你的代表作。它让我反复追问：当执行越来越便宜，什么判断更值钱；一个人、一家公司，又怎样把一次结果变成长期积累。",
+      "这些工作背后有一条个人主线：学点真本事，做点真东西。它让我反复追问：拿掉学历、title和公司logo以后，什么能力还成立；拿掉汇报与内部评分以后，做的东西还有谁会选择。",
     ],
     heroProofs: [
       "康奈尔经济学博士",
@@ -807,12 +807,12 @@ const copy = {
     pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他提出并长期倡导的主张是：做出你的代表作。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士，Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他的个人主线是：学点真本事，做点真东西。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。他是Superlinear Academy创始人；AI Builders课程与Stay Superlinear会员都是这个母体下的产品。他提出并长期倡导“做出你的代表作”：把判断和本事，做成真正作用于世界、完成以后仍继续创造价值的作品。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。他从大厂管理岗位进入早期创业公司，后来全职创办Superlinear Academy；AI Builders课程与Stay Superlinear会员都是这个母体下的产品。他把这条职业主线概括为“学点真本事，做点真东西”：学会离开学历、职位和平台仍然成立的能力，再把它做成现实会使用、检验或继续选择的东西。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
-    brandLine: "Superlinear Academy的主张是：做出你的代表作。",
+    brandLine: "Superlinear Academy的主张是：做点真东西。",
     headshotLabel: "1280 × 1280头像",
     headshotCta: "下载头像",
     factsTitle: "相关链接",

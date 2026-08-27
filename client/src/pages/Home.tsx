@@ -636,18 +636,25 @@ export default function Home() {
               </p>
               <h1
                 className={cn(
-                  "mt-6 text-[3.1rem] font-semibold text-white [text-wrap:balance] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]",
+                  "mt-6 font-semibold text-white [text-wrap:balance]",
                   lang === "en"
-                    ? "leading-[0.96] tracking-[-0.04em]"
-                    : "leading-[1.04] tracking-[-0.015em]"
+                    ? "text-[3.1rem] leading-[0.96] tracking-[-0.04em] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]"
+                    : "text-[2.85rem] leading-[1.08] tracking-[-0.02em] sm:text-[3.25rem] lg:text-[3.4rem] xl:text-[3.75rem]"
                 )}
               >
-                {lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。"}
+                {lang === "en" ? (
+                  "MAKE WHAT LASTS."
+                ) : (
+                  <>
+                    <span className="block whitespace-nowrap">学点真本事，</span>
+                    <span className="block whitespace-nowrap">做点真东西。</span>
+                  </>
+                )}
               </h1>
               <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "Most work ends at delivery. A defining work begins there: it keeps changing what others can do, and keeps representing the person who made it. Superlinear Academy is the one I am trying to make."
-                  : "多数工作止于交付。少数作品，交付才是开始：它会继续改变别人能做什么，也会长期代表做出它的人。我正在把Superlinear Academy做成这样的作品。"}
+                  ? "I moved from big-tech leadership into an early startup, then into building Superlinear full time—not because work outside institutions is automatically more real, but to let users, markets, and consequences answer more directly. Superlinear Academy is the work I am placing under that test."
+                  : "我从大厂带团队，走到早期创业公司，再全职做Superlinear。不是因为组织外天然更真，而是想让自己的判断更直接地接受用户、市场和现实的回答。Superlinear Academy是我正在做的答案。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -1354,7 +1361,7 @@ export default function Home() {
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
                 ? "Cornell Economics PhD, author, and founder of Superlinear Academy. Make what lasts."
-                : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。做出你的代表作。"}
+                : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。学点真本事，做点真东西。"}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link

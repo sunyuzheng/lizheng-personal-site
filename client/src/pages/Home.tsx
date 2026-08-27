@@ -30,16 +30,16 @@ const horizon = {
     title:
       "I admire people whose work and lives became impossible to separate.",
     detail:
-      "The products of Steve Jobs and Zhang Xiaolong. Lionel Messi's football. Christopher Nolan's films. Geoffrey Hinton's and Warren Buffett's convictions surviving decades of disagreement. Tsunekazu Nishioka's craft, giving ancient timber another thousand years of life. Different fields and temperaments; the same unmistakable result: the work carries the maker.",
+      "I think of the products of Steve Jobs and Zhang Xiaolong, Lionel Messi's football, Christopher Nolan's films, the judgments Geoffrey Hinton and Warren Buffett held through years of disagreement, and Tsunekazu Nishioka giving ancient timber another thousand years of life. Different fields and temperaments; in each case, the maker is unmistakable in the work.",
     structure:
-      "People shape work, and work shapes people. A defining work is not something you think right once; through version after version, materials, masters, users, markets, and time answer back until it slowly becomes real.",
+      "People shape work, and work shapes people. A defining work is not conceived correctly in one stroke. It takes shape version by version, as materials, masters, users, markets, and time keep correcting it.",
   },
   zh: {
     title: "我敬佩的，是作品与人最终变得无法分开。",
     detail:
-      "乔布斯与张小龙的产品，梅西的足球，诺兰的电影，Hinton与巴菲特经受时间的非共识，以及西冈常一让千年木材再活一千年的手艺。领域不同，性格不同；作品里都无法抹掉那个做出它的人。",
+      "乔布斯与张小龙的产品，梅西的足球，诺兰的电影，Hinton和巴菲特那些经得起争议与时间的判断，还有西冈常一让千年木材再活一千年的手艺。领域不同，性格不同；作品里都无法抹掉做出它的人。",
     structure:
-      "人塑造作品，作品也塑造人。真正的代表作不是一次想对的；它在一个个版本里，经过材料、高手、用户、市场和时间的回答，才慢慢成立。",
+      "人塑造作品，作品也反过来塑造人。代表作不是一开始就能想对的。它要经过一个个版本，让材料、高手、用户、市场和时间不断校正，才慢慢成立。",
   },
 };
 
@@ -49,25 +49,25 @@ const careerChapters = {
       marker: "CORNELL · AMAZON · META",
       title: "See the structure beneath the visible result.",
       detail:
-        "Economics trained me to ask about causes, choices, incentives, and constraints. Product work made those explanations answer to a harder question: did they change a real decision for real users?",
+        "Economics trained me to ask about causes, choices, incentives, and constraints. Building products forced those explanations to face a harder test: did they change real decisions for real users?",
     },
     {
       marker: "TENCENT · 30-PERSON DATA & AI TEAM",
-      title: "Make judgment travel through people and responsibility.",
+      title: "Turn judgment into organizational results.",
       detail:
-        "Leading a team taught me that one person seeing clearly was not enough. Priorities, incentives, standards, and ownership had to hold together before an idea could change an organization.",
+        "Leading a team taught me that one person seeing clearly was not enough. Priorities, incentives, standards, and ownership had to hold together before a judgment became something a team could actually deliver.",
     },
     {
       marker: "2022 · A DIFFERENT BET",
       title: "Leave a path I already knew how to win.",
       detail:
-        "After leading Tencent's 30-person Data & AI team and repeatedly earning its highest performance rating, I left a clear management path, returned to the U.S. as an individual contributor, and began turning work I had built outside my day job into something I was willing to carry for the long term.",
+        "After leading Tencent's 30-person Data & AI team and repeatedly earning its highest performance rating, I left a clear management path and returned to the U.S. as an individual contributor. From there, I began turning work I had built outside my day job into something I was willing to carry for the long term.",
     },
     {
       marker: "STATSIG · SUPERLINEAR",
-      title: "Keep the wager answerable to reality.",
+      title: "Make every bet answer to reality.",
       detail:
-        "At Statsig, experiments made belief revision part of the product workflow. At Superlinear, courses, community, books, tools, and public work remain open to the same question: are they genuinely useful after the first release?",
+        "At Statsig, experiments made revising a judgment part of the product workflow. At Superlinear, courses, community, books, tools, and public work must answer the same question: are they still useful after the first release?",
     },
   ],
   zh: [
@@ -75,25 +75,25 @@ const careerChapters = {
       marker: "康奈尔 · AMAZON · META",
       title: "看见结果背后的结构。",
       detail:
-        "经济学训练我追问因果、选择、激励与约束；产品工作又让这些解释面对一个更硬的问题：它有没有改变真实用户和真实决定？",
+        "经济学训练我追问因果、选择、激励与约束；做产品又逼我面对一个更硬的问题：这些解释，最后有没有改变真实用户的选择？",
     },
     {
       marker: "腾讯 · 30人数据与AI团队",
-      title: "让判断穿过人、组织与责任。",
+      title: "让判断变成组织里的结果。",
       detail:
-        "带团队让我明白，一个人想清楚远远不够。优先级、激励、标准与责任必须彼此咬合，一个想法才可能真正改变组织。",
+        "带团队让我明白，一个人想清楚远远不够。优先级、激励、标准与责任必须彼此咬合，一个判断才会变成团队真正做出来的结果。",
     },
     {
       marker: "2022年 · 换一种下注",
       title: "离开一条我已经知道怎样赢的路。",
       detail:
-        "在腾讯带领30人数据与AI团队、连续获得最高绩效之后，我离开那条清晰的管理晋升路径，回美国从IC重新开始，也把原先在主业之外积累的内容与事业，变成自己愿意长期承担的工作。",
+        "在腾讯带领30人数据与AI团队、连续获得最高绩效之后，我离开了清晰的管理晋升路径，回美国从IC重新开始。也从那时起，我把原本做在主业之外的内容和事业，变成自己愿意长期负责的工作。",
     },
     {
       marker: "STATSIG · SUPERLINEAR",
-      title: "让下注持续面对现实。",
+      title: "让每一次下注，都接受现实检验。",
       detail:
-        "在Statsig，实验把不断更新判断变成产品工作流的一部分；到了Superlinear，课程、社区、书、工具与公开内容，也一直面对同一个问题：第一次发布以后，它们是否仍然有用？",
+        "在Statsig，实验让更新判断成为产品工作流的一部分。到了Superlinear，课程、社区、书、工具和公开内容，也都要回答同一个问题：第一次发布以后，它们还会不会继续有用？",
     },
   ],
 };
@@ -101,15 +101,15 @@ const careerChapters = {
 const featuredJudgment = {
   en: {
     title:
-      "In 2021, I laid out the limits of the dominant AI paradigm. In February 2023, before GPT-4, I argued that AI had begun to break that ceiling.",
+      "In 2021, I explained why the previous AI paradigm had a ceiling. In February 2023, before GPT-4, I argued that ChatGPT was breaking it.",
     detail:
-      "Two public videos in 2021 located the earlier model's boundary in its mechanism: it learned mappings from labeled data and automated narrow settings well, but lacked general understanding. ChatGPT's instruction following, in-context learning, and apparent reasoning changed that model. From there I reasoned forward to falling inference costs, tool-connected workflows, persistent memory, direct result delivery, and ChatGPT-native systems. The original probabilities remain on the page; so do the two major errors added later.",
+      "Two videos in 2021 traced the limit to the mechanism: systems learned mappings from labeled data and worked well in narrow settings, but lacked general understanding. ChatGPT's instruction following, in-context learning, and signs of reasoning forced me to revise that view. I then projected cheaper inference, tool use, persistent memory, direct result delivery, and ChatGPT-native systems. The original probabilities remain on the page, along with two major mistakes added later.",
     cta: "Read the original argument and later review",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
     timeline: [
       {
         date: "APRIL 2021",
-        label: "Define the limits of the dominant AI paradigm",
+        label: "Explain why the previous AI paradigm could not generalize",
         links: [
           {
             label: "Why the Turing Test misses intelligence",
@@ -123,7 +123,7 @@ const featuredJudgment = {
       },
       {
         date: "FEBRUARY 2023 · BEFORE GPT-4",
-        label: "Explain what changed—and reason forward",
+        label: "Explain what ChatGPT changed—and project what came next",
         links: [
           {
             label: "Open the pre-GPT-4 public snapshot",
@@ -135,15 +135,15 @@ const featuredJudgment = {
   },
   zh: {
     title:
-      "2021年，我解释了旧AI的能力上限。2023年2月、GPT-4发布前，我判断AI已经开始突破那道上限。",
+      "2021年，我解释了上一代AI为什么有天花板。2023年2月、GPT-4发布前，我判断这道天花板正在被打破。",
     detail:
-      "2021年的两期视频先把上一代AI的边界落到机制上：它擅长从标注数据中学习对应关系，能很好地自动化窄场景，却缺少对世界的通用理解。ChatGPT出现以后，指令遵循、in-context learning与看似出现的推理能力改变了这个模型；我由此推演推理成本、工具连接、长期记忆、直接交付结果与ChatGPT Native系统。原文里的概率仍在，后来复盘的两处错误也仍在。",
+      "2021年的两期视频，从机制上解释了上一代AI的边界：它擅长从标注数据中学习对应关系，适合自动化窄场景，却缺少通用理解。ChatGPT出现后，指令遵循、in-context learning与推理能力的新迹象，迫使我更新判断。我继续推演推理成本下降、工具调用、长期记忆、直接交付结果与ChatGPT Native系统。原文中的概率没有删，后来判断错的两处也留在页面上。",
     cta: "阅读原文与后续复盘",
     href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
     timeline: [
       {
         date: "2021年4月",
-        label: "先说明旧AI范式的能力边界",
+        label: "解释上一代AI为什么难以通用",
         links: [
           {
             label: "为什么图灵测试不能检测人工智能？",
@@ -157,7 +157,7 @@ const featuredJudgment = {
       },
       {
         date: "2023年2月 · GPT-4发布前",
-        label: "再说明哪一层上限已经被打破",
+        label: "说明ChatGPT改变了什么，并继续推演下一步",
         links: [
           {
             label: "查看GPT-4前公开版本",
@@ -176,7 +176,7 @@ const work = {
       label: "OPEN, PUBLIC VALUE",
       title: "The free community",
       detail:
-        "A free community of 20,000+ people seriously using AI. Real work stays visible: what people tried, what failed, how they judged, and what changed. That gives unfinished work a better frame of reference—and a place to meet feedback, users, collaborators, and opportunity.",
+        "More than 20,000 people using AI to do serious work share projects, failures, progress, and postmortems here. You can see how others make decisions and get things done—and put unfinished work in front of feedback, users, peers, and opportunity earlier.",
       proof:
         "20,000+ members · 700+ public project posts · 8,000+ project comments",
       href: "https://www.superlinear.academy",
@@ -187,7 +187,7 @@ const work = {
       label: "STRUCTURED LEARNING",
       title: "AI Builders",
       detail:
-        "A structured learning system I teach with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at leading AI conferences such as CVPR, NeurIPS, and KDD. The aim is to understand AI deeply enough to make reliable choices and build beyond a tutorial.",
+        "I teach it with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at CVPR, NeurIPS, and KDD. The goal is independent judgment after the tutorial ends: when the problem is new, you can still decide what to build and make it reliable.",
       proof: "3,000+ paying learners · 5.0/5 on Maven",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
@@ -197,7 +197,7 @@ const work = {
       label: "YEAR-ROUND MEMBERSHIP",
       title: "Stay Superlinear membership",
       detail:
-        "A year-round source of deep analysis, guest masterclasses, monthly Q&A, core courses, Skills, recordings, and practitioner context—so the next important decision can begin from a higher place.",
+        "Deep analysis, guest masterclasses, monthly Q&A, three core courses, selected Skills, and recordings—updated throughout the year, so an important question does not have to start from zero.",
       proof:
         "12+ masterclasses · monthly Q&A · 3 core courses · selected Skills",
       href: "https://stay.superlinear.academy",
@@ -208,7 +208,7 @@ const work = {
       label: "ORGANIZATIONAL PRACTICE",
       title: "Enterprise AI programs",
       detail:
-        "We work with teams to bring new AI capability into real workflows, evaluation, ownership, and organizational constraints—so an experiment can become a way of working the organization can trust.",
+        "We work with teams to put AI into real workflows, then add the evaluation, ownership, and coordination it needs to become a way of working people can trust.",
       proof: "Tencent · Xiaohongshu · Meituan · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "Explore enterprise work",
@@ -220,7 +220,7 @@ const work = {
       label: "免费开放",
       title: "免费社区",
       detail:
-        "2万+认真用AI做事的人，把真实项目、一手判断、失败和进展留在这里。你能持续看见做过的人怎样判断、怎样把事情做成；未完成的作品也能尽早遇到反馈、用户、同行与机会。",
+        "2万+认真用AI做事的人，把项目、失败、进展和复盘留在这里。你能看见别人怎样判断、怎样把事情做成，也能让还没完成的作品尽早遇到反馈、用户、同行与机会。",
       proof: "20,000+名成员 · 700+项目帖 · 8,000+条项目评论",
       href: "https://www.superlinear.academy",
       cta: "免费加入",
@@ -230,7 +230,7 @@ const work = {
       label: "系统训练",
       title: "AI Builders",
       detail:
-        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究发表于CVPR、NeurIPS、KDD等AI顶会。我们的目标，是让人把AI理解到足以做出可靠判断，面对没有教程的新问题，也能独立做成可靠的东西。",
+        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD等顶会。目标是学完教程以后，仍然能独立判断：遇到没有现成答案的新问题，也知道该做什么、怎样做得可靠。",
       proof: "3,000+付费学员 · Maven 5.0/5",
       href: "https://ai-builders.com",
       cta: "了解AI Builders",
@@ -240,7 +240,7 @@ const work = {
       label: "全年会员",
       title: "Stay Superlinear会员",
       detail:
-        "全年持续更新深度解析、闭门大师课、每月答疑、三门核心课、精选Skills、活动回放与一线实践语境，让下一次重要判断从更高处开始。",
+        "全年持续更新深度解析、闭门大师课、每月答疑、三门核心课、精选Skills与活动回放。遇到重要问题时，不必每次从零开始。",
       proof: "12+场闭门大师课 · 每月深度答疑 · 三门核心课 · 精选Skills",
       href: "https://stay.superlinear.academy",
       cta: "了解会员",
@@ -250,7 +250,7 @@ const work = {
       label: "组织实践",
       title: "企业AI项目",
       detail:
-        "我们把新的AI能力放进团队的真实工作流、评估、责任与组织约束里，让一次实验变成组织可以信任的工作方式。",
+        "我们和团队一起，把AI放进真实工作流，补齐评估、责任与组织协作，让一次实验变成可以长期使用的工作方式。",
       proof: "腾讯 · 小红书 · 美团 · DoorDash",
       href: "https://corp-training.ai-builders.com",
       cta: "了解企业合作",
@@ -526,14 +526,14 @@ export default function Home() {
             <Button
               asChild
               size="sm"
-              className="bg-superlinear text-white hover:bg-superlinear-deep"
+              className="h-7 gap-1.5 bg-superlinear px-2.5 text-xs text-white hover:bg-superlinear-deep has-[>svg]:px-2.5"
             >
               <a
                 href="https://www.superlinear.academy"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Users className="mr-2 h-4 w-4" />
+                <Users className="h-3.5 w-3.5" />
                 {nav.community}
               </a>
             </Button>
@@ -620,7 +620,7 @@ export default function Home() {
           id="hero"
           className="scroll-mt-[72px] border-b border-white/10 bg-[#070A12]"
         >
-          <div className="container grid min-h-[calc(100svh-72px)] gap-10 py-12 md:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14 lg:py-20">
+          <div className="container grid gap-10 py-12 md:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14">
             <div className="max-w-2xl">
               <p
                 className={cn(
@@ -644,21 +644,19 @@ export default function Home() {
               >
                 {lang === "en" ? "MAKE WHAT LASTS." : "做出你的代表作。"}
               </h1>
-              <p className="mt-7 max-w-xl text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
+              <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "Some work ends when it ships. Some keeps changing what others can do—and keeps representing the person who made it. I am building Superlinear Academy to become the latter."
-                  : "有些工作，交付以后就结束了。有些会继续改变别人能做什么，也继续代表做出它的人。我正在把Superlinear Academy做成后者。"}
+                  ? "Most work ends at delivery. A defining work begins there: it keeps changing what others can do, and keeps representing the person who made it. Superlinear Academy is the one I am trying to make."
+                  : "多数工作止于交付。少数作品，交付才是开始：它会继续改变别人能做什么，也会长期代表做出它的人。我正在把Superlinear Academy做成这样的作品。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
                   size="lg"
                   onClick={() => scrollToSection("superlinear")}
-                  className="bg-superlinear text-white hover:bg-superlinear-deep"
+                  className="gap-1.5 bg-superlinear text-white hover:bg-superlinear-deep"
                 >
-                  {lang === "en"
-                    ? "See what I am building"
-                    : "看看我正在做什么"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  {lang === "en" ? "What I'm building" : "我在做什么"}
+                  <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
                   asChild
@@ -766,13 +764,13 @@ export default function Home() {
               <div className="space-y-5 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
                 <p>
                   {lang === "en"
-                    ? "Many capable people learn, rise, manage, and deliver. Then the task resets, the title moves on, and it becomes hard to say what their best attention added to the world. The deeper desire is to make something that could only have taken this shape through their own way of seeing and working."
-                    : "许多有能力的人不断学习、升级、管理和交付。任务却会重置，职位会移交；当这些标签拿走以后，很难回答自己最好的注意力究竟为世界增加了什么。更深的渴望，是做出一种只有经过自己，才会成为这个样子的东西。"}
+                    ? "Many capable people become excellent at completing tasks and advancing within organizations. But tasks reset and roles move on. Once the titles are stripped away, what exists because you were here? I want to leave work that would not have taken the same form in someone else's hands."
+                    : "许多人很会完成任务，也一路升职。可任务会重置，职位会移交。拿掉这些标签，什么东西仍然因为你而存在？我想留下的，是那种换一个人来做，就不会是这个样子的作品。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "AI is making the first version cheap, but it will not make a defining work for you. New leverage should not lower our standard; it should let one person or a small team finish what used to be entirely beyond reach."
-                    : "AI正在让第一版变得廉价，却不会自动替你做出一件能代表你的作品。新的杠杆，不该让我们降低标准，而应该让一个人或一个小团队，完成过去根本够不到的东西。"}
+                    ? "AI is making first drafts cheap—and making similar output abundant. The problems you choose, the standards you set, and the work you are willing to put your name behind now distinguish you more clearly. At the same time, one person or a small team can attempt what used to be out of reach."
+                    : "AI让第一版越来越便宜，也让相似的东西越来越多。于是，选什么题、用什么标准、愿意为什么作品署名负责，反而更能区分一个人。与此同时，一个人或一个小团队，也终于有机会完成过去根本够不到的东西。"}
                 </p>
               </div>
             </div>
@@ -843,8 +841,8 @@ export default function Home() {
               </div>
               <p className="max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
                 {lang === "en"
-                  ? "I learned how to succeed inside schools and companies. The harder change was to put my best attention behind problems, standards, and work I had chosen—and accept responsibility for what happened next."
-                  : "我曾经很擅长在学校和公司里取得好结果。更难的变化，是把最好的注意力放到自己选择的问题、标准与作品上，并承担接下来发生的一切。"}
+                  ? "I learned to do well in schools and companies. The harder move was to put my best time and ability behind problems, standards, and work I had chosen—and be responsible for the result."
+                  : "我曾经很擅长在学校和公司里取得好结果。更难的是，把最好的时间和能力押在自己选择的问题、标准与作品上，并为结果负责。"}
               </p>
             </div>
 
@@ -938,19 +936,19 @@ export default function Home() {
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
                   {lang === "en"
                     ? "I want to build a real academy."
-                    : "我想认真做一所真正的学院。"}
+                    : "我想做一所真正的学院。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-[#5C574D] md:text-lg">
                 <p>
                   {lang === "en"
-                    ? "Not merely a course, and not merely a community. I want people with professional depth to come here and turn their judgment into products, work, and ventures. Superlinear is the most important long-term work I have chosen—and it is still far from finished."
-                    : "它不是一门课，也不只是一个社区。我希望有专业积累的人来到这里以后，能把自己的判断变成作品、产品和事业。Superlinear是我选择长期做的、最重要的作品，也还远没有做完。"}
+                    ? "I want people with professional depth to come here and turn their judgment into work, products, and ventures of their own. Superlinear is the most important long-term bet I have chosen, and it is nowhere near finished."
+                    : "我希望有专业积累的人来到这里，把自己的判断做成作品、产品和事业。Superlinear是我最重要的长期选择，也还远没有做完。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "The free community, AI Builders, the membership, and our enterprise programs each solve a different part of that problem. The pages below show what each one is responsible for—and what already exists."
-                    : "免费社区、AI Builders、会员与企业项目，分别为这件事解决不同的问题。下面这四部分，说清它们各自负责什么，也告诉你现在已经有什么。"}
+                    ? "The free community, AI Builders, the membership, and enterprise programs each serve a different need. Start wherever fits."
+                    : "免费社区、AI Builders、会员与企业项目各做一件不同的事。你可以从最适合自己的地方进入。"}
                 </p>
               </div>
             </div>
@@ -1088,15 +1086,15 @@ export default function Home() {
                 </SectionLabel>
                 <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "I return to people whose work changed what others thought possible."
-                    : "我一直回到那些真正改变了“什么是可能”的人。"}
+                    ? "I want to know what people who built important things saw—and what they later changed their minds about."
+                    : "我想知道，做成过重要事情的人，当初看见了什么，后来又为什么改了主意。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-zinc-400">
                 <p>
                   {lang === "en"
-                    ? "I talk with them about technology, products, and companies, but also about the moments that changed a consequential choice: what they saw, why they were willing to bet, and how reality rewrote the answer. These conversations keep raising my own standard for good work."
-                    : "我与他们谈技术、产品和公司，也谈真正改变过选择的时刻：他们看见了什么，为什么愿意下注，现实又怎样改写答案。一次次这样的对话，也在抬高我对好作品的判断。"}
+                    ? "I talk with them about technology, products, and companies, but I care most about the moments that changed an important choice: what they saw, why they were willing to bet, and which judgments reality later forced them to revise. These conversations keep changing my own standard for good work."
+                    : "我和他们谈技术、产品和公司，更关心那些改变重要选择的时刻：当时看见了什么，为什么愿意下注，后来又有哪些判断被现实改写。这些对话，也不断改变我对好作品的判断。"}
                 </p>
                 <p className="text-sm leading-7 text-zinc-500">
                   {lang === "en"
@@ -1169,7 +1167,7 @@ export default function Home() {
                   {lang === "en"
                     ? "Browse all conversations"
                     : "查看全部嘉宾访谈"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
             </div>
@@ -1195,15 +1193,15 @@ export default function Home() {
               <div>
                 <p className="text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "Growth Data Analytics Playbook covers product-market fit, metrics, and experimentation. 真本事 asks how work becomes capability, leverage, and income of your own. Different subjects, same attempt: preserve judgment in a form another person can use."
-                    : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。主题不同，做的是同一件事：把判断留下来，变成别人也可以使用的作品。"}
+                    ? "Growth Data Analytics Playbook covers product-market fit, metrics, and experimentation. 真本事 examines how work becomes capability, leverage, and income of your own. Different subjects, same job: put judgment into a form someone else can still use when the author is not in the room."
+                    : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。主题不同，做的却是同一件事：把判断写成作者不在场时，别人仍然能用的东西。"}
                 </p>
                 <Button
                   asChild
                   className="mt-6 bg-[#191712] text-white hover:bg-[#302C25]"
                 >
                   <Link href={withLanguage("/book", lang)}>
-                    <BookOpen className="mr-2 h-4 w-4" />
+                    <BookOpen className="h-4 w-4" />
                     {lang === "en" ? "Explore both books" : "查看两本书"}
                   </Link>
                 </Button>
@@ -1301,8 +1299,8 @@ export default function Home() {
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
                   {lang === "en"
-                    ? "You do not need a complete answer before you begin. Come see what people here are making, or bring an unfinished question and put it in contact with knowledge, peers, and reality."
-                    : "你不必先拥有完整答案。可以先来看看这里的人正在做什么，也可以把还没做完的问题和作品带进来，让它早点遇到知识、同行和现实。"}
+                    ? "You do not need to have everything figured out before you begin. See what people here are making, or bring an unfinished question or work of your own. Find peers, get feedback, and test it in the world sooner."
+                    : "你不必想清楚一切才开始。先看看这里的人正在做什么；也可以带着还没完成的问题和作品进来，找到同行，得到反馈，拿到现实里试一试。"}
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -1318,7 +1316,7 @@ export default function Home() {
                     {lang === "en"
                       ? "Join Superlinear Academy for free"
                       : "免费加入Superlinear Academy"}
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    <ArrowRight className="h-4 w-4" />
                   </a>
                 </Button>
                 <Button

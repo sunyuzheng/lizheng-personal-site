@@ -1,6 +1,6 @@
-# Social Profiles — Ready To Paste
+# Social Profiles — Current State And Working Copy
 
-**Status:** 2026-08-27 ready for owner manual update; no social account was changed in this release. The 2026-08-02 rollout is retained below as history.
+**Status:** 2026-08-27 Xiaohongshu current copy confirmed by owner; other Chinese-profile revisions require separate review. No social account is changed by this document.
 
 **Owner inputs:** `yuzheng-profile/BIOS.md`, `THESIS.md`, `EVIDENCE.md`, and `facts.json`
 
@@ -18,64 +18,48 @@ Published and verified on the public profile:
 Not overwritten in this rollout:
 
 - Bilibili already carried a newer, platform-specific line—`做出你的代表作｜免费加入两万多用AI认真做事的人：Superlinear.Academy｜App：超线性学院`—so the older planned signature below was not allowed to replace it;
-- Xiaohongshu uses the owner-confirmed 159-character version below, but its current platform state was not changed in this run;
+- Xiaohongshu uses the owner-confirmed current version reproduced below;
 - WeChat and email signatures are private/manual surfaces;
 - the Substack author bio below remains the desired copy, but Substack's web profile editor did not persist the change after repeated value and public-page checks. The publication description did persist.
 
-## One memory everywhere
+## Shared center, adapted by surface
 
-- Yuzheng's Chinese personal signature: `学点真本事，做点真东西。`
-- Yuzheng's recurring editorial question: `真正把事做成的人，到底做对了什么？`
-- The reader transformation: `把他们做对的，变成你做得到的。`
-- Superlinear's Chinese institutional signature: `做点真东西。`
+- Shared Chinese mother idea: `做点真东西。`
+- Yuzheng's available personal bridge signature: `学点真本事，做点真东西。`
 - English: `MAKE WHAT LASTS.`
 
-The personal pair names Yuzheng's career thread: capability that survives beyond credentials, followed by work that survives beyond internal scoreboards. The institutional line gives Superlinear one short command. Career credentials answer “why pay attention”; Superlinear and the link answer “where can I go next.”
+The full personal pair connects Yuzheng's career, learning, and making, but it does not have to replace the sharper mother idea on every short surface. A social profile usually has several jobs at once: leave the aspiration, give it one immediately legible contemporary tension, establish hard-to-copy authority, make Superlinear concrete, and provide a next step. Career credentials answer “why pay attention”; Superlinear's people, work, and scale answer “is this real”; the link answers “where can I go next.”
 
-## Canonical Chinese paragraph
+## Current Xiaohongshu profile
 
-Use this when the surface allows one compact paragraph. Platform versions below preserve the same logic while adapting to length and link behavior.
-
-```text
-学点真本事，做点真东西。我一直追问：真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。我创办了Superlinear Academy，2万+认真用AI做事的人正在这里分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
-```
-
-## 小红书
-
-**Job:** make the idea memorable, establish authority quickly, and convert interested viewers into the free community or app.
-
-**Recommended：**
+This is the current owner-confirmed platform copy and the clearest reference for how those jobs can coexist. Do not replace it merely to make every platform repeat the same sentence.
 
 ```text
-学点真本事，做点真东西。
-真正把事做成的人，到底做对了什么？
-把他们做对的，变成你做得到的。
-康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队早期成员
-Superlinear Academy创始人｜2万+认真用AI做事的人：主页链接｜App搜「超线性学院」
+做点「真东西」
+AI能生成无限内容。真正代表你的，是作品里的判断与手艺
+创办「超线性学院」：汇聚2万+认真用AI做事的人｜技术本质·真实项目·反馈与同行｜我在腾讯/小红书/美团等AI培训，社区免费看
+康奈尔经济学博士｜前腾讯总监｜OpenAI收购团队
+免费加入：superlinear.academy｜App：超线性学院
 ```
 
-The copy is 128 Unicode code points including line breaks. The first three lines establish the personal thread, editorial question, and reader transformation; the final two provide authority, institution, and a concrete community route.
-
-This replaces the previously owner-confirmed 159-code-point version only after a separate live publication approval.
+Its order is deliberate: aspiration → AI-era tension and desired identity → institution and concrete value → personal authority → action. `《真本事》作者` can be useful in book or education contexts, but it does not replace the credential stack here.
 
 ## Bilibili
 
 **Job:** let an existing Chinese video audience remember the channel's standard and know where deeper participation happens.
 
-**个人签名：**
+**Current platform line; revise only in a separate Bilibili review:**
 
 ```text
-学点真本事，做点真东西。把高手做对的，变成你做得到的｜Superlinear Academy创始人｜App搜「超线性学院」
+做出你的代表作｜免费加入两万多用AI认真做事的人：Superlinear.Academy｜App：超线性学院
 ```
 
-61 Unicode code points. It preserves the personal memory, makes the audience benefit explicit, and leaves room for the institution and next action inside an 80-character surface.
-
-**频道长简介（如当前栏目支持）：**
+**Long-description draft retained for later platform-specific review:**
 
 ```text
 学点真本事，做点真东西。
 
-我一直追问：真正把事做成的人，到底做对了什么？这里有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话，也有我对AI时代工作与选择的长期研究。把他们做对的，变成你做得到的。
+我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有对AI技术本质、产品、商业和个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
 
 我是孙煜征（课代表立正），康奈尔经济学博士、Superlinear Academy创始人。
 
@@ -90,7 +74,7 @@ This replaces the previously owner-confirmed 159-code-point version only after a
 MAKE WHAT LASTS.
 学点真本事，做点真东西。
 
-我是孙煜征，也叫课代表立正。我一直追问：真正把事做成的人，到底做对了什么？这里有200+场与AI研究者、创始人、投资人和一线操盘者的深度对话，也有我对AI时代工作与选择的长期研究。把他们做对的，变成你做得到的。
+我是孙煜征，也叫课代表立正。我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有我对AI技术本质、产品、商业和个人选择的分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的深度对话。
 
 我创办了Superlinear Academy。2万+认真用AI做事的人正在这里分享700+真实项目、技术判断与一手经验。
 免费加入：https://superlinear.academy
@@ -166,7 +150,7 @@ Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornel
 **Job:** preserve the personal memory, explain the content in one breath, and make the in-platform search route obvious.
 
 ```text
-学点真本事，做点真东西。真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。Superlinear Academy创始人｜搜索「超线性学院」
+学点真本事，做点真东西。深聊AI、产品、商业和个人选择。Superlinear Academy创始人｜加入2万+认真用AI做事的人：搜索「超线性学院」
 ```
 
 ## WeChat / private profile

@@ -168,7 +168,7 @@ export function buildPodcastStructuredData() {
         name: "课代表立正",
         url: `${PODCAST_URL}/`,
         description:
-          "《课代表立正》是一档中文深度访谈。200+场对话里，课代表立正与AI研究者、科技创业者、一线管理者和各领域实践者追问：真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。",
+          "《课代表立正》是一档中文深度访谈。200+场对话里，课代表立正与AI研究者、科技创业者、一线管理者和各领域实践者反复追问：真正把事做成的人，到底做对了什么？",
         image: cover,
         webFeed: "https://feeds.transistor.fm/kedaibiao",
         author: { "@id": PERSON_ID },

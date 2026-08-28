@@ -415,7 +415,7 @@ export default function Podcast() {
                 真正把事做成的人，到底做对了什么？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-                《课代表立正》是一档中文深度访谈。200+场对话里，我和AI研究者、科技创业者、一线管理者与各领域实践者反复追问一件事：一件事究竟是怎样被做成的。把他们做对的，变成你做得到的。
+                《课代表立正》是一档中文深度访谈。200+场对话里，我和AI研究者、科技创业者、一线管理者与各领域实践者反复追问一件事：一件事究竟是怎样被做成的。
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">

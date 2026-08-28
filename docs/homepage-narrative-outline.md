@@ -38,7 +38,7 @@ Chinese:
 >
 > **做点真东西。**
 
-The supporting copy turns the belief toward the visitor through one durable question: `真正把事做成的人，到底做对了什么？` Its reader-facing answer is `把他们做对的，变成你做得到的。` The first line organizes Yuzheng's conversations and public analysis around a question worth returning to; the second names the desired transfer from observing other people to developing capability and making work of one's own. Superlinear Academy is where he pursues that work for the long term. The career arc and its real cost remain below as proof rather than asking the Hero paragraph to carry both biography and reader transformation.
+The supporting copy explains the career arc without romanticizing organization form: moving from big-tech leadership to an early startup and then to building Superlinear full time shortened the distance between judgment and the answer from users, markets, collaborators, and consequences. Superlinear Academy is Yuzheng's most important long-term wager and the institution carrying the second half of the line.
 
 The Acquired scene includes Yuzheng, Ben Gilbert, and David Rosenthal in full. Its role is quiet authority and peer context; it is not evidence that the belief is correct.
 

@@ -29,7 +29,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. Learn what people who make things work get right—and turn it into capability of your own.",
+      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. MAKE WHAT LASTS: turn hard-won judgment into work people keep using.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-08-27",
@@ -37,7 +37,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   zh: {
     title: "课代表立正（孙煜征）｜学点真本事，做点真东西",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。学点真本事，做点真东西：让能力离开履历仍然成立，让作品接受用户与现实的回答。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-08-27",
@@ -94,7 +94,7 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
 export const PODCAST_PAGE_META: PageMeta = {
   title: "课代表立正Podcast｜真正把事做成的人，做对了什么？",
   description:
-    "课代表立正（孙煜征）的官方中文播客。200+场与AI研究者、科技创业者、一线管理者和实践者的深度对话：真正把事做成的人，到底做对了什么？把他们做对的，变成你做得到的。",
+    "课代表立正（孙煜征）的官方中文播客。200+场与AI研究者、科技创业者、一线管理者和实践者的深度对话，追问真正把事做成的人，到底做对了什么。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/avatar.png",
   lastModified: "2026-08-27",

@@ -17,7 +17,7 @@ async function startServer() {
       : path.resolve(__dirname, "..", "dist", "public");
 
   app.get("/collab/podcast-one-pager.pdf", (_req, res) => {
-    res.redirect(308, "/collab/creators");
+    res.redirect(308, "/collab/podcast-kit-zh.pdf");
   });
 
   app.use(express.static(staticPath));

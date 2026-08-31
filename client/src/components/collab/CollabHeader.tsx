@@ -8,21 +8,39 @@ import { Link } from "wouter";
 interface CollabHeaderProps {
   backHref: string;
   section: { en: string; zh: string };
+  tone?: "gold" | "superlinear";
 }
 
-export default function CollabHeader({ backHref, section }: CollabHeaderProps) {
+export default function CollabHeader({
+  backHref,
+  section,
+  tone = "gold",
+}: CollabHeaderProps) {
   const { lang } = useLanguage();
+  const isSuperlinear = tone === "superlinear";
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
+    <nav
+      className={`sticky top-0 z-50 border-b border-white/10 backdrop-blur-xl ${
+        isSuperlinear ? "bg-[#0B0F1A]/95" : "bg-[#0B0F1A]/80"
+      }`}
+    >
       <div className="container flex items-center justify-between gap-2 py-4">
         <Link
           href={withLanguage(backHref, lang)}
-          className="flex min-w-0 items-center gap-2 text-zinc-400 transition hover:text-amber-300"
+          className={`flex min-w-0 items-center gap-2 text-zinc-400 transition ${
+            isSuperlinear
+              ? "hover:text-superlinear-light"
+              : "hover:text-amber-300"
+          }`}
         >
           <ArrowLeft className="h-4 w-4 shrink-0" />
           <div className="min-w-0">
-            <div className="whitespace-nowrap text-sm font-semibold text-amber-300">
+            <div
+              className={`whitespace-nowrap text-sm font-semibold ${
+                isSuperlinear ? "text-superlinear-light" : "text-amber-300"
+              }`}
+            >
               {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
             </div>
             <div className="hidden truncate text-xs text-zinc-400 min-[340px]:block">
@@ -31,11 +49,15 @@ export default function CollabHeader({ backHref, section }: CollabHeaderProps) {
           </div>
         </Link>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <LanguageToggle size="sm" />
+          <LanguageToggle size="sm" tone={tone} />
           <Button
             asChild
             size="sm"
-            className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+            className={
+              isSuperlinear
+                ? "bg-superlinear text-white hover:bg-superlinear-deep"
+                : "bg-amber-400 text-[#211300] hover:bg-amber-300"
+            }
           >
             <a
               href="mailto:yz@superlinear.academy"

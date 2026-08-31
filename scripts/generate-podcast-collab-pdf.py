@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+import shutil
 from pathlib import Path
 
 from PIL import Image
@@ -22,6 +23,9 @@ from reportlab.pdfgen import canvas
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / "client" / "public"
 OUTPUT = PUBLIC / "collab" / "podcast-kit-zh.pdf"
+BUSINESS_COPY = Path(
+    "/Users/sunyuzheng/Desktop/superlinear/0-常用素材/播客与视频访谈资料.pdf"
+)
 IMAGE_CACHE = ROOT / "tmp" / "pdfs" / "image-cache"
 TULONG_SCREENSHOT = ROOT / "scripts" / "assets" / "tulong-xiaohongshu-performance.png"
 
@@ -38,8 +42,10 @@ BODY = HexColor("#4D4941")
 MUTED = HexColor("#777064")
 WHITE = HexColor("#FFFFFF")
 SOFT_WHITE = HexColor("#D9DCE3")
-AMBER = HexColor("#FBBF24")
-AMBER_DARK = HexColor("#8B4A19")
+# Superlinear brand accents: light green on dark surfaces, deep green on paper.
+AMBER = HexColor("#85D164")
+AMBER_DARK = HexColor("#1B6B35")
+BRAND = HexColor("#238343")
 LINE_DARK = Color(1, 1, 1, alpha=0.12)
 LINE_LIGHT = HexColor("#D4D0C7")
 
@@ -292,7 +298,7 @@ def draw_metric(
 def draw_cover(c: canvas.Canvas) -> None:
     c.setFillColor(NAVY)
     c.rect(0, 0, W, H, fill=1, stroke=0)
-    c.setFillColor(AMBER)
+    c.setFillColor(BRAND)
     c.rect(M, H - 54, 34, 3, fill=1, stroke=0)
     draw_label(
         c,
@@ -304,31 +310,57 @@ def draw_cover(c: canvas.Canvas) -> None:
     )
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 31)
-    c.drawString(M, H - 112, "你定问题，")
-    c.drawString(M, H - 151, "我带着判断和证据来。")
+    c.drawString(M, H - 112, "把一个真问题聊透，")
+    c.drawString(M, H - 151, "也让它走得更远。")
     c.setFillColor(SOFT_WHITE)
-    c.setFont(FONT_REGULAR, 12)
-    c.drawString(M, H - 188, "课代表立正（孙煜征）｜播客与视频访谈资料")
+    draw_paragraph(
+        c,
+        "你定问题。他带着亲历、证据和一个经得起追问的判断来。节目照你原本的方式做；双方愿意时，也可以一起剪辑、切片、跨平台分发和联合发布。",
+        M,
+        H - 181,
+        W - 2 * M,
+        size=9.4,
+        leading=15,
+        color=SOFT_WHITE,
+        max_lines=3,
+    )
 
-    proof_y = H - 232
-    proofs = [
-        "康奈尔大学经济学博士",
-        "Amazon · Meta · 腾讯 · OpenAI收购团队早期成员",
-        "200+场公开对谈 · 截至2026.08",
-        "全网40万+关注者 · 三平台各10万+ · 截至2026.08",
+    value_y, value_h = 551, 67
+    c.setFillColor(Color(1, 1, 1, alpha=0.055))
+    c.rect(M, value_y, W - 2 * M, value_h, fill=1, stroke=0)
+    values = [
+        ("少见的经历", "研究·大厂·创业·教育"),
+        ("经得起追问", "观点、证据与反方"),
+        ("音视频都成立", "长对话与短切片"),
+        ("可以一起放大", "剪辑·分发·联合发布"),
     ]
-    for index, text in enumerate(proofs):
-        col = index % 2
-        row = index // 2
-        x = M + col * 255
-        y = proof_y - row * 29
+    value_w = (W - 2 * M) / 4
+    for index, (title, detail) in enumerate(values):
+        x = M + index * value_w
+        if index:
+            c.setStrokeColor(Color(1, 1, 1, alpha=0.13))
+            c.line(x, value_y + 13, x, value_y + value_h - 13)
         c.setFillColor(AMBER)
-        c.circle(x + 4, y + 3, 2.2, fill=1, stroke=0)
+        c.setFont(FONT_BOLD, 8.3)
+        c.drawString(x + 12, value_y + 39, title)
         c.setFillColor(SOFT_WHITE)
-        c.setFont(FONT_REGULAR, 9.2)
-        c.drawString(x + 13, y, text)
+        c.setFont(FONT_REGULAR, 7.1)
+        c.drawString(x + 12, value_y + 20, detail)
 
-    image_y, image_h = 115, 420
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 7.8)
+    c.drawString(
+        M,
+        532,
+        "Cornell经济学博士 · Amazon · Meta · 腾讯 · Statsig早期成员（公司后被OpenAI收购）",
+    )
+    c.drawRightString(
+        W - M,
+        517,
+        "200+场公开对谈 · 全网40万+关注者 · 截至2026.08",
+    )
+
+    image_y, image_h = 108, 400
     draw_image(
         c,
         PUBLIC / "hero" / "acquired-behind-scenes-desktop.webp",
@@ -365,10 +397,10 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "01 / WHY THIS CONVERSATION", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "这组经历，通常不在同一个嘉宾身上出现。")
+    c.drawString(M, H - 91, "这些问题，他在不止一个位置上处理过。")
     draw_paragraph(
         c,
-        "经济学让我先问机制和激励；Amazon、Meta、腾讯和Statsig让我在产品、组织和创业现场承担判断。此后的课程、企业项目和公开对谈，又让我看到同一个问题在不同人身上怎样成立、怎样失败。",
+        "他做过经济学家、数据科学家、大厂管理者和早期创业团队成员，也长期在课堂、企业和公开对谈中检验这些判断。因此同一个AI问题，他能同时谈机制、组织、产品和个人选择。",
         M,
         H - 122,
         W - 2 * M,
@@ -383,8 +415,8 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         ("Cornell", "经济学博士"),
         ("Amazon", "经济学家"),
         ("Meta", "数据科学家"),
-        ("腾讯IEG", "数据与AI副总监"),
-        ("Statsig", "Principal Data Scientist · 公司唯一布道师"),
+        ("腾讯IEG", "数据与AI副总监·30人团队·连续两期最高绩效"),
+        ("Statsig", "早期成员·公司后被OpenAI收购"),
         ("现在", "Superlinear Academy创始人"),
     ]
     c.setStrokeColor(HexColor("#BDB5A9"))
@@ -452,7 +484,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     draw_qr(c, URL_CHATGPT, W - M - 70, box_y + 131, 55)
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.5)
-    c.drawRightString(W - M - 82, box_y + 134, "扫码读原文与复盘")
+    c.drawCentredString(W - M - 42.5, box_y + 118, "扫码读原文与复盘")
     c.linkURL(URL_CHATGPT, (M + 10, box_y + 98, W - M, box_y + box_h), relative=0)
 
     c.setStrokeColor(Color(1, 1, 1, alpha=0.14))
@@ -467,7 +499,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     )
     draw_paragraph(
         c,
-        "观点讲清，证据也摆上桌；一个好问题真能改变我的判断，我会很高兴。",
+        "观点会讲清，也会说明什么证据能推翻它。好的追问，真的可能改变他的判断。",
         M + 18,
         box_y + 29,
         W - 2 * M - 36,
@@ -548,18 +580,18 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     )
     draw_paragraph(
         c,
-        "同一场对话，在小宇宙有人完整听完；换到抖音、小红书和视频号，又有人收藏、转发。平台变了，内容仍然成立。",
+        "同一场对话，在小宇宙有人完整听完。到了抖音、小红书和视频号，又有人收藏、转发。平台变了，内容仍然成立。",
         panel_x + 14,
         evidence_y + evidence_h - 112,
         panel_w - 28,
         font=FONT_BOLD,
-        size=10,
-        leading=17,
+        size=9.4,
+        leading=16,
         color=WHITE,
     )
     draw_paragraph(
         c,
-        "一次简单的远程连线，由Koji团队独立制作发布。我的账号没有参与联合发布——这个小点说明，成绩首先来自嘉宾的稀缺背景和内容质量，而不是我的账号流量。",
+        "远程录了63分钟，Koji团队完成全部制作和发布。立正的账号没有联发，因此这组数据更接近题目和对话本身的表现。",
         panel_x + 14,
         evidence_y + 148,
         panel_w - 28,
@@ -581,7 +613,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "听众反馈", M + 16, 176, color=AMBER, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "“很有帮助的一期，最近正在从chatgpt转codex，也在积累上下文～”",
+        "“很有帮助的一期，最近正在从ChatGPT转Codex，也在积累上下文。”",
         M + 16,
         151,
         W - 2 * M - 32,
@@ -647,7 +679,7 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "同一场录制，多种内容形态", left_x, 548, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "屠龙团队保留自己的节目语言；我们另做长版与切片，分别放到小红书、YouTube、B站和社群。不是把同一个文件机械搬运，而是让一场好对话用不同形态继续走。",
+        "屠龙团队保留自己的节目语言；立正团队再做长版和切片，分别发布到小红书、YouTube、B站和社区，让同一场对话在不同平台各自找到合适的形态。",
         left_x,
         521,
         left_w,
@@ -667,8 +699,8 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(left_x + 15, 353, "小红书1.13万转发·1,088条评论")
     c.drawString(left_x + 15, 336, "B站10.8万+播放·8,026收藏")
 
-    c.setFillColor(HexColor("#FFF4D6"))
-    c.setStrokeColor(HexColor("#E6C46B"))
+    c.setFillColor(HexColor("#E8F4E8"))
+    c.setStrokeColor(HexColor("#85D164"))
     c.roundRect(left_x, 199, left_w, 106, 10, fill=1, stroke=1)
     c.setFillColor(AMBER_DARK)
     c.setFont(FONT_BOLD, 12)
@@ -715,21 +747,21 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     topics = [
         (
             "方向一",
-            "学点真本事，做点真东西",
-            "拿掉学历、title和公司logo以后，什么能力还成立；拿掉内部评分以后，做的东西还有谁会选择？",
-            "适合：职业、个人成长、创作者与泛科技节目",
+            "AI把“能做”变便宜以后，为什么更需要代表作？",
+            "合格的第一版越来越多，真正稀缺的会转向选什么、做到什么程度、愿意为哪一种后果负责。",
+            "适合：职业·个人成长·创作者·泛科技节目",
         ),
         (
             "方向二",
-            "把2023年以来的公开判断摊开对答案",
-            "哪些说对了，哪些看错了节奏、公司或采用路径；当时为什么这样判断，后来又怎样修正。",
-            "适合：AI、科技、投资与趋势节目",
+            "AI会消灭fake work，还是让fake work多到看不完？",
+            "AI既能减少工作与结果之间的摩擦，也能更便宜地制造汇报、会议纪要和忙碌痕迹。组织该看什么？",
+            "适合：管理·组织·商业·职业节目",
         ),
         (
             "方向三",
-            "到底什么算AI Native人才？",
-            "不是年龄或工具频率。回到工作结果，识别旧流程补偿的约束，再在AI改变能力与成本以后，把工作重新算一遍。",
-            "适合：产品、管理、企业与技术节目",
+            "会用AI，和成为AI-native的人，中间差什么？",
+            "工具熟练度只是表面。更深的变化，是从结果出发重算整套工作，和AI一起积累长期context，并继续为结果负责。",
+            "适合：产品·企业·技术·AI节目",
         ),
     ]
     card_y = [568, 431, 294]
@@ -769,7 +801,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     proof_y, proof_h = 68, 202
     c.setFillColor(INK)
     c.roundRect(M, proof_y, W - 2 * M, proof_h, 12, fill=1, stroke=0)
-    draw_label(c, "这些不是空想", M + 16, proof_y + proof_h - 26, color=AMBER, font=FONT_BOLD)
+    draw_label(c, "这些问题一直在真实工作里接受检验", M + 16, proof_y + proof_h - 26, color=AMBER, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 15)
     c.drawString(M + 16, proof_y + proof_h - 53, "长期教学、企业现场与公开对话，持续给这些问题提供样本。")
@@ -811,7 +843,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "05 / HOST KIT & CONTACT", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
-    c.drawString(M, H - 91, "如果问题合适，录制可以很简单。")
+    c.drawString(M, H - 91, "问题值得聊透，录制就可以很简单。")
 
     draw_image(
         c,
@@ -827,7 +859,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=AMBER_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。他主持200+场科技领袖与AI研究者对话，课程服务3,000+付费学员，并建立了2万+人的免费社区。他把自己的职业主线概括为：学点真本事，做点真东西。",
+        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI进入真实工作以后，什么能力和作品反而更重要。",
         228,
         668,
         W - M - 228,
@@ -909,7 +941,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "PROGRAM INVITATIONS", M + 18, contact_y + contact_h - 27, color=AMBER)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 17)
-    c.drawString(M + 18, contact_y + contact_h - 56, "邮件里先告诉我们：你最想追问什么。")
+    c.drawString(M + 18, contact_y + contact_h - 56, "如果你有一个值得聊透的问题，先发给我们。")
     draw_paragraph(
         c,
         "附上节目或频道链接、听众为什么会在意、想怎么录，以及大概时间。",
@@ -921,13 +953,16 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         color=SOFT_WHITE,
     )
     c.setFillColor(AMBER)
-    c.setFont(FONT_BOLD, 10)
-    c.drawString(M + 18, contact_y + 22, EMAIL)
-    c.linkURL(f"mailto:{EMAIL}", (M + 15, contact_y + 10, M + 200, contact_y + 38))
+    c.setFont(FONT_BOLD, 8.8)
+    c.drawString(M + 18, contact_y + 27, "商务负责人：喵老师 · 微信：FM13870617")
     c.setFillColor(SOFT_WHITE)
     c.setFont(FONT_REGULAR, 7.6)
-    c.drawString(M + 190, contact_y + 23, "lizheng.ai/zh/collab/creators")
-    c.linkURL(URL_COLLAB, (M + 185, contact_y + 10, M + 370, contact_y + 38))
+    c.drawString(M + 18, contact_y + 12, EMAIL)
+    c.linkURL(f"mailto:{EMAIL}", (M + 15, contact_y + 5, M + 175, contact_y + 23))
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 7.6)
+    c.drawString(M + 190, contact_y + 12, "creators.lizheng.ai")
+    c.linkURL(URL_COLLAB, (M + 185, contact_y + 5, M + 305, contact_y + 23))
     draw_qr(c, URL_COLLAB, W - M - 83, contact_y + 28, 66)
     draw_footer(c, page)
 
@@ -956,6 +991,8 @@ def generate() -> Path:
     c.showPage()
     draw_host_kit(c, 6)
     c.save()
+    BUSINESS_COPY.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(OUTPUT, BUSINESS_COPY)
     return OUTPUT
 
 

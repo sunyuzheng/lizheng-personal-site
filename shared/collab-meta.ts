@@ -25,17 +25,17 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
   en: {
     title: "Podcast & video invitations · Yuzheng Sun",
     description:
-      "Invite Yuzheng Sun for a podcast, video interview, or long-form conversation about AI, lasting work, organizational judgment, and the business of education and community. Includes proven collaboration cases and a host kit.",
+      "Invite Yuzheng Sun for a podcast, video interview, or long-form conversation. Explore defining work in the AI era, fake work, AI-native talent, and organizational judgment—with proven cross-platform cases and a complete host kit.",
     canonical: "https://www.lizheng.ai/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-08-31",
   },
   zh: {
     title: "节目邀请 · 课代表立正｜播客与视频对谈",
     description:
-      "邀请课代表立正参与播客、视频访谈与长对话：围绕AI、个人作品、组织判断与教育商业，带着可追问的观点、公开证据和真实案例；附合作样本与嘉宾资料。",
+      "邀请课代表立正参与播客、视频访谈与长对话：可聊AI时代的代表作、fake work、AI-native人才与组织判断；页面包含Koji、屠龙跨平台案例、完整做客记录与嘉宾资料。",
     canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-08-31",
   },
 };

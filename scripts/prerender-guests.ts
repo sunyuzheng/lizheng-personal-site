@@ -161,7 +161,7 @@ function buildHead(meta: {
   ${meta.imageWidth ? `<meta property="og:image:width" content="${meta.imageWidth}" />` : ""}
   ${meta.imageHeight ? `<meta property="og:image:height" content="${meta.imageHeight}" />` : ""}
   <meta property="og:locale" content="${escapeHtml(meta.locale || "zh_CN")}" />
-  <meta property="og:site_name" content="课代表立正" />
+  <meta property="og:site_name" content="立正 · Yuzheng Sun" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="${escapeHtml(meta.canonical)}" />

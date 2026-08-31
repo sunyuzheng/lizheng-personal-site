@@ -27,20 +27,20 @@ export function languageAlternates(
 
 export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
-    title: "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS",
+    title: "Yuzheng Sun (立正 / 课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. MAKE WHAT LASTS: turn hard-won judgment into work people keep using.",
+      "Yuzheng Sun (立正 / 课代表立正), founder of Superlinear Academy. AI makes building easier; he studies what's worth building. MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-27",
+    lastModified: "2026-08-31",
   },
   zh: {
-    title: "课代表立正（孙煜征）｜学点真本事，做点真东西",
+    title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。学点真本事，做点真东西：让能力离开履历仍然成立，让作品接受用户与现实的回答。",
+      "立正（孙煜征，课代表立正），Superlinear Academy创始人。AI让做出来更容易；他研究什么值得做，怎样把真本事做成真东西。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-27",
+    lastModified: "2026-08-31",
   },
 };
 
@@ -48,7 +48,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Profile · Yuzheng Sun · 孙煜征",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) is a Cornell Economics PhD and founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
+      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
     lastModified: "2026-08-20",
@@ -139,7 +139,6 @@ export const AIE_SHANGHAI_DECK_PAGE_META: PageMeta = {
   description:
     "AI Engineer Shanghai 2026合作会谈材料：介绍共同运营团队、上海与全球AI工程网络的双向连接，以及与上海市人工智能行业协会的首轮合作方案。",
   canonical: "https://www.lizheng.ai/decks/aie-shanghai-2026",
-  ogImage:
-    "https://www.lizheng.ai/decks/aie-shanghai-2026/assets/og.png",
+  ogImage: "https://www.lizheng.ai/decks/aie-shanghai-2026/assets/og.png",
   lastModified: "2026-08-24",
 };

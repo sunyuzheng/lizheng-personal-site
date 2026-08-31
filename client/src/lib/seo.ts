@@ -133,7 +133,7 @@ export function applyPageSeo({
     manageMeta(
       'meta[property="og:site_name"]',
       { property: "og:site_name" },
-      "课代表立正"
+      "立正 · Yuzheng Sun"
     ),
     manageMeta(
       'meta[name="twitter:card"]',

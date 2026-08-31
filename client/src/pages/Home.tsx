@@ -25,22 +25,108 @@ import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 
-const horizon = {
-  en: {
-    title:
-      "I admire people whose work and lives became impossible to separate.",
-    detail:
-      "I think of the products of Steve Jobs and Zhang Xiaolong, Lionel Messi's football, Christopher Nolan's films, the judgments Geoffrey Hinton and Warren Buffett held through years of disagreement, and Tsunekazu Nishioka giving ancient timber another thousand years of life. Different fields and temperaments; in each case, the maker is unmistakable in the work.",
-    structure:
-      "People shape work, and work shapes people. A defining work is not conceived correctly in one stroke. It takes shape version by version, as materials, masters, users, markets, and time keep correcting it.",
-  },
-  zh: {
-    title: "我敬佩的，是作品与人最终变得无法分开。",
-    detail:
-      "乔布斯与张小龙的产品，梅西的足球，诺兰的电影，Hinton和巴菲特那些经得起争议与时间的判断，还有西冈常一让千年木材再活一千年的手艺。领域不同，性格不同；作品里都无法抹掉做出它的人。",
-    structure:
-      "人塑造作品，作品也反过来塑造人。代表作不是一开始就能想对的。它要经过一个个版本，让材料、高手、用户、市场和时间不断校正，才慢慢成立。",
-  },
+const brandLayers = {
+  en: [
+    {
+      number: "01",
+      title: "Build capability that remains yours.",
+      label: "REAL CAPABILITY",
+      detail:
+        "Strip away the credential, title, company, and fashionable tool. What can you still see, decide, and make happen?",
+    },
+    {
+      number: "02",
+      title: "Make something reality can answer.",
+      label: "REAL WORK",
+      detail:
+        "Strip away the manager, presentation, and internal scorecard. Does anyone still need it—and can they use, reject, or improve it?",
+    },
+    {
+      number: "03",
+      title: "Make what lasts.",
+      label: "THE HORIZON",
+      detail:
+        "Then ask one question further: after the first release, does the work keep creating value—and keep carrying the maker's judgment?",
+    },
+  ],
+  zh: [
+    {
+      number: "01",
+      title: "学点真本事。",
+      label: "能力",
+      detail:
+        "拿掉学历、title、公司和眼下最热的工具，什么判断和手艺还真正属于你？",
+    },
+    {
+      number: "02",
+      title: "做点真东西。",
+      label: "现实",
+      detail:
+        "拿掉老板、汇报和内部评分，做出来的东西还有没有人需要，能不能被使用、拒绝和改进？",
+    },
+    {
+      number: "03",
+      title: "MAKE WHAT LASTS.",
+      label: "时间",
+      detail:
+        "再往前一步：第一次发布以后，它还会不会继续创造价值；人们还能不能从中看见做出它的人的判断？",
+    },
+  ],
+};
+
+const recentWriting = {
+  en: [
+    {
+      label: "WORK & ORGANIZATIONS",
+      title: "How to identify and eliminate fake work",
+      detail:
+        "Knowledge work is hard to measure and outcomes are hard to attribute. Visible activity can therefore become a substitute for value. Does AI move people closer to results—or simply manufacture more evidence of progress?",
+      href: "https://www.superlinear.academy/c/ai-resources/fake-work",
+      cta: "Read the essay",
+    },
+    {
+      label: "AI-NATIVE TALENT",
+      title: "What actually makes someone AI native?",
+      detail:
+        "AI-native talent starts with the outcome: see which costs and capabilities AI changed, redesign the work, and remain responsible for the result.",
+      href: "https://www.superlinear.academy/c/ai-resources/ai-native",
+      cta: "Read the essay",
+    },
+    {
+      label: "NOUNS & VERBS",
+      title: "Everyone learns the nouns. The verbs set people apart.",
+      detail:
+        "LangChain, RAG, and fine-tuning come with names, docs, and clean checkpoints. Real projects depend on verbs: decompose, judge, route, diagnose, and iterate. Nouns give you parts; verbs give you the ability to assemble them.",
+      href: "https://www.superlinear.academy/c/ai-resources/verb",
+      cta: "Read the essay in Chinese",
+    },
+  ],
+  zh: [
+    {
+      label: "工作与组织",
+      title: "如何识别与消灭fake work",
+      detail:
+        "知识工作的价值难衡量，结果也难归因，于是可见动作很容易代替价值。AI究竟在缩短人与结果的距离，还是只会更快地生产“正在推进”的证据？",
+      href: "https://www.superlinear.academy/c/ai-resources/fake-work",
+      cta: "读文章",
+    },
+    {
+      label: "AI NATIVE人才",
+      title: "到底什么才算AI Native人才？",
+      detail:
+        "AI Native人才从结果出发：看清AI改写了哪些成本与能力，重新设计工作，并继续对结果负责。",
+      href: "https://www.superlinear.academy/c/ai-resources/ai-native",
+      cta: "读文章",
+    },
+    {
+      label: "名词与动词",
+      title: "为什么所有人都在学名词，但真正拉开差距的是动词",
+      detail:
+        "LangChain、RAG和fine-tune都有清楚的名字、边界与教程；真实项目却更依赖分解、判断、路由、诊断和迭代。名词给你零件，动词给你组装能力。",
+      href: "https://www.superlinear.academy/c/ai-resources/verb",
+      cta: "读文章",
+    },
+  ],
 };
 
 const careerChapters = {
@@ -58,16 +144,16 @@ const careerChapters = {
         "Leading a team taught me that one person seeing clearly was not enough. Priorities, incentives, standards, and ownership had to hold together before a judgment became something a team could actually deliver.",
     },
     {
-      marker: "2022 · A DIFFERENT BET",
-      title: "Leave a path I already knew how to win.",
+      marker: "2022 · STATSIG",
+      title: "Move closer to the consequence.",
       detail:
-        "After leading Tencent's 30-person Data & AI team and repeatedly earning its highest performance rating, I left a clear management path and returned to the U.S. as an individual contributor. From there, I began turning work I had built outside my day job into something I was willing to carry for the long term.",
+        "After leading Tencent's 30-person Data & AI team and repeatedly earning its highest performance rating, I left a clear management path, returned to the U.S., and joined an early startup as an individual contributor—closer to customers, experiments, and consequences.",
     },
     {
-      marker: "STATSIG · SUPERLINEAR",
-      title: "Make every bet answer to reality.",
+      marker: "SUPERLINEAR · FULL TIME",
+      title: "Devote my best years to work of my own.",
       detail:
-        "At Statsig, experiments made revising a judgment part of the product workflow. At Superlinear, courses, community, books, tools, and public work must answer the same question: are they still useful after the first release?",
+        "I eventually left my job to build Superlinear full time. Courses, community, books, tools, and public work now have to answer the question that titles and performance reviews cannot: do people use them, choose them again, and become able to do something they could not do before?",
     },
   ],
   zh: [
@@ -84,16 +170,16 @@ const careerChapters = {
         "带团队让我明白，一个人想清楚远远不够。优先级、激励、标准与责任必须彼此咬合，一个判断才会变成团队真正做出来的结果。",
     },
     {
-      marker: "2022年 · 换一种下注",
-      title: "离开一条我已经知道怎样赢的路。",
+      marker: "2022年 · STATSIG",
+      title: "离结果再近一点。",
       detail:
-        "在腾讯带领30人数据与AI团队、连续获得最高绩效之后，我离开了清晰的管理晋升路径，回美国从IC重新开始。也从那时起，我把原本做在主业之外的内容和事业，变成自己愿意长期负责的工作。",
+        "在腾讯带领30人数据与AI团队、连续获得最高绩效以后，我离开清晰的管理晋升路径，回美国加入早期创业公司，从IC重新开始，让自己的判断离客户、实验和后果更近。",
     },
     {
-      marker: "STATSIG · SUPERLINEAR",
-      title: "让每一次下注，都接受现实检验。",
+      marker: "SUPERLINEAR · 全职投入",
+      title: "把最好的时间，押在自己的长期作品上。",
       detail:
-        "在Statsig，实验让更新判断成为产品工作流的一部分。到了Superlinear，课程、社区、书、工具和公开内容，也都要回答同一个问题：第一次发布以后，它们还会不会继续有用？",
+        "后来我辞掉工作，全职做Superlinear。课程、社区、书、工具和公开内容，都要回答学历、title和绩效无法替我回答的问题：有没有人用，会不会再来，又让人多做成了什么？",
     },
   ],
 };
@@ -176,18 +262,18 @@ const work = {
       label: "OPEN, PUBLIC VALUE",
       title: "The free community",
       detail:
-        "More than 20,000 people using AI to do serious work share projects, failures, progress, and postmortems here. You can see how others make decisions and get things done—and put unfinished work in front of feedback, users, peers, and opportunity earlier.",
+        "More than 20,000 people using AI to do serious work share projects, failures, progress, and postmortems here. Good understanding becomes public work; unfinished work meets users, peers, feedback, and opportunity earlier.",
       proof:
         "20,000+ members · 700+ public project posts · 8,000+ project comments",
       href: "https://www.superlinear.academy",
-      cta: "Join for free",
+      cta: "Join free and put AI to real use",
     },
     {
       number: "02",
       label: "STRUCTURED LEARNING",
       title: "AI Builders",
       detail:
-        "I teach it with Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at CVPR, NeurIPS, and KDD. The goal is independent judgment after the tutorial ends: when the problem is new, you can still decide what to build and make it reliable.",
+        "Principles, engineering reliability, product judgment, and practice belong in one system. The goal is independent judgment after the tutorial ends: when the problem is new, you can still decide what to build and make it reliable.",
       proof: "3,000+ paying learners · 5.0/5 on Maven",
       href: "https://ai-builders.com",
       cta: "Explore AI Builders",
@@ -220,17 +306,17 @@ const work = {
       label: "免费开放",
       title: "免费社区",
       detail:
-        "2万+认真用AI做事的人，把项目、失败、进展和复盘留在这里。你能看见别人怎样判断、怎样把事情做成，也能让还没完成的作品尽早遇到反馈、用户、同行与机会。",
+        "2万+认真用AI做事的人，把项目、失败、进展和复盘留在这里。好的理解变成公开作品，没做完的东西也能尽早遇到用户、同行、反馈与机会。",
       proof: "20,000+名成员 · 700+项目帖 · 8,000+条项目评论",
       href: "https://www.superlinear.academy",
-      cta: "免费加入",
+      cta: "免费加入，把AI真正用起来",
     },
     {
       number: "02",
       label: "系统训练",
       title: "AI Builders",
       detail:
-        "我和鸭哥（王言）共同授课。鸭哥是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD等顶会。目标是学完教程以后，仍然能独立判断：遇到没有现成答案的新问题，也知道该做什么、怎样做得可靠。",
+        "把AI原理、工程可靠性、产品判断和真实练习放进同一套系统。目标是学完教程以后，遇到没有现成答案的新问题，仍然知道该做什么、怎样做得可靠。",
       proof: "3,000+付费学员 · Maven 5.0/5",
       href: "https://ai-builders.com",
       cta: "了解AI Builders",
@@ -474,10 +560,10 @@ export default function Home() {
         <div className="container flex h-[72px] items-center justify-between">
           <button onClick={() => scrollToSection("hero")} className="text-left">
             <div className="text-base font-semibold text-white">
-              {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
+              {lang === "en" ? "Yuzheng Sun" : "立正"}
             </div>
             <div className="text-xs text-zinc-500">
-              {lang === "en" ? "课代表立正" : "孙煜征 · Yuzheng Sun"}
+              {lang === "en" ? "立正 · 课代表立正" : "孙煜征 · 课代表立正"}
             </div>
           </button>
 
@@ -630,9 +716,7 @@ export default function Home() {
                     : "tracking-[0.1em]"
                 )}
               >
-                {lang === "en"
-                  ? "YUZHENG SUN · 课代表立正"
-                  : "课代表立正 · 孙煜征"}
+                {lang === "en" ? "YUZHENG SUN · 立正" : "立正 · 孙煜征"}
               </p>
               <h1
                 className={cn(
@@ -646,15 +730,19 @@ export default function Home() {
                   "MAKE WHAT LASTS."
                 ) : (
                   <>
-                    <span className="block whitespace-nowrap">学点真本事，</span>
-                    <span className="block whitespace-nowrap">做点真东西。</span>
+                    <span className="block whitespace-nowrap">
+                      学点真本事，
+                    </span>
+                    <span className="block whitespace-nowrap">
+                      做点真东西。
+                    </span>
                   </>
                 )}
               </h1>
               <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
                 {lang === "en"
-                  ? "I moved from big-tech leadership into an early startup, then into building Superlinear full time. The throughline is simple: put judgment in front of reality. Do people want it, use it, and choose it again? Superlinear Academy is the answer I am building."
-                  : "我从大厂带团队，走到早期创业公司，再全职做Superlinear。一路上，我把判断交给现实：有没有人要，有没有人用，做出来的东西能不能留下来。Superlinear Academy是我正在做的答案。"}
+                  ? "AI makes building easier. My focus is studying what's worth building—and how hard-won judgment becomes work people actually use, trust, and keep choosing. Superlinear Academy is the work I have chosen to build for the long term."
+                  : "AI让“做出来”越来越容易。我更关心什么值得做，以及怎样把一个人的判断和本事，做成人们真正会用、也愿意继续选择的东西。Superlinear Academy，是我决定花很多年做好的那件事。"}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -662,28 +750,22 @@ export default function Home() {
                   onClick={() => scrollToSection("superlinear")}
                   className="gap-1.5 bg-superlinear text-white hover:bg-superlinear-deep"
                 >
-                  {lang === "en" ? "What I'm building" : "我在做什么"}
+                  {lang === "en" ? "See what I'm building" : "看我在做什么"}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
                 <Button
-                  asChild
                   size="lg"
                   variant="outline"
+                  onClick={() => scrollToSection("thinking")}
                   className="border-white/25 bg-white/[0.03] text-white hover:bg-white/[0.08]"
                 >
-                  <a
-                    href="https://www.superlinear.academy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {lang === "en" ? "Join the free community" : "免费加入社区"}
-                  </a>
+                  {lang === "en" ? "Read recent thinking" : "最近在想什么"}
                 </Button>
               </div>
               <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-zinc-500">
                 {lang === "en"
-                  ? "Cornell Economics PhD · Amazon, Meta & Tencent · Early Statsig team, later acquired by OpenAI"
-                  : "康奈尔经济学博士 · Amazon、Meta、腾讯经历 · OpenAI收购团队早期成员 · 创始人、作者、访谈者"}
+                  ? "PhD in Economics from Cornell · Amazon, Meta & Tencent · Early Statsig team, later acquired by OpenAI"
+                  : "康奈尔经济学博士 · Amazon、Meta、腾讯经历 · OpenAI收购团队早期成员 · Superlinear Academy创始人"}
               </p>
             </div>
 
@@ -760,72 +842,155 @@ export default function Home() {
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
               <div>
                 <SectionLabel>
-                  {lang === "en" ? "WHAT I BELIEVE" : "我相信"}
+                  {lang === "en" ? "THE QUESTION" : "我关心的问题"}
                 </SectionLabel>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
-                  {lang === "en"
-                    ? "You can be capable all your life—and still leave no work that truly carries your judgment or name."
-                    : "一个人可以一生都很能干，最后却没有一件作品真正带着自己的判断和名字。"}
+                  {lang === "en" ? (
+                    "AI can make real work easier. It can also amplify fake work a hundredfold."
+                  ) : (
+                    <>
+                      AI让真东西更容易做出来，也能把
+                      <span className="whitespace-nowrap">fake work</span>
+                      放大一百倍。
+                    </>
+                  )}
                 </h2>
               </div>
               <div className="space-y-5 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
                 <p>
                   {lang === "en"
-                    ? "Many capable people become excellent at completing tasks and advancing within organizations. But tasks reset and roles move on. Once the titles are stripped away, what exists because you were here? I want to leave work that would not have taken the same form in someone else's hands."
-                    : "许多人很会完成任务，也一路升职。可任务会重置，职位会移交。拿掉这些标签，什么东西仍然因为你而存在？我想留下的，是那种换一个人来做，就不会是这个样子的作品。"}
+                    ? "Fake work substitutes visible activity for hard-to-measure value. A report, model, meeting, or launch can move the result—or merely produce evidence that someone is busy."
+                    : "Fake work用可见动作代替难以衡量的价值。一份报告、一个模型、一场会议、一次上线，都可能推动结果，也可能只在生产“我们正在推进”的证据。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "AI is making first drafts cheap—and making similar output abundant. The problems you choose, the standards you set, and the work you are willing to put your name behind now distinguish you more clearly. At the same time, one person or a small team can attempt what used to be out of reach."
-                    : "AI让第一版越来越便宜，也让相似的东西越来越多。于是，选什么题、用什么标准、愿意为什么作品署名负责，反而更能区分一个人。与此同时，一个人或一个小团队，也终于有机会完成过去根本够不到的东西。"}
+                    ? "So I keep returning to one question: what changed after the work was done? It is the question I use most often when I think about careers, products, organizations, and AI."
+                    : "所以我会一直追问：这件事做完以后，到底改变了什么？这也是我看职业、产品、组织与AI时，最常用的一把尺子。"}
                 </p>
               </div>
             </div>
 
-            <div className="mt-14 border-y border-[#D4D0C7]">
-              <div className="grid gap-8 py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14 lg:py-10">
-                <div>
-                  <p
-                    className={cn(
-                      "font-mono text-[11px] leading-5 text-superlinear-deep",
-                      lang === "en"
-                        ? "uppercase tracking-[0.18em]"
-                        : "tracking-[0.1em]"
-                    )}
-                  >
-                    {lang === "en" ? "THE HORIZON" : "我敬佩的作品"}
-                  </p>
-                  <h3 className="mt-4 max-w-md text-2xl font-semibold leading-9 md:text-3xl md:leading-10">
-                    {lang === "en"
-                      ? "The standard is visible in the work."
-                      : "标准，就在作品里。"}
+            <div className="mt-14 grid border-y border-[#D4D0C7] md:grid-cols-3">
+              {brandLayers[lang].map((item, index) => (
+                <article
+                  key={item.number}
+                  className={cn(
+                    "py-8 md:px-7 md:py-10",
+                    index > 0 &&
+                      "border-t border-[#D4D0C7] md:border-l md:border-t-0"
+                  )}
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-mono text-xs text-superlinear-deep">
+                      {item.number}
+                    </span>
+                    <p
+                      className={cn(
+                        "font-mono text-[11px] leading-5 text-superlinear-deep",
+                        lang === "en"
+                          ? "uppercase tracking-[0.18em]"
+                          : "tracking-[0.1em]"
+                      )}
+                    >
+                      {item.label}
+                    </p>
+                  </div>
+                  <h3 className="mt-5 text-2xl font-semibold leading-9">
+                    {item.title}
                   </h3>
-                </div>
-                <div>
-                  <h4 className="text-2xl font-semibold leading-9">
-                    {horizon[lang].title}
-                  </h4>
-                  <p className="mt-4 max-w-4xl text-base leading-8 text-[#5E584E]">
-                    {horizon[lang].detail}
+                  <p className="mt-3 text-sm leading-7 text-[#5E584E]">
+                    {item.detail}
                   </p>
-                </div>
-              </div>
+                </article>
+              ))}
+            </div>
 
-              <div className="grid border-t border-[#D4D0C7] py-8 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
+            <div className="mt-10 grid gap-5 border-l-2 border-superlinear pl-5 md:grid-cols-[0.88fr_1.12fr] md:gap-12 md:pl-7">
+              <h3 className="max-w-lg text-2xl font-semibold leading-9 md:text-3xl md:leading-10">
+                {lang === "en"
+                  ? "I admire people whose work and lives became impossible to separate."
+                  : "我敬佩的，是作品与人最终变得无法分开。"}
+              </h3>
+              <div className="space-y-3 text-sm leading-7 text-[#5E584E] md:text-base md:leading-8">
+                <p>
+                  {lang === "en"
+                    ? "I think of the products of Steve Jobs and Zhang Xiaolong, Lionel Messi's football, Christopher Nolan's films, the judgments Geoffrey Hinton and Warren Buffett held through years of disagreement, and Tsunekazu Nishioka's temple craft. Different fields; in each case, the maker is unmistakable in the work."
+                    : "乔布斯和张小龙的产品，梅西的足球，诺兰的电影，Hinton和巴菲特那些经得起争议与时间的判断，还有西冈常一的手艺。领域不同，作品里都抹不掉做出它的人。"}
+                </p>
+                <p>
+                  {lang === "en"
+                    ? "People shape work, and work shapes people. A defining work takes form version by version as materials, masters, users, markets, and time keep correcting it."
+                    : "人塑造作品，作品也反过来塑造人。代表作不是一开始就能想对的；它要经过一个个版本，让材料、高手、用户、市场和时间不断校正，才慢慢成立。"}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="thinking"
+          className="scroll-mt-[72px] bg-[#173C2A] py-16 md:py-20"
+        >
+          <div className="container">
+            <div className="grid gap-6 lg:grid-cols-[0.72fr_1.28fr] lg:items-end lg:gap-20">
+              <div>
                 <p
                   className={cn(
-                    "font-mono text-[11px] leading-5 text-superlinear-deep",
+                    "font-mono text-xs leading-5 text-[#A4D9B5]",
                     lang === "en"
-                      ? "uppercase tracking-[0.18em]"
+                      ? "uppercase tracking-[0.2em]"
                       : "tracking-[0.1em]"
                   )}
                 >
-                  {lang === "en" ? "WHAT LASTS" : "作品怎样成立"}
+                  {lang === "en" ? "LATEST THINKING" : "最近在写"}
                 </p>
-                <p className="max-w-4xl text-base leading-8 text-[#5E584E]">
-                  {horizon[lang].structure}
-                </p>
+                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
+                  {lang === "en"
+                    ? "As AI makes building easier, what becomes more valuable?"
+                    : "AI让很多事变容易以后，什么反而更重要？"}
+                </h2>
               </div>
+              <p className="max-w-2xl text-base leading-8 text-white/70 md:text-lg">
+                {lang === "en"
+                  ? "Three recent essays look at the question from different angles: why organizations mistake activity for value, how work should be redesigned when AI changes the economics, and why knowing the tools is not the same as knowing how to build."
+                  : "最近三篇文章都在回答这个问题：组织为什么会把忙碌当成价值；AI改变成本以后，一项工作该怎样重做；为什么会工具，还远远不等于会把东西做成。"}
+              </p>
+            </div>
+
+            <div className="mt-10 grid border-t border-white/20 lg:grid-cols-3">
+              {recentWriting[lang].map((item, index) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    "group block border-b border-white/20 py-7 transition hover:bg-white/[0.05] lg:px-7 lg:py-8",
+                    index > 0 && "lg:border-l"
+                  )}
+                >
+                  <p
+                    className={cn(
+                      "font-mono text-[11px] leading-5 text-[#A4D9B5]",
+                      lang === "en"
+                        ? "uppercase tracking-[0.16em]"
+                        : "tracking-[0.08em]"
+                    )}
+                  >
+                    {item.label}
+                  </p>
+                  <h3 className="mt-4 text-xl font-semibold leading-8 text-white md:text-2xl">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-white/65">
+                    {item.detail}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#A4D9B5] transition group-hover:text-white">
+                    {item.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         </section>
@@ -841,15 +1006,21 @@ export default function Home() {
                   {lang === "en" ? "THE STORY" : "这条路"}
                 </SectionLabel>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
-                  {lang === "en"
-                    ? "Being good at the game did not answer whose work my life was building."
-                    : "很会赢，并不能回答我的生命究竟在为谁的作品积累。"}
+                  {lang === "en" ? (
+                    "I traded a clear management path for work closer to the result."
+                  ) : (
+                    <>
+                      我把一条清晰的
+                      <span className="whitespace-nowrap">晋升路径</span>
+                      ，换成了离结果更近的工作。
+                    </>
+                  )}
                 </h2>
               </div>
               <p className="max-w-2xl text-base leading-8 text-zinc-400 md:text-lg">
                 {lang === "en"
-                  ? "I learned to do well in schools and companies. The harder move was to put my best time and ability behind problems, standards, and work I had chosen—and be responsible for the result."
-                  : "我曾经很擅长在学校和公司里取得好结果。更难的是，把最好的时间和能力押在自己选择的问题、标准与作品上，并为结果负责。"}
+                  ? "At Tencent I led a 30-person Data & AI team and repeatedly earned its highest performance rating. I returned to the U.S. as an individual contributor at an early-stage startup, then left my job to build Superlinear full time. Each step moved me closer to users, markets, and consequences—and put more of my time and judgment into work I was willing to carry for the long term."
+                  : "在腾讯带领30人数据与AI团队、连续获得最高绩效以后，我回到美国，从早期创业公司的IC重新开始；后来又辞掉工作，全职建设Superlinear。每一步，都让我离用户、市场与后果更近，也把更多时间和判断投进自己愿意长期负责的作品。"}
               </p>
             </div>
 
@@ -942,20 +1113,20 @@ export default function Home() {
                 <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
                   {lang === "en"
-                    ? "I want to build a real academy."
-                    : "我想做一所真正的学院。"}
+                    ? "I am building an academy around this work."
+                    : "我正在把这件事，做成一所学院。"}
                 </h2>
               </div>
               <div className="space-y-4 text-base leading-8 text-[#5C574D] md:text-lg">
                 <p>
                   {lang === "en"
-                    ? "I want people with professional depth to come here and turn their judgment into work, products, and ventures of their own. Superlinear is the most important long-term bet I have chosen, and it is nowhere near finished."
-                    : "我希望有专业积累的人来到这里，把自己的判断做成作品、产品和事业。Superlinear是我最重要的长期选择，也还远没有做完。"}
+                    ? "Courses turn principles and expert judgment into capabilities people can practice. Community and projects put them to use early, in front of peers, users, companies, and markets. Superlinear does not get to declare the work real. Reality answers."
+                    : "课程把原理和高手判断变成能练的本事；社区和项目让这些本事真正用起来，尽早见到同行、用户、企业与市场。什么算真东西，Superlinear说了不算，现实会回答。"}
                 </p>
                 <p>
                   {lang === "en"
-                    ? "The free community, AI Builders, the membership, and enterprise programs each serve a different need. Start wherever fits."
-                    : "免费社区、AI Builders、会员与企业项目各做一件不同的事。你可以从最适合自己的地方进入。"}
+                    ? "The free community, AI Builders, the Stay Superlinear membership, and enterprise programs each take responsibility for a different part of that work. Start wherever fits."
+                    : "免费社区、AI Builders、Stay Superlinear会员与企业项目各承担一部分工作。你可以从最适合自己的地方进入。"}
                 </p>
               </div>
             </div>
@@ -1200,18 +1371,36 @@ export default function Home() {
               <div>
                 <p className="text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "Growth Data Analytics Playbook covers product-market fit, metrics, and experimentation. 真本事 examines how work becomes capability, leverage, and income of your own. Different subjects, same job: put judgment into a form someone else can still use when the author is not in the room."
-                    : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。主题不同，做的却是同一件事：把判断写成作者不在场时，别人仍然能用的东西。"}
+                    ? "Two books turn judgment from different fields into something a reader can use. The new lizheng-open-context repository adds public posts, timestamped video transcripts, sources, and version boundaries. Different forms, same job: let understanding remain usable and inspectable when the author is not in the room."
+                    : "两本书把不同领域的判断写成读者可以独立使用的东西；新开放的lizheng-open-context又把公开帖子、视频时间码、出处与判断边界做成可检索的资料库。形式不同，做的是同一件事：作者不在场时，理解仍能被使用、核对和继续开发。"}
                 </p>
-                <Button
-                  asChild
-                  className="mt-6 bg-[#191712] text-white hover:bg-[#302C25]"
-                >
-                  <Link href={withLanguage("/book", lang)}>
-                    <BookOpen className="h-4 w-4" />
-                    {lang === "en" ? "Explore both books" : "查看两本书"}
-                  </Link>
-                </Button>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <Button
+                    asChild
+                    className="bg-[#191712] text-white hover:bg-[#302C25]"
+                  >
+                    <Link href={withLanguage("/book", lang)}>
+                      <BookOpen className="h-4 w-4" />
+                      {lang === "en" ? "Explore both books" : "查看两本书"}
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-[#BDB7AB] bg-transparent text-[#191712] hover:bg-[#E9E5DC]"
+                  >
+                    <a
+                      href="https://github.com/sunyuzheng/lizheng-open-context"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github className="h-4 w-4" />
+                      {lang === "en"
+                        ? "Open the public context"
+                        : "查看公开资料库"}
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -1306,8 +1495,8 @@ export default function Home() {
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
                   {lang === "en"
-                    ? "You do not need to have everything figured out before you begin. See what people here are making, or bring an unfinished question or work of your own. Find peers, get feedback, and test it in the world sooner."
-                    : "你不必想清楚一切才开始。先看看这里的人正在做什么；也可以带着还没完成的问题和作品进来，找到同行，得到反馈，拿到现实里试一试。"}
+                    ? "You do not need to have everything figured out before you begin. Make one small thing whose judgment and consequences you are willing to own—and that someone else is free to reject. Bring the unfinished work here, find peers, and let reality answer sooner."
+                    : "你不必想清楚一切才开始。先做一件从判断到结果都由自己负责、也可能被别人拒绝的小事。带着还没完成的问题和作品进来，找到同行，让现实早点回答。"}
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
@@ -1356,11 +1545,11 @@ export default function Home() {
         <div className="container flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="text-base font-semibold text-white">
-              Yuzheng Sun · 课代表立正
+              Yuzheng Sun · 立正
             </div>
             <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
               {lang === "en"
-                ? "Cornell Economics PhD, author, and founder of Superlinear Academy. Make what lasts."
+                ? "PhD in Economics from Cornell, author, and founder of Superlinear Academy. Make what lasts."
                 : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。学点真本事，做点真东西。"}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">

@@ -1,6 +1,6 @@
-# Yuzheng Sun / 孙煜征 / 课代表立正
+# Yuzheng Sun / 孙煜征 / 立正 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-27. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-31. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -8,7 +8,7 @@ MAKE WHAT LASTS.
 
 In Chinese: 做点真东西。
 
-Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy, the parent institution for its free community, AI Builders learning system, and Stay Superlinear membership. His personal throughline is 学点真本事，做点真东西: develop capability that remains real beyond a credential, then make work that remains valuable beyond the internal system that scores it.
+Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and founder based in Seattle. He founded Superlinear Academy, the parent institution for its free community, AI Builders learning system, and Stay Superlinear membership. His current personal brand is 立正; 课代表立正 remains the established name of his channels, podcast, earlier public content, and an important search alias. His personal throughline is 学点真本事，做点真东西: develop capability that remains real beyond a credential, then make work that remains valuable beyond the internal system that scores it.
 
 MAKE WHAT LASTS. and 做点真东西。 are the one defining idea shared by Yuzheng and Superlinear Academy. They are not literal translations. The Chinese line names the first move: turn judgment into something reality can use, test, reject, improve, or keep choosing. The English line asks whether that value continues through time. 做出你的代表作 remains the expanded long-term aspiration rather than the primary Chinese signature. None of these lines guarantees that every effort will endure or make its author successful.
 
@@ -16,7 +16,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 
 ## Identity and Common Ambiguities
 
-- Yuzheng Sun, 孙煜征, and 课代表立正 refer to the same person. 课代表立正 is the name used for public content.
+- Yuzheng Sun, 孙煜征, 立正, and 课代表立正 refer to the same person. 立正 is the current personal brand; 课代表立正 remains the established public-content identity and the current name of the channel and podcast.
 - Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
 - Superlinear Academy is the parent institution and master brand Yuzheng is building around this belief; its free community is the open public entry point. AI Builders is its structured learning product, co-taught with Yage. Stay Superlinear is its paid year-round membership product. Yage is a long-term teaching partner and technical authority; Yuzheng is the founder and public steward of the institution.
 - Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
@@ -30,9 +30,18 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 - [Enterprise AI training and deck library, Chinese](https://www.lizheng.ai/decks) and [English](https://www.lizheng.ai/en/decks): a curated index of custom enterprise AI programs, strategic briefings, team workshops, and selected public talks across data, engineering, investment, knowledge work, and AI-native building. Each deck keeps its original presentation language.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
-These are related parts of one body of work, not separate identities. The intellectual foundations join interpenetrating explicit world models and tacit, result-answerable craft; conviction matters when understanding has to bear the cost of action, while responsible authorship keeps agency and accountability with the work. Reality keeps testing it, and time gradually reveals what continues to matter.
+These are related parts of one body of work, not separate identities: build capability that survives beyond credentials, make work reality can use and reject, and ask whether its value continues through time.
 
 One current, revisable AI-era research agenda asks what should count as AI-native work and talent. Yuzheng's working view starts from the result that matters, identifies which old process choices compensated for old constraints, and redesigns the work when AI changes capability and relative cost. It treats professional judgment as something AI can amplify while recognizing that experienced people may have more to unlearn when old constraints have hardened into unquestioned best practices.
+
+Another current line of work concerns fake work: visible activity substituting for hard-to-measure value. Yuzheng's practical test is to ask what changed after the work was completed and to trace the output until it reaches a user, decision, capability, risk, or other real consequence. AI can shorten that distance, but it can also make work evidence cheaper to manufacture at much greater volume.
+
+## Recent Public Writing
+
+- [How to identify and eliminate fake work / 如何识别与消灭fake work](https://www.superlinear.academy/c/ai-resources/fake-work): why hard-to-measure, hard-to-attribute knowledge work turns visible activity into a proxy for value, and how AI can either remove interface tax or amplify institutional theater.
+- [What actually makes someone AI native? / 到底什么才算AI Native人才？](https://www.superlinear.academy/c/ai-resources/ai-native): begin with the outcome, identify the costs and capabilities AI changed, redesign the work, and remain responsible for the result.
+- [Everyone learns the nouns. The verbs set people apart. / 为什么所有人都在学名词，但真正拉开差距的是动词](https://www.superlinear.academy/c/ai-resources/verb): named tools and concepts provide parts; decomposition, judgment, routing, diagnosis, and iteration turn those parts into working systems.
+- [lizheng-open-context](https://github.com/sunyuzheng/lizheng-open-context): public posts, source links, dated video transcripts, core claims, and usage boundaries for building search, Skill, and Agent applications without presenting a fixed digital persona as Yuzheng himself.
 
 ## Current Public Evidence
 

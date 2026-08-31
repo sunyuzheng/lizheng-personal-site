@@ -13,8 +13,8 @@ export const SUPERLINEAR_ID = "https://www.superlinear.academy/#organization";
 export const PODCAST_URL = "https://podcast.lizheng.ai";
 
 const PERSON_DESCRIPTION = {
-  en: "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy. He previously worked at Amazon, Meta, Tencent IEG, and Statsig.",
-  zh: "课代表立正，本名孙煜征，康奈尔大学经济学博士，Superlinear Academy创始人，现居西雅图。他曾在Amazon、Meta、腾讯IEG和Statsig工作。",
+  en: "Yuzheng Sun (孙煜征, 立正, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy. He studies what's worth building and how judgment becomes work people keep choosing.",
+  zh: "立正，本名孙煜征，亦以课代表立正为人所知；康奈尔大学经济学博士，Superlinear Academy创始人，现居西雅图。他研究什么值得做，以及怎样把判断和本事做成人们真正会用的东西。",
 } satisfies Record<SiteLang, string>;
 
 function personNode(lang: SiteLang) {
@@ -22,14 +22,12 @@ function personNode(lang: SiteLang) {
     "@type": "Person",
     "@id": PERSON_ID,
     name: "Yuzheng Sun",
-    alternateName: ["孙煜征", "课代表立正"],
+    alternateName: ["孙煜征", "立正", "课代表立正"],
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
     description: PERSON_DESCRIPTION[lang],
-    slogan:
-      lang === "en" ? "MAKE WHAT LASTS." : "学点真本事，做点真东西。",
-    jobTitle:
-      "Founder of Superlinear Academy; educator and author",
+    slogan: lang === "en" ? "MAKE WHAT LASTS." : "学点真本事，做点真东西。",
+    jobTitle: "Founder of Superlinear Academy; educator and author",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "PhD in Economics",
@@ -51,8 +49,12 @@ function personNode(lang: SiteLang) {
     worksFor: { "@id": SUPERLINEAR_ID },
     knowsAbout: [
       "AI education",
+      "AI-native work",
+      "knowledge work and organizational design",
+      "human judgment in AI-assisted building",
       "organizational decision-making",
       "product experimentation",
+      "brand strategy and taste",
       "data science",
       "growth analytics",
     ],
@@ -103,8 +105,8 @@ function websiteNode() {
     "@type": "WebSite",
     "@id": WEBSITE_ID,
     url: `${SITE_URL}/`,
-    name: "课代表立正",
-    alternateName: ["孙煜征", "Yuzheng Sun", "lizheng.ai"],
+    name: "立正 · Yuzheng Sun",
+    alternateName: ["孙煜征", "课代表立正", "Yuzheng Sun", "lizheng.ai"],
     inLanguage: ["en-US", "zh-CN"],
     publisher: { "@id": PERSON_ID },
   };
@@ -141,13 +143,13 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         url: canonical,
         name:
           lang === "en"
-            ? "Yuzheng Sun (课代表立正) — MAKE WHAT LASTS"
-            : "课代表立正（孙煜征）｜学点真本事，做点真东西",
+            ? "Yuzheng Sun (立正 / 课代表立正) — MAKE WHAT LASTS"
+            : "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-27",
+        dateModified: "2026-08-31",
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -482,8 +484,7 @@ export function buildAieShanghaiDeckStructuredData() {
           name: "AI Engineer Shanghai 2026",
           startDate: "2026-11-05",
           endDate: "2026-11-06",
-          eventAttendanceMode:
-            "https://schema.org/OfflineEventAttendanceMode",
+          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
           location: {
             "@type": "Place",
             name: "上海虹桥祥源希尔顿",

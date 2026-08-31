@@ -433,20 +433,59 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         c.setFont(FONT_REGULAR, 8.5)
         c.drawString(timeline_x + 20, y - 15, role)
 
-    portrait_x, portrait_y, portrait_w, portrait_h = 343, 395, 210, 245
-    draw_image(
+    panel_x, panel_y, panel_w, panel_h = 343, 395, 210, 245
+    c.setFillColor(WHITE)
+    c.setStrokeColor(LINE_LIGHT)
+    c.roundRect(panel_x, panel_y, panel_w, panel_h, 12, fill=1, stroke=1)
+    draw_label(
         c,
-        PUBLIC / "yuzheng-sun-headshot.jpg",
-        portrait_x,
-        portrait_y,
-        portrait_w,
-        portrait_h,
-        fit="cover",
-        radius=26,
+        "节目里，可以继续往下问",
+        panel_x + 15,
+        panel_y + panel_h - 27,
+        color=AMBER_DARK,
+        font=FONT_BOLD,
+        size=8.3,
     )
-    c.setFillColor(MUTED)
-    c.setFont(FONT_REGULAR, 7.5)
-    c.drawRightString(W - M, portrait_y - 13, "现居西雅图")
+    c.setStrokeColor(LINE_LIGHT)
+    c.line(
+        panel_x + 15,
+        panel_y + panel_h - 42,
+        panel_x + panel_w - 15,
+        panel_y + panel_h - 42,
+    )
+    lenses = [
+        ("01", "机制", "明明都很理性，为什么结果还是坏的？"),
+        ("02", "产品", "技术能做了，为什么公司还是用不起来？"),
+        ("03", "组织", "数据在纠错，还是在替错误辩护？"),
+        ("04", "个人", "AI越强，人该把什么练得更深？"),
+    ]
+    row_y = panel_y + panel_h - 65
+    for index, (number, lens, question) in enumerate(lenses):
+        if index:
+            c.setStrokeColor(HexColor("#E3DFD6"))
+            c.line(
+                panel_x + 15,
+                row_y + 13,
+                panel_x + panel_w - 15,
+                row_y + 13,
+            )
+        c.setFillColor(AMBER_DARK)
+        c.setFont(FONT_MONO_BOLD, 7.2)
+        c.drawString(panel_x + 15, row_y, number)
+        c.setFont(FONT_BOLD, 8.4)
+        c.drawString(panel_x + 42, row_y, lens)
+        draw_paragraph(
+            c,
+            question,
+            panel_x + 42,
+            row_y - 15,
+            panel_w - 57,
+            size=8.2,
+            leading=11.5,
+            color=BODY,
+            max_lines=2,
+        )
+        row_y -= 45
 
     box_y, box_h = 117, 245
     c.setFillColor(INK)

@@ -13,6 +13,14 @@
       "continue": true
     },
     {
+      "src": "/decks/fake-work",
+      "dest": "https://fake-work-2026.vercel.app/decks/fake-work/"
+    },
+    {
+      "src": "/decks/fake-work/(.+)",
+      "dest": "https://fake-work-2026.vercel.app/decks/fake-work/$1"
+    },
+    {
       "src": "/decks/ai-side-income-career-capital",
       "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital"
     },

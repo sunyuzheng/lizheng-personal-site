@@ -13,6 +13,14 @@
       "continue": true
     },
     {
+      "src": "/decks/superlinear-one-year",
+      "dest": "https://superlinear-one-year-2026.vercel.app/decks/superlinear-one-year/"
+    },
+    {
+      "src": "/decks/superlinear-one-year/(.+)",
+      "dest": "https://superlinear-one-year-2026.vercel.app/decks/superlinear-one-year/$1"
+    },
+    {
       "src": "/decks/fake-work",
       "dest": "https://fake-work-2026.vercel.app/decks/fake-work/"
     },

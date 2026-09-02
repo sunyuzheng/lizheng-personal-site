@@ -3,6 +3,7 @@ import {
   DECKS_PAGE_META,
   type SiteLang,
 } from "./page-meta.ts";
+import { ENTERPRISE_TRAINING_PAGE_META } from "./collab-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
 import { DECK_LIBRARY, localized } from "./deck-index.ts";
 
@@ -149,7 +150,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-31",
+        dateModified: "2026-09-02",
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -250,7 +251,7 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
         isPartOf: { "@id": WEBSITE_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-08-01",
+        dateModified: "2026-09-02",
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -397,6 +398,230 @@ export function buildPersonWebPageStructuredData(options: {
         options.canonical,
         options.name,
         options.lang === "en" ? "Yuzheng Sun" : "课代表立正"
+      ),
+    ],
+  };
+}
+
+export function buildEnterpriseTrainingStructuredData(lang: SiteLang) {
+  const meta = ENTERPRISE_TRAINING_PAGE_META[lang];
+  const serviceId = `${meta.canonical}#service`;
+  const offerCatalogId = `${meta.canonical}#offers`;
+  const pageName =
+    lang === "en"
+      ? "Enterprise AI training and custom programs"
+      : "企业AI培训与定制项目";
+  const faqItems =
+    lang === "en"
+      ? [
+          {
+            question: "Do we need a custom program?",
+            answer:
+              "Usually not. If AI Builders already solves the capability gap, buying seats is the cleanest option. Customization is useful only when company-specific material changes what people need to learn or practice.",
+          },
+          {
+            question:
+              "What is the difference between a private cohort and a fully custom program?",
+            answer:
+              "A private cohort keeps AI Builders as the curriculum and gives one organization its own dates. A fully custom program begins with research into the organization’s work and creates a new curriculum and delivery package for that problem.",
+          },
+          {
+            question: "What should the first email include?",
+            answer:
+              "Include the team size and roles, the result you want to change, what you have already tried, rough timing, the decision owner, and the budget range.",
+          },
+        ]
+      : [
+          {
+            question: "我们需要完整定制吗？",
+            answer:
+              "多数情况不需要。现有AI Builders课程已经能补上能力缺口，就直接采购席位。只有企业自己的材料确实改变了要学什么、练什么，定制才有意义。",
+          },
+          {
+            question: "专属班和完整定制有什么区别？",
+            answer:
+              "专属班仍以AI Builders为课纲，只为一家企业单独确定日期。完整定制会先研究企业的真实工作，再为这个问题重新设计课程与交付。",
+          },
+          {
+            question: "第一封邮件需要写什么？",
+            answer:
+              "请写明团队人数与岗位、希望改变的结果、已经试过什么、大概时间、决策人和预算范围。",
+          },
+        ];
+  const courseReviews = [
+    {
+      name: "Shuyang",
+      jobTitle: "Member of Technical Staff",
+      company: "OpenAI",
+      body: "There are many courses teaching you specific tricks but this course helps you build the right mindset and empower you to teach yourself more effectively.",
+    },
+    {
+      name: "EZ",
+      jobTitle: "Engineer",
+      company: "Anthropic",
+      body: "There can be different new tools coming, but principles remain!",
+    },
+    {
+      name: "Chairy",
+      jobTitle: "UX Manager",
+      company: "Google",
+      body: "The content and instruction are both outstanding and very engaging.",
+    },
+  ];
+
+  const offer = (
+    name: string,
+    price: string,
+    description: string,
+    url = meta.canonical
+  ) => ({
+    "@type": "Offer",
+    name,
+    price,
+    priceCurrency: "USD",
+    description,
+    url,
+    availability: "https://schema.org/InStock",
+  });
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${meta.canonical}#webpage`,
+        url: meta.canonical,
+        name: pageName,
+        description: meta.description,
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": serviceId },
+        mainEntity: { "@id": serviceId },
+        inLanguage: lang === "en" ? "en-US" : "zh-CN",
+        dateModified: meta.lastModified,
+      },
+      {
+        "@type": "Service",
+        "@id": serviceId,
+        name: pageName,
+        description: meta.description,
+        provider: { "@id": SUPERLINEAR_ID },
+        serviceType: [
+          "Enterprise AI training",
+          "AI capability development",
+          "Custom enterprise learning program",
+        ],
+        hasOfferCatalog: { "@id": offerCatalogId },
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": offerCatalogId,
+        name:
+          lang === "en" ? "Enterprise training options" : "企业培训合作方式",
+        itemListElement: [
+          offer(
+            lang === "en"
+              ? "AI Builders team enrollment"
+              : "AI Builders团队购课",
+            "1999",
+            lang === "en"
+              ? "Base price per learner before published team discounts."
+              : "团队折扣前的单人基础价格。",
+            "https://maven.com/superlinear/aibuilders"
+          ),
+          offer(
+            lang === "en"
+              ? "Organization advisory session or internal conversation"
+              : "团队问题梳理会或内部交流",
+            "2000",
+            lang === "en"
+              ? "A focused organization session, starting at $2,000."
+              : "面向机构的一次聚焦咨询或内部交流，$2,000起。"
+          ),
+          offer(
+            lang === "en"
+              ? "Dedicated AI Builders cohort"
+              : "AI Builders企业专属班",
+            "44977.50",
+            lang === "en"
+              ? "A dedicated cohort for at least 30 learners, before optional customization."
+              : "30人起的企业专属班，不含可选定制费用。"
+          ),
+          offer(
+            lang === "en"
+              ? "Course customization"
+              : "基于AI Builders的课程定制",
+            "20000",
+            lang === "en"
+              ? "Customization added to course tuition, starting at $20,000."
+              : "在课程学费之外增加的企业定制，$20,000起。"
+          ),
+          offer(
+            lang === "en"
+              ? "Fully custom enterprise AI program"
+              : "完整定制企业AI项目",
+            "100000",
+            lang === "en"
+              ? "End-to-end diagnosis, design, curriculum, delivery, and reusable team assets, starting at $100,000."
+              : "从诊断、设计、课程到交付与团队资产的完整定制项目，$100,000起。"
+          ),
+        ],
+      },
+      {
+        "@type": "Course",
+        "@id": "https://ai-builders.com/#course",
+        name: "AI Builders 2027: Build Useful Things with AI",
+        url: "https://maven.com/superlinear/aibuilders",
+        description:
+          lang === "en"
+            ? "An instructor-led, project-based course for choosing useful AI problems, building complete systems, and making the results reliable."
+            : "一门以项目为核心的讲师带领课程，帮助学员选择值得做的AI问题、搭建完整系统，并把结果做得可靠。",
+        provider: { "@id": SUPERLINEAR_ID },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "5.0",
+          bestRating: "5",
+          ratingCount: 84,
+          reviewCount: 56,
+        },
+        review: courseReviews.map(review => ({
+          "@type": "Review",
+          url: "https://maven.com/superlinear/aibuilders#reviews",
+          reviewBody: review.body,
+          reviewRating: {
+            "@type": "Rating",
+            ratingValue: "5",
+            bestRating: "5",
+          },
+          author: {
+            "@type": "Person",
+            name: review.name,
+            jobTitle: review.jobTitle,
+            worksFor: {
+              "@type": "Organization",
+              name: review.company,
+            },
+          },
+        })),
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${meta.canonical}#faq`,
+        mainEntity: faqItems.map(item => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+      websiteNode(),
+      personNode(lang),
+      ...organizationNodes(lang),
+      breadcrumbNode(
+        meta.canonical,
+        pageName,
+        lang === "en" ? "Yuzheng Sun" : "课代表立正"
       ),
     ],
   };

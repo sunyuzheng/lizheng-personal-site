@@ -68,8 +68,9 @@ const currentWork = {
       name: "Enterprise AI programs",
       role: "Organizational practice",
       detail:
-        "Work with teams to connect AI capability to real workflows, evaluation, ownership, incentives, and organizational constraints.",
-      href: "https://corp-training.ai-builders.com/",
+        "Most teams begin with AI Builders by the seat. Dedicated cohorts, course customization, and fully custom programs add company-specific cases, evaluation, and delivery only when needed.",
+      href: "/collab/enterprise",
+      cta: "Enterprise options",
     },
   ],
   zh: [
@@ -97,8 +98,10 @@ const currentWork = {
     {
       name: "企业AI项目",
       role: "组织实践",
-      detail: "把AI能力放进团队的真实工作流、评估、责任、激励与组织约束里。",
-      href: "https://corp-training.ai-builders.com/",
+      detail:
+        "多数团队从按席位采购AI Builders开始；只有确实需要时，才增加专属班、企业案例、评估与完整定制。",
+      href: "/collab/enterprise",
+      cta: "查看合作方式",
     },
   ],
 };
@@ -157,7 +160,7 @@ export default function About() {
         "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
       sourcesTitle: "Sources and contact",
       reviewed:
-        "Facts last reviewed August 27, 2026. Changing figures retain their check date.",
+        "Facts last reviewed September 2, 2026. Changing figures retain their check date.",
       books: "Books",
       hosted: "People Yuzheng has interviewed",
       appeared: "Programs where Yuzheng appeared as a guest",
@@ -180,7 +183,7 @@ export default function About() {
       publicIntro:
         "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
       sourcesTitle: "资料与联系",
-      reviewed: "事实最后核对：2026年8月27日。会变化的数字保留各自的核对日期。",
+      reviewed: "事实最后核对：2026年9月2日。会变化的数字保留各自的核对日期。",
       books: "两本书",
       hosted: "孙煜征采访过的嘉宾",
       appeared: "孙煜征去别人节目做嘉宾的记录",
@@ -315,15 +318,33 @@ export default function About() {
                   <p className="mt-4 text-sm leading-7 text-zinc-400">
                     {item.detail}
                   </p>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-300"
-                  >
-                    {lang === "en" ? "Website" : "官网"}
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
+                  {item.href.startsWith("/") ? (
+                    <Link
+                      href={withLanguage(item.href, lang)}
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-300"
+                    >
+                      {"cta" in item
+                        ? item.cta
+                        : lang === "en"
+                          ? "Website"
+                          : "官网"}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-300"
+                    >
+                      {"cta" in item
+                        ? item.cta
+                        : lang === "en"
+                          ? "Website"
+                          : "官网"}
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
                 </article>
               ))}
             </div>

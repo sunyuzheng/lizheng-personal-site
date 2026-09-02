@@ -6,6 +6,7 @@ const EN_TO_ZH_PATH: Record<string, string> = {
   "/book": "/zh/book",
   "/collab": "/zh/collab",
   "/collab/creators": "/zh/collab/creators",
+  "/collab/enterprise": "/zh/collab/enterprise",
   "/experiment/vercel": "/zh/experiment/vercel",
   "/experiment/emil": "/zh/experiment/emil",
   "/en/decks": "/decks",

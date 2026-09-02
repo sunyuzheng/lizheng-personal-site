@@ -32,7 +32,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (立正 / 课代表立正), founder of Superlinear Academy. AI makes building easier; he studies what's worth building. MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-31",
+    lastModified: "2026-09-02",
   },
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
@@ -40,7 +40,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "立正（孙煜征，课代表立正），Superlinear Academy创始人。AI让做出来更容易；他研究什么值得做，怎样把真本事做成真东西。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-08-31",
+    lastModified: "2026-09-02",
   },
 };
 
@@ -51,7 +51,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-08-20",
+    lastModified: "2026-09-02",
   },
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
@@ -59,7 +59,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。",
     canonical: "https://www.lizheng.ai/zh/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-08-20",
+    lastModified: "2026-09-02",
   },
 };
 

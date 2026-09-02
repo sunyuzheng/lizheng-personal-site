@@ -118,6 +118,12 @@
       "headers": { "Location": "/zh/collab/creators" }
     },
     {
+      "src": "/collab/enterprise",
+      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
+      "status": 308,
+      "headers": { "Location": "/zh/collab/enterprise" }
+    },
+    {
       "src": "/collab/podcast-one-pager\\.pdf",
       "status": 308,
       "headers": { "Location": "/collab/podcast-kit-zh.pdf" }

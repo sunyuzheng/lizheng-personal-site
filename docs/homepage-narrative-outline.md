@@ -107,9 +107,9 @@ The four entries have distinct jobs:
 - **Free community:** open public value, real projects, questions, first-hand experience, collaboration, and opportunity.
 - **AI Builders:** systematic training across AI principles, engineering reliability, product judgment, and practice.
 - **Stay Superlinear membership:** a year-round, high-craft content and practitioner environment with deep analysis, masterclasses, Q&A, courses, Skills, recordings, and a searchable archive.
-- **Enterprise programs:** contact with real workflows, evaluation, ownership, and organizational constraints.
+- **Enterprise programs:** a formal path from seat-based training to private cohorts and fully custom work around real workflows, evaluation, ownership, and organizational constraints.
 
-These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; price and complete conversion arguments stay on the product sites.
+These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; complete scope and conversion arguments stay on the dedicated pages. The enterprise card may show the cooperation ladder and one operational price boundary—`fully custom from $100,000`—as part of explaining how the work is structured. It is not a homepage price pitch. Do not place public training names beside that number in a way that implies those organizations bought the fully custom offer.
 
 ### 7. Conversations — show whom Yuzheng chooses to honor
 
@@ -158,6 +158,7 @@ The page follows `show → frame → let the reader conclude`.
 - A fact or scene comes first.
 - The page explains only what that fact demonstrates and why it belongs there.
 - Every proof has one job and appears where its question naturally arises.
+- The enterprise entry tells a prospective client which format to consider; the same formal ladder, six-figure custom boundary, procurement brief, and confidentiality discipline allow other visitors to infer that the work is mature and high-consideration. The page does not announce that inference for them.
 - Employer names establish operating context; they are not endorsements.
 - Reach establishes distribution; it does not establish correctness.
 - Dated calls establish inspectable judgment; they do not establish permanent foresight.

@@ -161,7 +161,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "Data Science团队分享",
     },
     title: "Augmenting Data Science in the AI Era",
-    date: "2026-01-16",
+    date: "2025-01-16",
     language: "en",
     audience: { en: "Data scientists", zh: "数据科学家" },
     takeaway: {
@@ -205,39 +205,6 @@ export const DECK_LIBRARY: DeckEntry[] = [
       "腾讯",
       "什么是好的战略分析",
       "战略分析",
-    ],
-  },
-  {
-    id: "dymon-investment-research",
-    collection: "enterprise",
-    category: "strategy-knowledge",
-    organization: "Dymon Asia",
-    occasion: {
-      en: "PM AI fluency briefing",
-      zh: "投资经理AI能力briefing",
-    },
-    title: "The Third Interface for Investment Research",
-    date: "2026-05-06",
-    language: "en",
-    audience: {
-      en: "Portfolio managers and senior investors",
-      zh: "投资经理与资深投资人",
-    },
-    takeaway: {
-      en: "Natural language is becoming a dispatch layer for compute, tools, and context around investment judgment.",
-      zh: "自然语言正在成为新的调度层，让投资判断可以调用计算、工具和上下文。",
-    },
-    href: "https://dymon-asia-ai-enablement.vercel.app",
-    linkKind: "deck",
-    sourceHref: "https://github.com/sunyuzheng/dymon-asia-ai-enablement",
-    featured: true,
-    accent: "#67E8F9",
-    keywords: [
-      "dymon",
-      "investment",
-      "portfolio manager",
-      "research",
-      "context",
     ],
   },
   {

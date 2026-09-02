@@ -6,18 +6,18 @@ export const COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
   en: {
     title: "Collaborate with Yuzheng Sun · 课代表立正",
     description:
-      "Work with Yuzheng Sun on talks, enterprise AI programs, advisory, and long-term projects that turn new AI capability into better work and organizational choices.",
+      "Work with Yuzheng Sun on talks, organization sessions, AI Builders team enrollment, enterprise AI programs, advisory, and long-term projects.",
     canonical: "https://www.lizheng.ai/collab",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-09-02",
   },
   zh: {
     title: "合作 · 课代表立正",
     description:
-      "与课代表立正合作：把AI的新能力变成值得做的判断、重新设计的工作方式与经得起现实检验的组织选择。包括演讲、企业AI项目、顾问与长期合作。",
+      "与课代表立正合作：演讲、团队问题梳理会与内部交流、AI Builders团队采购、企业AI培训与定制、顾问与长期合作。",
     canonical: "https://www.lizheng.ai/zh/collab",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-20",
+    lastModified: "2026-09-02",
   },
 };
 
@@ -37,5 +37,24 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
     canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
     lastModified: "2026-08-31",
+  },
+};
+
+export const ENTERPRISE_TRAINING_PAGE_META: Record<CollabLang, PageMeta> = {
+  en: {
+    title: "Enterprise AI training & custom programs · Yuzheng Sun",
+    description:
+      "Bring AI Builders into your team by the seat, add course customization from $20,000, or commission a fully custom enterprise AI program from $100,000. Organization advisory sessions start at $2,000.",
+    canonical: "https://www.lizheng.ai/collab/enterprise",
+    ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
+    lastModified: "2026-09-02",
+  },
+  zh: {
+    title: "企业AI培训与定制项目｜课代表立正",
+    description:
+      "AI Builders团队按席位采购、30人专属班、$20,000起课程定制与$100,000起完整定制企业项目；团队问题梳理会与内部交流$2,000起。",
+    canonical: "https://www.lizheng.ai/zh/collab/enterprise",
+    ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
+    lastModified: "2026-09-02",
   },
 };

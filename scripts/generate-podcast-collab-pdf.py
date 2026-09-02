@@ -848,7 +848,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     proof_metrics = [
         ("两年半·13期", "AI Builders持续迭代"),
         ("3,000+", "付费学员"),
-        ("5.0/5", "83份Maven评分"),
+        ("5.0/5", "Maven公开评分"),
     ]
     metric_y = proof_y + 77
     metric_w = 126

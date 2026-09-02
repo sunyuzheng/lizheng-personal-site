@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 立正 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-08-31. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-09-02. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -26,8 +26,9 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 - [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
-- [Enterprise programs](https://corp-training.ai-builders.com): talks, workshops, and custom AI programs for teams and organizations.
-- [Enterprise AI training and deck library, Chinese](https://www.lizheng.ai/decks) and [English](https://www.lizheng.ai/en/decks): a curated index of custom enterprise AI programs, strategic briefings, team workshops, and selected public talks across data, engineering, investment, knowledge work, and AI-native building. Each deck keeps its original presentation language.
+- [Enterprise AI training](https://www.lizheng.ai/collab/enterprise): organizations can begin with a focused session from $2,000, buy AI Builders by the seat, run a dedicated cohort for at least 30 learners, add course customization from $20,000 in addition to tuition, or commission a fully custom enterprise program from $100,000. Yuzheng does not sell paid consulting to individuals; individuals can ask questions in the free Superlinear Academy community and receive answers there for free.
+- [AI Builders 2027 for Teams procurement brief](https://www.lizheng.ai/enterprise/AI-Builders-2027-for-Teams.pdf): a two-page English PDF with course outcomes, faculty, public learner reviews, team pricing, private-cohort options, customization, and purchasing terms.
+- [Enterprise AI training and deck library, Chinese](https://www.lizheng.ai/decks) and [English](https://www.lizheng.ai/en/decks): a curated index of enterprise training, strategic briefings, team workshops, and selected public talks that may be shown publicly. Fully custom client work subject to confidentiality is not listed. Each deck keeps its original presentation language.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
 
 These are related parts of one body of work, not separate identities: build capability that survives beyond credentials, make work reality can use and reject, and ask whether its value continues through time.
@@ -50,7 +51,7 @@ Metrics change and should retain their dates.
 - 400K+ cross-platform audience as of 2026-07-12.
 - 3,000+ paying learners as of 2026-07-12.
 - 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
-- 5.0/5 AI Builders rating on Maven from 83 ratings as of 2026-08-02. Separately, 54 public named written reviews had been archived as of 2026-07-27; the two counts measure different things and should not be subtracted to infer a current review gap.
+- 5.0/5 public AI Builders rating on Maven as of 2026-09-02. Public learner reviews include Shuyang, Member of Technical Staff at OpenAI; EZ, Engineer at Anthropic; and Chairy, UX Manager at Google. These affiliations identify individual reviewers and do not imply employer endorsement.
 - 55 selected AI Architect course projects as of 2026-07-25.
 - 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.
 - 21,686 members who completed profile setup in the free Superlinear Academy community as of 2026-08-20; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
@@ -75,6 +76,8 @@ Two public videos in April 2021 explained the limits of the dominant AI paradigm
 - Books, Chinese: [lizheng.ai/zh/book](https://www.lizheng.ai/zh/book)
 - Guest archive: [lizheng.ai/guests](https://www.lizheng.ai/guests)
 - Work and organization collaboration: [lizheng.ai/collab](https://www.lizheng.ai/collab)
+- Enterprise AI training, English: [lizheng.ai/collab/enterprise](https://www.lizheng.ai/collab/enterprise)
+- Enterprise AI training, Chinese: [lizheng.ai/zh/collab/enterprise](https://www.lizheng.ai/zh/collab/enterprise)
 - Enterprise AI training and deck library, Chinese: [lizheng.ai/decks](https://www.lizheng.ai/decks)
 - Enterprise AI training and deck library, English: [lizheng.ai/en/decks](https://www.lizheng.ai/en/decks)
 - Podcast and creator invitations, Chinese: [lizheng.ai/zh/collab/creators](https://www.lizheng.ai/zh/collab/creators)

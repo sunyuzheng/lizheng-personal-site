@@ -13,6 +13,7 @@ import ZhenbenShi from "./pages/ZhenbenShi";
 import Books from "./pages/Books";
 import Collab from "./pages/Collab";
 import CreatorCollab from "./pages/CreatorCollab";
+import EnterpriseTraining from "./pages/EnterpriseTraining";
 import About from "./pages/About";
 import Podcast from "./pages/Podcast";
 import GuestInvitation from "./pages/GuestInvitation";
@@ -104,8 +105,10 @@ function Router() {
         <Route path={"/book"} component={Books} />
         <Route path={"/zh/book"} component={Books} />
         <Route path={"/zh/collab/creators"} component={CreatorCollab} />
+        <Route path={"/zh/collab/enterprise"} component={EnterpriseTraining} />
         <Route path={"/zh/collab"} component={Collab} />
         <Route path={"/collab/creators"} component={CreatorCollab} />
+        <Route path={"/collab/enterprise"} component={EnterpriseTraining} />
         <Route path={"/collab"} component={Collab} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}

@@ -48,29 +48,29 @@ const copy = {
       {
         icon: Building2,
         number: "02",
-        title: "Enterprise AI programs",
+        title: "Enterprise AI training and custom programs",
         detail:
-          "Structured work for engineering and non-engineering teams: start from the result and constraints, redesign the division of labor among people, models, and tools, then build evaluation, feedback, and ownership into the system. Previous programs and internal sessions include Tencent, Meituan, Xiaohongshu, DoorDash, Pinterest, and others.",
+          "For engineering and non-engineering teams: use a mature course when it fits, and add company-specific cases or a full redesign only when the work requires it. Selected public team trainings and internal sessions include Tencent, Meituan, Xiaohongshu, DoorDash, and Pinterest.",
         fit: "Best when a team needs to move from discussing AI to changing how work actually gets done.",
         action: {
-          label: "Explore enterprise work",
-          href: "https://corp-training.ai-builders.com/",
+          label: "Compare enterprise formats",
+          href: "/collab/enterprise",
           secondaryLabel: "Browse selected decks",
-          secondaryHref: "https://www.lizheng.ai/en/decks",
+          secondaryHref: "/en/decks",
         },
       },
       {
         icon: Handshake,
         number: "03",
-        title: "Advisory & long-term partnerships",
+        title: "Organization advisory & long-term partnerships",
         detail:
-          "Focused work on product, AI, data, growth, or organizational decisions where there is no ready-made playbook and first-principles judgment has to meet operating reality.",
-        fit: "Long-term advisory or investment conversations can begin here. They remain separate from editorial coverage.",
+          "A focused session or internal conversation can clarify one important product, AI, data, growth, or organizational decision before a team commits to a larger project.",
+        fit: "Organization sessions start at $2,000. Long-term advisory or investment conversations can also begin here; all remain separate from editorial coverage.",
       },
     ],
     budgetTitle: "Commercial scope",
     budgetDetail:
-      "For planning: advisory is $2,000 per hour; custom corporate programs start at $100k. Talks are scoped separately. Editorial invitations are never priced or bundled here.",
+      "For planning: organization sessions start at $2,000; AI Builders can be purchased by the seat; fully custom enterprise programs start at $100,000. The enterprise page publishes the complete pricing ladder and a team procurement brief. I do not offer paid consulting to individuals—join the free community and ask there instead. Talks are scoped separately; editorial invitations are never priced or bundled here.",
     principlesEyebrow: "HOW I THINK ABOUT FIT",
     principlesTitle:
       "A useful collaboration starts with the work, not the transaction.",
@@ -132,29 +132,29 @@ const copy = {
       {
         icon: Building2,
         number: "02",
-        title: "企业AI项目",
+        title: "企业AI培训与定制",
         detail:
-          "面向研发和非研发团队的成体系项目：先回到工作要产生的结果和现实约束，再重做人、模型与工具的分工，把评估、反馈和责任写进系统。曾为腾讯、美团、小红书、DoorDash、Pinterest等团队提供项目与内部分享。",
+          "面向研发和非研发团队：成熟课程够用，就直接采购；只有企业自己的案例或工作本身确实不同，才增加定制。可公开的团队培训与内部分享包括腾讯、美团、小红书、DoorDash和Pinterest。",
         fit: "最合适的情况：团队需要从讨论AI，走到真正改变工作方式。",
         action: {
-          label: "了解企业项目",
-          href: "https://corp-training.ai-builders.com/",
+          label: "比较企业合作方式",
+          href: "/collab/enterprise",
           secondaryLabel: "看过往deck",
-          secondaryHref: "https://www.lizheng.ai/decks",
+          secondaryHref: "/en/decks",
         },
       },
       {
         icon: Handshake,
         number: "03",
-        title: "顾问与长期合作",
+        title: "机构咨询与长期合作",
         detail:
-          "聚焦产品、AI、数据、增长或组织决策；尤其适合没有现成答案，需要从原理重新定义问题、拆开约束，再回到真实业务里做判断的事情。",
-        fit: "长期顾问或投资对话可以从这里开始，但与节目选题和内容露出彼此独立。",
+          "先用一次聚焦的团队问题梳理会，把产品、AI、数据、增长或组织中的一个重要问题谈清楚，再决定是否值得进入更大的项目。",
+        fit: "机构合作$2,000起。长期顾问或投资对话也可以从这里开始，但与节目选题和内容露出彼此独立。",
       },
     ],
     budgetTitle: "商业项目的范围",
     budgetDetail:
-      "便于预算判断：顾问$2,000/小时；定制企业项目$100k起。演讲另行确定范围。节目邀请不在这里定价，也不与商业项目打包。",
+      "便于预算判断：团队问题梳理会与内部交流$2,000起；AI Builders可以按席位采购；完整定制企业项目$100,000起。企业页列出了完整价格阶梯，也提供可以内部转发的团队方案。我不接面向个人的付费咨询，个人问题欢迎到免费社区公开提问。演讲另行确定范围；节目邀请不在这里定价，也不与商业项目打包。",
     principlesEyebrow: "如何判断是否合适",
     principlesTitle: "有用的合作，应该从事情开始，不是从交易开始。",
     principles: [
@@ -325,23 +325,19 @@ export default function Collab() {
                     </p>
                     {"action" in path && path.action ? (
                       <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-6">
-                        <a
-                          href={path.action.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link
+                          href={withLanguage(path.action.href, lang)}
                           className="text-sm font-semibold text-amber-300 transition hover:text-amber-200"
                         >
-                          {path.action.label} <span aria-hidden="true">↗</span>
-                        </a>
-                        <a
-                          href={path.action.secondaryHref}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          {path.action.label} <span aria-hidden="true">→</span>
+                        </Link>
+                        <Link
+                          href={withLanguage(path.action.secondaryHref, lang)}
                           className="text-sm font-semibold text-zinc-400 transition hover:text-zinc-200"
                         >
                           {path.action.secondaryLabel}{" "}
-                          <span aria-hidden="true">↗</span>
-                        </a>
+                          <span aria-hidden="true">→</span>
+                        </Link>
                       </div>
                     ) : null}
                   </article>

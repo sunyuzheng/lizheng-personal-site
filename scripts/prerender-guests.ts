@@ -8,6 +8,7 @@ import {
 import {
   COLLAB_PAGE_META,
   CREATOR_COLLAB_PAGE_META,
+  ENTERPRISE_TRAINING_PAGE_META,
 } from "../shared/collab-meta.ts";
 import {
   ABOUT_PAGE_META,
@@ -34,6 +35,7 @@ import {
   buildPodcastStructuredData,
   buildPodcastGuestInvitationStructuredData,
   buildDeckLibraryStructuredData,
+  buildEnterpriseTrainingStructuredData,
   buildZhenbenshiStructuredData,
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
@@ -243,12 +245,20 @@ function buildSitemapXml(guests: GuestProfile[]) {
       lastmod: CREATOR_COLLAB_PAGE_META.en.lastModified,
     },
     {
+      loc: ENTERPRISE_TRAINING_PAGE_META.en.canonical,
+      lastmod: ENTERPRISE_TRAINING_PAGE_META.en.lastModified,
+    },
+    {
       loc: `${SITE_URL}/zh/collab`,
       lastmod: COLLAB_PAGE_META.zh.lastModified,
     },
     {
       loc: `${SITE_URL}/zh/collab/creators`,
       lastmod: CREATOR_COLLAB_PAGE_META.zh.lastModified,
+    },
+    {
+      loc: ENTERPRISE_TRAINING_PAGE_META.zh.canonical,
+      lastmod: ENTERPRISE_TRAINING_PAGE_META.zh.lastModified,
     },
     {
       loc: DECKS_PAGE_META.zh.canonical,
@@ -365,6 +375,10 @@ const collabAlternates = languageAlternates(
 const creatorCollabAlternates = languageAlternates(
   CREATOR_COLLAB_PAGE_META.en.canonical,
   CREATOR_COLLAB_PAGE_META.zh.canonical
+);
+const enterpriseTrainingAlternates = languageAlternates(
+  ENTERPRISE_TRAINING_PAGE_META.en.canonical,
+  ENTERPRISE_TRAINING_PAGE_META.zh.canonical
 );
 const experimentMeta = {
   vercel: {
@@ -567,6 +581,7 @@ const staticPages: StaticPage[] = [
   ...(["en", "zh"] as const).flatMap(lang => {
     const collabMeta = COLLAB_PAGE_META[lang];
     const creatorMeta = CREATOR_COLLAB_PAGE_META[lang];
+    const enterpriseMeta = ENTERPRISE_TRAINING_PAGE_META[lang];
     return [
       {
         route: lang === "en" ? "/collab" : "/zh/collab",
@@ -601,6 +616,19 @@ const staticPages: StaticPage[] = [
           lang === "en"
             ? "Yuzheng Sun in a long-form public conversation"
             : "孙煜征参与长访谈",
+      },
+      {
+        route: lang === "en" ? "/collab/enterprise" : "/zh/collab/enterprise",
+        meta: enterpriseMeta,
+        lang,
+        jsonLd: buildEnterpriseTrainingStructuredData(lang),
+        alternates: enterpriseTrainingAlternates,
+        imageAlt:
+          lang === "en"
+            ? "Yuzheng Sun leading enterprise AI training for DoorDash in Seattle"
+            : "孙煜征在西雅图为DoorDash团队进行企业AI培训",
+        imageWidth: 1280,
+        imageHeight: 720,
       },
     ];
   }),

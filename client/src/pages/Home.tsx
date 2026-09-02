@@ -292,12 +292,12 @@ const work = {
     {
       number: "04",
       label: "ORGANIZATIONAL PRACTICE",
-      title: "Enterprise AI programs",
+      title: "Enterprise AI training and custom programs",
       detail:
-        "We work with teams to put AI into real workflows, then add the evaluation, ownership, and coordination it needs to become a way of working people can trust.",
-      proof: "Tencent · Xiaohongshu · Meituan · DoorDash",
-      href: "https://corp-training.ai-builders.com",
-      cta: "Explore enterprise work",
+        "From team enrollment in a mature course to a full program redesigned around real roles, workflows, and evaluation. We begin by asking whether the existing course is enough; only a different problem warrants work from scratch.",
+      proof: "By the seat · Private cohort · Fully custom from $100,000",
+      href: "/collab/enterprise",
+      cta: "See training and custom formats",
     },
   ],
   zh: [
@@ -334,12 +334,12 @@ const work = {
     {
       number: "04",
       label: "组织实践",
-      title: "企业AI项目",
+      title: "企业AI培训与定制",
       detail:
-        "我们和团队一起，把AI放进真实工作流，补齐评估、责任与组织协作，让一次实验变成可以长期使用的工作方式。",
-      proof: "腾讯 · 小红书 · 美团 · DoorDash",
-      href: "https://corp-training.ai-builders.com",
-      cta: "了解企业合作",
+        "从成熟课程的团队采购，到围绕真实岗位、工作流与评估重新设计的完整项目。我们先判断现成课程是否够用；只有问题本身不同，才从头定制。",
+      proof: "按席位采购 · 专属班 · 完整定制$100,000起",
+      href: "/collab/enterprise",
+      cta: "查看企业培训与定制方式",
     },
   ],
 };
@@ -1215,15 +1215,25 @@ export default function Home() {
                     >
                       {item.proof}
                     </p>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
-                    >
-                      {item.cta}
-                      <ArrowRight className="h-4 w-4" />
-                    </a>
+                    {item.href.startsWith("/") ? (
+                      <Link
+                        href={withLanguage(item.href, lang)}
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                      >
+                        {item.cta}
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                      >
+                        {item.cta}
+                        <ArrowRight className="h-4 w-4" />
+                      </a>
+                    )}
                   </div>
                 </article>
               ))}

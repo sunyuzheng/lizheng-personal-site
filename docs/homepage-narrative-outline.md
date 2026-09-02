@@ -102,14 +102,16 @@ This is the page's main reveal. Superlinear is not a product catalogue attached 
 
 The institutional ambition appears before the product map in ordinary language: help people with professional depth turn judgment into products, work, and ventures. The full range of social and commercial results belongs in the deeper brand thesis, not in a mission-statement list on the homepage.
 
-The four entries have distinct jobs:
+The four entries have distinct jobs, but they do not need equal visual weight:
 
 - **Free community:** open public value, real projects, questions, first-hand experience, collaboration, and opportunity.
 - **AI Builders:** systematic training across AI principles, engineering reliability, product judgment, and practice.
 - **Stay Superlinear membership:** a year-round, high-craft content and practitioner environment with deep analysis, masterclasses, Q&A, courses, Skills, recordings, and a searchable archive.
 - **Enterprise programs:** a formal path from seat-based training to private cohorts and fully custom work around real workflows, evaluation, ownership, and organizational constraints.
 
-These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; complete scope and conversion arguments stay on the dedicated pages. The enterprise card may show the cooperation ladder and one operational price boundary—`fully custom from $100,000`—as part of explaining how the work is structured. It is not a homepage price pitch. Do not place public training names beside that number in a way that implies those organizations bought the fully custom offer.
+These are related expressions of one institution, not a mandatory purchase sequence. The page explains each role and routes the visitor onward; complete scope and conversion arguments stay on the dedicated pages. The free community, AI Builders, and Stay Superlinear remain three compact entry cards. Enterprise work becomes a separate editorial block rather than a fourth equal card, because it has a different reader and a different proof burden.
+
+That block begins with the buyer-facing standard `The work should be different after the training. / 培训结束以后，工作应该真的变了。` A real DoorDash training scene carries the operational context. The cooperation ladder and one operational price boundary—`fully custom from $100,000`—explain how the work is structured. The larger area and calmer typography make the signal legible without turning it into a homepage price pitch. Public training names do not sit beside that number in a way that implies those organizations bought the fully custom offer.
 
 ### 7. Conversations — show whom Yuzheng chooses to honor
 
@@ -158,7 +160,7 @@ The page follows `show → frame → let the reader conclude`.
 - A fact or scene comes first.
 - The page explains only what that fact demonstrates and why it belongs there.
 - Every proof has one job and appears where its question naturally arises.
-- The enterprise entry tells a prospective client which format to consider; the same formal ladder, six-figure custom boundary, procurement brief, and confidentiality discipline allow other visitors to infer that the work is mature and high-consideration. The page does not announce that inference for them.
+- The enterprise entry tells a prospective client which format to consider; its real working scene, formal ladder, six-figure custom boundary, procurement brief, and confidentiality discipline allow other visitors to infer that the work is mature and high-consideration. The page gives the scene and price enough visual weight, but does not announce that inference for them.
 - Employer names establish operating context; they are not endorsements.
 - Reach establishes distribution; it does not establish correctness.
 - Dated calls establish inspectable judgment; they do not establish permanent foresight.
@@ -180,7 +182,7 @@ The page follows `show → frame → let the reader conclude`.
 
 - Hero: `/hero/acquired-behind-scenes-desktop.webp`
 - Yuzheng and Yage: `/superlinear/yuzheng-yage-conversation.webp`
-- Enterprise work: `/english-network/doordash-ai-training.webp`
+- Enterprise work: `/english-network/doordash-ai-training.webp`, shown inside the dedicated enterprise block rather than detached from its offer.
 - Book launch: `/book/growth-data-launch.webp`
 
 Current implementation: `client/src/pages/Home.tsx`.

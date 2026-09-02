@@ -289,16 +289,6 @@ const work = {
       href: "https://stay.superlinear.academy",
       cta: "Explore the membership",
     },
-    {
-      number: "04",
-      label: "ORGANIZATIONAL PRACTICE",
-      title: "Enterprise AI training and custom programs",
-      detail:
-        "From team enrollment in a mature course to a full program redesigned around real roles, workflows, and evaluation. We begin by asking whether the existing course is enough; only a different problem warrants work from scratch.",
-      proof: "By the seat · Private cohort · Fully custom from $100,000",
-      href: "/collab/enterprise",
-      cta: "See training and custom formats",
-    },
   ],
   zh: [
     {
@@ -331,17 +321,32 @@ const work = {
       href: "https://stay.superlinear.academy",
       cta: "了解会员",
     },
-    {
-      number: "04",
-      label: "组织实践",
-      title: "企业AI培训与定制",
-      detail:
-        "从成熟课程的团队采购，到围绕真实岗位、工作流与评估重新设计的完整项目。我们先判断现成课程是否够用；只有问题本身不同，才从头定制。",
-      proof: "按席位采购 · 专属班 · 完整定制$100,000起",
-      href: "/collab/enterprise",
-      cta: "查看企业培训与定制方式",
-    },
   ],
+};
+
+const enterpriseWork = {
+  en: {
+    label: "ENTERPRISE AI TRAINING & CUSTOM PROGRAMS",
+    title: "The work should be different after the training.",
+    detail:
+      "For most teams, AI Builders is enough. When the work itself needs to change, we start with the roles, workflows, materials, and evaluation—then design what the team actually needs.",
+    formats: "Team seats · Private cohorts · Course customization",
+    priceLabel: "FULLY CUSTOM",
+    price: "$100,000+",
+    cta: "See enterprise formats",
+    caption: "DoorDash Analytics team offsite · Seattle",
+  },
+  zh: {
+    label: "企业AI培训与定制",
+    title: "培训结束以后，工作应该真的变了。",
+    detail:
+      "对多数团队来说，直接采购AI Builders就够了。现成课程解决不了真实工作里的问题时，我们再和团队一起，从岗位、流程与验收开始设计。",
+    formats: "团队购课 · 专属班 · 课程定制",
+    priceLabel: "完整定制",
+    price: "$100,000起",
+    cta: "查看企业合作方式",
+    caption: "DoorDash Analytics团队线下AI培训 · 西雅图",
+  },
 };
 
 const selectedGuests = {
@@ -1131,58 +1136,35 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="mt-12 grid gap-4 md:grid-cols-[1.38fr_0.62fr]">
-              <figure>
-                <div className="overflow-hidden bg-[#E9E4DA]">
-                  <img
-                    src="/superlinear/yuzheng-yage-conversation.webp"
-                    alt={
-                      lang === "en"
-                        ? "Yuzheng Sun and Yage discussing AI Builders"
-                        : "立正与鸭哥讨论AI Builders"
-                    }
-                    className="aspect-[16/9] w-full object-cover"
-                    loading="lazy"
-                    width={1672}
-                    height={941}
-                  />
-                </div>
-                <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
-                  {lang === "en"
-                    ? "With Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at leading AI conferences such as CVPR, NeurIPS, and KDD—and my long-term teaching partner across AI Builders and the membership."
-                    : "与鸭哥（王言）。他是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD等AI顶会；也是AI Builders与会员内容的长期共同建设者。"}
-                </figcaption>
-              </figure>
-              <figure>
-                <div className="overflow-hidden bg-[#E9E4DA]">
-                  <img
-                    src="/english-network/doordash-ai-training.webp"
-                    alt={
-                      lang === "en"
-                        ? "Yuzheng Sun leading an AI training session for DoorDash"
-                        : "孙煜征为DoorDash团队做AI培训"
-                    }
-                    className="aspect-[16/9] w-full object-cover md:aspect-auto md:h-full"
-                    loading="lazy"
-                    width={1280}
-                    height={720}
-                  />
-                </div>
-                <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
-                  {lang === "en"
-                    ? "DoorDash team offsite · Seattle"
-                    : "DoorDash团队线下AI培训 · 西雅图"}
-                </figcaption>
-              </figure>
-            </div>
+            <figure className="mt-12 grid overflow-hidden border border-[#DDD9D0] bg-[#F2F0EA] md:grid-cols-[1.38fr_0.62fr] md:items-stretch">
+              <div className="overflow-hidden bg-[#E9E4DA]">
+                <img
+                  src="/superlinear/yuzheng-yage-conversation.webp"
+                  alt={
+                    lang === "en"
+                      ? "Yuzheng Sun and Yage discussing AI Builders"
+                      : "立正与鸭哥讨论AI Builders"
+                  }
+                  className="aspect-[16/9] h-full w-full object-cover"
+                  loading="lazy"
+                  width={1672}
+                  height={941}
+                />
+              </div>
+              <figcaption className="flex items-end p-6 text-sm leading-7 text-[#5C574D] md:p-8">
+                {lang === "en"
+                  ? "With Yage (Wang Yan), a Columbia electrical engineering PhD and AI researcher with nearly 40 papers, including work at CVPR, NeurIPS, and KDD—and my long-term teaching partner across AI Builders and the membership."
+                  : "与鸭哥（王言）。他是哥伦比亚大学电子工程博士、AI研究者，发表近40篇论文，研究见于CVPR、NeurIPS、KDD；也是AI Builders与会员内容的长期共同建设者。"}
+              </figcaption>
+            </figure>
 
-            <div className="mt-12 grid border-t border-[#DDD9D0] lg:grid-cols-2">
+            <div className="mt-12 grid border-t border-[#DDD9D0] lg:grid-cols-3">
               {work[lang].map((item, index) => (
                 <article
                   key={item.title}
                   className={cn(
-                    "grid grid-cols-[2.6rem_1fr] gap-4 border-b border-[#DDD9D0] py-7 lg:px-8",
-                    index % 2 === 1 && "lg:border-l"
+                    "grid grid-cols-[2.6rem_1fr] gap-4 border-b border-[#DDD9D0] py-7 lg:px-7",
+                    index > 0 && "lg:border-l"
                   )}
                 >
                   <div className="font-mono text-xs text-superlinear-deep">
@@ -1238,6 +1220,95 @@ export default function Home() {
                 </article>
               ))}
             </div>
+
+            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-[#F2F0EA] xl:grid xl:grid-cols-[0.88fr_1.12fr]">
+              <figure className="flex flex-col border-b border-[#CFC9BE] bg-white xl:border-b-0 xl:border-r">
+                <div className="overflow-hidden">
+                  <img
+                    src="/english-network/doordash-ai-training.webp"
+                    alt={
+                      lang === "en"
+                        ? "Yuzheng Sun leading an AI training session for DoorDash"
+                        : "孙煜征为DoorDash团队做AI培训"
+                    }
+                    className="aspect-[16/10] w-full object-cover"
+                    loading="lazy"
+                    width={1280}
+                    height={720}
+                  />
+                </div>
+                <figcaption className="border-t border-[#CFC9BE] bg-white px-5 py-3 text-xs leading-5 text-[#777064]">
+                  {enterpriseWork[lang].caption}
+                </figcaption>
+              </figure>
+
+              <div className="flex flex-col justify-between p-7 md:p-10 lg:p-12">
+                <div>
+                  <p
+                    className={cn(
+                      "font-mono text-[11px] leading-5 text-superlinear-deep",
+                      lang === "en"
+                        ? "uppercase tracking-[0.18em]"
+                        : "tracking-[0.1em]"
+                    )}
+                  >
+                    {enterpriseWork[lang].label}
+                  </p>
+                  <h3
+                    className={cn(
+                      "mt-5 max-w-3xl font-semibold leading-[1.12] [text-wrap:balance]",
+                      lang === "zh"
+                        ? "text-[1.55rem] min-[360px]:text-3xl md:text-4xl"
+                        : "text-3xl md:text-4xl"
+                    )}
+                  >
+                    {lang === "zh" ? (
+                      <>
+                        <span className="block">培训结束以后，</span>
+                        <span className="block whitespace-nowrap">
+                          工作应该真的变了。
+                        </span>
+                      </>
+                    ) : (
+                      enterpriseWork[lang].title
+                    )}
+                  </h3>
+                  <p className="mt-5 max-w-3xl text-base leading-8 text-[#5C574D]">
+                    {enterpriseWork[lang].detail}
+                  </p>
+                </div>
+
+                <div className="mt-8 border-t border-[#CFC9BE] pt-6 sm:grid sm:grid-cols-[1fr_auto] sm:items-end sm:gap-10">
+                  <div>
+                    <p className="font-mono text-[11px] leading-5 tracking-[0.06em] text-[#5C574D]">
+                      {enterpriseWork[lang].formats}
+                    </p>
+                    <Link
+                      href={withLanguage("/collab/enterprise", lang)}
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                    >
+                      {enterpriseWork[lang].cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                  <div className="mt-7 sm:mt-0 sm:text-right">
+                    <p
+                      className={cn(
+                        "font-mono text-[10px] leading-5 text-superlinear-deep",
+                        lang === "en"
+                          ? "uppercase tracking-[0.16em]"
+                          : "tracking-[0.08em]"
+                      )}
+                    >
+                      {enterpriseWork[lang].priceLabel}
+                    </p>
+                    <p className="mt-1 whitespace-nowrap text-3xl font-semibold tracking-[-0.035em] text-[#173C2A] md:text-4xl">
+                      {enterpriseWork[lang].price}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 

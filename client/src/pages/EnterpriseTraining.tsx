@@ -6,12 +6,9 @@ import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight,
-  BookOpenCheck,
-  Check,
   ExternalLink,
   FileSearch,
   Mail,
-  MessagesSquare,
   PanelsTopLeft,
   Route,
 } from "lucide-react";
@@ -24,360 +21,322 @@ import { buildEnterpriseTrainingStructuredData } from "../../../shared/structure
 const copy = {
   en: {
     section: "Enterprise AI training",
-    eyebrow: "ENTERPRISE AI TRAINING · FROM ONE SESSION TO FULL CUSTOM",
-    title:
-      "Start with the course that already works. Customize only what your team needs.",
+    eyebrow: "ENTERPRISE AI TRAINING & CUSTOM PROGRAMS",
+    title: "The work should be different after the training.",
     titleLines: null,
     intro:
-      "AI Builders already covers what most teams need in common. Buy seats or run a private cohort when that is enough. Customize the course only when your own cases, objectives, or workflows change what should be taught; commission a full program only when the work itself must be rethought.",
-    proof: "2½ years of iteration · 13 cohorts · 3,000+ paid learners",
+      "When a team needs shared capability, AI Builders is the direct route. When the work itself needs to change, we start with the roles, workflows, materials, and evaluation—then design the program, cases, and tools the team actually needs.",
+    proof: "13 cohorts · 3,000+ paid learners · 5.0/5 on Maven",
     primaryCta: "Compare the formats",
     secondaryCta: "Open the team brief (PDF)",
     anchorLabel: "FULLY CUSTOM ENTERPRISE PROGRAM",
     anchorPrice: "$100,000+",
     anchorDetail:
-      "Diagnosis, stakeholder interviews, new curriculum, company-specific exercises, delivery, and reusable team assets.",
-    anchorNote:
-      "This scope begins when the organization’s work—not only the course materials—has to be understood and redesigned.",
+      "Start with the work. Leave the team with a program, cases, tools, and evaluation standards it can keep using.",
+    anchorNote: "Research · Design · Live delivery · Review",
     anchorCta: "Discuss a custom program",
     reviewsEyebrow: "PUBLIC MAVEN REVIEWS",
-    reviewsTitle: "What experienced builders found valuable",
+    reviewsTitle: "What learners actually took from the course",
     reviewsIntro:
-      "Public Maven reviews from experienced builders at OpenAI, Anthropic, and Google. Affiliations identify the reviewers; they do not imply employer endorsement.",
+      "These are public Maven reviews. Titles and employers identify the reviewers, not employer endorsements.",
     reviews: [
       {
         quote:
           "There are many courses teaching you specific tricks but this course helps you build the right mindset and empower you to teach yourself more effectively.",
         name: "Shuyang",
-        role: "Member of Technical Staff, OpenAI",
-        note: "Former Sr. AI Manager, Uber",
+        role: "Member of Technical Staff",
+        company: "OpenAI",
+        note: "Former Sr. AI Manager · Uber",
       },
       {
         quote:
           "There can be different new tools coming, but principles remain!",
         name: "EZ",
-        role: "Engineer, Anthropic",
+        role: "Engineer",
+        company: "Anthropic",
       },
       {
         quote:
           "The content and instruction are both outstanding and very engaging.",
         name: "Chairy",
-        role: "UX Manager, Google",
+        role: "UX Manager",
+        company: "Google",
       },
     ],
     reviewsCta: "Read public reviews on Maven",
-    advisoryEyebrow: "WHEN THE RIGHT STARTING POINT IS UNCLEAR",
-    advisoryTitle:
-      "Use one working session to define the problem before commissioning more.",
-    advisoryPrice: "From $2,000",
-    advisoryDetail:
-      "Work through one real organizational question, clarify the intended result, test the key assumptions, and decide whether the next step should be an internal session, team enrollment, or a custom program. It does not include new curriculum, research, or follow-on delivery; keynotes and larger events are scoped separately.",
-    advisoryCta: "Book a problem-framing session",
     individualNote:
       "I do not sell paid consulting to individuals. Join Superlinear Academy for free and ask in the community; I answer individual questions there for free.",
     communityCta: "Ask in the free community",
-    formatsEyebrow: "START WITH THE SIMPLEST OPTION THAT WORKS",
-    formatsTitle: "Buy only what your team actually needs.",
+    formatsEyebrow: "FIVE WAYS TO WORK TOGETHER",
+    formatsTitle: "Start with the simplest useful step.",
     formatsIntro:
-      "Start with what the engagement must add: seats, a dedicated cohort, company-specific course material, or an entirely new program.",
-    offers: [
+      "Start with what must change: shared capability, course content, or the work itself.",
+    formats: [
       {
         number: "01",
-        label: "TEAM ENROLLMENT",
-        title: "Buy AI Builders by the seat",
-        priceLines: ["$1,999 per learner before team discounts"],
-        fit: "Use this when the mature course already covers the capability your team needs.",
-        bullets: [
-          "Join a scheduled Maven cohort",
-          "2–9 learners: 20% off; 10+ learners: 25% off",
-          "Complete course, live instruction, project feedback, lifetime course access, and one year of Stay Superlinear",
-        ],
-        cta: "View AI Builders",
-        href: "https://maven.com/superlinear/aibuilders",
+        label: "ORGANIZATION SESSION",
+        title: "Work through one real question",
+        price: "From $2,000",
+        detail:
+          "Clarify the result, test the key assumptions, and decide whether the next step is an internal session, team enrollment, or a custom program.",
+        cta: "Discuss a working session",
+        href: "advisory",
+        featured: false,
       },
       {
         number: "02",
-        label: "DEDICATED COHORT / OPTIONAL CUSTOMIZATION",
-        title: "Change the delivery, the content, or both.",
-        priceLines: [
-          "Private cohort: 30 learners from $44,977.50",
-          "Optional course customization: from an additional $20,000",
-        ],
-        fit: "A dedicated cohort changes who learns together and when. Customization changes what is taught. They can be purchased separately or together.",
-        bullets: [
-          "A dedicated cohort uses standard AI Builders on dates agreed with your team",
-          "Customization can be added to a group enrollment or a dedicated cohort",
-          "Customization is priced in addition to tuition",
-        ],
-        cta: "Discuss a cohort or customization",
-        href: "email",
+        label: "TEAM ENROLLMENT",
+        title: "Bring AI Builders to your team",
+        price: "$1,999 per learner",
+        detail:
+          "Join a scheduled cohort. Teams of 2–9 receive 20% off; teams of 10 or more receive 25% off.",
+        cta: "View AI Builders",
+        href: "https://maven.com/superlinear/aibuilders",
+        featured: false,
       },
       {
         number: "03",
+        label: "PRIVATE COHORT",
+        title: "Give one organization its own cohort",
+        price: "30 learners · $44,977.50+",
+        detail:
+          "Use the standard AI Builders curriculum on dates agreed with your team.",
+        cta: "Discuss a private cohort",
+        href: "training",
+        featured: false,
+      },
+      {
+        number: "04",
+        label: "COURSE CUSTOMIZATION",
+        title: "Adapt what the course teaches",
+        price: "$20,000+ · plus tuition",
+        detail:
+          "Add company-specific cases, exercises, or material when they change what the team needs to learn. Tuition is separate.",
+        cta: "Discuss course customization",
+        href: "training",
+        featured: false,
+      },
+      {
+        number: "05",
         label: "FULLY CUSTOM ENTERPRISE PROGRAM",
-        title: "Start with the business problem, not an existing syllabus.",
-        priceLines: ["From $100,000"],
-        fit: "Use this when the real problem is not tool awareness, but how roles, workflows, evaluation, ownership, or team capability must change.",
-        bullets: [
-          "Research the work, stakeholders, constraints, and existing artifacts",
-          "Design new curriculum, cases, exercises, evaluation, and team assets",
-          "Deliver to the team, see what breaks in practice, and revise within the agreed scope",
-        ],
+        title: "Start with the business problem",
+        price: "From $100,000",
+        detail:
+          "Study the roles, workflows, materials, and evaluation; then design the program and delivery for one organization.",
         cta: "Discuss a custom program",
-        href: "email",
+        href: "training",
+        featured: true,
       },
     ],
     pricingNote:
       "Planning prices in USD, before applicable taxes. Seat prices reflect current US AI Builders 2027 team pricing; final scope, faculty, schedule, payment, cancellation terms, and taxes are set in the quote and order form.",
     pdfEyebrow: "TEAM PROCUREMENT BRIEF · PDF",
-    pdfTitle: "A two-page brief made to be forwarded internally.",
+    pdfTitle: "Forward this two-page brief to your team.",
     pdfBody:
-      "Course outcomes, faculty, public learner reviews, team pricing, private cohorts, customization, terms, and contact—already laid out for an internal conversation.",
+      "Course outcomes, faculty, public reviews, team pricing, private cohorts, customization, and procurement details are all in one place.",
     pdfMeta: "PDF · 2 pages · English · September 2026",
     pdfCta: "Open the team brief",
-    workEyebrow: "WHAT CHANGES WITH CUSTOMIZATION",
-    workTitle: "Full customization adds more than new course material.",
+    workEyebrow: "FULLY CUSTOM PROGRAMS",
+    workTitle: "Full customization starts with the work.",
     workIntro:
-      "It starts with the work itself: roles, workflows, decisions, and constraints—then redesigns the human–AI division of labor, evaluation, ownership, and learning assets. Course customization starts at $20,000; full custom programs start at $100,000 when that work must be done end to end for one organization.",
+      "Start with the work itself. Then design the program and delivery around it.",
     confidentialityLabel: "SENSITIVE CONTEXT STAYS WITH THE WORK",
     confidentialityDetail:
-      "Full custom work often requires real roles, workflows, and internal materials. We use that context only within the agreed scope; client names, materials, and delivery details are not published without explicit permission.",
+      "Real company materials are used only for the agreed delivery. Client names, materials, and project details are not published without explicit permission.",
     workSteps: [
       {
-        title: "Understand the work",
+        title: "See the real work",
         detail:
-          "Interview the people doing it; inspect real artifacts, decisions, handoffs, constraints, and failure modes.",
+          "Work with the people doing it. Examine the workflow, materials, handoffs, and recurring points of failure.",
       },
       {
-        title: "Redesign the system",
+        title: "Decide how people and AI divide the work",
         detail:
-          "Define the result, the human–AI division of labor, evaluation, ownership, and where context must persist.",
+          "Define what AI does, what judgment stays with people, who owns the result, and how it will be evaluated.",
       },
       {
-        title: "Build the learning assets",
+        title: "Leave the method with the team",
         detail:
-          "Turn the diagnosis into cases, exercises, demos, evaluation criteria, templates, and reusable context.",
-      },
-      {
-        title: "Teach and correct",
-        detail:
-          "Deliver to the team, watch what fails in practice, answer the hard questions, and revise within scope.",
+          "Turn the decisions into a program, cases, tools, templates, and materials the team can keep using.",
       },
     ],
     evidenceEyebrow: "COURSE DEPTH · ENTERPRISE REALITY",
     evidenceTitle:
-      "The course is refined in public cohorts. Enterprise work tests it against real constraints.",
+      "The course is refined in public cohorts and tested in real organizations.",
     evidenceBody:
-      "AI Builders has been taught across 13 cohorts and 3,000+ paid learners. Inside an organization, the questions become more concrete: the real workflow, the decision owner, what can be measured, and what the team will actually adopt. Public trainings and internal sessions bring those constraints back into the course; full custom work begins with those constraints and redesigns for one organization.",
+      "AI Builders has been taught across 13 cohorts and 3,000+ paid learners. Inside a team, the test becomes concrete: will people adopt it, can the result be evaluated, and does the method remain after the session ends?",
     evidenceCaption: "DoorDash Analytics team offsite · Seattle",
     publicWorkLabel: "Selected public team trainings and internal sessions",
     publicWorkNames: "Tencent · Meituan · Xiaohongshu · Pinterest · DoorDash",
     publicWorkNote:
-      "The names above refer to public trainings and internal sessions. Full custom engagements are named only with client permission.",
+      "These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
     faculty:
       "AI Builders is co-taught by Yuzheng Sun and Yan Wang. Faculty and delivery roles for each enterprise engagement are named in the proposal and order form.",
     decksCta: "Browse selected enterprise decks",
-    faqEyebrow: "BEFORE YOU WRITE",
-    faqTitle: "The questions that usually decide the format.",
-    faqs: [
-      {
-        q: "Do we need a custom program?",
-        a: "Usually not. If the existing course solves the capability gap, seats are the cleanest purchase. Customization is useful only when company-specific material changes what people need to learn or practice.",
-      },
-      {
-        q: "What is the difference between a private cohort and a fully custom program?",
-        a: "A private cohort keeps AI Builders as the curriculum and gives one organization its own dates. A fully custom program begins with research into your work and creates a new curriculum and delivery package for that problem.",
-      },
-      {
-        q: "What should the first email include?",
-        a: "Team size and roles, the result you want to change, what you have already tried, rough timing, the decision owner, and the budget range. That is enough to recommend the right starting point.",
-      },
-    ],
-    closeEyebrow: "START WITH THE REAL NEED",
+    closeEyebrow: "START WITH ONE CONCRETE CHANGE",
     closeTitle: "Tell us what should be different after the training.",
     closeBody:
-      "We will tell you whether the right answer is one organization session, seats, a private cohort, course customization, a fully custom program—or no engagement at all.",
+      "Include the team, the problem today, the result you want to change, and the rough timing. We will recommend the most useful starting point.",
     closeCta: "Email Yuzheng",
     collabCta: "See all collaboration options",
   },
   zh: {
     section: "企业AI培训",
-    eyebrow: "企业AI培训 · 从一次交流到完整定制",
-    title: "先用成熟课程。只为真正不同的问题重新设计。",
-    titleLines: ["先用成熟课程。", "只为真正不同的问题", "重新设计。"],
+    eyebrow: "企业AI培训与定制",
+    title: "培训结束以后，工作应该真的变了。",
+    titleLines: ["培训结束以后，", "工作应该真的变了。"],
     intro:
-      "AI Builders已经覆盖多数团队需要的共性能力。够用，就按席位采购或开专属班；只有企业自己的案例、目标或工作流改变了“该教什么”，才增加课程定制；只有当岗位和工作方式本身需要重新理解、重新设计，才进入完整定制项目。",
-    proof: "两年半持续迭代 · 13期教学 · 3,000+付费学员",
+      "团队要补共性能力，就直接用AI Builders。要改变一套真实工作，我们会先看岗位、流程、材料和结果怎么验收，再决定该做什么课程、案例与工具。",
+    proof: "13期教学 · 3,000+付费学员 · Maven 5.0/5",
     primaryCta: "查看合作方式",
     secondaryCta: "打开团队方案PDF",
     anchorLabel: "完整定制企业项目",
     anchorPrice: "$100,000起",
     anchorDetail:
-      "从业务诊断与岗位访谈开始，重新设计课程、企业案例、练习、交付和可复用的团队资产。",
-    anchorNote:
-      "只有当企业的工作本身，而不只是课程材料，需要重新理解和设计，才进入这个范围。",
+      "从真实工作开始，把判断做成团队能继续使用的课程、案例、工具与验收方式。",
+    anchorNote: "研究 · 设计 · 现场交付 · 复盘",
     anchorCta: "讨论完整定制",
     reviewsEyebrow: "Maven公开评价",
-    reviewsTitle: "真正做过东西的人，具体认可什么？",
+    reviewsTitle: "他们在课里真正带走了什么。",
     reviewsIntro:
-      "下面三条来自Maven公开学员评价。评价者分别在OpenAI、Anthropic和Google工作；公司信息只说明个人背景，不代表雇主背书。",
+      "以下均为Maven公开评价；任职信息用于说明评价者背景，不代表雇主背书。",
     reviews: [
       {
         quote:
           "There are many courses teaching you specific tricks but this course helps you build the right mindset and empower you to teach yourself more effectively.",
         name: "Shuyang",
-        role: "Member of Technical Staff, OpenAI",
-        note: "Former Sr. AI Manager, Uber",
+        role: "Member of Technical Staff",
+        company: "OpenAI",
+        note: "Former Sr. AI Manager · Uber",
       },
       {
         quote:
           "There can be different new tools coming, but principles remain!",
         name: "EZ",
-        role: "Engineer, Anthropic",
+        role: "Engineer",
+        company: "Anthropic",
       },
       {
         quote:
           "The content and instruction are both outstanding and very engaging.",
         name: "Chairy",
-        role: "UX Manager, Google",
+        role: "UX Manager",
+        company: "Google",
       },
     ],
     reviewsCta: "在Maven查看公开评价",
-    advisoryEyebrow: "还不确定从哪里开始",
-    advisoryTitle: "先用一次团队问题梳理会，把真正要解决的事讲清楚。",
-    advisoryPrice: "$2,000起",
-    advisoryDetail:
-      "围绕一个真实的组织问题，澄清目标、检验关键假设，并判断更适合内部分享、团队购课还是定制项目。不含专项研究、新课纲或后续交付；主题演讲和大型活动另行确定范围。",
-    advisoryCta: "预约团队问题梳理会",
     individualNote:
       "我不接面向个人的付费咨询。个人问题欢迎免费加入Superlinear Academy公开提问，我会在社区里免费回答。",
     communityCta: "去免费社区提问",
-    formatsEyebrow: "从最简单、够用的方案开始",
-    formatsTitle: "只买团队真正需要的部分。",
+    formatsEyebrow: "五种合作方式",
+    formatsTitle: "从够用的那一步开始。",
     formatsIntro:
-      "先看这次合作需要新增什么：席位、专属班、企业自己的课程内容，还是一套从头设计的项目。",
-    offers: [
+      "先看眼下要改变什么：补齐共性能力、调整课程内容，还是重新设计一项真实工作。",
+    formats: [
       {
         number: "01",
-        label: "团队购课",
-        title: "按席位采购AI Builders",
-        priceLines: ["团队折扣前$1,999/人"],
-        fit: "适合：成熟课程已经覆盖团队要补的能力。",
-        bullets: [
-          "加入Maven已公布日期的公开班",
-          "2–9人八折；10人起七五折",
-          "包含完整课程、直播教学、项目反馈、课程终身访问与一年Stay Superlinear会员",
-        ],
-        cta: "查看AI Builders",
-        href: "https://maven.com/superlinear/aibuilders",
+        label: "团队问题梳理会或内部交流",
+        title: "先把一个真实问题讲清楚",
+        price: "$2,000起",
+        detail:
+          "围绕一个组织问题，澄清目标、验证关键假设，再判断下一步是内部交流、团队购课还是定制。",
+        cta: "讨论一次团队交流",
+        href: "advisory",
+        featured: false,
       },
       {
         number: "02",
-        label: "专属班/可选课程定制",
-        title: "交付怎么安排、内容是否定制，可以分开选。",
-        priceLines: [
-          "专属班：30人起，$44,977.50起",
-          "可选课程定制：另加$20,000起",
-        ],
-        fit: "专属班改变谁在一起学、什么时候学；课程定制改变教什么。两者可以分开选择，也可以叠加。",
-        bullets: [
-          "专属班使用AI Builders标准课程，双方共同确定日期",
-          "团队购课或专属班，都可以另外增加课程定制",
-          "课程定制费用另计",
-        ],
-        cta: "咨询专属班或课程定制",
-        href: "email",
+        label: "团队购课",
+        title: "让团队一起学AI Builders",
+        price: "$1,999/人",
+        detail: "加入公开班；2–9人八折，10人起七五折。",
+        cta: "查看AI Builders",
+        href: "https://maven.com/superlinear/aibuilders",
+        featured: false,
       },
       {
         number: "03",
+        label: "企业专属班",
+        title: "为一家企业单独开班",
+        price: "30人起 · $44,977.50起",
+        detail: "沿用AI Builders标准课程，由双方共同确定日期。",
+        cta: "咨询企业专属班",
+        href: "training",
+        featured: false,
+      },
+      {
+        number: "04",
+        label: "课程定制",
+        title: "把企业自己的内容放进课程",
+        price: "另加$20,000起",
+        detail:
+          "当企业案例、材料或工作方式改变了要学和要练的内容，再增加课程定制；学费另计。",
+        cta: "咨询课程定制",
+        href: "training",
+        featured: false,
+      },
+      {
+        number: "05",
         label: "完整定制企业项目",
-        title: "从业务问题开始，不从现成课纲开始。",
-        priceLines: ["$100,000起"],
-        fit: "适合：真正的问题不是员工会不会某个工具，而是岗位分工、工作流、评估标准和责任边界都需要重新设计。",
-        bullets: [
-          "研究真实工作、参与者、约束与现有材料",
-          "重新设计课程、案例、练习、评估与团队资产",
-          "正式交付，看真实使用中哪里会卡住，并在约定范围内迭代",
-        ],
+        title: "从业务问题开始",
+        price: "$100,000起",
+        detail:
+          "研究岗位、流程、材料与验收方式，再为一家组织设计完整项目和交付。",
         cta: "讨论完整定制",
-        href: "email",
+        href: "training",
+        featured: true,
       },
     ],
     pricingNote:
       "以上为美元未税参考价。席位价格基于当前AI Builders 2027美国区团队方案；最终范围、讲师、时间、付款、取消条款与税费，以正式报价和双方签署的订单确认书（order form）为准。",
     pdfEyebrow: "团队采购说明 · PDF",
-    pdfTitle: "一份可以直接转给同事的两页材料。",
+    pdfTitle: "把这两页材料，直接转给同事。",
     pdfBody:
-      "课程目标、讲师背景、公开学员评价、团队价格、专属班、定制方式、条款与联系方式，已经整理成适合内部沟通的版本。",
+      "课程、讲师、公开评价、团队价格、专属班、定制方式与采购信息都在里面。",
     pdfMeta: "PDF · 2页 · 英文 · 2026年9月",
     pdfCta: "打开团队方案PDF",
-    workEyebrow: "定制到底增加了什么",
-    workTitle: "完整定制增加的，不只是课件。",
-    workIntro:
-      "它从真实工作开始：看清岗位、流程、决策与约束，再重新设计人和AI的分工、评估、责任与学习资产。课程定制$20,000起；当这套工作需要为一家组织从头完成，完整定制项目$100,000起。",
+    workEyebrow: "完整定制企业项目",
+    workTitle: "完整定制，从真实工作开始。",
+    workIntro: "先看真实工作，再决定课程和交付应该长什么样。",
     confidentialityLabel: "敏感上下文只用于交付",
     confidentialityDetail:
-      "完整定制往往需要接触真实岗位、工作流与内部材料。我们只在约定范围内使用这些信息；未经明确许可，不把客户名称、材料或项目细节用于公开传播。",
+      "企业真实材料只用于约定交付；未经明确许可，不公开客户名称、材料或项目细节。",
     workSteps: [
       {
-        title: "看清工作",
-        detail: "访谈真正做事的人，检查现有材料、决策、交接、约束与常见失效。",
+        title: "看真实工作",
+        detail: "和真正做事的人一起看流程、材料、交接和最常见的卡点。",
       },
       {
-        title: "重做系统",
-        detail:
-          "定义结果、人和AI怎样分工、如何验收、谁负责，以及哪些上下文需要被团队长期保留。",
+        title: "决定人和AI怎么分工",
+        detail: "AI做什么、人保留什么判断、谁对结果负责，最后怎样验收。",
       },
       {
-        title: "做成课程与资产",
-        detail:
-          "把诊断变成案例、练习、演示、评估标准、模板与可复用的团队上下文。",
-      },
-      {
-        title: "在现场纠偏",
-        detail:
-          "正式交付，看大家在哪里卡住，回答真正困难的问题，并在约定范围内继续修改。",
+        title: "把做法留在团队里",
+        detail: "把结论做成课程、案例、工具、模板和团队能继续使用的材料。",
       },
     ],
     evidenceEyebrow: "课程深度 · 企业现实",
-    evidenceTitle: "课程在公开班里反复打磨，再到企业现场接受现实检验。",
+    evidenceTitle: "课程在公开班里反复打磨，也在企业现场接受现实检验。",
     evidenceBody:
-      "AI Builders已经经历13期教学和3,000+名付费学员。进入组织现场后，问题会变得更具体：真实工作流是什么、谁负责决策、结果如何验收、团队最后会不会采用。公开培训与内部分享让这些约束不断回到课程；完整定制则从这些约束出发，为一家组织重新设计。",
+      "AI Builders已经经历13期教学和3,000+名付费学员。进入企业现场，检验会变得更具体：团队是否真的采用，结果能否验收，做法能不能留下来。",
     evidenceCaption: "DoorDash Analytics团队线下培训 · 西雅图",
     publicWorkLabel: "部分可公开的企业培训与内部分享",
     publicWorkNames: "腾讯 · 美团 · 小红书 · Pinterest · DoorDash",
     publicWorkNote:
-      "以上名称只指已公开的团队培训与内部分享；完整定制项目是否具名，以客户明确许可为准。",
+      "以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
     faculty:
       "AI Builders由立正与鸭哥共同授课。企业项目由谁参与、分别负责什么，会写进提案与订单确认书。",
     decksCta: "查看精选企业课件",
-    faqEyebrow: "发邮件以前",
-    faqTitle: "通常是这几个问题，决定合作方式。",
-    faqs: [
-      {
-        q: "我们需要完整定制吗？",
-        a: "多数情况不需要。现有课程已经能补上能力缺口，就直接买席位。只有企业自己的材料确实改变了要学什么、练什么，定制才有意义。",
-      },
-      {
-        q: "专属班和完整定制有什么区别？",
-        a: "专属班仍以AI Builders为课纲，只为一家企业单独确定日期。完整定制会先研究你们的工作，再为这个问题新做一套课程与交付。",
-      },
-      {
-        q: "第一封邮件需要写什么？",
-        a: "团队人数与岗位、希望改变的结果、已经试过什么、大概时间、决策人和预算范围。有这些信息，就足以判断从哪一种方式开始。",
-      },
-    ],
-    closeEyebrow: "从真实需要开始",
-    closeTitle: "请告诉我们：培训结束以后，什么应该变得不一样？",
+    closeEyebrow: "从一个具体变化开始",
+    closeTitle: "告诉我们：培训结束以后，什么应该真的变了。",
     closeBody:
-      "我们会直接判断应该先聊一次、买席位、开专属班、增加课程定制、做完整项目，还是暂时不需要合作。",
+      "写清团队、眼下的问题、希望改变的结果和大概时间。我们会直接建议最合适的合作方式。",
     closeCta: "发邮件给立正",
     collabCta: "查看全部合作方式",
   },
 };
 
-const offerIcons = [BookOpenCheck, PanelsTopLeft, Route];
-const workIcons = [FileSearch, Route, PanelsTopLeft, MessagesSquare];
+const workIcons = [FileSearch, Route, PanelsTopLeft];
 
 function buildMailto(
   lang: "en" | "zh",
@@ -446,21 +405,14 @@ export default function EnterpriseTraining() {
               >
                 {t.eyebrow}
               </p>
-              <h1 className="mt-6 max-w-4xl text-[2.65rem] font-semibold leading-[1.04] tracking-[-0.025em] text-white [text-wrap:balance] sm:text-5xl md:text-6xl">
-                {t.titleLines ? (
-                  <>
-                    <span className="sm:hidden">{t.title}</span>
-                    <span className="hidden sm:block">
-                      {t.titleLines.map(line => (
-                        <span key={line} className="block">
-                          {line}
-                        </span>
-                      ))}
-                    </span>
-                  </>
-                ) : (
-                  t.title
-                )}
+              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.04] tracking-[-0.025em] text-white [text-wrap:balance] min-[360px]:text-[2.35rem] sm:text-5xl md:text-6xl">
+                {t.titleLines
+                  ? t.titleLines.map(line => (
+                      <span key={line} className="block whitespace-nowrap">
+                        {line}
+                      </span>
+                    ))
+                  : t.title}
               </h1>
               <p className="mt-7 max-w-3xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
                 {t.intro}
@@ -504,7 +456,7 @@ export default function EnterpriseTraining() {
               >
                 {t.anchorLabel}
               </p>
-              <p className="mt-5 text-[3.25rem] font-semibold leading-none tracking-[-0.04em] text-white sm:text-6xl">
+              <p className="mt-5 whitespace-nowrap text-[2.3rem] font-semibold leading-none tracking-[-0.04em] text-white min-[360px]:text-[3.25rem] sm:text-6xl">
                 {t.anchorPrice}
               </p>
               <p className="mt-6 text-base leading-8 text-white/80">
@@ -573,8 +525,11 @@ export default function EnterpriseTraining() {
                   <blockquote className="text-base font-medium leading-7 text-[#26231D]">
                     “{review.quote}”
                   </blockquote>
-                  <figcaption className="mt-6 border-l-2 border-superlinear pl-4 text-xs leading-5 text-[#777064]">
-                    <span className="block font-semibold text-[#173C2A]">
+                  <figcaption className="mt-6 border-t border-[#CFC9BE] pt-5 text-xs leading-5 text-[#5C574D]">
+                    <span className="block text-xl font-semibold tracking-[-0.02em] text-[#173C2A]">
+                      {review.company}
+                    </span>
+                    <span className="mt-1 block font-medium text-[#4E493F]">
                       {review.name} · {review.role}
                     </span>
                     {"note" in review && review.note ? (
@@ -613,110 +568,81 @@ export default function EnterpriseTraining() {
               </p>
             </div>
 
-            <div className="mt-12 grid border-t border-[#CFC9BE] lg:grid-cols-3">
-              {t.offers.map((offer, index) => {
-                const Icon = offerIcons[index];
-                const isCustom = index === 2;
+            <div className="mt-12 border-t border-[#CFC9BE]">
+              {t.formats.map(format => {
+                const href =
+                  format.href === "training"
+                    ? mailto
+                    : format.href === "advisory"
+                      ? advisoryMailto
+                      : format.href;
+                const isExternal = href.startsWith("http");
                 return (
                   <article
-                    key={offer.number}
+                    key={format.number}
                     className={cn(
-                      "flex flex-col border-b border-[#CFC9BE] py-8 lg:px-7 lg:py-10",
-                      index > 0 && "lg:border-l",
-                      isCustom && "bg-[#173C2A] px-5 text-white sm:px-6 lg:px-8"
+                      "grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-3 border-b border-[#CFC9BE] px-5 py-7 xl:grid-cols-[2.5rem_minmax(0,0.9fr)_minmax(14rem,0.7fr)_minmax(0,1.15fr)_14.5rem] xl:items-start xl:gap-6 xl:px-6",
+                      format.featured && "bg-[#173C2A] text-white"
                     )}
                   >
-                    <div className="flex items-center justify-between gap-4">
-                      <span
+                    <span
+                      className={cn(
+                        "row-span-4 font-mono text-xs xl:row-span-1",
+                        format.featured ? "text-white/45" : "text-[#797268]"
+                      )}
+                    >
+                      {format.number}
+                    </span>
+                    <div>
+                      <p
                         className={cn(
-                          "flex h-10 w-10 items-center justify-center border",
-                          isCustom
-                            ? "border-white/25 text-[#A4D9B5]"
-                            : "border-[#CFC9BE] text-superlinear-deep"
+                          "font-mono text-[10px] leading-5",
+                          lang === "en"
+                            ? "uppercase tracking-[0.15em]"
+                            : "tracking-[0.08em]",
+                          format.featured
+                            ? "text-[#A4D9B5]"
+                            : "text-superlinear-deep"
                         )}
                       >
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span
-                        className={cn(
-                          "font-mono text-xs",
-                          isCustom ? "text-white/50" : "text-[#797268]"
-                        )}
-                      >
-                        {offer.number}
-                      </span>
+                        {format.label}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold leading-7 md:text-xl">
+                        {format.title}
+                      </h3>
                     </div>
                     <p
                       className={cn(
-                        "mt-7 font-mono text-[10px] leading-5",
-                        lang === "en"
-                          ? "uppercase tracking-[0.15em]"
-                          : "tracking-[0.08em]",
-                        isCustom ? "text-[#A4D9B5]" : "text-superlinear-deep"
+                        "text-xl font-semibold leading-7 tracking-[-0.02em] xl:whitespace-nowrap xl:text-right",
+                        format.featured ? "text-white" : "text-[#173C2A]"
                       )}
                     >
-                      {offer.label}
+                      {format.price}
                     </p>
-                    <h3 className="mt-3 text-2xl font-semibold leading-8">
-                      {offer.title}
-                    </h3>
-                    <div
-                      className={cn(
-                        "mt-5 space-y-1.5 text-xl font-semibold leading-8",
-                        isCustom ? "text-white" : "text-[#173C2A]"
-                      )}
-                    >
-                      {offer.priceLines.map(line => (
-                        <p key={line}>{line}</p>
-                      ))}
-                    </div>
                     <p
                       className={cn(
-                        "mt-5 text-sm leading-7",
-                        isCustom ? "text-white/70" : "text-[#5C574D]"
+                        "text-sm leading-7",
+                        format.featured ? "text-white/70" : "text-[#5C574D]"
                       )}
                     >
-                      {offer.fit}
+                      {format.detail}
                     </p>
-                    <ul className="mt-6 space-y-3">
-                      {offer.bullets.map(bullet => (
-                        <li
-                          key={bullet}
-                          className={cn(
-                            "flex gap-3 text-sm leading-6",
-                            isCustom ? "text-white/75" : "text-[#4E493F]"
-                          )}
-                        >
-                          <Check
-                            className={cn(
-                              "mt-1 h-4 w-4 shrink-0",
-                              isCustom ? "text-[#A4D9B5]" : "text-superlinear"
-                            )}
-                          />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
                     <a
-                      href={offer.href === "email" ? mailto : offer.href}
-                      target={offer.href === "email" ? undefined : "_blank"}
-                      rel={
-                        offer.href === "email"
-                          ? undefined
-                          : "noopener noreferrer"
-                      }
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
                       className={cn(
-                        "mt-auto inline-flex items-center gap-2 pt-8 text-sm font-semibold",
-                        isCustom
+                        "inline-flex max-w-full items-center gap-2 self-start text-sm font-semibold xl:justify-self-end xl:whitespace-nowrap",
+                        format.featured
                           ? "text-[#A4D9B5] hover:text-white"
                           : "text-superlinear-deep hover:text-superlinear"
                       )}
                     >
-                      {offer.cta}
-                      {offer.href === "email" ? (
-                        <ArrowRight className="h-4 w-4" />
+                      {format.cta}
+                      {isExternal ? (
+                        <ExternalLink className="h-4 w-4 shrink-0" />
                       ) : (
-                        <ExternalLink className="h-4 w-4" />
+                        <ArrowRight className="h-4 w-4 shrink-0" />
                       )}
                     </a>
                   </article>
@@ -724,9 +650,24 @@ export default function EnterpriseTraining() {
               })}
             </div>
 
-            <p className="mt-6 max-w-5xl text-xs leading-6 text-[#777064]">
+            <p className="mt-6 max-w-5xl text-xs leading-6 text-[#5C574D]">
               {t.pricingNote}
             </p>
+
+            <div className="mt-6 flex flex-col gap-3 border-l-2 border-superlinear pl-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+              <p className="max-w-4xl text-sm leading-7 text-[#5C574D]">
+                {t.individualNote}
+              </p>
+              <a
+                href="https://www.superlinear.academy/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+              >
+                {t.communityCta}
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
 
             <div className="mt-12 grid overflow-hidden border border-[#CFC9BE] bg-white lg:grid-cols-[0.74fr_1.26fr]">
               <figure className="border-b border-[#CFC9BE] bg-[#E8F2EC] p-5 lg:border-b-0 lg:border-r lg:p-7">
@@ -760,7 +701,7 @@ export default function EnterpriseTraining() {
                 <p className="mt-5 max-w-2xl text-sm leading-7 text-[#5C574D] md:text-base">
                   {t.pdfBody}
                 </p>
-                <p className="mt-5 font-mono text-[11px] tracking-[0.08em] text-[#777064]">
+                <p className="mt-5 font-mono text-[11px] tracking-[0.08em] text-[#5C574D]">
                   {t.pdfMeta}
                 </p>
                 <a
@@ -795,7 +736,16 @@ export default function EnterpriseTraining() {
                   {t.workEyebrow}
                 </p>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
-                  {t.workTitle}
+                  {lang === "zh" ? (
+                    <>
+                      完整定制，
+                      <span className="block whitespace-nowrap">
+                        从真实工作开始。
+                      </span>
+                    </>
+                  ) : (
+                    t.workTitle
+                  )}
                 </h2>
               </div>
               <p className="max-w-2xl text-base leading-8 text-white/70 md:text-lg">
@@ -803,7 +753,7 @@ export default function EnterpriseTraining() {
               </p>
             </div>
 
-            <div className="mt-12 grid border-t border-white/20 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-12 grid border-t border-white/20 md:grid-cols-3">
               {t.workSteps.map((step, index) => {
                 const Icon = workIcons[index];
                 return (
@@ -811,8 +761,7 @@ export default function EnterpriseTraining() {
                     key={step.title}
                     className={cn(
                       "border-b border-white/20 py-7 md:px-6 md:py-9",
-                      index % 2 === 1 && "md:border-l",
-                      index > 0 && "xl:border-l"
+                      index > 0 && "md:border-l"
                     )}
                   >
                     <div className="flex items-center justify-between gap-4">
@@ -867,7 +816,7 @@ export default function EnterpriseTraining() {
                   loading="lazy"
                 />
               </div>
-              <figcaption className="mt-3 text-xs leading-5 text-[#777064]">
+              <figcaption className="mt-3 text-xs leading-5 text-[#5C574D]">
                 {t.evidenceCaption}
               </figcaption>
             </figure>
@@ -891,17 +840,17 @@ export default function EnterpriseTraining() {
               </p>
 
               <div className="mt-8 border-l-2 border-superlinear pl-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#777064]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#5C574D]">
                   {t.publicWorkLabel}
                 </p>
                 <p className="mt-2 text-sm font-semibold leading-7 text-[#173C2A]">
                   {t.publicWorkNames}
                 </p>
-                <p className="mt-2 max-w-2xl text-xs leading-6 text-[#777064]">
+                <p className="mt-2 max-w-2xl text-xs leading-6 text-[#5C574D]">
                   {t.publicWorkNote}
                 </p>
               </div>
-              <p className="mt-6 text-sm leading-7 text-[#777064]">
+              <p className="mt-6 text-sm leading-7 text-[#5C574D]">
                 {t.faculty}
               </p>
               <Link
@@ -911,100 +860,6 @@ export default function EnterpriseTraining() {
                 {t.decksCta}
                 <ArrowRight className="h-4 w-4" />
               </Link>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="ways"
-          className="scroll-mt-[76px] bg-white py-10 text-[#191712] md:py-14"
-        >
-          <div className="container">
-            <div className="grid gap-7 border-y border-[#D8D3C9] py-8 lg:grid-cols-[0.72fr_0.28fr_1fr] lg:items-center lg:gap-10">
-              <div>
-                <p
-                  className={cn(
-                    "font-mono text-[11px] leading-5 text-superlinear-deep",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {t.advisoryEyebrow}
-                </p>
-                <h2 className="mt-3 text-2xl font-semibold leading-8 md:text-3xl">
-                  {t.advisoryTitle}
-                </h2>
-              </div>
-              <p className="text-3xl font-semibold tracking-[-0.03em] text-[#173C2A] md:text-4xl">
-                {t.advisoryPrice}
-              </p>
-              <div>
-                <p className="text-sm leading-7 text-[#5C574D]">
-                  {t.advisoryDetail}
-                </p>
-                <a
-                  href={advisoryMailto}
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
-                >
-                  {t.advisoryCta}
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-            <div className="mt-6 flex flex-col gap-3 border-l-2 border-superlinear pl-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-              <p className="max-w-4xl text-sm leading-7 text-[#5C574D]">
-                {t.individualNote}
-              </p>
-              <a
-                href="https://www.superlinear.academy/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
-              >
-                {t.communityCta}
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-t border-white/10 bg-[#0B0F1A] py-16 md:py-24">
-          <div className="container grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-20">
-            <div>
-              <p
-                className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-light",
-                  lang === "en"
-                    ? "uppercase tracking-[0.18em]"
-                    : "tracking-[0.1em]"
-                )}
-              >
-                {t.faqEyebrow}
-              </p>
-              <h2 className="mt-5 text-3xl font-semibold leading-[1.12] text-white md:text-4xl">
-                {t.faqTitle}
-              </h2>
-            </div>
-            <div className="border-t border-white/15">
-              {t.faqs.map((item, index) => (
-                <article
-                  key={item.q}
-                  className="grid gap-3 border-b border-white/15 py-7 sm:grid-cols-[2rem_1fr]"
-                >
-                  <span className="font-mono text-xs text-superlinear-light/70">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">
-                      {item.q}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-zinc-400">
-                      {item.a}
-                    </p>
-                  </div>
-                </article>
-              ))}
             </div>
           </div>
         </section>
@@ -1042,7 +897,7 @@ export default function EnterpriseTraining() {
               </a>
               <Link
                 href={withLanguage("/collab", lang)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-[#777064] transition hover:text-superlinear-deep"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-[#5C574D] transition hover:text-superlinear-deep"
               >
                 {t.collabCta}
                 <ArrowRight className="h-4 w-4" />

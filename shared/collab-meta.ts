@@ -44,7 +44,7 @@ export const ENTERPRISE_TRAINING_PAGE_META: Record<CollabLang, PageMeta> = {
   en: {
     title: "Enterprise AI training & custom programs · Yuzheng Sun",
     description:
-      "Bring AI Builders into your team by the seat, add course customization from $20,000, or commission a fully custom enterprise AI program from $100,000. Organization advisory sessions start at $2,000.",
+      "Enterprise AI training that changes how work gets done: AI Builders team seats and private cohorts, course customization from $20,000 plus tuition, and fully custom programs from $100,000.",
     canonical: "https://www.lizheng.ai/collab/enterprise",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
     lastModified: "2026-09-02",
@@ -52,7 +52,7 @@ export const ENTERPRISE_TRAINING_PAGE_META: Record<CollabLang, PageMeta> = {
   zh: {
     title: "企业AI培训与定制项目｜课代表立正",
     description:
-      "AI Builders团队按席位采购、30人专属班、$20,000起课程定制与$100,000起完整定制企业项目；团队问题梳理会与内部交流$2,000起。",
+      "让AI真正进入团队工作：AI Builders团队采购与专属班、学费之外$20,000起的课程定制，以及从真实岗位与流程开始的$100,000起完整企业项目。",
     canonical: "https://www.lizheng.ai/zh/collab/enterprise",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
     lastModified: "2026-09-02",

@@ -411,43 +411,6 @@ export function buildEnterpriseTrainingStructuredData(lang: SiteLang) {
     lang === "en"
       ? "Enterprise AI training and custom programs"
       : "企业AI培训与定制项目";
-  const faqItems =
-    lang === "en"
-      ? [
-          {
-            question: "Do we need a custom program?",
-            answer:
-              "Usually not. If AI Builders already solves the capability gap, buying seats is the cleanest option. Customization is useful only when company-specific material changes what people need to learn or practice.",
-          },
-          {
-            question:
-              "What is the difference between a private cohort and a fully custom program?",
-            answer:
-              "A private cohort keeps AI Builders as the curriculum and gives one organization its own dates. A fully custom program begins with research into the organization’s work and creates a new curriculum and delivery package for that problem.",
-          },
-          {
-            question: "What should the first email include?",
-            answer:
-              "Include the team size and roles, the result you want to change, what you have already tried, rough timing, the decision owner, and the budget range.",
-          },
-        ]
-      : [
-          {
-            question: "我们需要完整定制吗？",
-            answer:
-              "多数情况不需要。现有AI Builders课程已经能补上能力缺口，就直接采购席位。只有企业自己的材料确实改变了要学什么、练什么，定制才有意义。",
-          },
-          {
-            question: "专属班和完整定制有什么区别？",
-            answer:
-              "专属班仍以AI Builders为课纲，只为一家企业单独确定日期。完整定制会先研究企业的真实工作，再为这个问题重新设计课程与交付。",
-          },
-          {
-            question: "第一封邮件需要写什么？",
-            answer:
-              "请写明团队人数与岗位、希望改变的结果、已经试过什么、大概时间、决策人和预算范围。",
-          },
-        ];
   const courseReviews = [
     {
       name: "Shuyang",
@@ -520,6 +483,15 @@ export function buildEnterpriseTrainingStructuredData(lang: SiteLang) {
         itemListElement: [
           offer(
             lang === "en"
+              ? "Organization advisory session or internal conversation"
+              : "团队问题梳理会或内部交流",
+            "2000",
+            lang === "en"
+              ? "A focused organization session, starting at $2,000."
+              : "面向机构的一次聚焦咨询或内部交流，$2,000起。"
+          ),
+          offer(
+            lang === "en"
               ? "AI Builders team enrollment"
               : "AI Builders团队购课",
             "1999",
@@ -527,15 +499,6 @@ export function buildEnterpriseTrainingStructuredData(lang: SiteLang) {
               ? "Base price per learner before published team discounts."
               : "团队折扣前的单人基础价格。",
             "https://maven.com/superlinear/aibuilders"
-          ),
-          offer(
-            lang === "en"
-              ? "Organization advisory session or internal conversation"
-              : "团队问题梳理会或内部交流",
-            "2000",
-            lang === "en"
-              ? "A focused organization session, starting at $2,000."
-              : "面向机构的一次聚焦咨询或内部交流，$2,000起。"
           ),
           offer(
             lang === "en"
@@ -600,18 +563,6 @@ export function buildEnterpriseTrainingStructuredData(lang: SiteLang) {
               "@type": "Organization",
               name: review.company,
             },
-          },
-        })),
-      },
-      {
-        "@type": "FAQPage",
-        "@id": `${meta.canonical}#faq`,
-        mainEntity: faqItems.map(item => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.answer,
           },
         })),
       },

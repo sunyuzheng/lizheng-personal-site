@@ -142,3 +142,12 @@ export const AIE_SHANGHAI_DECK_PAGE_META: PageMeta = {
   ogImage: "https://www.lizheng.ai/decks/aie-shanghai-2026/assets/og.png",
   lastModified: "2026-08-24",
 };
+
+export const FAMILY_PARTY_CUE_CARDS_PAGE_META: PageMeta = {
+  title: "0905三校校友Family Party｜讲者提示卡",
+  description: "《AI时代的求职与创业》现场讲者提示卡。",
+  canonical: "https://www.lizheng.ai/decks/0905",
+  ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
+  lastModified: "2026-09-03",
+  robots: "noindex, nofollow",
+};

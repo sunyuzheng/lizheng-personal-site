@@ -19,6 +19,7 @@ import {
   GUEST_INVITATION_PAGE_META,
   DECKS_LANGUAGE_ALTERNATES,
   DECKS_PAGE_META,
+  FAMILY_PARTY_CUE_CARDS_PAGE_META,
   ZHENBENSHI_PAGE_META,
   languageAlternates,
   type PageMeta,
@@ -530,6 +531,13 @@ const staticPages: StaticPage[] = [
     imageAlt: "AIE Shanghai 2026合作会谈deck封面",
     imageWidth: 1280,
     imageHeight: 720,
+  },
+  {
+    route: "/decks/0905",
+    meta: FAMILY_PARTY_CUE_CARDS_PAGE_META,
+    lang: "zh",
+    jsonLd: null,
+    imageAlt: "课代表立正",
   },
   {
     route: "/en/decks",

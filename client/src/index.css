@@ -5,11 +5,11 @@
 
 @theme {
   --font-sans:
-    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
-    sans-serif;
+    "Geist Variable", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
   --font-mono:
-    "Geist Mono", "PingFang SC", "Microsoft YaHei", ui-monospace, "SF Mono",
-    Menlo, Monaco, monospace;
+    "Geist Mono Variable", "PingFang SC", "Microsoft YaHei", ui-monospace,
+    "SF Mono", Menlo, Monaco, monospace;
   --color-superlinear: #238343;
   --color-superlinear-deep: #155d30;
   /* Same hue as the community link green, darkened for accessible small text. */
@@ -25,6 +25,11 @@
   --color-superlinear-coral: #ff8b70;
   /* Accessible site tint for controlled dark surfaces; not the Circle online state. */
   --color-superlinear-on-dark: #a4d9b5;
+  /* Personal-site dark surfaces: deep edge, page canvas, then raised proof. */
+  --color-lizheng-deep: #070a12;
+  --color-lizheng-dark: #0b0f1a;
+  --color-lizheng-raised: #101521;
+  --color-lizheng-muted: #a1a1aa;
 }
 
 @theme inline {
@@ -68,11 +73,11 @@
 
 :root {
   --font-sans:
-    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
-    sans-serif;
+    "Geist Variable", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
   --font-display:
-    "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
-    sans-serif;
+    "Geist Variable", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
   --primary: #238343;
   --primary-foreground: #ffffff;
   --sidebar-primary: #238343;

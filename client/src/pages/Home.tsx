@@ -560,14 +560,17 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/90 backdrop-blur-xl">
+    <div className="min-h-screen overflow-x-clip bg-lizheng-dark text-zinc-100">
+      <nav className="sticky top-0 z-50 border-b border-white/10 bg-lizheng-dark/90 backdrop-blur-xl">
         <div className="container flex h-[72px] items-center justify-between">
-          <button onClick={() => scrollToSection("hero")} className="text-left">
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="min-h-11 text-left"
+          >
             <div className="text-base font-semibold text-white">
               {lang === "en" ? "Yuzheng Sun" : "立正"}
             </div>
-            <div className="text-xs text-zinc-500">
+            <div className="text-xs text-lizheng-muted">
               {lang === "en" ? "立正 · 课代表立正" : "孙煜征 · 课代表立正"}
             </div>
           </button>
@@ -631,10 +634,13 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3 xl:hidden">
-            <LanguageToggle size="sm" />
+            <LanguageToggle
+              size="sm"
+              className="[&>a]:flex [&>a]:min-h-11 [&>a]:min-w-11 [&>a]:items-center [&>a]:justify-center xl:[&>a]:min-h-0 xl:[&>a]:min-w-0"
+            />
             <button
               onClick={() => setMobileMenuOpen(value => !value)}
-              className="p-1 text-zinc-300"
+              className="flex size-11 items-center justify-center text-zinc-300"
               aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               {mobileMenuOpen ? (
@@ -648,7 +654,7 @@ export default function Home() {
 
         {mobileMenuOpen && (
           <div className="container border-t border-white/10 py-4 xl:hidden">
-            <div className="grid gap-3 text-sm">
+            <div className="grid text-sm">
               {[
                 ["belief", nav.belief],
                 ["story", nav.story],
@@ -658,7 +664,7 @@ export default function Home() {
                 <button
                   key={id}
                   onClick={() => closeAndScroll(id)}
-                  className="text-left text-zinc-300"
+                  className="flex min-h-11 items-center text-left text-zinc-300"
                 >
                   {label}
                 </button>
@@ -666,14 +672,14 @@ export default function Home() {
               <Link
                 href={withLanguage("/decks", lang)}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-zinc-300"
+                className="flex min-h-11 items-center text-zinc-300"
               >
                 {nav.decks}
               </Link>
               <Link
                 href={withLanguage("/book", lang)}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-zinc-300"
+                className="flex min-h-11 items-center text-zinc-300"
               >
                 {nav.books}
               </Link>
@@ -682,14 +688,14 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-zinc-300"
+                className="flex min-h-11 items-center text-zinc-300"
               >
                 {nav.shop}
               </a>
               <Link
                 href={withLanguage("/collab", lang)}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-zinc-300"
+                className="flex min-h-11 items-center text-zinc-300"
               >
                 {nav.collaborate}
               </Link>
@@ -697,7 +703,7 @@ export default function Home() {
                 href="https://www.superlinear.academy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-superlinear-on-dark"
+                className="flex min-h-11 items-center text-superlinear-on-dark"
               >
                 {nav.community} <span aria-hidden="true">→</span>
               </a>
@@ -709,7 +715,7 @@ export default function Home() {
       <main>
         <section
           id="hero"
-          className="scroll-mt-[72px] border-b border-white/10 bg-[#070A12]"
+          className="scroll-mt-[72px] border-b border-white/10 bg-lizheng-deep"
         >
           <div className="container grid gap-10 py-12 md:py-16 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14">
             <div className="max-w-2xl">
@@ -753,7 +759,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   onClick={() => scrollToSection("superlinear")}
-                  className="gap-1.5 bg-superlinear text-white hover:bg-superlinear-deep"
+                  className="min-h-11 gap-1.5 bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   {lang === "en" ? "See what I'm building" : "看我在做什么"}
                   <ArrowRight className="h-4 w-4" />
@@ -762,12 +768,12 @@ export default function Home() {
                   size="lg"
                   variant="outline"
                   onClick={() => scrollToSection("thinking")}
-                  className="border-white/25 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                  className="min-h-11 border-white/25 bg-white/[0.03] text-white hover:bg-white/[0.08]"
                 >
                   {lang === "en" ? "Read recent thinking" : "最近在想什么"}
                 </Button>
               </div>
-              <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-zinc-500">
+              <p className="mt-7 border-t border-white/10 pt-5 text-xs leading-6 text-lizheng-muted">
                 {lang === "en"
                   ? "PhD in Economics from Cornell · Amazon, Meta & Tencent · Early Statsig team, later acquired by OpenAI"
                   : "康奈尔经济学博士 · Amazon、Meta、腾讯经历 · OpenAI收购团队早期成员 · Superlinear Academy创始人"}
@@ -789,7 +795,7 @@ export default function Home() {
                   loading="eager"
                 />
               </div>
-              <figcaption className="mt-3 flex items-start justify-between gap-4 text-xs leading-5 text-zinc-500">
+              <figcaption className="mt-3 flex items-start justify-between gap-4 text-xs leading-5 text-lizheng-muted">
                 <span>
                   {lang === "en"
                     ? "In conversation with Ben Gilbert and David Rosenthal of Acquired"
@@ -797,13 +803,13 @@ export default function Home() {
                 </span>
                 <span className="shrink-0">Significance Summit</span>
               </figcaption>
-              <div className="mt-5 flex gap-4 border-t border-white/10 pt-4">
+              <div className="mt-5 flex gap-1 border-t border-white/10 pt-2">
                 <a
                   href="https://www.youtube.com/@kedaibiao"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
-                  className="text-zinc-500 transition hover:text-white"
+                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
                 >
                   <Youtube className="h-5 w-5" />
                 </a>
@@ -812,7 +818,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="LinkedIn"
-                  className="text-zinc-500 transition hover:text-white"
+                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
                 >
                   <Linkedin className="h-5 w-5" />
                 </a>
@@ -821,7 +827,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Substack"
-                  className="text-zinc-500 transition hover:text-white"
+                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
                 >
                   <Rss className="h-5 w-5" />
                 </a>
@@ -830,7 +836,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub"
-                  className="text-zinc-500 transition hover:text-white"
+                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
                 >
                   <Github className="h-5 w-5" />
                 </a>
@@ -947,7 +953,9 @@ export default function Home() {
                       : "tracking-[0.1em]"
                   )}
                 >
-                  {lang === "en" ? "LATEST THINKING" : "最近在写"}
+                  {lang === "en"
+                    ? "KNOWLEDGE BANK · LATEST THINKING"
+                    : "KNOWLEDGE BANK · 最近在写"}
                 </p>
                 <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
                   {lang === "en"
@@ -1002,7 +1010,7 @@ export default function Home() {
 
         <section
           id="story"
-          className="scroll-mt-[72px] bg-[#0B0F1A] py-16 md:py-24"
+          className="scroll-mt-[72px] bg-lizheng-dark py-16 md:py-24"
         >
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end lg:gap-20">
@@ -1031,7 +1039,10 @@ export default function Home() {
 
             <div className="mt-12 grid gap-px bg-white/10 md:grid-cols-2">
               {careerChapters[lang].map(item => (
-                <article key={item.marker} className="bg-[#101521] p-6 md:p-8">
+                <article
+                  key={item.marker}
+                  className="bg-lizheng-raised p-6 md:p-8"
+                >
                   <p
                     className={cn(
                       "font-mono text-[11px] leading-5 text-superlinear-on-dark",
@@ -1063,7 +1074,7 @@ export default function Home() {
                 <div className="mt-5 space-y-5 border-l border-superlinear/30 pl-4">
                   {featuredJudgment[lang].timeline.map(item => (
                     <div key={item.date}>
-                      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+                      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-lizheng-muted">
                         {item.date}
                       </p>
                       <p className="mt-1.5 max-w-xs text-sm font-medium leading-6 text-zinc-300">
@@ -1076,7 +1087,7 @@ export default function Home() {
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-superlinear-on-dark"
+                            className="flex min-h-11 w-fit items-center gap-1.5 text-xs leading-5 text-lizheng-muted transition hover:text-superlinear-on-dark md:min-h-0 md:items-start"
                           >
                             <ExternalLink className="mt-1 h-3 w-3 shrink-0" />
                             <span>{link.label}</span>
@@ -1098,19 +1109,45 @@ export default function Home() {
                   href={featuredJudgment[lang].href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
+                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white md:mt-5 md:min-h-0"
                 >
                   {featuredJudgment[lang].cta}
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             </article>
+
+            <aside
+              aria-label={
+                lang === "en"
+                  ? "Vijaye Raji on Yuzheng Sun's product judgment"
+                  : "Vijaye Raji对立正产品判断的评价"
+              }
+              className="mt-12 grid gap-6 border border-white/10 bg-lizheng-raised p-6 md:grid-cols-[auto_1fr] md:items-center md:gap-10 md:p-8"
+            >
+              <Avatar className="h-14 w-14 border border-white/15 md:h-16 md:w-16">
+                <AvatarImage src="/avatars/vijaye-raji.jpg" alt="Vijaye Raji" />
+                <AvatarFallback>VR</AvatarFallback>
+              </Avatar>
+              <blockquote>
+                <p className="max-w-5xl text-lg font-medium leading-8 text-white md:text-xl md:leading-9">
+                  “{endorsements[lang][0].quote}”
+                </p>
+                <footer className="mt-4 text-sm leading-6 text-zinc-400">
+                  <span className="font-semibold text-zinc-200">
+                    {endorsements[lang][0].name}
+                  </span>
+                  <span className="mx-2 text-lizheng-muted">·</span>
+                  {endorsements[lang][0].role}
+                </footer>
+              </blockquote>
+            </aside>
           </div>
         </section>
 
         <section
           id="superlinear"
-          className="scroll-mt-[72px] bg-white py-16 text-[#171611] md:py-24"
+          className="scroll-mt-[72px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
         >
           <div className="container">
             <div className="grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-end lg:gap-20">
@@ -1200,7 +1237,7 @@ export default function Home() {
                     {item.href.startsWith("/") ? (
                       <Link
                         href={withLanguage(item.href, lang)}
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                        className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep lg:mt-4 lg:min-h-0"
                       >
                         {item.cta}
                         <ArrowRight className="h-4 w-4" />
@@ -1210,7 +1247,7 @@ export default function Home() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                        className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep lg:mt-4 lg:min-h-0"
                       >
                         {item.cta}
                         <ArrowRight className="h-4 w-4" />
@@ -1221,7 +1258,7 @@ export default function Home() {
               ))}
             </div>
 
-            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-superlinear-canvas xl:grid xl:grid-cols-[0.88fr_1.12fr]">
+            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-superlinear-surface xl:grid xl:grid-cols-[0.88fr_1.12fr]">
               <figure className="flex flex-col border-b border-[#CFC9BE] bg-white xl:border-b-0 xl:border-r">
                 <div className="overflow-hidden">
                   <img
@@ -1285,7 +1322,7 @@ export default function Home() {
                     </p>
                     <Link
                       href={withLanguage("/collab/enterprise", lang)}
-                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                      className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep sm:mt-5 sm:min-h-0"
                     >
                       {enterpriseWork[lang].cta}
                       <ArrowRight className="h-4 w-4" />
@@ -1309,33 +1346,50 @@ export default function Home() {
                 </div>
               </div>
             </article>
-          </div>
-        </section>
 
-        <section className="border-y border-white/10 bg-[#111722] py-12 md:py-16">
-          <div className="container grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-10">
-            <Avatar className="h-16 w-16 border border-white/15 md:h-20 md:w-20">
-              <AvatarImage src="/avatars/vijaye-raji.jpg" alt="Vijaye Raji" />
-              <AvatarFallback>VR</AvatarFallback>
-            </Avatar>
-            <blockquote>
-              <p className="max-w-5xl text-xl font-medium leading-8 text-white md:text-2xl md:leading-10">
-                “{endorsements[lang][0].quote}”
-              </p>
-              <footer className="mt-4 text-sm text-zinc-400">
-                <span className="font-semibold text-zinc-200">
-                  {endorsements[lang][0].name}
-                </span>
-                <span className="mx-2 text-zinc-600">·</span>
-                {endorsements[lang][0].role}
-              </footer>
-            </blockquote>
+            <div className="mt-14 border-t border-[#CFC9BE] pt-10">
+              <SectionLabel>
+                {lang === "en"
+                  ? "FROM PEOPLE WHO KNOW THE WORK"
+                  : "来自了解这件事的人"}
+              </SectionLabel>
+              <div className="mt-6 grid border-y border-[#CFC9BE] lg:grid-cols-2">
+                {endorsements[lang].slice(1).map((item, index) => (
+                  <blockquote
+                    key={item.name}
+                    className={cn(
+                      "py-8 lg:px-8",
+                      index > 0 &&
+                        "border-t border-[#CFC9BE] lg:border-l lg:border-t-0"
+                    )}
+                  >
+                    <p className="text-lg leading-8 text-[#302C25]">
+                      “{item.quote}”
+                    </p>
+                    <footer className="mt-6 flex items-center gap-3">
+                      <Avatar className="h-10 w-10 border border-[#CFC9BE]">
+                        <AvatarImage src={item.avatar} alt={item.name} />
+                        <AvatarFallback>{item.initials}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <div className="text-sm font-semibold text-superlinear-ink">
+                          {item.name}
+                        </div>
+                        <div className="mt-0.5 text-xs leading-5 text-[#5C574D]">
+                          {item.role}
+                        </div>
+                      </div>
+                    </footer>
+                  </blockquote>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         <section
           id="conversations"
-          className="scroll-mt-[72px] bg-[#0B0F1A] py-16 md:py-24"
+          className="scroll-mt-[72px] bg-lizheng-dark py-16 md:py-24"
         >
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
@@ -1355,7 +1409,7 @@ export default function Home() {
                     ? "I talk with them about technology, products, and companies, but I care most about the moments that changed an important choice: what they saw, why they were willing to bet, and which judgments reality later forced them to revise. These conversations keep changing my own standard for good work."
                     : "我和他们谈技术、产品和公司，更关心那些改变重要选择的时刻：当时看见了什么，为什么愿意下注，后来又有哪些判断被现实改写。这些对话，也不断改变我对好作品的判断。"}
                 </p>
-                <p className="text-sm leading-7 text-zinc-500">
+                <p className="text-sm leading-7 text-lizheng-muted">
                   {lang === "en"
                     ? "The work reaches a 400K+ audience across YouTube, Bilibili, and Xiaohongshu, including engineers, researchers, founders, investors, and operators across China and the U.S."
                     : "这些内容通过YouTube、B站和小红书触达400K+关注者，其中包括大量中美工程师、研究者、创始人、投资人与管理者。"}
@@ -1376,15 +1430,15 @@ export default function Home() {
                       width={480}
                       height={270}
                     />
-                    <div className="min-h-28 bg-[#101521] p-3 sm:p-5">
+                    <div className="min-h-28 bg-lizheng-raised p-3 sm:p-5">
                       <div className="flex items-start justify-between gap-4">
                         <h3 className="text-sm font-semibold leading-5 text-white sm:text-lg">
                           {guest.name}
                         </h3>
                         {external ? (
-                          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-zinc-600" />
+                          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-zinc-500" />
                         ) : (
-                          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-zinc-600" />
+                          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-zinc-500" />
                         )}
                       </div>
                       <p className="mt-2 text-[11px] leading-4 text-zinc-400 sm:text-xs sm:leading-5">
@@ -1400,7 +1454,7 @@ export default function Home() {
                     href={guest.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group block bg-[#0B0F1A]"
+                    className="group block bg-lizheng-dark"
                   >
                     {content}
                   </a>
@@ -1408,7 +1462,7 @@ export default function Home() {
                   <Link
                     key={guest.name}
                     href={withLanguage(guest.href, lang)}
-                    className="group block bg-[#0B0F1A]"
+                    className="group block bg-lizheng-dark"
                   >
                     {content}
                   </Link>
@@ -1420,7 +1474,7 @@ export default function Home() {
               <Button
                 asChild
                 variant="outline"
-                className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                className="min-h-11 border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
               >
                 <Link href={withLanguage("/guests", lang)}>
                   {lang === "en"
@@ -1458,7 +1512,7 @@ export default function Home() {
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                   <Button
                     asChild
-                    className="bg-[#191712] text-white hover:bg-[#302C25]"
+                    className="min-h-11 bg-[#191712] text-white hover:bg-[#302C25]"
                   >
                     <Link href={withLanguage("/book", lang)}>
                       <BookOpen className="h-4 w-4" />
@@ -1468,7 +1522,7 @@ export default function Home() {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-[#BDB7AB] bg-transparent text-superlinear-ink hover:bg-[#E9E5DC]"
+                    className="min-h-11 border-[#BDB7AB] bg-transparent text-superlinear-ink hover:bg-[#E9E5DC]"
                   >
                     <a
                       href="https://github.com/sunyuzheng/lizheng-open-context"
@@ -1516,46 +1570,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#101521] py-14 md:py-20">
-          <div className="container">
-            <SectionLabel dark>
-              {lang === "en"
-                ? "FROM PEOPLE WHO KNOW THE WORK"
-                : "来自了解这件事的人"}
-            </SectionLabel>
-            <div className="mt-8 grid border-t border-white/10 lg:grid-cols-2">
-              {endorsements[lang].slice(1).map((item, index) => (
-                <blockquote
-                  key={item.name}
-                  className={cn(
-                    "border-b border-white/10 py-8 lg:px-8",
-                    index > 0 && "lg:border-l"
-                  )}
-                >
-                  <p className="text-lg leading-8 text-zinc-200">
-                    “{item.quote}”
-                  </p>
-                  <footer className="mt-6 flex items-center gap-3">
-                    <Avatar className="h-10 w-10 border border-white/10">
-                      <AvatarImage src={item.avatar} alt={item.name} />
-                      <AvatarFallback>{item.initials}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="text-sm font-semibold text-white">
-                        {item.name}
-                      </div>
-                      <div className="mt-0.5 text-xs leading-5 text-zinc-500">
-                        {item.role}
-                      </div>
-                    </div>
-                  </footer>
-                </blockquote>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-[#0B0F1A] py-16 md:py-24">
+        <section className="bg-lizheng-dark py-16 md:py-24">
           <div className="container border-y border-white/10 py-12 md:py-16">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
               <div>
@@ -1583,7 +1598,7 @@ export default function Home() {
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
                 <Button
                   asChild
-                  className="bg-superlinear text-white hover:bg-superlinear-deep"
+                  className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   <a
                     href="https://www.superlinear.academy"
@@ -1599,7 +1614,7 @@ export default function Home() {
                 <Button
                   asChild
                   variant="outline"
-                  className="border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                  className="min-h-11 border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
                 >
                   <a
                     href="https://ai-builders.com"
@@ -1611,7 +1626,7 @@ export default function Home() {
                 </Button>
                 <Link
                   href={withLanguage("/collab", lang)}
-                  className="inline-flex items-center justify-center gap-2 py-2 text-sm font-semibold text-zinc-500 transition hover:text-white"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 text-sm font-semibold text-lizheng-muted transition hover:text-white"
                 >
                   <Handshake className="h-4 w-4" />
                   {lang === "en" ? "Collaborate with me" : "与我合作"}
@@ -1622,13 +1637,13 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-[#080B12] py-10">
+      <footer className="border-t border-white/10 bg-lizheng-deep py-10">
         <div className="container flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="text-base font-semibold text-white">
               Yuzheng Sun · 立正
             </div>
-            <p className="mt-2 max-w-lg text-sm leading-6 text-zinc-500">
+            <p className="mt-2 max-w-lg text-sm leading-6 text-lizheng-muted">
               {lang === "en"
                 ? "PhD in Economics from Cornell, author, and founder of Superlinear Academy. Make what lasts."
                 : "康奈尔大学经济学博士、作者，Superlinear Academy创始人。学点真本事，做点真东西。"}
@@ -1636,7 +1651,7 @@ export default function Home() {
             <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link
                 href={withLanguage("/about", lang)}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
+                className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white md:min-h-0"
               >
                 {lang === "en" ? "Factual profile" : "关于课代表立正"}
                 <ArrowRight className="h-4 w-4" />
@@ -1645,20 +1660,20 @@ export default function Home() {
                 href="https://shop.lizheng.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-on-dark"
+                className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-on-dark md:min-h-0"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {nav.shop}
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-5 text-zinc-500">
+          <div className="flex items-center gap-1 text-lizheng-muted">
             <a
               href="https://www.youtube.com/@kedaibiao"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="YouTube"
-              className="transition hover:text-white"
+              className="flex size-11 items-center justify-center transition hover:text-white"
             >
               <Youtube className="h-5 w-5" />
             </a>
@@ -1667,7 +1682,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="transition hover:text-white"
+              className="flex size-11 items-center justify-center transition hover:text-white"
             >
               <Linkedin className="h-5 w-5" />
             </a>
@@ -1676,7 +1691,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Substack"
-              className="transition hover:text-white"
+              className="flex size-11 items-center justify-center transition hover:text-white"
             >
               <Rss className="h-5 w-5" />
             </a>
@@ -1685,20 +1700,20 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              className="transition hover:text-white"
+              className="flex size-11 items-center justify-center transition hover:text-white"
             >
               <Github className="h-5 w-5" />
             </a>
             <a
               href="mailto:yz@superlinear.academy"
               aria-label="Email"
-              className="transition hover:text-white"
+              className="flex size-11 items-center justify-center transition hover:text-white"
             >
               <Mail className="h-5 w-5" />
             </a>
           </div>
         </div>
-        <div className="container mt-8 border-t border-white/10 pt-6 text-xs text-zinc-600">
+        <div className="container mt-8 border-t border-white/10 pt-6 text-xs text-lizheng-muted">
           © {new Date().getFullYear()} Yuzheng Sun. All rights reserved.
         </div>
       </footer>

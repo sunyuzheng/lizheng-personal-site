@@ -144,7 +144,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
       <div className="container py-12 md:py-16">
         <Link
           href={withLanguage("/guests", lang)}
-          className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-superlinear-on-dark"
+          className="mb-3 inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-superlinear-on-dark md:mb-6 md:min-h-0"
         >
           <ArrowLeft className="h-4 w-4" />
           {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
@@ -227,7 +227,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
                 asChild
-                className="bg-superlinear text-white hover:bg-superlinear-deep"
+                className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
               >
                 <a
                   href={guest.primary_episode.url}
@@ -241,7 +241,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <Button
                 asChild
                 variant="outline"
-                className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
               >
                 <a
                   href={guest.primary_url}
@@ -259,6 +259,11 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             href={guest.primary_episode.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={
+              lang === "en"
+                ? `Watch featured interview: ${guest.primary_episode.title}`
+                : `观看精选访谈：${guest.primary_episode.title}`
+            }
             className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5"
           >
             <img
@@ -266,8 +271,16 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               alt={guest.primary_episode.title}
               className="aspect-video h-full w-full object-cover transition duration-300 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6">
+            <div className="absolute inset-0 bg-black/10 sm:bg-gradient-to-t sm:from-black/75 sm:via-black/10 sm:to-transparent" />
+            <div className="absolute left-4 top-4 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white sm:hidden">
+              {lang === "en" ? "Featured" : "精选视频"}
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center sm:hidden">
+              <span className="flex size-12 items-center justify-center rounded-full bg-superlinear/95 text-white shadow-lg">
+                <Play className="h-5 w-5 fill-current" />
+              </span>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 hidden p-6 sm:block">
               <div className="mb-3 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
                 {lang === "en" ? "Featured" : "精选视频"}
               </div>

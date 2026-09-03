@@ -497,7 +497,7 @@ function SectionLabel({
       className={cn(
         "font-mono text-xs leading-5",
         lang === "en" ? "uppercase tracking-[0.2em]" : "tracking-[0.1em]",
-        dark ? "text-superlinear-light" : "text-superlinear-deep"
+        dark ? "text-superlinear-on-dark" : "text-superlinear-deep"
       )}
     >
       {children}
@@ -613,7 +613,7 @@ export default function Home() {
             >
               {nav.collaborate}
             </Link>
-            <LanguageToggle size="sm" tone="superlinear" />
+            <LanguageToggle size="sm" />
             <Button
               asChild
               size="sm"
@@ -631,7 +631,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-3 xl:hidden">
-            <LanguageToggle size="sm" tone="superlinear" />
+            <LanguageToggle size="sm" />
             <button
               onClick={() => setMobileMenuOpen(value => !value)}
               className="p-1 text-zinc-300"
@@ -697,7 +697,7 @@ export default function Home() {
                 href="https://www.superlinear.academy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-superlinear-light"
+                className="text-superlinear-on-dark"
               >
                 {nav.community} <span aria-hidden="true">→</span>
               </a>
@@ -715,7 +715,7 @@ export default function Home() {
             <div className="max-w-2xl">
               <p
                 className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-light",
+                  "font-mono text-xs leading-5 text-superlinear-on-dark",
                   lang === "en"
                     ? "uppercase tracking-[0.2em]"
                     : "tracking-[0.1em]"
@@ -841,7 +841,7 @@ export default function Home() {
 
         <section
           id="belief"
-          className="scroll-mt-[72px] bg-[#F2F0EA] py-16 text-[#191712] md:py-24"
+          className="scroll-mt-[72px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
         >
           <div className="container">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
@@ -941,7 +941,7 @@ export default function Home() {
               <div>
                 <p
                   className={cn(
-                    "font-mono text-xs leading-5 text-[#A4D9B5]",
+                    "font-mono text-xs leading-5 text-superlinear-on-dark",
                     lang === "en"
                       ? "uppercase tracking-[0.2em]"
                       : "tracking-[0.1em]"
@@ -976,7 +976,7 @@ export default function Home() {
                 >
                   <p
                     className={cn(
-                      "font-mono text-[11px] leading-5 text-[#A4D9B5]",
+                      "font-mono text-[11px] leading-5 text-superlinear-on-dark",
                       lang === "en"
                         ? "uppercase tracking-[0.16em]"
                         : "tracking-[0.08em]"
@@ -990,7 +990,7 @@ export default function Home() {
                   <p className="mt-3 text-sm leading-7 text-white/65">
                     {item.detail}
                   </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#A4D9B5] transition group-hover:text-white">
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition group-hover:text-white">
                     {item.cta}
                     <ArrowRight className="h-4 w-4" />
                   </span>
@@ -1034,7 +1034,7 @@ export default function Home() {
                 <article key={item.marker} className="bg-[#101521] p-6 md:p-8">
                   <p
                     className={cn(
-                      "font-mono text-[11px] leading-5 text-superlinear-light",
+                      "font-mono text-[11px] leading-5 text-superlinear-on-dark",
                       lang === "en"
                         ? "uppercase tracking-[0.18em]"
                         : "tracking-[0.1em]"
@@ -1076,7 +1076,7 @@ export default function Home() {
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-superlinear-light"
+                            className="flex w-fit items-start gap-1.5 text-xs leading-5 text-zinc-500 transition hover:text-superlinear-on-dark"
                           >
                             <ExternalLink className="mt-1 h-3 w-3 shrink-0" />
                             <span>{link.label}</span>
@@ -1098,7 +1098,7 @@ export default function Home() {
                   href={featuredJudgment[lang].href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-light transition hover:text-white"
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
                 >
                   {featuredJudgment[lang].cta}
                   <ArrowRight className="h-4 w-4" />
@@ -1136,7 +1136,7 @@ export default function Home() {
               </div>
             </div>
 
-            <figure className="mt-12 grid overflow-hidden border border-[#DDD9D0] bg-[#F2F0EA] md:grid-cols-[1.38fr_0.62fr] md:items-stretch">
+            <figure className="mt-12 grid overflow-hidden border border-[#DDD9D0] bg-superlinear-canvas md:grid-cols-[1.38fr_0.62fr] md:items-stretch">
               <div className="overflow-hidden bg-[#E9E4DA]">
                 <img
                   src="/superlinear/yuzheng-yage-conversation.webp"
@@ -1200,7 +1200,7 @@ export default function Home() {
                     {item.href.startsWith("/") ? (
                       <Link
                         href={withLanguage(item.href, lang)}
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                       >
                         {item.cta}
                         <ArrowRight className="h-4 w-4" />
@@ -1210,7 +1210,7 @@ export default function Home() {
                         href={item.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                       >
                         {item.cta}
                         <ArrowRight className="h-4 w-4" />
@@ -1221,7 +1221,7 @@ export default function Home() {
               ))}
             </div>
 
-            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-[#F2F0EA] xl:grid xl:grid-cols-[0.88fr_1.12fr]">
+            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-superlinear-canvas xl:grid xl:grid-cols-[0.88fr_1.12fr]">
               <figure className="flex flex-col border-b border-[#CFC9BE] bg-white xl:border-b-0 xl:border-r">
                 <div className="overflow-hidden">
                   <img
@@ -1285,7 +1285,7 @@ export default function Home() {
                     </p>
                     <Link
                       href={withLanguage("/collab/enterprise", lang)}
-                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                     >
                       {enterpriseWork[lang].cta}
                       <ArrowRight className="h-4 w-4" />
@@ -1435,7 +1435,7 @@ export default function Home() {
 
         <section
           id="books"
-          className="scroll-mt-[72px] bg-[#F2F0EA] py-16 text-[#191712] md:py-24"
+          className="scroll-mt-[72px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
         >
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-20">
@@ -1468,7 +1468,7 @@ export default function Home() {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-[#BDB7AB] bg-transparent text-[#191712] hover:bg-[#E9E5DC]"
+                    className="border-[#BDB7AB] bg-transparent text-superlinear-ink hover:bg-[#E9E5DC]"
                   >
                     <a
                       href="https://github.com/sunyuzheng/lizheng-open-context"
@@ -1561,7 +1561,7 @@ export default function Home() {
               <div>
                 <p
                   className={cn(
-                    "font-mono text-xs leading-5 text-superlinear-light",
+                    "font-mono text-xs leading-5 text-superlinear-on-dark",
                     lang === "en"
                       ? "uppercase tracking-[0.2em]"
                       : "tracking-[0.1em]"
@@ -1636,7 +1636,7 @@ export default function Home() {
             <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
               <Link
                 href={withLanguage("/about", lang)}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-light transition hover:text-white"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
               >
                 {lang === "en" ? "Factual profile" : "关于课代表立正"}
                 <ArrowRight className="h-4 w-4" />
@@ -1645,7 +1645,7 @@ export default function Home() {
                 href="https://shop.lizheng.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-light"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-on-dark"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {nav.shop}

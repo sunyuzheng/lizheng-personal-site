@@ -224,17 +224,16 @@ export default function Collab() {
   );
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,191,36,0.08)_0%,rgba(11,15,26,0)_26rem)]" />
+    <div className="relative min-h-screen overflow-x-clip bg-superlinear-canvas text-superlinear-ink">
       <CollabHeader backHref="/" section={{ en: "Collaborate", zh: "合作" }} />
 
       <main className="relative z-10">
         <section className="container py-16 md:py-24">
           <div className="max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
               {t.eyebrow}
             </p>
-            <h1 className="mt-5 max-w-3xl text-[34px] font-semibold leading-[1.08] text-white md:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-[34px] font-semibold leading-[1.08] text-superlinear-ink md:text-6xl">
               {lang === "zh" ? (
                 <>
                   把AI的变化，
@@ -245,17 +244,17 @@ export default function Collab() {
                 t.h1
               )}
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">
+            <p className="mt-6 max-w-3xl text-lg leading-8 text-superlinear-body">
               {t.intro}
             </p>
-            <p className="mt-6 max-w-3xl border-l border-amber-300/50 pl-4 text-xs font-medium leading-6 text-zinc-400">
+            <p className="mt-6 max-w-3xl border-l border-superlinear/60 pl-4 text-xs font-medium leading-6 text-superlinear-body/80">
               {t.proofLine}
             </p>
           </div>
 
           <Link
             href={withLanguage("/collab/creators", lang)}
-            className="group mt-12 grid overflow-hidden rounded-2xl border border-amber-300/25 bg-amber-300/[0.06] transition hover:border-amber-300/50 md:grid-cols-[0.68fr_1fr]"
+            className="group mt-12 grid overflow-hidden rounded-2xl border border-superlinear/35 bg-superlinear-deep text-white transition hover:border-superlinear md:grid-cols-[0.68fr_1fr]"
           >
             <div className="relative min-h-56 overflow-hidden md:min-h-full">
               <img
@@ -269,10 +268,10 @@ export default function Collab() {
                 width={2400}
                 height={1600}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F1A]/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-[#0B0F1A]/60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-superlinear-deep/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-superlinear-deep/60" />
             </div>
             <div className="p-6 md:p-10">
-              <div className="flex items-center gap-2 text-amber-300">
+              <div className="flex items-center gap-2 text-superlinear-on-dark">
                 <Mic2 className="h-4 w-4" />
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em]">
                   {t.creatorLabel}
@@ -281,10 +280,10 @@ export default function Collab() {
               <h2 className="mt-4 text-2xl font-semibold text-white md:text-3xl">
                 {t.creatorTitle}
               </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-300">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">
                 {t.creatorDetail}
               </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-amber-300">
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark">
                 {t.creatorCta}
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </span>
@@ -292,10 +291,10 @@ export default function Collab() {
           </Link>
 
           <div className="mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
               {t.workEyebrow}
             </p>
-            <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-white md:text-4xl">
+            <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-superlinear-ink md:text-4xl">
               {t.workTitle}
             </h2>
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
@@ -304,36 +303,36 @@ export default function Collab() {
                 return (
                   <article
                     key={path.number}
-                    className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.035] p-6 md:p-7"
+                    className="flex flex-col rounded-2xl border border-superlinear-cream bg-superlinear-surface p-6 md:p-7"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="flex h-10 w-10 items-center justify-center border border-white/15 text-amber-300">
+                      <span className="flex h-10 w-10 items-center justify-center border border-superlinear/20 bg-superlinear-pale text-superlinear-link">
                         <Icon className="h-5 w-5" />
                       </span>
-                      <span className="font-mono text-xs text-zinc-400">
+                      <span className="font-mono text-xs text-superlinear-body/60">
                         {path.number}
                       </span>
                     </div>
-                    <h3 className="mt-6 text-xl font-semibold text-white">
+                    <h3 className="mt-6 text-xl font-semibold text-superlinear-ink">
                       {path.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-7 text-zinc-400">
+                    <p className="mt-3 text-sm leading-7 text-superlinear-body/80">
                       {path.detail}
                     </p>
-                    <p className="mt-4 text-sm leading-7 text-zinc-300">
+                    <p className="mt-4 text-sm leading-7 text-superlinear-body">
                       {path.fit}
                     </p>
                     {"action" in path && path.action ? (
                       <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-6">
                         <Link
                           href={withLanguage(path.action.href, lang)}
-                          className="text-sm font-semibold text-amber-300 transition hover:text-amber-200"
+                          className="text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                         >
                           {path.action.label} <span aria-hidden="true">→</span>
                         </Link>
                         <Link
                           href={withLanguage(path.action.secondaryHref, lang)}
-                          className="text-sm font-semibold text-zinc-400 transition hover:text-zinc-200"
+                          className="text-sm font-semibold text-superlinear-body/75 transition hover:text-superlinear-ink"
                         >
                           {path.action.secondaryLabel}{" "}
                           <span aria-hidden="true">→</span>
@@ -346,38 +345,38 @@ export default function Collab() {
             </div>
           </div>
 
-          <div className="mt-8 rounded-2xl border border-amber-300/20 bg-amber-300/[0.05] p-6 md:p-8">
-            <h3 className="text-lg font-semibold text-white">
+          <div className="mt-8 rounded-2xl border border-superlinear/20 bg-superlinear-pale p-6 md:p-8">
+            <h3 className="text-lg font-semibold text-superlinear-ink">
               {t.budgetTitle}
             </h3>
-            <p className="mt-2 max-w-4xl text-sm leading-7 text-zinc-300">
+            <p className="mt-2 max-w-4xl text-sm leading-7 text-superlinear-body">
               {t.budgetDetail}
             </p>
           </div>
 
           <div className="mt-20 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
                 {t.principlesEyebrow}
               </p>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight text-white">
+              <h2 className="mt-4 text-3xl font-semibold leading-tight text-superlinear-ink">
                 {t.principlesTitle}
               </h2>
             </div>
-            <div className="border-t border-white/10">
+            <div className="border-t border-superlinear-cream">
               {t.principles.map((principle, index) => (
                 <div
                   key={principle.title}
-                  className="grid gap-3 border-b border-white/10 py-6 sm:grid-cols-[2rem_1fr]"
+                  className="grid gap-3 border-b border-superlinear-cream py-6 sm:grid-cols-[2rem_1fr]"
                 >
-                  <span className="font-mono text-xs text-zinc-400">
+                  <span className="font-mono text-xs text-superlinear-body/60">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="font-semibold text-white">
+                    <h3 className="font-semibold text-superlinear-ink">
                       {principle.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-7 text-zinc-400">
+                    <p className="mt-2 text-sm leading-7 text-superlinear-body/80">
                       {principle.detail}
                     </p>
                   </div>
@@ -386,28 +385,28 @@ export default function Collab() {
             </div>
           </div>
 
-          <section className="mt-20 rounded-2xl border border-white/10 bg-white/[0.045] p-6 md:p-10">
+          <section className="mt-20 rounded-2xl border border-superlinear bg-superlinear p-6 text-white md:p-10">
             <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/75">
                   {t.contactEyebrow}
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold text-white">
                   {t.contactTitle}
                 </h2>
-                <p className="mt-4 text-sm leading-7 text-zinc-400">
+                <p className="mt-4 text-sm leading-7 text-white/75">
                   {t.contactClose}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-zinc-300">{t.contactIntro}</p>
+                <p className="text-sm text-white/85">{t.contactIntro}</p>
                 <ol className="mt-4 space-y-3">
                   {t.contactItems.map((item, index) => (
                     <li key={item} className="flex gap-3 text-sm leading-7">
-                      <span className="font-mono text-amber-300/90">
+                      <span className="font-mono text-superlinear-on-dark">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-zinc-300">{item}</span>
+                      <span className="text-white/85">{item}</span>
                     </li>
                   ))}
                 </ol>
@@ -415,7 +414,7 @@ export default function Collab() {
                   href={buildMailto(lang)}
                   className={cn(
                     buttonVariants(),
-                    "mt-7 bg-amber-400 text-[#211300] hover:bg-amber-300"
+                    "mt-7 bg-white text-superlinear-deep hover:bg-superlinear-hover"
                   )}
                 >
                   <Mail className="mr-2 h-4 w-4" />
@@ -425,7 +424,7 @@ export default function Collab() {
             </div>
           </section>
 
-          <div className="mt-10 flex items-center justify-center gap-3 text-xs text-zinc-400">
+          <div className="mt-10 flex items-center justify-center gap-3 text-xs text-superlinear-body/70">
             <ShieldCheck className="h-4 w-4" />
             <span>yz@superlinear.academy</span>
           </div>
@@ -434,7 +433,7 @@ export default function Collab() {
               href={withLanguage("/", lang)}
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                "border-superlinear-cream bg-superlinear-surface text-superlinear-body hover:bg-superlinear-hover hover:text-superlinear-ink"
               )}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />

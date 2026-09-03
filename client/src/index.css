@@ -11,8 +11,19 @@
     "Geist Mono", "PingFang SC", "Microsoft YaHei", ui-monospace, "SF Mono",
     Menlo, Monaco, monospace;
   --color-superlinear: #238343;
-  --color-superlinear-deep: #1b6b35;
-  --color-superlinear-light: #85d164;
+  --color-superlinear-deep: #155d30;
+  --color-superlinear-link: #008841;
+  --color-superlinear-canvas: #fbf9f5;
+  --color-superlinear-surface: #fefdfc;
+  --color-superlinear-cream: #ede7da;
+  --color-superlinear-pale: #e8efe5;
+  --color-superlinear-hover: #f4f5ef;
+  --color-superlinear-ink: #17151d;
+  --color-superlinear-body: #4b4238;
+  --color-superlinear-online: #85d164;
+  --color-superlinear-coral: #ff8b70;
+  /* Accessible site tint for controlled dark surfaces; not the Circle online state. */
+  --color-superlinear-on-dark: #a4d9b5;
 }
 
 @theme inline {
@@ -61,46 +72,46 @@
   --font-display:
     "Geist", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
     sans-serif;
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  --primary: #238343;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #238343;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #a4d9b5;
+  --chart-2: #238343;
+  --chart-3: #155d30;
+  --chart-4: #4b4238;
+  --chart-5: #17151d;
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --background: #fbf9f5;
+  --foreground: #17151d;
+  --card: #fefdfc;
+  --card-foreground: #17151d;
+  --popover: #fefdfc;
+  --popover-foreground: #17151d;
+  --secondary: #f4f5ef;
+  --secondary-foreground: #4b4238;
+  --muted: #ede7da;
+  --muted-foreground: #4b4238;
+  --accent: #e8efe5;
+  --accent-foreground: #17151d;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --border: #ede7da;
+  --input: #ede7da;
+  --ring: #238343;
+  --sidebar: #fefdfc;
+  --sidebar-foreground: #4b4238;
+  --sidebar-accent: #e8efe5;
+  --sidebar-accent-foreground: #17151d;
+  --sidebar-border: #ede7da;
+  --sidebar-ring: #238343;
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
+  --primary: #238343;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #238343;
+  --sidebar-primary-foreground: #ffffff;
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.85 0.005 65);
   --card: oklch(0.21 0.006 285.885);
@@ -117,18 +128,18 @@
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
+  --ring: #a4d9b5;
+  --chart-1: #a4d9b5;
+  --chart-2: #238343;
+  --chart-3: #155d30;
+  --chart-4: #ede7da;
+  --chart-5: #fefdfc;
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.85 0.005 65);
   --sidebar-accent: oklch(0.274 0.006 286.033);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --sidebar-ring: #a4d9b5;
 }
 
 @layer base {

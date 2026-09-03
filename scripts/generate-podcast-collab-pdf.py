@@ -35,19 +35,19 @@ M = 42
 NAVY = HexColor("#0B0F1A")
 NAVY_2 = HexColor("#111722")
 NAVY_3 = HexColor("#171E2B")
-PAPER = HexColor("#F2F0EA")
-PAPER_2 = HexColor("#E8E4DC")
-INK = HexColor("#191712")
-BODY = HexColor("#4D4941")
+PAPER = HexColor("#FBF9F5")
+PAPER_2 = HexColor("#EDE7DA")
+INK = HexColor("#17151D")
+BODY = HexColor("#4B4238")
 MUTED = HexColor("#777064")
 WHITE = HexColor("#FFFFFF")
 SOFT_WHITE = HexColor("#D9DCE3")
 # Superlinear brand accents: light green on dark surfaces, deep green on paper.
-AMBER = HexColor("#85D164")
-AMBER_DARK = HexColor("#1B6B35")
+ACCENT_ON_DARK = HexColor("#A4D9B5")
+BRAND_DEEP = HexColor("#155D30")
 BRAND = HexColor("#238343")
 LINE_DARK = Color(1, 1, 1, alpha=0.12)
-LINE_LIGHT = HexColor("#D4D0C7")
+LINE_LIGHT = HexColor("#EDE7DA")
 
 FONT_REGULAR = "HeitiLight"
 FONT_BOLD = "HeitiMedium"
@@ -147,7 +147,7 @@ def draw_label(
     text: str,
     x: float,
     y: float,
-    color=AMBER_DARK,
+    color=BRAND_DEEP,
     font: str = FONT_MONO_BOLD,
     size: float = 8.5,
 ) -> None:
@@ -278,11 +278,11 @@ def draw_metric(
     if dark:
         c.setFillColor(NAVY_2)
         c.setStrokeColor(Color(1, 1, 1, alpha=0.13))
-        value_color, label_color, signal_color = WHITE, SOFT_WHITE, AMBER
+        value_color, label_color, signal_color = WHITE, SOFT_WHITE, ACCENT_ON_DARK
     else:
         c.setFillColor(WHITE)
         c.setStrokeColor(LINE_LIGHT)
-        value_color, label_color, signal_color = INK, BODY, AMBER_DARK
+        value_color, label_color, signal_color = INK, BODY, BRAND_DEEP
     c.roundRect(x, y, w, h, 9, fill=1, stroke=1)
     c.setFillColor(value_color)
     c.setFont(FONT_BOLD, 20)
@@ -305,7 +305,7 @@ def draw_cover(c: canvas.Canvas) -> None:
         "PODCAST · VIDEO · LONG-FORM",
         M + 44,
         H - 57,
-        color=AMBER,
+        color=ACCENT_ON_DARK,
         size=8,
     )
     c.setFillColor(WHITE)
@@ -340,7 +340,7 @@ def draw_cover(c: canvas.Canvas) -> None:
         if index:
             c.setStrokeColor(Color(1, 1, 1, alpha=0.13))
             c.line(x, value_y + 13, x, value_y + value_h - 13)
-        c.setFillColor(AMBER)
+        c.setFillColor(ACCENT_ON_DARK)
         c.setFont(FONT_BOLD, 8.3)
         c.drawString(x + 12, value_y + 39, title)
         c.setFillColor(SOFT_WHITE)
@@ -382,7 +382,7 @@ def draw_cover(c: canvas.Canvas) -> None:
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 10.5)
     c.drawRightString(W - M, 94, "学点真本事，做点真东西。")
-    c.setFillColor(AMBER)
+    c.setFillColor(ACCENT_ON_DARK)
     c.setFont(FONT_MONO_BOLD, 7.2)
     c.drawRightString(W - M, 77, "MAKE WHAT LASTS. · lizheng.ai")
     c.linkURL("https://www.lizheng.ai", (W - 200, 66, W - M, 104), relative=0)
@@ -424,7 +424,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
     c.line(timeline_x + 5, timeline_top - 8, timeline_x + 5, timeline_top - 211)
     for index, (org, role) in enumerate(timeline):
         y = timeline_top - index * 40
-        c.setFillColor(AMBER_DARK if index < 5 else AMBER)
+        c.setFillColor(BRAND_DEEP if index < 5 else BRAND)
         c.circle(timeline_x + 5, y - 5, 4, fill=1, stroke=0)
         c.setFillColor(INK)
         c.setFont(FONT_BOLD, 10)
@@ -442,7 +442,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         "节目里，可以继续往下问",
         panel_x + 15,
         panel_y + panel_h - 27,
-        color=AMBER_DARK,
+        color=BRAND_DEEP,
         font=FONT_BOLD,
         size=8.3,
     )
@@ -469,7 +469,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
                 panel_x + panel_w - 15,
                 row_y + 13,
             )
-        c.setFillColor(AMBER_DARK)
+        c.setFillColor(BRAND_DEEP)
         c.setFont(FONT_MONO_BOLD, 7.2)
         c.drawString(panel_x + 15, row_y, number)
         c.setFont(FONT_BOLD, 8.4)
@@ -495,7 +495,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         "2023.02 · GPT-4发布前 · 一条可检查的判断",
         M + 18,
         box_y + box_h - 26,
-        color=AMBER,
+        color=ACCENT_ON_DARK,
         font=FONT_BOLD,
         size=8,
     )
@@ -533,7 +533,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         "STRONG OPINIONS, WEAKLY HELD",
         M + 18,
         box_y + 52,
-        color=AMBER,
+        color=ACCENT_ON_DARK,
         size=7.7,
     )
     draw_paragraph(
@@ -553,7 +553,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
 def draw_koji_page(c: canvas.Canvas, page: int) -> None:
     c.setFillColor(NAVY)
     c.rect(0, 0, W, H, fill=1, stroke=0)
-    draw_label(c, "02 / CASE STUDY · KOJI · REMOTE", M, H - 50, color=AMBER)
+    draw_label(c, "02 / CASE STUDY · KOJI · REMOTE", M, H - 50, color=ACCENT_ON_DARK)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 27)
     c.drawString(M, H - 91, "一场好对话，不只活在上线那天。")
@@ -639,7 +639,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
         color=SOFT_WHITE,
     )
     draw_qr(c, URL_KOJI, panel_x + 14, evidence_y + 25, 54)
-    c.setFillColor(AMBER)
+    c.setFillColor(ACCENT_ON_DARK)
     c.setFont(FONT_BOLD, 8.2)
     c.drawString(panel_x + 80, evidence_y + 62, "去小宇宙听完整节目")
     c.setFillColor(SOFT_WHITE)
@@ -649,7 +649,7 @@ def draw_koji_page(c: canvas.Canvas, page: int) -> None:
 
     c.setFillColor(Color(1, 1, 1, alpha=0.08))
     c.roundRect(M, 94, W - 2 * M, 112, 10, fill=1, stroke=0)
-    draw_label(c, "听众反馈", M + 16, 176, color=AMBER, font=FONT_BOLD)
+    draw_label(c, "听众反馈", M + 16, 176, color=ACCENT_ON_DARK, font=FONT_BOLD)
     draw_paragraph(
         c,
         "“很有帮助的一期，最近正在从ChatGPT转Codex，也在积累上下文。”",
@@ -715,7 +715,7 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     )
 
     left_x, left_w = M, 272
-    draw_label(c, "同一场录制，多种内容形态", left_x, 548, color=AMBER_DARK, font=FONT_BOLD)
+    draw_label(c, "同一场录制，多种内容形态", left_x, 548, color=BRAND_DEEP, font=FONT_BOLD)
     draw_paragraph(
         c,
         "屠龙团队保留自己的节目语言；立正团队再做长版和切片，分别发布到小红书、YouTube、B站和社区，让同一场对话在不同平台各自找到合适的形态。",
@@ -729,7 +729,7 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
 
     c.setFillColor(INK)
     c.roundRect(left_x, 326, left_w, 105, 10, fill=1, stroke=0)
-    draw_label(c, "三个平台，各自成立", left_x + 15, 406, color=AMBER, font=FONT_BOLD)
+    draw_label(c, "三个平台，各自成立", left_x + 15, 406, color=ACCENT_ON_DARK, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 13)
     c.drawString(left_x + 15, 377, "YouTube11万+观看·3,600赞")
@@ -738,10 +738,10 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     c.drawString(left_x + 15, 353, "小红书1.13万转发·1,088条评论")
     c.drawString(left_x + 15, 336, "B站10.8万+播放·8,026收藏")
 
-    c.setFillColor(HexColor("#E8F4E8"))
-    c.setStrokeColor(HexColor("#85D164"))
+    c.setFillColor(HexColor("#E8EFE5"))
+    c.setStrokeColor(BRAND)
     c.roundRect(left_x, 199, left_w, 106, 10, fill=1, stroke=1)
-    c.setFillColor(AMBER_DARK)
+    c.setFillColor(BRAND_DEEP)
     c.setFont(FONT_BOLD, 12)
     c.drawString(left_x + 15, 277, "新观众真的认识了她")
     draw_paragraph(
@@ -757,7 +757,7 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     c.linkURL(URL_TULONG_COMMENT, (left_x, 199, left_x + left_w, 305), relative=0)
 
     draw_qr(c, URL_TULONG_YT, left_x, 102, 63)
-    c.setFillColor(AMBER_DARK)
+    c.setFillColor(BRAND_DEEP)
     c.setFont(FONT_BOLD, 8.5)
     c.drawString(left_x + 79, 145, "看YouTube完整正片与评论")
     c.linkURL(URL_TULONG_YT, (left_x + 75, 135, left_x + 220, 157), relative=0)
@@ -809,7 +809,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
         c.setFillColor(WHITE)
         c.setStrokeColor(LINE_LIGHT)
         c.roundRect(M, y, W - 2 * M, card_h, 11, fill=1, stroke=1)
-        draw_label(c, label, M + 16, y + card_h - 24, color=AMBER_DARK, font=FONT_BOLD)
+        draw_label(c, label, M + 16, y + card_h - 24, color=BRAND_DEEP, font=FONT_BOLD)
         title_bottom = draw_paragraph(
             c,
             title,
@@ -833,14 +833,14 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
             color=BODY,
             max_lines=2,
         )
-        c.setFillColor(AMBER_DARK)
+        c.setFillColor(BRAND_DEEP)
         c.setFont(FONT_BOLD, 7.6)
         c.drawString(M + 16, y + 14, fit)
 
     proof_y, proof_h = 68, 202
     c.setFillColor(INK)
     c.roundRect(M, proof_y, W - 2 * M, proof_h, 12, fill=1, stroke=0)
-    draw_label(c, "这些问题一直在真实工作里接受检验", M + 16, proof_y + proof_h - 26, color=AMBER, font=FONT_BOLD)
+    draw_label(c, "这些问题一直在真实工作里接受检验", M + 16, proof_y + proof_h - 26, color=ACCENT_ON_DARK, font=FONT_BOLD)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 15)
     c.drawString(M + 16, proof_y + proof_h - 53, "长期教学、企业现场与公开对话，持续给这些问题提供样本。")
@@ -895,7 +895,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         radius=26,
     )
     c.linkURL(URL_HEADSHOT, (M, 520, M + 165, 710), relative=0)
-    draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=AMBER_DARK, font=FONT_BOLD)
+    draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=BRAND_DEEP, font=FONT_BOLD)
     draw_paragraph(
         c,
         "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI进入真实工作以后，什么能力和作品反而更重要。",
@@ -906,7 +906,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         leading=16,
         color=BODY,
     )
-    c.setFillColor(AMBER_DARK)
+    c.setFillColor(BRAND_DEEP)
     c.setFont(FONT_BOLD, 8)
     c.drawString(228, 548, "完整履历与高清头像")
     c.linkURL(URL_ABOUT, (225, 535, 345, 563), relative=0)
@@ -927,7 +927,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         c.setFillColor(WHITE)
         c.setStrokeColor(LINE_LIGHT)
         c.roundRect(x, 432, card_w, 65, 9, fill=1, stroke=1)
-        c.setFillColor(AMBER_DARK)
+        c.setFillColor(BRAND_DEEP)
         c.setFont(FONT_BOLD, 7.4)
         c.drawString(x + 11, 476, label)
         draw_paragraph(
@@ -947,12 +947,12 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         "SUPERLINEAR ACADEMY · 做点真东西。",
         M,
         510,
-        color=AMBER_DARK,
+        color=BRAND_DEEP,
         font=FONT_BOLD,
         size=8.5,
     )
 
-    draw_label(c, "怎么一起录", M, 393, color=AMBER_DARK, font=FONT_BOLD)
+    draw_label(c, "怎么一起录", M, 393, color=BRAND_DEEP, font=FONT_BOLD)
     principles = [
         "你定问题、节奏、标题和最终剪辑；通常不用提前给我完整问题清单，成片也不用给我审。",
         "我会准备原文、数据、案例和最强反方，但不背稿；事实、引述与合作边界可以发布前核对。",
@@ -960,7 +960,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     ]
     y = 364
     for index, text in enumerate(principles, 1):
-        c.setFillColor(AMBER_DARK)
+        c.setFillColor(BRAND_DEEP)
         c.circle(M + 4, y + 2, 3, fill=1, stroke=0)
         draw_paragraph(
             c,
@@ -977,7 +977,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     contact_y, contact_h = 76, 142
     c.setFillColor(INK)
     c.roundRect(M, contact_y, W - 2 * M, contact_h, 13, fill=1, stroke=0)
-    draw_label(c, "PROGRAM INVITATIONS", M + 18, contact_y + contact_h - 27, color=AMBER)
+    draw_label(c, "PROGRAM INVITATIONS", M + 18, contact_y + contact_h - 27, color=ACCENT_ON_DARK)
     c.setFillColor(WHITE)
     c.setFont(FONT_BOLD, 17)
     c.drawString(M + 18, contact_y + contact_h - 56, "如果你有一个值得聊透的问题，先发给我们。")
@@ -991,7 +991,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
         leading=14,
         color=SOFT_WHITE,
     )
-    c.setFillColor(AMBER)
+    c.setFillColor(ACCENT_ON_DARK)
     c.setFont(FONT_BOLD, 8.8)
     c.drawString(M + 18, contact_y + 27, "商务负责人：喵老师 · 微信：FM13870617")
     c.setFillColor(SOFT_WHITE)

@@ -5,29 +5,30 @@ import { Link, useLocation } from "wouter";
 interface LanguageToggleProps {
   className?: string;
   size?: "sm" | "md";
-  tone?: "gold" | "superlinear";
+  surface?: "dark" | "light";
 }
 
 export default function LanguageToggle({
   className = "",
   size = "md",
-  tone = "gold",
+  surface = "dark",
 }: LanguageToggleProps) {
   const { lang, setLang } = useLanguage();
   const [location] = useLocation();
   const pad = size === "sm" ? "px-2 py-1 text-[11px]" : "px-2.5 py-1 text-xs";
-  const activeTone =
-    tone === "superlinear"
-      ? "bg-superlinear text-white"
-      : "bg-amber-300 text-[#211300]";
+  const activeTone = "bg-superlinear text-white";
   const inactiveTone =
-    tone === "superlinear"
-      ? "text-zinc-400 hover:text-superlinear-light"
-      : "text-zinc-400 hover:text-amber-200";
+    surface === "light"
+      ? "text-superlinear-body hover:bg-superlinear-hover hover:text-superlinear-link"
+      : "text-zinc-400 hover:text-superlinear-on-dark";
+  const frameTone =
+    surface === "light"
+      ? "border-superlinear-cream bg-superlinear-surface"
+      : "border-white/15 bg-white/5";
 
   return (
     <div
-      className={`inline-flex shrink-0 items-center overflow-hidden rounded-full border border-white/15 bg-white/5 ${className}`}
+      className={`inline-flex shrink-0 items-center overflow-hidden rounded-full border ${frameTone} ${className}`}
       role="group"
       aria-label="Language"
     >

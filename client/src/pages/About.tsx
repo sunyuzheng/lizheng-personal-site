@@ -210,7 +210,7 @@ export default function About() {
         <section className="border-b border-white/10 py-16 md:py-24">
           <div className="container grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
                 {copy.eyebrow}
               </p>
               <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
@@ -224,7 +224,7 @@ export default function About() {
               <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
                 {copy.intro}
               </p>
-              <p className="mt-5 max-w-3xl border-l border-amber-300/40 pl-5 text-base leading-8 text-zinc-400">
+              <p className="mt-5 max-w-3xl border-l border-superlinear-on-dark/40 pl-5 text-base leading-8 text-zinc-400">
                 {copy.belief}
               </p>
             </div>
@@ -256,10 +256,10 @@ export default function About() {
           </div>
         </section>
 
-        <section className="bg-[#F2F0EA] py-16 text-[#191712] md:py-24">
+        <section className="bg-superlinear-canvas py-16 text-superlinear-ink md:py-24">
           <div className="container grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#8B4A19]">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-deep">
                 {copy.backgroundTitle}
               </p>
               <p className="mt-5 text-lg leading-9 text-[#48443B]">
@@ -269,7 +269,7 @@ export default function About() {
                 href="https://economics.cornell.edu/historical-placement-phd-students"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#743B13]"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
               >
                 {lang === "en"
                   ? "Cornell Economics placement record"
@@ -296,7 +296,7 @@ export default function About() {
         <section className="py-12 md:py-16">
           <div className="container">
             <div className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
                 {lang === "en" ? "Current work" : "现在在做"}
               </p>
               <h2 className="mt-5 text-3xl font-semibold text-white md:text-4xl">
@@ -309,7 +309,7 @@ export default function About() {
             <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-2">
               {currentWork[lang].map(item => (
                 <article key={item.name} className="bg-[#111722] p-6">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-amber-300">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-on-dark">
                     {item.role}
                   </p>
                   <h3 className="mt-3 text-xl font-semibold text-white">
@@ -321,7 +321,7 @@ export default function About() {
                   {item.href.startsWith("/") ? (
                     <Link
                       href={withLanguage(item.href, lang)}
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-300"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark"
                     >
                       {"cta" in item
                         ? item.cta
@@ -335,7 +335,7 @@ export default function About() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-amber-300"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark"
                     >
                       {"cta" in item
                         ? item.cta
@@ -354,7 +354,7 @@ export default function About() {
         <section className="border-y border-white/10 bg-[#111722] py-16 md:py-20">
           <div className="container grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
                 {lang === "en" ? "Books and conversations" : "书与对话"}
               </p>
               <h2 className="mt-5 text-3xl font-semibold text-white md:text-4xl">
@@ -366,7 +366,7 @@ export default function About() {
               <div className="mt-7 flex flex-wrap gap-3">
                 <Button
                   asChild
-                  className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+                  className="bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   <Link href={withLanguage("/book", lang)}>
                     <BookOpen className="mr-2 h-4 w-4" />
@@ -420,7 +420,7 @@ export default function About() {
         <section className="py-14 md:py-20">
           <div className="container grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <div className="flex items-center gap-2 text-amber-300">
+              <div className="flex items-center gap-2 text-superlinear-on-dark">
                 <MapPin className="h-4 w-4" />
                 <span className="font-mono text-[11px] uppercase tracking-[0.2em]">
                   Seattle / 西雅图
@@ -436,7 +436,7 @@ export default function About() {
             <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
               <Button
                 asChild
-                className="bg-amber-400 text-[#211300] hover:bg-amber-300"
+                className="bg-superlinear text-white hover:bg-superlinear-deep"
               >
                 <Link href={withLanguage("/collab/creators", lang)}>
                   {copy.invite}

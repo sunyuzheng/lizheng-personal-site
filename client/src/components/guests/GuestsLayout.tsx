@@ -15,7 +15,7 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#0B0F1A] text-zinc-100">
       <div className="pointer-events-none absolute inset-0 opacity-60">
-        <div className="absolute -left-32 top-0 h-[32rem] w-[32rem] rounded-full bg-amber-500/15 blur-3xl" />
+        <div className="absolute -left-32 top-0 h-[32rem] w-[32rem] rounded-full bg-superlinear/15 blur-3xl" />
         <div className="absolute -right-40 top-40 h-[28rem] w-[28rem] rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
@@ -23,11 +23,11 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
         <div className="container flex items-center justify-between py-4">
           <Link
             href={withLanguage("/", lang)}
-            className="flex items-center gap-2 text-zinc-400 transition hover:text-amber-300"
+            className="flex items-center gap-2 text-zinc-400 transition hover:text-superlinear-on-dark"
           >
             <ArrowLeft className="h-4 w-4" />
             <div>
-              <div className="text-sm font-semibold text-amber-300">
+              <div className="text-sm font-semibold text-superlinear-on-dark">
                 {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
               </div>
               <div className="text-xs text-zinc-500">
@@ -41,7 +41,7 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
               asChild
               variant="outline"
               size="sm"
-              className="border-amber-300/40 bg-amber-300/10 text-amber-100 hover:bg-amber-300/20"
+              className="border-superlinear-on-dark/40 bg-superlinear/10 text-superlinear-pale hover:bg-superlinear/20"
             >
               <a
                 href="https://www.youtube.com/@kedaibiao"
@@ -62,7 +62,7 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
         <p className="text-sm text-zinc-500">
           <Link
             href={withLanguage("/", lang)}
-            className="text-amber-400 transition hover:text-amber-300"
+            className="text-superlinear-on-dark transition hover:text-white"
           >
             {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
           </Link>{" "}
@@ -73,7 +73,7 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
           <span className="mx-2 text-zinc-700">·</span>
           <Link
             href={withLanguage("/collab/creators", lang)}
-            className="text-zinc-400 transition hover:text-amber-300"
+            className="text-zinc-400 transition hover:text-superlinear-on-dark"
           >
             {lang === "en" ? "Invite me to your show" : "邀请我上节目"}
           </Link>

@@ -260,13 +260,13 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
               href={deck.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition hover:text-amber-200"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition hover:text-white"
             >
               {primaryLabel}
               <PrimaryIcon className="h-3.5 w-3.5" />
             </a>
           ) : (
-            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-300">
+            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-superlinear-on-dark">
               {t.publicCutPending}
               <FileClock className="h-3.5 w-3.5" />
             </span>
@@ -276,7 +276,7 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
               href={deck.secondaryHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 transition hover:text-amber-200"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-400 transition hover:text-white"
             >
               {secondaryLabel}
               <SecondaryIcon className="h-3.5 w-3.5" />
@@ -355,7 +355,7 @@ export default function Decks() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#090D16] text-zinc-100 selection:bg-amber-300 selection:text-[#211300]">
+    <div className="min-h-screen overflow-x-clip bg-[#090D16] text-zinc-100 selection:bg-superlinear selection:text-white">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#090D16]/82 backdrop-blur-xl">
         <div className="container flex items-center justify-between gap-3 py-4">
           <a
@@ -388,8 +388,8 @@ export default function Decks() {
                 className={cn(
                   "px-2 py-1 text-[11px] font-semibold uppercase tracking-wide transition",
                   lang === "en"
-                    ? "bg-amber-300 text-[#211300]"
-                    : "text-zinc-400 hover:text-amber-200"
+                    ? "bg-superlinear text-white"
+                    : "text-zinc-400 hover:text-white"
                 )}
               >
                 EN
@@ -400,8 +400,8 @@ export default function Decks() {
                 className={cn(
                   "px-2 py-1 text-[11px] font-semibold transition",
                   lang === "zh"
-                    ? "bg-amber-300 text-[#211300]"
-                    : "text-zinc-400 hover:text-amber-200"
+                    ? "bg-superlinear text-white"
+                    : "text-zinc-400 hover:text-white"
                 )}
               >
                 中文
@@ -410,7 +410,7 @@ export default function Decks() {
             <Button
               asChild
               size="sm"
-              className="bg-amber-300 text-[#211300] hover:bg-amber-200"
+              className="bg-superlinear text-white hover:bg-superlinear-deep"
             >
               <a
                 href={
@@ -429,10 +429,10 @@ export default function Decks() {
 
       <main>
         <section className="relative border-b border-white/10">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(245,158,11,0.13),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(103,232,249,0.08),transparent_30%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(35,131,67,0.13),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(103,232,249,0.08),transparent_30%)]" />
           <div className="container relative grid gap-12 py-16 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-16 lg:py-24">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.eyebrow}
               </p>
               <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.04] text-white [text-wrap:balance] sm:text-5xl lg:text-7xl">
@@ -489,7 +489,7 @@ export default function Decks() {
                   <span className="text-xs font-medium text-white/80">
                     {t.photoCaption}
                   </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-amber-300">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-superlinear-on-dark">
                     REAL ROOM · REAL WORK
                   </span>
                 </figcaption>
@@ -520,7 +520,7 @@ export default function Decks() {
 
         <section className="border-b border-white/10 bg-white/[0.018]">
           <div className="container grid gap-8 py-14 md:grid-cols-[0.7fr_1.3fr] md:items-start md:py-20">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
               {t.thesisEyebrow}
             </p>
             <div>
@@ -537,7 +537,7 @@ export default function Decks() {
         <section className="container py-16 md:py-24">
           <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.indexEyebrow}
               </p>
               <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-white md:text-5xl">
@@ -557,7 +557,7 @@ export default function Decks() {
                 onChange={event => setQuery(event.target.value)}
                 placeholder={t.searchPlaceholder}
                 aria-label={t.searchPlaceholder}
-                className="h-12 w-full rounded-xl border border-white/10 bg-[#090D16] pl-11 pr-11 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/60"
+                className="h-12 w-full rounded-xl border border-white/10 bg-[#090D16] pl-11 pr-11 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-superlinear-on-dark/60"
               />
               {query ? (
                 <button
@@ -578,7 +578,7 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "all"
-                    ? "border-amber-300 bg-amber-300 text-[#211300]"
+                    ? "border-superlinear-on-dark bg-superlinear text-white"
                     : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
                 )}
               >
@@ -590,7 +590,7 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "enterprise"
-                    ? "border-amber-300 bg-amber-300 text-[#211300]"
+                    ? "border-superlinear-on-dark bg-superlinear text-white"
                     : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
                 )}
               >
@@ -602,7 +602,7 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "public"
-                    ? "border-amber-300 bg-amber-300 text-[#211300]"
+                    ? "border-superlinear-on-dark bg-superlinear text-white"
                     : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
                 )}
               >
@@ -694,7 +694,7 @@ export default function Decks() {
               <button
                 type="button"
                 onClick={clearFilters}
-                className="mt-4 text-sm font-semibold text-amber-300 hover:text-amber-200"
+                className="mt-4 text-sm font-semibold text-superlinear-on-dark hover:text-white"
               >
                 {t.clear}
               </button>
@@ -702,9 +702,9 @@ export default function Decks() {
           )}
         </section>
 
-        <section className="border-t border-white/10 bg-[linear-gradient(135deg,rgba(245,158,11,.10),rgba(9,13,22,0)_48%)]">
+        <section className="border-t border-white/10 bg-[linear-gradient(135deg,rgba(35,131,67,.10),rgba(9,13,22,0)_48%)]">
           <div className="container py-16 md:py-24">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
               {t.closeEyebrow}
             </p>
             <h2 className="mt-5 max-w-4xl text-3xl font-semibold leading-[1.12] text-white [text-wrap:balance] md:text-5xl">
@@ -717,7 +717,7 @@ export default function Decks() {
               <Button
                 asChild
                 size="lg"
-                className="bg-amber-300 text-[#211300] hover:bg-amber-200"
+                className="bg-superlinear text-white hover:bg-superlinear-deep"
               >
                 <a href="mailto:yz@superlinear.academy?subject=Enterprise%20AI%20program">
                   <Mail className="mr-2 h-4 w-4" />

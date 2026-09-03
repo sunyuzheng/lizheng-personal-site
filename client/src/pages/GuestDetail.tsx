@@ -122,7 +122,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             </p>
             <Button
               asChild
-              className="mt-8 bg-amber-300 text-[#211300] hover:bg-amber-200"
+              className="mt-8 bg-superlinear text-white hover:bg-superlinear-deep"
             >
               <Link href={withLanguage("/guests", lang)}>
                 {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
@@ -144,7 +144,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
       <div className="container py-12 md:py-16">
         <Link
           href={withLanguage("/guests", lang)}
-          className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-amber-300"
+          className="mb-6 inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-superlinear-on-dark"
         >
           <ArrowLeft className="h-4 w-4" />
           {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
@@ -171,7 +171,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               {displayName}
             </h1>
             {guest.guest_company && (
-              <p className="mt-4 text-lg font-semibold text-amber-300">
+              <p className="mt-4 text-lg font-semibold text-superlinear-on-dark">
                 {guest.guest_company}
               </p>
             )}
@@ -227,7 +227,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
                 asChild
-                className="bg-amber-300 text-[#211300] hover:bg-amber-200"
+                className="bg-superlinear text-white hover:bg-superlinear-deep"
               >
                 <a
                   href={guest.primary_episode.url}
@@ -268,7 +268,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6">
-              <div className="mb-3 inline-flex items-center rounded-full bg-amber-400 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-[#211300]">
+              <div className="mb-3 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
                 {lang === "en" ? "Featured" : "精选视频"}
               </div>
               <h2 className="text-2xl font-semibold leading-tight text-white">
@@ -321,7 +321,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 href={episode.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10"
+                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-superlinear-on-dark/40 hover:bg-white/10"
               >
                 <div className="relative aspect-video overflow-hidden">
                   <img
@@ -331,12 +331,12 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                     loading="lazy"
                   />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition group-hover:opacity-100">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-400/90 text-[#211300]">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-superlinear/90 text-white">
                       <Play className="h-4 w-4 fill-current" />
                     </div>
                   </div>
                   {episode.isPrimary && (
-                    <div className="absolute left-3 top-3 rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#211300]">
+                    <div className="absolute left-3 top-3 rounded-full bg-superlinear px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
                       {lang === "en" ? "Featured" : "精选"}
                     </div>
                   )}

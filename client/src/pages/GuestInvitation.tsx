@@ -99,7 +99,7 @@ export default function GuestInvitation() {
         <div className="container flex h-[68px] items-center justify-between gap-4">
           <a
             href="https://podcast.lizheng.ai"
-            className="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">回到Podcast</span>
@@ -114,14 +114,14 @@ export default function GuestInvitation() {
             <span className="block text-sm font-semibold text-white">
               课代表立正
             </span>
-            <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-amber-300">
+            <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-superlinear-on-dark">
               Conversations
             </span>
           </a>
 
           <a
             href={mailto}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-amber-300/40 hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
           >
             <Mail className="h-3.5 w-3.5" aria-hidden="true" />
             <span className="hidden sm:inline">回复邀请</span>
@@ -131,15 +131,15 @@ export default function GuestInvitation() {
 
       <main>
         <section className="relative isolate overflow-hidden border-b border-white/10">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_18%,rgba(251,191,36,0.13),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.025),transparent_42%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_76%_18%,rgba(35,131,67,0.13),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.025),transparent_42%)]" />
           <div className="container relative grid gap-12 py-16 sm:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-20 lg:py-28">
             <div className="max-w-4xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-superlinear-on-dark">
                 课代表立正 · 嘉宾邀请
               </p>
               <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.08] tracking-[-0.04em] text-white sm:text-6xl lg:text-[4.75rem]">
                 <span className="block">把一个重要的问题</span>
-                <span className="block text-amber-200">谈透。</span>
+                <span className="block text-superlinear-on-dark">谈透。</span>
               </h1>
               <p className="mt-7 max-w-2xl text-lg font-medium leading-8 text-zinc-200 sm:text-xl sm:leading-9">
                 如果你收到了这个页面，我已经有一个只想和你谈的问题。
@@ -150,14 +150,14 @@ export default function GuestInvitation() {
               <div className="mt-9 flex flex-wrap gap-3">
                 <a
                   href={mailto}
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-amber-300 px-6 text-sm font-semibold text-[#211300] transition hover:-translate-y-0.5 hover:bg-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 motion-reduce:transform-none"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full bg-superlinear px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-superlinear-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark motion-reduce:transform-none"
                 >
                   回复邀请
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
                 <a
                   href="#moments"
-                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 bg-white/[0.035] px-6 text-sm font-medium text-zinc-200 transition hover:border-white/30 hover:bg-white/[0.07] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/15 bg-white/[0.035] px-6 text-sm font-medium text-zinc-200 transition hover:border-white/30 hover:bg-white/[0.07] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                 >
                   <Play className="h-4 w-4" aria-hidden="true" />
                   看两段真实对话
@@ -172,9 +172,9 @@ export default function GuestInvitation() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group block rounded-3xl border p-6 transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 motion-reduce:transform-none sm:p-7 ${
+                  className={`group block rounded-3xl border p-6 transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark motion-reduce:transform-none sm:p-7 ${
                     index === 0
-                      ? "border-amber-300/25 bg-amber-300/[0.07]"
+                      ? "border-superlinear-on-dark/25 bg-superlinear/[0.07]"
                       : "border-white/10 bg-white/[0.035]"
                   }`}
                 >
@@ -191,7 +191,7 @@ export default function GuestInvitation() {
                       </p>
                     </div>
                     <ArrowUpRight
-                      className="h-4 w-4 text-zinc-600 transition group-hover:text-amber-300"
+                      className="h-4 w-4 text-zinc-600 transition group-hover:text-superlinear-on-dark"
                       aria-hidden="true"
                     />
                   </div>
@@ -224,7 +224,9 @@ export default function GuestInvitation() {
             <h2 className="text-3xl font-semibold tracking-[-0.035em] text-white sm:text-5xl">
               看看我们怎么聊。
             </h2>
-            <p className="mt-4 text-base text-zinc-400">问题是起点，不是剧本。</p>
+            <p className="mt-4 text-base text-zinc-400">
+              问题是起点，不是剧本。
+            </p>
 
             <div className="mt-10 grid gap-6 md:grid-cols-2">
               {moments.map(item => (
@@ -236,7 +238,7 @@ export default function GuestInvitation() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative block aspect-video overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                    className="relative block aspect-video overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                     aria-label={`从时间点观看${item.label}对话`}
                   >
                     <img
@@ -252,7 +254,7 @@ export default function GuestInvitation() {
                     </span>
                   </a>
                   <div className="p-6 sm:p-7">
-                    <p className="text-xs font-medium text-amber-300">
+                    <p className="text-xs font-medium text-superlinear-on-dark">
                       {item.label}
                     </p>
                     <h3 className="mt-3 text-xl font-semibold leading-8 text-white sm:text-2xl">
@@ -276,13 +278,14 @@ export default function GuestInvitation() {
             <div className="mt-10 grid gap-7 md:grid-cols-3">
               {recordingDetails.map(({ Icon, title, body }) => (
                 <article key={title} className="border-t border-white/10 pt-6">
-                  <Icon className="h-5 w-5 text-amber-300" aria-hidden="true" />
+                  <Icon
+                    className="h-5 w-5 text-superlinear-on-dark"
+                    aria-hidden="true"
+                  />
                   <h3 className="mt-5 text-base font-semibold text-white">
                     {title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-zinc-500">
-                    {body}
-                  </p>
+                  <p className="mt-3 text-sm leading-7 text-zinc-500">{body}</p>
                 </article>
               ))}
             </div>
@@ -290,7 +293,7 @@ export default function GuestInvitation() {
         </section>
 
         <section className="relative isolate overflow-hidden">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(251,191,36,0.12),transparent_34%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(35,131,67,0.12),transparent_34%)]" />
           <div className="container relative py-20 text-center sm:py-28">
             <h2 className="mx-auto max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-white sm:text-5xl">
               你最想讲清什么？
@@ -301,7 +304,7 @@ export default function GuestInvitation() {
             <div className="mt-9 flex flex-wrap justify-center gap-x-5 gap-y-4">
               <a
                 href={mailto}
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-amber-300 px-6 text-sm font-semibold text-[#211300] transition hover:-translate-y-0.5 hover:bg-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 motion-reduce:transform-none"
+                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-superlinear px-6 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-superlinear-deep focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark motion-reduce:transform-none"
               >
                 <Mail className="h-4 w-4" aria-hidden="true" />
                 回复邀请
@@ -330,19 +333,19 @@ export default function GuestInvitation() {
           <div className="flex flex-wrap items-center gap-5">
             <a
               href="https://podcast.lizheng.ai"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               Podcast
             </a>
             <a
               href="https://www.lizheng.ai/guests"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               全部对话
             </a>
             <a
               href="https://www.lizheng.ai"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               关于立正
             </a>

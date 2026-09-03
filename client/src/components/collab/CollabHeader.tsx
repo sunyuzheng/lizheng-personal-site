@@ -8,56 +8,34 @@ import { Link } from "wouter";
 interface CollabHeaderProps {
   backHref: string;
   section: { en: string; zh: string };
-  tone?: "gold" | "superlinear";
 }
 
-export default function CollabHeader({
-  backHref,
-  section,
-  tone = "gold",
-}: CollabHeaderProps) {
+export default function CollabHeader({ backHref, section }: CollabHeaderProps) {
   const { lang } = useLanguage();
-  const isSuperlinear = tone === "superlinear";
 
   return (
-    <nav
-      className={`sticky top-0 z-50 border-b border-white/10 backdrop-blur-xl ${
-        isSuperlinear ? "bg-[#0B0F1A]/95" : "bg-[#0B0F1A]/80"
-      }`}
-    >
+    <nav className="sticky top-0 z-50 border-b border-superlinear-cream bg-superlinear-canvas/95 text-superlinear-body backdrop-blur-xl">
       <div className="container flex items-center justify-between gap-2 py-4">
         <Link
           href={withLanguage(backHref, lang)}
-          className={`flex min-w-0 items-center gap-2 text-zinc-400 transition ${
-            isSuperlinear
-              ? "hover:text-superlinear-light"
-              : "hover:text-amber-300"
-          }`}
+          className="flex min-w-0 items-center gap-2 text-superlinear-body transition hover:text-superlinear-link"
         >
           <ArrowLeft className="h-4 w-4 shrink-0" />
           <div className="min-w-0">
-            <div
-              className={`whitespace-nowrap text-sm font-semibold ${
-                isSuperlinear ? "text-superlinear-light" : "text-amber-300"
-              }`}
-            >
+            <div className="whitespace-nowrap text-sm font-semibold text-superlinear-link">
               {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
             </div>
-            <div className="hidden truncate text-xs text-zinc-400 min-[340px]:block">
+            <div className="hidden truncate text-xs text-superlinear-body/75 min-[340px]:block">
               {section[lang]}
             </div>
           </div>
         </Link>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <LanguageToggle size="sm" tone={tone} />
+          <LanguageToggle size="sm" surface="light" />
           <Button
             asChild
             size="sm"
-            className={
-              isSuperlinear
-                ? "bg-superlinear text-white hover:bg-superlinear-deep"
-                : "bg-amber-400 text-[#211300] hover:bg-amber-300"
-            }
+            className="bg-superlinear text-white hover:bg-superlinear-deep"
           >
             <a
               href="mailto:yz@superlinear.academy"

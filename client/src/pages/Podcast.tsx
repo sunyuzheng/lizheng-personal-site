@@ -206,7 +206,7 @@ function EpisodeMeta({ episode }: { episode: PodcastEpisode }) {
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-500">
       {episode.episodeNumber && (
-        <span className="font-mono text-amber-300">
+        <span className="font-mono text-superlinear-on-dark">
           E{episode.episodeNumber}
         </span>
       )}
@@ -339,7 +339,7 @@ export default function Podcast() {
         <div className="container flex h-[68px] items-center justify-between gap-4">
           <a
             href="https://www.lizheng.ai"
-            className="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span className="hidden sm:inline">返回lizheng.ai</span>
@@ -354,7 +354,7 @@ export default function Podcast() {
             <span className="block text-sm font-semibold text-white">
               课代表立正
             </span>
-            <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-amber-300">
+            <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-superlinear-on-dark">
               Podcast
             </span>
           </a>
@@ -363,7 +363,7 @@ export default function Podcast() {
             href={PUBLIC_FEED_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-amber-300/40 hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
           >
             <Rss className="h-3.5 w-3.5" aria-hidden="true" />
             RSS
@@ -381,13 +381,13 @@ export default function Podcast() {
               className="h-full w-full scale-110 object-cover opacity-20 blur-3xl"
             />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,15,26,0.96)_0%,rgba(11,15,26,0.86)_50%,rgba(11,15,26,0.96)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_35%,rgba(251,191,36,0.14),transparent_38%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_35%,rgba(35,131,67,0.14),transparent_38%)]" />
           </div>
 
           <div className="container relative z-10 grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(260px,400px)_1fr] lg:items-center lg:gap-16 lg:py-20">
             <div className="mx-auto w-full max-w-[340px] lg:max-w-[400px]">
               <div className="relative">
-                <div className="absolute -inset-5 rounded-[2.2rem] bg-amber-300/15 blur-2xl" />
+                <div className="absolute -inset-5 rounded-[2.2rem] bg-superlinear/15 blur-2xl" />
                 <Artwork
                   src={feed?.cover || SHOW_COVER}
                   alt="课代表立正Podcast节目封面"
@@ -405,13 +405,13 @@ export default function Podcast() {
             </div>
 
             <div className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-amber-300">
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-superlinear-on-dark">
                 Official Podcast
               </p>
               <h1 className="mt-5 text-5xl font-semibold tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
                 课代表立正
               </h1>
-              <p className="mt-5 text-xl font-medium leading-8 text-amber-100 sm:text-2xl">
+              <p className="mt-5 text-xl font-medium leading-8 text-superlinear-pale sm:text-2xl">
                 真正把事做成的人，到底做对了什么？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
@@ -425,7 +425,7 @@ export default function Podcast() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:border-amber-300/40 hover:bg-amber-300/10 hover:text-amber-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 motion-reduce:transform-none"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:border-superlinear-on-dark/40 hover:bg-superlinear/10 hover:text-superlinear-pale focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark motion-reduce:transform-none"
                   >
                     <Icon className="h-4 w-4" aria-hidden="true" />
                     {name}
@@ -449,7 +449,7 @@ export default function Podcast() {
         <section className="container py-12 sm:py-16">
           <div className="mb-7 flex items-end justify-between gap-4">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 Latest Episode
               </p>
               <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
@@ -481,9 +481,9 @@ export default function Podcast() {
           {feedState.status === "error" && (
             <div
               role="alert"
-              className="rounded-3xl border border-amber-300/20 bg-amber-300/[0.06] p-8 text-center"
+              className="rounded-3xl border border-superlinear-on-dark/20 bg-superlinear/[0.06] p-8 text-center"
             >
-              <p className="text-base font-medium text-amber-100">
+              <p className="text-base font-medium text-superlinear-pale">
                 暂时没有读到官方RSS
               </p>
               <p className="mt-2 text-sm text-zinc-400">{feedState.error}</p>
@@ -491,7 +491,7 @@ export default function Podcast() {
                 <Button
                   type="button"
                   onClick={() => setRefreshKey(value => value + 1)}
-                  className="min-h-11 bg-amber-400 text-[#211300] hover:bg-amber-300"
+                  className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
                 >
                   <RefreshCw className="mr-2 h-4 w-4" />
                   重新同步
@@ -557,7 +557,7 @@ export default function Podcast() {
                   <Button
                     type="button"
                     onClick={() => playEpisode(latestEpisode)}
-                    className="min-h-11 bg-amber-400 text-[#211300] hover:bg-amber-300"
+                    className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
                   >
                     {activeEpisode?.id === latestEpisode.id && isPlaying ? (
                       <Pause className="mr-2 h-4 w-4 fill-current" />
@@ -592,7 +592,7 @@ export default function Podcast() {
           <div className="container py-12 sm:py-16">
             <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                   All Episodes
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
@@ -617,14 +617,14 @@ export default function Podcast() {
                   value={query}
                   onChange={event => setQuery(event.target.value)}
                   placeholder="搜索集数、标题或内容…"
-                  className="min-h-12 w-full rounded-full border border-white/10 bg-white/[0.05] py-3 pl-11 pr-12 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-amber-300/20"
+                  className="min-h-12 w-full rounded-full border border-white/10 bg-white/[0.05] py-3 pl-11 pr-12 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-superlinear-on-dark/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-superlinear-on-dark/20"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="清空搜索"
-                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-amber-300"
+                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-superlinear-on-dark"
                   >
                     <X className="h-4 w-4" aria-hidden="true" />
                   </button>
@@ -669,14 +669,14 @@ export default function Podcast() {
                       key={episode.id}
                       className={`group flex gap-4 overflow-hidden rounded-2xl border p-3 transition duration-300 sm:gap-5 sm:p-4 ${
                         isActive
-                          ? "border-amber-300/40 bg-amber-300/[0.08]"
+                          ? "border-superlinear-on-dark/40 bg-superlinear/[0.08]"
                           : "border-white/10 bg-white/[0.035] hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06]"
                       } motion-reduce:transform-none`}
                     >
                       <button
                         type="button"
                         onClick={() => playEpisode(episode)}
-                        className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 sm:h-36 sm:w-36"
+                        className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-superlinear-on-dark sm:h-36 sm:w-36"
                         aria-label={`${isActive && isPlaying ? "暂停" : "播放"}${episode.title}`}
                       >
                         <Artwork
@@ -713,7 +713,7 @@ export default function Podcast() {
                           <button
                             type="button"
                             onClick={() => playEpisode(episode)}
-                            className="inline-flex min-h-11 items-center gap-1.5 text-amber-300 transition hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                            className="inline-flex min-h-11 items-center gap-1.5 text-superlinear-on-dark transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                           >
                             {isActive && isPlaying ? (
                               <Pause className="h-3.5 w-3.5 fill-current" />
@@ -726,7 +726,7 @@ export default function Podcast() {
                             href={episode.shareUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                            className="inline-flex min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                           >
                             详情
                             <ExternalLink className="h-3.5 w-3.5" />
@@ -736,7 +736,7 @@ export default function Podcast() {
                               href={episode.transcriptUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="hidden min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300 sm:inline-flex"
+                              className="hidden min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark sm:inline-flex"
                             >
                               <ScrollText className="h-3.5 w-3.5" />
                               文字稿
@@ -762,7 +762,7 @@ export default function Podcast() {
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  className="mt-5 min-h-11 rounded-full border border-white/10 px-5 text-sm text-amber-300 transition hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                  className="mt-5 min-h-11 rounded-full border border-white/10 px-5 text-sm text-superlinear-on-dark transition hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                 >
                   清空搜索
                 </button>
@@ -788,7 +788,7 @@ export default function Podcast() {
         <section className="border-t border-white/10 bg-[#0B0F1A]">
           <div className="container grid gap-10 py-12 sm:py-16 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-amber-300">
+              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 Subscribe
               </p>
               <h2 className="mt-3 max-w-2xl text-2xl font-semibold text-white sm:text-3xl">
@@ -805,7 +805,7 @@ export default function Podcast() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm text-zinc-300 transition hover:border-amber-300/40 hover:bg-amber-300/10 hover:text-amber-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:bg-superlinear/10 hover:text-superlinear-pale focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                 >
                   <Icon className="h-4 w-4" aria-hidden="true" />
                   {name}
@@ -827,13 +827,13 @@ export default function Podcast() {
           <div className="flex flex-wrap items-center gap-5">
             <a
               href="https://speaker.lizheng.ai"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               嘉宾邀请
             </a>
             <a
               href="https://www.lizheng.ai"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               关于我
             </a>
@@ -841,7 +841,7 @@ export default function Podcast() {
               href="https://stay.superlinear.academy"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               Stay Superlinear会员
             </a>
@@ -849,7 +849,7 @@ export default function Podcast() {
               href="https://ai-builders.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition hover:text-amber-300"
+              className="transition hover:text-superlinear-on-dark"
             >
               AI Builders
             </a>
@@ -858,7 +858,7 @@ export default function Podcast() {
       </footer>
 
       {activeEpisode && (
-        <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-amber-300/25 bg-[#090C14]/96 shadow-[0_-18px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+        <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-superlinear-on-dark/25 bg-[#090C14]/96 shadow-[0_-18px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl">
           <div className="container flex items-center gap-3 py-3 sm:gap-4">
             <Artwork
               src={activeEpisode.artwork}
@@ -895,7 +895,7 @@ export default function Podcast() {
                 playerRef.current?.pause();
                 setActiveEpisode(null);
               }}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-amber-300"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-superlinear-on-dark"
               aria-label="关闭播放器"
             >
               <X className="h-5 w-5" aria-hidden="true" />

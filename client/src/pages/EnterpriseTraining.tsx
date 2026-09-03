@@ -387,7 +387,6 @@ export default function EnterpriseTraining() {
       <CollabHeader
         backHref="/collab"
         section={{ en: "Enterprise AI training", zh: "企业AI培训" }}
-        tone="superlinear"
       />
 
       <main>
@@ -397,7 +396,7 @@ export default function EnterpriseTraining() {
             <div>
               <p
                 className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-light",
+                  "font-mono text-xs leading-5 text-superlinear-on-dark",
                   lang === "en"
                     ? "uppercase tracking-[0.2em]"
                     : "tracking-[0.1em]"
@@ -445,10 +444,10 @@ export default function EnterpriseTraining() {
               </div>
             </div>
 
-            <aside className="border border-superlinear-light/30 bg-[#123521] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.25)] md:p-9">
+            <aside className="border border-superlinear-on-dark/30 bg-[#123521] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.25)] md:p-9">
               <p
                 className={cn(
-                  "font-mono text-[11px] leading-5 text-[#A4D9B5]",
+                  "font-mono text-[11px] leading-5 text-superlinear-on-dark",
                   lang === "en"
                     ? "uppercase tracking-[0.18em]"
                     : "tracking-[0.1em]"
@@ -467,7 +466,7 @@ export default function EnterpriseTraining() {
               </p>
               <a
                 href={mailto}
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#A4D9B5] transition hover:text-white"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
               >
                 {t.anchorCta}
                 <ArrowRight className="h-4 w-4" />
@@ -476,7 +475,7 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        <section className="border-b border-[#D6D1C7] bg-[#F2F0EA] py-14 text-[#191712] md:py-20">
+        <section className="border-b border-[#D6D1C7] bg-superlinear-canvas py-14 text-superlinear-ink md:py-20">
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[0.58fr_1.42fr] lg:items-end lg:gap-16">
               <div>
@@ -505,7 +504,7 @@ export default function EnterpriseTraining() {
                   href="https://maven.com/superlinear/aibuilders#reviews"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                 >
                   {t.reviewsCta}
                   <ExternalLink className="h-4 w-4" />
@@ -544,7 +543,7 @@ export default function EnterpriseTraining() {
 
         <section
           id="formats"
-          className="scroll-mt-[76px] bg-[#F2F0EA] py-16 text-[#191712] md:py-24"
+          className="scroll-mt-[76px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
         >
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
@@ -582,13 +581,16 @@ export default function EnterpriseTraining() {
                     key={format.number}
                     className={cn(
                       "grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-3 border-b border-[#CFC9BE] px-5 py-7 xl:grid-cols-[2.5rem_minmax(0,0.9fr)_minmax(14rem,0.7fr)_minmax(0,1.15fr)_14.5rem] xl:items-start xl:gap-6 xl:px-6",
-                      format.featured && "bg-[#173C2A] text-white"
+                      format.featured &&
+                        "border-l-4 border-l-superlinear bg-superlinear-pale"
                     )}
                   >
                     <span
                       className={cn(
                         "row-span-4 font-mono text-xs xl:row-span-1",
-                        format.featured ? "text-white/45" : "text-[#797268]"
+                        format.featured
+                          ? "text-superlinear-deep/55"
+                          : "text-[#797268]"
                       )}
                     >
                       {format.number}
@@ -600,9 +602,7 @@ export default function EnterpriseTraining() {
                           lang === "en"
                             ? "uppercase tracking-[0.15em]"
                             : "tracking-[0.08em]",
-                          format.featured
-                            ? "text-[#A4D9B5]"
-                            : "text-superlinear-deep"
+                          "text-superlinear-deep"
                         )}
                       >
                         {format.label}
@@ -614,7 +614,9 @@ export default function EnterpriseTraining() {
                     <p
                       className={cn(
                         "text-xl font-semibold leading-7 tracking-[-0.02em] xl:whitespace-nowrap xl:text-right",
-                        format.featured ? "text-white" : "text-[#173C2A]"
+                        format.featured
+                          ? "text-superlinear-ink"
+                          : "text-[#173C2A]"
                       )}
                     >
                       {format.price}
@@ -622,7 +624,9 @@ export default function EnterpriseTraining() {
                     <p
                       className={cn(
                         "text-sm leading-7",
-                        format.featured ? "text-white/70" : "text-[#5C574D]"
+                        format.featured
+                          ? "text-superlinear-body"
+                          : "text-[#5C574D]"
                       )}
                     >
                       {format.detail}
@@ -634,7 +638,7 @@ export default function EnterpriseTraining() {
                       className={cn(
                         "inline-flex max-w-full items-center gap-2 self-start text-sm font-semibold xl:justify-self-end xl:whitespace-nowrap",
                         format.featured
-                          ? "text-[#A4D9B5] hover:text-white"
+                          ? "text-superlinear-link hover:text-superlinear-deep"
                           : "text-superlinear-deep hover:text-superlinear"
                       )}
                     >
@@ -662,7 +666,7 @@ export default function EnterpriseTraining() {
                 href="https://www.superlinear.academy/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
               >
                 {t.communityCta}
                 <ExternalLink className="h-4 w-4" />
@@ -727,7 +731,7 @@ export default function EnterpriseTraining() {
               <div>
                 <p
                   className={cn(
-                    "font-mono text-xs leading-5 text-[#A4D9B5]",
+                    "font-mono text-xs leading-5 text-superlinear-on-dark",
                     lang === "en"
                       ? "uppercase tracking-[0.18em]"
                       : "tracking-[0.1em]"
@@ -765,7 +769,7 @@ export default function EnterpriseTraining() {
                     )}
                   >
                     <div className="flex items-center justify-between gap-4">
-                      <Icon className="h-5 w-5 text-[#A4D9B5]" />
+                      <Icon className="h-5 w-5 text-superlinear-on-dark" />
                       <span className="font-mono text-xs text-white/35">
                         {String(index + 1).padStart(2, "0")}
                       </span>
@@ -784,7 +788,7 @@ export default function EnterpriseTraining() {
             <div className="mt-8 grid gap-3 border border-white/20 bg-black/10 p-5 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-10 md:p-7">
               <p
                 className={cn(
-                  "font-mono text-[10px] leading-5 text-[#A4D9B5]",
+                  "font-mono text-[10px] leading-5 text-superlinear-on-dark",
                   lang === "en"
                     ? "uppercase tracking-[0.15em]"
                     : "tracking-[0.08em]"
@@ -799,7 +803,7 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        <section className="bg-white py-16 text-[#191712] md:py-24">
+        <section className="bg-white py-16 text-superlinear-ink md:py-24">
           <div className="container grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
             <figure>
               <div className="overflow-hidden bg-[#E9E4DA]">
@@ -855,7 +859,7 @@ export default function EnterpriseTraining() {
               </p>
               <Link
                 href={withLanguage("/decks", lang)}
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
               >
                 {t.decksCta}
                 <ArrowRight className="h-4 w-4" />
@@ -864,7 +868,7 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        <section className="bg-[#F2F0EA] py-14 text-[#191712] md:py-20">
+        <section className="bg-superlinear-canvas py-14 text-superlinear-ink md:py-20">
           <div className="container grid gap-8 border-y border-[#CFC9BE] py-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
             <div>
               <p

@@ -142,7 +142,7 @@ function ModuleItem({
         className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/5 transition-colors"
       >
         <div className="flex items-center gap-4">
-          <span className="text-amber-400 font-bold text-lg w-4">
+          <span className="text-superlinear-on-dark font-bold text-lg w-4">
             {mod.num}
           </span>
           <span className="text-white font-semibold">{mod.title}</span>
@@ -163,7 +163,7 @@ function ModuleItem({
               key={i}
               className="flex gap-3 py-2 border-b border-white/[0.06] last:border-0"
             >
-              <span className="text-xs font-mono text-amber-400 pt-0.5 flex-shrink-0 w-6">
+              <span className="text-xs font-mono text-superlinear-on-dark pt-0.5 flex-shrink-0 w-6">
                 {String(
                   mod.num === "一"
                     ? i + 1
@@ -196,9 +196,9 @@ function FaqItem({ q, a }: { q: string; a: string }) {
       >
         <span className="text-white font-semibold pr-4">{q}</span>
         {open ? (
-          <ChevronUp className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <ChevronUp className="w-4 h-4 text-superlinear-on-dark flex-shrink-0" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <ChevronDown className="w-4 h-4 text-superlinear-on-dark flex-shrink-0" />
         )}
       </button>
       {open && (
@@ -222,7 +222,7 @@ function renderInline(text: string): React.ReactNode {
       return (
         <code
           key={i}
-          className="text-amber-300 bg-white/10 px-1 rounded text-xs font-mono"
+          className="text-superlinear-on-dark bg-white/10 px-1 rounded text-xs font-mono"
         >
           {part.slice(1, -1)}
         </code>
@@ -271,7 +271,9 @@ function MarkdownMessage({ content }: { content: string }) {
           key={i}
           className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
         >
-          <span className="text-amber-400 flex-shrink-0 mt-0.5">•</span>
+          <span className="text-superlinear-on-dark flex-shrink-0 mt-0.5">
+            •
+          </span>
           <span>{renderInline(line.slice(2))}</span>
         </li>
       );
@@ -283,7 +285,7 @@ function MarkdownMessage({ content }: { content: string }) {
             key={i}
             className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
           >
-            <span className="text-amber-400 font-mono text-xs flex-shrink-0 mt-0.5 w-4">
+            <span className="text-superlinear-on-dark font-mono text-xs flex-shrink-0 mt-0.5 w-4">
               {m[1]}.
             </span>
             <span>{renderInline(m[2])}</span>
@@ -294,7 +296,7 @@ function MarkdownMessage({ content }: { content: string }) {
       nodes.push(
         <blockquote
           key={i}
-          className="border-l-2 border-amber-400/40 pl-3 text-zinc-400 text-sm italic my-1"
+          className="border-l-2 border-superlinear-on-dark/40 pl-3 text-zinc-400 text-sm italic my-1"
         >
           {renderInline(line.slice(2))}
         </blockquote>
@@ -428,10 +430,10 @@ function AdvisorSection() {
     <section id="advisor" className="py-16 md:py-20">
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="mb-8">
-          <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-            <span className="w-6 h-px bg-amber-400 inline-block" />
+          <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+            <span className="w-6 h-px bg-superlinear inline-block" />
             AI顾问
-            <span className="w-6 h-px bg-amber-400 inline-block" />
+            <span className="w-6 h-px bg-superlinear inline-block" />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
             与《真本事》AI顾问对话
@@ -449,9 +451,9 @@ function AdvisorSection() {
                 <button
                   key={s}
                   onClick={() => prefillFromStarter(s)}
-                  className="text-left p-3.5 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-amber-400/40 transition-all text-sm text-zinc-300 group"
+                  className="text-left p-3.5 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-superlinear-on-dark/40 transition-all text-sm text-zinc-300 group"
                 >
-                  <span className="text-amber-400 mr-2 group-hover:text-amber-300">
+                  <span className="text-superlinear-on-dark mr-2 group-hover:text-white">
                     ▸
                   </span>
                   {s}
@@ -473,8 +475,8 @@ function AdvisorSection() {
             </button>
 
             {showExample && (
-              <div className="border border-amber-400/15 bg-amber-500/[0.04] p-4 space-y-2">
-                <p className="text-[10px] text-amber-400/70 uppercase tracking-widest">
+              <div className="border border-superlinear-on-dark/15 bg-superlinear/[0.04] p-4 space-y-2">
+                <p className="text-[10px] text-superlinear-on-dark/70 uppercase tracking-widest">
                   优秀提问示范
                 </p>
                 <p className="text-zinc-300 text-sm leading-relaxed">
@@ -494,8 +496,8 @@ function AdvisorSection() {
                 className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {m.role === "assistant" && (
-                  <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-amber-400 text-[10px] font-bold">
+                  <div className="w-6 h-6 rounded-full bg-superlinear/20 border border-superlinear-on-dark/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-superlinear-on-dark text-[10px] font-bold">
                       真
                     </span>
                   </div>
@@ -503,7 +505,7 @@ function AdvisorSection() {
                 <div
                   className={`max-w-[82%] ${
                     m.role === "user"
-                      ? "bg-amber-500/15 border border-amber-400/20 text-amber-100 text-sm leading-relaxed px-3 py-2"
+                      ? "bg-superlinear/15 border border-superlinear-on-dark/20 text-superlinear-pale text-sm leading-relaxed px-3 py-2"
                       : ""
                   }`}
                 >
@@ -517,8 +519,8 @@ function AdvisorSection() {
             ))}
             {loading && (
               <div className="flex gap-3">
-                <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-400/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-amber-400 text-[10px] font-bold">
+                <div className="w-6 h-6 rounded-full bg-superlinear/20 border border-superlinear-on-dark/30 flex items-center justify-center flex-shrink-0">
+                  <span className="text-superlinear-on-dark text-[10px] font-bold">
                     真
                   </span>
                 </div>
@@ -539,13 +541,13 @@ function AdvisorSection() {
             placeholder="说说你的情况：行业/职级/工作年限，遇到了什么问题，已经尝试过什么，希望达到什么目标——背景越具体，建议越准。"
             rows={3}
             maxLength={2000}
-            className="flex-1 bg-white/5 border border-white/10 text-white placeholder:text-zinc-600 text-sm px-3 py-2.5 resize-none focus:outline-none focus:border-amber-400/50 transition-colors"
+            className="flex-1 bg-white/5 border border-white/10 text-white placeholder:text-zinc-600 text-sm px-3 py-2.5 resize-none focus:outline-none focus:border-superlinear-on-dark/50 transition-colors"
           />
           <Button
             onClick={() => sendMessage(input)}
             disabled={loading || !input.trim()}
             aria-label="发送问题"
-            className="bg-amber-500 hover:bg-amber-600 text-black px-4 self-end disabled:opacity-40"
+            className="bg-superlinear hover:bg-superlinear-deep text-white px-4 self-end disabled:opacity-40"
           >
             <Send className="w-4 h-4" />
           </Button>
@@ -579,7 +581,7 @@ function AdvisorSection() {
             <div className="flex flex-col gap-1.5 flex-shrink-0 justify-center">
               <button
                 onClick={copyInstallLink}
-                className="text-xs border border-amber-400/40 text-amber-400 hover:bg-amber-400/10 px-3 py-2 transition-colors whitespace-nowrap"
+                className="text-xs border border-superlinear-on-dark/40 text-superlinear-on-dark hover:bg-superlinear/10 px-3 py-2 transition-colors whitespace-nowrap"
               >
                 {copied ? "已复制 ✓" : "复制仓库地址"}
               </button>
@@ -624,9 +626,9 @@ export default function ZhenbenShi() {
     <div className="min-h-screen bg-[#0B0F1A] text-white relative">
       {/* Gradient blur backgrounds */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 -left-32 w-[32rem] h-[32rem] bg-amber-500/[0.07] rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -left-32 w-[32rem] h-[32rem] bg-superlinear/[0.07] rounded-full blur-3xl" />
         <div className="absolute top-0 right-0 w-[28rem] h-[28rem] bg-sky-500/[0.06] rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/3 w-[26rem] h-[26rem] bg-orange-500/[0.06] rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/3 w-[26rem] h-[26rem] bg-superlinear/[0.06] rounded-full blur-3xl" />
       </div>
 
       {/* ── Nav ── */}
@@ -637,7 +639,7 @@ export default function ZhenbenShi() {
             <div className="flex items-center gap-3">
               <Link
                 href={withLanguage("/", lang)}
-                className="flex items-center gap-1 text-zinc-500 hover:text-amber-400 transition-colors text-sm"
+                className="flex items-center gap-1 text-zinc-500 hover:text-superlinear-on-dark transition-colors text-sm"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span className="hidden sm:inline">孙煜征</span>
@@ -661,14 +663,14 @@ export default function ZhenbenShi() {
                 <button
                   key={id}
                   onClick={() => scrollTo(id)}
-                  className="text-zinc-400 hover:text-amber-400 transition-colors text-sm"
+                  className="text-zinc-400 hover:text-superlinear-on-dark transition-colors text-sm"
                 >
                   {label}
                 </button>
               ))}
               <Button
                 size="sm"
-                className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+                className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
                 asChild
               >
                 <a
@@ -682,7 +684,7 @@ export default function ZhenbenShi() {
               <Button
                 size="sm"
                 variant="outline"
-                className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10"
+                className="border-superlinear/50 text-superlinear-on-dark hover:bg-superlinear/10"
                 asChild
               >
                 <a
@@ -697,7 +699,7 @@ export default function ZhenbenShi() {
 
             {/* Mobile hamburger */}
             <button
-              className="lg:hidden text-zinc-400 hover:text-amber-400"
+              className="lg:hidden text-zinc-400 hover:text-superlinear-on-dark"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -722,7 +724,7 @@ export default function ZhenbenShi() {
                 <button
                   key={id}
                   onClick={() => scrollTo(id)}
-                  className="block text-zinc-400 hover:text-amber-400 transition-colors text-sm"
+                  className="block text-zinc-400 hover:text-superlinear-on-dark transition-colors text-sm"
                 >
                   {label}
                 </button>
@@ -731,7 +733,7 @@ export default function ZhenbenShi() {
                 href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
+                className="block text-superlinear-on-dark hover:text-white text-sm font-semibold"
               >
                 微信读书 →
               </a>
@@ -739,7 +741,7 @@ export default function ZhenbenShi() {
                 href="https://item.jd.com/14667625.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-amber-400 hover:text-amber-300 text-sm font-semibold"
+                className="block text-superlinear-on-dark hover:text-white text-sm font-semibold"
               >
                 京东购买 →
               </a>
@@ -769,7 +771,8 @@ export default function ZhenbenShi() {
               <h1 className="text-4xl md:text-5xl font-black leading-tight">
                 《真本事：
                 <br />
-                从会工作<span className="text-amber-400">到会赚钱</span>》
+                从会工作
+                <span className="text-superlinear-on-dark">到会赚钱</span>》
               </h1>
               <p className="text-zinc-400 mt-3 text-lg">
                 把工作变成能力，把能力变成收入
@@ -781,7 +784,7 @@ export default function ZhenbenShi() {
 
             <div className="flex flex-wrap gap-3">
               <Button
-                className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+                className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
                 asChild
               >
                 <a
@@ -829,7 +832,7 @@ export default function ZhenbenShi() {
           <div className="flex justify-center order-1 md:order-2">
             <div className="relative">
               {/* Glow */}
-              <div className="absolute inset-0 bg-amber-500/20 blur-3xl rounded-full scale-75" />
+              <div className="absolute inset-0 bg-superlinear/20 blur-3xl rounded-full scale-75" />
               {/* 3D book */}
               <div
                 className="relative flex items-stretch"
@@ -880,8 +883,8 @@ export default function ZhenbenShi() {
       <section className="bg-white/[0.03] py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="mb-10">
-            <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               认知觉醒
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -910,7 +913,7 @@ export default function ZhenbenShi() {
             ].map(card => (
               <Card
                 key={card.title}
-                className="bg-white/[0.03] border-l-2 border-l-amber-400 border-t-0 border-r-0 border-b-0 rounded-none"
+                className="bg-white/[0.03] border-l-2 border-l-superlinear-on-dark border-t-0 border-r-0 border-b-0 rounded-none"
               >
                 <CardContent className="pt-6">
                   <h3 className="text-white font-bold text-lg mb-2">
@@ -930,10 +933,10 @@ export default function ZhenbenShi() {
       <section id="framework" className="py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               核心框架
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+              <span className="w-6 h-px bg-superlinear inline-block" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               个人价值公式
@@ -947,11 +950,11 @@ export default function ZhenbenShi() {
             </p>
             <p className="text-2xl md:text-3xl font-bold text-white leading-loose">
               个人价值
-              <span className="text-amber-400 mx-2">＝</span>
+              <span className="text-superlinear-on-dark mx-2">＝</span>
               了解市场
-              <span className="text-amber-400 mx-2">×</span>
+              <span className="text-superlinear-on-dark mx-2">×</span>
               打造产品
-              <span className="text-amber-400 mx-2">×</span>
+              <span className="text-superlinear-on-dark mx-2">×</span>
               利用杠杆
             </p>
           </div>
@@ -979,7 +982,7 @@ export default function ZhenbenShi() {
             ].map(c => (
               <Card key={c.num} className="bg-white/[0.03] border-white/10">
                 <CardContent className="pt-6 space-y-2">
-                  <p className="text-xs font-mono text-amber-400 tracking-wider">
+                  <p className="text-xs font-mono text-superlinear-on-dark tracking-wider">
                     {c.num} · {c.tag}
                   </p>
                   <h3 className="text-white font-bold">{c.title}</h3>
@@ -997,8 +1000,8 @@ export default function ZhenbenShi() {
       <section className="bg-white/[0.03] py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="mb-10">
-            <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               怎样练出本事
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -1037,7 +1040,7 @@ export default function ZhenbenShi() {
                 <span className="absolute top-4 right-5 text-5xl font-serif text-white/[0.05] select-none leading-none">
                   {step.n}
                 </span>
-                <p className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">
+                <p className="text-xs font-semibold text-superlinear-on-dark uppercase tracking-wider mb-2">
                   {step.label}
                 </p>
                 <h3 className="text-white font-bold mb-2">{step.title}</h3>
@@ -1057,8 +1060,8 @@ export default function ZhenbenShi() {
       <section id="outline" className="bg-white/[0.03] py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="mb-10">
-            <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               课程大纲
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -1097,10 +1100,10 @@ export default function ZhenbenShi() {
       <section id="endorsements" className="py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               封面推荐
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+              <span className="w-6 h-px bg-superlinear inline-block" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               他们为这本书背书
@@ -1111,7 +1114,7 @@ export default function ZhenbenShi() {
             {ENDORSEMENTS.map(e => (
               <Card
                 key={e.name}
-                className="bg-white/[0.03] border-t-2 border-t-amber-400 border-x-0 border-b-0 rounded-none"
+                className="bg-white/[0.03] border-t-2 border-t-superlinear-on-dark border-x-0 border-b-0 rounded-none"
               >
                 <CardContent className="pt-6 space-y-4 relative">
                   <span className="absolute top-3 right-4 text-5xl font-serif text-white/10 leading-none select-none">
@@ -1137,13 +1140,13 @@ export default function ZhenbenShi() {
           <div className="grid md:grid-cols-[240px_1fr] gap-10 items-start">
             {/* Photo */}
             <div className="relative mx-auto md:mx-0" style={{ maxWidth: 240 }}>
-              <div className="absolute inset-0 bg-amber-500/10 blur-2xl" />
+              <div className="absolute inset-0 bg-superlinear/10 blur-2xl" />
               <img
                 src="/book/author.jpg"
                 alt="孙煜征博士"
                 className="relative w-full aspect-[3/4] object-cover object-top"
               />
-              <div className="bg-amber-500 text-black text-xs font-semibold text-center py-2 tracking-wide">
+              <div className="bg-superlinear text-white text-xs font-semibold text-center py-2 tracking-wide">
                 孙煜征 博士
               </div>
             </div>
@@ -1151,8 +1154,8 @@ export default function ZhenbenShi() {
             {/* Bio */}
             <div className="space-y-5">
               <div>
-                <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-                  <span className="w-6 h-px bg-amber-400 inline-block" />
+                <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                  <span className="w-6 h-px bg-superlinear inline-block" />
                   关于作者
                 </div>
                 <h2 className="text-3xl md:text-4xl font-black text-white">
@@ -1175,7 +1178,7 @@ export default function ZhenbenShi() {
                     key={item}
                     className="flex gap-3 text-sm text-zinc-300 leading-relaxed"
                   >
-                    <span className="text-amber-400 flex-shrink-0 mt-0.5">
+                    <span className="text-superlinear-on-dark flex-shrink-0 mt-0.5">
                       ▸
                     </span>
                     {item}
@@ -1216,7 +1219,7 @@ export default function ZhenbenShi() {
                 href="https://www.lizheng.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-amber-400 hover:text-amber-300 transition-colors"
+                className="inline-flex items-center text-sm text-superlinear-on-dark hover:text-white transition-colors"
               >
                 个人主页：lizheng.ai →
               </a>
@@ -1229,10 +1232,10 @@ export default function ZhenbenShi() {
       <section id="community" className="py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               Superlinear社群
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+              <span className="w-6 h-px bg-superlinear inline-block" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               在免费社区里
@@ -1259,8 +1262,8 @@ export default function ZhenbenShi() {
       <section className="bg-white/[0.03] py-16 md:py-20 relative">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="mb-10">
-            <div className="flex items-center gap-3 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-amber-400 inline-block" />
+            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+              <span className="w-6 h-px bg-superlinear inline-block" />
               常见问题
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -1287,7 +1290,7 @@ export default function ZhenbenShi() {
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               size="lg"
-              className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+              className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
               asChild
             >
               <a

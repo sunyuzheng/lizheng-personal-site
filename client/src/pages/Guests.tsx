@@ -97,7 +97,7 @@ export default function Guests() {
                 ? "Search by name, company, or title…"
                 : "搜索嘉宾姓名、公司、职位…"
             }
-            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-10 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-amber-300/50 focus:bg-white/8"
+            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-10 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-superlinear-on-dark/50 focus:bg-white/8"
           />
           {query && (
             <button
@@ -113,12 +113,18 @@ export default function Guests() {
           <p className="mb-6 text-center text-sm text-zinc-500">
             {lang === "en" ? (
               <>
-                Found <span className="text-amber-300">{filtered.length}</span>{" "}
+                Found{" "}
+                <span className="text-superlinear-on-dark">
+                  {filtered.length}
+                </span>{" "}
                 guest{filtered.length === 1 ? "" : "s"}
               </>
             ) : (
               <>
-                找到 <span className="text-amber-300">{filtered.length}</span>{" "}
+                找到{" "}
+                <span className="text-superlinear-on-dark">
+                  {filtered.length}
+                </span>{" "}
                 位嘉宾
               </>
             )}
@@ -154,7 +160,7 @@ export default function Guests() {
             {filtered.map(guest => (
               <article
                 key={guest.slug}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40 hover:bg-white/10"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-superlinear-on-dark/40 hover:bg-white/10"
               >
                 <Link
                   href={withLanguage(`/guests/${guest.slug}`, lang)}
@@ -174,7 +180,7 @@ export default function Guests() {
                       height={180}
                     />
                     <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition duration-300 group-hover:opacity-100">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-amber-400/90 text-[#211300]">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-superlinear/90 text-white">
                         <Play className="h-4 w-4 fill-current" />
                       </div>
                     </div>
@@ -193,7 +199,7 @@ export default function Guests() {
                           : guest.guest_name}
                       </h2>
                       {guest.guest_company && (
-                        <p className="mt-1 line-clamp-1 text-sm font-medium text-amber-300">
+                        <p className="mt-1 line-clamp-1 text-sm font-medium text-superlinear-on-dark">
                           {guest.guest_company}
                         </p>
                       )}
@@ -224,7 +230,7 @@ export default function Guests() {
                 <div className="grid grid-cols-2 gap-2 border-t border-white/10 p-3">
                   <Link
                     href={withLanguage(`/guests/${guest.slug}`, lang)}
-                    className="inline-flex items-center justify-center gap-1 rounded-lg border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-xs font-semibold text-amber-300 transition hover:bg-amber-300/20"
+                    className="inline-flex items-center justify-center gap-1 rounded-lg border border-superlinear-on-dark/30 bg-superlinear/10 px-3 py-2 text-xs font-semibold text-superlinear-on-dark transition hover:bg-superlinear/20"
                   >
                     {lang === "en" ? "View page" : "查看子页"}
                     <ArrowRight className="h-3 w-3" />

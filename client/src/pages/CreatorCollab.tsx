@@ -222,7 +222,7 @@ function AppearanceCard({
       href={appearance.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex min-w-0 flex-col bg-[#0F1420] p-4 transition hover:bg-[#151B28] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-light"
+      className="group flex min-w-0 flex-col bg-[#0F1420] p-4 transition hover:bg-[#151B28] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark"
     >
       <div className="flex items-center justify-between gap-3">
         <time
@@ -238,7 +238,7 @@ function AppearanceCard({
             </span>
           )}
           <ExternalLink
-            className="h-3.5 w-3.5 text-zinc-600 transition group-hover:text-superlinear-light"
+            className="h-3.5 w-3.5 text-zinc-600 transition group-hover:text-superlinear-on-dark"
             aria-hidden="true"
           />
         </span>
@@ -956,18 +956,16 @@ export default function CreatorCollab() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(35,131,67,0.12)_0%,rgba(11,15,26,0)_30rem)]" />
       <CollabHeader
         backHref="/collab"
         section={{ en: "Podcasts & creators", zh: "播客与视频" }}
-        tone="superlinear"
       />
 
       <main className="relative z-10">
         <section className="container py-12 md:py-20">
           <div className="grid gap-7 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-16 lg:gap-y-8">
             <div className="order-1 lg:col-start-1 lg:row-start-1">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-light">
+              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.eyebrow}
               </p>
               <h1 className="mt-5 max-w-3xl whitespace-pre-line text-4xl font-semibold leading-[1.08] text-white md:text-[3.5rem]">
@@ -1046,7 +1044,7 @@ export default function CreatorCollab() {
                   index > 1 && "lg:border-l lg:border-white/10"
                 )}
               >
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-light">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-on-dark">
                   {proof.label}
                 </p>
                 <p className="mt-2 text-xs font-medium leading-5 text-zinc-300">
@@ -1058,7 +1056,7 @@ export default function CreatorCollab() {
 
           <section
             id="conversations"
-            className="relative left-1/2 mt-16 w-screen -translate-x-1/2 scroll-mt-24 bg-[#F2F0EA] py-16 text-[#191712] md:mt-24 md:py-24"
+            className="relative left-1/2 mt-16 w-screen -translate-x-1/2 scroll-mt-24 bg-superlinear-canvas py-16 text-superlinear-ink md:mt-24 md:py-24"
           >
             <div className="container">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
@@ -1130,7 +1128,7 @@ export default function CreatorCollab() {
                                   "col-span-2 sm:col-span-1"
                               )}
                             >
-                              <p className="whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-[#191712] sm:text-2xl">
+                              <p className="whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-superlinear-ink sm:text-2xl">
                                 {metric.value}
                               </p>
                               <p className="mt-1 text-xs font-medium leading-5 text-[#5C574D]">
@@ -1163,7 +1161,7 @@ export default function CreatorCollab() {
                           href={conversation.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-deep transition hover:text-superlinear"
+                          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
                         >
                           {conversation.linkLabel}
                           <ExternalLink className="h-3.5 w-3.5" />
@@ -1232,11 +1230,11 @@ export default function CreatorCollab() {
 
           <section
             id="questions"
-            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 bg-[#173C2A] py-16 md:py-24"
+            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 border-y border-white/10 bg-[#0F1420] py-16 md:py-24"
           >
             <div className="container grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#A4D9B5]">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                   {t.questionsEyebrow}
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
@@ -1262,7 +1260,7 @@ export default function CreatorCollab() {
                       <p className="mt-2 text-sm leading-7 text-zinc-400">
                         {question.detail}
                       </p>
-                      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#A4D9B5]">
+                      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-superlinear-on-dark">
                         {question.proof}
                       </p>
                     </div>
@@ -1276,7 +1274,7 @@ export default function CreatorCollab() {
           </section>
 
           <section className="mt-14 md:mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-light">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
               {t.formatsEyebrow}
             </p>
             <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white md:text-4xl">
@@ -1288,7 +1286,7 @@ export default function CreatorCollab() {
                   key={format.number}
                   className="flex flex-col border-b border-white/10 py-7 last:border-b-0 lg:border-b-0 lg:border-l lg:px-7 lg:first:border-l-0 lg:first:pl-0 lg:last:pr-0"
                 >
-                  <span className="font-mono text-xs text-superlinear-light">
+                  <span className="font-mono text-xs text-superlinear-on-dark">
                     {format.number}
                   </span>
                   <h3 className="mt-5 text-xl font-semibold text-white">
@@ -1297,7 +1295,7 @@ export default function CreatorCollab() {
                   <p className="mt-3 text-sm leading-7 text-zinc-400">
                     {format.detail}
                   </p>
-                  <p className="mt-5 border-t border-white/10 pt-4 text-xs font-medium leading-5 text-[#A4D9B5]">
+                  <p className="mt-5 border-t border-white/10 pt-4 text-xs font-medium leading-5 text-superlinear-on-dark">
                     {format.proof}
                   </p>
                 </article>
@@ -1305,7 +1303,7 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section className="relative left-1/2 mt-16 w-screen -translate-x-1/2 bg-[#F2F0EA] py-16 text-[#191712] md:mt-24 md:py-20">
+          <section className="relative left-1/2 mt-16 w-screen -translate-x-1/2 bg-superlinear-canvas py-16 text-superlinear-ink md:mt-24 md:py-20">
             <div className="container">
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
                 {t.appearancesEyebrow}
@@ -1367,7 +1365,7 @@ export default function CreatorCollab() {
                 href={buildCreatorMailto(lang)}
                 className={cn(
                   buttonVariants(),
-                  "mt-7 bg-white text-superlinear-deep hover:bg-[#F2F0EA]"
+                  "mt-7 bg-white text-superlinear-deep hover:bg-superlinear-canvas"
                 )}
               >
                 <Mail className="mr-2 h-4 w-4" />
@@ -1383,10 +1381,10 @@ export default function CreatorCollab() {
             </div>
           </section>
 
-          <section className="mt-14 border-y border-superlinear/35 bg-superlinear/[0.055] py-8 md:mt-20 md:py-12">
+          <section className="mt-14 border-y border-white/10 py-8 md:mt-20 md:py-12">
             <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-light">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                   {t.agreementsEyebrow}
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
@@ -1397,7 +1395,7 @@ export default function CreatorCollab() {
                     href={hostConversation.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group mt-7 block overflow-hidden border border-white/10 bg-black/15 transition hover:border-superlinear/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-superlinear-light"
+                    className="group mt-7 block overflow-hidden border border-white/10 bg-black/15 transition hover:border-superlinear/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-superlinear-on-dark"
                   >
                     <img
                       src={hostConversation.image}
@@ -1408,7 +1406,7 @@ export default function CreatorCollab() {
                       height={720}
                     />
                     <div className="p-4">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-superlinear-light">
+                      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-superlinear-on-dark">
                         {hostConversation.label}
                       </p>
                       <h3 className="mt-2 text-base font-semibold leading-6 text-white">
@@ -1417,7 +1415,7 @@ export default function CreatorCollab() {
                       <p className="mt-2 text-xs leading-6 text-zinc-400">
                         {hostConversation.note}
                       </p>
-                      <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-superlinear-light">
+                      <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-superlinear-on-dark">
                         {hostConversation.linkLabel}
                         <ExternalLink className="h-3 w-3" aria-hidden="true" />
                       </span>
@@ -1463,7 +1461,7 @@ export default function CreatorCollab() {
                 const Icon = item.icon;
                 return (
                   <div key={item.label} className="bg-[#0F1420] p-6">
-                    <Icon className="h-5 w-5 text-superlinear-light" />
+                    <Icon className="h-5 w-5 text-superlinear-on-dark" />
                     <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
                       {item.label}
                     </p>
@@ -1478,7 +1476,7 @@ export default function CreatorCollab() {
 
           <section className="mt-14 md:mt-20">
             <details className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 p-5 transition hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-light md:p-7 [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 p-5 transition hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark md:p-7 [&::-webkit-details-marker]:hidden">
                 <div>
                   <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
                     {lang === "en" ? "COMPLETE ARCHIVE" : "完整做客档案"}
@@ -1509,7 +1507,7 @@ export default function CreatorCollab() {
           </section>
 
           <section id="host-kit" className="scroll-mt-24 pt-14 md:pt-20">
-            <div className="rounded-2xl border border-white/10 bg-[#F2F0EA] p-6 text-[#191712] md:p-10">
+            <div className="rounded-2xl border border-white/10 bg-superlinear-canvas p-6 text-superlinear-ink md:p-10">
               <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
                 <div>
                   <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
@@ -1525,7 +1523,7 @@ export default function CreatorCollab() {
                     href="/collab/podcast-kit-zh.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 border border-superlinear/35 bg-white/55 px-4 py-3 text-sm font-semibold text-superlinear-deep transition hover:border-superlinear hover:bg-white"
+                    className="mt-5 inline-flex items-center gap-2 border border-superlinear/35 bg-white/55 px-4 py-3 text-sm font-semibold text-superlinear-link transition hover:border-superlinear hover:bg-white hover:text-superlinear-deep"
                   >
                     <Download className="h-4 w-4" />
                     {t.pdfCta}
@@ -1544,7 +1542,7 @@ export default function CreatorCollab() {
                   <a
                     href="/yuzheng-sun-headshot.jpg"
                     download="yuzheng-sun-headshot.jpg"
-                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-deep hover:text-superlinear"
+                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-deep"
                   >
                     <Download className="h-4 w-4" />
                     {t.headshotCta}

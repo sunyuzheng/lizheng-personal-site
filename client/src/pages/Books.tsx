@@ -170,17 +170,17 @@ export default function Books() {
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(251,191,36,0.08)_0%,rgba(11,15,26,0)_24rem),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:100%_100%,72px_72px,72px_72px]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(35,131,67,0.08)_0%,rgba(11,15,26,0)_24rem),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:100%_100%,72px_72px,72px_72px]" />
 
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
         <div className="container flex items-center justify-between py-4">
           <Link
             href={withLanguage("/", lang)}
-            className="flex items-center gap-2 text-zinc-400 transition hover:text-amber-300"
+            className="flex items-center gap-2 text-zinc-400 transition hover:text-superlinear-on-dark"
           >
             <ArrowLeft className="h-4 w-4" />
             <div>
-              <div className="text-sm font-semibold text-amber-300">
+              <div className="text-sm font-semibold text-superlinear-on-dark">
                 {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
               </div>
               <div className="text-xs text-zinc-500">
@@ -195,7 +195,7 @@ export default function Books() {
       <main className="relative z-10">
         <section className="container py-16 md:py-24">
           <div className="max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-amber-300">
+            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
               {lang === "en" ? "Books" : "Books / 书"}
             </p>
             <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
@@ -219,7 +219,7 @@ export default function Books() {
                 <BookVisual id={book.id} />
 
                 <div className="flex min-w-0 flex-col justify-center">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-300">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-on-dark">
                     {book.label}
                   </p>
                   <h2 className="mt-3 text-2xl font-semibold leading-tight text-white md:text-3xl">
@@ -250,7 +250,7 @@ export default function Books() {
                       external={book.primary.external}
                       className={cn(
                         buttonVariants(),
-                        "bg-amber-400 text-[#211300] hover:bg-amber-300"
+                        "bg-superlinear text-white hover:bg-superlinear-deep"
                       )}
                     >
                       <BookOpen className="mr-2 h-4 w-4" />

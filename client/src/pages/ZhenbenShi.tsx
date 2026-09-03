@@ -627,7 +627,6 @@ export default function ZhenbenShi() {
       {/* Gradient blur backgrounds */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/3 -left-32 w-[32rem] h-[32rem] bg-superlinear/[0.07] rounded-full blur-3xl" />
-        <div className="absolute top-0 right-0 w-[28rem] h-[28rem] bg-sky-500/[0.06] rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/3 w-[26rem] h-[26rem] bg-superlinear/[0.06] rounded-full blur-3xl" />
       </div>
 
@@ -756,7 +755,7 @@ export default function ZhenbenShi() {
           {/* Copy */}
           <div className="space-y-6 order-2 md:order-1">
             {/* Course origin */}
-            <div className="inline-flex items-center gap-2 bg-sky-500 text-white text-xs font-semibold px-3 py-1.5 rounded-sm">
+            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-zinc-200">
               <svg
                 className="w-3.5 h-3.5"
                 viewBox="0 0 24 24"

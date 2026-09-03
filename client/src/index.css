@@ -12,7 +12,8 @@
     Menlo, Monaco, monospace;
   --color-superlinear: #238343;
   --color-superlinear-deep: #155d30;
-  --color-superlinear-link: #008841;
+  /* Same hue as the community link green, darkened for accessible small text. */
+  --color-superlinear-link: #007a3a;
   --color-superlinear-canvas: #fbf9f5;
   --color-superlinear-surface: #fefdfc;
   --color-superlinear-cream: #ede7da;

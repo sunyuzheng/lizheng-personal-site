@@ -388,25 +388,25 @@ export default function Collab() {
           <section className="mt-20 rounded-2xl border border-superlinear bg-superlinear p-6 text-white md:p-10">
             <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/75">
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white">
                   {t.contactEyebrow}
                 </p>
                 <h2 className="mt-4 text-3xl font-semibold text-white">
                   {t.contactTitle}
                 </h2>
-                <p className="mt-4 text-sm leading-7 text-white/75">
+                <p className="mt-4 text-sm leading-7 text-white">
                   {t.contactClose}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-white/85">{t.contactIntro}</p>
+                <p className="text-sm text-white">{t.contactIntro}</p>
                 <ol className="mt-4 space-y-3">
                   {t.contactItems.map((item, index) => (
                     <li key={item} className="flex gap-3 text-sm leading-7">
-                      <span className="font-mono text-superlinear-on-dark">
+                      <span className="font-mono text-white">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="text-white/85">{item}</span>
+                      <span className="text-white">{item}</span>
                     </li>
                   ))}
                 </ol>

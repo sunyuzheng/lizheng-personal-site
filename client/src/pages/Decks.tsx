@@ -429,7 +429,7 @@ export default function Decks() {
 
       <main>
         <section className="relative border-b border-white/10">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(35,131,67,0.13),transparent_32%),radial-gradient(circle_at_90%_12%,rgba(103,232,249,0.08),transparent_30%)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_0%,rgba(35,131,67,0.13),transparent_32%)]" />
           <div className="container relative grid gap-12 py-16 lg:grid-cols-[1.04fr_0.96fr] lg:items-center lg:gap-16 lg:py-24">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">

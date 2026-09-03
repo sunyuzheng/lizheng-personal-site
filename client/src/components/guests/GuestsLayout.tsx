@@ -16,7 +16,6 @@ export default function GuestsLayout({ children }: GuestsLayoutProps) {
     <div className="relative min-h-screen overflow-x-hidden bg-[#0B0F1A] text-zinc-100">
       <div className="pointer-events-none absolute inset-0 opacity-60">
         <div className="absolute -left-32 top-0 h-[32rem] w-[32rem] rounded-full bg-superlinear/15 blur-3xl" />
-        <div className="absolute -right-40 top-40 h-[28rem] w-[28rem] rounded-full bg-sky-500/10 blur-3xl" />
       </div>
 
       <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">

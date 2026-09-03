@@ -1352,13 +1352,13 @@ export default function CreatorCollab() {
           >
             <div className="container">
               <Mic2 className="mx-auto h-7 w-7 text-white" />
-              <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-white/75">
+              <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-white">
                 {t.contactEyebrow}
               </p>
               <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold text-white md:text-4xl">
                 {t.contactTitle}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/80">
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white">
                 {t.contactDetail}
               </p>
               <a
@@ -1371,7 +1371,7 @@ export default function CreatorCollab() {
                 <Mail className="mr-2 h-4 w-4" />
                 {t.contactButton}
               </a>
-              <div className="mt-5 space-y-2 text-xs text-white/70">
+              <div className="mt-5 space-y-2 text-xs text-white">
                 <div className="flex items-center justify-center gap-2">
                   <ShieldCheck className="h-4 w-4" />
                   <span>yz@superlinear.academy</span>

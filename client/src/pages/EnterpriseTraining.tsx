@@ -391,7 +391,7 @@ export default function EnterpriseTraining() {
 
       <main>
         <section className="relative overflow-hidden border-b border-white/10 bg-[#09110C]">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(35,131,67,0.30),transparent_34rem)]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(35,131,67,0.16),transparent_34rem)]" />
           <div className="container relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:gap-16">
             <div>
               <p
@@ -674,7 +674,7 @@ export default function EnterpriseTraining() {
             </div>
 
             <div className="mt-12 grid overflow-hidden border border-[#CFC9BE] bg-white lg:grid-cols-[0.74fr_1.26fr]">
-              <figure className="border-b border-[#CFC9BE] bg-[#E8F2EC] p-5 lg:border-b-0 lg:border-r lg:p-7">
+              <figure className="border-b border-[#CFC9BE] bg-superlinear-pale p-5 lg:border-b-0 lg:border-r lg:p-7">
                 <img
                   src="/enterprise/ai-builders-2027-for-teams-preview.webp"
                   alt={

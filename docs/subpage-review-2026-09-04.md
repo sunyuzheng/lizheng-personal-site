@@ -1,6 +1,6 @@
 # September 4 subpage review
 
-Status: local/staging revision, awaiting review of the final preview and diff before production publication. The separately approved insight-first homepage was published as `7608bcbe0ebeb7bd48ab0e29eba586483468bb16`.
+Status: approved and published on September 4, 2026 as `8726ea314a5e9f54124b7054e65bf4c33a1425fc`; production and GitHub Actions verified. The separately approved insight-first homepage was published as `7608bcbe0ebeb7bd48ab0e29eba586483468bb16`.
 
 ## Decision
 

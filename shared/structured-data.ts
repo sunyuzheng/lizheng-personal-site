@@ -1,6 +1,9 @@
 import {
+  ABOUT_PAGE_META,
   AIE_SHANGHAI_DECK_PAGE_META,
+  BOOKS_PAGE_META,
   DECKS_PAGE_META,
+  HOME_PAGE_META,
   type SiteLang,
 } from "./page-meta.ts";
 import { ENTERPRISE_TRAINING_PAGE_META } from "./collab-meta.ts";
@@ -150,7 +153,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
         about: { "@id": PERSON_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-09-02",
+        dateModified: HOME_PAGE_META[lang].lastModified,
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -251,7 +254,7 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
         isPartOf: { "@id": WEBSITE_ID },
         mainEntity: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-09-02",
+        dateModified: ABOUT_PAGE_META[lang].lastModified,
       },
       personNode(lang),
       ...organizationNodes(lang),
@@ -323,7 +326,7 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": PERSON_ID },
         inLanguage: lang === "en" ? "en-US" : "zh-CN",
-        dateModified: "2026-07-21",
+        dateModified: BOOKS_PAGE_META[lang].lastModified,
         mainEntity: {
           "@type": "ItemList",
           numberOfItems: 2,

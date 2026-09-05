@@ -78,7 +78,7 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "孙煜征的两本书：英文《Growth Data Analytics Playbook》与中文《真本事：从会工作到会赚钱》。",
     canonical: "https://www.lizheng.ai/zh/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-07-21",
+    lastModified: "2026-09-04",
   },
 };
 

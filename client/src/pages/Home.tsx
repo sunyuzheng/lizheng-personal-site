@@ -1,4 +1,5 @@
 import LanguageToggle from "@/components/LanguageToggle";
+import CourseReviews from "@/components/CourseReviews";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage } from "@/contexts/LanguageContext";
@@ -291,22 +292,6 @@ const endorsements = {
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
     },
-    {
-      quote:
-        "Yuzheng has built an AI education community that is carefully curated, practical, and unusually useful for people doing real work.",
-      name: "Wei Manfredi",
-      role: "Senior Vice President, AI & Architecture · IHG Hotels & Resorts",
-      avatar: "/avatars/wei-manfredi.jpg",
-      initials: "WM",
-    },
-    {
-      quote:
-        "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era. Even as a scientist, I found his course deeply illuminating.",
-      name: "Liu Jia",
-      role: "Chair Professor, Tsinghua University · Cognitive neuroscientist",
-      avatar: "/avatars/liu-jia.jpg",
-      initials: "LJ",
-    },
   ],
   zh: [
     {
@@ -316,22 +301,6 @@ const endorsements = {
       role: "Statsig创始人 · OpenAI CTO of Applications",
       avatar: "/avatars/vijaye-raji.jpg",
       initials: "VR",
-    },
-    {
-      quote:
-        "立正做的AI教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
-      name: "Wei Manfredi",
-      role: "IHG Hotels & Resorts AI与架构高级副总裁",
-      avatar: "/avatars/wei-manfredi.jpg",
-      initials: "WM",
-    },
-    {
-      quote:
-        "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
-      name: "刘嘉",
-      role: "清华大学讲席教授 ·《最强大脑》总科学顾问",
-      avatar: "/avatars/liu-jia.jpg",
-      initials: "刘嘉",
     },
   ],
 };
@@ -815,6 +784,8 @@ export default function Home() {
               ))}
             </div>
 
+            <CourseReviews />
+
             <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-superlinear-surface xl:grid xl:grid-cols-[0.88fr_1.12fr]">
               <figure className="flex flex-col border-b border-[#CFC9BE] bg-white xl:border-b-0 xl:border-r">
                 <div className="overflow-hidden">
@@ -903,39 +874,6 @@ export default function Home() {
                 </div>
               </div>
             </article>
-
-            <div className="mt-14">
-              <div className="grid border-y border-[#CFC9BE] lg:grid-cols-2">
-                {endorsements[lang].slice(1).map((item, index) => (
-                  <blockquote
-                    key={item.name}
-                    className={cn(
-                      "py-8 lg:px-8",
-                      index > 0 &&
-                        "border-t border-[#CFC9BE] lg:border-l lg:border-t-0"
-                    )}
-                  >
-                    <p className="text-lg leading-8 text-[#302C25]">
-                      “{item.quote}”
-                    </p>
-                    <footer className="mt-6 flex items-center gap-3">
-                      <Avatar className="h-10 w-10 border border-[#CFC9BE]">
-                        <AvatarImage src={item.avatar} alt={item.name} />
-                        <AvatarFallback>{item.initials}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <div className="text-sm font-semibold text-superlinear-ink">
-                          {item.name}
-                        </div>
-                        <div className="mt-0.5 text-xs leading-5 text-[#5C574D]">
-                          {item.role}
-                        </div>
-                      </div>
-                    </footer>
-                  </blockquote>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 

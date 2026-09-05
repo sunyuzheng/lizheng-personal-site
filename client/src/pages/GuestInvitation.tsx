@@ -121,6 +121,7 @@ export default function GuestInvitation() {
 
           <a
             href={mailto}
+            aria-label="回复邀请"
             className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
           >
             <Mail className="h-3.5 w-3.5" aria-hidden="true" />

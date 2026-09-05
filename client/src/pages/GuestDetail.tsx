@@ -117,8 +117,8 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             </h1>
             <p className="mt-3 text-sm leading-6 text-zinc-400">
               {lang === "en"
-                ? "The link may be wrong, or the slug may not have been generated yet."
-                : "链接可能写错了，或者对应slug还没有生成。"}
+                ? "The link may have changed. Search the interview archive to find the guest."
+                : "链接可能已变更，可以到访谈列表搜索这位嘉宾。"}
             </p>
             <Button
               asChild

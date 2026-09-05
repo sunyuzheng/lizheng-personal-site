@@ -24,15 +24,15 @@ const copy = {
   en: {
     navSub: "Collaborate",
     eyebrow: "Talks · Team programs · Long-term work",
-    h1: "Turn what AI makes possible into work that actually happens.",
+    h1: "AI has changed. The work should too.",
     intro:
-      "I am most useful when new technical capability has to become a judgment about what is worth doing, a redesigned way of working, or an organizational choice that can survive reality. We can begin with a talk, an enterprise program, or a longer partnership. Podcast and video invitations have their own page.",
+      "Talks, team training, and advisory for organizations putting AI to work. Start with what your team needs to understand, learn, or do differently.",
     proofLine:
       "Cornell Economics PhD · Former Tencent AI leader · Early Statsig team, later acquired by OpenAI · 200+ public conversations",
     creatorLabel: "PODCASTS & CREATOR INVITATIONS",
     creatorTitle: "Inviting me to a podcast or video?",
     creatorDetail:
-      "These invitations are handled separately from commercial work. See possible questions, recording details, editorial boundaries, and host-ready materials.",
+      "Explore possible topics, past episodes, and a ready-to-use host kit. Program invitations are separate from commercial work.",
     creatorCta: "Open the creator page",
     workEyebrow: "ORGANIZATIONS & LONG-TERM WORK",
     workTitle: "Three practical starting points.",
@@ -108,15 +108,15 @@ const copy = {
   zh: {
     navSub: "合作",
     eyebrow: "演讲 · 企业项目 · 长期合作",
-    h1: "把AI的变化，变成真正发生的工作。",
+    h1: "AI变了，工作也该变了。",
     intro:
-      "我最能发挥价值的地方，是把技术变化翻译成值得做的判断、重新设计的工作方式，以及经得起现实检验的组织选择。可以从一场演讲、一个企业项目，或一段长期合作开始。播客和视频邀请另有入口。",
+      "企业想用好AI，先要说清楚：团队需要看懂什么、学会什么，或改变哪项工作。可以从演讲、培训或一次团队交流开始。",
     proofLine:
       "康奈尔经济学博士 · 前腾讯总监 · OpenAI收购团队早期成员 · 200+场科技领袖与AI研究者对话",
     creatorLabel: "播客与创作者邀请",
-    creatorTitle: "想邀请我上播客或视频节目？",
+    creatorTitle: "想邀请我上节目？",
     creatorDetail:
-      "这类邀请与商业合作分开处理。单独页面里有可聊问题、录制方式、编辑边界和主持人素材。",
+      "可聊的话题、过往节目和介绍素材都在这里。节目邀请与商业合作分开处理。",
     creatorCta: "前往播客与创作者邀请",
     workEyebrow: "组织与长期合作",
     workTitle: "三种常见的合作起点。",
@@ -236,9 +236,9 @@ export default function Collab() {
             <h1 className="mt-5 max-w-3xl text-[34px] font-semibold leading-[1.08] text-superlinear-ink md:text-6xl">
               {lang === "zh" ? (
                 <>
-                  把AI的变化，
+                  AI变了，
                   <br />
-                  变成真正发生的工作。
+                  工作也该变了。
                 </>
               ) : (
                 t.h1

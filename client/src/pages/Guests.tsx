@@ -57,7 +57,8 @@ export default function Guests() {
       guest.guest_name.toLowerCase().includes(q) ||
       guest.guest_en_name.toLowerCase().includes(q) ||
       guest.guest_company.toLowerCase().includes(q) ||
-      guest.guest_title.toLowerCase().includes(q)
+      guest.guest_title.toLowerCase().includes(q) ||
+      guest.episodes.some(episode => episode.title.toLowerCase().includes(q))
   );
 
   const multiEp = guests.filter(guest => guest.episode_count > 1).length;
@@ -67,7 +68,7 @@ export default function Guests() {
       <div className="container py-12 md:py-16">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-white md:text-5xl">
-            {lang === "en" ? "Super Nodes · All Guests" : "超级节点 · 全部嘉宾"}
+            {lang === "en" ? "People & conversations" : "全部访谈"}
           </h1>
           {!loading && !error && (
             <p className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-zinc-400">
@@ -80,7 +81,7 @@ export default function Guests() {
                     {multiEp} featured in multiple interviews
                   </span>
                   <span className="whitespace-nowrap">
-                    Every guest has a dedicated page
+                    Search guests or interview topics
                   </span>
                 </>
               ) : (
@@ -89,9 +90,7 @@ export default function Guests() {
                     {guests.length}位嘉宾
                   </span>
                   <span className="whitespace-nowrap">{multiEp}位多期深访</span>
-                  <span className="whitespace-nowrap">
-                    每位嘉宾都有独立分享页
-                  </span>
+                  <span className="whitespace-nowrap">按嘉宾或话题查找</span>
                 </>
               )}
             </p>
@@ -102,12 +101,13 @@ export default function Guests() {
           <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
           <input
             type="text"
+            aria-label={lang === "en" ? "Search interviews" : "搜索访谈"}
             value={query}
             onChange={event => setQuery(event.target.value)}
             placeholder={
               lang === "en"
-                ? "Search by name, company, or title…"
-                : "搜索嘉宾姓名、公司、职位…"
+                ? "Search a guest, company, or topic…"
+                : "搜索嘉宾、公司或访谈话题…"
             }
             className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-10 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-superlinear-on-dark/50 focus:bg-white/8"
           />

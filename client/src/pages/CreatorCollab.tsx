@@ -259,8 +259,7 @@ const copy = {
     eyebrow: "Podcasts · Video · Long-form",
     h1: "Take one real question all the way—and help the conversation travel farther.",
     intro: [
-      "You set the question. I’ll bring first-hand experience, public evidence, and a view that can stand up to real follow-up. The episode can stay entirely in your show’s format; when both sides want to build further, my team can also support editing, clips, cross-platform distribution, and co-publishing.",
-      "I have worked across economics, data, AI, product decisions, organizational leadership, and early-stage execution. Today I am building Superlinear Academy. The questions I know best begin where technical capability meets real work: what a company will actually adopt, what a person should become good at, and what is worth making for the long term.",
+      "You set the question. I’ll bring first-hand experience and evidence, and we’ll follow the question wherever it leads. We can use your usual format; my team can also help with editing, clips, and co-publishing.",
     ],
     heroProofs: [
       {
@@ -595,7 +594,7 @@ const copy = {
       },
       {
         label: "Stay Superlinear membership",
-        href: "https://stay.superlinear.academy",
+        href: "https://staysuperlinear.com",
       },
     ],
     contactEyebrow: "PROGRAM INVITATIONS",
@@ -612,8 +611,7 @@ const copy = {
     eyebrow: "播客 · 视频访谈 · 长对话",
     h1: "把一个真问题聊透，\n也让它走得更远。",
     intro: [
-      "你定问题。我带着亲历、证据和一个经得起追问的判断来。节目照你原本的方式做；双方愿意时，我们也能一起剪辑、切片、跨平台分发和联合发布。",
-      "我先后做过经济学家、数据科学家、大厂管理者和早期创业团队成员，如今在建设Superlinear Academy。我最熟悉的是AI进入真实工作以后的问题：公司会不会真的用，人该练什么本事，什么东西值得长期做。",
+      "你定问题。我带着亲历和证据来，和你一起把问题追到底。按你的节目方式录；需要时，我的团队也可以参与剪辑、切片与联合发布。",
     ],
     heroProofs: [
       {
@@ -899,7 +897,7 @@ const copy = {
       },
       {
         label: "Stay Superlinear会员",
-        href: "https://stay.superlinear.academy",
+        href: "https://staysuperlinear.com",
       },
     ],
     contactEyebrow: "节目邀请",

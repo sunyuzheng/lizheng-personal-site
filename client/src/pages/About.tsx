@@ -1,4 +1,5 @@
 import DefiningWork from "@/components/DefiningWork";
+import EducationEndorsements from "@/components/EducationEndorsements";
 import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage } from "@/contexts/LanguageContext";
@@ -46,23 +47,23 @@ const currentWork = {
   en: [
     {
       name: "Superlinear Academy",
-      role: "Parent institution and open community",
+      role: "Free community",
       detail:
-        "A free community of 20,000+ members where real work and first-hand judgment stay visible across fields: 700+ project posts, 8,000+ comments, and a living frame of reference for what serious AI practice looks like.",
+        "See how people use AI, share your work, and bring your questions. 20,000+ members, 700+ project posts, and 8,000+ project comments.",
       href: "https://www.superlinear.academy/",
     },
     {
       name: "AI Builders",
       role: "Long-term AI learning system",
       detail:
-        "Co-taught with Yage, it translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.",
+        "Understand AI systematically, build hands-on, and keep up as it changes. Co-taught with Yage.",
       href: "https://ai-builders.com/",
     },
     {
       name: "Stay Superlinear membership",
       role: "Long-term membership",
       detail:
-        "A paid, year-round content and practitioner environment with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage is the long-term teaching partner responsible for much of its technical depth.",
+        "Keep learning through guest masterclasses, deep technical analysis with Yage, Q&A, and member discussions. Recordings and resources stay available to members.",
       href: "https://staysuperlinear.com/",
     },
     {
@@ -77,23 +78,23 @@ const currentWork = {
   zh: [
     {
       name: "Superlinear Academy",
-      role: "母体机构与免费实践社区",
+      role: "免费社区",
       detail:
-        "2万+成员把真实工作和一手判断留在这里：700+项目帖、8,000+条评论，持续提供一个看见不同领域AI实践水位的参照系。",
+        "看别人怎么用AI，分享自己的项目，也带着问题来讨论。2万+成员，700+项目帖，8,000+条项目评论。",
       href: "https://www.superlinear.academy/",
     },
     {
       name: "AI Builders",
       role: "长期AI学习体系",
       detail:
-        "立正与鸭哥把对模型、工程、产品和组织的理解，转译成学员可以练习、纠错，再带回自己问题里的能力。",
+        "想系统学懂AI、真正动手、并持续跟上变化，选AI Builders 2027。由我和鸭哥共同授课。",
       href: "https://ai-builders.com/",
     },
     {
       name: "Stay Superlinear会员",
       role: "长期会员社区",
       detail:
-        "面向已有专业积累、正在用AI的人，持续提供深度解析、闭门大师课、答疑、课程、Skills、回放、讨论与可检索的内容库。鸭哥作为长期核心教学伙伴，负责其中大量技术内容。",
+        "跟大师课嘉宾深聊，跟鸭哥看懂技术变化，也把自己的问题带进答疑和会员讨论。回放与资料可以随时回来查。",
       href: "https://staysuperlinear.com/",
     },
     {
@@ -147,48 +148,48 @@ export default function About() {
       back: "Back to homepage",
       eyebrow: "About Yuzheng Sun",
       intro:
-        "Yuzheng Sun (孙煜征), also known publicly as 课代表立正, has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He is based in Seattle.",
+        "I’m Yuzheng Sun, known as 立正 / 课代表立正. I have a PhD in Economics from Cornell and founded Superlinear Academy. I live in Seattle.",
       belief:
-        "His defining belief is MAKE WHAT LASTS: learn capability that remains real beyond a credential, then make work that remains valuable beyond the system that scores it. He has placed his own work, and Superlinear Academy, under that test.",
+        "MAKE WHAT LASTS. I want to build things people keep choosing, long after the launch.",
       backgroundTitle: "Background",
       background:
-        "He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, the team later acquired by OpenAI. His work now spans AI education, communities, books, enterprise programs, and long-form public conversations.",
-      currentTitle: "What he is building now",
+        "I worked as an economist at Amazon, a data scientist at Meta, and Vice Director of Data & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
+      currentTitle: "The academy I’m building",
       currentIntro:
-        "Superlinear is the academy he has chosen to build for the long term. It now includes a free community, structured learning through AI Builders, a year-round membership, and enterprise AI programs. One current research agenda asks what should count as AI-native work and talent once the capability and cost frontier changes.",
+        "Superlinear Academy is where my teaching, community, and enterprise work come together. You can begin with the free community.",
       publicTitle: "Books and conversations",
       publicIntro:
-        "He is the co-author of Growth Data Analytics Playbook and the author of 真本事：从会工作到会赚钱. He also hosts the 课代表立正 channel and appears as a guest on other podcasts and video programs.",
+        "I co-authored Growth Data Analytics Playbook and wrote 真本事：从会工作到会赚钱. I host long-form conversations on my channel and join other shows as a guest.",
       sourcesTitle: "Sources and contact",
       reviewed:
         "Facts last reviewed September 2, 2026. Changing figures retain their check date.",
       books: "Books",
-      hosted: "People Yuzheng has interviewed",
-      appeared: "Programs where Yuzheng appeared as a guest",
+      hosted: "Interviews I host",
+      appeared: "Guest appearances",
       invite: "Invite Yuzheng to a program",
     },
     zh: {
       back: "回到主页",
-      eyebrow: "关于课代表立正",
+      eyebrow: "关于我",
       intro:
-        "课代表立正是孙煜征公开做内容时使用的名字。他有康奈尔大学经济学博士学位，是Superlinear Academy创始人，现居西雅图。",
+        "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院Superlinear Academy创始人，现居西雅图。",
       belief:
-        "他的个人主线是：学点真本事，做点真东西。前半句问拿掉学历、职位和平台后还会什么，后半句问拿掉内部评分后，做的东西是否仍有人需要、使用和选择。Superlinear Academy是他把后半句做成机构的长期实践。",
+        "学点真本事，做点真东西。对我来说，就是离开职位和公司名，仍能做出别人需要的东西。",
       backgroundTitle: "经历",
       background:
-        "他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是OpenAI收购团队早期成员。现在主要做AI教育、社区和企业项目，同时写书、做访谈。",
-      currentTitle: "现在主要在做什么",
+        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG数据与AI副总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设Superlinear Academy。",
+      currentTitle: "我正在办的这所学院",
       currentIntro:
-        "Superlinear是他选择长期建设的学院。现在包括免费社区、AI Builders系统课程、全年会员和企业AI项目。他当前的一项公开研究议程，是AI改变能力与成本以后，到底什么才算AI Native工作与人才。",
+        "课程、社区和企业项目，都在Superlinear Academy。想了解我们，可以先从免费社区开始。",
       publicTitle: "书与对话",
       publicIntro:
-        "他合著了《Growth Data Analytics Playbook》，也是《真本事：从会工作到会赚钱》的作者。他在自己的频道里主持长访谈，也会去其他播客和视频节目做嘉宾。",
+        "我合著了《Growth Data Analytics Playbook》，写了《真本事：从会工作到会赚钱》。也在自己的频道里做长访谈，去别人的节目做嘉宾。",
       sourcesTitle: "资料与联系",
       reviewed: "事实最后核对：2026年9月2日。会变化的数字保留各自的核对日期。",
       books: "两本书",
-      hosted: "孙煜征采访过的嘉宾",
-      appeared: "孙煜征去别人节目做嘉宾的记录",
-      invite: "邀请孙煜征参与节目",
+      hosted: "我采访过的人",
+      appeared: "我做客的节目",
+      invite: "邀请我上节目",
     },
   });
 
@@ -215,11 +216,11 @@ export default function About() {
                 {copy.eyebrow}
               </p>
               <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
-                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
-                <span className="block text-zinc-400">
+                {lang === "en" ? "Yuzheng Sun" : "立正"}
+                <span className="mt-3 block text-lg font-normal leading-7 text-zinc-400 md:text-2xl">
                   {lang === "en"
                     ? "孙煜征 · 课代表立正"
-                    : "孙煜征 · Yuzheng Sun"}
+                    : "孙煜征 · Yuzheng Sun · 课代表立正"}
                 </span>
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
@@ -349,6 +350,12 @@ export default function About() {
                 </article>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="pb-12 md:pb-16">
+          <div className="container">
+            <EducationEndorsements />
           </div>
         </section>
 

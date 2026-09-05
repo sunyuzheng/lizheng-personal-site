@@ -1,5 +1,6 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Home } from "lucide-react";
+import { withLanguage } from "@/lib/language-url";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
@@ -42,7 +43,7 @@ export default function NotFound() {
             : "你访问的页面可能已被移动或删除。"}
         </p>
         <button
-          onClick={() => setLocation("/")}
+          onClick={() => setLocation(withLanguage("/", lang))}
           className="inline-flex items-center gap-2 rounded-lg bg-superlinear px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-superlinear-deep"
         >
           <Home className="w-4 h-4" />

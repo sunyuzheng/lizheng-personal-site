@@ -17,8 +17,7 @@ const books = {
       id: "growth",
       label: "English book",
       title: "Growth Data Analytics Playbook",
-      subtitle:
-        "From product-market fit and growth accounting to retention, metrics, and experimentation.",
+      subtitle: "What makes a product grow?",
       description:
         "A practical guide to product-market fit, growth accounting, metrics, retention, and experimentation—written for people making real product decisions.",
       meta: [
@@ -36,7 +35,7 @@ const books = {
       id: "zbs",
       label: "Chinese book",
       title: "真本事：从会工作到会赚钱",
-      subtitle: "Turning work into capability, leverage, and income.",
+      subtitle: "How does capability become income?",
       description:
         "A Chinese book about taking back agency at work, building capability through practice, and learning how value becomes income.",
       meta: ["人民邮电出版社 · 2026", "ISBN 9787115690500", "中文"],
@@ -57,7 +56,7 @@ const books = {
       id: "growth",
       label: "英文书",
       title: "Growth Data Analytics Playbook",
-      subtitle: "从产品市场匹配、增长核算到留存、指标与实验。",
+      subtitle: "产品为什么增长？",
       description:
         "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。",
       meta: [
@@ -75,7 +74,7 @@ const books = {
       id: "zbs",
       label: "中文书",
       title: "真本事：从会工作到会赚钱",
-      subtitle: "把工作变成自己的能力、杠杆和收入。",
+      subtitle: "本事怎样变成收入？",
       description:
         "这本书讨论怎样拿回工作的主动权，在实践里练出本事，并逐步弄懂自己的价值如何变成收入。",
       meta: ["人民邮电出版社 · 2026", "ISBN 9787115690500", "中文"],
@@ -198,16 +197,11 @@ export default function Books() {
             <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
               {lang === "en" ? "Books" : "Books / 书"}
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
+            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.15] text-white [text-wrap:balance] md:text-6xl">
               {lang === "en"
-                ? "One book asks how products find direction and grow. The other asks how work becomes capability."
-                : "一本讲产品怎样找到方向、推动增长；一本讲人怎样把工作变成自己的本事。"}
+                ? "Two books. Two questions."
+                : "两本书，回答两个问题。"}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
-              {lang === "en"
-                ? "Growth Data Analytics Playbook is about product-market fit, metrics, and experimentation. 真本事 is about turning work into capability, leverage, and income of your own."
-                : "《Growth Data Analytics Playbook》讨论产品市场匹配、指标和实验；《真本事》讨论怎样把工作变成自己的能力、杠杆和收入。"}
-            </p>
           </div>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-2">

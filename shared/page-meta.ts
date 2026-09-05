@@ -70,7 +70,7 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "Books by Yuzheng Sun: Growth Data Analytics Playbook and 真本事：从会工作到会赚钱.",
     canonical: "https://www.lizheng.ai/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-07-21",
+    lastModified: "2026-09-04",
   },
   zh: {
     title: "两本书 · 课代表立正",
@@ -88,7 +88,7 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
     "孙煜征所著《真本事：从会工作到会赚钱》，由人民邮电出版社出版。关于工作、能力、副业与长期价值的一套实践框架。",
   canonical: "https://www.lizheng.ai/zbs",
   ogImage: "https://www.lizheng.ai/book/cover-front.png",
-  lastModified: "2026-08-20",
+  lastModified: "2026-09-04",
 };
 
 export const PODCAST_PAGE_META: PageMeta = {
@@ -97,7 +97,7 @@ export const PODCAST_PAGE_META: PageMeta = {
     "课代表立正（孙煜征）的官方中文播客。200+场与AI研究者、科技创业者、一线管理者和实践者的深度对话，追问真正把事做成的人，到底做对了什么。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/avatar.png",
-  lastModified: "2026-08-27",
+  lastModified: "2026-09-04",
 };
 
 export const GUEST_INVITATION_PAGE_META: PageMeta = {
@@ -106,7 +106,7 @@ export const GUEST_INVITATION_PAGE_META: PageMeta = {
     "课代表立正的定向嘉宾邀请：提前读你的作品与公开表达，录制时让你的答案决定下一问。",
   canonical: "https://speaker.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/og.png",
-  lastModified: "2026-08-13",
+  lastModified: "2026-09-04",
 };
 
 export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
@@ -116,7 +116,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "Enterprise AI training, strategic briefings, and workshop decks by Yuzheng Sun, designed for teams across data, engineering, investment, and knowledge work.",
     canonical: "https://www.lizheng.ai/en/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-24",
+    lastModified: "2026-09-04",
   },
   zh: {
     title: "企业AI培训与课件｜课代表立正（孙煜征）",
@@ -124,7 +124,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征）的企业AI培训与课件索引：为数据、研发、投资与知识工作团队定制的战略汇报、工作坊和公开分享。",
     canonical: "https://www.lizheng.ai/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-08-24",
+    lastModified: "2026-09-04",
   },
 };
 

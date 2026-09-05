@@ -49,7 +49,9 @@ The public membership destination is `https://staysuperlinear.com`, chosen for m
 
 Enterprise work remains a distinct editorial block. Keep the real DoorDash training scene, the transformation headline, the cooperation ladder, the `$100,000+` fully custom boundary, and the dedicated enterprise-page route. Do not conflate a public training scene with a named fully custom client.
 
-Wei Manfredi and Liu Jia's existing quotations remain next to the Academy's work, unchanged. Their words, names and roles stand on their own; the former “from people who know the work” introduction is unnecessary.
+Two short learner-review excerpts follow the product entries: Shuyang (OpenAI) on learning to think and teach oneself, and EZ (Anthropic) on principles outlasting tools. Their employers are readable attribution, not the section's claim; the label identifies AI Builders learner reviews and links to the public Maven source. This answers a specific question about teaching, rather than turning the personal homepage into an employer-logo wall.
+
+Wei Manfredi and Liu Jia's existing quotations move unchanged to About, beside the Academy's work. This keeps their broader educational perspective available without stacking four education quotations on the homepage. Vijaye Raji's separate book quotation stays in its original context.
 
 ### 3. Conversations: let the people and episodes appear early
 

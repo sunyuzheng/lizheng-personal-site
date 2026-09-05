@@ -415,7 +415,7 @@ export default function Podcast() {
                 真正把事做成的人，到底做对了什么？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-                《课代表立正》是一档中文深度访谈。200+场对话里，我和AI研究者、科技创业者、一线管理者与各领域实践者反复追问一件事：一件事究竟是怎样被做成的。
+                200+场长对话，和AI研究者、科技创业者、管理者与实践者，聊他们如何想清楚、做决定、把事情做成。
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">
@@ -832,13 +832,13 @@ export default function Podcast() {
               嘉宾邀请
             </a>
             <a
-              href="https://www.lizheng.ai"
+              href="https://www.lizheng.ai/zh/about"
               className="transition hover:text-superlinear-on-dark"
             >
               关于我
             </a>
             <a
-              href="https://stay.superlinear.academy"
+              href="https://staysuperlinear.com"
               target="_blank"
               rel="noopener noreferrer"
               className="transition hover:text-superlinear-on-dark"

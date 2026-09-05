@@ -145,7 +145,8 @@ export default function AieShanghaiDeck() {
       ref={rootRef}
       className="aie-deck-page relative h-[100svh] w-full overflow-hidden bg-[#0f2f1d] text-white"
     >
-      <style>{`
+      {/* Raw CSS keeps React 18 SSR from escaping > inside this raw-text element. */}
+      <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           @page { size: 13.333in 7.5in; margin: 0; }
           html, body { background: #fff !important; }
@@ -159,7 +160,7 @@ export default function AieShanghaiDeck() {
             page-break-after: always;
           }
         }
-      `}</style>
+      ` }} />
 
       <div
         className="aie-deck-screen h-full"

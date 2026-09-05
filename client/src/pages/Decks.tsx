@@ -38,20 +38,15 @@ const copy = {
     section: "Deck index",
     collaboration: "Enterprise work",
     eyebrow: "YUZHENG SUN · ENTERPRISE AI DECKS · 2026",
-    h1: "I don't take one generic AI talk from company to company.",
+    h1: "Different work calls for different ways to use AI.",
     intro:
-      "I design enterprise AI training, strategic briefings, and hands-on workshops around the team in the room. Engineering leaders, data analysts, portfolio managers, cross-functional teams, and founders face different constraints, so every deck here was built around a specific organization, workflow, and decision.",
+      "Explore the materials behind team trainings, strategic briefings, and public workshops. Each entry shows the audience, the problem, and the original deck or recording.",
     photoCaption: "DoorDash team offsite · Seattle",
     enterpriseMetric: "enterprise programs & briefings",
     publicMetric: "public talks & workshops",
     languageMetric: "working languages",
-    thesisEyebrow: "ONE THROUGH-LINE · MANY REAL ROOMS",
-    thesisTitle:
-      "AI makes building easier. The hard part is knowing what is worth building—and making it last.",
-    thesisBody:
-      "That belief becomes a different program in every organization. The work starts by finding the real constraint, then turning AI into a workflow the team can inspect, own, and improve.",
     indexEyebrow: "THE LIBRARY",
-    indexTitle: "Find a deck by problem, team, or room.",
+    indexTitle: "Find the material you need.",
     indexIntro:
       "The collection includes enterprise programs, briefings, and selected public workshops. Original deck language is preserved.",
     searchPlaceholder: "Search an organization, topic, or audience",
@@ -68,38 +63,32 @@ const copy = {
     enterprise: "Enterprise",
     publicTalk: "Public session",
     closeEyebrow: "BRING A REAL TEAM PROBLEM",
-    closeTitle: "A useful AI program starts with the work—not the tool list.",
+    closeTitle: "What does your team need to do differently?",
     closeBody:
       "Tell me who is in the room, what they are responsible for, and what should become possible afterward. That is enough to start designing the right session.",
     email: "Discuss an enterprise program",
     homepage: "Back to lizheng.ai",
   },
   zh: {
-    section: "Deck索引",
+    section: "课件与公开分享",
     collaboration: "企业合作",
     eyebrow: "课代表立正 · 企业AI DECKS · 2026",
-    h1: "我不拿一套通用课，到处讲。",
+    h1: "不同的工作，需要不同的AI解法。",
     intro:
-      "我做企业AI培训、战略汇报和工作坊，通常先问：这支团队到底卡在哪里？研发负责人、数据分析师、投资经理、非研发团队和创业者面对的问题不同，所以这里每一套课件，都围绕具体团队、业务场景和要解决的问题重新设计。",
+      "这里是企业培训、战略汇报和公开工作坊的材料。每一套都写清了面向谁、解决什么问题，可以直接打开课件或观看实录。",
     photoCaption: "DoorDash团队线下AI培训 · 西雅图",
     enterpriseMetric: "套企业定制材料",
     publicMetric: "场公开演讲与工作坊",
     languageMetric: "种工作语言",
-    thesisEyebrow: "一条主线 · 很多种现场",
-    thesisTitle:
-      "AI让构建更容易。真正难的是，知道什么值得做，并把它做成能留下来的东西。",
-    thesisBody:
-      "到了不同组织里，这句话会变成完全不同的课。先找到团队真正卡住的地方，再把AI做进一条能检查、能接手、能持续改进的工作流。",
     indexEyebrow: "全部材料",
-    indexTitle: "按问题、团队或场合，找到那套deck。",
-    indexIntro:
-      "这里收录企业培训、定制方案，也收录一部分公开演讲和工作坊。deck保留原始语言。",
+    indexTitle: "找到你需要的那份材料。",
+    indexIntro: "按主题和受众筛选；课件保留原始语言。",
     searchPlaceholder: "搜索客户、主题或受众",
     all: "全部",
     results: (count: number) => `${count}套材料`,
-    noResults: "没有找到符合条件的deck。",
+    noResults: "没有找到符合条件的材料。",
     clear: "清除筛选",
-    openDeck: "打开deck",
+    openDeck: "打开课件",
     watchReplay: "看完整实录",
     source: "查看源码",
     publicCutPending: "公开版整理中",
@@ -108,7 +97,7 @@ const copy = {
     enterprise: "企业定制",
     publicTalk: "公开分享",
     closeEyebrow: "带着一个真实问题来",
-    closeTitle: "一场有用的AI培训，应该从工作开始，不是从工具清单开始。",
+    closeTitle: "你的团队，想把哪项工作做得更好？",
     closeBody:
       "告诉我台下是谁、他们正在负责什么，以及听完之后，希望他们具体能做成什么。知道这三件事，就可以开始设计。",
     email: "聊聊企业AI项目",
@@ -435,12 +424,28 @@ export default function Decks() {
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.eyebrow}
               </p>
-              <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.04] text-white [text-wrap:balance] sm:text-5xl lg:text-7xl">
-                {t.h1}
+              <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.12] text-white [text-wrap:balance] sm:text-5xl lg:text-7xl">
+                {lang === "zh" ? (
+                  <>
+                    <span className="block">不同的工作，</span>
+                    <span className="inline-block">需要不同的</span>
+                    <span className="inline-block">AI解法。</span>
+                  </>
+                ) : (
+                  t.h1
+                )}
               </h1>
               <p className="mt-7 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
                 {t.intro}
               </p>
+
+              <a
+                href="#library"
+                className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-lg bg-superlinear px-5 text-sm font-semibold text-white hover:bg-superlinear-deep"
+              >
+                {lang === "en" ? "Browse the materials" : "查看全部课件"}
+                <ArrowRight className="size-4" />
+              </a>
 
               <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-white/10">
                 <div className="py-5 pr-3">
@@ -489,9 +494,6 @@ export default function Decks() {
                   <span className="text-xs font-medium text-white/80">
                     {t.photoCaption}
                   </span>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-superlinear-on-dark">
-                    REAL ROOM · REAL WORK
-                  </span>
                 </figcaption>
               </div>
               <div className="absolute -bottom-7 -left-4 hidden w-[46%] -rotate-3 shadow-2xl sm:block lg:-left-8">
@@ -518,23 +520,10 @@ export default function Decks() {
           </div>
         </section>
 
-        <section className="border-b border-white/10 bg-white/[0.018]">
-          <div className="container grid gap-8 py-14 md:grid-cols-[0.7fr_1.3fr] md:items-start md:py-20">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-              {t.thesisEyebrow}
-            </p>
-            <div>
-              <h2 className="max-w-3xl text-3xl font-semibold leading-[1.12] text-white [text-wrap:balance] md:text-5xl">
-                {t.thesisTitle}
-              </h2>
-              <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-400 md:text-lg">
-                {t.thesisBody}
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="container py-16 md:py-24">
+        <section
+          id="library"
+          className="container scroll-mt-[88px] py-16 md:py-24"
+        >
           <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">

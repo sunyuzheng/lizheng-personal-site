@@ -638,6 +638,7 @@ export default function ZhenbenShi() {
             <div className="flex items-center gap-3">
               <Link
                 href={withLanguage("/", lang)}
+                aria-label="回到立正主页"
                 className="flex items-center gap-1 text-zinc-500 hover:text-superlinear-on-dark transition-colors text-sm"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -749,40 +750,559 @@ export default function ZhenbenShi() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
-      <section className="container mx-auto px-4 py-16 md:py-24 relative">
-        <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          {/* Copy */}
-          <div className="space-y-6 order-2 md:order-1">
-            {/* Course origin */}
-            <div className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-zinc-200">
-              <svg
-                className="w-3.5 h-3.5"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.907-.373.336 0 .63.124.867.373L8.12 3.333h7.893l1.387-1.387c.253-.249.549-.373.867-.373.32 0 .613.124.867.373.249.249.373.551.373.907 0 .355-.124.657-.373.906z" />
-              </svg>
-              由同名B站课程扩写成书
+      <main>
+        {/* ── Hero ── */}
+        <section className="container mx-auto px-4 py-16 md:py-24 relative">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
+            {/* Copy */}
+            <div className="space-y-6 order-2 md:order-1">
+              {/* Course origin */}
+              <div className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-zinc-200">
+                <svg
+                  className="w-3.5 h-3.5"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.907-.373.336 0 .63.124.867.373L8.12 3.333h7.893l1.387-1.387c.253-.249.549-.373.867-.373.32 0 .613.124.867.373.249.249.373.551.373.907 0 .355-.124.657-.373.906z" />
+                </svg>
+                由同名B站课程扩写成书
+              </div>
+
+              <div>
+                <h1 className="text-4xl md:text-5xl font-black leading-tight">
+                  《真本事：
+                  <br />
+                  从会工作
+                  <span className="text-superlinear-on-dark">到会赚钱</span>》
+                </h1>
+                <p className="text-zinc-400 mt-3 text-lg">
+                  把工作变成能力，把能力变成收入
+                </p>
+                <div className="inline-block border border-white/10 text-zinc-500 text-xs px-2 py-1 mt-2">
+                  人民邮电出版社 · 2026年4月 · ISBN 9787115690500
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
+                  asChild
+                >
+                  <a
+                    href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    微信读书
+                  </a>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-white/10 hover:bg-white/10 text-white"
+                  asChild
+                >
+                  <a
+                    href="https://item.jd.com/14667625.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    京东购买
+                  </a>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="border-white/10 hover:bg-white/10 text-white"
+                  asChild
+                >
+                  <a
+                    href="https://www.superlinear.academy/c/work-wealth/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    购买课程
+                  </a>
+                </Button>
+              </div>
+              <p className="text-zinc-500 text-xs">
+                孙煜征 著 · 已出版纸质书，并上线微信读书
+              </p>
             </div>
 
-            <div>
-              <h1 className="text-4xl md:text-5xl font-black leading-tight">
-                《真本事：
-                <br />
-                从会工作
-                <span className="text-superlinear-on-dark">到会赚钱</span>》
-              </h1>
-              <p className="text-zinc-400 mt-3 text-lg">
-                把工作变成能力，把能力变成收入
-              </p>
-              <div className="inline-block border border-white/10 text-zinc-500 text-xs px-2 py-1 mt-2">
-                人民邮电出版社 · 2026年4月 · ISBN 9787115690500
+            {/* Book 3D */}
+            <div className="flex justify-center order-1 md:order-2">
+              <div className="relative">
+                {/* Glow */}
+                <div className="absolute inset-0 bg-superlinear/20 blur-3xl rounded-full scale-75" />
+                {/* 3D book */}
+                <div
+                  className="relative flex items-stretch"
+                  style={{
+                    transform: "perspective(900px) rotateY(-18deg)",
+                    filter: "drop-shadow(14px 28px 48px rgba(10,5,5,0.5))",
+                    transition: "transform 0.45s ease",
+                  }}
+                  onMouseEnter={e =>
+                    (e.currentTarget.style.transform =
+                      "perspective(900px) rotateY(-6deg) scale(1.02)")
+                  }
+                  onMouseLeave={e =>
+                    (e.currentTarget.style.transform =
+                      "perspective(900px) rotateY(-18deg)")
+                  }
+                >
+                  {/* Spine */}
+                  <div
+                    className="overflow-hidden flex-shrink-0"
+                    style={{
+                      width: "22px",
+                      filter: "brightness(0.7) saturate(0.85)",
+                    }}
+                  >
+                    <img
+                      src="/book/cover-spine.png"
+                      alt=""
+                      className="w-full h-full object-cover object-top"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  {/* Front cover */}
+                  <div style={{ width: "clamp(180px, 22vw, 240px)" }}>
+                    <img
+                      src="/book/cover-front.png"
+                      alt="《真本事：从会工作到会赚钱》"
+                      className="block w-full h-auto"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div className="flex flex-wrap gap-3">
+        {/* ── Pain Points ── */}
+        <section className="bg-white/[0.03] py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="mb-10">
+              <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                认知觉醒
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                你明明努力，
+                <br />
+                却仍在原地踏步？
+              </h2>
+              <p className="text-zinc-400 mt-4 max-w-lg">
+                很多时候，真正卡住人的，是努力方向和反馈质量。
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: '陷在"仓鼠轮"',
+                  body: "工作越忙越看不到前景，绩效还行，却缺乏可控收入。你一直在跑，但跑道本身并不通向你想去的地方。",
+                },
+                {
+                  title: "被打分体系绑架",
+                  body: "害怕犯错，永远只做90%执行，没有10%突破。客体、固定、打分三种错误思维，让你把失去主动权合理化。",
+                },
+                {
+                  title: "副业无法起势",
+                  body: "想做副业却找不到方向，赚钱技能无处积累。因为你还没搞清楚：你到底能提供什么市场真正需要的价值？",
+                },
+              ].map(card => (
+                <Card
+                  key={card.title}
+                  className="bg-white/[0.03] border-l-2 border-l-superlinear-on-dark border-t-0 border-r-0 border-b-0 rounded-none"
+                >
+                  <CardContent className="pt-6">
+                    <h3 className="text-white font-bold text-lg mb-2">
+                      {card.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">
+                      {card.body}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Value Formula ── */}
+        <section id="framework" className="py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                核心框架
+                <span className="w-6 h-px bg-superlinear inline-block" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                个人价值公式
+              </h2>
+            </div>
+
+            {/* Formula */}
+            <div className="border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center mb-8">
+              <p className="text-xs text-zinc-500 uppercase tracking-widest mb-4">
+                个人价值公式
+              </p>
+              <p className="text-2xl md:text-3xl font-bold text-white leading-loose">
+                个人价值
+                <span className="text-superlinear-on-dark mx-2">＝</span>
+                了解市场
+                <span className="text-superlinear-on-dark mx-2">×</span>
+                打造产品
+                <span className="text-superlinear-on-dark mx-2">×</span>
+                利用杠杆
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  num: "01",
+                  tag: "了解市场",
+                  title: "找准高价值问题",
+                  body: "读懂行业、组织、用户的真实需求。知道市场要什么，你才能知道把力气用在哪里。",
+                },
+                {
+                  num: "02",
+                  tag: "打造产品",
+                  title: "能力变成可交付成果",
+                  body: "从简历到副业产品再到个人品牌，把你的能力封装成别人买得到、用得上的东西。",
+                },
+                {
+                  num: "03",
+                  tag: "利用杠杆",
+                  title: "成果放大十倍、百倍",
+                  body: "借助平台、内容、AI与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
+                },
+              ].map(c => (
+                <Card key={c.num} className="bg-white/[0.03] border-white/10">
+                  <CardContent className="pt-6 space-y-2">
+                    <p className="text-xs font-mono text-superlinear-on-dark tracking-wider">
+                      {c.num} · {c.tag}
+                    </p>
+                    <h3 className="text-white font-bold">{c.title}</h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">
+                      {c.body}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Flywheel ── */}
+        <section className="bg-white/[0.03] py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="mb-10">
+              <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                怎样练出本事
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                从理解到会做
+              </h2>
+              <p className="text-zinc-400 mt-3 max-w-lg">
+                光靠读书不够。你得在真实项目里试、得到反馈，再调整下一步。
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-0 border border-white/10">
+              {[
+                {
+                  n: "01",
+                  label: "打开认知",
+                  title: "拆掉思维的墙",
+                  body: "理解财富自由与价值创造的底层逻辑，识别并破除客体思维、固定思维、打分思维三大陷阱。",
+                },
+                {
+                  n: "02",
+                  label: "形成判断",
+                  title: "向真正做出结果的人学",
+                  body: "不只听结论，也看对方经历了什么、根据什么做出选择，再用真实案例检验自己的理解。",
+                },
+                {
+                  n: "03",
+                  label: "动手去做",
+                  title: "在真实项目里练",
+                  body: "用高价值任务或一个小型副业来试，看见结果，再调整下一步。理论真正用过，才会变成自己的本事。",
+                },
+              ].map((step, i) => (
+                <div
+                  key={step.n}
+                  className={`relative p-7 ${i < 2 ? "border-b md:border-b-0 md:border-r border-white/10" : ""}`}
+                >
+                  <span className="absolute top-4 right-5 text-5xl font-serif text-white/[0.05] select-none leading-none">
+                    {step.n}
+                  </span>
+                  <p className="text-xs font-semibold text-superlinear-on-dark uppercase tracking-wider mb-2">
+                    {step.label}
+                  </p>
+                  <h3 className="text-white font-bold mb-2">{step.title}</h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed">
+                    {step.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── AI Advisor ── */}
+        <AdvisorSection />
+
+        {/* ── Course Outline ── */}
+        <section
+          id="outline"
+          className="bg-white/[0.03] py-16 md:py-20 relative"
+        >
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="mb-10">
+              <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                课程大纲
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                21课，4大模块
+              </h2>
+              <p className="text-zinc-400 mt-3 max-w-lg">
+                从认知觉醒到行动落地，完整路径清晰可循。课程与书相互映照，书是课程的深度延伸。
+              </p>
+            </div>
+
+            <div className="border border-white/10 bg-white/[0.03]">
+              {MODULES.map((mod, i) => (
+                <ModuleItem key={mod.num} mod={mod} defaultOpen={i === 0} />
+              ))}
+            </div>
+
+            <div className="mt-6">
               <Button
+                variant="outline"
+                className="border-white/10 hover:bg-white/10 text-white"
+                asChild
+              >
+                <a
+                  href="https://www.bilibili.com/cheese/play/ss300796438"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  在B站观看课程 →
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Endorsements ── */}
+        <section id="endorsements" className="py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                封面推荐
+                <span className="w-6 h-px bg-superlinear inline-block" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                他们为这本书背书
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {ENDORSEMENTS.map(e => (
+                <Card
+                  key={e.name}
+                  className="bg-white/[0.03] border-t-2 border-t-superlinear-on-dark border-x-0 border-b-0 rounded-none"
+                >
+                  <CardContent className="pt-6 space-y-4 relative">
+                    <span className="absolute top-3 right-4 text-5xl font-serif text-white/10 leading-none select-none">
+                      "
+                    </span>
+                    <blockquote className="text-zinc-300 text-sm leading-relaxed relative z-10">
+                      {e.quote}
+                    </blockquote>
+                    <div>
+                      <p className="text-white font-bold text-sm">{e.name}</p>
+                      <p className="text-zinc-500 text-xs">{e.title}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Author ── */}
+        <section
+          id="author"
+          className="bg-white/[0.03] py-16 md:py-20 relative"
+        >
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="grid md:grid-cols-[240px_1fr] gap-10 items-start">
+              {/* Photo */}
+              <div
+                className="relative mx-auto md:mx-0"
+                style={{ maxWidth: 240 }}
+              >
+                <div className="absolute inset-0 bg-superlinear/10 blur-2xl" />
+                <img
+                  src="/book/author.jpg"
+                  alt="孙煜征博士"
+                  className="relative w-full aspect-[3/4] object-cover object-top"
+                />
+                <div className="bg-superlinear text-white text-xs font-semibold text-center py-2 tracking-wide">
+                  孙煜征 博士
+                </div>
+              </div>
+
+              {/* Bio */}
+              <div className="space-y-5">
+                <div>
+                  <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                    <span className="w-6 h-px bg-superlinear inline-block" />
+                    关于作者
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-black text-white">
+                    孙煜征
+                  </h2>
+                  <p className="text-zinc-400 text-sm mt-1">
+                    康奈尔大学经济学博士 · Superlinear Academy · 创始人 · 作者
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {[
+                    "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监",
+                    "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一evangelist",
+                    "Superlinear Academy创始人，长期从事AI教育、社区与企业实践",
+                    "截至2026年8月，累计完成200+场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
+                    "现居西雅图",
+                  ].map(item => (
+                    <div
+                      key={item}
+                      className="flex gap-3 text-sm text-zinc-300 leading-relaxed"
+                    >
+                      <span className="text-superlinear-on-dark flex-shrink-0 mt-0.5">
+                        ▸
+                      </span>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-white/[0.04] border border-white/10 p-4">
+                  <p className="text-sm text-zinc-400">
+                    📖 合著{" "}
+                    <span className="text-white font-semibold">
+                      《Growth Data Analytics Playbook》
+                    </span>{" "}
+                    入选《华尔街日报》CIO Journal 2025年书单
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Cornell PhD",
+                    "Amazon",
+                    "Meta",
+                    "Tencent IEG",
+                    "Statsig",
+                    "Seattle",
+                  ].map(b => (
+                    <Badge
+                      key={b}
+                      variant="outline"
+                      className="border-white/20 text-zinc-400 text-xs"
+                    >
+                      {b}
+                    </Badge>
+                  ))}
+                </div>
+
+                <a
+                  href="https://www.lizheng.ai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-superlinear-on-dark hover:text-white transition-colors"
+                >
+                  个人主页：lizheng.ai →
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Community ── */}
+        <section id="community" className="py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                Superlinear社群
+                <span className="w-6 h-px bg-superlinear inline-block" />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                在免费社区里
+                <br />
+                把书里的方法用起来
+              </h2>
+              <p className="text-zinc-400 mt-4 max-w-lg mx-auto text-sm">
+                Superlinear
+                Academy长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
+              </p>
+            </div>
+            <div className="border border-white/10 overflow-hidden">
+              <iframe
+                style={{ border: 0, width: "100%", height: "75vh" }}
+                src="https://www.superlinear.academy/feed?iframe=true"
+                title="Superlinear社群"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section className="bg-white/[0.03] py-16 md:py-20 relative">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <div className="mb-10">
+              <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
+                <span className="w-6 h-px bg-superlinear inline-block" />
+                常见问题
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                你可能想问的
+              </h2>
+            </div>
+            <div className="border border-white/10 bg-white/[0.03]">
+              {FAQ.map(item => (
+                <FaqItem key={item.q} q={item.q} a={item.a} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Footer CTA ── */}
+        <section
+          id="purchase"
+          className="bg-black/30 py-20 text-center relative"
+        >
+          <div className="container mx-auto px-4 max-w-2xl">
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+              想继续读，从这里开始
+            </h2>
+            <p className="text-zinc-400 mb-8">
+              可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入Superlinear社区。
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button
+                size="lg"
                 className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
                 asChild
               >
@@ -795,6 +1315,7 @@ export default function ZhenbenShi() {
                 </a>
               </Button>
               <Button
+                size="lg"
                 variant="outline"
                 className="border-white/10 hover:bg-white/10 text-white"
                 asChild
@@ -808,531 +1329,24 @@ export default function ZhenbenShi() {
                 </a>
               </Button>
               <Button
+                size="lg"
                 variant="outline"
                 className="border-white/10 hover:bg-white/10 text-white"
                 asChild
               >
                 <a
-                  href="https://www.superlinear.academy/c/work-wealth/"
+                  href="https://www.superlinear.academy"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  购买课程
+                  <Users className="w-5 h-5 mr-2" />
+                  加入Superlinear社群
                 </a>
               </Button>
             </div>
-            <p className="text-zinc-500 text-xs">
-              孙煜征 著 · 已出版纸质书，并上线微信读书
-            </p>
           </div>
-
-          {/* Book 3D */}
-          <div className="flex justify-center order-1 md:order-2">
-            <div className="relative">
-              {/* Glow */}
-              <div className="absolute inset-0 bg-superlinear/20 blur-3xl rounded-full scale-75" />
-              {/* 3D book */}
-              <div
-                className="relative flex items-stretch"
-                style={{
-                  transform: "perspective(900px) rotateY(-18deg)",
-                  filter: "drop-shadow(14px 28px 48px rgba(10,5,5,0.5))",
-                  transition: "transform 0.45s ease",
-                }}
-                onMouseEnter={e =>
-                  (e.currentTarget.style.transform =
-                    "perspective(900px) rotateY(-6deg) scale(1.02)")
-                }
-                onMouseLeave={e =>
-                  (e.currentTarget.style.transform =
-                    "perspective(900px) rotateY(-18deg)")
-                }
-              >
-                {/* Spine */}
-                <div
-                  className="overflow-hidden flex-shrink-0"
-                  style={{
-                    width: "22px",
-                    filter: "brightness(0.7) saturate(0.85)",
-                  }}
-                >
-                  <img
-                    src="/book/cover-spine.png"
-                    alt=""
-                    className="w-full h-full object-cover object-top"
-                    aria-hidden="true"
-                  />
-                </div>
-                {/* Front cover */}
-                <div style={{ width: "clamp(180px, 22vw, 240px)" }}>
-                  <img
-                    src="/book/cover-front.png"
-                    alt="《真本事：从会工作到会赚钱》"
-                    className="block w-full h-auto"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Pain Points ── */}
-      <section className="bg-white/[0.03] py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="mb-10">
-            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              认知觉醒
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              你明明努力，
-              <br />
-              却仍在原地踏步？
-            </h2>
-            <p className="text-zinc-400 mt-4 max-w-lg">
-              很多时候，真正卡住人的，是努力方向和反馈质量。
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              {
-                title: '陷在"仓鼠轮"',
-                body: "工作越忙越看不到前景，绩效还行，却缺乏可控收入。你一直在跑，但跑道本身并不通向你想去的地方。",
-              },
-              {
-                title: "被打分体系绑架",
-                body: "害怕犯错，永远只做90%执行，没有10%突破。客体、固定、打分三种错误思维，让你把失去主动权合理化。",
-              },
-              {
-                title: "副业无法起势",
-                body: "想做副业却找不到方向，赚钱技能无处积累。因为你还没搞清楚：你到底能提供什么市场真正需要的价值？",
-              },
-            ].map(card => (
-              <Card
-                key={card.title}
-                className="bg-white/[0.03] border-l-2 border-l-superlinear-on-dark border-t-0 border-r-0 border-b-0 rounded-none"
-              >
-                <CardContent className="pt-6">
-                  <h3 className="text-white font-bold text-lg mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    {card.body}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Value Formula ── */}
-      <section id="framework" className="py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              核心框架
-              <span className="w-6 h-px bg-superlinear inline-block" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              个人价值公式
-            </h2>
-          </div>
-
-          {/* Formula */}
-          <div className="border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center mb-8">
-            <p className="text-xs text-zinc-500 uppercase tracking-widest mb-4">
-              个人价值公式
-            </p>
-            <p className="text-2xl md:text-3xl font-bold text-white leading-loose">
-              个人价值
-              <span className="text-superlinear-on-dark mx-2">＝</span>
-              了解市场
-              <span className="text-superlinear-on-dark mx-2">×</span>
-              打造产品
-              <span className="text-superlinear-on-dark mx-2">×</span>
-              利用杠杆
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              {
-                num: "01",
-                tag: "了解市场",
-                title: "找准高价值问题",
-                body: "读懂行业、组织、用户的真实需求。知道市场要什么，你才能知道把力气用在哪里。",
-              },
-              {
-                num: "02",
-                tag: "打造产品",
-                title: "能力变成可交付成果",
-                body: "从简历到副业产品再到个人品牌，把你的能力封装成别人买得到、用得上的东西。",
-              },
-              {
-                num: "03",
-                tag: "利用杠杆",
-                title: "成果放大十倍、百倍",
-                body: "借助平台、内容、AI与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
-              },
-            ].map(c => (
-              <Card key={c.num} className="bg-white/[0.03] border-white/10">
-                <CardContent className="pt-6 space-y-2">
-                  <p className="text-xs font-mono text-superlinear-on-dark tracking-wider">
-                    {c.num} · {c.tag}
-                  </p>
-                  <h3 className="text-white font-bold">{c.title}</h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
-                    {c.body}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Flywheel ── */}
-      <section className="bg-white/[0.03] py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="mb-10">
-            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              怎样练出本事
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              从理解到会做
-            </h2>
-            <p className="text-zinc-400 mt-3 max-w-lg">
-              光靠读书不够。你得在真实项目里试、得到反馈，再调整下一步。
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-0 border border-white/10">
-            {[
-              {
-                n: "01",
-                label: "打开认知",
-                title: "拆掉思维的墙",
-                body: "理解财富自由与价值创造的底层逻辑，识别并破除客体思维、固定思维、打分思维三大陷阱。",
-              },
-              {
-                n: "02",
-                label: "形成判断",
-                title: "向真正做出结果的人学",
-                body: "不只听结论，也看对方经历了什么、根据什么做出选择，再用真实案例检验自己的理解。",
-              },
-              {
-                n: "03",
-                label: "动手去做",
-                title: "在真实项目里练",
-                body: "用高价值任务或一个小型副业来试，看见结果，再调整下一步。理论真正用过，才会变成自己的本事。",
-              },
-            ].map((step, i) => (
-              <div
-                key={step.n}
-                className={`relative p-7 ${i < 2 ? "border-b md:border-b-0 md:border-r border-white/10" : ""}`}
-              >
-                <span className="absolute top-4 right-5 text-5xl font-serif text-white/[0.05] select-none leading-none">
-                  {step.n}
-                </span>
-                <p className="text-xs font-semibold text-superlinear-on-dark uppercase tracking-wider mb-2">
-                  {step.label}
-                </p>
-                <h3 className="text-white font-bold mb-2">{step.title}</h3>
-                <p className="text-zinc-400 text-sm leading-relaxed">
-                  {step.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── AI Advisor ── */}
-      <AdvisorSection />
-
-      {/* ── Course Outline ── */}
-      <section id="outline" className="bg-white/[0.03] py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="mb-10">
-            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              课程大纲
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              21课，4大模块
-            </h2>
-            <p className="text-zinc-400 mt-3 max-w-lg">
-              从认知觉醒到行动落地，完整路径清晰可循。课程与书相互映照，书是课程的深度延伸。
-            </p>
-          </div>
-
-          <div className="border border-white/10 bg-white/[0.03]">
-            {MODULES.map((mod, i) => (
-              <ModuleItem key={mod.num} mod={mod} defaultOpen={i === 0} />
-            ))}
-          </div>
-
-          <div className="mt-6">
-            <Button
-              variant="outline"
-              className="border-white/10 hover:bg-white/10 text-white"
-              asChild
-            >
-              <a
-                href="https://www.bilibili.com/cheese/play/ss300796438"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                在B站观看课程 →
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Endorsements ── */}
-      <section id="endorsements" className="py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-10">
-            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              封面推荐
-              <span className="w-6 h-px bg-superlinear inline-block" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              他们为这本书背书
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            {ENDORSEMENTS.map(e => (
-              <Card
-                key={e.name}
-                className="bg-white/[0.03] border-t-2 border-t-superlinear-on-dark border-x-0 border-b-0 rounded-none"
-              >
-                <CardContent className="pt-6 space-y-4 relative">
-                  <span className="absolute top-3 right-4 text-5xl font-serif text-white/10 leading-none select-none">
-                    "
-                  </span>
-                  <blockquote className="text-zinc-300 text-sm leading-relaxed relative z-10">
-                    {e.quote}
-                  </blockquote>
-                  <div>
-                    <p className="text-white font-bold text-sm">{e.name}</p>
-                    <p className="text-zinc-500 text-xs">{e.title}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Author ── */}
-      <section id="author" className="bg-white/[0.03] py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="grid md:grid-cols-[240px_1fr] gap-10 items-start">
-            {/* Photo */}
-            <div className="relative mx-auto md:mx-0" style={{ maxWidth: 240 }}>
-              <div className="absolute inset-0 bg-superlinear/10 blur-2xl" />
-              <img
-                src="/book/author.jpg"
-                alt="孙煜征博士"
-                className="relative w-full aspect-[3/4] object-cover object-top"
-              />
-              <div className="bg-superlinear text-white text-xs font-semibold text-center py-2 tracking-wide">
-                孙煜征 博士
-              </div>
-            </div>
-
-            {/* Bio */}
-            <div className="space-y-5">
-              <div>
-                <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-                  <span className="w-6 h-px bg-superlinear inline-block" />
-                  关于作者
-                </div>
-                <h2 className="text-3xl md:text-4xl font-black text-white">
-                  孙煜征
-                </h2>
-                <p className="text-zinc-400 text-sm mt-1">
-                  康奈尔大学经济学博士 · Superlinear Academy · 创始人 · 作者
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监",
-                  "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一evangelist",
-                  "Superlinear Academy创始人，长期从事AI教育、社区与企业实践",
-                  "截至2026年8月，累计完成200+场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
-                  "现居西雅图",
-                ].map(item => (
-                  <div
-                    key={item}
-                    className="flex gap-3 text-sm text-zinc-300 leading-relaxed"
-                  >
-                    <span className="text-superlinear-on-dark flex-shrink-0 mt-0.5">
-                      ▸
-                    </span>
-                    {item}
-                  </div>
-                ))}
-              </div>
-
-              <div className="bg-white/[0.04] border border-white/10 p-4">
-                <p className="text-sm text-zinc-400">
-                  📖 合著{" "}
-                  <span className="text-white font-semibold">
-                    《Growth Data Analytics Playbook》
-                  </span>{" "}
-                  入选《华尔街日报》CIO Journal 2025年书单
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Cornell PhD",
-                  "Amazon",
-                  "Meta",
-                  "Tencent IEG",
-                  "Statsig",
-                  "Seattle",
-                ].map(b => (
-                  <Badge
-                    key={b}
-                    variant="outline"
-                    className="border-white/20 text-zinc-400 text-xs"
-                  >
-                    {b}
-                  </Badge>
-                ))}
-              </div>
-
-              <a
-                href="https://www.lizheng.ai/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-superlinear-on-dark hover:text-white transition-colors"
-              >
-                个人主页：lizheng.ai →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Community ── */}
-      <section id="community" className="py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              Superlinear社群
-              <span className="w-6 h-px bg-superlinear inline-block" />
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              在免费社区里
-              <br />
-              把书里的方法用起来
-            </h2>
-            <p className="text-zinc-400 mt-4 max-w-lg mx-auto text-sm">
-              Superlinear
-              Academy长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
-            </p>
-          </div>
-          <div className="border border-white/10 overflow-hidden">
-            <iframe
-              style={{ border: 0, width: "100%", height: "75vh" }}
-              src="https://www.superlinear.academy/feed?iframe=true"
-              title="Superlinear社群"
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ ── */}
-      <section className="bg-white/[0.03] py-16 md:py-20 relative">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="mb-10">
-            <div className="flex items-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
-              <span className="w-6 h-px bg-superlinear inline-block" />
-              常见问题
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              你可能想问的
-            </h2>
-          </div>
-          <div className="border border-white/10 bg-white/[0.03]">
-            {FAQ.map(item => (
-              <FaqItem key={item.q} q={item.q} a={item.a} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Footer CTA ── */}
-      <section id="purchase" className="bg-black/30 py-20 text-center relative">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-            想继续读，从这里开始
-          </h2>
-          <p className="text-zinc-400 mb-8">
-            可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入Superlinear社区。
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button
-              size="lg"
-              className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
-              asChild
-            >
-              <a
-                href="https://weread.qq.com/book-detail?type=1&senderVid=4500358&v=33c32d30813abb4d6g0122ff"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                微信读书
-              </a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/10 hover:bg-white/10 text-white"
-              asChild
-            >
-              <a
-                href="https://item.jd.com/14667625.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                京东购买
-              </a>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/10 hover:bg-white/10 text-white"
-              asChild
-            >
-              <a
-                href="https://www.superlinear.academy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Users className="w-5 h-5 mr-2" />
-                加入Superlinear社群
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
-
+        </section>
+      </main>
       {/* ── Footer ── */}
       <footer className="bg-black/30 border-t border-white/[0.06] py-6 relative">
         <div className="container mx-auto px-4">

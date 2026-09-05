@@ -10,7 +10,8 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 
 ## Public Content Model
 
-- **Homepage:** the defining idea, the exemplary makers and works that set its horizon, the choices and work that make Yuzheng a credible steward of it, one inspectable dated judgment, Superlinear as the long-term wager, conversations, books, and an invitation back to the visitor's own work.
+- **Homepage:** the defining idea and clear personal identity, the Academy he is building, selected conversations, consequential career choices and one inspectable dated judgment, writing, books, and participation. Concrete people and work appear before extended explanation; the full belief section lives on About.
+- **About:** factual biography, career and project relationships, and the full defining-work philosophy relocated from the homepage. The homepage curates; this page provides depth.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
 - **Superlinear Academy:** the open, free learning and builder community.

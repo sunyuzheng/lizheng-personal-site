@@ -94,7 +94,7 @@ function organizationNodes(lang: SiteLang) {
       "@type": "Organization",
       "@id": "https://stay.superlinear.academy/#organization",
       name: "Stay Superlinear",
-      url: "https://stay.superlinear.academy/",
+      url: "https://staysuperlinear.com/",
       description:
         "A paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.",
     },

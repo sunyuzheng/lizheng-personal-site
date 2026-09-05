@@ -1,3 +1,4 @@
+import DefiningWork from "@/components/DefiningWork";
 import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage } from "@/contexts/LanguageContext";
@@ -62,7 +63,7 @@ const currentWork = {
       role: "Long-term membership",
       detail:
         "A paid, year-round content and practitioner environment with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage is the long-term teaching partner responsible for much of its technical depth.",
-      href: "https://stay.superlinear.academy/",
+      href: "https://staysuperlinear.com/",
     },
     {
       name: "Enterprise AI programs",
@@ -93,7 +94,7 @@ const currentWork = {
       role: "长期会员社区",
       detail:
         "面向已有专业积累、正在用AI的人，持续提供深度解析、闭门大师课、答疑、课程、Skills、回放、讨论与可检索的内容库。鸭哥作为长期核心教学伙伴，负责其中大量技术内容。",
-      href: "https://stay.superlinear.academy/",
+      href: "https://staysuperlinear.com/",
     },
     {
       name: "企业AI项目",
@@ -455,6 +456,7 @@ export default function About() {
             </div>
           </div>
         </section>
+        <DefiningWork />
       </main>
     </div>
   );

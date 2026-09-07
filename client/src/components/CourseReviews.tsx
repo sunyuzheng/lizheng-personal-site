@@ -2,7 +2,9 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Public Maven learner reviews; Chinese excerpts follow the approved AI Builders translation.
+// Public Maven learner reviews; Chinese text translates the selected excerpts.
+// EZ: use the opening course evaluation, not the following general view about tools.
+// Source: course-marketing-system/05_assets/proof-library/processed/maven-review-shortlist.json
 // Employer names identify the individual reviewers, not institutional endorsements.
 const reviews = [
   {
@@ -18,8 +20,8 @@ const reviews = [
     company: "Anthropic",
     role: "Engineer",
     avatar: "/avatars/ez-anthropic.webp",
-    en: "There can be different new tools coming, but principles remain!",
-    zh: "新工具会不断出现，但原理会留下。",
+    en: "I love how the course is being structured, it not only use live demo, but also include lots of principles to help build mental models how we can best leverage AI to build!",
+    zh: "我很喜欢这门课的设计：既有现场演示，也讲了很多原理，帮助我们建立如何更好地用AI做东西的思维模型。",
   },
 ];
 

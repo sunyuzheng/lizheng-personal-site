@@ -34,7 +34,7 @@ Chinese social accounts:
 
 - Never showcase members’ projects as Yuzheng’s own representative work. Community scale may describe the institution without adding a member-project gallery.
 - Preserve strong credentials and real evidence. Compression removes repetition and moves detail to its appropriate context.
-- Move the two unchanged `CourseReviews.tsx` excerpts to About, after current work. `PeerEndorsements.tsx` owns the four full peer quotations and their homepage excerpts; it replaces the former separate education/book quotation copies. Employer names remain reviewer attribution, not employer endorsements.
+- Keep the two `CourseReviews.tsx` excerpts on About, after current work. EZ’s excerpt is the complete opening sentence that evaluates the course’s structure, live demos, principles and mental models, with a faithful Chinese translation. `PeerEndorsements.tsx` owns the four full peer quotations and their homepage excerpts; it replaces the former separate education/book quotation copies. Employer names remain reviewer attribution, not employer endorsements.
 - Preserve the real photographs, book quotation, article titles, guest identities, and product destinations.
 - The full philosophy remains on About in `DefiningWork.tsx`; it is not expanded into another required homepage introduction.
 - Do not turn the career narrative into a claim that every transition was a voluntary resignation. Do not imply employment at OpenAI or participation in its later acquisition of Statsig.

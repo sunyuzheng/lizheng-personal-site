@@ -10,7 +10,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 
 ## Public Content Model
 
-- **Homepage:** the defining idea and clear personal identity, the Academy he is building, selected conversations, consequential career choices and one inspectable dated judgment, writing, books, and participation. Concrete people and work appear before extended explanation; the full belief section lives on About.
+- **Homepage:** the defining idea and clear personal identity, his story immediately after the hero, selected conversations, writing and dated arguments, books, the Academy he is building, enterprise work, and participation. Chinese social links and grouped navigation make the main routes easy to find. Both books appear in the hero; four concise peer endorsements follow the story. The fully custom starting price sits within enterprise work. Full beliefs, peer quotations, and learner reviews live on About.
 - **About:** factual biography, career and project relationships, and the full defining-work philosophy relocated from the homepage. The homepage curates; this page provides depth.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.

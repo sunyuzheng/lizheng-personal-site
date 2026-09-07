@@ -29,18 +29,18 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun (立正 / 课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun, Cornell Economics PhD and founder of Superlinear Academy. AI courses, a 20,000+ member community, and conversations with technology builders. MAKE WHAT LASTS.",
+      "Yuzheng Sun, Cornell Economics PhD, author, and founder of Superlinear Academy. His story, writing, books, and conversations with AI researchers and technology founders. MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-06",
   },
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
     description:
-      "立正（孙煜征，课代表立正），康奈尔经济学博士、超线性学院Superlinear Academy创始人。和2万+同行学懂AI、把AI用起来；与AI研究者、科技创始人深聊。学点真本事，做点真东西。",
+      "立正（孙煜征，课代表立正），康奈尔经济学博士、《真本事》作者、超线性学院创始人。我的经历、文章、书，以及与AI研究者和科技创始人的深度对话。学点真本事，做点真东西。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-06",
   },
 };
 
@@ -51,7 +51,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-06",
   },
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
@@ -59,7 +59,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。",
     canonical: "https://www.lizheng.ai/zh/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-06",
   },
 };
 

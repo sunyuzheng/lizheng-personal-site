@@ -1,3 +1,4 @@
+import { GROWTH_BOOK_AMAZON_URL } from "./book-links";
 import {
   ABOUT_PAGE_META,
   AIE_SHANGHAI_DECK_PAGE_META,
@@ -67,6 +68,7 @@ function personNode(lang: SiteLang) {
       "https://www.linkedin.com/in/yuzhengsun/",
       "https://www.youtube.com/@kedaibiao",
       "https://space.bilibili.com/491306902",
+      "https://www.xiaohongshu.com/user/profile/62a402140000000019029369",
       "https://yuzheng.substack.com/",
     ],
   };
@@ -284,8 +286,7 @@ function growthBookNode() {
       { "@id": PERSON_ID },
     ],
     publisher: { "@type": "Organization", name: "Statsig" },
-    sameAs:
-      "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
+    sameAs: GROWTH_BOOK_AMAZON_URL,
   };
 }
 

@@ -1,116 +1,53 @@
 # Homepage Narrative
 
-Updated for the September 4, 2026 copy revision. This is the page brief for the local implementation; publication is a separate approval boundary. The full personal philosophy remains owned by `yuzheng-profile/THESIS.md`.
+Updated September 6, 2026. This brief describes the current local revision; public deployment requires review and approval. Personal facts and philosophy remain owned by `yuzheng-profile`, not this page brief.
 
-## The one memory
+## The page’s job
 
-> **学点真本事，做点真东西。 / MAKE WHAT LASTS.**
+A visitor should quickly recognize Yuzheng, understand what his experiences have led him to care about, and find his conversations, writing, books, Academy, or a way to work together.
 
-A visitor should recognize Yuzheng's conviction, the real work behind it, and a useful way to participate. The English line stays `MAKE WHAT LASTS.`; a change to the Chinese adaptation never changes the English mother line.
-
-This is a personal homepage serving content viewers, learners, guests, hosts, and prospective enterprise partners. It is not a course sales page. The Academy is his principal current work, while conversations, career choices, public judgments, books, and enterprise work retain independent significance.
-
-## Why the September revision
-
-The previous homepage explained the same belief in the Hero, a three-layer philosophy section, career chapters, the Academy introduction, conversations, books, and the final invitation. Each passage made sense separately, but their accumulation delayed the actual people, work, proof, and choices.
-
-This revision removes repeated explanation while preserving concrete authority. It does not lower the ambition, remove strong credentials to appear modest, or replace meaningful material with empty space.
-
-The full former belief section now lives in `DefiningWork.tsx` on the About page. It retains the distinction among capability, reality, and time, as well as the exemplary makers and works that explain Yuzheng's aspirations. Those ideas remain available without becoming a prerequisite for understanding the homepage.
+Keep the personal signature **学点真本事，做点真东西。** and the English **MAKE WHAT LASTS.** The Academy is his principal current work. His homepage introduces the person and his work while making consequential credentials and peer recognition visible early. The scale of his enterprise practice belongs with the enterprise work later on the page. Detailed course formats and procurement choices remain later in the page or on their dedicated surfaces.
 
 ## Reading sequence
 
-### 1. Hero: conviction, identity, and an immediate choice
+1. **Hero — identity and an immediate choice.** Founder, author of 真本事, co-author of Growth Data Analytics Playbook, and interviewer. Book names are subtle inline links without underlines; the English book points directly to Amazon. Keep the readable credentials, full Acquired photograph, free-community CTA and conversation CTA. Chinese social links are B站, 小红书, YouTube, and LinkedIn; Substack, GitHub and email remain in the footer.
+2. **Story — immediately after the hero.** Tencent’s 30-person data and AI team, hands-on work with the early Statsig team later acquired by OpenAI, and full-time work on the Academy he founded. Follow with his question about what his skills can make beyond a title or company name. Keep the career line and About link. Do not infer resignation or any other reason for leaving Statsig. Preserve the approved short credential `OpenAI收购团队早期成员`; the narrative names Statsig and makes it the company acquired. Follow the story with one compact group of four peer endorsements: Liu Jia, Wei Manfredi, Vijaye Raji, and Dai Yusen. Names, roles, and faithful short excerpts remain visible; one link goes directly to all four full quotations on About.
+3. **Conversations.** Keep six selected guests, their roles, episode/archive routes, and the separate meanings of 200+ conversations and 400K+ followers. The conversations themselves show what the work is about.
+4. **Writing and dated arguments.** Keep the three Knowledge Bank article titles and reading reasons. Place the April 2021 and pre-GPT-4 February 2023 records here, with their original links and later review, so dated judgments sit beside the writing.
+5. **Books and open context.** Keep both covers and descriptions, the full launch photograph, co-authors, Julie Zhuo, and the WSJ reading-list mention. The English book cover/title also goes directly to Amazon. Vijaye’s excerpt appears with peer recognition earlier on the page; his full book quotation is available on About. Retain the public context repository link.
+6. **Academy.** Introduce the institution Yuzheng is building with a short personal paragraph, member/project scale, the Yage conversation image and attribution, and a free-community route. Keep AI Builders and Stay Superlinear as compact subordinate entries with clear descriptions and direct product routes. The public membership destination remains `https://staysuperlinear.com`.
+7. **Enterprise work.** Keep the actual DoorDash training photograph, a short description of team work, and the enterprise-page link. A clearly labeled `Fully custom enterprise AI programs · $100,000+` line belongs here, alongside the scope and enterprise-page link. Other reference pricing and procurement choices live on the enterprise page. The DoorDash caption describes training and does not imply that this publicly shown client purchased the fully custom offer.
+8. **Invitation and footer.** Free community and cooperation, with complete social routes and the shop link in the footer.
 
-Keep the large Chinese signature and English mother line.
+## Navigation
 
-The supporting introduction says what Yuzheng actually does: founded Superlinear Academy, learns and works with a 20,000+ member community, and hosts conversations with AI researchers and technology founders. It no longer explains the full relationship among judgment, craft, authorship, and time.
+Desktop: About me / 关于我; Content / 内容 dropdown; Superlinear / 超线性学院; Collaborate / 合作; language switch and free-community action.
 
-Credentials are a separate, readable two-line element: Cornell, Tencent leadership, Amazon, Meta, and the early Statsig team later acquired by OpenAI. Chinese uses the already approved editorial shorthand. English preserves the Statsig-to-OpenAI relationship without suggesting OpenAI employment.
+Content contains conversations, writing, books, and talks/slides (`演讲资料` in Chinese). Mobile exposes the same links in two clear groups with 44px targets. The dropdown and mobile menu close with Escape; selecting a section closes the menu before scrolling.
 
-The full Acquired scene remains, with Ben Gilbert and David Rosenthal visible. It supplies peer context without an added claim of endorsement.
+Chinese social accounts:
 
-Primary action: join the free community. Secondary action: watch the conversations. Cooperation remains visible in navigation.
+- B站: `https://space.bilibili.com/491306902`, from the personal fact source.
+- 小红书: `https://www.xiaohongshu.com/user/profile/62a402140000000019029369`. Account ownership was checked against the platform’s official creator activity page, which identifies `课代表立正` and this user ID.
 
-### 2. Superlinear: show what people can enter
+## Evidence and boundaries
 
-The Academy follows the Hero. The free community gets the main text, scale evidence, action, and the real Yuzheng–Yage conversation image.
+- Never showcase members’ projects as Yuzheng’s own representative work. Community scale may describe the institution without adding a member-project gallery.
+- Preserve strong credentials and real evidence. Compression removes repetition and moves detail to its appropriate context.
+- Move the two unchanged `CourseReviews.tsx` excerpts to About, after current work. `PeerEndorsements.tsx` owns the four full peer quotations and their homepage excerpts; it replaces the former separate education/book quotation copies. Employer names remain reviewer attribution, not employer endorsements.
+- Preserve the real photographs, book quotation, article titles, guest identities, and product destinations.
+- The full philosophy remains on About in `DefiningWork.tsx`; it is not expanded into another required homepage introduction.
+- Do not turn the career narrative into a claim that every transition was a voluntary resignation. Do not imply employment at OpenAI or participation in its later acquisition of Statsig.
+- Existing English/Chinese canonical routes, hreflang, structured data, SEO dates, and prerendered body content remain complete.
 
-Its headline is `Who you learn with matters. / 学AI，也要选对身边的人。` It names the visitor's choice of learning environment. The 20,000+ member figure remains in the adjacent scale line rather than being repeated in the heading.
+## Visual rhythm and proof density
 
-The introduction names concrete things available after registration: enterprise AI training content, member projects, and technical discussion. It does not imply that all paid courses or member-only material are free.
+The homepage uses a centered 1200px outer content width and consistent gutters. Writing sits on an inset green surface, with its heading, article text and dated arguments sharing clear alignment. Cards use spacing instead of multiple competing left indents, and reading links align at the bottom on desktop.
 
-AI Builders and Stay appear as two compact subordinate entries, not equal institutions or a compulsory purchase sequence:
+In this personal-page context, compression should reduce repeated explanation rather than hide valuable recognition from readers who will never enter About. Four short, visible peer excerpts after the story provide breadth without four full testimonial panels. Full quotes remain directly reachable at `/about#endorsements` and `/zh/about#endorsements`; route scrolling must honor those fragments.
 
-- AI Builders: systematic AI understanding, hands-on practice, and continued learning as AI changes. The Chinese sentence reuses the user's approved formulation.
-- Stay Superlinear: ongoing contact with practitioners, new AI developments brought back into one's own work, and concrete masterclasses, analysis, Q&A, and Skills.
-
-The public membership destination is `https://staysuperlinear.com`, chosen for mainland-China access. The Circle service and historic schema entity identifiers need not change with that marketing URL.
-
-Enterprise work remains a distinct editorial block. Keep the real DoorDash training scene, the transformation headline, the cooperation ladder, the `$100,000+` fully custom boundary, and the dedicated enterprise-page route. Do not conflate a public training scene with a named fully custom client.
-
-Two short learner-review excerpts follow the product entries: Shuyang (OpenAI) on learning to think and teach oneself, and EZ (Anthropic) on principles outlasting tools. Their employers are readable attribution, not the section's claim; the label identifies AI Builders learner reviews and links to the public Maven source. This answers a specific question about teaching, rather than turning the personal homepage into an employer-logo wall.
-
-Wei Manfredi and Liu Jia's existing quotations move unchanged to About, beside the Academy's work. This keeps their broader educational perspective available without stacking four education quotations on the homepage. Vijaye Raji's separate book quotation stays in its original context.
-
-### 3. Conversations: let the people and episodes appear early
-
-The headline is `What did they get right? / 他们做对了什么？`.
-
-One short supporting sentence establishes the subject: technology and the decisions that made the difference. The six selected guests, their roles, and the episode/archive links do most of the remaining work. Role text is more readable; no new prestige badges are added.
-
-The existing 200+ conversation and 400K+ audience figures preserve their distinct meanings. One counts conversations, the other reach.
-
-### 4. Story and public judgment: keep choices and evidence
-
-The story begins with `A career should leave more than a résumé. / 工作一辈子，别只留下一份简历。` The previous draft put “leading 30 people at Tencent” in the headline. It was concrete and short, but made status the explicit proposition instead of the reader's inference. The revised title names the career aspiration; leading the Tencent team, returning to hands-on work at early-stage Statsig, and founding Superlinear supply the lived choices beneath it.
-
-Two short paragraphs keep the facts separate from the personal question: without the title or company name, what could he make that people would actually want? The team size remains readable supporting context. The highest-performance detail is not needed again here; this is a selective homepage, not the complete career record.
-
-A compact career line retains Cornell, Amazon, Meta, Tencent, Statsig, and Superlinear. Detailed biography and beliefs live on About, reached by `My background and beliefs / 我的经历与主张`.
-
-The public-judgment case remains a two-date record:
-
-- April 2021: explain why the previous AI paradigm did not generalize.
-- February 2023, before GPT-4: explain what ChatGPT changed and reason forward.
-
-The visible headings name the subjects and arguments themselves: `上一代AI，为什么难以通用？` and `ChatGPT不只是聊天机器人。` The original videos, pre-GPT-4 snapshot and living argument with later corrections remain linked. Dates supply historical context; the page no longer adds a “judgment on the record” wrapper or a separate sentence announcing that the record preserves corrections.
-
-This is not a requirement to make every section provocative. The existing enterprise transformation headline, conversation question, book titles, original article titles and primary brand command retain their distinct jobs.
-
-Vijaye Raji's quotation remains next to this career and judgment context, unchanged.
-
-### 5. Writing, books, and open context: show the work
-
-Keep the three actual Knowledge Bank article titles. Each has one short reading reason, not a miniature abstract after a second section-wide summary. Current selections remain fake work, AI-native talent, and nouns versus verbs.
-
-Books now appear as book covers, titles, and one practical reason to read each. The launch photograph, co-author context, Julie Zhuo, and the WSJ CIO Journal reading-list mention remain intact.
-
-Open context has its own concise linked row: `Bring my writing and video transcripts into your AI. / 把我的文章与视频资料，带进你的AI。` It points to the existing public repository and adds no new capability or data-availability promise.
-
-### 6. Invitation: natural participation
-
-Chinese: `一起学点真本事，做点真东西。`
-
-English: `MAKE WHAT LASTS.`
-
-Invite the visitor to begin with the free community and bring a question they want to solve. Keep a cooperation route for readers with a different relationship. Do not make people first understand authorship, rejection, reality testing, or a defining work before they can join.
-
-## What stays stable
-
-- English remains the default language; Chinese has its own canonical path.
-- The true H1 remains the mother line.
-- Current green, warm-white, and dark roles remain; no new palette or logo system.
-- Strong proof stays legible. Modesty means less self-awarded interpretation, not smaller evidence.
-- Real images remain intact, including the full Acquired scene and the book-launch group.
-- Third-party quotations, prices, product ownership, and access boundaries are not rewritten by a copy-density pass.
-- Homepage reduction does not delete public knowledge: About, articles, books, guest archives, product sites, and procurement materials retain the depth.
-- Person identity, canonical, hreflang, structured data, and static HTML stay complete.
+The $100,000 line signals the scale of a clearly named enterprise engagement. It does not claim that all training costs that amount, or that a displayed training customer purchased this scope. It remains visible on the homepage within enterprise work, where the scope gives it context. The hero stays focused on the person, books, and conversations.
 
 ## Acceptance
 
-Review both languages at desktop, 390px, and 320px widths. Check natural line breaks, horizontal overflow, image loading, touch targets, menu/anchor navigation, external destinations, and About's relocated belief section.
-
-Compare rendered main text to the previous production page using the same counting method. A lower count is useful evidence of reduction, not the sole definition of success.
-
-Type checking, production build, and prerendering must pass. Review the exact final diff and preview before any public push or production deployment.
+Inspect desktop, 390px, and 320px layouts in both languages, including natural line breaks, horizontal overflow, image loading, navigation, touch targets, and the relocated About reviews. Compare story position and page height at the same viewport; this measures reading order and density, not a conversion-rate increase. Type checking, production build, and prerendering must pass. Show the final diff and local preview before any public push or deployment.

@@ -1,3 +1,4 @@
+import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
 import LanguageToggle from "@/components/LanguageToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -27,7 +28,7 @@ const books = {
       ],
       primary: {
         label: "View on Amazon",
-        href: "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
+        href: GROWTH_BOOK_AMAZON_URL,
         external: true,
       },
     },
@@ -66,7 +67,7 @@ const books = {
       ],
       primary: {
         label: "在Amazon查看",
-        href: "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822",
+        href: GROWTH_BOOK_AMAZON_URL,
         external: true,
       },
     },

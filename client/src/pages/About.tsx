@@ -1,5 +1,7 @@
+import CourseReviews from "@/components/CourseReviews";
 import DefiningWork from "@/components/DefiningWork";
-import EducationEndorsements from "@/components/EducationEndorsements";
+import PeerEndorsements from "@/components/PeerEndorsements";
+import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
 import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage } from "@/contexts/LanguageContext";
@@ -158,8 +160,28 @@ export default function About() {
       currentIntro:
         "Superlinear Academy is where my teaching, community, and enterprise work come together. You can begin with the free community.",
       publicTitle: "Books and conversations",
-      publicIntro:
-        "I co-authored Growth Data Analytics Playbook and wrote 真本事：从会工作到会赚钱. I host long-form conversations on my channel and join other shows as a guest.",
+      publicIntro: (
+        <>
+          I co-authored{" "}
+          <a
+            href={GROWTH_BOOK_AMAZON_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+          >
+            Growth Data Analytics Playbook
+          </a>{" "}
+          and wrote{" "}
+          <Link
+            href="/zbs"
+            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+          >
+            真本事：从会工作到会赚钱
+          </Link>
+          . I host long-form conversations on my channel and join other shows as
+          a guest.
+        </>
+      ),
       sourcesTitle: "Sources and contact",
       reviewed:
         "Facts last reviewed September 2, 2026. Changing figures retain their check date.",
@@ -182,8 +204,27 @@ export default function About() {
       currentIntro:
         "课程、社区和企业项目，都在Superlinear Academy。想了解我们，可以先从免费社区开始。",
       publicTitle: "书与对话",
-      publicIntro:
-        "我合著了《Growth Data Analytics Playbook》，写了《真本事：从会工作到会赚钱》。也在自己的频道里做长访谈，去别人的节目做嘉宾。",
+      publicIntro: (
+        <>
+          我合著了
+          <a
+            href={GROWTH_BOOK_AMAZON_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+          >
+            《Growth Data Analytics Playbook》
+          </a>
+          ，写了
+          <Link
+            href="/zbs"
+            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+          >
+            《真本事：从会工作到会赚钱》
+          </Link>
+          。也在自己的频道里做长访谈，去别人的节目做嘉宾。
+        </>
+      ),
       sourcesTitle: "资料与联系",
       reviewed: "事实最后核对：2026年9月2日。会变化的数字保留各自的核对日期。",
       books: "两本书",
@@ -353,9 +394,15 @@ export default function About() {
           </div>
         </section>
 
-        <section className="pb-12 md:pb-16">
+        <section className="bg-superlinear-canvas py-10 text-superlinear-ink md:py-12">
+          <div className="container [&>div]:mt-0">
+            <CourseReviews />
+          </div>
+        </section>
+
+        <section id="endorsements" className="scroll-mt-[68px] py-12 md:py-16">
           <div className="container">
-            <EducationEndorsements />
+            <PeerEndorsements />
           </div>
         </section>
 

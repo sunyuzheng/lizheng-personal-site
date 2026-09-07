@@ -59,11 +59,20 @@ function FamilyPartyCueCardsRoute() {
   );
 }
 
-function ScrollToTop() {
+function RouteScroll() {
   const [location] = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    // Wait for the destination DOM, then honor a section link when present.
+    const frame = window.requestAnimationFrame(() => {
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (target) {
+        target.scrollIntoView({ block: "start", behavior: "auto" });
+      } else {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
   }, [location]);
 
   return null;
@@ -85,7 +94,7 @@ function Router() {
 
   return (
     <>
-      <ScrollToTop />
+      <RouteScroll />
       <Switch>
         <Route path={"/"} component={Home} />
         <Route path={"/zh"} component={Home} />

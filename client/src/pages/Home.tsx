@@ -1,8 +1,9 @@
-import LanguageToggle from "@/components/LanguageToggle";
-import CourseReviews from "@/components/CourseReviews";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import HomeNavigation from "@/components/HomeNavigation";
+import HomeSocialLinks from "@/components/HomeSocialLinks";
+import PeerEndorsements from "@/components/PeerEndorsements";
+import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
 import { Button } from "@/components/ui/button";
-import { pick, useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -11,16 +12,9 @@ import {
   ExternalLink,
   Github,
   Handshake,
-  Linkedin,
-  Mail,
-  Menu,
-  Rss,
   ShoppingBag,
-  Users,
-  X,
-  Youtube,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
@@ -32,14 +26,14 @@ const recentWriting = {
       title: "How to identify and eliminate fake work",
       detail: "Why organizations reward busyness—and what AI changes.",
       href: "https://www.superlinear.academy/c/ai-resources/fake-work",
-      cta: "Read the essay",
+      cta: "Read the essay in Chinese",
     },
     {
       label: "AI-NATIVE TALENT",
       title: "What actually makes someone AI native?",
       detail: "Using AI is a start. Rethinking the work is the bigger change.",
       href: "https://www.superlinear.academy/c/ai-resources/ai-native",
-      cta: "Read the essay",
+      cta: "Read the essay in Chinese",
     },
     {
       label: "NOUNS & VERBS",
@@ -183,10 +177,8 @@ const enterpriseWork = {
     label: "ENTERPRISE AI TRAINING & CUSTOM PROGRAMS",
     title: "The work should be different after the training.",
     detail:
-      "For most teams, AI Builders is enough. When the work itself needs to change, we start with the roles, workflows, materials, and evaluation—then design what the team actually needs.",
+      "I work with teams to bring AI into their day-to-day work, through existing courses or programs designed around their roles, workflows, and goals.",
     formats: "Team seats · Private cohorts · Course customization",
-    priceLabel: "FULLY CUSTOM",
-    price: "$100,000+",
     cta: "See enterprise formats",
     caption: "DoorDash Analytics team offsite · Seattle",
   },
@@ -194,10 +186,8 @@ const enterpriseWork = {
     label: "企业AI培训与定制",
     title: "培训结束以后，工作应该真的变了。",
     detail:
-      "对多数团队来说，直接采购AI Builders就够了。现成课程解决不了真实工作里的问题时，我们再和团队一起，从岗位、流程与验收开始设计。",
+      "我也帮助企业团队把AI带进真实工作。从团队购课到定制项目，围绕具体岗位、工作流程和目标设计。",
     formats: "团队购课 · 专属班 · 课程定制",
-    priceLabel: "完整定制",
-    price: "$100,000起",
     cta: "查看企业合作方式",
     caption: "DoorDash Analytics团队线下AI培训 · 西雅图",
   },
@@ -282,29 +272,6 @@ const selectedGuests = {
   ],
 };
 
-const endorsements = {
-  en: [
-    {
-      quote:
-        "Yuzheng distills years of product growth wisdom into actionable insight—helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
-      name: "Vijaye Raji",
-      role: "Founder, Statsig · CTO of Applications, OpenAI",
-      avatar: "/avatars/vijaye-raji.jpg",
-      initials: "VR",
-    },
-  ],
-  zh: [
-    {
-      quote:
-        "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略，也帮助创始人找到能够持续复利的PMF路径。",
-      name: "Vijaye Raji",
-      role: "Statsig创始人 · OpenAI CTO of Applications",
-      avatar: "/avatars/vijaye-raji.jpg",
-      initials: "VR",
-    },
-  ],
-};
-
 function SectionLabel({
   children,
   dark = false,
@@ -335,7 +302,6 @@ function scrollToSection(id: string) {
 
 export default function Home() {
   const { lang } = useLanguage();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const meta = HOME_PAGE_META[lang];
@@ -351,188 +317,9 @@ export default function Home() {
     });
   }, [lang]);
 
-  const nav = pick(lang, {
-    en: {
-      thinking: "Writing",
-      story: "Story",
-      work: "Superlinear",
-      conversations: "Conversations",
-      decks: "Decks",
-      books: "Books",
-      shop: "Shop",
-      collaborate: "Collaborate",
-      community: "Free community",
-    },
-    zh: {
-      thinking: "文章",
-      story: "经历",
-      work: "Superlinear",
-      conversations: "对话",
-      decks: "Decks",
-      books: "书",
-      shop: "周边店",
-      collaborate: "合作",
-      community: "免费社区",
-    },
-  });
-
-  const closeAndScroll = (id: string) => {
-    setMobileMenuOpen(false);
-    window.setTimeout(() => scrollToSection(id), 0);
-  };
-
   return (
-    <div className="min-h-screen overflow-x-clip bg-lizheng-dark text-zinc-100">
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-lizheng-dark/90 backdrop-blur-xl">
-        <div className="container flex h-[72px] items-center justify-between">
-          <button
-            onClick={() => scrollToSection("hero")}
-            className="min-h-11 text-left"
-          >
-            <div className="text-base font-semibold text-white">
-              {lang === "en" ? "Yuzheng Sun" : "立正"}
-            </div>
-            <div className="text-xs text-lizheng-muted">
-              {lang === "en" ? "立正 · 课代表立正" : "孙煜征 · 课代表立正"}
-            </div>
-          </button>
-
-          <div className="hidden items-center gap-4 xl:flex">
-            {[
-              ["superlinear", nav.work],
-              ["conversations", nav.conversations],
-              ["story", nav.story],
-              ["thinking", nav.thinking],
-            ].map(([id, label]) => (
-              <button
-                key={id}
-                onClick={() => scrollToSection(id)}
-                className="text-sm text-zinc-400 transition hover:text-white"
-              >
-                {label}
-              </button>
-            ))}
-            <Link
-              href={withLanguage("/decks", lang)}
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              {nav.decks}
-            </Link>
-            <Link
-              href={withLanguage("/book", lang)}
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              {nav.books}
-            </Link>
-            <a
-              href="https://shop.lizheng.ai/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              {nav.shop}
-            </a>
-            <Link
-              href={withLanguage("/collab", lang)}
-              className="text-sm text-zinc-400 transition hover:text-white"
-            >
-              {nav.collaborate}
-            </Link>
-            <LanguageToggle size="sm" />
-            <Button
-              asChild
-              size="sm"
-              className="h-7 gap-1.5 bg-superlinear px-2.5 text-xs text-white hover:bg-superlinear-deep has-[>svg]:px-2.5"
-            >
-              <a
-                href="https://www.superlinear.academy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Users className="h-3.5 w-3.5" />
-                {nav.community}
-              </a>
-            </Button>
-          </div>
-
-          <div className="flex items-center gap-3 xl:hidden">
-            <LanguageToggle
-              size="sm"
-              className="[&>a]:flex [&>a]:min-h-11 [&>a]:min-w-11 [&>a]:items-center [&>a]:justify-center xl:[&>a]:min-h-0 xl:[&>a]:min-w-0"
-            />
-            <button
-              onClick={() => setMobileMenuOpen(value => !value)}
-              className="flex size-11 items-center justify-center text-zinc-300"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            >
-              {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="container border-t border-white/10 py-4 xl:hidden">
-            <div className="grid text-sm">
-              {[
-                ["superlinear", nav.work],
-                ["conversations", nav.conversations],
-                ["story", nav.story],
-                ["thinking", nav.thinking],
-              ].map(([id, label]) => (
-                <button
-                  key={id}
-                  onClick={() => closeAndScroll(id)}
-                  className="flex min-h-11 items-center text-left text-zinc-300"
-                >
-                  {label}
-                </button>
-              ))}
-              <Link
-                href={withLanguage("/decks", lang)}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-11 items-center text-zinc-300"
-              >
-                {nav.decks}
-              </Link>
-              <Link
-                href={withLanguage("/book", lang)}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-11 items-center text-zinc-300"
-              >
-                {nav.books}
-              </Link>
-              <a
-                href="https://shop.lizheng.ai/"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-11 items-center text-zinc-300"
-              >
-                {nav.shop}
-              </a>
-              <Link
-                href={withLanguage("/collab", lang)}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex min-h-11 items-center text-zinc-300"
-              >
-                {nav.collaborate}
-              </Link>
-              <a
-                href="https://www.superlinear.academy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex min-h-11 items-center text-superlinear-on-dark"
-              >
-                {nav.community} <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
-        )}
-      </nav>
+    <div className="min-h-screen overflow-x-clip bg-lizheng-dark text-zinc-100 [&_.container]:max-w-[1200px] [&_.container]:px-5 sm:[&_.container]:px-8 lg:[&_.container]:px-10">
+      <HomeNavigation onNavigate={scrollToSection} />
 
       <main>
         <section
@@ -556,7 +343,7 @@ export default function Home() {
                   "mt-6 font-semibold text-white [text-wrap:balance]",
                   lang === "en"
                     ? "text-[3.1rem] leading-[0.96] tracking-[-0.04em] sm:text-6xl lg:text-[4.35rem] xl:text-[5.15rem]"
-                    : "text-[2.85rem] leading-[1.08] tracking-[-0.02em] sm:text-[3.25rem] lg:text-[3.4rem] xl:text-[3.75rem]"
+                    : "text-[2.65rem] leading-[1.08] tracking-[-0.02em] min-[360px]:text-[2.85rem] sm:text-[3.25rem] lg:text-[3.4rem] xl:text-[3.75rem]"
                 )}
               >
                 {lang === "en" ? (
@@ -573,9 +360,49 @@ export default function Home() {
                 )}
               </h1>
               <p className="mt-7 max-w-xl text-pretty text-base leading-7 text-zinc-300 md:text-lg md:leading-8">
-                {lang === "en"
-                  ? "I founded Superlinear Academy, where 20,000+ people learn AI and put it to work. I also host in-depth conversations with AI researchers and technology founders."
-                  : "我创办了超线性学院，和2万+同行一起学懂AI、把AI用起来。也在「课代表立正」，和AI研究者、科技创始人深聊。"}
+                {lang === "en" ? (
+                  <>
+                    I founded Superlinear Academy, wrote{" "}
+                    <Link
+                      href="/zbs"
+                      className="font-medium text-zinc-100 no-underline hover:text-superlinear-on-dark"
+                    >
+                      真本事
+                    </Link>
+                    , and co-authored{" "}
+                    <a
+                      href={GROWTH_BOOK_AMAZON_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-zinc-100 no-underline hover:text-superlinear-on-dark"
+                    >
+                      Growth Data Analytics Playbook
+                    </a>
+                    . I host in-depth conversations with AI researchers and
+                    technology founders, bringing what I learn into my teaching
+                    and practice.
+                  </>
+                ) : (
+                  <>
+                    我是超线性学院创始人，著有
+                    <Link
+                      href="/zbs"
+                      className="font-medium text-zinc-100 no-underline hover:text-superlinear-on-dark"
+                    >
+                      《真本事》
+                    </Link>
+                    ，合著
+                    <a
+                      href={GROWTH_BOOK_AMAZON_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-zinc-100 no-underline hover:text-superlinear-on-dark"
+                    >
+                      《Growth Data Analytics Playbook》
+                    </a>
+                    。也和AI研究者、科技创始人深聊，把思考带回写作、教学与实践。
+                  </>
+                )}
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button
@@ -640,240 +467,61 @@ export default function Home() {
                 </span>
                 <span className="shrink-0">Significance Summit</span>
               </figcaption>
-              <div className="mt-5 flex gap-1 border-t border-white/10 pt-2">
-                <a
-                  href="https://www.youtube.com/@kedaibiao"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="YouTube"
-                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/yuzhengsun/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://yuzheng.substack.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Substack"
-                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
-                >
-                  <Rss className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://github.com/sunyuzheng"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex size-11 items-center justify-center text-lizheng-muted transition hover:text-white"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-              </div>
+              <HomeSocialLinks />
             </figure>
           </div>
         </section>
 
         <section
-          id="superlinear"
-          className="scroll-mt-[72px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
+          id="story"
+          className="scroll-mt-[72px] bg-superlinear-canvas py-12 text-superlinear-ink md:py-16"
         >
           <div className="container">
-            <div className="grid gap-9 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
+            <span id="belief" className="scroll-mt-[88px]" />
+            <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-16">
               <div>
-                <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
-                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.2] [text-wrap:balance] md:text-5xl">
+                <SectionLabel>
+                  {lang === "en" ? "THE STORY" : "这条路"}
+                </SectionLabel>
+                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.2] text-superlinear-ink [text-wrap:balance] md:text-5xl">
                   {lang === "en" ? (
-                    "Who you learn with matters."
+                    "A career should leave more than a résumé."
                   ) : (
                     <>
-                      <span className="inline-block">学AI，也要</span>
-                      <span className="inline-block">选对身边的人。</span>
+                      <span className="block">工作一辈子，</span>
+                      <span className="block">别只留下一份简历。</span>
                     </>
                   )}
                 </h2>
-                <p className="mt-6 max-w-xl text-base leading-8 text-[#5C574D] md:text-lg">
-                  {lang === "en"
-                    ? "See how experienced practitioners work, and bring your own questions. Join for free to explore enterprise AI training, member projects, and technical discussions."
-                    : "看高手怎么做，拿自己的问题来讨论。企业AI培训、项目分享和技术讨论，注册就能看。"}
-                </p>
-                <p className="mt-5 text-sm leading-7 text-[#5C574D]">
-                  {lang === "en"
-                    ? "20,000+ members · 700+ project posts · 8,000+ project comments"
-                    : "20,000+名成员 · 700+项目帖 · 8,000+条项目评论"}
-                </p>
-                <Button
-                  asChild
-                  size="lg"
-                  className="mt-6 min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
-                >
-                  <a
-                    href="https://www.superlinear.academy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {lang === "en"
-                      ? "Join Superlinear Academy for free"
-                      : "免费加入，把AI真正用起来"}
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                </Button>
               </div>
-              <figure>
-                <div className="overflow-hidden border border-[#DDD9D0] bg-[#E9E4DA]">
-                  <img
-                    src="/superlinear/yuzheng-yage-conversation.webp"
-                    alt={
-                      lang === "en"
-                        ? "Yuzheng Sun and Yage discussing AI Builders"
-                        : "立正与鸭哥讨论AI Builders"
-                    }
-                    className="aspect-[16/9] w-full object-cover"
-                    loading="lazy"
-                    width={1672}
-                    height={941}
-                  />
-                </div>
-                <figcaption className="mt-3 text-xs leading-6 text-[#5C574D]">
+              <div>
+                <p className="text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "With Yage (Wang Yan), my teaching partner. Columbia PhD; nearly 40 AI research papers, including CVPR, NeurIPS and KDD."
-                    : "与教学伙伴鸭哥（王言）。哥伦比亚大学博士，发表近40篇AI论文，研究见于CVPR、NeurIPS、KDD。"}
-                </figcaption>
-              </figure>
-            </div>
-
-            <div className="mt-10 grid border-y border-[#DDD9D0] md:grid-cols-2">
-              {work[lang].map((item, index) => (
-                <article
-                  key={item.title}
-                  className={cn(
-                    "py-7 md:py-8",
-                    index === 0
-                      ? "md:pr-9"
-                      : "border-t border-[#DDD9D0] md:border-l md:border-t-0 md:pl-9"
-                  )}
+                    ? "I led a 30-person data and AI team at Tencent. Back in the U.S., I joined the early team at Statsig—later acquired by OpenAI—and returned to hands-on work. Today, I work full time on Superlinear Academy, which I founded."
+                    : "我曾在腾讯带领30人的数据与AI团队。回到美国后，我加入后来被OpenAI收购的Statsig早期团队，重新做一线工作。如今，我全职建设自己创办的超线性学院。"}
+                </p>
+                <p className="mt-4 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
+                  {lang === "en"
+                    ? "Those experiences left me with a question: beyond the title and the company name, what could I build with my own skills that people would actually need? Superlinear Academy is the answer I’m working on."
+                    : "这些经历让我越来越在意：离开职位和公司名，自己的本事还能做成什么，是别人真正需要的？超线性学院，是我正在认真做出的回答。"}
+                </p>
+                <p className="mt-6 border-t border-[#DDD9D0] pt-5 text-sm leading-7 text-[#5C574D]">
+                  Cornell → Amazon → Meta → Tencent → Statsig → Superlinear
+                </p>
+                <Link
+                  href={withLanguage("/about", lang)}
+                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-ink"
                 >
-                  <p className="text-xs font-medium text-superlinear-deep">
-                    {item.label}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-semibold">{item.title}</h3>
-                  <p className="mt-3 max-w-xl text-base leading-7 text-[#5C574D]">
-                    {item.detail}
-                  </p>
-                  <p className="mt-3 text-xs leading-6 text-[#5C574D]">
-                    {item.proof}
-                  </p>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-deep"
-                  >
-                    {item.cta}
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                </article>
-              ))}
-            </div>
-
-            <CourseReviews />
-
-            <article className="mt-12 overflow-hidden border border-[#CFC9BE] bg-superlinear-surface xl:grid xl:grid-cols-[0.88fr_1.12fr]">
-              <figure className="flex flex-col border-b border-[#CFC9BE] bg-white xl:border-b-0 xl:border-r">
-                <div className="overflow-hidden">
-                  <img
-                    src="/english-network/doordash-ai-training.webp"
-                    alt={
-                      lang === "en"
-                        ? "Yuzheng Sun leading an AI training session for DoorDash"
-                        : "孙煜征为DoorDash团队做AI培训"
-                    }
-                    className="aspect-[16/10] w-full object-cover"
-                    loading="lazy"
-                    width={1280}
-                    height={720}
-                  />
-                </div>
-                <figcaption className="border-t border-[#CFC9BE] bg-white px-5 py-3 text-xs leading-5 text-[#777064]">
-                  {enterpriseWork[lang].caption}
-                </figcaption>
-              </figure>
-
-              <div className="flex flex-col justify-between p-7 md:p-10 lg:p-12">
-                <div>
-                  <p
-                    className={cn(
-                      "font-mono text-[11px] leading-5 text-superlinear-deep",
-                      lang === "en"
-                        ? "uppercase tracking-[0.18em]"
-                        : "tracking-[0.1em]"
-                    )}
-                  >
-                    {enterpriseWork[lang].label}
-                  </p>
-                  <h3
-                    className={cn(
-                      "mt-5 max-w-3xl font-semibold leading-[1.12] [text-wrap:balance]",
-                      lang === "zh"
-                        ? "text-[1.55rem] min-[360px]:text-3xl md:text-4xl"
-                        : "text-3xl md:text-4xl"
-                    )}
-                  >
-                    {lang === "zh" ? (
-                      <>
-                        <span className="block">培训结束以后，</span>
-                        <span className="block whitespace-nowrap">
-                          工作应该真的变了。
-                        </span>
-                      </>
-                    ) : (
-                      enterpriseWork[lang].title
-                    )}
-                  </h3>
-                  <p className="mt-5 max-w-3xl text-base leading-8 text-[#5C574D]">
-                    {enterpriseWork[lang].detail}
-                  </p>
-                </div>
-
-                <div className="mt-8 border-t border-[#CFC9BE] pt-6 sm:grid sm:grid-cols-[1fr_auto] sm:items-end sm:gap-10">
-                  <div>
-                    <p className="font-mono text-[11px] leading-5 tracking-[0.06em] text-[#5C574D]">
-                      {enterpriseWork[lang].formats}
-                    </p>
-                    <Link
-                      href={withLanguage("/collab/enterprise", lang)}
-                      className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep sm:mt-5 sm:min-h-0"
-                    >
-                      {enterpriseWork[lang].cta}
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                  <div className="mt-7 sm:mt-0 sm:text-right">
-                    <p
-                      className={cn(
-                        "font-mono text-[10px] leading-5 text-superlinear-deep",
-                        lang === "en"
-                          ? "uppercase tracking-[0.16em]"
-                          : "tracking-[0.08em]"
-                      )}
-                    >
-                      {enterpriseWork[lang].priceLabel}
-                    </p>
-                    <p className="mt-1 whitespace-nowrap text-3xl font-semibold tracking-[-0.035em] text-[#173C2A] md:text-4xl">
-                      {enterpriseWork[lang].price}
-                    </p>
-                  </div>
-                </div>
+                  {lang === "en"
+                    ? "My background and beliefs"
+                    : "我的经历与主张"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
-            </article>
+            </div>
+            <div className="mt-8 border-t border-[#DDD9D0] pt-6 md:mt-10">
+              <PeerEndorsements compact />
+            </div>
           </div>
         </section>
 
@@ -978,180 +626,99 @@ export default function Home() {
         </section>
 
         <section
-          id="story"
-          className="scroll-mt-[72px] bg-lizheng-dark py-16 md:py-24"
+          id="thinking"
+          className="scroll-mt-[72px] bg-lizheng-dark py-10 md:py-14"
         >
           <div className="container">
-            <span id="belief" className="scroll-mt-[88px]" />
-            <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-16">
-              <div>
-                <SectionLabel dark>
-                  {lang === "en" ? "THE STORY" : "这条路"}
-                </SectionLabel>
-                <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.2] text-white [text-wrap:balance] md:text-5xl">
-                  {lang === "en" ? (
-                    "A career should leave more than a résumé."
-                  ) : (
-                    <>
-                      工作一辈子，别只留下
-                      <span className="whitespace-nowrap">一份简历。</span>
-                    </>
-                  )}
-                </h2>
-              </div>
-              <div>
-                <p className="text-base leading-8 text-zinc-300 md:text-lg">
-                  {lang === "en"
-                    ? "After leading a 30-person data and AI team at Tencent, I returned to the U.S. to work hands-on at an early-stage Statsig. Later, I left to build Superlinear Academy full time."
-                    : "在腾讯带过30人的数据与AI团队后，我回到美国，加入早期的Statsig，重新做一线工作。后来，我辞职创办了超线性学院。"}
-                </p>
-                <p className="mt-4 text-base leading-8 text-zinc-300 md:text-lg">
-                  {lang === "en"
-                    ? "The question I kept coming back to: without the title or the company name, what could I make that people would actually want?"
-                    : "我越来越在意：离开职位和公司名，自己还能做出什么，是别人真正需要的？"}
-                </p>
-                <p className="mt-6 border-t border-white/15 pt-5 text-sm leading-7 text-lizheng-muted">
-                  Cornell → Amazon → Meta → Tencent → Statsig → Superlinear
-                </p>
-                <Link
-                  href={withLanguage("/about", lang)}
-                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-on-dark hover:text-white"
-                >
-                  {lang === "en"
-                    ? "My background and beliefs"
-                    : "我的经历与主张"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
+            <div className="bg-[#173C2A] px-6 py-9 sm:px-8 md:p-10 lg:p-12">
+              <SectionLabel dark>KNOWLEDGE BANK</SectionLabel>
+              <h2 className="mt-5 text-3xl font-semibold leading-tight text-white md:text-[2.5rem]">
+                {lang === "en" ? "What I’m thinking about." : "最近在想什么。"}
+              </h2>
 
-            <article
-              id="judgment"
-              className="mt-10 scroll-mt-[88px] border-y border-white/15 py-7"
-            >
-              <SectionLabel dark>
-                {lang === "en" ? "ON AI" : "关于AI"}
-              </SectionLabel>
-              <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-12">
-                {featuredJudgment[lang].timeline.map(item => (
-                  <div
-                    key={item.date}
-                    className="border-l border-superlinear-on-dark/40 pl-5"
+              <div className="mt-8 grid gap-x-8 border-y border-white/20 lg:grid-cols-3">
+                {recentWriting[lang].map(item => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col border-b border-white/15 py-6 last:border-b-0 lg:border-b-0 lg:py-8"
                   >
-                    <p className="font-mono text-xs leading-5 text-superlinear-on-dark">
-                      {item.date}
+                    <p
+                      className={cn(
+                        "font-mono text-[11px] leading-5 text-superlinear-on-dark",
+                        lang === "en"
+                          ? "uppercase tracking-[0.16em]"
+                          : "tracking-[0.08em]"
+                      )}
+                    >
+                      {item.label}
                     </p>
-                    <h3 className="mt-2 text-xl font-semibold leading-8 text-white">
-                      {Array.isArray(item.label)
-                        ? item.label.map(phrase => (
-                            <span key={phrase} className="inline-block">
-                              {phrase}
-                            </span>
-                          ))
-                        : item.label}
+                    <h3 className="mt-3 text-xl font-semibold leading-8 text-white transition group-hover:text-superlinear-on-dark">
+                      {item.title}
                     </h3>
-                    <div className="mt-2">
-                      {item.links.map(link => (
-                        <a
-                          key={link.href}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex min-h-11 items-center gap-2 text-sm leading-6 text-zinc-400 hover:text-white"
-                        >
-                          <ExternalLink className="h-3.5 w-3.5 shrink-0" />
-                          {link.label}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
+                    <p className="mt-3 text-sm leading-7 text-white/65">
+                      {item.detail}
+                    </p>
+                    <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-superlinear-on-dark transition group-hover:text-white">
+                      {item.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </a>
                 ))}
               </div>
-              <div className="mt-5 border-t border-white/10 pt-4">
-                <a
-                  href={featuredJudgment[lang].href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-on-dark hover:text-white"
-                >
-                  {featuredJudgment[lang].cta}
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </div>
-            </article>
-
-            <aside
-              aria-label={
-                lang === "en"
-                  ? "Vijaye Raji on Yuzheng Sun's product judgment"
-                  : "Vijaye Raji对立正产品判断的评价"
-              }
-              className="mt-12 grid gap-6 border border-white/10 bg-lizheng-raised p-6 md:grid-cols-[auto_1fr] md:items-center md:gap-10 md:p-8"
-            >
-              <Avatar className="h-14 w-14 border border-white/15 md:h-16 md:w-16">
-                <AvatarImage src="/avatars/vijaye-raji.jpg" alt="Vijaye Raji" />
-                <AvatarFallback>VR</AvatarFallback>
-              </Avatar>
-              <blockquote>
-                <p className="max-w-5xl text-lg font-medium leading-8 text-white md:text-xl md:leading-9">
-                  “{endorsements[lang][0].quote}”
-                </p>
-                <footer className="mt-4 text-sm leading-6 text-zinc-400">
-                  <span className="font-semibold text-zinc-200">
-                    {endorsements[lang][0].name}
-                  </span>
-                  <span className="mx-2 text-lizheng-muted">·</span>
-                  {endorsements[lang][0].role}
-                </footer>
-              </blockquote>
-            </aside>
-          </div>
-        </section>
-
-        <section
-          id="thinking"
-          className="scroll-mt-[72px] bg-[#173C2A] py-16 md:py-20"
-        >
-          <div className="container">
-            <SectionLabel dark>KNOWLEDGE BANK</SectionLabel>
-            <h2 className="mt-5 text-3xl font-semibold leading-tight text-white md:text-5xl">
-              {lang === "en" ? "What I’m thinking about." : "最近在想什么。"}
-            </h2>
-
-            <div className="mt-10 grid border-t border-white/20 lg:grid-cols-3">
-              {recentWriting[lang].map((item, index) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "group block border-b border-white/20 py-7 transition hover:bg-white/[0.05] lg:px-7 lg:py-8",
-                    index > 0 && "lg:border-l"
-                  )}
-                >
-                  <p
-                    className={cn(
-                      "font-mono text-[11px] leading-5 text-superlinear-on-dark",
-                      lang === "en"
-                        ? "uppercase tracking-[0.16em]"
-                        : "tracking-[0.08em]"
-                    )}
+              <article id="judgment" className="mt-8 scroll-mt-[88px]">
+                <SectionLabel dark>
+                  {lang === "en" ? "ON AI" : "关于AI"}
+                </SectionLabel>
+                <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-12">
+                  {featuredJudgment[lang].timeline.map(item => (
+                    <div
+                      key={item.date}
+                      className="border-l border-superlinear-on-dark/40 pl-5"
+                    >
+                      <p className="font-mono text-xs leading-5 text-superlinear-on-dark">
+                        {item.date}
+                      </p>
+                      <h3 className="mt-2 text-xl font-semibold leading-8 text-white">
+                        {Array.isArray(item.label)
+                          ? item.label.map(phrase => (
+                              <span key={phrase} className="inline-block">
+                                {phrase}
+                              </span>
+                            ))
+                          : item.label}
+                      </h3>
+                      <div className="mt-2">
+                        {item.links.map(link => (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex min-h-11 items-center gap-2 text-sm leading-6 text-white/70 hover:text-white"
+                          >
+                            <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 border-t border-white/10 pt-4">
+                  <a
+                    href={featuredJudgment[lang].href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-on-dark hover:text-white"
                   >
-                    {item.label}
-                  </p>
-                  <h3 className="mt-4 text-xl font-semibold leading-8 text-white md:text-2xl">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-white/65">
-                    {item.detail}
-                  </p>
-                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition group-hover:text-white">
-                    {item.cta}
+                    {featuredJudgment[lang].cta}
                     <ArrowRight className="h-4 w-4" />
-                  </span>
-                </a>
-              ))}
+                  </a>
+                </div>
+              </article>
             </div>
           </div>
         </section>
@@ -1170,7 +737,7 @@ export default function Home() {
                   {
                     title: "Growth Data Analytics Playbook",
                     cover: "/book/growth-data-analytics-playbook.jpg",
-                    href: "/book",
+                    href: GROWTH_BOOK_AMAZON_URL,
                     detail:
                       lang === "en"
                         ? "A practical guide to product-market fit, growth, and experimentation."
@@ -1186,10 +753,20 @@ export default function Home() {
                         : "拿回工作的主动权，把自己的本事变成收入。",
                   },
                 ].map(book => (
-                  <Link
+                  <a
                     key={book.title}
-                    href={withLanguage(book.href, lang)}
-                    className="group grid grid-cols-[5.5rem_1fr] items-center gap-5 py-6 first:pt-0 last:pb-0 sm:grid-cols-[6.5rem_1fr]"
+                    href={
+                      book.href.startsWith("http")
+                        ? book.href
+                        : withLanguage(book.href, lang)
+                    }
+                    target={book.href.startsWith("http") ? "_blank" : undefined}
+                    rel={
+                      book.href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
+                    className="group grid grid-cols-[5rem_1fr] items-center gap-4 py-6 first:pt-0 last:pb-0 sm:grid-cols-[6.5rem_1fr] sm:gap-5"
                   >
                     <img
                       src={book.cover}
@@ -1199,17 +776,32 @@ export default function Home() {
                     />
                     <div>
                       <h2 className="text-xl font-semibold leading-7 group-hover:text-superlinear-link sm:text-2xl sm:leading-8">
-                        {book.title}
+                        {book.href === "/zbs" ? (
+                          <>
+                            <span className="block">真本事：</span>
+                            <span className="inline-block">
+                              从会工作到会赚钱
+                            </span>
+                          </>
+                        ) : (
+                          book.title
+                        )}
                       </h2>
                       <p className="mt-3 text-sm leading-7 text-[#5C574D]">
                         {book.detail}
                       </p>
                       <span className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link">
-                        {lang === "en" ? "Explore the book" : "了解这本书"}
+                        {book.href.startsWith("http")
+                          ? lang === "en"
+                            ? "View on Amazon"
+                            : "在Amazon查看"
+                          : lang === "en"
+                            ? "Explore the book"
+                            : "了解这本书"}
                         <ArrowRight className="h-4 w-4" />
                       </span>
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
               <figure>
@@ -1241,6 +833,7 @@ export default function Home() {
                 </figcaption>
               </figure>
             </div>
+
             <a
               href="https://github.com/sunyuzheng/lizheng-open-context"
               target="_blank"
@@ -1265,8 +858,203 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-lizheng-dark py-16 md:py-24">
-          <div className="container border-y border-white/10 py-12 md:py-16">
+        <section
+          id="superlinear"
+          className="scroll-mt-[72px] border-t border-[#DDD9D0] bg-[#F1EEE7] py-12 text-superlinear-ink md:py-16"
+        >
+          <div className="container">
+            <div className="grid gap-9 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
+              <div>
+                <SectionLabel>SUPERLINEAR ACADEMY</SectionLabel>
+                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.2] [text-wrap:balance] md:text-5xl">
+                  {lang === "en" ? (
+                    "The academy I’m building."
+                  ) : (
+                    <>
+                      <span className="inline-block">我正在建设的学院。</span>
+                    </>
+                  )}
+                </h2>
+                <p className="mt-6 max-w-xl text-base leading-8 text-[#5C574D] md:text-lg">
+                  {lang === "en"
+                    ? "At Superlinear Academy, I teach AI with Yage and learn alongside a community of practitioners. Join for free to explore project discussions, training sessions, and technical exchanges."
+                    : "在超线性学院，我和鸭哥一起教AI，也和一群认真做事的人持续交流。项目分享、企业AI培训内容和技术讨论，注册就能看。"}
+                </p>
+                <p className="mt-5 text-sm leading-7 text-[#5C574D]">
+                  {lang === "en"
+                    ? "20,000+ members · 700+ project posts"
+                    : "20,000+名成员 · 700+项目帖"}
+                </p>
+                <Button
+                  asChild
+                  size="lg"
+                  className="mt-6 min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
+                >
+                  <a
+                    href="https://www.superlinear.academy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en"
+                      ? "Join the free community"
+                      : "免费加入，把AI真正用起来"}
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </Button>
+              </div>
+              <figure>
+                <div className="overflow-hidden border border-[#DDD9D0] bg-[#E9E4DA]">
+                  <img
+                    src="/superlinear/yuzheng-yage-conversation.webp"
+                    alt={
+                      lang === "en"
+                        ? "Yuzheng Sun and Yage discussing AI Builders"
+                        : "立正与鸭哥讨论AI Builders"
+                    }
+                    className="aspect-[16/9] w-full object-cover"
+                    loading="lazy"
+                    width={1672}
+                    height={941}
+                  />
+                </div>
+                <figcaption className="mt-3 text-xs leading-6 text-[#5C574D]">
+                  {lang === "en"
+                    ? "With Yage (Wang Yan), my teaching partner. Columbia PhD; nearly 40 AI research papers, including CVPR, NeurIPS and KDD."
+                    : "与教学伙伴鸭哥（王言）。哥伦比亚大学博士，发表近40篇AI论文，研究见于CVPR、NeurIPS、KDD。"}
+                </figcaption>
+              </figure>
+            </div>
+
+            <div className="mt-8 grid border-y border-[#DDD9D0] md:grid-cols-2">
+              {work[lang].map((item, index) => (
+                <article
+                  key={item.title}
+                  className={cn(
+                    "py-5 md:py-6",
+                    index === 0
+                      ? "md:pr-9"
+                      : "border-t border-[#DDD9D0] md:border-l md:border-t-0 md:pl-9"
+                  )}
+                >
+                  <p className="text-xs font-medium text-superlinear-deep">
+                    {item.label}
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold">{item.title}</h3>
+                  <p className="mt-2 max-w-xl text-sm leading-7 text-[#5C574D]">
+                    {item.detail}
+                  </p>
+                  <p className="mt-3 text-xs leading-6 text-[#5C574D]">
+                    {item.proof}
+                  </p>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-deep"
+                  >
+                    {item.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="collaboration"
+          className="scroll-mt-[72px] bg-lizheng-dark py-12 text-superlinear-ink md:py-16"
+        >
+          <div className="container">
+            <article className="overflow-hidden border border-[#CFC9BE] bg-superlinear-surface lg:grid lg:grid-cols-[0.88fr_1.12fr]">
+              <figure className="flex flex-col border-b border-[#CFC9BE] bg-white lg:border-b-0 lg:border-r">
+                <div className="overflow-hidden">
+                  <img
+                    src="/english-network/doordash-ai-training.webp"
+                    alt={
+                      lang === "en"
+                        ? "Yuzheng Sun leading an AI training session for DoorDash"
+                        : "孙煜征为DoorDash团队做AI培训"
+                    }
+                    className="aspect-[16/10] w-full object-cover"
+                    loading="lazy"
+                    width={1280}
+                    height={720}
+                  />
+                </div>
+                <figcaption className="border-t border-[#CFC9BE] bg-white px-5 py-3 text-xs leading-5 text-[#777064]">
+                  {enterpriseWork[lang].caption}
+                </figcaption>
+              </figure>
+
+              <div className="flex flex-col justify-between p-6 md:p-8">
+                <div>
+                  <p
+                    className={cn(
+                      "font-mono text-[11px] leading-5 text-superlinear-deep",
+                      lang === "en"
+                        ? "uppercase tracking-[0.18em]"
+                        : "tracking-[0.1em]"
+                    )}
+                  >
+                    {enterpriseWork[lang].label}
+                  </p>
+                  <h2
+                    className={cn(
+                      "mt-5 max-w-3xl font-semibold leading-[1.12] [text-wrap:balance]",
+                      lang === "zh"
+                        ? "text-[1.45rem] min-[360px]:text-3xl md:text-4xl"
+                        : "text-3xl md:text-4xl"
+                    )}
+                  >
+                    {lang === "zh" ? (
+                      <>
+                        <span className="block">培训结束以后，</span>
+                        <span className="block whitespace-nowrap">
+                          工作应该真的变了。
+                        </span>
+                      </>
+                    ) : (
+                      enterpriseWork[lang].title
+                    )}
+                  </h2>
+                  <p className="mt-5 max-w-3xl text-base leading-8 text-[#5C574D]">
+                    {enterpriseWork[lang].detail}
+                  </p>
+                </div>
+
+                <div className="mt-5 border-t border-[#CFC9BE] pt-4">
+                  <p className="text-xs leading-6 text-[#5C574D]">
+                    {enterpriseWork[lang].formats}
+                  </p>
+                  <p className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <span className="text-sm text-[#5C574D]">
+                      {lang === "en"
+                        ? "Fully custom enterprise AI programs"
+                        : "完整定制企业AI项目"}
+                    </span>
+                    <span className="inline-flex items-baseline gap-1 font-mono text-2xl font-semibold text-superlinear-deep">
+                      $100,000
+                      <span className="font-sans text-sm font-normal">
+                        {lang === "en" ? "+" : "起"}
+                      </span>
+                    </span>
+                  </p>
+                  <Link
+                    href={withLanguage("/collab/enterprise", lang)}
+                    className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-deep"
+                  >
+                    {enterpriseWork[lang].cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="bg-lizheng-dark pb-12 md:pb-16">
+          <div className="container border-y border-white/10 py-10 md:py-12">
             <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
               <div>
                 <p
@@ -1301,7 +1089,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                   >
                     {lang === "en"
-                      ? "Join Superlinear Academy for free"
+                      ? "Join the free community"
                       : "免费加入超线性学院"}
                     <ArrowRight className="h-4 w-4" />
                   </a>
@@ -1346,55 +1134,11 @@ export default function Home() {
                 className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-zinc-400 transition hover:text-superlinear-on-dark md:min-h-0"
               >
                 <ShoppingBag className="h-4 w-4" />
-                {nav.shop}
+                {lang === "en" ? "Shop" : "周边店"}
               </a>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-lizheng-muted">
-            <a
-              href="https://www.youtube.com/@kedaibiao"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-              className="flex size-11 items-center justify-center transition hover:text-white"
-            >
-              <Youtube className="h-5 w-5" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/yuzhengsun/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="flex size-11 items-center justify-center transition hover:text-white"
-            >
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a
-              href="https://yuzheng.substack.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Substack"
-              className="flex size-11 items-center justify-center transition hover:text-white"
-            >
-              <Rss className="h-5 w-5" />
-            </a>
-            <a
-              href="https://github.com/sunyuzheng"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="flex size-11 items-center justify-center transition hover:text-white"
-            >
-              <Github className="h-5 w-5" />
-            </a>
-            <a
-              href="mailto:yz@superlinear.academy"
-              aria-label="Email"
-              className="flex size-11 items-center justify-center transition hover:text-white"
-            >
-              <Mail className="h-5 w-5" />
-            </a>
-          </div>
+          <HomeSocialLinks footer />
         </div>
         <div className="container mt-8 border-t border-white/10 pt-6 text-xs text-lizheng-muted">
           © {new Date().getFullYear()} Yuzheng Sun. All rights reserved.

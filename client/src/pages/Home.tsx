@@ -485,11 +485,11 @@ export default function Home() {
                 </SectionLabel>
                 <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.2] text-superlinear-ink [text-wrap:balance] md:text-5xl">
                   {lang === "en" ? (
-                    "A career should leave more than a résumé."
+                    "Why I founded Superlinear Academy."
                   ) : (
                     <>
-                      <span className="block">工作一辈子，</span>
-                      <span className="block">别只留下一份简历。</span>
+                      <span className="block">我为什么创办</span>
+                      <span className="block">超线性学院。</span>
                     </>
                   )}
                 </h2>
@@ -497,13 +497,13 @@ export default function Home() {
               <div>
                 <p className="text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "I led a 30-person data and AI team at Tencent. Back in the U.S., I joined the early team at Statsig—later acquired by OpenAI—and returned to hands-on work. Today, I work full time on Superlinear Academy, which I founded."
-                    : "我曾在腾讯带领30人的数据与AI团队。回到美国后，我加入后来被OpenAI收购的Statsig早期团队，重新做一线工作。如今，我全职建设自己创办的超线性学院。"}
+                    ? "I led a 30-person data and AI team at Tencent. Back in the U.S., I joined the early team at Statsig—later acquired by OpenAI—and returned to hands-on work."
+                    : "我曾在腾讯带领30人的数据与AI团队。回到美国后，我加入后来被OpenAI收购的Statsig早期团队，重新做一线工作。"}
                 </p>
                 <p className="mt-4 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "Those experiences left me with a question: beyond the title and the company name, what could I build with my own skills that people would actually need? Superlinear Academy is the answer I’m working on."
-                    : "这些经历让我越来越在意：离开职位和公司名，自己的本事还能做成什么，是别人真正需要的？超线性学院，是我正在认真做出的回答。"}
+                    ? "I founded Superlinear Academy to turn what I’ve learned into courses, public content, and a community where people can deepen their understanding, develop skills through practice, and make things others actually need. Today, the Academy is my full-time work and a long-term commitment."
+                    : "我创办超线性学院，是想把这些年的积累做成课程、内容和社区，让更多人在深入理解和动手实践中练出本事，做出别人真正需要的东西。如今，这所学院是我全职投入、希望长期做好的事业。"}
                 </p>
                 <p className="mt-6 border-t border-[#DDD9D0] pt-5 text-sm leading-7 text-[#5C574D]">
                   Cornell → Amazon → Meta → Tencent → Statsig → Superlinear

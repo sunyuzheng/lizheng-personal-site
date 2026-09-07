@@ -92,8 +92,8 @@ const featuredJudgment = {
         label: "ChatGPT is more than a chatbot.",
         links: [
           {
-            label: "Open the pre-GPT-4 public snapshot",
-            href: "https://www.huxiu.com/article/812076.html",
+            label: "Read the 2023 essay",
+            href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
           },
         ],
       },
@@ -122,8 +122,8 @@ const featuredJudgment = {
         label: ["ChatGPT不只是", "聊天机器人。"],
         links: [
           {
-            label: "查看GPT-4前公开版本",
-            href: "https://www.huxiu.com/article/812076.html",
+            label: "阅读2023年文章",
+            href: "https://www.superlinear.academy/c/ai-resources/chatgpt",
           },
         ],
       },
@@ -497,7 +497,7 @@ export default function Home() {
               <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <p className="text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   <a
-                    href="https://www.huxiu.com/article/812076.html"
+                    href="https://www.superlinear.academy/c/ai-resources/chatgpt"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium text-superlinear-ink no-underline hover:text-superlinear-link"

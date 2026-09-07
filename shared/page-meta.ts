@@ -32,7 +32,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun, Cornell Economics PhD, author, and founder of Superlinear Academy. His story, writing, books, and conversations with AI researchers and technology founders. MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-06",
+    lastModified: "2026-09-07",
   },
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
@@ -40,7 +40,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "立正（孙煜征，课代表立正），康奈尔经济学博士、《真本事》作者、超线性学院创始人。我的经历、文章、书，以及与AI研究者和科技创始人的深度对话。学点真本事，做点真东西。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-06",
+    lastModified: "2026-09-07",
   },
 };
 

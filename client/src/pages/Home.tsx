@@ -478,7 +478,7 @@ export default function Home() {
         >
           <div className="container">
             <span id="belief" className="scroll-mt-[88px]" />
-            <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:gap-16">
+            <div className="grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-x-16">
               <div>
                 <SectionLabel>
                   {lang === "en" ? "THE STORY" : "这条路"}
@@ -494,18 +494,53 @@ export default function Home() {
                   )}
                 </h2>
               </div>
-              <div>
+              <div className="lg:col-start-2 lg:row-span-2 lg:row-start-1">
                 <p className="text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
+                  <a
+                    href="https://www.huxiu.com/article/812076.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-superlinear-ink no-underline hover:text-superlinear-link"
+                  >
+                    {lang === "en"
+                      ? "In 2023, I already saw this transformation coming"
+                      : "2023年，我就看到了这场巨变"}
+                  </a>
+                  {lang === "en"
+                    ? ": AI would be both a great flood, upending our careers and education, and a second Renaissance, bringing individual self-discovery and liberation."
+                    : "：AI既是一场大洪水，会颠覆我们的职业与教育；又是第二次文艺复兴，会带来个体的自我发现与自我解放。"}
+                </p>
+                <p className="mt-5 text-pretty text-base font-semibold leading-8 text-superlinear-ink md:text-lg">
+                  {lang === "en"
+                    ? "In a flood, people need to "
+                    : "大洪水中，人们需要"}
+                  <a
+                    href="https://ai-builders.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-superlinear-link no-underline hover:text-superlinear-deep"
+                  >
+                    {lang === "en"
+                      ? "learn to swim and build boats"
+                      : "学会游泳与造船"}
+                  </a>
+                  {lang === "en"
+                    ? ". A Renaissance needs Florence."
+                    : "；文艺复兴，需要佛罗伦萨。"}
+                </p>
+                <p className="mt-5 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
+                  {lang === "en"
+                    ? "I founded Superlinear Academy to do both: teach people to harness AI, and build a city for creators. A place where people with ideas meet masters and peers, inspire and challenge one another, and turn ideas into work—and work into something that defines them."
+                    : "我创办超线性学院，就是要把这两件事做成：教人驾驭AI，也为创造者建一座城。让有想法的人找到高手与同行，在彼此的启发和切磋中，把想法做成作品，把作品磨成代表作。"}
+                </p>
+              </div>
+              <div className="border-t border-[#DDD9D0] pt-6 lg:col-start-1 lg:row-start-2">
+                <p className="text-pretty text-sm leading-7 text-[#5C574D]">
                   {lang === "en"
                     ? "I led a 30-person data and AI team at Tencent. Back in the U.S., I joined the early team at Statsig—later acquired by OpenAI—and returned to hands-on work."
                     : "我曾在腾讯带领30人的数据与AI团队。回到美国后，我加入后来被OpenAI收购的Statsig早期团队，重新做一线工作。"}
                 </p>
-                <p className="mt-4 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
-                  {lang === "en"
-                    ? "I founded Superlinear Academy to turn what I’ve learned into courses, public content, and a community where people can deepen their understanding, develop skills through practice, and make things others actually need. Today, the Academy is my full-time work and a long-term commitment."
-                    : "我创办超线性学院，是想把这些年的积累做成课程、内容和社区，让更多人在深入理解和动手实践中练出本事，做出别人真正需要的东西。如今，这所学院是我全职投入、希望长期做好的事业。"}
-                </p>
-                <p className="mt-6 border-t border-[#DDD9D0] pt-5 text-sm leading-7 text-[#5C574D]">
+                <p className="mt-4 text-xs leading-6 text-[#5C574D]">
                   Cornell → Amazon → Meta → Tencent → Statsig → Superlinear
                 </p>
                 <Link

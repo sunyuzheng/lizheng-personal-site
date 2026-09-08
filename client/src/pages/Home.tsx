@@ -525,8 +525,17 @@ export default function Home() {
                       : "学会游泳与造船"}
                   </a>
                   {lang === "en"
-                    ? ". A Renaissance needs Florence."
-                    : "；文艺复兴，需要佛罗伦萨。"}
+                    ? ". A Renaissance needs "
+                    : "；文艺复兴，需要"}
+                  <a
+                    href="https://www.superlinear.academy/c/ai-resources/ai-second-renaissance-florence"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-superlinear-link no-underline hover:text-superlinear-deep"
+                  >
+                    {lang === "en" ? "Florence" : "佛罗伦萨"}
+                  </a>
+                  {lang === "en" ? "." : "。"}
                 </p>
                 <p className="mt-5 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"

@@ -3,6 +3,78 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Homepage conversation covers keep editable type separate from real portraits. */
+.conversation-cover {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: 62% 38%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e7eadf;
+  color: #21362b;
+}
+
+.conversation-cover-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 6cqw 2.5cqw 6cqw 6cqw;
+}
+
+.conversation-cover-topic {
+  max-width: 100%;
+  font-size: clamp(9px, 3cqw, 12px);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  color: #536652;
+}
+
+.conversation-cover-title {
+  margin-block: 5cqw;
+  font-size: clamp(18px, 6.5cqw, 28px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.04em;
+}
+
+.conversation-cover-title span {
+  display: block;
+}
+
+.conversation-cover-rule {
+  width: 24px;
+  height: 2px;
+  flex-shrink: 0;
+  background: #658569;
+}
+
+.conversation-cover-portrait {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #d6ddd0;
+}
+
+.conversation-cover-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  transition: transform 250ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .group:hover .conversation-cover-portrait img,
+  .group:focus-visible .conversation-cover-portrait img {
+    transform: scale(1.035);
+  }
+}
+
 @theme {
   --font-sans:
     "Geist Variable", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",

@@ -1,4 +1,5 @@
 import HomeNavigation from "@/components/HomeNavigation";
+import HomeConversations from "@/components/HomeConversations";
 import HomeSocialLinks from "@/components/HomeSocialLinks";
 import PeerEndorsements from "@/components/PeerEndorsements";
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
@@ -191,85 +192,6 @@ const enterpriseWork = {
     cta: "查看企业合作方式",
     caption: "DoorDash Analytics团队线下AI培训 · 西雅图",
   },
-};
-
-const selectedGuests = {
-  en: [
-    {
-      name: "Yangqing Jia",
-      role: "Co-lead, PyTorch 1.0 · Founder, Lepton AI",
-      href: "/guests/yangqing-jia",
-      image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
-    },
-    {
-      name: "Shuchao Bi",
-      role: "Head of Post-Training · Multimodal, OpenAI",
-      href: "/guests/shuchao-bi",
-      image: "https://img.youtube.com/vi/7ej2r7XysKc/hqdefault.jpg",
-    },
-    {
-      name: "Reynold Xin",
-      role: "Co-founder, Databricks",
-      href: "/guests/reynold-xin",
-      image: "https://img.youtube.com/vi/GIv0I-34aaI/hqdefault.jpg",
-    },
-    {
-      name: "Vijaye Raji",
-      role: "Founder, Statsig · CTO of Applications, OpenAI",
-      href: "/guests/vijaye-raji",
-      image: "https://img.youtube.com/vi/iw2QYZeVlOQ/hqdefault.jpg",
-    },
-    {
-      name: "Ryo Lu",
-      role: "Head of Design, Cursor",
-      href: "/guests/ryo-lu",
-      image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
-    },
-    {
-      name: "Gergely Orosz",
-      role: "Founder, The Pragmatic Engineer",
-      href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
-      image: "/english-network/gergely-orosz.webp",
-    },
-  ],
-  zh: [
-    {
-      name: "贾扬清（Yangqing Jia）",
-      role: "PyTorch 1.0共同负责人 · Lepton AI创始人",
-      href: "/guests/yangqing-jia",
-      image: "https://img.youtube.com/vi/Lt-lVe957hc/hqdefault.jpg",
-    },
-    {
-      name: "毕书超（Shuchao Bi）",
-      role: "OpenAI Head of Post-Training · Multimodal",
-      href: "/guests/shuchao-bi",
-      image: "https://img.youtube.com/vi/7ej2r7XysKc/hqdefault.jpg",
-    },
-    {
-      name: "Reynold Xin",
-      role: "Databricks联合创始人",
-      href: "/guests/reynold-xin",
-      image: "https://img.youtube.com/vi/GIv0I-34aaI/hqdefault.jpg",
-    },
-    {
-      name: "Vijaye Raji",
-      role: "Statsig创始人 · OpenAI CTO of Applications",
-      href: "/guests/vijaye-raji",
-      image: "https://img.youtube.com/vi/iw2QYZeVlOQ/hqdefault.jpg",
-    },
-    {
-      name: "Ryo Lu",
-      role: "Cursor Head of Design",
-      href: "/guests/ryo-lu",
-      image: "https://img.youtube.com/vi/BnL5qaBzmR0/maxresdefault.jpg",
-    },
-    {
-      name: "Gergely Orosz",
-      role: "The Pragmatic Engineer创始人",
-      href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
-      image: "/english-network/gergely-orosz.webp",
-    },
-  ],
 };
 
 function SectionLabel({
@@ -569,105 +491,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          id="conversations"
-          className="scroll-mt-[72px] bg-lizheng-dark py-16 md:py-24"
-        >
-          <div className="container">
-            <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
-              <div>
-                <SectionLabel dark>
-                  {lang === "en" ? "200+ CONVERSATIONS" : "200+场公开对话"}
-                </SectionLabel>
-                <h2 className="mt-5 max-w-3xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
-                  {lang === "en"
-                    ? "What did they get right?"
-                    : "他们做对了什么？"}
-                </h2>
-              </div>
-              <div className="space-y-4 text-base leading-8 text-zinc-400">
-                <p>
-                  {lang === "en"
-                    ? "Conversations about technology—and the decisions that made the difference."
-                    : "聊技术，也聊做决定的那一刻。"}
-                </p>
-                <p className="text-sm leading-7 text-lizheng-muted">
-                  {lang === "en"
-                    ? "400K+ followers across YouTube, Bilibili, and Xiaohongshu."
-                    : "YouTube、B站、小红书，40万+关注者。"}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-12 grid grid-cols-2 gap-px bg-white/10 lg:grid-cols-3">
-              {selectedGuests[lang].map(guest => {
-                const external = guest.href.startsWith("http");
-                const content = (
-                  <>
-                    <img
-                      src={guest.image}
-                      alt=""
-                      className="aspect-[16/9] w-full object-cover opacity-85 transition duration-300 group-hover:opacity-100"
-                      loading="lazy"
-                      width={480}
-                      height={270}
-                    />
-                    <div className="min-h-28 bg-lizheng-raised p-3 sm:p-5">
-                      <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-sm font-semibold leading-5 text-white sm:text-lg">
-                          {guest.name}
-                        </h3>
-                        {external ? (
-                          <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-zinc-500" />
-                        ) : (
-                          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-zinc-500" />
-                        )}
-                      </div>
-                      <p className="mt-2 text-xs leading-5 text-zinc-300 sm:text-sm sm:leading-6">
-                        {guest.role}
-                      </p>
-                    </div>
-                  </>
-                );
-
-                return external ? (
-                  <a
-                    key={guest.name}
-                    href={guest.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block bg-lizheng-dark"
-                  >
-                    {content}
-                  </a>
-                ) : (
-                  <Link
-                    key={guest.name}
-                    href={withLanguage(guest.href, lang)}
-                    className="group block bg-lizheng-dark"
-                  >
-                    {content}
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className="mt-8 flex justify-end">
-              <Button
-                asChild
-                variant="outline"
-                className="min-h-11 border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-              >
-                <Link href={withLanguage("/guests", lang)}>
-                  {lang === "en"
-                    ? "Browse all conversations"
-                    : "查看全部嘉宾访谈"}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <HomeConversations lang={lang} />
 
         <section
           id="thinking"

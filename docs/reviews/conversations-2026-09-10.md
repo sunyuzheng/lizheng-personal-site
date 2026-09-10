@@ -24,7 +24,7 @@
 | 嘉宾 | 页面身份 | 分类 · 封面标题 | 入口与相关节目 |
 | --- | --- | --- | --- |
 | 田渊栋 | 前 Meta FAIR 研究总监 | AI研究 · 模型的顿悟／研究者的品味 | `/guests/tian-yuandong`；[研究、顿悟与优雅](https://www.youtube.com/watch?v=dymM40bVIhQ) |
-| 毕书超 | YouTube Shorts 联合创始人 · 前 OpenAI 多模态后训练负责人 | 技术前沿 · AI往何处去／模型的自我迭代 | `/guests/shuchao-bi`；[2025，AI路往何方？](https://www.youtube.com/watch?v=eRYBE0dXsmU) |
+| 毕树超 | YouTube Shorts 联合创始人 · 前 OpenAI 多模态后训练负责人 | 技术前沿 · AI往何处去／模型的自我迭代 | `/guests/shuchao-bi`；[2025，AI路往何方？](https://www.youtube.com/watch?v=eRYBE0dXsmU) |
 | Reynold Xin | Databricks 联合创始人、首席架构师 | 技术创业 · 大机会／是怎样抓住的 | `/guests/reynold-xin`；[识别机会](https://www.youtube.com/watch?v=GIv0I-34aaI) |
 | 贾扬清 | Caffe 作者 · Lepton AI 创始人（被 NVIDIA 收购） | 创业圆桌 · AI创业／从模型到市场 | `/guests/yangqing-jia`；[AI创业圆桌](https://www.youtube.com/watch?v=Lt-lVe957hc) |
 | 硅谷徐老师 | Howie Xu · Gen 首席AI与创新官 | 周期与判断 · 亲历两轮泡沫／这次有何不同 | `/guests/howie-xu`；[AI泡沫](https://www.youtube.com/watch?v=knTP07tE89Y) |
@@ -44,8 +44,10 @@
 
 核对日期：2026-09-10。首页采用足以说明其分量的简短经历，不机械复制陈旧的视频标题。
 
+中文姓名校正：Shuchao Bi 写作“毕树超”，依据[浙江大学校报2007年毕业生专访](https://zdjy.zju.edu.cn/review/toReview?dbID=23&dbName=ZHEJIANGDAXUEBAO&sysID=44749)。首页中文名与本文已统一；上游嘉宾记录使用英文姓名，无需更改链接标识。
+
 - [田渊栋本人主页](https://yuandong-tian.com/)：现为 Recursive Superintelligence Inc 联合创始人，曾任 Meta FAIR Research Scientist Director。因此保留有辨识度的 Meta 经历并标明“前”；英文压缩为 Former Research Director, Meta FAIR。
-- [毕书超哥大讲座介绍](https://ai.columbia.edu/events/distinguished-lecture-shuchao-bi-openai)：YouTube Shorts co-founder，曾领导 Shorts 算法组织。其[本人 X 简介](https://x.com/shuchaobi/with_replies)已显示在 Meta Superintelligence Labs 从事研究；本次检索通过索引读取，直接抓取失败。首页保留 Shorts 联创经历，并明确标注“前 OpenAI 多模态后训练负责人”；后者也由用户频道原始访谈描述明确支持，不沿用旧版的现任 OpenAI 头衔。
+- [毕树超哥大讲座介绍](https://ai.columbia.edu/events/distinguished-lecture-shuchao-bi-openai)：YouTube Shorts co-founder，曾领导 Shorts 算法组织。其[本人 X 简介](https://x.com/shuchaobi/with_replies)已显示在 Meta Superintelligence Labs 从事研究；本次检索通过索引读取，直接抓取失败。首页保留 Shorts 联创经历，并明确标注“前 OpenAI 多模态后训练负责人”；后者也由用户频道原始访谈描述明确支持，不沿用旧版的现任 OpenAI 头衔。
 - [Databricks 官方页面](https://www.databricks.com/dataaisummit/speaker/reynold-xin)：Co-Founder and Chief Architect。
 - [贾扬清本人主页](https://daggerfs.com/)：当前创建 Intent Lab。Caffe 作者、Lepton AI 创始人是持续成立的历史成就；原网页明确写明 Lepton 被 NVIDIA 收购，首页同样补充这一信息。
 - [Gen 2026-09-04 官方署名文章](https://www.gendigital.com/blog/insights/leadership-perspectives/the-cyber-defense-window)：Howie Xu，Chief AI & Innovation Officer。
@@ -76,7 +78,7 @@
 逐张查看九张原始 1280×720 封面，并核对原题、描述和必要章节。原图留在本地 `output/conversations-review/original-covers/`。Gergely 的真实现场照片另外用于英文封面的彩色肖像；其余原频道封面不部署到站点。
 
 - 田渊栋：模型顿悟、研究品味；原片有 Grokking 专门章节，英文封面使用 `Grokking / & research taste`。
-- 毕书超：原片 15:54–16:30 区分预训练压缩既有知识与强化学习推动主动迭代，因此采用“模型的自我迭代”。
+- 毕树超：原片 15:54–16:30 区分预训练压缩既有知识与强化学习推动主动迭代，因此采用“模型的自我迭代”。
 - Reynold：识别机会、公司成长；没有把 2024 原题的历史估值数字写成当前估值。
 - 贾扬清：GenAI 成本、开源与闭源、中间层及小公司机会；原片是四位嘉宾的现场圆桌，封面保留圆桌分类。
 - Howie：亲历互联网泡沫，比较 2000、2008 与本轮 AI 周期，讨论 CEO 判断和校准。

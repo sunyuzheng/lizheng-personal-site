@@ -28,7 +28,7 @@ const guests = [
       zh: ["AI往何处去", "模型的自我迭代"],
       en: ["Where AI", "goes next"],
     },
-    name: { zh: "毕书超", en: "Shuchao Bi" },
+    name: { zh: "毕树超", en: "Shuchao Bi" },
     role: {
       zh: "YouTube Shorts 联合创始人 · 前 OpenAI 多模态后训练负责人",
       en: "Co-founder, YouTube Shorts · Former Multimodal Post-Training Lead, OpenAI",

@@ -343,7 +343,7 @@ export const guests = {
       "/guests/yangqing-jia",
     ],
     [
-      "毕书超",
+      "毕树超",
       "OpenAI Head of Post-Training·Multimodal",
       "https://img.youtube.com/vi/7ej2r7XysKc/hqdefault.jpg",
       "/guests/shuchao-bi",

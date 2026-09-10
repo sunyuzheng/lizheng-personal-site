@@ -26,13 +26,13 @@
 | 田渊栋 | 前 Meta FAIR 研究总监 | AI研究 · 模型的顿悟／研究者的品味 | `/guests/tian-yuandong`；[研究、顿悟与优雅](https://www.youtube.com/watch?v=dymM40bVIhQ) |
 | 毕树超 | YouTube Shorts 联合创始人 · 前 OpenAI 多模态后训练负责人 | 技术前沿 · AI往何处去／模型的自我迭代 | `/guests/shuchao-bi`；[2025，AI路往何方？](https://www.youtube.com/watch?v=eRYBE0dXsmU) |
 | Reynold Xin | Databricks 联合创始人、首席架构师 | 技术创业 · 大机会／是怎样抓住的 | `/guests/reynold-xin`；[识别机会](https://www.youtube.com/watch?v=GIv0I-34aaI) |
-| 贾扬清 | Caffe 作者 · Lepton AI 创始人（被 NVIDIA 收购） | 创业圆桌 · AI创业／从模型到市场 | `/guests/yangqing-jia`；[AI创业圆桌](https://www.youtube.com/watch?v=Lt-lVe957hc) |
+| 屠龙大实话 | 神经科学博士 · 连续创业者 | 商业实战 · 先学会销售／再动手做产品 | `/guests/yang-ying`；[屠龙博士创业的秘密](https://www.youtube.com/watch?v=vd_oYgwQSBM) |
 | 硅谷徐老师 | Howie Xu · Gen 首席AI与创新官 | 周期与判断 · 亲历两轮泡沫／这次有何不同 | `/guests/howie-xu`；[AI泡沫](https://www.youtube.com/watch?v=knTP07tE89Y) |
 | 刘嘉 | 清华大学讲席教授 | 认知与教育 · 大脑、AI／与教育的未来 | `/guests/liu-jia`；[脑科学、AI与教育](https://www.youtube.com/watch?v=-Et3GJRSI_0) |
 | Vijaye Raji | OpenAI 应用 CTO · Statsig 创始人 | 职业选择 · 从大厂高管／到创业者 | `/guests/vijaye-raji`；[英文职业访谈](https://www.youtube.com/watch?v=iw2QYZeVlOQ) |
-| Ryo Lu | 前 Cursor 设计负责人 | 设计与创造 · 走出Figma／在代码中设计 | `/guests/ryo-lu`；[设计与代码](https://www.youtube.com/watch?v=BnL5qaBzmR0) |
+| 魏慧 | 洲际酒店集团 AI与架构高级副总裁 | 技术与领导力 · 如何成为／不可替代的人 | 直达[魏慧访谈](https://www.youtube.com/watch?v=99-5ptPiHJ0) |
 
-相对旧版，中文新增田渊栋、徐老师、刘嘉，暂不在中文首页展示 Gergely Orosz。田渊栋补研究深度；徐老师既有中文认知度，也有多年连续对话；刘嘉把 AI 接到认知、学习与人的成长。保留的五位分别体现产品创新、技术创业、基础设施、职业选择与制作方法。贾扬清对应多人圆桌，因此显示“圆桌”，不把活动包装成独家单人专访。
+相对旧版，中文新增田渊栋、徐老师、刘嘉，暂不在中文首页展示 Gergely Orosz。田渊栋补研究深度；徐老师既有中文认知度，也有多年连续对话；刘嘉把 AI 接到认知、学习与人的成长。用户随后指定以魏慧替换 Ryo、屠龙大实话替换贾扬清。魏慧补上从专业能力到领导力的成长，屠龙大实话补上真实生意中的销售与产品实践。其余嘉宾分别体现技术前沿、技术创业与职业选择。两位新嘉宾同步用于中英文首页，未入选的访谈仍保留在完整目录中。
 
 樊登的知名度很高，但当前首页围绕 AI、研究与制作展开，这版优先刘嘉的认知与教育研究。戴雨森已在上方同行评价中出现；Acquired 主持人已在 Hero 的真实合照中出现，不必让同一批姓名占据每一处证明。所有未精选的真实访谈继续保留。
 
@@ -49,11 +49,11 @@
 - [田渊栋本人主页](https://yuandong-tian.com/)：现为 Recursive Superintelligence Inc 联合创始人，曾任 Meta FAIR Research Scientist Director。因此保留有辨识度的 Meta 经历并标明“前”；英文压缩为 Former Research Director, Meta FAIR。
 - [毕树超哥大讲座介绍](https://ai.columbia.edu/events/distinguished-lecture-shuchao-bi-openai)：YouTube Shorts co-founder，曾领导 Shorts 算法组织。其[本人 X 简介](https://x.com/shuchaobi/with_replies)已显示在 Meta Superintelligence Labs 从事研究；本次检索通过索引读取，直接抓取失败。首页保留 Shorts 联创经历，并明确标注“前 OpenAI 多模态后训练负责人”；后者也由用户频道原始访谈描述明确支持，不沿用旧版的现任 OpenAI 头衔。
 - [Databricks 官方页面](https://www.databricks.com/dataaisummit/speaker/reynold-xin)：Co-Founder and Chief Architect。
-- [贾扬清本人主页](https://daggerfs.com/)：当前创建 Intent Lab。Caffe 作者、Lepton AI 创始人是持续成立的历史成就；原网页明确写明 Lepton 被 NVIDIA 收购，首页同样补充这一信息。
+- 屠龙大实话（杨滢）：身份由本频道[原片介绍](https://www.youtube.com/watch?v=vd_oYgwQSBM)、上游嘉宾名录与既有讲师肖像材料共同支持；中文以用户指定的公众昵称显示，英文采用 Yang Ying。
 - [Gen 2026-09-04 官方署名文章](https://www.gendigital.com/blog/insights/leadership-perspectives/the-cyber-defense-window)：Howie Xu，Chief AI & Innovation Officer。
 - [清华官方教师页](https://www.pcs.tsinghua.edu.cn/info/1008/1350.htm)与[2026年校方报道](https://www.pcs.tsinghua.edu.cn/info/1037/2092.htm)：刘嘉为基础科学讲席教授；首页压缩为清华大学讲席教授。
 - [OpenAI 公告](https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig/)：Vijaye Raji 出任 CTO of Applications。此处访谈实际讨论职业选择，未把旧采访描述成现任 OpenAI 职位的访谈。
-- [Ryo 本人主页](https://ryo.lu/)将 Cursor 列于过去工作，因此使用“前 Cursor 设计负责人”。
+- 魏慧（Wei Manfredi）：[本人参与的 DataIQ 2026 简介与问答](https://www.dataiq.global/dataiq100/wei-manfredi-svp-ai-architecture-ihg-hotels-and-resorts/)确认 IHG Hotels & Resorts 的 SVP, AI & Architecture 身份；中文使用辨识度更高的“洲际酒店集团”。
 
 完整嘉宾目录由 `shared/guest-roster-snapshot.ts` 与 `shared/guest-video-metadata.ts` 的上游来源维护，本次不手改生成文件。潜在的目录头衔更新应由 `sunyuzheng/kedaibiao-content-tools` 单独处理。这里的精选、排序和议题属于首页编辑层。
 
@@ -66,32 +66,36 @@
 | `yuandong-tian.png` | [本人网站原图](https://yuandong-tian.com/imgs/bio.png)，637×677。 |
 | `shuchao-bi.jpg` | [本人 X](https://x.com/shuchaobi) 的[原始头像](https://pbs.twimg.com/profile_images/1842686033592565760/MoZKV90L.jpg)，400×400；[公开账户资料](https://api.fxtwitter.com/shuchaobi)核对账户与图像的对应。替换首稿中不适合窄栏的哥大演讲照片。 |
 | `reynold-xin-color.jpg` | [Databricks 官方作者页](https://www.databricks.com/blog/author/reynold-xin)提供的[官方彩色缩略图](https://www.databricks.com/sites/default/files/styles/max_650x650/public/2022-10/Reynold-Xin.jpg?itok=ofJ_eOc7&v=1665675097)，650×650、约24KB；浅背景、微笑正面肖像。 |
-| `yangqing-jia.jpg` | [本人网站原图](https://daggerfs.com/assets/img/profile.jpg)，512×512。 |
+| `yang-ying-color.jpg` | 复用立正于2026-08-12提供的杨滢正式形象照现有裁图，1200×1600、约365KB；源文件为 `Desktop/superlinear/6-活动/Stay Superlinear 大师课/05-2026-12-11-杨滢-商业实战/03-讲师素材/yangying-official-portrait-4-cover-crop.jpg`。来源见同项目 `04-来源与记录/封面制作记录.md`；直接复制现有真人彩色照片。 |
 | `howie-xu.jpg` | 复用 `/Users/sunyuzheng/Desktop/superlinear/1-会员社区/stay-superlinear-membership/assets/guest-howie-xu-v1.jpg`，1200×1200；已有会员网站嘉宾肖像。 |
-| `ryo-lu-color.jpg` | [本人 X](https://x.com/ryolu_)的[彩色头像原图](https://pbs.twimg.com/profile_images/1915014653295697921/KmMbglaO.jpg)，313×313；与先前黑白肖像为同一构图。 |
+| `/avatars/wei-manfredi.jpg` | 复用本网站既有魏慧真人彩色肖像，490×490。 |
 | `gergely-orosz-color.jpg` | [既有英文对谈](https://www.youtube.com/watch?v=-WvvJBd3hDI)的[原始现场封面](https://img.youtube.com/vi/-WvvJBd3hDI/maxresdefault.jpg)，1280×720；CSS 只展示 Gergely 所在区域，保留自然彩色。 |
 | `/avatars/liu-jia.jpg` | 复用本网站既有刘嘉肖像，200×200。 |
 | `/avatars/vijaye-raji.jpg` | 复用本网站既有 Vijaye 肖像，800×800。 |
 
 ## 原片内容核对
 
-逐张查看九张原始 1280×720 封面，并核对原题、描述和必要章节。原图留在本地 `output/conversations-review/original-covers/`。Gergely 的真实现场照片另外用于英文封面的彩色肖像；其余原频道封面不部署到站点。
+逐张查看原始 1280×720 封面，并核对原题、描述和必要章节。首轮原图留在本地 `output/conversations-review/original-covers/`；魏慧、屠龙大实话原图留在 `output/conversations-review/new-guests/`。Gergely 的真实现场照片另外用于英文封面的彩色肖像；其余原频道封面不部署到站点。
 
 - 田渊栋：模型顿悟、研究品味；原片有 Grokking 专门章节，英文封面使用 `Grokking / & research taste`。
 - 毕树超：原片 15:54–16:30 区分预训练压缩既有知识与强化学习推动主动迭代，因此采用“模型的自我迭代”。
 - Reynold：识别机会、公司成长；没有把 2024 原题的历史估值数字写成当前估值。
-- 贾扬清：GenAI 成本、开源与闭源、中间层及小公司机会；原片是四位嘉宾的现场圆桌，封面保留圆桌分类。
+- 屠龙大实话：原片 15:00 起讨论书店生意中“先销售、再产品”的实践，其他章节延伸到获取一手信息、失败诊断与长期写作；封面提炼为“先学会销售／再动手做产品”，英文 `Sell first. / Then build.`。
 - Howie：亲历互联网泡沫，比较 2000、2008 与本轮 AI 周期，讨论 CEO 判断和校准。
 - 刘嘉：脑科学、人机差异、学习与教育；终稿扩大为“大脑、AI与教育的未来”，更贴近原片范围。
 - Vijaye：原封面 Facebook VP 到创业者；不把旧片转述为现任 OpenAI 职位的访谈。
-- Ryo：原封面离开 Figma、Baby Cursor、软件设计的概念进化，封面提炼为直接在代码中设计。
+- 魏慧：剪辑版原题为《躺平十年，却成为华人天花板，她靠三个底层特质｜魏慧》，完整版标题明确以“不可替代性”为主线；22:21 起专门讨论 Go-to person。封面提炼为“如何成为／不可替代的人”，英文 `Becoming / irreplaceable`。当前完整嘉宾目录未收录魏慧，首页直达已公开的1小时剪辑版，不创建空嘉宾页。
 - Gergely：原封面是立正与 Gergely 在 Statsig 办公室面对面对话，标题为 Engineering Careers and AI，保留旧版公开页面已使用的视频入口。
 
 ## 验证记录
 
 - `pnpm check`、`pnpm build`、`git diff --check`。构建含中英文首页完整预渲染与 126 个嘉宾子页；既有主包超过 500 kB 的提示未因本次扩展处理。
 - 检查默认桌面、390 px、320 px 的中英文页面，以及中间双栏宽度；封面文字与图片没有重叠、裁断或横向溢出。
-- 中文八位含 Howie，英文八位含 Gergely；所有肖像成功加载，八个内部嘉宾入口与完整目录返回 HTTP 200，浏览器实际核对田渊栋与徐老师页面。
+- 中文八位含 Howie，英文八位含 Gergely；所有肖像成功加载，七个共用内部嘉宾入口（包括中文限定的 Howie）与完整目录返回 HTTP 200；英文以 Gergely 视频替代 Howie，魏慧在两种语言均直达公开视频。浏览器实际核对田渊栋、徐老师及新增屠龙大实话页面。
 - 嘉宾卡片与目录入口可以键盘聚焦，有可见焦点样式；装饰性肖像空 alt，主题与身份是可读的原生文字。减少动态效果偏好关闭照片放大。
-- 既有 `/guests/...` 为中文规范路径；Gergely 直达英文视频。本次没有新增或承诺独立英文嘉宾档案。
+- 既有 `/guests/...` 为中文规范路径；Gergely 直达英文视频，魏慧直达中文视频。本次没有新增或承诺独立英文嘉宾档案。
 - 不变更完整嘉宾目录、视频状态、旧访谈头衔来源、创办动机或其他首页区块。临时浏览器尺寸覆盖在交付前恢复。
+
+## 频道姓名核验（2026-09-10）
+
+用户同时要求纠正频道中同一错字。实际登录 YouTube Studio 全频道搜索“毕书超”返回零条；三期 `7ej2r7XysKc`、`eRYBE0dXsmU`、`minCtoiRHG8` 的线上标题与完整简介均使用 Shuchao / Shuchao Bi，且没有可编辑的既有字幕轨。B站已核对的 `BV1RqLTzNEcW` 标题与完整简介也无错字；未取得其他两期映射。上游1,024条视频元数据、3,365个存档文本/字幕和138个播客 show notes 无该错字。频道最小差异为零，因此没有执行空更新；小红书全量内容未核验。网站姓名错误已由前一提交更正。

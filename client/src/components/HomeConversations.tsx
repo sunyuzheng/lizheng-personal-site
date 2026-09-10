@@ -54,18 +54,18 @@ const guests = [
     position: "50% 40%",
   },
   {
-    slug: "yangqing-jia",
-    topic: { zh: "创业圆桌", en: "FOUNDER ROUNDTABLE" },
+    slug: "yang-ying",
+    topic: { zh: "商业实战", en: "ENTREPRENEURSHIP" },
     headline: {
-      zh: ["AI创业", "从模型到市场"],
-      en: ["Building", "beyond", "the model"],
+      zh: ["先学会销售", "再动手做产品"],
+      en: ["Sell first.", "Then build."],
     },
-    name: { zh: "贾扬清", en: "Yangqing Jia" },
+    name: { zh: "屠龙大实话", en: "Yang Ying" },
     role: {
-      zh: "Caffe 作者 · Lepton AI 创始人（被 NVIDIA 收购）",
-      en: "Creator of Caffe · Founder, Lepton AI (acquired by NVIDIA)",
+      zh: "神经科学博士 · 连续创业者",
+      en: "Neuroscience PhD · Serial entrepreneur",
     },
-    image: "/guest-portraits/yangqing-jia.jpg",
+    image: "/guest-portraits/yang-ying-color.jpg",
     position: "50% 35%",
   },
   {
@@ -134,19 +134,20 @@ const guests = [
     position: "50% 40%",
   },
   {
-    slug: "ryo-lu",
-    topic: { zh: "设计与创造", en: "DESIGN & CRAFT" },
+    slug: "wei-manfredi",
+    topic: { zh: "技术与领导力", en: "GROWTH & LEADERSHIP" },
     headline: {
-      zh: ["走出Figma", "在代码中设计"],
-      en: ["Beyond Figma.", "Designing", "in code."],
+      zh: ["如何成为", "不可替代的人"],
+      en: ["Becoming", "irreplaceable"],
     },
-    name: { zh: "Ryo Lu", en: "Ryo Lu" },
+    name: { zh: "魏慧", en: "Wei Manfredi" },
     role: {
-      zh: "前 Cursor 设计负责人",
-      en: "Former Head of Design, Cursor",
+      zh: "洲际酒店集团 AI与架构高级副总裁",
+      en: "SVP, AI & Architecture, IHG Hotels & Resorts",
     },
-    image: "/guest-portraits/ryo-lu-color.jpg",
-    position: "50% 40%",
+    href: "https://www.youtube.com/watch?v=99-5ptPiHJ0",
+    image: "/avatars/wei-manfredi.jpg",
+    position: "50% 35%",
   },
 ] as const;
 

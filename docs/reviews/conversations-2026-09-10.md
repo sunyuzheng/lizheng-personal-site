@@ -1,5 +1,7 @@
 # 首页访谈区：2026-09-10 统一封面与精选嘉宾
 
+本页记录八位嘉宾阶段。当前十二位名单、魏慧正式嘉宾页和近期目录更新见[后续扩展记录](conversations-expanded-2026-09-10.md)。
+
 发布授权：用户本轮明确要求制作统一、unbranded 的 thumbnail，强调主题多样性、对话含金量与嘉宾分量，并授权完成检查后直接上线。发布通过 `main` 的 CI 和 Vercel 完成。基于 `origin/main` 的 `0278143258a46337e25efeb4d1b3deb10c168f8a`。发布页面为 `https://www.lizheng.ai/zh#conversations` 与英文首页对应位置，读者是公开网站访客。
 
 预览：`http://127.0.0.1:4178/zh#conversations`；英文为 `http://127.0.0.1:4178/#conversations`。准确实现及双语文案见 `client/src/components/HomeConversations.tsx`。

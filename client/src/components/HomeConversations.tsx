@@ -145,8 +145,69 @@ const guests = [
       zh: "洲际酒店集团 AI与架构高级副总裁",
       en: "SVP, AI & Architecture, IHG Hotels & Resorts",
     },
-    href: "https://www.youtube.com/watch?v=99-5ptPiHJ0",
     image: "/avatars/wei-manfredi.jpg",
+    position: "50% 35%",
+  },
+  {
+    slug: "mike-vernal",
+    topic: { zh: "投资与创新", en: "INVESTING & INNOVATION" },
+    headline: {
+      zh: ["AI、投资", "与公司成长"],
+      en: ["AI, investing", "& building", "companies"],
+    },
+    name: { zh: "Mike Vernal", en: "Mike Vernal" },
+    role: {
+      zh: "Conviction 合伙人 · 前红杉合伙人、Facebook 副总裁",
+      en: "Partner, Conviction · Former Sequoia partner & Facebook VP",
+    },
+    image: "/guest-portraits/mike-vernal-color.jpg",
+    position: "93% 40%",
+    portraitScale: 1.9,
+    portraitOrigin: "50% 60%",
+  },
+  {
+    slug: "ethan-evans",
+    topic: { zh: "管理与影响力", en: "LEADERSHIP & IMPACT" },
+    headline: {
+      zh: ["技术之外", "如何建立影响力"],
+      en: ["Leading beyond", "technical skill"],
+    },
+    name: { zh: "Ethan Evans", en: "Ethan Evans" },
+    role: {
+      zh: "前 Amazon 副总裁 · 高管教练",
+      en: "Former Amazon VP · Executive coach",
+    },
+    image: "/guest-portraits/ethan-evans.jpg",
+    position: "50% 35%",
+  },
+  {
+    slug: "zhou-nan",
+    topic: { zh: "非共识投资", en: "BEFORE CONSENSUS" },
+    headline: {
+      zh: ["在共识之前", "看见机会"],
+      en: ["Seeing", "opportunity", "before others"],
+    },
+    name: { zh: "周楠", en: "Nan Zhou" },
+    role: {
+      zh: "硅谷科技投资人 · Cerebras 早期投资人",
+      en: "Silicon Valley tech investor · Early investor in Cerebras",
+    },
+    image: "/guest-portraits/nan-zhou.jpg",
+    position: "50% 35%",
+  },
+  {
+    slug: "kevin-chen",
+    topic: { zh: "科学与工程", en: "SCIENCE & ENGINEERING" },
+    headline: {
+      zh: ["微型机器人", "与科学的边界"],
+      en: ["Microrobots", "& the limits", "of science"],
+    },
+    name: { zh: "Kevin Chen", en: "Kevin Chen" },
+    role: {
+      zh: "MIT 电气工程与计算机科学副教授",
+      en: "Associate Professor, MIT EECS",
+    },
+    image: "/guest-portraits/kevin-chen.jpg",
     position: "50% 35%",
   },
 ] as const;

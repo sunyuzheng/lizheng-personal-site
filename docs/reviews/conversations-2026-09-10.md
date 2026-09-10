@@ -8,7 +8,7 @@
 
 旧版用六张节目封面，封面的字号、配色、描边、人物数量和构图彼此竞争。它们是为各自平台的信息流设计的；放在个人主页上，读者先看到封面包装，然后才能辨认嘉宾。
 
-最终版采用统一的 16:10 封面：浅灰绿色底，左侧主题分类与短标题，右侧真实肖像；封面下面列姓名与关键身份。主题取自原片标题、封面和内容，不以平台式悬念作为主要吸引力。网站原生文字与照片分层，文字在窄屏保持清楚，也能由搜索和辅助技术读取。肖像以 CSS 灰阶和轻微绿色叠色与网站协调，悬停有克制的放大。宽桌面四栏、中屏双栏、手机单栏，每个完整卡片可点击，八位直接展示。
+最终版采用统一的 16:10 封面：明亮的暖白色底，左侧主题分类与短标题，右侧真实彩色肖像；封面下面列姓名与关键身份。主题取自原片标题、封面和内容，不以平台式悬念作为主要吸引力。网站原生文字与照片分层，文字在窄屏保持清楚，也能由搜索和辅助技术读取。根据用户对中文页面观感的反馈，取消黑白处理与压暗的绿色叠色，恢复自然肤色，适度提亮偏暗照片；统一性由封面格式与排版维持。悬停有克制的放大。宽桌面四栏、中屏双栏、手机单栏，每个完整卡片可点击，八位直接展示。
 
 这既呈现公开对话的分量，也解释立正与嘉宾聊什么。名气不是唯一的筛选条件：研究、创业与产品、认知与教育三个方向，应当一起支持个人主页“学点真本事，做点真东西”的主张。
 
@@ -57,23 +57,23 @@
 
 ## 肖像来源
 
-所有图片均为真实人物照片，直接使用原文件。没有生成面孔、拼接合照或修改图片内容。统一视觉由 CSS 的窄肖像栏裁切、灰阶和叠色完成。新增文件位于 `client/public/guest-portraits/`。
+所有图片均为真实人物照片，直接使用原文件。没有生成面孔、拼接合照或修改图片内容。统一视觉由封面布局、窄肖像栏裁切与排版完成，照片保留自然彩色；CSS 仅适度提亮，避免沉重的黑白观感。新增文件位于 `client/public/guest-portraits/`。
 
 | 文件 | 来源与备注 |
 | --- | --- |
 | `yuandong-tian.png` | [本人网站原图](https://yuandong-tian.com/imgs/bio.png)，637×677。 |
 | `shuchao-bi.jpg` | [本人 X](https://x.com/shuchaobi) 的[原始头像](https://pbs.twimg.com/profile_images/1842686033592565760/MoZKV90L.jpg)，400×400；[公开账户资料](https://api.fxtwitter.com/shuchaobi)核对账户与图像的对应。替换首稿中不适合窄栏的哥大演讲照片。 |
-| `reynold-xin.jpg` | [Databricks 官方讲者页](https://www.databricks.com/dataaisummit/speaker/reynold-xin)提供的[官方头像](https://www.databricks.com/dataaisummit/sites/default/files/styles/headshot/public/media/images/dataaisummit_speaker/Reynold%2520Xin_1781024107894001xST3.jpg?h=fbe83f66&itok=QiTM-vKm)，300×300。 |
+| `reynold-xin-color.jpg` | [Databricks 官方作者页](https://www.databricks.com/blog/author/reynold-xin)提供的[官方彩色缩略图](https://www.databricks.com/sites/default/files/styles/max_650x650/public/2022-10/Reynold-Xin.jpg?itok=ofJ_eOc7&v=1665675097)，650×650、约24KB；浅背景、微笑正面肖像。 |
 | `yangqing-jia.jpg` | [本人网站原图](https://daggerfs.com/assets/img/profile.jpg)，512×512。 |
 | `howie-xu.jpg` | 复用 `/Users/sunyuzheng/Desktop/superlinear/1-会员社区/stay-superlinear-membership/assets/guest-howie-xu-v1.jpg`，1200×1200；已有会员网站嘉宾肖像。 |
-| `ryo-lu.jpg` | [Cursor Compile 讲者页](https://cursor.com/compile)的[原始头像](https://cursor.com/marketing-static/compile/speakers/ryo.jpg)，173×216；用于封面右侧肖像栏。 |
-| `gergely-orosz.png` | [本人 About 页面](https://blog.pragmaticengineer.com/about/)中的[原始头像](https://storage.ghost.io/c/39/f8/39f85cc7-8637-40fc-a57c-f45754453717/content/images/2015/12/pragmatic-engineer-profile-image.png)，300×338，仅用于英文首页。 |
+| `ryo-lu-color.jpg` | [本人 X](https://x.com/ryolu_)的[彩色头像原图](https://pbs.twimg.com/profile_images/1915014653295697921/KmMbglaO.jpg)，313×313；与先前黑白肖像为同一构图。 |
+| `gergely-orosz-color.jpg` | [既有英文对谈](https://www.youtube.com/watch?v=-WvvJBd3hDI)的[原始现场封面](https://img.youtube.com/vi/-WvvJBd3hDI/maxresdefault.jpg)，1280×720；CSS 只展示 Gergely 所在区域，保留自然彩色。 |
 | `/avatars/liu-jia.jpg` | 复用本网站既有刘嘉肖像，200×200。 |
 | `/avatars/vijaye-raji.jpg` | 复用本网站既有 Vijaye 肖像，800×800。 |
 
 ## 原片内容核对
 
-逐张查看九张原始 1280×720 封面，并核对原题、描述和必要章节。原图留在本地 `output/conversations-review/original-covers/`，不部署到站点。
+逐张查看九张原始 1280×720 封面，并核对原题、描述和必要章节。原图留在本地 `output/conversations-review/original-covers/`。Gergely 的真实现场照片另外用于英文封面的彩色肖像；其余原频道封面不部署到站点。
 
 - 田渊栋：模型顿悟、研究品味；原片有 Grokking 专门章节，英文封面使用 `Grokking / & research taste`。
 - 毕书超：原片 15:54–16:30 区分预训练压缩既有知识与强化学习推动主动迭代，因此采用“模型的自我迭代”。

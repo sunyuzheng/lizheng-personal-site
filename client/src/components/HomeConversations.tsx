@@ -36,6 +36,7 @@ const guests = [
     image: "/guest-portraits/shuchao-bi.jpg",
     position: "50% 40%",
     portraitScale: 1.5,
+    portraitBrightness: 1.2,
   },
   {
     slug: "reynold-xin",
@@ -49,7 +50,7 @@ const guests = [
       zh: "Databricks 联合创始人、首席架构师",
       en: "Co-founder & Chief Architect, Databricks",
     },
-    image: "/guest-portraits/reynold-xin.jpg",
+    image: "/guest-portraits/reynold-xin-color.jpg",
     position: "50% 40%",
   },
   {
@@ -97,8 +98,10 @@ const guests = [
       en: "Founder, The Pragmatic Engineer",
     },
     href: "https://www.youtube.com/watch?v=-WvvJBd3hDI",
-    image: "/guest-portraits/gergely-orosz.png",
-    position: "50% 35%",
+    image: "/guest-portraits/gergely-orosz-color.jpg",
+    position: "87% 40%",
+    portraitScale: 1.7,
+    portraitOrigin: "50% 60%",
   },
   {
     slug: "liu-jia",
@@ -142,7 +145,7 @@ const guests = [
       zh: "前 Cursor 设计负责人",
       en: "Former Head of Design, Cursor",
     },
-    image: "/guest-portraits/ryo-lu.jpg",
+    image: "/guest-portraits/ryo-lu-color.jpg",
     position: "50% 40%",
   },
 ] as const;
@@ -224,11 +227,18 @@ export default function HomeConversations({ lang }: { lang: Lang }) {
                         loading="lazy"
                         style={{
                           objectPosition: guest.position,
+                          filter:
+                            "portraitBrightness" in guest
+                              ? `brightness(${guest.portraitBrightness})`
+                              : undefined,
                           scale:
                             "portraitScale" in guest
                               ? String(guest.portraitScale)
                               : undefined,
-                          transformOrigin: "50% 25%",
+                          transformOrigin:
+                            "portraitOrigin" in guest
+                              ? guest.portraitOrigin
+                              : "50% 25%",
                         }}
                       />
                     </div>

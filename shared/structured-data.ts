@@ -69,7 +69,7 @@ function personNode(lang: SiteLang) {
       "https://www.youtube.com/@kedaibiao",
       "https://space.bilibili.com/491306902",
       "https://www.xiaohongshu.com/user/profile/62a402140000000019029369",
-      "https://yuzheng.substack.com/",
+      "https://substack.com/@yuzheng",
     ],
   };
 }

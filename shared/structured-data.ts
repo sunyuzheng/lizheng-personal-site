@@ -9,6 +9,7 @@ import {
 } from "./page-meta.ts";
 import { ENTERPRISE_TRAINING_PAGE_META } from "./collab-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
+import { getGuestEnglishInsights } from "./guest-insights.ts";
 import { DECK_LIBRARY, localized } from "./deck-index.ts";
 
 export const SITE_URL = "https://www.lizheng.ai";
@@ -740,12 +741,30 @@ export function buildGuestStructuredData(
           }
         : {}),
     },
-    hasPart: guest.episodes.map(episode => ({
-      "@type": "CreativeWork",
-      name: episode.title,
-      url: episode.url,
-      image: episode.thumbnailUrl,
-      ...(episode.publishedAt ? { datePublished: episode.publishedAt } : {}),
-    })),
+    hasPart: [
+      ...guest.episodes.map(episode => ({
+        "@type": "CreativeWork",
+        name: episode.title,
+        url: episode.url,
+        image: new URL(episode.thumbnailUrl, SITE_URL).href,
+        ...(episode.publishedAt ? { datePublished: episode.publishedAt } : {}),
+      })),
+      ...getGuestEnglishInsights(guest.slug).map(article => ({
+        "@type": "Article",
+        headline: article.title,
+        description: article.summary,
+        url: article.url,
+        inLanguage: "en",
+        about: {
+          "@type": "Person",
+          name: guest.guest_en_name || guest.guest_name,
+        },
+        isPartOf: {
+          "@type": "Periodical",
+          name: "Superlinear Academy",
+          url: "https://yuzheng.substack.com/",
+        },
+      })),
+    ],
   };
 }

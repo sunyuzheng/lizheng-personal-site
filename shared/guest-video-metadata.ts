@@ -2,7 +2,7 @@
 //
 // Upstream source of truth:
 // - Guest roster and episode membership: https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json
-// - Guest page video metadata authority: /Users/sunyuzheng/Desktop/AI/_workspace/kedaibiao-guests-20260910/guest_video_metadata.json
+// - Guest page video metadata authority: /Users/sunyuzheng/Desktop/AI/_workspace/kedaibiao-orca-guest-20260915/guest_video_metadata.json
 // - Fallback for IDs missing in local metadata: YouTube oEmbed
 //
 // Refresh command:

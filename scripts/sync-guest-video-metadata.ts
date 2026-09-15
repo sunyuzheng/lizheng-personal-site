@@ -13,6 +13,7 @@ interface LocalVideoMetadata {
 }
 
 interface RemoteGuest {
+  primary_source_type?: "youtube" | "circle";
   all_video_ids: string[];
   all_urls?: string[];
 }
@@ -28,7 +29,11 @@ const LOCAL_VIDEO_METADATA_PATH = path.join(
 );
 const LOCAL_GUESTS_PATH = path.join(DEFAULT_CONTENT_REPO_DIR, "guests.json");
 const OUTPUT_PATH = path.join(ROOT, "shared", "guest-video-metadata.ts");
-const ROSTER_OUTPUT_PATH = path.join(ROOT, "shared", "guest-roster-snapshot.ts");
+const ROSTER_OUTPUT_PATH = path.join(
+  ROOT,
+  "shared",
+  "guest-roster-snapshot.ts"
+);
 
 function assertFileExists(filePath: string) {
   if (!fs.existsSync(filePath)) {
@@ -99,6 +104,7 @@ function getRequiredGuestVideoIds(guests: RemoteGuest[]): string[] {
   const seen = new Set<string>();
 
   for (const guest of guests) {
+    if (guest.primary_source_type === "circle") continue;
     for (const url of guest.all_urls || []) {
       const videoId = extractYouTubeVideoId(url);
       if (!videoId || seen.has(videoId)) continue;
@@ -161,7 +167,9 @@ async function main() {
   console.log(
     `Wrote ${output.length} guest video metadata records to ${OUTPUT_PATH}`
   );
-  console.log(`Wrote ${localGuests.length} guest roster records to ${ROSTER_OUTPUT_PATH}`);
+  console.log(
+    `Wrote ${localGuests.length} guest roster records to ${ROSTER_OUTPUT_PATH}`
+  );
   console.log(`Local metadata source: ${LOCAL_VIDEO_METADATA_PATH}`);
   if (missingTitles.length > 0) {
     console.warn(

@@ -1,20 +1,25 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
+import GuestInsightCard from "@/components/guests/GuestInsightCard";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
+import {
+  getGuestEnglishInsights,
+  type GuestInsight,
+} from "@shared/guest-insights";
 import { buildGuestStructuredData } from "@shared/structured-data";
 import { ArrowLeft, ExternalLink, Linkedin, Play } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
 interface GuestDetailProps {
   slug: string;
 }
 
-function formatViews(views?: number): string | null {
+function formatViews(views?: number | null): string | null {
   if (!views) return null;
   return views.toLocaleString("en-US");
 }
@@ -61,6 +66,30 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
   const { lang } = useLanguage();
   const { guests, loading, error } = useGuestDirectory();
   const guest = guests.find(item => item.slug === slug);
+  const [reviewInsights, setReviewInsights] = useState<GuestInsight[]>([]);
+  const publishedInsights = getGuestEnglishInsights(slug);
+  const insights = [
+    ...publishedInsights,
+    ...reviewInsights.filter(article => article.guestSlug === slug),
+  ];
+
+  useEffect(() => {
+    if (
+      !import.meta.env.DEV ||
+      !new URLSearchParams(window.location.search).has("insightReview")
+    )
+      return;
+    const controller = new AbortController();
+    fetch("/__review/guest-insights.json", { signal: controller.signal })
+      .then(response =>
+        response.ok
+          ? response.json()
+          : Promise.reject(new Error("Review unavailable"))
+      )
+      .then(data => setReviewInsights(data.articles || []))
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     if (!guest) return;
@@ -138,6 +167,8 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
     lang === "en" && guest.guest_en_name
       ? guest.guest_en_name
       : guest.guest_name;
+  const isCircle = guest.primary_episode.sourceType === "circle";
+  const bio = lang === "en" ? guest.guest_bio_en : guest.guest_bio;
 
   return (
     <GuestsLayout>
@@ -178,6 +209,17 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             {guest.guest_title && (
               <p className="mt-2 max-w-2xl text-base leading-7 text-zinc-300">
                 {guest.guest_title}
+              </p>
+            )}
+            {bio && (
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
+                {bio}
+              </p>
+            )}
+            {guest.interview_date && (
+              <p className="mt-3 text-xs text-zinc-500">
+                {lang === "en" ? "Recorded " : "访谈录制于"}
+                {formatPublishedAt(guest.interview_date, lang)}
               </p>
             )}
 
@@ -235,23 +277,31 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   rel="noopener noreferrer"
                 >
                   <Play className="mr-2 h-4 w-4 fill-current" />
-                  {lang === "en" ? "Watch featured interview" : "观看精选访谈"}
+                  {isCircle
+                    ? lang === "en"
+                      ? "Watch on Superlinear"
+                      : "在超线性学院观看"
+                    : lang === "en"
+                      ? "Watch featured interview"
+                      : "观看精选访谈"}
                 </a>
               </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-              >
-                <a
-                  href={guest.primary_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {!isCircle && (
+                <Button
+                  asChild
+                  variant="outline"
+                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
                 >
-                  {lang === "en" ? "Open on YouTube" : "打开YouTube"}
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
+                  <a
+                    href={guest.primary_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en" ? "Open on YouTube" : "打开YouTube"}
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -269,22 +319,46 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <img
               src={guest.primary_episode.thumbnailUrl}
               alt={guest.primary_episode.title}
-              className="aspect-video h-full w-full object-cover transition duration-300 group-hover:scale-105"
+              className={`aspect-video ${isCircle ? "" : "h-full"} w-full object-cover transition duration-300 group-hover:scale-105`}
             />
-            <div className="absolute inset-0 bg-black/10 sm:bg-gradient-to-t sm:from-black/75 sm:via-black/10 sm:to-transparent" />
-            <div className="absolute left-4 top-4 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white sm:hidden">
-              {lang === "en" ? "Featured" : "精选视频"}
+            {!isCircle && (
+              <div className="absolute inset-0 bg-black/10 sm:bg-gradient-to-t sm:from-black/75 sm:via-black/10 sm:to-transparent" />
+            )}
+            <div
+              className={`absolute left-4 top-4 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white ${isCircle ? "" : "sm:hidden"}`}
+            >
+              {isCircle
+                ? "Superlinear"
+                : lang === "en"
+                  ? "Featured"
+                  : "精选视频"}
             </div>
-            <div className="absolute inset-0 flex items-center justify-center sm:hidden">
+            <div
+              className={`absolute inset-0 flex items-center justify-center sm:hidden ${isCircle ? "hidden" : ""}`}
+            >
               <span className="flex size-12 items-center justify-center rounded-full bg-superlinear/95 text-white shadow-lg">
                 <Play className="h-5 w-5 fill-current" />
               </span>
             </div>
-            <div className="absolute inset-x-0 bottom-0 hidden p-6 sm:block">
-              <div className="mb-3 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
-                {lang === "en" ? "Featured" : "精选视频"}
-              </div>
-              <h2 className="text-2xl font-semibold leading-tight text-white">
+            <div
+              className={
+                isCircle
+                  ? "p-5"
+                  : "absolute inset-x-0 bottom-0 hidden p-6 sm:block"
+              }
+            >
+              {!isCircle && (
+                <div className="mb-3 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
+                  {isCircle
+                    ? "Superlinear"
+                    : lang === "en"
+                      ? "Featured"
+                      : "精选视频"}
+                </div>
+              )}
+              <h2
+                className={`${isCircle ? "text-lg" : "text-2xl"} font-semibold leading-tight text-white`}
+              >
                 {guest.primary_episode.title}
               </h2>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-200">
@@ -297,18 +371,27 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 )}
                 {formatPublishedAt(guest.primary_episode.publishedAt, lang) && (
                   <span>
+                    {isCircle && (lang === "en" ? "Published " : "发布于")}
                     {formatPublishedAt(guest.primary_episode.publishedAt, lang)}
                   </span>
                 )}
               </div>
               <p className="mt-2 text-sm text-zinc-200">
-                {lang === "en"
-                  ? "Click through to watch on YouTube"
-                  : "点开后直接跳转到YouTube播放页"}
+                {isCircle
+                  ? lang === "en"
+                    ? "Recording and companion notes on Superlinear"
+                    : "在超线性学院观看回放与伴读"
+                  : lang === "en"
+                    ? "Click through to watch on YouTube"
+                    : "点开后直接跳转到YouTube播放页"}
               </p>
             </div>
           </a>
         </section>
+
+        {insights.map(article => (
+          <GuestInsightCard key={article.id} article={article} />
+        ))}
 
         <section className="mt-14">
           <div className="mb-6 flex items-end justify-between gap-4">
@@ -321,16 +404,18 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               </h2>
             </div>
             <p className="text-sm text-zinc-500">
-              {lang === "en"
-                ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}, sorted by views`
-                : `${guest.episode_count}期内容，按观看量排序`}
+              {isCircle
+                ? "Superlinear"
+                : lang === "en"
+                  ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}, sorted by views`
+                  : `${guest.episode_count}期内容，按观看量排序`}
             </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {guest.episodes.map((episode, rank) => (
               <a
-                key={episode.videoId}
+                key={episode.url}
                 href={episode.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -356,7 +441,11 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 </div>
                 <div className="space-y-3 p-4">
                   <div className="flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
-                    <span>Top {rank + 1}</span>
+                    <span>
+                      {episode.sourceType === "circle"
+                        ? "Superlinear"
+                        : `Top ${rank + 1}`}
+                    </span>
                     {formatPublishedAt(episode.publishedAt, lang) && (
                       <span>
                         {formatPublishedAt(episode.publishedAt, lang)}
@@ -367,7 +456,13 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                     {episode.title}
                   </h3>
                   <div className="flex items-center justify-between text-sm text-zinc-400">
-                    <span>{episode.videoId}</span>
+                    <span>
+                      {episode.sourceType === "circle"
+                        ? lang === "en"
+                          ? "Recording and notes"
+                          : "回放与伴读"
+                        : episode.videoId}
+                    </span>
                     {formatViews(episode.viewCount) && (
                       <span>
                         {lang === "en"

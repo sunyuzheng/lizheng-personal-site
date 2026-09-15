@@ -31,9 +31,15 @@ export interface RawGuest {
   guest_company: string;
   xiaohongshu_url?: string;
   linkedin_url?: string;
-  primary_video_id: string;
+  primary_video_id: string | null;
+  primary_source_type?: "youtube" | "circle";
+  primary_source_title?: string;
+  primary_source_published_at?: string;
+  interview_date?: string;
+  guest_bio?: string;
+  guest_bio_en?: string;
   all_video_ids: readonly string[];
-  max_views: number;
+  max_views: number | null;
   thumbnail_url: string;
   primary_url: string;
   episode_count: number;
@@ -56,7 +62,8 @@ interface GuestEpisodeSeed {
 }
 
 export interface GuestEpisode {
-  videoId: string;
+  videoId: string | null;
+  sourceType: "youtube" | "circle";
   url: string;
   title: string;
   thumbnailUrl: string;
@@ -73,8 +80,12 @@ export interface GuestProfile {
   guest_company: string;
   xiaohongshu_url?: string;
   linkedin_url?: string;
-  primary_video_id: string;
-  max_views: number;
+  primary_video_id: string | null;
+  primary_source_type?: "youtube" | "circle";
+  interview_date?: string;
+  guest_bio?: string;
+  guest_bio_en?: string;
+  max_views: number | null;
   thumbnail_url: string;
   primary_url: string;
   episode_count: number;
@@ -164,11 +175,11 @@ function buildGuestSlug(rawGuest: RawGuest, usedSlugs: Set<string>): string {
     rawGuest.slug?.trim() ||
     slugifyText(rawGuest.guest_en_name || "") ||
     slugifyText(rawGuest.guest_name || "") ||
-    `guest-${rawGuest.primary_video_id.toLowerCase()}`;
+    `guest-${rawGuest.primary_video_id?.toLowerCase() || "interview"}`;
 
   let candidate = preferredBase;
   if (usedSlugs.has(candidate)) {
-    candidate = `${preferredBase}-${rawGuest.primary_video_id.toLowerCase()}`;
+    candidate = `${preferredBase}-${rawGuest.primary_video_id?.toLowerCase() || "interview"}`;
   }
 
   let suffix = 2;
@@ -202,6 +213,7 @@ function buildGuestEpisode(
 
   return {
     videoId,
+    sourceType: "youtube",
     url,
     title,
     thumbnailUrl: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
@@ -241,6 +253,28 @@ export function buildGuestDirectory(
 
   return rawGuests.map(rawGuest => {
     const slug = buildGuestSlug(rawGuest, usedSlugs);
+    if (rawGuest.primary_source_type === "circle") {
+      const episode: GuestEpisode = {
+        videoId: null,
+        sourceType: "circle",
+        url: rawGuest.primary_url,
+        title: rawGuest.primary_source_title || rawGuest.guest_name,
+        thumbnailUrl: rawGuest.thumbnail_url,
+        publishedAt: rawGuest.primary_source_published_at,
+        isPrimary: true,
+        index: 0,
+      };
+      return {
+        ...rawGuest,
+        slug,
+        share_url: `${SITE_URL}/guests/${slug}`,
+        episode_count: 1,
+        all_video_ids: [],
+        all_urls: [rawGuest.primary_url],
+        episodes: [episode],
+        primary_episode: episode,
+      };
+    }
     const episodeSeeds = buildGuestEpisodeSeeds(rawGuest);
     const baseEpisodes = episodeSeeds.map(seed =>
       buildGuestEpisode(rawGuest, seed, videoLookup)
@@ -248,6 +282,7 @@ export function buildGuestDirectory(
     const primaryEpisode = baseEpisodes.find(episode => episode.isPrimary) ||
       baseEpisodes[0] || {
         videoId: rawGuest.primary_video_id,
+        sourceType: "youtube" as const,
         url: rawGuest.primary_url,
         title: rawGuest.guest_name,
         thumbnailUrl:
@@ -261,7 +296,9 @@ export function buildGuestDirectory(
     return {
       ...rawGuest,
       episode_count: episodes.length,
-      all_video_ids: episodes.map(episode => episode.videoId),
+      all_video_ids: episodes.flatMap(episode =>
+        episode.videoId ? [episode.videoId] : []
+      ),
       all_urls: episodes.map(episode => episode.url),
       slug,
       share_url: `${SITE_URL}/guests/${slug}`,
@@ -291,7 +328,7 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
   );
   return {
     title: `全部嘉宾 · 课代表立正 — ${totalGuests}位嘉宾，${totalEpisodes}期对话`,
-    description: `课代表立正的完整访谈嘉宾库：${totalGuests}位研究者、创业者、管理者、投资人与各领域实践者，共${totalEpisodes}期公开对话。`,
+    description: `课代表立正的完整访谈嘉宾库：${totalGuests}位研究者、创业者、管理者、投资人与各领域实践者，共${totalEpisodes}期对话。`,
     canonical: `${SITE_URL}/guests`,
     ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };
@@ -312,7 +349,10 @@ export function getGuestPageMeta(guest: GuestProfile): PageMeta {
     title: `${guest.guest_name} · 课代表立正`,
     description,
     canonical: guest.share_url,
-    ogImage: guest.primary_episode.thumbnailUrl || guest.thumbnail_url,
+    ogImage: new URL(
+      guest.primary_episode.thumbnailUrl || guest.thumbnail_url,
+      SITE_URL
+    ).href,
   };
 }
 

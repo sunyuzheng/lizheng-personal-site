@@ -9,7 +9,7 @@ import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
-function formatViews(views: number, lang: "en" | "zh"): string | null {
+function formatViews(views: number | null, lang: "en" | "zh"): string | null {
   if (!views) return null;
   if (lang === "en") {
     if (views >= 1_000_000) return `${(views / 1_000_000).toFixed(1)}M`;

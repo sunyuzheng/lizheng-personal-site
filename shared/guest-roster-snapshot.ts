@@ -1,7 +1,7 @@
 // AUTO-GENERATED FILE. DO NOT EDIT BY HAND.
 //
 // Upstream source of truth:
-// - Guest roster and episode membership: /Users/sunyuzheng/Desktop/AI/_workspace/kedaibiao-guests-20260910/guests.json
+// - Guest roster and episode membership: /Users/sunyuzheng/Desktop/AI/_workspace/kedaibiao-orca-guest-20260915/guests.json
 // - Canonical published source: https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json
 //
 // Refresh command:
@@ -2843,5 +2843,28 @@ export const guestRosterSnapshot = [
       "https://www.youtube.com/watch?v=W4vEix8Ty40",
       "https://www.youtube.com/watch?v=DuI1H1zSlik"
     ]
+  },
+  {
+    "guest_name": "梁津晶 Jinjing Liang",
+    "guest_en_name": "Jinjing Liang",
+    "guest_title": "Co-founder and CEO",
+    "guest_company": "Stably AI (Orca)",
+    "slug": "jinjing-liang",
+    "linkedin_url": "https://www.linkedin.com/in/jinjingliang/",
+    "guest_bio": "梁津晶是 Stably AI 联合创始人兼 CEO，和团队开发 Orca。她毕业于 Cornell，曾在 Google 担任工程师。2026年8月19日的访谈围绕多智能体协作、人的判断与创业展开。",
+    "guest_bio_en": "At the time of this August 19, 2026 interview, Jinjing Liang was co-founder and CEO of Stably AI, the team behind Orca. A Cornell graduate and former Google engineer, she discussed coordinating multiple AI agents, human judgment, and building a company.",
+    "primary_source_type": "circle",
+    "primary_video_id": null,
+    "all_video_ids": [],
+    "max_views": null,
+    "thumbnail_url": "/guest-media/jinjing-liang.png",
+    "primary_url": "https://www.superlinear.academy/c/recording/orca",
+    "episode_count": 1,
+    "all_urls": [
+      "https://www.superlinear.academy/c/recording/orca"
+    ],
+    "primary_source_title": "Orca CEO：当 AI 同时做二十件事，人该在哪里出手？",
+    "primary_source_published_at": "2026-08-20T04:53:14.281Z",
+    "interview_date": "2026-08-19"
   }
 ] as const;

@@ -12,7 +12,8 @@
     "verify:domain": "tsx scripts/verify-domain.ts",
     "sync:guest-video-metadata": "tsx scripts/sync-guest-video-metadata.ts",
     "refresh:guests": "pnpm sync:guest-video-metadata && pnpm check && pnpm build",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "sync:guest-insights": "tsx scripts/sync-guest-insights.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",

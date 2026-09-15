@@ -5,6 +5,7 @@ import {
   getGuestsPageMeta,
   type GuestProfile,
 } from "../shared/guest-data.ts";
+import { getGuestEnglishInsights } from "../shared/guest-insights.ts";
 import {
   COLLAB_PAGE_META,
   CREATOR_COLLAB_PAGE_META,
@@ -200,6 +201,17 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
 }
 
 function buildGuestNoscript(guest: GuestProfile, description: string) {
+  const insights = getGuestEnglishInsights(guest.slug)
+    .map(
+      article => `
+    <section lang="en">
+      <h2><a href="${escapeHtml(article.url)}">${escapeHtml(article.title)}</a></h2>
+      <p>${escapeHtml(article.summary)}</p>
+      ${article.takeaways?.length ? `<ul>${article.takeaways.map(item => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}
+      <p><a href="${escapeHtml(article.url)}">Read the English insights</a></p>
+    </section>`
+    )
+    .join("\n");
   const items = guest.episodes
     .map(
       (episode, index) =>
@@ -214,6 +226,10 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     <p><a href="${SITE_URL}/guests">返回全部嘉宾</a></p>
     <h1>${escapeHtml(guest.guest_name)}</h1>
     <p>${escapeHtml(description)}</p>
+    ${guest.guest_bio ? `<p>${escapeHtml(guest.guest_bio)}</p>` : ""}
+    ${guest.guest_bio_en ? `<p lang="en">${escapeHtml(guest.guest_bio_en)}</p>` : ""}
+    ${guest.interview_date ? `<p>Recorded: ${escapeHtml(guest.interview_date)}</p>` : ""}
+    ${insights}
     <h2>全部访谈</h2>
     <ol>
         ${items}

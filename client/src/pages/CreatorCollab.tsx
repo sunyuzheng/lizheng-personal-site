@@ -1418,7 +1418,12 @@ export default function CreatorCollab() {
                     ))
                   : t.contactTitle}
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white">
+              <p
+                className={cn(
+                  "mx-auto mt-4 max-w-2xl text-sm leading-7 text-white",
+                  lang === "zh" && "text-balance"
+                )}
+              >
                 {t.contactDetail}
               </p>
               <a

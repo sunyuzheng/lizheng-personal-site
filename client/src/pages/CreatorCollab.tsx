@@ -607,11 +607,12 @@ const copy = {
     back: "Back to all collaboration options",
   },
   zh: {
-    navSub: "播客与视频节目邀请",
-    eyebrow: "播客 · 视频访谈 · 长对话",
-    h1: "把一个真问题聊透，\n也让它走得更远。",
+    navSub: "播客与视频节目合作",
+    eyebrow: "播客与视频主理人 · 节目合作",
+    h1: "一起做一期节目，\n聊聊彼此的看法。",
     intro: [
-      "你定问题。我带着亲历和证据来，和你一起把问题追到底。按你的节目方式录；需要时，我的团队也可以参与剪辑、切片与联合发布。",
+      "聊AI怎么改变工作，也聊职业选择、创业和组织管理。我会带来自己的经历和案例，也想听听你的观察和不同看法。",
+      "可以做客、串台，也可以一起策划。录制方式一起商量；有需要，我的团队也能参与剪辑、切片与联合发布。",
     ],
     heroProofs: [
       {
@@ -900,10 +901,10 @@ const copy = {
         href: "https://staysuperlinear.com",
       },
     ],
-    contactEyebrow: "节目邀请",
-    contactTitle: "如果你有一个值得聊透的问题，发给我们。",
+    contactEyebrow: "一起做节目",
+    contactTitle: "有想聊的话题？我们一起录一期。",
     contactDetail:
-      "发来节目或频道链接、你最想追的那个问题，以及大概的形式和时间。我们会尽快确认方向、录制与后续素材安排。",
+      "发来你的节目或频道、想聊的话题，以及大概的形式和时间。我们一起商量怎么聊、怎么录，后续素材怎么用。",
     businessContact: "商务负责人：喵老师｜微信：FM13870617",
     contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
@@ -914,11 +915,11 @@ function buildCreatorMailto(lang: "en" | "zh") {
   const subject =
     lang === "en"
       ? "Podcast or creator invitation for Yuzheng Sun"
-      : "邀请课代表立正参与节目";
+      : "聊聊节目合作｜课代表立正";
   const body =
     lang === "en"
       ? "Show or channel:\n\nCore question:\n\nWhy this matters to your audience:\n\nFormat and language:\n\nRough recording window:\n"
-      : "节目或频道链接：\n\n最想追问的问题：\n\n为什么听众会在意：\n\n想怎么录：\n\n大概时间：\n";
+      : "节目或频道链接：\n\n想聊的话题：\n\n想怎么合作（做客、串台或共同策划）：\n\n大概时间：\n";
   return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -953,7 +954,13 @@ export default function CreatorCollab() {
   );
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
+    <div
+      lang={lang === "zh" ? "zh-CN" : "en"}
+      className={cn(
+        "relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100",
+        lang === "zh" && "[&_h2]:text-balance [&_h3]:text-balance"
+      )}
+    >
       <CollabHeader
         backHref="/collab"
         section={{ en: "Podcasts & creators", zh: "播客与视频" }}
@@ -966,8 +973,21 @@ export default function CreatorCollab() {
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.eyebrow}
               </p>
-              <h1 className="mt-5 max-w-3xl whitespace-pre-line text-4xl font-semibold leading-[1.08] text-white md:text-[3.5rem]">
-                {t.h1}
+              <h1
+                className={cn(
+                  "mt-5 max-w-3xl font-semibold text-white",
+                  lang === "zh"
+                    ? "text-[2.125rem] leading-[1.3] sm:text-5xl lg:text-[2.5rem] xl:text-5xl"
+                    : "whitespace-pre-line text-4xl leading-[1.08] md:text-[3.5rem]"
+                )}
+              >
+                {lang === "zh"
+                  ? t.h1.split("\n").map(line => (
+                      <span key={line} className="block whitespace-nowrap">
+                        {line}
+                      </span>
+                    ))
+                  : t.h1}
               </h1>
             </div>
             <figure className="order-3 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
@@ -1005,29 +1025,58 @@ export default function CreatorCollab() {
                   </p>
                 ))}
               </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                {lang === "zh" && (
+                  <a
+                    href="#contact"
+                    className={cn(
+                      buttonVariants(),
+                      "bg-superlinear text-white hover:bg-superlinear-deep"
+                    )}
+                  >
+                    聊聊节目合作
+                    <ArrowDown className="ml-2 h-4 w-4" />
+                  </a>
+                )}
                 <a
                   href="#conversations"
                   className={cn(
-                    buttonVariants(),
-                    "bg-superlinear text-white hover:bg-superlinear-deep"
+                    buttonVariants({
+                      variant: lang === "zh" ? "outline" : "default",
+                    }),
+                    lang === "zh"
+                      ? "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                      : "bg-superlinear text-white hover:bg-superlinear-deep"
                   )}
                 >
                   {t.questionCta}
                   <ArrowDown className="ml-2 h-4 w-4" />
                 </a>
+                {lang === "en" && (
+                  <a
+                    href="/collab/podcast-kit-zh.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
+                    )}
+                  >
+                    {t.kitCta}
+                  </a>
+                )}
+              </div>
+              {lang === "zh" && (
                 <a
                   href="/collab/podcast-kit-zh.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                  )}
+                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm text-zinc-300 transition hover:text-white"
                 >
+                  <Download className="h-4 w-4 shrink-0" />
                   {t.kitCta}
                 </a>
-              </div>
+              )}
             </div>
           </div>
 
@@ -1073,7 +1122,14 @@ export default function CreatorCollab() {
                     key={conversation.name}
                     className="border-t border-[#CEC9BF] py-10 md:py-14"
                   >
-                    <div className="grid items-start gap-8 lg:grid-cols-[0.84fr_1.16fr] lg:gap-14">
+                    <div
+                      className={cn(
+                        "grid items-start gap-8 lg:gap-14",
+                        caseIndex % 2 === 1
+                          ? "lg:grid-cols-[1.16fr_0.84fr]"
+                          : "lg:grid-cols-[0.84fr_1.16fr]"
+                      )}
+                    >
                       <a
                         href={conversation.href}
                         target="_blank"
@@ -1354,7 +1410,13 @@ export default function CreatorCollab() {
                 {t.contactEyebrow}
               </p>
               <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold text-white md:text-4xl">
-                {t.contactTitle}
+                {lang === "zh"
+                  ? t.contactTitle.split(/(?<=？)/).map(phrase => (
+                      <span key={phrase} className="inline-block">
+                        {phrase}
+                      </span>
+                    ))
+                  : t.contactTitle}
               </h2>
               <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white">
                 {t.contactDetail}

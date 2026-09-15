@@ -31,12 +31,12 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
     lastModified: "2026-09-04",
   },
   zh: {
-    title: "节目邀请 · 课代表立正｜播客与视频对谈",
+    title: "一起做一期节目｜课代表立正·播客与视频合作",
     description:
-      "邀请课代表立正参与播客、视频访谈与长对话：可聊AI时代的代表作、fake work、AI-native人才与组织判断；页面包含Koji、屠龙跨平台案例、完整做客记录与嘉宾资料。",
+      "和课代表立正一起做一期播客或视频节目，聊AI、工作、职业选择与创业，交换经历和看法。可以做客、串台或共同策划，团队也能参与剪辑、切片与联合发布。",
     canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-15",
   },
 };
 

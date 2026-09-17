@@ -540,13 +540,13 @@ export default function Home() {
                 <div className="max-w-2xl">
                   <h3 className="text-xl font-semibold leading-8 text-white">
                     {lang === "en"
-                      ? "Read Superlinear Academy in English"
-                      : "读Superlinear的英文刊物"}
+                      ? "Essays and conversations by Yuzheng"
+                      : "读我的英文文章与访谈"}
                   </h3>
                   <p className="mt-2 text-sm leading-7 text-white/65">
                     {lang === "en"
-                      ? "Essays, conversations, and real projects on AI, judgment, and craft, from Yuzheng Sun and the Superlinear community."
-                      : "来自立正与Superlinear社区的英文文章、深度访谈和真实作品，讨论AI、判断力与创造。"}
+                      ? "My writing on AI, work, and judgment; conversations with researchers and builders; and what I’m learning from building Superlinear Academy."
+                      : "我关于AI、工作与判断力的思考，与研究者和创业者的对话，以及建设Superlinear Academy过程中的观察与实践。"}
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
@@ -556,7 +556,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
                   >
-                    {lang === "en" ? "Explore the publication" : "浏览英文刊物"}
+                    {lang === "en" ? "Start reading" : "从这里开始"}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                   <a
@@ -565,7 +565,9 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="text-sm font-semibold text-white/70 underline underline-offset-4 transition hover:text-white"
                   >
-                    {lang === "en" ? "Subscribe" : "订阅"}
+                    {lang === "en"
+                      ? "Subscribe to my Substack"
+                      : "订阅我的Substack"}
                   </a>
                 </div>
               </div>

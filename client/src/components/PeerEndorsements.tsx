@@ -17,7 +17,8 @@ const endorsements = [
       subject: "On teaching",
       quote:
         "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era. Even as a scientist, I found his course deeply illuminating.",
-      excerpt: "Even as a scientist, I found his course deeply illuminating.",
+      excerpt:
+        "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era.",
     },
     zh: {
       name: "刘嘉",
@@ -26,7 +27,8 @@ const endorsements = [
       subject: "关于教学",
       quote:
         "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
-      excerpt: "他的课程让我这个科学家也深受启发。",
+      excerpt:
+        "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。",
     },
   },
   {
@@ -64,7 +66,7 @@ const endorsements = [
       quote:
         "Yuzheng distills years of product growth wisdom into actionable insight—helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
       excerpt:
-        "Yuzheng distills years of product growth wisdom into actionable insight…",
+        "Yuzheng distills years of product growth wisdom into actionable insight—helping data scientists surface decisive signals, PMs turn numbers into strategy…",
     },
     zh: {
       name: "Vijaye Raji",
@@ -73,7 +75,8 @@ const endorsements = [
       subject: "推荐《Growth Data Analytics Playbook》",
       quote:
         "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略，也帮助创始人找到能够持续复利的PMF路径。",
-      excerpt: "立正把多年产品增长经验提炼成可执行的洞察……",
+      excerpt:
+        "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略……",
     },
   },
   {
@@ -189,11 +192,14 @@ export default function PeerEndorsements({
                   </p>
                 </div>
               </figcaption>
-              {!compact && (
-                <p className="mt-5 text-xs leading-5 text-superlinear-on-dark">
-                  {copy.subject}
-                </p>
-              )}
+              <p
+                className={cn(
+                  "mt-4 text-xs leading-5",
+                  compact ? "text-superlinear-deep" : "text-superlinear-on-dark"
+                )}
+              >
+                {copy.subject}
+              </p>
               <blockquote
                 className={cn(
                   "mt-4 leading-7",

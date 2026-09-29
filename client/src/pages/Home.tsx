@@ -135,39 +135,41 @@ const featuredJudgment = {
 const work = {
   en: [
     {
-      label: "STRUCTURED LEARNING",
+      label: "PAID COURSE PROGRAM",
       title: "AI Builders 2027",
       detail:
-        "Understand AI systematically, build hands-on, and keep up as it changes.",
+        "For people ready to build their own AI projects. Four courses combine AI foundations, hands-on building, checking results, and developing systems that keep working.",
       proof: "3,000+ paying learners · 5.0/5 on Maven",
       href: "https://ai-builders.com",
       cta: "Explore the courses",
     },
     {
-      label: "YEAR-ROUND MEMBERSHIP",
+      label: "PAID YEAR-ROUND MEMBERSHIP",
       title: "Stay Superlinear",
       detail:
-        "Keep learning with people working at the frontier, and bring new AI capabilities into your own work.",
-      proof: "Guest masterclasses · deep analysis · monthly Q&A · Skills",
-      href: "https://staysuperlinear.com",
+        "For people who want to keep up with AI and ask practitioners about their own work. Attend guest masterclasses, read in-depth analysis, and bring questions to a monthly live Q&A with Yage and me.",
+      proof: "12+ guest masterclasses per membership year · monthly live Q&A",
+      href: "https://stay.superlinear.academy",
       cta: "Explore the membership",
     },
   ],
   zh: [
     {
-      label: "系统课程",
+      label: "付费系统课程",
       title: "AI Builders 2027",
-      detail: "想系统学懂AI、真正动手、并持续跟上变化，选AI Builders 2027。",
+      detail:
+        "适合想从使用AI走向独立做项目的人。四门课带你理解原理、动手构建、检查结果，并逐步搭建能持续工作的AI系统。",
       proof: "3,000+付费学员 · Maven 5.0/5",
       href: "https://ai-builders.com",
       cta: "了解课程",
     },
     {
-      label: "全年会员",
+      label: "付费全年会员",
       title: "Stay Superlinear会员",
-      detail: "和一线实践者持续深聊，把AI的新变化带回自己的工作。",
-      proof: "闭门大师课 · 深度解析 · 每月答疑 · Skills",
-      href: "https://staysuperlinear.com",
+      detail:
+        "适合想持续跟进AI变化、向实践者请教的人。参加嘉宾闭门大师课，读深度解析，并在每月直播答疑中向我和鸭哥提问。",
+      proof: "每个会员年度12+场嘉宾大师课 · 每月一次直播答疑",
+      href: "https://stay.superlinear.academy",
       cta: "了解会员",
     },
   ],
@@ -176,18 +178,42 @@ const work = {
 const enterpriseWork = {
   en: {
     label: "ENTERPRISE AI TRAINING & CUSTOM PROGRAMS",
-    title: "The work should be different after the training.",
+    title: "Help teammates build on each other’s AI work.",
     detail:
-      "I work with teams to bring AI into their day-to-day work, through existing courses or programs designed around their roles, workflows, and goals.",
+      "When AI experience varies across a team, collaboration can turn into repeated onboarding. Training focuses on two goals:",
+    outcomes: [
+      {
+        title: "A shared way of working",
+        detail:
+          "Define tasks, prepare context, choose technical approaches, and check results. Leave documents, methods, and acceptance criteria that colleagues can reuse.",
+      },
+      {
+        title: "Turn expertise into tools and products",
+        detail:
+          "Start with a business problem you know, build and test a prototype with AI, and practice taking responsibility from problem selection through delivery.",
+      },
+    ],
     formats: "Team seats · Private cohorts · Course customization",
     cta: "See enterprise formats",
     caption: "DoorDash Analytics team offsite · Seattle",
   },
   zh: {
     label: "企业AI培训与定制",
-    title: "培训结束以后，工作应该真的变了。",
+    title: "让团队用AI时，不必每次从头解释。",
     detail:
-      "我也帮助企业团队把AI带进真实工作。从团队购课到定制项目，围绕具体岗位、工作流程和目标设计。",
+      "同事使用AI的经验不同，合作容易变成反复补课。企业培训围绕两件事展开：",
+    outcomes: [
+      {
+        title: "建立共同的工作方法",
+        detail:
+          "定义任务、准备背景资料、选择技术方案、检查结果，把文档、常用做法与验收标准留给同事复用。",
+      },
+      {
+        title: "把专业判断做成工具与产品",
+        detail:
+          "从熟悉的业务问题出发，用AI做出原型，测试并改进，练习承担从问题选择到结果交付的完整责任。",
+      },
+    ],
     formats: "团队购课 · 专属班 · 课程定制",
     cta: "查看企业合作方式",
     caption: "DoorDash Analytics团队线下AI培训 · 西雅图",
@@ -461,8 +487,8 @@ export default function Home() {
                 </p>
                 <p className="mt-5 text-pretty text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "I founded Superlinear Academy to do both: teach people to harness AI, and build a city for creators. A place where people with ideas meet masters and peers, inspire and challenge one another, and turn ideas into work—and work into something that defines them."
-                    : "我创办超线性学院，就是要把这两件事做成：教人驾驭AI，也为创造者建一座城。让有想法的人找到高手与同行，在彼此的启发和切磋中，把想法做成作品，把作品磨成代表作。"}
+                    ? "I founded Superlinear Academy to do both: teach people to harness AI, and build a city for creators. Courses help you put AI to work; the community gives you a place to share projects, find peers, and exchange methods. Through that practice and exchange, ideas can become work—and work can become something that defines you."
+                    : "我创办超线性学院，就是要把这两件事做成：教人驾驭AI，也为创造者建一座城。课程帮助你把AI用进自己的工作；社区让你分享项目、找到同行、交流做法。在彼此的启发和切磋中，把想法做成作品，把作品磨成代表作。"}
                 </p>
               </div>
               <div className="border-t border-[#DDD9D0] pt-6 lg:col-start-1 lg:row-start-2">
@@ -499,10 +525,19 @@ export default function Home() {
         >
           <div className="container">
             <div className="bg-[#173C2A] px-6 py-9 sm:px-8 md:p-10 lg:p-12">
-              <SectionLabel dark>KNOWLEDGE BANK</SectionLabel>
+              <SectionLabel dark>
+                {lang === "en" ? "ESSAYS & PUBLIC JUDGMENTS" : "文章与公开判断"}
+              </SectionLabel>
               <h2 className="mt-5 text-3xl font-semibold leading-tight text-white md:text-[2.5rem]">
-                {lang === "en" ? "What I’m thinking about." : "最近在想什么。"}
+                {lang === "en"
+                  ? "Essays on AI, work, and judgment."
+                  : "关于AI与工作的思考。"}
               </h2>
+              <p className="mt-4 max-w-3xl text-base leading-8 text-white/65">
+                {lang === "en"
+                  ? "I write about questions from teaching, building, and interviewing: how AI changes work, learning, and judgment. Here are selected essays, alongside earlier arguments and later reviews."
+                  : "我把教学、实践和访谈中的问题写成文章，讨论AI怎样改变工作、学习与判断。这里收录精选文章，也保留早期判断与后续复盘。"}
+              </p>
 
               <div className="mt-8 grid gap-x-8 border-y border-white/20 lg:grid-cols-3">
                 {recentWriting[lang].map(item => (
@@ -573,7 +608,9 @@ export default function Home() {
               </div>
               <article id="judgment" className="mt-8 scroll-mt-[88px]">
                 <SectionLabel dark>
-                  {lang === "en" ? "ON AI" : "关于AI"}
+                  {lang === "en"
+                    ? "EARLIER ARGUMENTS & REVIEWS"
+                    : "早期判断与复盘"}
                 </SectionLabel>
                 <div className="mt-5 grid gap-6 md:grid-cols-2 md:gap-12">
                   {featuredJudgment[lang].timeline.map(item => (
@@ -748,11 +785,13 @@ export default function Home() {
                 <div>
                   <h3 className="text-lg font-semibold leading-7">
                     {lang === "en"
-                      ? "Bring my writing and video transcripts into your AI."
-                      : "把我的文章与视频资料，带进你的AI。"}
+                      ? "Search my essays and video transcripts with AI."
+                      : "用AI检索我的文章与视频文字稿。"}
                   </h3>
                   <p className="mt-1 text-sm leading-6 text-[#5C574D]">
-                    lizheng-open-context
+                    {lang === "en"
+                      ? "Get the open library on GitHub for search, Q&A, or research, with source links and video timestamps."
+                      : "在GitHub获取开放资料库，做搜索、问答或研究；原文链接与视频时间码都保留。"}
                   </p>
                 </div>
               </div>
@@ -780,13 +819,29 @@ export default function Home() {
                 </h2>
                 <p className="mt-6 max-w-xl text-base leading-8 text-[#5C574D] md:text-lg">
                   {lang === "en"
-                    ? "At Superlinear Academy, I teach AI with Yage and learn alongside a community of practitioners. Join for free to explore project discussions, training sessions, and technical exchanges."
-                    : "在超线性学院，我和鸭哥一起教AI，也和一群认真做事的人持续交流。项目分享、企业AI培训内容和技术讨论，注册就能看。"}
+                    ? "At Superlinear Academy, I teach AI with Yage and learn alongside people putting it to work. Join the free community to:"
+                    : "在超线性学院，我和鸭哥一起教AI，也与一群正在动手的人交流。注册免费社区后，你可以："}
                 </p>
+                <ul className="mt-4 max-w-xl list-disc space-y-2 pl-5 text-sm leading-7 text-[#5C574D] md:text-base">
+                  {(lang === "en"
+                    ? [
+                        "Read AI essays and watch public team-training sessions.",
+                        "Share a project, prototype, or retrospective, and invite members to try it and discuss it.",
+                        "Ask questions in technical discussions and learn how others approach their work.",
+                      ]
+                    : [
+                        "读文章、看培训：阅读AI文章与公开企业培训内容。",
+                        "分享项目：发布作品、原型或复盘，邀请成员试用与讨论。",
+                        "交流问题：在技术讨论中提问，也看看同行的做法。",
+                      ]
+                  ).map(activity => (
+                    <li key={activity}>{activity}</li>
+                  ))}
+                </ul>
                 <p className="mt-5 text-sm leading-7 text-[#5C574D]">
                   {lang === "en"
-                    ? "20,000+ members · 700+ project posts"
-                    : "20,000+名成员 · 700+项目帖"}
+                    ? "20,000+ free-community members · 700+ project posts"
+                    : "20,000+名免费社区成员 · 700+项目帖"}
                 </p>
                 <Button
                   asChild
@@ -798,9 +853,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {lang === "en"
-                      ? "Join the free community"
-                      : "免费加入，把AI真正用起来"}
+                    {lang === "en" ? "Join the free community" : "免费加入社区"}
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </Button>
@@ -870,7 +923,7 @@ export default function Home() {
         >
           <div className="container">
             <article className="overflow-hidden border border-[#CFC9BE] bg-superlinear-surface lg:grid lg:grid-cols-[0.88fr_1.12fr]">
-              <figure className="flex flex-col border-b border-[#CFC9BE] bg-white lg:border-b-0 lg:border-r">
+              <figure className="flex flex-col border-b border-[#CFC9BE] bg-white lg:justify-center lg:border-b-0 lg:border-r">
                 <div className="overflow-hidden">
                   <img
                     src="/english-network/doordash-ai-training.webp"
@@ -912,10 +965,8 @@ export default function Home() {
                   >
                     {lang === "zh" ? (
                       <>
-                        <span className="block">培训结束以后，</span>
-                        <span className="block whitespace-nowrap">
-                          工作应该真的变了。
-                        </span>
+                        <span className="block">让团队用AI时，</span>
+                        <span className="block">不必每次从头解释。</span>
                       </>
                     ) : (
                       enterpriseWork[lang].title
@@ -924,6 +975,18 @@ export default function Home() {
                   <p className="mt-5 max-w-3xl text-base leading-8 text-[#5C574D]">
                     {enterpriseWork[lang].detail}
                   </p>
+                  <ul className="mt-5 space-y-4">
+                    {enterpriseWork[lang].outcomes.map(outcome => (
+                      <li key={outcome.title}>
+                        <h3 className="text-base font-semibold leading-7">
+                          {outcome.title}
+                        </h3>
+                        <p className="mt-1 text-sm leading-7 text-[#5C574D]">
+                          {outcome.detail}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
                 <div className="mt-5 border-t border-[#CFC9BE] pt-4">

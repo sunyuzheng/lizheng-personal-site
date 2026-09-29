@@ -54,6 +54,21 @@ const guests = [
     position: "50% 40%",
   },
   {
+    slug: "vijaye-raji",
+    topic: { zh: "职业选择", en: "CAREER CHOICES" },
+    headline: {
+      zh: ["从大厂高管", "到创业者"],
+      en: ["From big tech", "to founder"],
+    },
+    name: { zh: "Vijaye Raji", en: "Vijaye Raji" },
+    role: {
+      zh: "OpenAI 应用 CTO · Statsig 创始人",
+      en: "CTO of Applications, OpenAI · Founder, Statsig",
+    },
+    image: "/avatars/vijaye-raji.jpg",
+    position: "50% 40%",
+  },
+  {
     slug: "yang-ying",
     topic: { zh: "商业实战", en: "ENTREPRENEURSHIP" },
     headline: {
@@ -117,21 +132,6 @@ const guests = [
     },
     image: "/avatars/liu-jia.jpg",
     position: "50% 35%",
-  },
-  {
-    slug: "vijaye-raji",
-    topic: { zh: "职业选择", en: "CAREER CHOICES" },
-    headline: {
-      zh: ["从大厂高管", "到创业者"],
-      en: ["From big tech", "to founder"],
-    },
-    name: { zh: "Vijaye Raji", en: "Vijaye Raji" },
-    role: {
-      zh: "OpenAI 应用 CTO · Statsig 创始人",
-      en: "CTO of Applications, OpenAI · Founder, Statsig",
-    },
-    image: "/avatars/vijaye-raji.jpg",
-    position: "50% 40%",
   },
   {
     slug: "wei-manfredi",
@@ -227,26 +227,28 @@ export default function HomeConversations({ lang }: { lang: Lang }) {
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-20">
           <div>
             <p className="font-mono text-xs tracking-[0.18em] text-superlinear-on-dark">
-              {lang === "en" ? "200+ CONVERSATIONS" : "200+场公开对话"}
+              {lang === "en"
+                ? "PUBLIC INTERVIEWS · 200+ CONVERSATIONS"
+                : "公开访谈 · 200+场"}
             </p>
             <h2
               id="conversations-heading"
               className="mt-5 text-balance text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl"
             >
               {lang === "en" ? (
-                "The people behind the work."
+                "My conversations with researchers and founders."
               ) : (
                 <>
-                  <span className="inline-block">和他们，</span>
-                  <span className="inline-block">把问题聊透。</span>
+                  <span className="inline-block">我与研究者、</span>
+                  <span className="inline-block">创业者的对话。</span>
                 </>
               )}
             </h2>
           </div>
           <p className="max-w-lg text-pretty text-base leading-8 text-zinc-400">
             {lang === "en"
-              ? "How does research break through? How do products take shape? And how do we grow along the way?"
-              : "研究是怎么突破的，产品是怎么做成的，人又该怎样成长？"}
+              ? "I ask researchers, founders, and practitioners how they choose problems, build products, and navigate career changes. Open a guest’s card to watch the conversation and hear the decisions and lessons behind their work."
+              : "研究怎样突破，产品怎样做成，职业转折怎样选择？我请亲历者讲他们的过程、判断和教训。点击下面的嘉宾，观看访谈。"}
           </p>
         </div>
 

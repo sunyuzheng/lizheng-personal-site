@@ -90,6 +90,42 @@ export const DECK_CATEGORIES: DeckCategoryDefinition[] = [
 
 export const DECK_LIBRARY: DeckEntry[] = [
   {
+    id: "columbia-fake-work-fake-learning-2026",
+    collection: "public",
+    category: "builder-work",
+    organization: "Columbia University",
+    occasion: {
+      en: "Guest session · October 2, 2026",
+      zh: "哥伦比亚大学Guest Session · 2026年10月2日",
+    },
+    title: "The Work Is Done. Did You Learn?",
+    date: "2026-10-02",
+    language: "en",
+    audience: {
+      en: "Undergraduate and graduate students building with AI",
+      zh: "使用AI开展实践的本科生与研究生",
+    },
+    takeaway: {
+      en: "Completion, value, and capability need separate evidence. Test what changed for someone, then change the problem to test what you learned.",
+      zh: "完成了、产生了价值、学到了能力，需要分别证明。先检查为谁带来了什么改变，再改变问题，检验自己究竟学会了什么。",
+    },
+    href: "https://www.lizheng.ai/decks/fake-work-fake-learning",
+    linkKind: "deck",
+    featured: true,
+    accent: "#238343",
+    keywords: [
+      "Columbia",
+      "fake work",
+      "fake learning",
+      "AI learning",
+      "tutorial",
+      "transfer",
+      "哥伦比亚大学",
+      "假工作",
+      "假学习",
+    ],
+  },
+  {
     id: "aie-shanghai-2026",
     collection: "enterprise",
     category: "product-delivery",

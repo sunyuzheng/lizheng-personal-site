@@ -289,6 +289,10 @@ function buildSitemapXml(guests: GuestProfile[]) {
       loc: AIE_SHANGHAI_DECK_PAGE_META.canonical,
       lastmod: AIE_SHANGHAI_DECK_PAGE_META.lastModified,
     },
+    {
+      loc: `${SITE_URL}/decks/fake-work-fake-learning`,
+      lastmod: "2026-09-28",
+    },
     ...guests.map(guest => ({
       loc: guest.share_url,
       lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),

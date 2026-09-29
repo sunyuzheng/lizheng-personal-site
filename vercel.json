@@ -13,6 +13,14 @@
       "continue": true
     },
     {
+      "src": "/decks/fake-work-fake-learning",
+      "dest": "https://columbia-fake-work-learning.vercel.app/"
+    },
+    {
+      "src": "/decks/fake-work-fake-learning/(.+)",
+      "dest": "https://columbia-fake-work-learning.vercel.app/$1"
+    },
+    {
       "src": "/decks/superlinear-one-year",
       "dest": "https://superlinear-one-year-2026.vercel.app/decks/superlinear-one-year/"
     },

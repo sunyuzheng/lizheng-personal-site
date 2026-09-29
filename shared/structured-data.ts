@@ -10,7 +10,7 @@ import {
 import { ENTERPRISE_TRAINING_PAGE_META } from "./collab-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
 import { getGuestEnglishInsights } from "./guest-insights.ts";
-import { DECK_LIBRARY, localized } from "./deck-index.ts";
+import { DECK_LIBRARY, deckForLanguage, localized } from "./deck-index.ts";
 
 export const SITE_URL = "https://www.lizheng.ai";
 export const PERSON_ID = `${SITE_URL}/#person`;
@@ -607,7 +607,9 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
         "@id": `${canonical}#decks`,
         name,
         numberOfItems: DECK_LIBRARY.length,
-        itemListElement: DECK_LIBRARY.map((deck, index) => ({
+        itemListElement: DECK_LIBRARY.map(deck =>
+          deckForLanguage(deck, lang)
+        ).map((deck, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: {

@@ -8,6 +8,7 @@ import {
   ENTERPRISE_DECKS,
   PUBLIC_TALK_DECKS,
   categoryDefinition,
+  deckForLanguage,
   localized,
   type DeckCategory,
   type DeckCollection,
@@ -194,8 +195,9 @@ function DeckCover({
   );
 }
 
-function DeckCard({ deck }: { deck: DeckEntry }) {
+function DeckCard({ deck: originalDeck }: { deck: DeckEntry }) {
   const { lang } = useLanguage();
+  const deck = deckForLanguage(originalDeck, lang);
   const t = copy[lang];
   const category = categoryDefinition(deck.category);
   const primaryLabel = deck.linkKind === "replay" ? t.watchReplay : t.openDeck;
@@ -232,6 +234,9 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
           <span className="text-white/20">/</span>
           <span className="text-white/45">
             {deck.language === "zh" ? t.zhDeck : t.enDeck}
+            {deck.alternateEdition
+              ? ` / ${deck.alternateEdition.language === "zh" ? t.zhDeck : t.enDeck}`
+              : ""}
           </span>
         </div>
 
@@ -260,6 +265,17 @@ function DeckCard({ deck }: { deck: DeckEntry }) {
               <FileClock className="h-3.5 w-3.5" />
             </span>
           )}
+          {deck.alternateEdition ? (
+            <a
+              href={deck.alternateEdition.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-300 transition hover:text-white"
+            >
+              {deck.alternateEdition.language === "zh" ? t.zhDeck : t.enDeck}
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          ) : null}
           {deck.secondaryHref ? (
             <a
               href={deck.secondaryHref}
@@ -316,6 +332,7 @@ export default function Decks() {
       const haystack = [
         deck.organization,
         deck.title,
+        deck.alternateEdition?.title,
         deck.date,
         localized(deck.audience, lang),
         localized(deck.takeaway, lang),

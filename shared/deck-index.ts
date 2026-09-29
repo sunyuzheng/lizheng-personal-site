@@ -30,6 +30,11 @@ export interface DeckEntry {
   audience: LocalizedText;
   takeaway: LocalizedText;
   href?: string;
+  alternateEdition?: {
+    title: string;
+    language: DeckLanguage;
+    href: string;
+  };
   linkKind: DeckLinkKind;
   secondaryHref?: string;
   secondaryLinkKind?: Exclude<DeckLinkKind, "pending">;
@@ -110,6 +115,11 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "当AI能替你完成任务，怎样才算真正学会？从假学习如何掩盖判断能力的缺口，讲到它为什么会造成无效工作、放大错误，以及如何练出能应对下一个问题的能力。",
     },
     href: "https://www.lizheng.ai/decks/fake-work-fake-learning",
+    alternateEdition: {
+      title: "假学习的终结",
+      language: "zh",
+      href: "https://www.lizheng.ai/decks/fake-work-fake-learning/zh",
+    },
     linkKind: "deck",
     featured: true,
     accent: "#238343",
@@ -728,6 +738,24 @@ export const DECK_LIBRARY: DeckEntry[] = [
 
 export function localized(text: LocalizedText, lang: SiteLang) {
   return text[lang];
+}
+
+export function deckForLanguage(deck: DeckEntry, lang: SiteLang): DeckEntry {
+  if (
+    !deck.alternateEdition ||
+    deck.alternateEdition.language !== lang ||
+    !deck.href
+  )
+    return deck;
+  return {
+    ...deck,
+    ...deck.alternateEdition,
+    alternateEdition: {
+      title: deck.title,
+      language: deck.language,
+      href: deck.href,
+    },
+  };
 }
 
 export function categoryDefinition(category: DeckCategory) {

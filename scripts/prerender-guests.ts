@@ -293,6 +293,10 @@ function buildSitemapXml(guests: GuestProfile[]) {
       loc: `${SITE_URL}/decks/fake-work-fake-learning`,
       lastmod: "2026-09-28",
     },
+    {
+      loc: `${SITE_URL}/decks/fake-work-fake-learning/zh`,
+      lastmod: "2026-09-29",
+    },
     ...guests.map(guest => ({
       loc: guest.share_url,
       lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),

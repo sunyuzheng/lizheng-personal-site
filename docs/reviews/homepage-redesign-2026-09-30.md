@@ -45,6 +45,10 @@ About, Books, Collaborate, Enterprise training, Creators, the guest directory an
 
 Prices, ISBNs, courses, cases, deck entries and guest records are unchanged; guest pages keep their view counts. `/zbs` keeps its own design and only its author note carries the new title. `/podcast`, `/speaker`, the AIE and 0905 decks, the design experiments and the 404 page keep their design.
 
+## The previous homepage
+
+The homepage as it was before this redesign (commit `622555b`, September 29, 2026) stays online for comparison at `/archive/2026-09` (Chinese) and `/archive/2026-09/en` (English). It was built from that commit, then stripped of scripts and structured data, marked `noindex`, and given copies of the stylesheet, fonts and images it uses, so later changes to the live site cannot break it; a small label at the bottom links to the current site. At 1440 px it matches the original page pixel for pixel. Menus and the language switch do not open without scripts; the switch links between the two archived pages.
+
 ## Performance
 
 Serif fonts are self-hosted: Noto Serif SC (700 and 900, split by unicode-range so a page downloads only the slices it uses) and Source Serif 4 (variable). The font stylesheet loads without blocking first paint, and nothing loads from Google Fonts. The homepage preloads its portrait; `/collab` and `/collab/creators` keep the preload for the photograph they show. The search index loads only when the search panel approaches the viewport; the default query's results are prerendered, so the panel does not grow when the index arrives. The community map reserves the height of its caption while member data loads.

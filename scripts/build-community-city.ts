@@ -7,6 +7,10 @@
  *   pnpm community:city --upload             # full snapshot, then publish it
  *   pnpm community:city --demo               # no API calls
  *
+ * --min-age-days=N skips the run (no Circle requests) while the published
+ * snapshot is younger than N days; the monthly schedule uses it so a manual
+ * run near the end of a month does not repeat on the 1st.
+ *
  * Reads CIRCLE_ADMIN_API (Circle Admin API v2 token) and, for --upload,
  * BLOB_READ_WRITE_TOKEN from the environment, .env or .env.local. A monthly
  * GitHub workflow (.github/workflows/community-city.yml) runs --upload.
@@ -161,6 +165,22 @@ function write(data: CityFile) {
   return json;
 }
 
+// Days since the published snapshot was generated (Infinity if none yet).
+async function publishedAgeDays() {
+  const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
+  if (!token) throw new Error("Set BLOB_READ_WRITE_TOKEN to check the age.");
+  try {
+    const current = await head(BLOB_PATH, { token });
+    const online = (await (
+      await fetch(`${current.url}?check=${now}`)
+    ).json()) as CityFile;
+    return (now - Date.parse(`${online.generatedAt}T00:00:00Z`)) / DAY;
+  } catch (error) {
+    if (error instanceof BlobNotFoundError) return Infinity;
+    throw error;
+  }
+}
+
 // Publishes to Vercel Blob, refusing a snapshot that is much smaller than the
 // one already online, then reads the public file back to confirm it changed.
 async function publish(json: string, data: CityFile) {
@@ -230,6 +250,17 @@ function demo() {
 
 async function main() {
   if (args.has("demo")) return demo();
+
+  const minAgeDays = Number(args.get("min-age-days") ?? 0);
+  if (minAgeDays > 0) {
+    const age = await publishedAgeDays();
+    if (age < minAgeDays) {
+      console.log(
+        `Published snapshot is ${age.toFixed(1)} days old (< ${minAgeDays}). Skipping.`
+      );
+      return;
+    }
+  }
 
   const token = process.env.CIRCLE_ADMIN_API?.trim();
   if (!token) {

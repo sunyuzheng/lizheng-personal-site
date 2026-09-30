@@ -34,7 +34,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # About 250 requests; stops before starting if more than 300 are needed.
-      - run: pnpm community:city --upload --max-requests=300
+      # Scheduled runs skip while the published snapshot is under 20 days old.
+      - run: >-
+          pnpm community:city --upload --max-requests=300
+          ${{ github.event_name == 'schedule' && '--min-age-days=20' || '' }}
         env:
           CIRCLE_ADMIN_API: ${{ secrets.CIRCLE_ADMIN_API }}
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}

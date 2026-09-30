@@ -1,4 +1,5 @@
 import type { Lang } from "@/contexts/LanguageContext";
+import { prefersReducedMotion } from "@/lib/scroll";
 import {
   useEffect,
   useId,
@@ -7,14 +8,18 @@ import {
   useRef,
   useState,
   type KeyboardEvent,
+  type ReactNode,
 } from "react";
 import type { CityCopy } from "./content";
+import { Phrases } from "./parts";
 
 /**
  * The community as a city: one dot per member. Members arrive sorted by
  * activity (posts and comments), so the most active ones form a bright centre
  * and quieter members spread towards the edge. Every dot opens that member's
- * public profile, and members can be found by name.
+ * public profile, and members can be found by name. When the map first comes
+ * into view the lights come on from the centre outwards; after that a slow
+ * wave and a wandering light keep the city alive without asking for attention.
  *
  * Data contract, produced by scripts/build-community-city.ts:
  * - `heat[i]` is a digit 0–9 for member i (members sorted most active first);
@@ -114,15 +119,20 @@ interface Tip {
 export default function CityField({
   lang,
   copy,
+  action,
 }: {
   lang: Lang;
   copy: CityCopy;
+  /** The section's call to action, shown beside the caption. */
+  action: ReactNode;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
   const tipRef = useRef<HTMLAnchorElement>(null);
   const locateRef = useRef<(member: number) => Tip | null>(() => null);
+  // When the map first came into view; the lights come on from then.
+  const revealRef = useRef<number | null>(null);
   const [data, setData] = useState<CityData | null>(null);
   const [tip, setTip] = useState<Tip | null>(null);
   const [query, setQuery] = useState("");
@@ -187,6 +197,33 @@ export default function CityField({
     let hovered = -1;
     // Safari reports clicks without pointerType, so remember the last pointer.
     let lastPointerType = "mouse";
+    const reduced = prefersReducedMotion();
+
+    // Per-member drawing data, rebuilt on every layout.
+    let posX = new Float32Array(0);
+    let posY = new Float32Array(0);
+    let baseAlpha = new Float32Array(0);
+    let phase = new Float32Array(0);
+    let dotSize = new Uint8Array(0);
+    let dotColor = new Uint32Array(0);
+    let image: ImageData | null = null;
+    let pixels = new Uint32Array(0);
+
+    // A soft light moves through the city: it wanders on its own, follows the
+    // mouse, and settles on a member found by search or by chance. Dots under
+    // it brighten a little; none move, so hit tests stay exact.
+    let lightX = -1;
+    let lightY = -1;
+    let pointerX = -1;
+    let pointerY = -1;
+    let pointerInside = false;
+
+    // A few members who post and comment flare up for a moment at a time.
+    const SPARKS = 7;
+    const SPARK_LIFE = 1800;
+    const sparkMember = new Int32Array(SPARKS).fill(-1);
+    const sparkStart = new Float64Array(SPARKS);
+    let activeCount = count;
 
     // Each dot sits slightly off its grid cell, like lights in a real city.
     const cellCenter = (cell: number) => {
@@ -196,6 +233,100 @@ export default function CityField({
         x: (col + 0.5 + (jitter(row + 17, col + 31) - 0.5) * 0.7) * sx,
         y: (row + 0.5 + (jitter(col + 5, row + 11) - 0.5) * 0.7) * sy,
       };
+    };
+
+    const revealProgress = (time: number) => {
+      if (revealRef.current === null) return 0;
+      const p = Math.min(1, (time - revealRef.current) / 2600);
+      return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    };
+
+    const draw = (time: number) => {
+      if (!image) return;
+      pixels.fill(0);
+      const still = reduced;
+      const reveal = still ? 1 : revealProgress(time);
+      const sigma = Math.min(110, width / dpr / 9) * dpr;
+      const spread = 2 * sigma * sigma;
+      const reach = spread * 4;
+      const drift = time * 0.0012;
+      for (let member = 0; member < count; member++) {
+        const x = posX[member];
+        const y = posY[member];
+        let alpha = baseAlpha[member];
+        if (!still) {
+          // A slow wave of brightness travels across the whole city.
+          const wave = Math.sin(phase[member] + drift);
+          alpha = alpha * (0.86 + 0.14 * wave) + 0.035 * (wave + 1);
+          const dx = x - lightX;
+          const dy = y - lightY;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < reach) alpha += 0.42 * Math.exp(-d2 / spread);
+          // The lights come on from the centre (the most active) outwards.
+          if (reveal < 1) {
+            const on = (reveal * 1.35 - member / count) / 0.35;
+            if (on <= 0) continue;
+            if (on < 1) alpha *= on;
+          }
+        }
+        if (alpha > 1) alpha = 1;
+        const size = dotSize[member];
+        const left = Math.round(x - size / 2);
+        const top = Math.round(y - size / 2);
+        if (left < 0 || top < 0 || left + size > width || top + size > height)
+          continue;
+        const color = (((alpha * 255) | 0) << 24) | dotColor[member];
+        for (let row = 0; row < size; row++) {
+          const offset = (top + row) * width + left;
+          for (let col = 0; col < size; col++) pixels[offset + col] = color;
+        }
+      }
+      if (!still && reveal >= 1) drawSparks(time);
+      context.putImageData(image, 0, 0);
+    };
+
+    const drawSparks = (time: number) => {
+      const unit = dpr > 1.5 ? 2 : 1;
+      for (let i = 0; i < SPARKS; i++) {
+        const age = time - sparkStart[i];
+        if (sparkMember[i] < 0 || age > SPARK_LIFE) {
+          sparkMember[i] = Math.floor(Math.random() * activeCount);
+          sparkStart[i] = time + Math.random() * 1400;
+          continue;
+        }
+        if (age < 0) continue;
+        const glow = Math.pow(Math.sin((Math.PI * age) / SPARK_LIFE), 2);
+        const x = Math.round(posX[sparkMember[i]]);
+        const y = Math.round(posY[sparkMember[i]]);
+        // A small soft cross: a bright centre and dimmer arms.
+        const put = (px: number, py: number, alpha: number) => {
+          if (px < 0 || py < 0 || px >= width || py >= height) return;
+          pixels[py * width + px] = (((alpha * 255) | 0) << 24) | MINT;
+        };
+        for (let dy = -unit; dy <= unit; dy++)
+          for (let dx = -unit; dx <= unit; dx++) put(x + dx, y + dy, glow);
+        for (let k = unit + 1; k <= unit * 3; k++) {
+          const arm = glow * 0.45 * (1 - (k - unit) / (unit * 2 + 1));
+          put(x + k, y, arm);
+          put(x - k, y, arm);
+          put(x, y + k, arm);
+          put(x, y - k, arm);
+        }
+      }
+    };
+
+    const moveLight = (time: number) => {
+      let targetX = width * (0.5 + 0.38 * Math.sin(time * 0.00031));
+      let targetY = height * (0.48 + 0.3 * Math.sin(time * 0.00047 + 1));
+      if (pointerInside) {
+        targetX = pointerX;
+        targetY = pointerY;
+      } else if (hovered >= 0 && hovered < count) {
+        targetX = posX[hovered];
+        targetY = posY[hovered];
+      }
+      lightX += (targetX - lightX) * 0.12;
+      lightY += (targetY - lightY) * 0.12;
     };
 
     const layout = () => {
@@ -235,25 +366,33 @@ export default function CityField({
         cellMember[cellOrder[member]] = member;
       }
 
-      const image = context.createImageData(width, height);
-      const pixels = new Uint32Array(image.data.buffer);
+      posX = new Float32Array(count);
+      posY = new Float32Array(count);
+      baseAlpha = new Float32Array(count);
+      phase = new Float32Array(count);
+      dotSize = new Uint8Array(count);
+      dotColor = new Uint32Array(count);
       const base = dpr > 1.5 ? 3 : 2;
+      activeCount = count;
       for (let member = 0; member < count; member++) {
         const level = heat ? heat.charCodeAt(member) - 48 : 2;
-        const size = level >= 6 ? base + 1 : base;
-        const color =
-          (((ALPHA[level] * 255) | 0) << 24) | (level >= 7 ? MINT : IVORY);
+        if (heat && level < 3 && activeCount === count) activeCount = member;
         const { x, y } = cellCenter(memberCell[member]);
-        const left = Math.round(x - size / 2);
-        const top = Math.round(y - size / 2);
-        if (left < 0 || top < 0 || left + size > width || top + size > height)
-          continue;
-        for (let row = 0; row < size; row++) {
-          const offset = (top + row) * width + left;
-          for (let col = 0; col < size; col++) pixels[offset + col] = color;
-        }
+        posX[member] = x;
+        posY[member] = y;
+        baseAlpha[member] = ALPHA[level];
+        phase[member] = (x * 0.01 + y * 0.016) / dpr;
+        dotSize[member] = level >= 6 ? base + 1 : base;
+        dotColor[member] = level >= 7 ? MINT : IVORY;
       }
-      context.putImageData(image, 0, 0);
+      if (activeCount < 1) activeCount = count;
+      image = context.createImageData(width, height);
+      pixels = new Uint32Array(image.data.buffer);
+      if (lightX < 0) {
+        lightX = width * 0.62;
+        lightY = height * 0.45;
+      }
+      draw(performance.now());
       drawHover(hovered);
     };
 
@@ -356,6 +495,50 @@ export default function CityField({
       openProfile(linked[member]);
     };
 
+    let frame = 0;
+    let visible = false;
+    let lastFrame = 0;
+    const loop = (time: number) => {
+      frame = 0;
+      if (!visible || document.hidden) return;
+      // About 30 frames a second is plenty for light this slow.
+      if (time - lastFrame >= 32) {
+        lastFrame = time;
+        moveLight(time);
+        draw(time);
+      }
+      frame = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      if (!frame && visible && !reduced) frame = requestAnimationFrame(loop);
+    };
+    const visibility = new IntersectionObserver(
+      ([entry]) => {
+        visible = Boolean(entry?.isIntersecting);
+        if (entry && entry.intersectionRatio >= 0.35) {
+          revealRef.current ??= performance.now();
+        }
+        if (visible) start();
+      },
+      { threshold: [0, 0.35] }
+    );
+    visibility.observe(canvas);
+    const onPageVisibility = () => start();
+    document.addEventListener("visibilitychange", onPageVisibility);
+
+    const onLightMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      const rect = canvas.getBoundingClientRect();
+      pointerX = (event.clientX - rect.left) * dpr;
+      pointerY = (event.clientY - rect.top) * dpr;
+      pointerInside = true;
+    };
+    const onLightLeave = () => {
+      pointerInside = false;
+    };
+    canvas.addEventListener("pointermove", onLightMove);
+    canvas.addEventListener("pointerleave", onLightLeave);
+
     const resizeObserver = new ResizeObserver(layout);
     resizeObserver.observe(canvas);
     layout();
@@ -367,6 +550,11 @@ export default function CityField({
     }
     return () => {
       resizeObserver.disconnect();
+      visibility.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", onPageVisibility);
+      canvas.removeEventListener("pointermove", onLightMove);
+      canvas.removeEventListener("pointerleave", onLightLeave);
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerleave", onPointerLeave);
@@ -468,59 +656,8 @@ export default function CityField({
 
   return (
     <div className="city-map rv">
-      <div ref={wrapRef} className="field">
-        <canvas
-          ref={canvasRef}
-          className="dots"
-          role="img"
-          aria-label={data ? copy.label(countText) : copy.fallbackLabel}
-        />
-        <canvas ref={overlayRef} className="dots-overlay" aria-hidden="true" />
-        {tip && tipId && (
-          <a
-            ref={tipRef}
-            className={[
-              "city-tip",
-              tip.sticky ? "sticky" : "",
-              tip.y < 52 ? "below" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            href={PROFILE_BASE + tipId}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ left: tip.x, top: tip.y }}
-            tabIndex={tip.sticky ? 0 : -1}
-            aria-label={tipName ? copy.openNamed(tipName) : copy.open}
-          >
-            <span className="who">{tipName || copy.open}</span>
-            <span aria-hidden="true">↗</span>
-          </a>
-        )}
-      </div>
-      <div className="city-caption">
-        <div className="city-legend" {...reserve}>
-          <p>
-            {caption[0]}
-            {caption[1] && (
-              <>
-                <br />
-                {caption[1]}
-              </>
-            )}
-            {data && (
-              <small>
-                {data.demo
-                  ? copy.demo
-                  : copy.updated(formatDate(data.generatedAt, lang))}
-              </small>
-            )}
-          </p>
-        </div>
-        <div
-          className={linkedCount ? "city-tools" : "city-tools idle"}
-          aria-hidden={linkedCount ? undefined : true}
-        >
+      {names?.length ? (
+        <div className="city-tools">
           <div className="city-find">
             <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
               <circle
@@ -552,7 +689,6 @@ export default function CityField({
               }
               autoComplete="off"
               spellCheck={false}
-              disabled={!names?.length}
               onChange={event => {
                 setQuery(event.target.value);
                 setListOpen(true);
@@ -589,11 +725,72 @@ export default function CityField({
             type="button"
             className="city-random"
             onClick={meetRandom}
-            disabled={!linkedCount}
+            aria-label={copy.random}
           >
-            {copy.random} <span aria-hidden="true">→</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M4 7h3.5c2.6 0 3.9 1.6 5 3.6l1 1.8c1.1 2 2.4 3.6 5 3.6H20M4 17h3.5c1.4 0 2.4-.5 3.2-1.3M16.8 8.3c.7-.8 1.7-1.3 2.9-1.3H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="label">{copy.random}</span>
           </button>
         </div>
+      ) : null}
+      <div ref={wrapRef} className="field">
+        <canvas
+          ref={canvasRef}
+          className="dots"
+          role="img"
+          aria-label={data ? copy.label(countText) : copy.fallbackLabel}
+        />
+        <canvas ref={overlayRef} className="dots-overlay" aria-hidden="true" />
+        {tip && tipId && (
+          <a
+            ref={tipRef}
+            className={[
+              "city-tip",
+              tip.sticky ? "sticky" : "",
+              tip.y < 52 ? "below" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            href={PROFILE_BASE + tipId}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ left: tip.x, top: tip.y }}
+            tabIndex={tip.sticky ? 0 : -1}
+            aria-label={tipName ? copy.openNamed(tipName) : copy.open}
+          >
+            <span className="who">{tipName || copy.open}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        )}
+      </div>
+      <div className="city-caption">
+        <div className="city-legend" {...reserve}>
+          <p>
+            <Phrases text={caption[0]} />
+            {caption[1] && (
+              <>
+                <br />
+                <Phrases text={caption[1]} />
+              </>
+            )}
+            {data && (
+              <small>
+                {data.demo
+                  ? copy.demo
+                  : copy.updated(formatDate(data.generatedAt, lang))}
+              </small>
+            )}
+          </p>
+        </div>
+        {action}
       </div>
     </div>
   );

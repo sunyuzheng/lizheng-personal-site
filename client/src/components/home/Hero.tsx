@@ -71,7 +71,7 @@ export default function Hero({ lang }: { lang: Lang }) {
           </div>
           <div className="social rise d4">
             <span className="lab">{t.follow}</span>
-            {socialLinks(lang, "hero").map(link => (
+            {socialLinks(lang).map(link => (
               <a
                 key={link.id}
                 href={link.href}

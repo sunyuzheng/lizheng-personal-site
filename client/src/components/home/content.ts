@@ -15,6 +15,7 @@ export const LINKS = {
   chatgptEssay: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
+  openContext: "https://github.com/sunyuzheng/lizheng-open-context",
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,
@@ -159,6 +160,15 @@ export interface Scene {
   image: string;
   alt: string;
   caption: string;
+  /** Where the room can be seen: a page on this site ("/…"), a video or a replay. */
+  href: string;
+}
+
+/** A guest in the "also with" strip, linked to their page or conversation. */
+export interface AlsoGuest {
+  name: string;
+  slug?: string;
+  href?: string;
 }
 
 // Only rooms where Yuzheng is the one on stage: teaching, moderating, speaking.
@@ -169,13 +179,24 @@ const SCENE_IMAGES = [
   "pinterest-data-science",
 ].map(name => `/english-network/${name}.webp`);
 
+const SCENE_LINKS = [
+  "/collab/enterprise",
+  "https://www.youtube.com/watch?v=tneRWgZGWxM",
+  "https://youtu.be/3Nxxg2oX1mo",
+  "https://www.superlinear.academy/c/public/sections/900177/lessons/3409683",
+];
+
 function scenes(copy: Array<[alt: string, caption: string]>): Scene[] {
   return copy.map(([alt, caption], index) => ({
     image: SCENE_IMAGES[index],
     alt,
     caption,
+    href: SCENE_LINKS[index],
   }));
 }
+
+const also = (name: string, target: string): AlsoGuest =>
+  target.startsWith("http") ? { name, href: target } : { name, slug: target };
 
 export interface PublicCall {
   date: string;
@@ -329,7 +350,7 @@ const zh = {
     ],
     [
       "Pinterest数据科学团队分享",
-      "Pinterest数据科学团队分享：The Identity Crisis of Data Science",
+      "Pinterest数据科学团队分享：Augmenting Data Science in the AI Era",
     ],
   ]),
   works: {
@@ -347,6 +368,8 @@ const zh = {
         alt: "在Significance Summit的舞台上与Acquired的Ben Gilbert、David Rosenthal对谈",
         caption:
           "与Acquired的Ben Gilbert、David Rosenthal对谈 · Significance Summit",
+        href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
+        label: "看这场对谈",
       },
     },
     zbs: {
@@ -386,22 +409,28 @@ const zh = {
     alsoLabel: "还聊过",
     alsoAria: "更多对话嘉宾",
     also: [
-      "樊登",
-      "Leon",
-      "尚书",
-      "郭宇",
-      "戴雨森",
-      "杜磊",
-      "Indigo",
-      "Ryo Lu",
-      "查晟",
-      "佘昶",
-      "韦晓亮",
-      "夏淳",
-      "刘未末",
-      "Kevin Chen",
-      "董有超",
-      "Vivian Wang",
+      also("樊登", "fan-deng"),
+      also("Leon", "leon"),
+      also("尚书", "https://www.youtube.com/watch?v=vCzj0Fth_8A"),
+      also("郭宇", "guo-yu"),
+      also("戴雨森", "dai-yusen"),
+      also("杜磊", "du-lei"),
+      also("Indigo", "indigo"),
+      also("Ryo Lu", "ryo-lu"),
+      also("查晟", "zha-sheng"),
+      also("佘昶", "https://www.superlinear.academy/c/ai-resources/lancedb"),
+      also(
+        "韦晓亮",
+        "https://www.superlinear.academy/c/ai-resources/result-certainty-general-intelligence-wei-xiaoliang"
+      ),
+      also("夏淳", "https://www.superlinear.academy/c/posts/xiachun"),
+      also(
+        "刘未末",
+        "https://www.youtube.com/@kedaibiao/search?query=%E5%88%98%E6%9C%AA%E6%9C%AB"
+      ),
+      also("Kevin Chen", "kevin-chen"),
+      also("董有超", "devin-dong"),
+      also("Vivian Wang", "vivian-wang"),
     ],
     popularTitle: "从这几期开始",
     popular: [
@@ -416,15 +445,14 @@ const zh = {
         year: "2026",
       },
       {
-        id: "-WvvJBd3hDI",
-        title:
-          "对话The Pragmatic Engineer创始人Gergely Orosz：工程师职业与AI（英文）",
+        id: "vd_oYgwQSBM",
+        title: "一红16年，干啥啥赚钱？｜屠龙博士创业的秘密！",
         year: "2026",
       },
       {
-        id: "awaZBWTss-4",
-        title: "AI元年复盘：如何独立思考，抓住未来机会？｜硅谷徐老师",
-        year: "2023",
+        id: "CTcMvIZFQcw",
+        title: "Influence Without Authority｜人生元能力",
+        year: "2021",
       },
       {
         id: "8omGQSetKMA",
@@ -564,6 +592,12 @@ const zh = {
         href: "https://www.superlinear.academy/c/ai-resources/quality",
       },
     ] as Essay[],
+    openContext: {
+      title: "立正 · Open Context",
+      body: "我在社区和视频里公开发表的内容，整理成一个人和AI都能读的开放仓库：文章全文、视频字幕与英文译稿，都带来源和日期。可以检索、引用，也可以拿来做你自己的Skill或Agent。",
+      cta: "在GitHub查看",
+      href: LINKS.openContext,
+    },
     search: {
       title: "搜索我写过、讲过的内容",
       intro: "在文章和视频里搜索。",
@@ -754,7 +788,7 @@ const en: HomeCopy = {
     ],
     [
       "Talk for Pinterest Data Science",
-      "Pinterest Data Science: The Identity Crisis of Data Science",
+      "Pinterest Data Science: Augmenting Data Science in the AI Era",
     ],
   ]),
   works: {
@@ -772,6 +806,8 @@ const en: HomeCopy = {
         alt: "On stage with Ben Gilbert and David Rosenthal of Acquired at Significance Summit",
         caption:
           "With Ben Gilbert and David Rosenthal of Acquired · Significance Summit",
+        href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
+        label: "Watch this conversation",
       },
     },
     zbs: {
@@ -811,18 +847,21 @@ const en: HomeCopy = {
     alsoLabel: "Also with",
     alsoAria: "More guests",
     also: [
-      "Howie Xu",
-      "Ryo Lu",
-      "Chang She",
-      "Richard Liu",
-      "Dai Yusen",
-      "Devin Dong",
-      "Vivian Wang",
-      "Indigo",
-      "Fan Deng",
-      "Howard Li",
-      "Eugene Wang",
-      "Leon",
+      also("Howie Xu", "howie-xu"),
+      also("Ryo Lu", "ryo-lu"),
+      also(
+        "Chang She",
+        "https://www.superlinear.academy/c/ai-resources/lancedb"
+      ),
+      also("Richard Liu", "richard-liu"),
+      also("Dai Yusen", "dai-yusen"),
+      also("Devin Dong", "devin-dong"),
+      also("Vivian Wang", "vivian-wang"),
+      also("Indigo", "indigo"),
+      also("Fan Deng", "fan-deng"),
+      also("Howard Li", "howard-li"),
+      also("Eugene Wang", "eugene-wang"),
+      also("Leon", "leon"),
     ],
     popularTitle: "",
     popular: [],
@@ -970,6 +1009,12 @@ const en: HomeCopy = {
         href: "https://www.superlinear.academy/c/ai-resources-en/the-ai-native-organization-when-execution-costs-drop-the-org-chart-must-be-rewritten",
       },
     ],
+    openContext: {
+      title: "Open Context",
+      body: "Everything I publish in the community and on video, gathered into one open repository that people and AI can both read: full posts, transcripts with English translations, each with its source and date. Search it, cite it, or build your own Skill or Agent on it.",
+      cta: "View on GitHub",
+      href: LINKS.openContext,
+    },
     search: {
       title: "Search my essays and talks",
       intro: "Search essays and talks.",

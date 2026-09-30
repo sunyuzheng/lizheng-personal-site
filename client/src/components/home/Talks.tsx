@@ -1,7 +1,14 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
-import { HOME_COPY, LINKS, SECTION, type Guest } from "./content";
+import {
+  HOME_COPY,
+  LINKS,
+  SECTION,
+  type AlsoGuest,
+  type Guest,
+} from "./content";
+import Marquee from "./Marquee";
 import { EXTERNAL, Lines } from "./parts";
 
 function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
@@ -30,21 +37,34 @@ function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
   );
 }
 
+// Each name opens the guest page, or the conversation when there is no page.
+function AlsoName({
+  guest,
+  lang,
+  loopCopy,
+}: {
+  guest: AlsoGuest;
+  lang: Lang;
+  loopCopy: boolean;
+}) {
+  const focus = loopCopy ? { tabIndex: -1 } : {};
+  return guest.slug ? (
+    <Link
+      href={withLanguage(`/guests/${guest.slug}`, lang)}
+      draggable={false}
+      {...focus}
+    >
+      {guest.name}
+    </Link>
+  ) : (
+    <a href={guest.href} draggable={false} {...EXTERNAL} {...focus}>
+      {guest.name}
+    </a>
+  );
+}
+
 export default function Talks({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].talks;
-  const names = (duplicate: boolean) => (
-    <>
-      <span className="lab" aria-hidden={duplicate || undefined}>
-        {t.alsoLabel}
-      </span>
-      {t.also.map(name => (
-        <span key={name} aria-hidden={duplicate || undefined}>
-          {name}
-        </span>
-      ))}
-    </>
-  );
-
   return (
     <section className="sec talks" id={SECTION.talks}>
       <div className="wrap">
@@ -66,12 +86,21 @@ export default function Talks({ lang }: { lang: Lang }) {
           ))}
         </ul>
 
-        <div className="names" role="group" aria-label={t.alsoAria}>
-          <div className="track">
-            {names(false)}
-            {names(true)}
-          </div>
-        </div>
+        <Marquee className="names" label={t.alsoAria} speed={34}>
+          {loopCopy => (
+            <>
+              <span className="lab">{t.alsoLabel}</span>
+              {t.also.map(guest => (
+                <AlsoName
+                  key={guest.name}
+                  guest={guest}
+                  lang={lang}
+                  loopCopy={loopCopy}
+                />
+              ))}
+            </>
+          )}
+        </Marquee>
 
         {t.popular.length > 0 && (
           <div className="popular">

@@ -139,6 +139,62 @@ function breadcrumbNode(pageUrl: string, pageName: string, homeName: string) {
   };
 }
 
+// The work the homepage leads with, tied to the same person node.
+function homeWorkNodes(lang: SiteLang) {
+  return [
+    growthBookNode(),
+    zhenbenshiBookNode(),
+    {
+      "@type": "Article",
+      "@id": "https://www.superlinear.academy/c/ai-resources/chatgpt#article",
+      headline: "关于ChatGPT最重要的五个问题",
+      url: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+      datePublished: "2023-02",
+      inLanguage: "zh-CN",
+      author: { "@id": PERSON_ID },
+      description:
+        lang === "en"
+          ? "Written before GPT-4: ChatGPT as a natural-language interface to data and computation, and what would follow from it."
+          : "写于GPT-4发布前：ChatGPT是通往数据与算力的自然语言接口，以及由此推演出的变化。",
+    },
+    lang === "en"
+      ? {
+          "@type": "Article",
+          "@id":
+            "https://yuzheng.substack.com/p/jev-and-the-ai-narrative-trap#article",
+          headline: "Jev and the AI Narrative Trap",
+          url: "https://yuzheng.substack.com/p/jev-and-the-ai-narrative-trap",
+          datePublished: "2026-09-21",
+          inLanguage: "en",
+          author: { "@id": PERSON_ID },
+          description:
+            "To tell whether a new technology is hype, find the real benchmark: its best actual alternative.",
+        }
+      : {
+          "@type": "Article",
+          "@id":
+            "https://www.superlinear.academy/c/ai-resources/ai-builders-learning-path#article",
+          headline: "通过Jev，辨清AI新技术的叙事陷阱",
+          url: "https://www.superlinear.academy/c/ai-resources/ai-builders-learning-path",
+          datePublished: "2026-09-20",
+          inLanguage: "zh-CN",
+          author: { "@id": PERSON_ID },
+          description:
+            "判断一项新技术是不是炒作，最要紧的是找到真正的对标：它最好的替代方案是什么。",
+        },
+    {
+      "@type": "Dataset",
+      "@id": "https://github.com/sunyuzheng/lizheng-open-context#dataset",
+      name: "立正 · Open Context",
+      url: "https://github.com/sunyuzheng/lizheng-open-context",
+      description:
+        "Source-grounded public context for Yuzheng Sun (立正): Superlinear Academy posts, video transcripts with AI English translations, and book frameworks, each with its source and date, for search, citation, and building Skills or Agents.",
+      creator: { "@id": PERSON_ID },
+      inLanguage: ["zh-CN", "en"],
+    },
+  ];
+}
+
 export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
   return {
     "@context": "https://schema.org",
@@ -160,6 +216,7 @@ export function buildHomeStructuredData(lang: SiteLang, canonical: string) {
       },
       personNode(lang),
       ...organizationNodes(lang),
+      ...homeWorkNodes(lang),
     ],
   };
 }

@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 立正 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-09-02. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-09-30. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -23,7 +23,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Direct
 
 ## Current Work
 
-- [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice.
+- [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice. The homepage shows the community as a map: one dot per member, ordered by posts and comments, each opening that member's public Circle profile, refreshed from a monthly member snapshot.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
 - [Enterprise AI training](https://www.lizheng.ai/collab/enterprise): the standard is that work should be different after the training. Organizations can begin with a focused session from $2,000, buy AI Builders by the seat, run a dedicated cohort for at least 30 learners, add course customization from $20,000 in addition to tuition, or commission a fully custom enterprise program from $100,000. Yuzheng does not sell paid consulting to individuals; individuals can ask questions in the free Superlinear Academy community and receive answers there for free.
@@ -42,7 +42,11 @@ Another current line of work concerns fake work: visible activity substituting f
 - [How to identify and eliminate fake work / 如何识别与消灭fake work](https://www.superlinear.academy/c/ai-resources/fake-work): why hard-to-measure, hard-to-attribute knowledge work turns visible activity into a proxy for value, and how AI can either remove interface tax or amplify institutional theater.
 - [What actually makes someone AI native? / 到底什么才算AI Native人才？](https://www.superlinear.academy/c/ai-resources/ai-native): begin with the outcome, identify the costs and capabilities AI changed, redesign the work, and remain responsible for the result.
 - [Everyone learns the nouns. The verbs set people apart. / 为什么所有人都在学名词，但真正拉开差距的是动词](https://www.superlinear.academy/c/ai-resources/verb): named tools and concepts provide parts; decomposition, judgment, routing, diagnosis, and iteration turn those parts into working systems.
-- [lizheng-open-context](https://github.com/sunyuzheng/lizheng-open-context): public posts, source links, dated video transcripts, core claims, and usage boundaries for building search, Skill, and Agent applications without presenting a fixed digital persona as Yuzheng himself.
+- [Jev and the AI Narrative Trap](https://yuzheng.substack.com/p/jev-and-the-ai-narrative-trap) / [通过Jev，辨清AI新技术的叙事陷阱](https://www.superlinear.academy/c/ai-resources/ai-builders-learning-path) (September 2026; [video, Chinese](https://www.youtube.com/watch?v=kYuolIPDeRQ)): to tell whether a new technology is hype, find the real benchmark, its best actual alternative, rather than accepting the comparison the narrative offers.
+
+## Open Context
+
+[立正 · Open Context](https://github.com/sunyuzheng/lizheng-open-context) is the public corpus for people and AI systems: Yuzheng's first-party Superlinear Academy posts, dated video transcripts with AI English translations, selected English community articles with their original authors recorded, and book frameworks, each with source links and dates. It is meant for search, citation, and building Skill or Agent applications, without presenting a fixed digital persona as Yuzheng himself. Community contributions, translations, and AI-written syntheses are labelled separately and are not his original statements.
 
 ## Current Public Evidence
 
@@ -55,6 +59,7 @@ Metrics change and should retain their dates.
 - 55 selected AI Architect course projects as of 2026-07-25.
 - 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.
 - 21,686 members who completed profile setup in the free Superlinear Academy community as of 2026-08-20; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
+- 24,536 active member accounts in the Superlinear Academy community snapshot of 2026-09-30 (the source of the homepage map). "Active" is the account status, not a measure of posting or participation.
 - [AI Engineer](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) publicly named Yuzheng as a collaborator on the upcoming [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), scheduled for November 5-6, 2026. This establishes the announced collaboration, not a completed event outcome.
 
 ## Books
@@ -65,6 +70,8 @@ Metrics change and should retain their dates.
 ## Dated Public Judgment
 
 Two public videos in April 2021 explained the limits of the dominant AI paradigm and how to distinguish useful machine-learning applications from impressive-looking demonstrations. In February 2023, before GPT-4, Yuzheng wrote [关于ChatGPT最重要的五个问题](https://www.superlinear.academy/c/ai-resources/chatgpt). A [public snapshot available by 2023-03-06](https://www.huxiu.com/article/812076.html) argued that ChatGPT was a new natural-language interface to data and computation and reasoned forward to falling inference costs, tool-connected workflows, persistent memory, direct result delivery, and ChatGPT-native systems. The living article preserves its original probabilities and later records two major errors. Private search and the Microsoft 365 Copilot section were later additions, not part of the pre-GPT-4 snapshot.
+
+Later dated calls, each with its original record: in January 2025, that agentic AI was the most important near-term opportunity, with a window of roughly 10 to 18 months for early movers ([video](https://youtu.be/FzbkAy0DcQk)); in March 2025, that the hype around MCP exceeded what the protocol could reliably deliver ([video](https://youtu.be/kwwjR6HHJPM)); in March 2026, that the OpenClaw product category would not last but was still worth trying to understand the capability shift ([video](https://youtu.be/h_yCYBRzbVw)); and in September 2026, a method for judging hype by finding a technology's best actual alternative ([essay](https://yuzheng.substack.com/p/jev-and-the-ai-narrative-trap)). These are dated judgments, not claims that each was later confirmed.
 
 ## Canonical Pages
 

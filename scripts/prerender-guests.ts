@@ -512,7 +512,9 @@ const staticPages: StaticPage[] = [
     jsonLd: buildHomeStructuredData("en", HOME_PAGE_META.en.canonical),
     alternates: homeAlternates,
     ogType: "profile",
-    imageAlt: "Yuzheng Sun with the hosts of Acquired",
+    imageAlt: "Yuzheng Sun (立正): MAKE WHAT LASTS.",
+    imageWidth: 1200,
+    imageHeight: 630,
     preloadImages: HOME_IMAGE_PRELOADS,
   },
   {
@@ -522,7 +524,9 @@ const staticPages: StaticPage[] = [
     jsonLd: buildHomeStructuredData("zh", HOME_PAGE_META.zh.canonical),
     alternates: homeAlternates,
     ogType: "profile",
-    imageAlt: "孙煜征与Acquired的两位主播对谈",
+    imageAlt: "立正（孙煜征）：学点真本事，做点真东西。",
+    imageWidth: 1200,
+    imageHeight: 630,
     preloadImages: HOME_IMAGE_PRELOADS,
   },
   {

@@ -84,8 +84,13 @@ export default function Works({ lang }: { lang: Lang }) {
           <p>{t.intro}</p>
         </div>
         <div className="bento">
-          <SectionLink to={SECTION.talks} className="card c-show rv">
-            <figure className="photo">
+          <div className="card c-show rv">
+            <a
+              className="photo"
+              href={t.show.photo.href}
+              aria-label={`${t.show.photo.label}${lang === "en" ? ": " : "："}${t.show.photo.caption}`}
+              {...EXTERNAL}
+            >
               <img
                 src={t.show.photo.src}
                 alt={t.show.photo.alt}
@@ -94,19 +99,22 @@ export default function Works({ lang }: { lang: Lang }) {
                 loading="lazy"
                 decoding="async"
               />
-              <figcaption>{t.show.photo.caption}</figcaption>
-            </figure>
+              <span className="play" aria-hidden="true" />
+              <span className="caption">{t.show.photo.caption}</span>
+            </a>
             <div className="body">
               <div className="meta">{t.show.meta}</div>
               <h3>
-                <Phrases text={t.show.title} />
+                <SectionLink to={SECTION.talks}>
+                  <Phrases text={t.show.title} />
+                </SectionLink>
               </h3>
               <p>{t.show.body}</p>
-              <span className="go">
+              <SectionLink className="go" to={SECTION.talks}>
                 {t.show.go} <Arrow />
-              </span>
+              </SectionLink>
             </div>
-          </SectionLink>
+          </div>
           {books}
         </div>
       </div>

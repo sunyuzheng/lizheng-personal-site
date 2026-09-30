@@ -702,7 +702,12 @@
   list-style: none;
 }
 
+/* Each card spans three shared rows (subject, quote, signature) via subgrid,
+   so quotes and names line up across the row whatever their length. */
 .lz-home .peer-list li {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
   padding: 2px 28px;
   border-left: 1px solid var(--lz-line);
 }
@@ -713,9 +718,9 @@
 }
 
 .lz-home .peer-list figure {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
   margin: 0;
 }
 
@@ -742,8 +747,8 @@
 .lz-home .peer-list figcaption {
   display: flex;
   align-items: center;
+  align-self: start;
   gap: 12px;
-  margin-top: auto;
   padding-top: 20px;
 }
 
@@ -782,7 +787,10 @@
 @media (max-width: 1100px) {
   .lz-home .peer-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 32px;
+  }
+
+  .lz-home .peer-list li:nth-child(-n + 2) {
+    padding-bottom: 32px;
   }
 
   .lz-home .peer-list li:nth-child(3) {
@@ -857,24 +865,47 @@
   );
 }
 
-.lz-home .reel {
-  --gap: 18px;
-  display: flex;
-  gap: var(--gap);
-  width: max-content;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  animation: lz-reel 70s linear infinite;
+/* Drifting strips (photos, guest names): scrollable, draggable, seamless. */
+.lz-home .marquee {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  cursor: grab;
 }
 
-.lz-home .scenes:hover .reel,
-.lz-home .scenes:focus-within .reel {
-  animation-play-state: paused;
+.lz-home .marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.lz-home .marquee.dragging {
+  cursor: grabbing;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.lz-home .marquee-track {
+  display: flex;
+  width: max-content;
+}
+
+.lz-home .marquee-copy {
+  display: flex;
+  gap: var(--gap);
+  padding-right: var(--gap);
+}
+
+.lz-home .reel {
+  --gap: 18px;
+}
+
+.lz-home .reel .scene {
+  display: block;
+  width: clamp(260px, 30vw, 420px);
+  color: inherit;
 }
 
 .lz-home .reel figure {
-  width: clamp(260px, 30vw, 420px);
   margin: 0;
 }
 
@@ -885,6 +916,11 @@
   object-fit: cover;
   border-radius: 6px;
   background: var(--lz-sand);
+  transition: filter 0.3s;
+}
+
+.lz-home .reel .scene:hover img {
+  filter: brightness(1.06);
 }
 
 .lz-home .reel figcaption {
@@ -892,12 +928,16 @@
   font-size: 13.5px;
   line-height: 1.55;
   color: var(--lz-muted);
+  transition: color 0.2s;
 }
 
-@keyframes lz-reel {
-  to {
-    transform: translateX(calc(-50% - var(--gap) / 2));
-  }
+.lz-home .reel .scene:hover figcaption {
+  color: var(--lz-ink);
+}
+
+.lz-home .reel .scene:hover figcaption::after {
+  content: " ↗";
+  color: var(--lz-green);
 }
 
 /* ---------- Section heads ---------- */
@@ -1024,7 +1064,7 @@
 
 .lz-home .c-show .photo {
   position: relative;
-  margin: 0;
+  display: block;
   overflow: hidden;
 }
 
@@ -1038,11 +1078,11 @@
   transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.lz-home .c-show:hover .photo img {
+.lz-home .c-show .photo:hover img {
   transform: scale(1.02);
 }
 
-.lz-home .c-show figcaption {
+.lz-home .c-show .photo .caption {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -1052,6 +1092,30 @@
   font-size: 13.5px;
   line-height: 1.5;
   color: var(--lz-on-forest-2);
+}
+
+/* The photograph plays the conversation it shows. */
+.lz-home .c-show .play {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgb(18 22 19 / 0.62)
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 7l9 5-9 5z' fill='%23f8f1e4'/></svg>")
+    center / 26px no-repeat;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s;
+}
+
+.lz-home .c-show .photo:hover .play {
+  transform: scale(1.08);
+}
+
+.lz-home .c-show h3 a {
+  color: inherit;
 }
 
 .lz-home .c-show .body {
@@ -1153,7 +1217,7 @@
     padding: 26px;
   }
 
-  .lz-home .c-show figcaption {
+  .lz-home .c-show .photo .caption {
     padding: 36px 16px 12px;
     font-size: 12.5px;
   }
@@ -1245,7 +1309,7 @@
 }
 
 .lz-home .names {
-  overflow: hidden;
+  --gap: 34px;
   margin-top: 44px;
   padding-block: 18px;
   border-block: 1px solid var(--lz-line);
@@ -1265,26 +1329,30 @@
   );
 }
 
-.lz-home .names .track {
-  --gap: 34px;
-  display: flex;
-  gap: var(--gap);
-  width: max-content;
+.lz-home .names .marquee-copy {
+  align-items: baseline;
   font-family: var(--serif);
   font-size: 18px;
   font-weight: 700;
   color: #575b54;
   white-space: nowrap;
-  animation: lz-reel 60s linear infinite;
 }
 
-.lz-home.l-en .names .track {
+.lz-home.l-en .names .marquee-copy {
   font-family: var(--num);
   font-weight: 500;
 }
 
-.lz-home .names .track .lab {
-  align-self: center;
+.lz-home .names a {
+  color: inherit;
+  transition: color 0.2s;
+}
+
+.lz-home .names a:hover {
+  color: var(--lz-green);
+}
+
+.lz-home .names .lab {
   font-family: var(--sans);
   font-size: 13.5px;
   font-weight: 400;
@@ -1412,7 +1480,7 @@
   display: grid;
   grid-template-columns: 132px minmax(0, 1fr) minmax(0, 250px);
   gap: 10px 40px;
-  padding: 28px 0;
+  padding: 28px clamp(26px, 3vw, 40px);
   border-top: 1px solid var(--lz-line);
 }
 
@@ -1615,6 +1683,7 @@
     padding-top: 6px;
   }
 
+  .lz-home .call,
   .lz-home .call.featured {
     padding: 24px 22px;
   }
@@ -1644,16 +1713,23 @@
 .lz-home .essays {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  column-gap: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Subgrid: every card's date, title, line and link sit on shared rows. */
+.lz-home .essays > li {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+}
+
 .lz-home .essay {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
   padding: 28px 26px;
   border-radius: 14px;
   background: var(--lz-paper);
@@ -1687,6 +1763,7 @@
 }
 
 .lz-home .essay p {
+  align-self: start;
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--lz-line);
@@ -1701,7 +1778,7 @@
 }
 
 .lz-home .essay .go {
-  margin-top: auto;
+  align-self: end;
   padding-top: 18px;
   font-size: 14px;
   font-weight: 500;
@@ -1711,6 +1788,10 @@
 @media (max-width: 1040px) {
   .lz-home .essays {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lz-home .essays > li {
+    margin-bottom: 18px;
   }
 }
 
@@ -1728,6 +1809,68 @@
   border-radius: 18px;
   background: var(--lz-forest-2);
   color: var(--lz-on-forest);
+}
+
+/* Open Context: the public corpus people and AI can both read. */
+.lz-home .open-context {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px 24px;
+  margin-top: 18px;
+  padding: 22px 28px;
+  border-radius: 16px;
+  background: var(--lz-paper);
+  box-shadow: 0 0 0 1px var(--lz-line);
+  color: var(--lz-ink-2);
+  transition:
+    box-shadow 0.25s,
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.lz-home .open-context:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px var(--lz-line-2),
+    0 20px 40px -30px rgb(20 30 20 / 0.45);
+}
+
+.lz-home .open-context .gh {
+  width: 30px;
+  height: 30px;
+  color: var(--lz-ink);
+}
+
+.lz-home .open-context b {
+  font-family: var(--num);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
+.lz-home .open-context p {
+  margin-top: 4px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-muted);
+}
+
+.lz-home .open-context .go {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--lz-green);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .lz-home .open-context {
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 20px 22px;
+  }
+
+  .lz-home .open-context .go {
+    grid-column: 2;
+  }
 }
 
 .lz-search h3 {
@@ -1978,8 +2121,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 14px 28px;
-  margin-top: 18px;
+  gap: 22px 40px;
+  margin-top: 22px;
 }
 
 /* The legend keeps the height of its longest version (data-lines and
@@ -2023,66 +2166,60 @@
   color: var(--lz-on-forest-3);
 }
 
-.lz-home .city-random {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 0 16px;
-  border: 0;
-  border-radius: 999px;
-  background: rgb(248 241 228 / 0.08);
-  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
-  color: var(--lz-on-forest);
-  font: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.2s;
+/* Map controls float over the map's empty top corners. */
+.lz-home .city-map {
+  position: relative;
 }
 
-.lz-home .city-random:hover {
-  background: rgb(248 241 228 / 0.16);
-}
-
-/* Search and the random member; hidden (but still taking space) until the
-   member data has loaded. */
 .lz-home .city-tools {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  left: 16px;
+  z-index: 4;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 10px;
-  align-items: center;
+  pointer-events: none;
 }
 
-.lz-home .city-tools.idle {
-  visibility: hidden;
+.lz-home .city-tools > * {
+  pointer-events: auto;
 }
 
 .lz-home .city-find {
   position: relative;
-  width: 260px;
-  max-width: 100%;
+  width: min(300px, 100%);
 }
 
 .lz-home .city-find svg {
   position: absolute;
-  top: 50%;
+  top: 21px;
   left: 15px;
+  z-index: 1;
   color: var(--lz-on-forest-3);
   transform: translateY(-50%);
   pointer-events: none;
 }
 
-.lz-home .city-find input {
-  width: 100%;
+.lz-home .city-find input,
+.lz-home .city-random {
   min-height: 42px;
-  padding: 0 16px 0 40px;
   border: 0;
   border-radius: 999px;
-  background: rgb(248 241 228 / 0.06);
-  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
+  background: rgb(8 35 19 / 0.62);
+  box-shadow: inset 0 0 0 1px rgb(248 241 228 / 0.16);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: var(--lz-on-forest);
   font: inherit;
   font-size: 14px;
+}
+
+.lz-home .city-find input {
+  width: 100%;
+  padding: 0 16px 0 40px;
   outline: none;
   transition: box-shadow 0.2s;
 }
@@ -2097,6 +2234,19 @@
 
 .lz-home .city-find input::-webkit-search-cancel-button {
   display: none;
+}
+
+.lz-home .city-random {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.lz-home .city-random:hover {
+  background: rgb(20 60 36 / 0.8);
 }
 
 .lz-home .city-find-list {
@@ -2145,26 +2295,44 @@
 }
 
 @media (max-width: 560px) {
-  .lz-home .city-tools,
+  .lz-home .city-tools {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+  }
+
   .lz-home .city-find {
-    width: 100%;
+    flex: 1;
+    width: auto;
+  }
+
+  .lz-home .city-random {
+    justify-content: center;
+    width: 42px;
+    padding: 0;
+  }
+
+  .lz-home .city-random .label {
+    display: none;
   }
 }
 
 .lz-home .city-join {
-  margin-top: 30px;
+  flex: none;
 }
 
 .lz-home .paths {
   display: grid;
   grid-template-columns: 1.15fr 1fr 1fr;
-  gap: 18px;
+  column-gap: 18px;
   margin-top: 18px;
 }
 
+/* Subgrid: the three offers share rows, so numbers and actions line up. */
 .lz-home .path {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
   padding: 30px;
   border-radius: 16px;
   box-shadow: inset 0 0 0 1px var(--lz-forest-line);
@@ -2209,6 +2377,7 @@
 .lz-home .path .s {
   display: flex;
   flex-wrap: wrap;
+  align-self: start;
   gap: 4px 18px;
   margin-top: 18px;
   font-size: 14px;
@@ -2233,7 +2402,7 @@
 }
 
 .lz-home .path .act {
-  margin-top: auto;
+  align-self: end;
   padding-top: 24px;
 }
 
@@ -2317,6 +2486,10 @@
   .lz-home .paths {
     grid-template-columns: 1fr;
   }
+
+  .lz-home .path {
+    margin-bottom: 18px;
+  }
 }
 
 @media (max-width: 520px) {
@@ -2379,9 +2552,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lz-home .hero .mark-in,
-  .lz-home .hero .rise,
-  .lz-home .reel,
-  .lz-home .names .track {
+  .lz-home .hero .rise {
     animation: none;
   }
 
@@ -2391,23 +2562,7 @@
     transition: none;
   }
 
-  .lz-home .scenes .mask {
-    overflow-x: auto;
-  }
-
-  .lz-home .reel [aria-hidden="true"],
-  .lz-home .names .track [aria-hidden="true"] {
+  .lz-home .marquee-copy[aria-hidden="true"] {
     display: none;
-  }
-
-  .lz-home .names .track {
-    flex-wrap: wrap;
-    width: auto;
-    white-space: normal;
-  }
-
-  .lz-home .names {
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }

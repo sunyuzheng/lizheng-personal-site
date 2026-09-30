@@ -29,17 +29,17 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun (立正 / 课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun, Cornell Economics PhD, author, and founder of Superlinear Academy. His story, writing, books, and conversations with AI researchers and technology founders. MAKE WHAT LASTS.",
+      "Yuzheng Sun (立正), Cornell Economics PhD, founder of Superlinear Academy. 200+ conversations with AI researchers and founders, two books, dated calls on AI.",
     canonical: "https://www.lizheng.ai/",
-    ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
+    ogImage: "https://www.lizheng.ai/og/home-en.jpg",
     lastModified: "2026-09-30",
   },
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
     description:
-      "立正（孙煜征，课代表立正），康奈尔经济学博士、《真本事》作者、超线性学院创始人。我的经历、文章、书，以及与AI研究者和科技创始人的深度对话。学点真本事，做点真东西。",
+      "立正（孙煜征，课代表立正），康奈尔经济学博士，超线性学院创始人，《真本事》作者。和AI研究者、创业者做了200多场深度对话，关于AI的判断先写下来，再让时间检验。",
     canonical: "https://www.lizheng.ai/zh",
-    ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
+    ogImage: "https://www.lizheng.ai/og/home-zh.jpg",
     lastModified: "2026-09-30",
   },
 };

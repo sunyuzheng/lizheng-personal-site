@@ -1,3 +1,4 @@
+import { SocialIcon } from "@/components/site/social";
 import type { Lang } from "@/contexts/LanguageContext";
 import { HOME_COPY, SECTION } from "./content";
 import { EXTERNAL, Lines, Phrases } from "./parts";
@@ -34,6 +35,16 @@ export default function Writing({ lang }: { lang: Lang }) {
           ))}
         </ul>
         <SiteSearch lang={lang} />
+        <a className="open-context rv" href={t.openContext.href} {...EXTERNAL}>
+          <SocialIcon id="github" className="gh" />
+          <div>
+            <b>{t.openContext.title}</b>
+            <p>{t.openContext.body}</p>
+          </div>
+          <span className="go">
+            {t.openContext.cta} <span aria-hidden="true">→</span>
+          </span>
+        </a>
       </div>
     </section>
   );

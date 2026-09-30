@@ -43,7 +43,7 @@ export default function SiteFooter() {
           <nav aria-label={copy.footerFollow}>
             <h2>{copy.footerFollow}</h2>
             <ul>
-              {socialLinks(lang, "footer").map(link => (
+              {socialLinks(lang).map(link => (
                 <li key={link.id}>
                   <a
                     href={link.href}

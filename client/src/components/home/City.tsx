@@ -21,12 +21,19 @@ export default function City({ lang }: { lang: Lang }) {
             <RichText value={t.intro} />
           </p>
         </div>
-        <CityField lang={lang} copy={t.field} />
-        <div className="city-join rv">
-          <a className="btn btn-ivory" href={LINKS.community} {...EXTERNAL}>
-            {t.field.join} <span aria-hidden="true">→</span>
-          </a>
-        </div>
+        <CityField
+          lang={lang}
+          copy={t.field}
+          action={
+            <a
+              className="btn btn-ivory city-join"
+              href={LINKS.community}
+              {...EXTERNAL}
+            >
+              {t.field.join} <span aria-hidden="true">→</span>
+            </a>
+          }
+        />
       </div>
     </section>
   );

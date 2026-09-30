@@ -1,38 +1,76 @@
 import type { Lang } from "@/contexts/LanguageContext";
-import { HOME_COPY } from "./content";
+import { withLanguage } from "@/lib/language-url";
+import { Link } from "wouter";
+import { HOME_COPY, type Scene } from "./content";
+import Marquee from "./Marquee";
+import { EXTERNAL } from "./parts";
+
+function SceneCard({
+  scene,
+  lang,
+  loopCopy,
+}: {
+  scene: Scene;
+  lang: Lang;
+  loopCopy: boolean;
+}) {
+  const body = (
+    <figure>
+      <img
+        src={scene.image}
+        alt={loopCopy ? "" : scene.alt}
+        width={1280}
+        height={720}
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+      />
+      <figcaption>{scene.caption}</figcaption>
+    </figure>
+  );
+  const focus = loopCopy ? { tabIndex: -1 } : {};
+  return scene.href.startsWith("/") ? (
+    <Link
+      className="scene"
+      href={withLanguage(scene.href, lang)}
+      draggable={false}
+      {...focus}
+    >
+      {body}
+    </Link>
+  ) : (
+    <a
+      className="scene"
+      href={scene.href}
+      draggable={false}
+      {...EXTERNAL}
+      {...focus}
+    >
+      {body}
+    </a>
+  );
+}
 
 /**
- * A slow, seamless strip of real photographs. The second copy exists only for
- * the loop, so it is hidden from assistive technology and has empty alt text.
+ * Real photographs of Yuzheng on stage. The strip drifts slowly; it can be
+ * dragged or swiped, and each photo opens where that room can be seen.
  */
 export default function Scenes({ lang }: { lang: Lang }) {
   const copy = HOME_COPY[lang];
-  const renderScenes = (duplicate: boolean) =>
-    copy.scenes.map(scene => (
-      <figure
-        key={`${duplicate ? "loop-" : ""}${scene.image}`}
-        aria-hidden={duplicate || undefined}
-      >
-        <img
-          src={scene.image}
-          alt={duplicate ? "" : scene.alt}
-          width={1280}
-          height={720}
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption>{scene.caption}</figcaption>
-      </figure>
-    ));
-
   return (
     <section className="scenes" aria-label={copy.scenesLabel}>
-      <div className="mask">
-        <div className="reel">
-          {renderScenes(false)}
-          {renderScenes(true)}
-        </div>
-      </div>
+      <Marquee className="mask reel" speed={24}>
+        {loopCopy =>
+          copy.scenes.map(scene => (
+            <SceneCard
+              key={scene.image}
+              scene={scene}
+              lang={lang}
+              loopCopy={loopCopy}
+            />
+          ))
+        }
+      </Marquee>
     </section>
   );
 }

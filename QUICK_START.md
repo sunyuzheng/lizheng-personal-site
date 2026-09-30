@@ -39,17 +39,20 @@ docs/             ← 数据结构和嘉宾维护说明
 
 ## 路由
 
-| 路径                  | 页面                               |
-| --------------------- | ---------------------------------- |
-| `/`                   | 首页（主线、判断、实践、对话与书） |
-| `/guests`             | 嘉宾目录                           |
-| `/guests/:slug`       | 单个嘉宾详情                       |
-| `/book`               | 两本书总览                         |
-| `/zbs`                | 《真本事》单书页与 AI 顾问         |
-| `/collab`             | 演讲、企业项目与长期合作入口       |
-| `/collab/creators`    | 播客、视频与创作者邀请             |
-| `/zh/collab`          | 中文合作入口                       |
-| `/zh/collab/creators` | 中文节目邀请页                     |
+中文是默认语言，页面在不带前缀的路径；有英文版的页面，英文版在`/en`下（`/en`、`/en/about`、`/en/collab`……）。旧的`/zh/…`地址308跳转到中文路径。
+
+| 路径                 | 页面                         |
+| -------------------- | ---------------------------- |
+| `/`                  | 首页（英文`/en`）            |
+| `/about`             | 关于我                       |
+| `/guests`            | 嘉宾目录                     |
+| `/guests/:slug`      | 单个嘉宾详情                 |
+| `/book`              | 两本书总览                   |
+| `/zbs`               | 《真本事》单书页与AI顾问     |
+| `/decks`             | 企业培训与演讲资料索引       |
+| `/collab`            | 演讲、企业项目与长期合作入口 |
+| `/collab/creators`   | 播客、视频与创作者邀请       |
+| `/collab/enterprise` | 企业AI培训                   |
 
 ---
 
@@ -57,20 +60,16 @@ docs/             ← 数据结构和嘉宾维护说明
 
 ### 修改首页内容
 
-编辑 `client/src/pages/Home.tsx`：
+首页的中英文文案、链接和精选内容集中在 `client/src/components/home/content.ts`，各段组件在 `client/src/components/home/`。
 
-- `method` / `careerChapters` / `featuredJudgment` → 母题之下的方法、经历与一个最强公开记录
-- `work` → 免费社区、AI Builders、Stay Superlinear会员与企业项目
-- `selectedGuests` / `endorsements` → 首页精选证据
-
-页面的取舍与品牌关系见 `docs/content-system.md` 和 `docs/homepage-narrative-outline.md`。
+页面的取舍与品牌关系见 `docs/content-system.md` 和 `docs/reviews/homepage-redesign-2026-09-30.md`。
 
 ### 修改合作页面
 
 - 商业与组织合作：`client/src/pages/Collab.tsx`
 - 播客与创作者邀请：`client/src/pages/CreatorCollab.tsx`
 - 两页共享的搜索与分享文案：`shared/collab-meta.ts`
-- 中文合作页使用真实路径 `/zh/collab` 与 `/zh/collab/creators`，便于分享预览；旧的 `?lang=zh` 链接仍可打开。
+- 两页都有中英文两个真实地址（`/collab`与`/en/collab`，`/collab/creators`与`/en/collab/creators`），便于分享预览。
 
 ### 修改图片
 

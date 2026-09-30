@@ -20,7 +20,6 @@ import GuestInvitation from "./pages/GuestInvitation";
 import Decks from "./pages/Decks";
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "wouter";
-import type { Lang } from "./contexts/LanguageContext";
 
 const HomeExperiment = lazy(() => import("./pages/HomeExperiment"));
 const HomeExperimentEmil = lazy(() => import("./pages/HomeExperimentEmil"));
@@ -97,9 +96,9 @@ function Router() {
       <RouteScroll />
       <Switch>
         <Route path={"/"} component={Home} />
-        <Route path={"/zh"} component={Home} />
+        <Route path={"/en"} component={Home} />
         <Route path={"/about"} component={About} />
-        <Route path={"/zh/about"} component={About} />
+        <Route path={"/en/about"} component={About} />
         <Route path={"/guests/:slug"}>
           {params => <GuestDetail slug={params.slug} />}
         </Route>
@@ -116,16 +115,16 @@ function Router() {
         <Route path={"/en/decks"} component={Decks} />
         <Route path={"/experiment/vercel"} component={VercelExperimentRoute} />
         <Route
-          path={"/zh/experiment/vercel"}
+          path={"/en/experiment/vercel"}
           component={VercelExperimentRoute}
         />
         <Route path={"/experiment/emil"} component={EmilExperimentRoute} />
-        <Route path={"/zh/experiment/emil"} component={EmilExperimentRoute} />
+        <Route path={"/en/experiment/emil"} component={EmilExperimentRoute} />
         <Route path={"/book"} component={Books} />
-        <Route path={"/zh/book"} component={Books} />
-        <Route path={"/zh/collab/creators"} component={CreatorCollab} />
-        <Route path={"/zh/collab/enterprise"} component={EnterpriseTraining} />
-        <Route path={"/zh/collab"} component={Collab} />
+        <Route path={"/en/book"} component={Books} />
+        <Route path={"/en/collab/creators"} component={CreatorCollab} />
+        <Route path={"/en/collab/enterprise"} component={EnterpriseTraining} />
+        <Route path={"/en/collab"} component={Collab} />
         <Route path={"/collab/creators"} component={CreatorCollab} />
         <Route path={"/collab/enterprise"} component={EnterpriseTraining} />
         <Route path={"/collab"} component={Collab} />
@@ -137,14 +136,10 @@ function Router() {
   );
 }
 
-interface AppProps {
-  defaultLang?: Lang;
-}
-
-function App({ defaultLang = "en" }: AppProps) {
+function App() {
   return (
     <ErrorBoundary>
-      <LanguageProvider defaultLang={defaultLang}>
+      <LanguageProvider>
         <ThemeProvider defaultTheme="dark">
           <TooltipProvider>
             <Toaster />

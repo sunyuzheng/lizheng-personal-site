@@ -656,91 +656,94 @@ export default function CityField({
 
   return (
     <div className="city-map rv">
-      {names?.length ? (
-        <div className="city-tools">
-          <div className="city-find">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <circle
-                cx="11"
-                cy="11"
-                r="7"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M20 20l-4-4"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-            <input
-              type="search"
-              value={query}
-              placeholder={copy.find.placeholder}
-              aria-label={copy.find.label}
-              role="combobox"
-              aria-autocomplete="list"
-              aria-expanded={showList}
-              aria-controls={listId}
-              aria-activedescendant={
-                showList && matches.length ? `${listId}-${active}` : undefined
-              }
-              autoComplete="off"
-              spellCheck={false}
-              onChange={event => {
-                setQuery(event.target.value);
-                setListOpen(true);
-              }}
-              onFocus={() => setListOpen(true)}
-              onBlur={() => setListOpen(false)}
-              onKeyDown={onFindKey}
+      {/* Always rendered, so the map does not move when the data arrives. */}
+      <div
+        className={names?.length ? "city-tools" : "city-tools idle"}
+        aria-hidden={names?.length ? undefined : true}
+      >
+        <div className="city-find">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <circle
+              cx="11"
+              cy="11"
+              r="7"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
             />
-            {showList && (
-              <ul id={listId} role="listbox" className="city-find-list">
-                {matches.map((member, index) => (
-                  <li
-                    key={member}
-                    id={`${listId}-${index}`}
-                    role="option"
-                    aria-selected={index === active}
-                    onMouseEnter={() => setActive(index)}
-                    onMouseDown={event => event.preventDefault()}
-                    onClick={() => linked && openProfile(linked[member])}
-                  >
-                    <span>{names?.[member]}</span>
-                    <span aria-hidden="true">↗</span>
-                  </li>
-                ))}
-                {!matches.length && (
-                  <li className="empty" role="option" aria-selected={false}>
-                    {copy.find.empty(query.trim())}
-                  </li>
-                )}
-              </ul>
-            )}
-          </div>
-          <button
-            type="button"
-            className="city-random"
-            onClick={meetRandom}
-            aria-label={copy.random}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M4 7h3.5c2.6 0 3.9 1.6 5 3.6l1 1.8c1.1 2 2.4 3.6 5 3.6H20M4 17h3.5c1.4 0 2.4-.5 3.2-1.3M16.8 8.3c.7-.8 1.7-1.3 2.9-1.3H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="label">{copy.random}</span>
-          </button>
+            <path
+              d="M20 20l-4-4"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+          <input
+            type="search"
+            value={query}
+            placeholder={copy.find.placeholder}
+            aria-label={copy.find.label}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded={showList}
+            aria-controls={listId}
+            aria-activedescendant={
+              showList && matches.length ? `${listId}-${active}` : undefined
+            }
+            autoComplete="off"
+            spellCheck={false}
+            disabled={!names?.length}
+            onChange={event => {
+              setQuery(event.target.value);
+              setListOpen(true);
+            }}
+            onFocus={() => setListOpen(true)}
+            onBlur={() => setListOpen(false)}
+            onKeyDown={onFindKey}
+          />
+          {showList && (
+            <ul id={listId} role="listbox" className="city-find-list">
+              {matches.map((member, index) => (
+                <li
+                  key={member}
+                  id={`${listId}-${index}`}
+                  role="option"
+                  aria-selected={index === active}
+                  onMouseEnter={() => setActive(index)}
+                  onMouseDown={event => event.preventDefault()}
+                  onClick={() => linked && openProfile(linked[member])}
+                >
+                  <span>{names?.[member]}</span>
+                  <span aria-hidden="true">↗</span>
+                </li>
+              ))}
+              {!matches.length && (
+                <li className="empty" role="option" aria-selected={false}>
+                  {copy.find.empty(query.trim())}
+                </li>
+              )}
+            </ul>
+          )}
         </div>
-      ) : null}
+        <button
+          type="button"
+          className="city-random"
+          onClick={meetRandom}
+          aria-label={copy.random}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M4 7h3.5c2.6 0 3.9 1.6 5 3.6l1 1.8c1.1 2 2.4 3.6 5 3.6H20M4 17h3.5c1.4 0 2.4-.5 3.2-1.3M16.8 8.3c.7-.8 1.7-1.3 2.9-1.3H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="label">{copy.random}</span>
+        </button>
+      </div>
       <div ref={wrapRef} className="field">
         <canvas
           ref={canvasRef}

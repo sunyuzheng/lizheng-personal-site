@@ -53,9 +53,14 @@
       "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1"
     },
     {
-      "src": "/zh/decks",
+      "src": "/zh",
       "status": 308,
-      "headers": { "Location": "/decks" }
+      "headers": { "Location": "/" }
+    },
+    {
+      "src": "/zh/(.*)",
+      "status": 308,
+      "headers": { "Location": "/$1" }
     },
     {
       "src": "/",
@@ -90,7 +95,7 @@
       ],
       "status": 308,
       "headers": {
-        "Location": "https://www.lizheng.ai/zh/collab/creators"
+        "Location": "https://www.lizheng.ai/collab/creators"
       }
     },
     {
@@ -102,42 +107,6 @@
         }
       ],
       "dest": "/podcast"
-    },
-    {
-      "src": "/",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh" }
-    },
-    {
-      "src": "/book",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh/book" }
-    },
-    {
-      "src": "/about",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh/about" }
-    },
-    {
-      "src": "/collab",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh/collab" }
-    },
-    {
-      "src": "/collab/creators",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh/collab/creators" }
-    },
-    {
-      "src": "/collab/enterprise",
-      "has": [{ "type": "query", "key": "lang", "value": "zh" }],
-      "status": 308,
-      "headers": { "Location": "/zh/collab/enterprise" }
     },
     {
       "src": "/collab/podcast-one-pager\\.pdf",

@@ -185,7 +185,7 @@ const makingSteps = {
 };
 
 function EmilLanguageSwitch() {
-  const { lang, setLang } = useLanguage();
+  const { lang } = useLanguage();
   const [location] = useLocation();
 
   return (
@@ -198,7 +198,6 @@ function EmilLanguageSwitch() {
         href={withLanguage(location, "en")}
         hrefLang="en"
         aria-current={lang === "en" ? "page" : undefined}
-        onClick={() => setLang("en")}
       >
         EN
       </Link>
@@ -206,7 +205,6 @@ function EmilLanguageSwitch() {
         href={withLanguage(location, "zh")}
         hrefLang="zh-CN"
         aria-current={lang === "zh" ? "page" : undefined}
-        onClick={() => setLang("zh")}
       >
         中文
       </Link>

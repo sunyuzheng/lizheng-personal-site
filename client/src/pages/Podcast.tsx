@@ -832,7 +832,7 @@ export default function Podcast() {
               嘉宾邀请
             </a>
             <a
-              href="https://www.lizheng.ai/zh/about"
+              href="https://www.lizheng.ai/about"
               className="transition hover:text-superlinear-on-dark"
             >
               关于我

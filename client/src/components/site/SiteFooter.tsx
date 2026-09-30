@@ -6,6 +6,10 @@ import LizhengMark from "./LizhengMark";
 import { CONTACT_EMAIL, SHOP_URL, SITE_COPY, SITE_PAGES } from "./site-content";
 import { SocialIcon, socialLinks } from "./social";
 
+/**
+ * Two balanced rows: who Yuzheng is on the left and where to follow him on
+ * the right; then the site's pages on the left and the copyright on the right.
+ */
 export default function SiteFooter() {
   const { lang } = useLanguage();
   const copy = SITE_COPY[lang];
@@ -13,7 +17,7 @@ export default function SiteFooter() {
   return (
     <footer className={`lz-footer${lang === "en" ? " l-en" : ""}`}>
       <div className="inner">
-        <div className="grid">
+        <div className="top">
           <div className="who">
             <LizhengMark />
             <div>
@@ -25,8 +29,32 @@ export default function SiteFooter() {
               </p>
             </div>
           </div>
+          <div className="follow">
+            <h2>{copy.footerFollow}</h2>
+            <ul className="icons">
+              {socialLinks(lang).map(link => (
+                <li key={link.id}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-id={link.id}
+                    aria-label={link.label[lang]}
+                    title={link.label[lang]}
+                  >
+                    <SocialIcon id={link.id} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a className="mail" href={`mailto:${CONTACT_EMAIL}`}>
+              <Mail aria-hidden="true" />
+              {CONTACT_EMAIL}
+            </a>
+          </div>
+        </div>
+        <div className="base">
           <nav aria-label={copy.footerMore}>
-            <h2>{copy.footerMore}</h2>
             <ul>
               {SITE_PAGES.map(item => (
                 <li key={item.page}>
@@ -40,33 +68,7 @@ export default function SiteFooter() {
               </li>
             </ul>
           </nav>
-          <nav aria-label={copy.footerFollow}>
-            <h2>{copy.footerFollow}</h2>
-            <ul>
-              {socialLinks(lang).map(link => (
-                <li key={link.id}>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-id={link.id}
-                  >
-                    <SocialIcon id={link.id} />
-                    {link.label[lang]}
-                  </a>
-                </li>
-              ))}
-              <li>
-                <a href={`mailto:${CONTACT_EMAIL}`}>
-                  <Mail aria-hidden="true" />
-                  {copy.email}
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div className="base">
-          <span>
+          <span className="rights">
             © <span suppressHydrationWarning>{new Date().getFullYear()}</span>{" "}
             {copy.rights}
           </span>

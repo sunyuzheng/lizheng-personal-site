@@ -1,19 +1,24 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { hasCanonicalLanguagePath, withLanguage } from "@/lib/language-url";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useLocation } from "wouter";
+import { followsReaderLanguage, langForPath } from "@/lib/language-url";
 
 export type Lang = "en" | "zh";
 
 interface LanguageContextType {
   lang: Lang;
-  setLang: (lang: Lang) => void;
-  toggleLang: () => void;
+  /** Switches language in place on pages with one address (the guest pages). */
+  setReaderLang: (lang: Lang) => void;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
-
-const STORAGE_KEY = "lizheng-lang";
 
 function isStandaloneChineseHost(): boolean {
   if (typeof window === "undefined") return false;
@@ -23,107 +28,39 @@ function isStandaloneChineseHost(): boolean {
   );
 }
 
-function readInitialLang(defaultLang: Lang): Lang {
-  if (typeof window === "undefined") return defaultLang;
-  if (isStandaloneChineseHost()) return "zh";
-  if (
-    window.location.pathname === "/decks" ||
-    window.location.pathname.startsWith("/decks/")
-  )
-    return "zh";
-  if (window.location.pathname === "/en/decks") return "en";
-  if (
-    window.location.pathname === "/zh" ||
-    window.location.pathname.startsWith("/zh/")
-  ) {
-    return "zh";
-  }
-  if (
-    window.location.pathname === "/zbs" ||
-    window.location.pathname === "/speaker" ||
-    window.location.pathname === "/podcast" ||
-    window.location.pathname === "/guests" ||
-    window.location.pathname.startsWith("/guests/")
-  ) {
-    return "zh";
-  }
-  if (hasCanonicalLanguagePath(window.location.pathname)) return "en";
-  const requested = new URLSearchParams(window.location.search).get("lang");
-  if (requested === "en" || requested === "zh") return requested;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (stored === "en" || stored === "zh") return stored;
-  return defaultLang;
-}
-
-function syncLangParam(lang: Lang) {
-  const url = new URL(window.location.href);
-  const nextUrl = withLanguage(`${url.pathname}${url.search}${url.hash}`, lang);
-  window.history.replaceState(window.history.state, "", nextUrl);
-}
-
 interface LanguageProviderProps {
   children: React.ReactNode;
-  defaultLang?: Lang;
 }
 
-export function LanguageProvider({
-  children,
-  defaultLang = "en",
-}: LanguageProviderProps) {
-  const [lang, setLangState] = useState<Lang>(() =>
-    readInitialLang(defaultLang)
+// The address decides the language: Chinese at plain paths, English under
+// /en, and switching language is a link to the other address. The guest
+// pages are the exception: one address, the language the visitor was reading
+// in (Chinese on a fresh visit), switched in place.
+export function LanguageProvider({ children }: LanguageProviderProps) {
+  const [location] = useLocation();
+  const shared = followsReaderLanguage(location);
+  const [readerLang, setReaderLang] = useState<Lang>(() =>
+    shared ? "zh" : langForPath(location)
   );
 
   useEffect(() => {
-    document.documentElement.lang = lang === "en" ? "en-US" : "zh-CN";
-    window.localStorage.setItem(STORAGE_KEY, lang);
-    if (!isStandaloneChineseHost()) syncLangParam(lang);
-  }, [lang]);
+    if (!shared) setReaderLang(langForPath(location));
+  }, [shared, location]);
+
+  const lang: Lang = isStandaloneChineseHost()
+    ? "zh"
+    : shared
+      ? readerLang
+      : langForPath(location);
 
   useEffect(() => {
-    const handlePopState = () => {
-      if (
-        window.location.pathname === "/decks" ||
-        window.location.pathname.startsWith("/decks/")
-      ) {
-        setLangState("zh");
-        return;
-      }
-      if (window.location.pathname === "/en/decks") {
-        setLangState("en");
-        return;
-      }
-      if (
-        isStandaloneChineseHost() ||
-        window.location.pathname === "/zh" ||
-        window.location.pathname.startsWith("/zh/") ||
-        window.location.pathname === "/zbs" ||
-        window.location.pathname === "/speaker" ||
-        window.location.pathname === "/podcast" ||
-        window.location.pathname === "/guests" ||
-        window.location.pathname.startsWith("/guests/")
-      ) {
-        setLangState("zh");
-        return;
-      }
-      if (hasCanonicalLanguagePath(window.location.pathname)) {
-        setLangState("en");
-        return;
-      }
-      const requested = new URLSearchParams(window.location.search).get("lang");
-      setLangState(requested === "zh" ? "zh" : "en");
-    };
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
+    document.documentElement.lang = lang === "en" ? "en-US" : "zh-CN";
+  }, [lang]);
 
-  const setLang = (next: Lang) => {
-    setLangState(next);
-  };
-  const toggleLang = () => setLangState(prev => (prev === "en" ? "zh" : "en"));
+  const value = useMemo(() => ({ lang, setReaderLang }), [lang]);
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, toggleLang }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

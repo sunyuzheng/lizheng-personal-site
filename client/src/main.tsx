@@ -8,24 +8,7 @@ import "./index.css";
 void import("./fonts.css");
 
 const root = document.getElementById("root")!;
-const isChineseContentPath =
-  window.location.hostname === "podcast.lizheng.ai" ||
-  window.location.hostname === "speaker.lizheng.ai" ||
-  window.location.pathname === "/decks" ||
-  window.location.pathname.startsWith("/decks/") ||
-  window.location.pathname === "/zbs" ||
-  window.location.pathname === "/speaker" ||
-  window.location.pathname === "/podcast" ||
-  window.location.pathname === "/guests" ||
-  window.location.pathname.startsWith("/guests/");
-const defaultLang =
-  window.location.pathname === "/zh" ||
-  window.location.pathname.startsWith("/zh/") ||
-  isChineseContentPath ||
-  new URLSearchParams(window.location.search).get("lang") === "zh"
-    ? "zh"
-    : "en";
-const app = <App defaultLang={defaultLang} />;
+const app = <App />;
 
 if (root.dataset.ssr === "true") {
   hydrateRoot(root, app);

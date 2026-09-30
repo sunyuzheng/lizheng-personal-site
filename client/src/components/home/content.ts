@@ -19,7 +19,8 @@ export const LINKS = {
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,
-// /zh#conversations and other existing links still land in the right place.
+// /en#conversations and older links (/zh#… redirects to /#…) still land in
+// the right place.
 export const SECTION = {
   hero: "hero",
   works: "works",
@@ -424,10 +425,7 @@ const zh = {
         "https://www.superlinear.academy/c/ai-resources/result-certainty-general-intelligence-wei-xiaoliang"
       ),
       also("夏淳", "https://www.superlinear.academy/c/posts/xiachun"),
-      also(
-        "刘未末",
-        "https://www.youtube.com/@kedaibiao/search?query=%E5%88%98%E6%9C%AA%E6%9C%AB"
-      ),
+      also("刘未末", "https://www.superlinear.academy/c/main/puppygraph"),
       also("Kevin Chen", "kevin-chen"),
       also("董有超", "devin-dong"),
       also("Vivian Wang", "vivian-wang"),
@@ -641,7 +639,7 @@ const zh = {
         placeholder: "按名字找成员",
         empty: (query: string) => `没有找到“${query}”。`,
       },
-      join: "免费加入，成为其中一个点",
+      join: "免费加入，一起建这座城",
     } as CityCopy,
   },
   join: {
@@ -1059,7 +1057,7 @@ const en: HomeCopy = {
         placeholder: "Find a member by name",
         empty: query => `No member named “${query}”.`,
       },
-      join: "Join free and become one of the dots",
+      join: "Join free and help build it",
     },
   },
   join: {

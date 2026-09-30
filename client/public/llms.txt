@@ -26,7 +26,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Direct
 - [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice. The homepage shows the community as a map: one dot per member, ordered by posts and comments, each opening that member's public Circle profile, refreshed from a monthly member snapshot.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.
-- [Enterprise AI training](https://www.lizheng.ai/collab/enterprise): the standard is that work should be different after the training. Organizations can begin with a focused session from $2,000, buy AI Builders by the seat, run a dedicated cohort for at least 30 learners, add course customization from $20,000 in addition to tuition, or commission a fully custom enterprise program from $100,000. Yuzheng does not sell paid consulting to individuals; individuals can ask questions in the free Superlinear Academy community and receive answers there for free.
+- [Enterprise AI training](https://www.lizheng.ai/en/collab/enterprise): the standard is that work should be different after the training. Organizations can begin with a focused session from $2,000, buy AI Builders by the seat, run a dedicated cohort for at least 30 learners, add course customization from $20,000 in addition to tuition, or commission a fully custom enterprise program from $100,000. Yuzheng does not sell paid consulting to individuals; individuals can ask questions in the free Superlinear Academy community and receive answers there for free.
 - [AI Builders 2027 for Teams procurement brief](https://www.lizheng.ai/enterprise/AI-Builders-2027-for-Teams.pdf): a two-page English PDF with course outcomes, faculty, public learner reviews, team pricing, private-cohort options, customization, and purchasing terms.
 - [Enterprise AI training and deck library, Chinese](https://www.lizheng.ai/decks) and [English](https://www.lizheng.ai/en/decks): a curated index of enterprise training, strategic briefings, team workshops, and selected public talks that may be shown publicly. Fully custom client work subject to confidentiality is not listed. Each deck keeps its original presentation language.
 - [课代表立正](https://www.youtube.com/@kedaibiao): public conversations and analysis across YouTube, Bilibili, and Xiaohongshu.
@@ -64,7 +64,7 @@ Metrics change and should retain their dates.
 
 ## Books
 
-- [Growth Data Analytics Playbook](https://www.lizheng.ai/book): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
+- [Growth Data Analytics Playbook](https://www.lizheng.ai/en/book): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
 - [真本事：从会工作到会赚钱](https://www.lizheng.ai/zbs): written by Yuzheng Sun and published by 人民邮电出版社; career agency, capability building, side projects, and compounding work.
 
 ## Dated Public Judgment
@@ -75,20 +75,23 @@ Later dated calls, each with its original record: in January 2025, that agentic 
 
 ## Canonical Pages
 
-- Website: [lizheng.ai](https://www.lizheng.ai)
-- Website, Chinese: [lizheng.ai/zh](https://www.lizheng.ai/zh)
-- Factual profile: [lizheng.ai/about](https://www.lizheng.ai/about)
-- Factual profile, Chinese: [lizheng.ai/zh/about](https://www.lizheng.ai/zh/about)
-- Books, English: [lizheng.ai/book](https://www.lizheng.ai/book)
-- Books, Chinese: [lizheng.ai/zh/book](https://www.lizheng.ai/zh/book)
+Chinese is the site's default language; English versions live under /en.
+
+- Website, Chinese: [lizheng.ai](https://www.lizheng.ai/)
+- Website, English: [lizheng.ai/en](https://www.lizheng.ai/en)
+- Factual profile, Chinese: [lizheng.ai/about](https://www.lizheng.ai/about)
+- Factual profile, English: [lizheng.ai/en/about](https://www.lizheng.ai/en/about)
+- Books, Chinese: [lizheng.ai/book](https://www.lizheng.ai/book)
+- Books, English: [lizheng.ai/en/book](https://www.lizheng.ai/en/book)
 - Guest archive: [lizheng.ai/guests](https://www.lizheng.ai/guests)
-- Work and organization collaboration: [lizheng.ai/collab](https://www.lizheng.ai/collab)
-- Enterprise AI training, English: [lizheng.ai/collab/enterprise](https://www.lizheng.ai/collab/enterprise)
-- Enterprise AI training, Chinese: [lizheng.ai/zh/collab/enterprise](https://www.lizheng.ai/zh/collab/enterprise)
+- Work and organization collaboration, Chinese: [lizheng.ai/collab](https://www.lizheng.ai/collab)
+- Work and organization collaboration, English: [lizheng.ai/en/collab](https://www.lizheng.ai/en/collab)
+- Enterprise AI training, Chinese: [lizheng.ai/collab/enterprise](https://www.lizheng.ai/collab/enterprise)
+- Enterprise AI training, English: [lizheng.ai/en/collab/enterprise](https://www.lizheng.ai/en/collab/enterprise)
 - Enterprise AI training and deck library, Chinese: [lizheng.ai/decks](https://www.lizheng.ai/decks)
 - Enterprise AI training and deck library, English: [lizheng.ai/en/decks](https://www.lizheng.ai/en/decks)
-- Podcast and creator invitations, Chinese: [lizheng.ai/zh/collab/creators](https://www.lizheng.ai/zh/collab/creators)
-- Podcast and creator invitations, English: [lizheng.ai/collab/creators](https://www.lizheng.ai/collab/creators)
+- Podcast and creator invitations, Chinese: [lizheng.ai/collab/creators](https://www.lizheng.ai/collab/creators)
+- Podcast and creator invitations, English: [lizheng.ai/en/collab/creators](https://www.lizheng.ai/en/collab/creators)
 - GitHub: [github.com/sunyuzheng](https://github.com/sunyuzheng)
 - LinkedIn: [linkedin.com/in/yuzhengsun](https://www.linkedin.com/in/yuzhengsun/)
 - Email: yz@superlinear.academy

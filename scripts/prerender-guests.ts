@@ -283,41 +283,21 @@ function buildSitemapXml(guests: GuestProfile[]) {
     guests.flatMap(guest => guest.episodes.map(episode => episode.publishedAt))
   );
   const urls: Array<{ loc: string; lastmod?: string }> = [
-    { loc: `${SITE_URL}/`, lastmod: HOME_PAGE_META.en.lastModified },
-    { loc: `${SITE_URL}/zh`, lastmod: HOME_PAGE_META.zh.lastModified },
-    { loc: `${SITE_URL}/about`, lastmod: ABOUT_PAGE_META.en.lastModified },
-    {
-      loc: `${SITE_URL}/zh/about`,
-      lastmod: ABOUT_PAGE_META.zh.lastModified,
-    },
-    { loc: `${SITE_URL}/book`, lastmod: BOOKS_PAGE_META.en.lastModified },
-    {
-      loc: `${SITE_URL}/zh/book`,
-      lastmod: BOOKS_PAGE_META.zh.lastModified,
-    },
+    ...[
+      HOME_PAGE_META,
+      ABOUT_PAGE_META,
+      BOOKS_PAGE_META,
+      COLLAB_PAGE_META,
+      CREATOR_COLLAB_PAGE_META,
+      ENTERPRISE_TRAINING_PAGE_META,
+    ].flatMap(meta =>
+      (["zh", "en"] as const).map(lang => ({
+        loc: meta[lang].canonical,
+        lastmod: meta[lang].lastModified,
+      }))
+    ),
     { loc: `${SITE_URL}/zbs`, lastmod: ZHENBENSHI_PAGE_META.lastModified },
     { loc: `${SITE_URL}/guests`, lastmod: latestGuestDate },
-    { loc: `${SITE_URL}/collab`, lastmod: COLLAB_PAGE_META.en.lastModified },
-    {
-      loc: `${SITE_URL}/collab/creators`,
-      lastmod: CREATOR_COLLAB_PAGE_META.en.lastModified,
-    },
-    {
-      loc: ENTERPRISE_TRAINING_PAGE_META.en.canonical,
-      lastmod: ENTERPRISE_TRAINING_PAGE_META.en.lastModified,
-    },
-    {
-      loc: `${SITE_URL}/zh/collab`,
-      lastmod: COLLAB_PAGE_META.zh.lastModified,
-    },
-    {
-      loc: `${SITE_URL}/zh/collab/creators`,
-      lastmod: CREATOR_COLLAB_PAGE_META.zh.lastModified,
-    },
-    {
-      loc: ENTERPRISE_TRAINING_PAGE_META.zh.canonical,
-      lastmod: ENTERPRISE_TRAINING_PAGE_META.zh.lastModified,
-    },
     {
       loc: DECKS_PAGE_META.zh.canonical,
       lastmod: DECKS_PAGE_META.zh.lastModified,
@@ -380,8 +360,9 @@ function routeDirectory(route: string) {
   return path.join(ROOT, "dist", "public", ...segments);
 }
 
-async function renderApp(route: string, lang: SiteLang): Promise<string> {
-  const app = React.createElement(App, { defaultLang: lang });
+// The language comes from the route itself (/en/… is English).
+async function renderApp(route: string): Promise<string> {
+  const app = React.createElement(App);
   const tree = React.createElement(WouterRouter, {
     ssrPath: route,
     children: app,
@@ -453,7 +434,7 @@ const experimentMeta = {
       title: "Vercel Design Study · Yuzheng Sun",
       description:
         "A design experiment for Yuzheng Sun's personal site, applying the editorial and evidence-led principles of Vercel design.md.",
-      canonical: `${SITE_URL}/experiment/vercel`,
+      canonical: `${SITE_URL}/en/experiment/vercel`,
       ogImage: HOME_PAGE_META.en.ogImage,
       lastModified: "2026-08-17",
       robots: "noindex, nofollow",
@@ -462,7 +443,7 @@ const experimentMeta = {
       title: "Vercel设计原生实验 · 课代表立正",
       description:
         "课代表立正个人主页的Vercel design.md原生设计实验：编辑式构图、证据优先与近乎静态的阅读体验。",
-      canonical: `${SITE_URL}/zh/experiment/vercel`,
+      canonical: `${SITE_URL}/experiment/vercel`,
       ogImage: HOME_PAGE_META.zh.ogImage,
       lastModified: "2026-08-17",
       robots: "noindex, nofollow",
@@ -473,7 +454,7 @@ const experimentMeta = {
       title: "Emil Motion Study · Yuzheng Sun",
       description:
         "A design experiment for Yuzheng Sun's personal site, applying Emil Kowalski's interaction and motion principles.",
-      canonical: `${SITE_URL}/experiment/emil`,
+      canonical: `${SITE_URL}/en/experiment/emil`,
       ogImage: HOME_PAGE_META.en.ogImage,
       lastModified: "2026-08-17",
       robots: "noindex, nofollow",
@@ -482,7 +463,7 @@ const experimentMeta = {
       title: "Emil动效原生实验 · 课代表立正",
       description:
         "课代表立正个人主页的Emil Kowalski原生设计实验：以短促、可中断的状态切换组织内容与交互。",
-      canonical: `${SITE_URL}/zh/experiment/emil`,
+      canonical: `${SITE_URL}/experiment/emil`,
       ogImage: HOME_PAGE_META.zh.ogImage,
       lastModified: "2026-08-17",
       robots: "noindex, nofollow",
@@ -506,7 +487,7 @@ const emilExperimentStylesheet = findBuiltStylesheet(
 );
 const staticPages: StaticPage[] = [
   {
-    route: "/",
+    route: "/en",
     meta: HOME_PAGE_META.en,
     lang: "en",
     jsonLd: buildHomeStructuredData("en", HOME_PAGE_META.en.canonical),
@@ -518,7 +499,7 @@ const staticPages: StaticPage[] = [
     preloadImages: HOME_IMAGE_PRELOADS,
   },
   {
-    route: "/zh",
+    route: "/",
     meta: HOME_PAGE_META.zh,
     lang: "zh",
     jsonLd: buildHomeStructuredData("zh", HOME_PAGE_META.zh.canonical),
@@ -530,7 +511,7 @@ const staticPages: StaticPage[] = [
     preloadImages: HOME_IMAGE_PRELOADS,
   },
   {
-    route: "/about",
+    route: "/en/about",
     meta: ABOUT_PAGE_META.en,
     lang: "en",
     jsonLd: buildAboutStructuredData("en", ABOUT_PAGE_META.en.canonical),
@@ -539,7 +520,7 @@ const staticPages: StaticPage[] = [
     imageAlt: "Portrait of Yuzheng Sun",
   },
   {
-    route: "/zh/about",
+    route: "/about",
     meta: ABOUT_PAGE_META.zh,
     lang: "zh",
     jsonLd: buildAboutStructuredData("zh", ABOUT_PAGE_META.zh.canonical),
@@ -548,7 +529,7 @@ const staticPages: StaticPage[] = [
     imageAlt: "孙煜征头像",
   },
   {
-    route: "/book",
+    route: "/en/book",
     meta: BOOKS_PAGE_META.en,
     lang: "en",
     jsonLd: buildBooksStructuredData("en", BOOKS_PAGE_META.en.canonical),
@@ -556,7 +537,7 @@ const staticPages: StaticPage[] = [
     imageAlt: "Yuzheng Sun at the Growth Data Analytics Playbook launch",
   },
   {
-    route: "/zh/book",
+    route: "/book",
     meta: BOOKS_PAGE_META.zh,
     lang: "zh",
     jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),
@@ -624,7 +605,7 @@ const staticPages: StaticPage[] = [
     imageHeight: 720,
   },
   {
-    route: "/experiment/vercel",
+    route: "/en/experiment/vercel",
     meta: experimentMeta.vercel.en,
     lang: "en",
     jsonLd: null,
@@ -633,7 +614,7 @@ const staticPages: StaticPage[] = [
     stylesheets: [vercelExperimentStylesheet],
   },
   {
-    route: "/zh/experiment/vercel",
+    route: "/experiment/vercel",
     meta: experimentMeta.vercel.zh,
     lang: "zh",
     jsonLd: null,
@@ -642,7 +623,7 @@ const staticPages: StaticPage[] = [
     stylesheets: [vercelExperimentStylesheet],
   },
   {
-    route: "/experiment/emil",
+    route: "/en/experiment/emil",
     meta: experimentMeta.emil.en,
     lang: "en",
     jsonLd: null,
@@ -651,7 +632,7 @@ const staticPages: StaticPage[] = [
     stylesheets: [emilExperimentStylesheet],
   },
   {
-    route: "/zh/experiment/emil",
+    route: "/experiment/emil",
     meta: experimentMeta.emil.zh,
     lang: "zh",
     jsonLd: null,
@@ -665,7 +646,7 @@ const staticPages: StaticPage[] = [
     const enterpriseMeta = ENTERPRISE_TRAINING_PAGE_META[lang];
     return [
       {
-        route: lang === "en" ? "/collab" : "/zh/collab",
+        route: lang === "en" ? "/en/collab" : "/collab",
         meta: collabMeta,
         lang,
         jsonLd: buildPersonWebPageStructuredData({
@@ -683,7 +664,7 @@ const staticPages: StaticPage[] = [
             : "孙煜征在西雅图进行AI培训",
       },
       {
-        route: lang === "en" ? "/collab/creators" : "/zh/collab/creators",
+        route: lang === "en" ? "/en/collab/creators" : "/collab/creators",
         meta: creatorMeta,
         lang,
         jsonLd: buildPersonWebPageStructuredData({
@@ -701,7 +682,7 @@ const staticPages: StaticPage[] = [
             : "孙煜征参与长访谈",
       },
       {
-        route: lang === "en" ? "/collab/enterprise" : "/zh/collab/enterprise",
+        route: lang === "en" ? "/en/collab/enterprise" : "/collab/enterprise",
         meta: enterpriseMeta,
         lang,
         jsonLd: buildEnterpriseTrainingStructuredData(lang),
@@ -730,7 +711,7 @@ for (const page of staticPages) {
       imageHeight: page.imageHeight,
       stylesheets: page.stylesheets,
     }),
-    bodyHtml: await renderApp(page.route, page.lang),
+    bodyHtml: await renderApp(page.route),
     lang: page.lang === "en" ? "en-US" : "zh-CN",
     hydrate: true,
     preloadImages: page.preloadImages,
@@ -740,17 +721,18 @@ for (const page of staticPages) {
   fs.writeFileSync(path.join(directory, "index.html"), html, "utf-8");
 }
 
+// Chinese like the site's default; the client re-renders /en/… misses in English.
 const notFoundHtml = injectDocument(baseHtml, {
   head: buildHead({
-    title: "Page not found · Yuzheng Sun",
-    description: "This page does not exist.",
+    title: "页面不存在 · 孙煜征",
+    description: "你访问的页面不存在。",
     canonical: `${SITE_URL}/404`,
-    ogImage: HOME_PAGE_META.en.ogImage,
-    locale: "en_US",
+    ogImage: HOME_PAGE_META.zh.ogImage,
+    locale: "zh_CN",
     robots: "noindex, follow",
   }),
-  bodyHtml: await renderApp("/404", "en"),
-  lang: "en-US",
+  bodyHtml: await renderApp("/404"),
+  lang: "zh-CN",
   hydrate: false,
 });
 fs.writeFileSync(

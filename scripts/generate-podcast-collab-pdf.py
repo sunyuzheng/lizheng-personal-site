@@ -55,8 +55,8 @@ FONT_SERIF = "Songti"
 FONT_MONO = "Courier"
 FONT_MONO_BOLD = "Courier-Bold"
 
-URL_COLLAB = "https://www.lizheng.ai/zh/collab/creators"
-URL_ABOUT = "https://www.lizheng.ai/zh/about"
+URL_COLLAB = "https://www.lizheng.ai/collab/creators"
+URL_ABOUT = "https://www.lizheng.ai/about"
 URL_HEADSHOT = "https://www.lizheng.ai/yuzheng-sun-headshot.jpg"
 URL_CHATGPT = "https://www.superlinear.academy/c/ai-resources/chatgpt"
 URL_PUBLIC_TRAINING = "https://www.superlinear.academy/c/public"
@@ -912,7 +912,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     c.linkURL(URL_ABOUT, (225, 535, 345, 563), relative=0)
     c.setFillColor(MUTED)
     c.setFont(FONT_REGULAR, 7.5)
-    c.drawString(228, 531, "lizheng.ai/zh/about")
+    c.drawString(228, 531, "lizheng.ai/about")
 
     logistics = [
         ("语言", "中文或英文"),

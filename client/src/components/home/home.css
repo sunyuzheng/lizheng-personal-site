@@ -844,7 +844,7 @@
 
 .lz-home .scenes {
   overflow: hidden;
-  padding-block: 44px 64px;
+  padding-block: 44px 48px;
   background: var(--lz-paper);
 }
 
@@ -988,7 +988,9 @@
 
 /* ---------- Works (bento) ---------- */
 
+/* Selected work follows the photo strip closely, so it needs less air above. */
 .lz-home .works {
+  padding-top: clamp(56px, 6vw, 84px);
   background: var(--lz-ivory);
 }
 
@@ -2120,7 +2122,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   gap: 22px 40px;
   margin-top: 22px;
 }
@@ -2132,6 +2134,13 @@
   max-width: 660px;
   font-size: 15px;
   line-height: 1.75;
+}
+
+/* No lone last word; the invisible copies wrap the same way. */
+.lz-home .city-legend p,
+.lz-home .city-legend::before,
+.lz-home .city-legend::after {
+  text-wrap: pretty;
 }
 
 .lz-home .city-legend p {
@@ -2166,31 +2175,25 @@
   color: var(--lz-on-forest-3);
 }
 
-/* Map controls float over the map's empty top corners. */
-.lz-home .city-map {
-  position: relative;
-}
-
+/* Map controls sit on their own row above the map, on the same left and
+   right edges as the heading, the map and the call to action. */
 .lz-home .city-tools {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  left: 16px;
+  position: relative;
   z-index: 4;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  pointer-events: none;
+  margin-bottom: 14px;
 }
 
-.lz-home .city-tools > * {
-  pointer-events: auto;
+.lz-home .city-tools.idle {
+  visibility: hidden;
 }
 
 .lz-home .city-find {
   position: relative;
-  width: min(300px, 100%);
+  width: min(320px, 100%);
 }
 
 .lz-home .city-find svg {
@@ -2208,10 +2211,8 @@
   min-height: 42px;
   border: 0;
   border-radius: 999px;
-  background: rgb(8 35 19 / 0.62);
-  box-shadow: inset 0 0 0 1px rgb(248 241 228 / 0.16);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgb(248 241 228 / 0.05);
+  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
   color: var(--lz-on-forest);
   font: inherit;
   font-size: 14px;
@@ -2246,7 +2247,7 @@
 }
 
 .lz-home .city-random:hover {
-  background: rgb(20 60 36 / 0.8);
+  background: rgb(248 241 228 / 0.12);
 }
 
 .lz-home .city-find-list {
@@ -2295,12 +2296,6 @@
 }
 
 @media (max-width: 560px) {
-  .lz-home .city-tools {
-    top: 12px;
-    right: 12px;
-    left: 12px;
-  }
-
   .lz-home .city-find {
     flex: 1;
     width: auto;

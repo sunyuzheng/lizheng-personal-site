@@ -268,7 +268,7 @@ export const workItems = {
       "Enterprise AI programs",
       "Tencent · Xiaohongshu · Meituan · DoorDash",
       "We bring new AI capability into real workflows, evaluation, ownership, and organizational constraints.",
-      "https://www.lizheng.ai/decks",
+      "https://www.lizheng.ai/en/decks",
       "Explore enterprise work",
     ],
   ],
@@ -364,7 +364,7 @@ export const guests = {
 };
 
 function ExperimentLanguageSwitch() {
-  const { lang, setLang } = useLanguage();
+  const { lang } = useLanguage();
   const [location] = useLocation();
 
   return (
@@ -375,7 +375,6 @@ function ExperimentLanguageSwitch() {
     >
       <Link
         href={withLanguage(location, "en")}
-        onClick={() => setLang("en")}
         aria-current={lang === "en" ? "page" : undefined}
         hrefLang="en"
       >
@@ -383,7 +382,6 @@ function ExperimentLanguageSwitch() {
       </Link>
       <Link
         href={withLanguage(location, "zh")}
-        onClick={() => setLang("zh")}
         aria-current={lang === "zh" ? "page" : undefined}
         hrefLang="zh-CN"
       >

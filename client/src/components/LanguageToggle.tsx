@@ -1,5 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { withLanguage } from "@/lib/language-url";
+import { followsReaderLanguage, withLanguage } from "@/lib/language-url";
 import { Link, useLocation } from "wouter";
 
 interface LanguageToggleProps {
@@ -22,15 +22,28 @@ export default function LanguageToggle({
   variant = "segmented",
   label,
 }: LanguageToggleProps) {
-  const { lang, setLang } = useLanguage();
+  const { lang, setReaderLang } = useLanguage();
   const [location] = useLocation();
 
   if (variant === "pill") {
     const other = lang === "en" ? "zh" : "en";
+    // Guest pages have no second address, so the switch happens in place.
+    if (followsReaderLanguage(location)) {
+      return (
+        <button
+          type="button"
+          onClick={() => setReaderLang(other)}
+          lang={other === "en" ? "en" : "zh-CN"}
+          aria-label={label}
+          className={className}
+        >
+          {other === "en" ? "EN" : "中文"}
+        </button>
+      );
+    }
     return (
       <Link
         href={withLanguage(location, other)}
-        onClick={() => setLang(other)}
         hrefLang={other === "en" ? "en" : "zh-CN"}
         lang={other === "en" ? "en" : "zh-CN"}
         aria-label={label}
@@ -60,7 +73,6 @@ export default function LanguageToggle({
     >
       <Link
         href={withLanguage(location, "en")}
-        onClick={() => setLang("en")}
         aria-current={lang === "en" ? "page" : undefined}
         hrefLang="en"
         className={`${pad} whitespace-nowrap font-semibold uppercase tracking-wide transition ${
@@ -71,7 +83,6 @@ export default function LanguageToggle({
       </Link>
       <Link
         href={withLanguage(location, "zh")}
-        onClick={() => setLang("zh")}
         aria-current={lang === "zh" ? "page" : undefined}
         hrefLang="zh-CN"
         className={`${pad} whitespace-nowrap font-semibold transition ${

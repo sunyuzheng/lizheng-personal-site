@@ -10,7 +10,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 
 ## Public Content Model
 
-- **Homepage:** the defining idea and clear personal identity, his story immediately after the hero, selected conversations, writing and dated arguments, books, the Academy he is building, enterprise work, and participation. Chinese social links and grouped navigation make the main routes easy to find. Both books appear in the hero; four concise peer endorsements follow the story. The fully custom starting price sits within enterprise work. Full beliefs, peer quotations, and learner reviews live on About.
+- **Homepage:** a forest-green hero with the defining idea, identity and compact social links; the career path; public numbers and the organizations he has spoken to; selected work; conversations; dated public calls with their later status; recent writing with a lazily loaded site search; and the Academy he is building, including one understated enterprise line with the fully custom starting price. The header and footer are shared with the personal subpages. Full beliefs, peer quotations, and learner reviews live on About. See [`docs/reviews/homepage-redesign-2026-09-30.md`](docs/reviews/homepage-redesign-2026-09-30.md).
 - **About:** factual biography, career and project relationships, and the full defining-work philosophy relocated from the homepage. The homepage curates; this page provides depth.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
@@ -24,6 +24,7 @@ See [`docs/content-system.md`](docs/content-system.md) for ownership, fact sourc
 
 Current local review materials:
 
+- [`docs/reviews/homepage-redesign-2026-09-30.md`](docs/reviews/homepage-redesign-2026-09-30.md): homepage redesign, shared site shell, and the site-wide Tencent IEG title
 - [`docs/subpage-review-2026-09-04.md`](docs/subpage-review-2026-09-04.md): short learner reviews, clearer subpage copy, and navigation/rendering fixes
 - [`docs/personal-site-brand-plan-2026-08-01.md`](docs/personal-site-brand-plan-2026-08-01.md): homepage job, emotional sequence, authority pattern, and implementation decisions
 - [`docs/social-bios-2026-08-01.md`](docs/social-bios-2026-08-01.md): platform-specific signatures and bios ready to paste after review

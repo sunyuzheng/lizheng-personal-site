@@ -1,0 +1,544 @@
+/*
+ * Shared site shell (header and footer) for the homepage and the personal
+ * subpages. The homepage uses the header's overlay variant, which sits on the
+ * forest hero and turns solid after the hero; every other page uses the solid
+ * variant from the top.
+ */
+
+.lz-header,
+.lz-footer {
+  --serif: var(--lz-serif-zh);
+  font-family: var(--lz-sans-zh);
+  line-break: strict;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lz-header.l-en,
+.lz-footer.l-en {
+  --serif: var(--lz-serif-en);
+  font-family: var(--lz-sans-en);
+}
+
+.lz-header *,
+.lz-footer * {
+  box-sizing: border-box;
+}
+
+.lz-header a,
+.lz-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lz-header :is(a, button):focus-visible,
+.lz-footer a:focus-visible {
+  outline: 2px solid var(--lz-green-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Header ---------- */
+
+.lz-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: rgb(248 245 238 / 0.9);
+  -webkit-backdrop-filter: saturate(1.3) blur(14px);
+  backdrop-filter: saturate(1.3) blur(14px);
+  box-shadow: 0 1px 0 var(--lz-line);
+  color: var(--lz-ink);
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.lz-header.is-overlay {
+  position: fixed;
+  inset: 0 0 auto;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  color: var(--lz-on-forest);
+}
+
+.lz-header.is-overlay.solid {
+  background: rgb(248 245 238 / 0.9);
+  -webkit-backdrop-filter: saturate(1.3) blur(14px);
+  backdrop-filter: saturate(1.3) blur(14px);
+  box-shadow: 0 1px 0 var(--lz-line);
+  color: var(--lz-ink);
+}
+
+.lz-header .bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: var(--lz-wrap);
+  height: var(--lz-header-h);
+  margin-inline: auto;
+  padding-inline: var(--lz-gut);
+}
+
+.lz-brand {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+
+.lz-brand svg {
+  display: block;
+  width: 46px;
+  height: auto;
+  transition: color 0.35s ease;
+}
+
+.lz-header:not(.is-overlay) .lz-brand svg,
+.lz-header.solid .lz-brand svg {
+  color: var(--lz-green);
+}
+
+.lz-brand b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+}
+
+.lz-header.l-en .lz-brand b {
+  letter-spacing: 0.01em;
+}
+
+.lz-brand small {
+  display: block;
+  margin-top: -1px;
+  font-size: 11.5px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.lz-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+  font-size: 14.5px;
+}
+
+.lz-nav > a,
+.lz-more > button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  opacity: 0.82;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.lz-nav > a:hover,
+.lz-more > button:hover,
+.lz-more > button[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.lz-more {
+  position: relative;
+}
+
+.lz-more > button svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s;
+}
+
+.lz-more > button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.lz-more-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: -12px;
+  z-index: 2;
+  display: grid;
+  min-width: 190px;
+  padding: 6px;
+  border-radius: 12px;
+  background: var(--lz-paper);
+  box-shadow:
+    0 0 0 1px var(--lz-line),
+    0 24px 48px -24px rgb(18 22 19 / 0.45);
+  color: var(--lz-ink);
+}
+
+.lz-more-panel a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  transition: background 0.15s;
+}
+
+.lz-more-panel a:hover,
+.lz-more-panel a[aria-current="page"] {
+  background: rgb(35 131 67 / 0.08);
+}
+
+.lz-more-panel a[aria-current="page"] {
+  color: var(--lz-green-text);
+  font-weight: 500;
+}
+
+.lz-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.lz-lang {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px currentColor;
+  font-size: 13.5px;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.lz-lang:hover {
+  opacity: 1;
+}
+
+.lz-join {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--lz-green);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.lz-header a.lz-join {
+  color: #fff;
+}
+
+.lz-join:hover {
+  background: var(--lz-green-deep);
+  transform: translateY(-1px);
+}
+
+.lz-header.is-overlay:not(.solid) a.lz-join {
+  background: var(--lz-on-forest);
+  color: var(--lz-forest-2);
+}
+
+.lz-menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.lz-menu-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.lz-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  max-height: calc(100dvh - var(--lz-header-h));
+  overflow-y: auto;
+  border-top: 1px solid var(--lz-line);
+  background: var(--lz-paper);
+  box-shadow: 0 24px 48px -28px rgb(18 22 19 / 0.5);
+  color: var(--lz-ink);
+}
+
+.lz-menu .inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--lz-wrap);
+  margin-inline: auto;
+  padding: 14px var(--lz-gut) 22px;
+}
+
+.lz-menu .grp {
+  margin: 0 0 2px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--lz-muted);
+}
+
+.lz-menu ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-menu li a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15.5px;
+}
+
+.lz-menu li a[aria-current="page"] {
+  color: var(--lz-green-text);
+  font-weight: 500;
+}
+
+.lz-menu .lz-join {
+  width: 100%;
+  height: 46px;
+  font-size: 15px;
+}
+
+@media (max-width: 1023px) {
+  .lz-nav {
+    display: none;
+  }
+
+  .lz-actions {
+    margin-left: auto;
+  }
+
+  .lz-menu-button {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lz-menu {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .lz-brand small {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .lz-actions .lz-join {
+    display: none;
+  }
+
+  .lz-brand {
+    gap: 10px;
+  }
+
+  .lz-brand svg {
+    width: 40px;
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.lz-footer {
+  padding-block: 56px 40px;
+  background: var(--lz-forest-3);
+  color: var(--lz-on-forest-2);
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.lz-footer .inner {
+  max-width: var(--lz-wrap);
+  margin-inline: auto;
+  padding-inline: var(--lz-gut);
+}
+
+.lz-footer .grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 32px;
+}
+
+.lz-footer .who {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.lz-footer .who svg {
+  flex-shrink: 0;
+  width: 64px;
+  margin-top: 4px;
+  color: var(--lz-on-forest);
+}
+
+.lz-footer .who b {
+  font-weight: 500;
+  color: var(--lz-on-forest);
+}
+
+.lz-footer .who p {
+  margin: 6px 0 0;
+  line-height: 1.8;
+}
+
+.lz-footer h2 {
+  margin: 0 0 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-footer ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-footer li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 32px;
+  transition: color 0.15s;
+}
+
+.lz-footer li a:hover {
+  color: var(--lz-on-forest);
+}
+
+.lz-footer li svg {
+  width: 15px;
+  height: 15px;
+  opacity: 0.8;
+}
+
+.lz-footer li a[data-id="xiaohongshu"] svg {
+  width: 22px;
+  height: 22px;
+  margin-inline: -3.5px;
+}
+
+.lz-footer .base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 44px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lz-forest-line);
+  font-size: 12.5px;
+  color: var(--lz-on-forest-3);
+}
+
+@media (max-width: 760px) {
+  .lz-footer .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lz-footer .who {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) and (pointer: coarse) {
+  .lz-footer li a {
+    min-height: 44px;
+  }
+}
+
+/* ---------- Personal subpages ---------- */
+
+/*
+ * Pages wrapped in .lz-site share the homepage's language without rewriting
+ * every class: the former near-black/navy tokens resolve to the forest greens,
+ * cool zinc greys on dark surfaces become warm ivory tints, light canvases
+ * become ivory/paper, and titles use the serif pair. These pages use zinc only
+ * on dark surfaces, which is what makes the remap safe.
+ */
+.lz-site {
+  --color-lizheng-deep: var(--lz-forest-3);
+  --color-lizheng-dark: var(--lz-forest-3);
+  --color-lizheng-raised: var(--lz-forest-2);
+  --color-lizheng-muted: rgb(248 241 228 / 0.62);
+  --color-superlinear-canvas: var(--lz-ivory);
+  --color-superlinear-surface: var(--lz-paper);
+  --color-superlinear-cream: var(--lz-line);
+  --color-zinc-100: #f8f1e4;
+  --color-zinc-200: rgb(248 241 228 / 0.9);
+  --color-zinc-300: rgb(248 241 228 / 0.8);
+  --color-zinc-400: rgb(248 241 228 / 0.66);
+  --color-zinc-500: rgb(248 241 228 / 0.52);
+  --color-zinc-600: rgb(248 241 228 / 0.42);
+  --color-zinc-700: rgb(248 241 228 / 0.3);
+  --color-zinc-900: var(--lz-forest-2);
+  --lz-title: var(--lz-serif-zh);
+  line-break: strict;
+}
+
+.lz-site.l-en {
+  --lz-title: var(--lz-serif-en);
+}
+
+@layer base {
+  .lz-site :is(h1, h2, h3) {
+    font-family: var(--lz-title);
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  .lz-site.l-en :is(h1, h2, h3) {
+    letter-spacing: 0;
+  }
+}
+
+/* Figures on subpages use the numeral serif. */
+.lz-site .lz-num {
+  font-family: var(--lz-num);
+  font-variant-numeric: lining-nums tabular-nums;
+}

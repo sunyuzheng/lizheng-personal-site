@@ -32,7 +32,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun, Cornell Economics PhD, author, and founder of Superlinear Academy. His story, writing, books, and conversations with AI researchers and technology founders. MAKE WHAT LASTS.",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-13",
+    lastModified: "2026-09-30",
   },
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
@@ -40,7 +40,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
       "立正（孙煜征，课代表立正），康奈尔经济学博士、《真本事》作者、超线性学院创始人。我的经历、文章、书，以及与AI研究者和科技创始人的深度对话。学点真本事，做点真东西。",
     canonical: "https://www.lizheng.ai/zh",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-13",
+    lastModified: "2026-09-30",
   },
 };
 
@@ -51,15 +51,15 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
       "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-09-06",
+    lastModified: "2026-09-30",
   },
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队早期成员。",
     canonical: "https://www.lizheng.ai/zh/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
-    lastModified: "2026-09-06",
+    lastModified: "2026-09-30",
   },
 };
 
@@ -88,7 +88,7 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
     "孙煜征所著《真本事：从会工作到会赚钱》，由人民邮电出版社出版。关于工作、能力、副业与长期价值的一套实践框架。",
   canonical: "https://www.lizheng.ai/zbs",
   ogImage: "https://www.lizheng.ai/book/cover-front.png",
-  lastModified: "2026-09-04",
+  lastModified: "2026-09-30",
 };
 
 export const PODCAST_PAGE_META: PageMeta = {

@@ -6,7 +6,8 @@ import { Link } from "wouter";
 
 // Full wording and existing translations follow yuzheng-profile/EVIDENCE.md
 // and the previously published site. Ellipses explicitly mark shortened clauses.
-const endorsements = [
+// The homepage shows the excerpts; About shows the full quotations.
+export const endorsements = [
   {
     id: "liu-jia",
     avatar: "/avatars/liu-jia.jpg",

@@ -1,12 +1,13 @@
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
-import LanguageToggle from "@/components/LanguageToggle";
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, ArrowRight, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
 import { BOOKS_PAGE_META, languageAlternates } from "@shared/page-meta";
@@ -93,29 +94,34 @@ const books = {
   ],
 };
 
-function BookVisual({ id }: { id: string }) {
-  if (id === "zbs") {
-    return (
-      <div className="relative mx-auto aspect-[0.705] w-full max-w-[8.75rem] overflow-hidden rounded-md border border-white/15 bg-white/[0.04] shadow-2xl shadow-black/40">
-        <img
-          src="/book/cover-front.png"
-          alt="《真本事：从会工作到会赚钱》"
-          className="h-full w-full object-cover"
-          loading="eager"
-        />
-      </div>
-    );
-  }
+const COVERS = {
+  zbs: {
+    src: "/home/books/zhenbenshi.webp",
+    alt: "《真本事：从会工作到会赚钱》",
+    width: 460,
+    height: 652,
+  },
+  growth: {
+    src: "/home/books/gdap.webp",
+    alt: "Growth Data Analytics Playbook",
+    width: 460,
+    height: 711,
+  },
+} as const;
 
+// Same treatment as the book cards in the homepage's selected work.
+function BookVisual({ id }: { id: string }) {
+  const cover = id === "zbs" ? COVERS.zbs : COVERS.growth;
   return (
-    <div className="relative mx-auto aspect-[0.647] w-full max-w-[8.75rem] overflow-hidden rounded-md border border-white/15 bg-white/[0.04] shadow-2xl shadow-black/40">
-      <img
-        src="/book/growth-data-analytics-playbook.jpg"
-        alt="Growth Data Analytics Playbook"
-        className="h-full w-full object-cover"
-        loading="eager"
-      />
-    </div>
+    <img
+      src={cover.src}
+      alt={cover.alt}
+      width={cover.width}
+      height={cover.height}
+      className="mx-auto w-[150px] rounded-[3px_6px_6px_3px] shadow-[0_1px_0_rgba(0,0,0,0.05),0_24px_32px_-18px_rgba(0,0,0,0.55),inset_3px_0_0_rgba(255,255,255,0.25)] transition-transform duration-500 [transform:perspective(900px)_rotateY(-10deg)] group-hover:[transform:perspective(900px)_rotateY(-2deg)] md:mx-0"
+      loading="eager"
+      decoding="async"
+    />
   );
 }
 
@@ -169,39 +175,29 @@ export default function Books() {
   }, [lang]);
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(35,131,67,0.08)_0%,rgba(11,15,26,0)_24rem),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[length:100%_100%,72px_72px,72px_72px]" />
+    <div
+      className={cn(
+        "lz-site min-h-screen overflow-x-clip bg-lz-ivory text-lz-ink",
+        lang === "en" && "l-en"
+      )}
+    >
+      <SiteHeader current="book" />
 
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/80 backdrop-blur-xl">
-        <div className="container flex items-center justify-between py-4">
-          <Link
-            href={withLanguage("/", lang)}
-            className="flex items-center gap-2 text-zinc-400 transition hover:text-superlinear-on-dark"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <div>
-              <div className="text-sm font-semibold text-superlinear-on-dark">
-                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
-              </div>
-              <div className="text-xs text-zinc-500">
-                {lang === "en" ? "Books" : "两本书"}
-              </div>
-            </div>
-          </Link>
-          <LanguageToggle size="sm" />
-        </div>
-      </nav>
-
-      <main className="relative z-10">
+      <main>
         <section className="container py-16 md:py-24">
           <div className="max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-              {lang === "en" ? "Books" : "Books / 书"}
+            <p className="text-sm font-medium tracking-[0.08em] text-lz-green">
+              {lang === "en" ? "Books" : "书"}
             </p>
-            <h1 className="mt-5 max-w-3xl text-4xl font-semibold leading-[1.15] text-white [text-wrap:balance] md:text-6xl">
-              {lang === "en"
-                ? "Two books. Two questions."
-                : "两本书，回答两个问题。"}
+            <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.2] [text-wrap:balance] md:text-6xl">
+              {lang === "en" ? (
+                "Two books. Two questions."
+              ) : (
+                <>
+                  <span className="inline-block">两本书，</span>
+                  <span className="inline-block">回答两个问题。</span>
+                </>
+              )}
             </h1>
           </div>
 
@@ -209,21 +205,28 @@ export default function Books() {
             {books[lang].map(book => (
               <article
                 key={book.id}
-                className="grid gap-8 rounded-2xl border border-white/10 bg-white/[0.045] p-5 md:grid-cols-[9.5rem_minmax(0,1fr)] md:p-7"
+                className="group grid gap-8 rounded-[14px] bg-lz-paper p-6 shadow-[0_0_0_1px_var(--lz-line)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_0_1px_var(--lz-line-2),0_28px_50px_-30px_rgba(20,30,20,0.45)] md:grid-cols-[150px_minmax(0,1fr)] md:items-center md:p-8"
               >
                 <BookVisual id={book.id} />
 
                 <div className="flex min-w-0 flex-col justify-center">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-on-dark">
+                  <p className="text-[13.5px] tracking-[0.03em] text-lz-muted">
                     {book.label}
                   </p>
-                  <h2 className="mt-3 text-2xl font-semibold leading-tight text-white md:text-3xl">
-                    {book.title}
+                  <h2 className="mt-2 text-2xl font-black leading-snug [text-wrap:balance] md:text-3xl">
+                    {book.id === "zbs" ? (
+                      <>
+                        真本事：
+                        <span className="inline-block">从会工作到会赚钱</span>
+                      </>
+                    ) : (
+                      book.title
+                    )}
                   </h2>
-                  <p className="mt-3 text-base font-medium leading-7 text-zinc-300">
+                  <p className="mt-3 text-base font-medium leading-7 text-lz-ink-2">
                     {book.subtitle}
                   </p>
-                  <p className="mt-4 text-sm leading-7 text-zinc-400">
+                  <p className="mt-3 text-[15.5px] leading-7 text-lz-ink-2">
                     {book.description}
                   </p>
 
@@ -232,7 +235,7 @@ export default function Books() {
                       <Badge
                         key={item}
                         variant="secondary"
-                        className="border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[10px] font-normal text-zinc-300"
+                        className="rounded-full border border-lz-line bg-lz-ivory px-2.5 py-1 text-[11px] font-normal text-lz-ink-2"
                       >
                         {item}
                       </Badge>
@@ -245,7 +248,7 @@ export default function Books() {
                       external={book.primary.external}
                       className={cn(
                         buttonVariants(),
-                        "bg-superlinear text-white hover:bg-superlinear-deep"
+                        "min-h-11 rounded-full bg-lz-green px-5 text-white hover:bg-superlinear-deep"
                       )}
                     >
                       <BookOpen className="mr-2 h-4 w-4" />
@@ -262,7 +265,7 @@ export default function Books() {
                         external={book.secondary.external}
                         className={cn(
                           buttonVariants({ variant: "outline" }),
-                          "border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                          "min-h-11 rounded-full border-lz-ink/45 bg-transparent px-5 text-lz-ink hover:bg-lz-sand"
                         )}
                       >
                         {book.secondary.label}
@@ -278,21 +281,10 @@ export default function Books() {
               </article>
             ))}
           </div>
-
-          <div className="mt-8 flex justify-center">
-            <Link
-              href={withLanguage("/", lang)}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-              )}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {lang === "en" ? "Back to homepage" : "回到主页"}
-            </Link>
-          </div>
         </section>
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

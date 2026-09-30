@@ -415,7 +415,7 @@ def draw_background_page(c: canvas.Canvas, page: int) -> None:
         ("Cornell", "经济学博士"),
         ("Amazon", "经济学家"),
         ("Meta", "数据科学家"),
-        ("腾讯IEG", "数据与AI副总监·30人团队·连续两期最高绩效"),
+        ("腾讯IEG", "增长数据科学与AI总监·30人团队·连续两期最高绩效"),
         ("Statsig", "早期成员·公司后被OpenAI收购"),
         ("现在", "Superlinear Academy创始人"),
     ]
@@ -898,7 +898,7 @@ def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     draw_label(c, "主持人可直接使用的短介绍", 228, 697, color=BRAND_DEEP, font=FONT_BOLD)
     draw_paragraph(
         c,
-        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI进入真实工作以后，什么能力和作品反而更重要。",
+        "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI进入真实工作以后，什么能力和作品反而更重要。",
         228,
         668,
         W - M - 228,

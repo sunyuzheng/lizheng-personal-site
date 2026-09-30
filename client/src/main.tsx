@@ -4,6 +4,9 @@ import "@fontsource-variable/geist-mono/wght.css";
 import App from "./App";
 import "./index.css";
 
+// Serif fonts load after first paint; see fonts.css.
+void import("./fonts.css");
+
 const root = document.getElementById("root")!;
 const isChineseContentPath =
   window.location.hostname === "podcast.lizheng.ai" ||

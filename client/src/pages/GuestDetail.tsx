@@ -198,7 +198,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               )}
             </div>
 
-            <h1 className="mt-5 text-4xl font-bold text-white md:text-5xl">
+            <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">
               {displayName}
             </h1>
             {guest.guest_company && (
@@ -314,7 +314,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 ? `Watch featured interview: ${guest.primary_episode.title}`
                 : `观看精选访谈：${guest.primary_episode.title}`
             }
-            className="group relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5"
+            className="group relative overflow-hidden rounded-[18px] border border-white/10 bg-lz-forest-2"
           >
             <img
               src={guest.primary_episode.thumbnailUrl}
@@ -419,7 +419,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                 href={episode.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:-translate-y-1 hover:border-superlinear-on-dark/40 hover:bg-white/10"
+                className="group overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2 transition hover:-translate-y-1 hover:border-superlinear-on-dark/40"
               >
                 <div className="relative aspect-video overflow-hidden">
                   <img

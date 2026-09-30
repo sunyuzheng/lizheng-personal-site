@@ -54,6 +54,22 @@ import { Router as WouterRouter } from "wouter";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
+// The homepage search renders its default results on the server, so the page
+// does not grow when the browser loads the index (see SiteSearch).
+(
+  globalThis as typeof globalThis & { __LZ_SEARCH_INDEX__?: unknown }
+).__LZ_SEARCH_INDEX__ = Object.fromEntries(
+  (["zh", "en"] as const).map(lang => [
+    lang,
+    JSON.parse(
+      fs.readFileSync(
+        path.join(ROOT, "client", "public", "search", `${lang}.json`),
+        "utf-8"
+      )
+    ),
+  ])
+);
+
 // The Vite build uses the automatic JSX runtime. tsx executes these existing
 // TSX modules with the classic runtime during static generation.
 (globalThis as typeof globalThis & { React: typeof React }).React = React;
@@ -94,11 +110,32 @@ function stripExistingSeo(baseHtml: string) {
     );
 }
 
-function stripHomeHeroPreloads(baseHtml: string) {
+// The template preloads the homepage portrait for the dev server. Static pages
+// declare their own first-screen images instead.
+function stripImagePreloads(baseHtml: string) {
   return baseHtml.replace(
-    /\s*<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bhref=["']\/hero\/acquired-behind-scenes-(?:desktop|mobile)\.webp["'])[^>]*>\s*/gi,
+    /\s*<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bas=["']image["'])[^>]*>\s*/gi,
     "\n"
   );
+}
+
+const HOME_IMAGE_PRELOADS = ["/home/portrait.webp"];
+const ACQUIRED_IMAGE_PRELOADS = ["/hero/acquired-behind-scenes-desktop.webp"];
+
+function imagePreloadTags(images: string[] = []) {
+  return images
+    .map(
+      href =>
+        `<link rel="preload" as="image" href="${escapeHtml(href)}" type="image/webp" fetchpriority="high" />`
+    )
+    .join("\n  ");
+}
+
+// Serif @font-face rules (fonts.css) load without blocking first paint.
+function fontStylesheetTags(href: string) {
+  const safe = escapeHtml(href);
+  return `<link rel="preload" as="style" href="${safe}" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="${safe}" /></noscript>`;
 }
 
 function injectDocument(
@@ -108,14 +145,18 @@ function injectDocument(
     bodyHtml: string;
     lang?: string;
     hydrate?: boolean;
-    keepHomeHeroPreloads?: boolean;
+    preloadImages?: string[];
   }
 ) {
-  const sourceHtml = options.keepHomeHeroPreloads
-    ? baseHtml
-    : stripHomeHeroPreloads(baseHtml);
-  const html = sourceHtml
-    .replace("</head>", `${options.head}\n</head>`)
+  const head = [
+    imagePreloadTags(options.preloadImages),
+    fontStylesheetTags(fontStylesheet),
+    options.head,
+  ]
+    .filter(Boolean)
+    .join("\n  ");
+  const html = stripImagePreloads(baseHtml)
+    .replace("</head>", `${head}\n</head>`)
     .replace(
       '<div id="root"></div>',
       `<div id="root"${options.hydrate ? ' data-ssr="true"' : ""}>${options.bodyHtml}</div>`
@@ -368,6 +409,7 @@ interface StaticPage {
   imageWidth?: number;
   imageHeight?: number;
   stylesheets?: string[];
+  preloadImages?: string[];
 }
 
 function findBuiltStylesheet(pattern: RegExp): string {
@@ -455,6 +497,7 @@ const emilExperimentAlternates = languageAlternates(
   experimentMeta.emil.en.canonical,
   experimentMeta.emil.zh.canonical
 );
+const fontStylesheet = findBuiltStylesheet(/^fonts-.+\.css$/);
 const vercelExperimentStylesheet = findBuiltStylesheet(
   /^home-experiment-(?!emil-).+\.css$/
 );
@@ -470,6 +513,7 @@ const staticPages: StaticPage[] = [
     alternates: homeAlternates,
     ogType: "profile",
     imageAlt: "Yuzheng Sun with the hosts of Acquired",
+    preloadImages: HOME_IMAGE_PRELOADS,
   },
   {
     route: "/zh",
@@ -479,6 +523,7 @@ const staticPages: StaticPage[] = [
     alternates: homeAlternates,
     ogType: "profile",
     imageAlt: "孙煜征与Acquired的两位主播对谈",
+    preloadImages: HOME_IMAGE_PRELOADS,
   },
   {
     route: "/about",
@@ -627,6 +672,7 @@ const staticPages: StaticPage[] = [
           lastModified: collabMeta.lastModified,
         }),
         alternates: collabAlternates,
+        preloadImages: ACQUIRED_IMAGE_PRELOADS,
         imageAlt:
           lang === "en"
             ? "Yuzheng Sun leading an AI training session in Seattle"
@@ -644,6 +690,7 @@ const staticPages: StaticPage[] = [
           lastModified: creatorMeta.lastModified,
         }),
         alternates: creatorCollabAlternates,
+        preloadImages: ACQUIRED_IMAGE_PRELOADS,
         imageAlt:
           lang === "en"
             ? "Yuzheng Sun in a long-form public conversation"
@@ -682,10 +729,7 @@ for (const page of staticPages) {
     bodyHtml: await renderApp(page.route, page.lang),
     lang: page.lang === "en" ? "en-US" : "zh-CN",
     hydrate: true,
-    keepHomeHeroPreloads:
-      page.route === "/" ||
-      page.route === "/zh" ||
-      page.route.includes("/collab"),
+    preloadImages: page.preloadImages,
   });
   const directory = routeDirectory(page.route);
   fs.mkdirSync(directory, { recursive: true });

@@ -1,5 +1,7 @@
 # Homepage Narrative
 
+> **Superseded on September 30, 2026:** the reading sequence, navigation and layout below are replaced by the redesign recorded in [`reviews/homepage-redesign-2026-09-30.md`](reviews/homepage-redesign-2026-09-30.md). The **Evidence and boundaries** section remains in force.
+
 Updated September 29, 2026. This brief records the reviewed homepage narrative and clarity revision, approved for publication on September 29. Subsequent public changes require review and approval. Personal facts and philosophy remain owned by `yuzheng-profile`, not this page brief.
 
 ## The page’s job

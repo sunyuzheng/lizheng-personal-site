@@ -1,49 +1,62 @@
 import CourseReviews from "@/components/CourseReviews";
 import DefiningWork from "@/components/DefiningWork";
 import PeerEndorsements from "@/components/PeerEndorsements";
+import CareerPath, { type CareerStep } from "@/components/home/CareerPath";
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
-import LanguageToggle from "@/components/LanguageToggle";
 import { Button } from "@/components/ui/button";
-import { pick, useLanguage } from "@/contexts/LanguageContext";
+import { pick, useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 import { ABOUT_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildAboutStructuredData } from "@shared/structured-data";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  ExternalLink,
-  MapPin,
-  Mic2,
-} from "lucide-react";
-import { useEffect } from "react";
+import { ArrowRight, BookOpen, ExternalLink, MapPin, Mic2 } from "lucide-react";
+import { Fragment, useEffect } from "react";
 import { Link } from "wouter";
 
-const career = [
-  {
-    organization: "Cornell University",
-    en: "PhD in Economics",
-    zh: "经济学博士",
-  },
-  { organization: "Amazon", en: "Economist", zh: "经济学家" },
-  { organization: "Meta", en: "Data Scientist", zh: "数据科学家" },
-  {
-    organization: "Tencent IEG",
-    en: "Vice Director, Data & AI",
-    zh: "数据与AI副总监",
-  },
-  {
-    organization: "Statsig",
-    en: "Principal Data Scientist and sole evangelist",
-    zh: "Principal Data Scientist、公司唯一布道师",
-  },
-  {
-    organization: "Superlinear Academy",
-    en: "Founder",
-    zh: "创始人",
-  },
-];
+// The homepage career band, with the fuller Statsig role kept on the profile.
+const career: Record<Lang, CareerStep[]> = {
+  en: [
+    { org: "Cornell University", latin: true, role: ["PhD in Economics"] },
+    { org: "Amazon", latin: true, role: ["Economist"] },
+    { org: "Meta", latin: true, role: ["Data Scientist"] },
+    {
+      org: "Tencent IEG",
+      latin: true,
+      role: ["Director, Growth Data Science & AI", "Led a 30-person team"],
+    },
+    {
+      org: "Statsig",
+      latin: true,
+      role: [
+        "Principal Data Scientist and sole evangelist",
+        "Early team, later acquired by OpenAI",
+      ],
+    },
+    { org: "Superlinear Academy", latin: true, role: ["Founder, full time"] },
+  ],
+  zh: [
+    { org: "康奈尔大学", latin: false, role: ["经济学博士"] },
+    { org: "Amazon", latin: true, role: ["经济学家"] },
+    { org: "Meta", latin: true, role: ["数据科学家"] },
+    {
+      org: "腾讯IEG",
+      latin: false,
+      role: ["增长数据科学与AI总监", "带领30人团队"],
+    },
+    {
+      org: "Statsig",
+      latin: true,
+      role: [
+        "Principal Data Scientist、公司唯一布道师",
+        "OpenAI收购团队早期成员",
+      ],
+    },
+    { org: "超线性学院", latin: false, role: ["创始人 · 全职投入"] },
+  ],
+};
 
 const currentWork = {
   en: [
@@ -66,7 +79,7 @@ const currentWork = {
       role: "Long-term membership",
       detail:
         "Keep learning through guest masterclasses, deep technical analysis with Yage, Q&A, and member discussions. Recordings and resources stay available to members.",
-      href: "https://staysuperlinear.com/",
+      href: "https://stay.superlinear.academy/",
     },
     {
       name: "Enterprise AI programs",
@@ -97,7 +110,7 @@ const currentWork = {
       role: "长期会员社区",
       detail:
         "跟大师课嘉宾深聊，跟鸭哥看懂技术变化，也把自己的问题带进答疑和会员讨论。回放与资料可以随时回来查。",
-      href: "https://staysuperlinear.com/",
+      href: "https://stay.superlinear.academy/",
     },
     {
       name: "企业AI项目",
@@ -147,7 +160,6 @@ export default function About() {
 
   const copy = pick(lang, {
     en: {
-      back: "Back to homepage",
       eyebrow: "About Yuzheng Sun",
       intro:
         "I’m Yuzheng Sun, known as 立正 / 课代表立正. I have a PhD in Economics from Cornell and founded Superlinear Academy. I live in Seattle.",
@@ -155,7 +167,7 @@ export default function About() {
         "MAKE WHAT LASTS. I want to build things people keep choosing, long after the launch.",
       backgroundTitle: "Background",
       background:
-        "I worked as an economist at Amazon, a data scientist at Meta, and Vice Director of Data & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
+        "I worked as an economist at Amazon, a data scientist at Meta, and Director of Growth Data Science & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
       currentTitle: "The academy I’m building",
       currentIntro:
         "Superlinear Academy is where my teaching, community, and enterprise work come together. You can begin with the free community.",
@@ -191,7 +203,6 @@ export default function About() {
       invite: "Invite Yuzheng to a program",
     },
     zh: {
-      back: "回到主页",
       eyebrow: "关于我",
       intro:
         "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院Superlinear Academy创始人，现居西雅图。",
@@ -199,7 +210,7 @@ export default function About() {
         "学点真本事，做点真东西。对我来说，就是离开职位和公司名，仍能做出别人需要的东西。",
       backgroundTitle: "经历",
       background:
-        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG数据与AI副总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设Superlinear Academy。",
+        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设Superlinear Academy。",
       currentTitle: "我正在办的这所学院",
       currentIntro:
         "课程、社区和企业项目，都在Superlinear Academy。想了解我们，可以先从免费社区开始。",
@@ -235,19 +246,13 @@ export default function About() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0B0F1A] text-zinc-100">
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/90 backdrop-blur-xl">
-        <div className="container flex h-[68px] items-center justify-between">
-          <Link
-            href={withLanguage("/", lang)}
-            className="inline-flex items-center gap-2 text-sm text-zinc-400 transition hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            {copy.back}
-          </Link>
-          <LanguageToggle size="sm" />
-        </div>
-      </nav>
+    <div
+      className={cn(
+        "lz-site min-h-screen bg-lz-forest-3 text-zinc-100",
+        lang === "en" && "l-en"
+      )}
+    >
+      <SiteHeader current="about" />
 
       <main>
         <section className="border-b border-white/10 py-16 md:py-24">
@@ -259,9 +264,18 @@ export default function About() {
               <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
                 {lang === "en" ? "Yuzheng Sun" : "立正"}
                 <span className="mt-3 block text-lg font-normal leading-7 text-zinc-400 md:text-2xl">
-                  {lang === "en"
-                    ? "孙煜征 · 课代表立正"
-                    : "孙煜征 · Yuzheng Sun · 课代表立正"}
+                  {(lang === "en"
+                    ? ["孙煜征", "课代表立正"]
+                    : ["孙煜征", "Yuzheng Sun", "课代表立正"]
+                  ).map((name, index) => (
+                    <Fragment key={name}>
+                      {index > 0 && " "}
+                      <span className="inline-block">
+                        {index > 0 && "· "}
+                        {name}
+                      </span>
+                    </Fragment>
+                  ))}
                 </span>
               </h1>
               <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
@@ -286,7 +300,7 @@ export default function About() {
                   lang === "en" ? "Founder · Author" : "创始人 · 作者",
                 ],
               ].map(([label, value]) => (
-                <div key={label} className="bg-[#111722] p-5">
+                <div key={label} className="bg-lz-forest-2 p-5">
                   <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">
                     {label}
                   </p>
@@ -299,9 +313,11 @@ export default function About() {
           </div>
         </section>
 
-        <section className="bg-superlinear-canvas py-16 text-superlinear-ink md:py-24">
-          <div className="container grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-            <div>
+        <CareerPath lang={lang} steps={career[lang]} />
+
+        <section className="bg-superlinear-canvas py-16 text-superlinear-ink md:py-20">
+          <div className="container">
+            <div className="max-w-3xl">
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-deep">
                 {copy.backgroundTitle}
               </p>
@@ -319,19 +335,6 @@ export default function About() {
                   : "康奈尔经济学博士去向记录"}
                 <ExternalLink className="h-4 w-4" />
               </a>
-            </div>
-            <div className="grid border-t border-[#D4D0C7] sm:grid-cols-2 lg:grid-cols-3">
-              {career.map(item => (
-                <div
-                  key={item.organization}
-                  className="border-b border-[#D4D0C7] p-5 sm:border-l"
-                >
-                  <p className="font-semibold">{item.organization}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#6E685D]">
-                    {lang === "en" ? item.en : item.zh}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
@@ -351,7 +354,7 @@ export default function About() {
             </div>
             <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-2">
               {currentWork[lang].map(item => (
-                <article key={item.name} className="bg-[#111722] p-6">
+                <article key={item.name} className="bg-lz-forest-2 p-6">
                   <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-on-dark">
                     {item.role}
                   </p>
@@ -406,7 +409,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-[#111722] py-16 md:py-20">
+        <section className="border-y border-white/10 bg-lz-forest-2 py-16 md:py-20">
           <div className="container grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
@@ -454,8 +457,8 @@ export default function About() {
             </div>
             <div className="grid gap-px bg-white/10 sm:grid-cols-3 lg:grid-cols-1">
               {publicFacts.map(item => (
-                <div key={item.value} className="bg-[#0B0F1A] p-6">
-                  <p className="text-3xl font-semibold text-white">
+                <div key={item.value} className="bg-lz-forest-3 p-6">
+                  <p className="lz-num text-3xl font-semibold text-white">
                     {item.value}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-zinc-400">
@@ -463,7 +466,7 @@ export default function About() {
                   </p>
                 </div>
               ))}
-              <p className="bg-[#0B0F1A] p-4 text-xs leading-5 text-zinc-600 sm:col-span-3 lg:col-span-1">
+              <p className="bg-lz-forest-3 p-4 text-xs leading-5 text-zinc-600 sm:col-span-3 lg:col-span-1">
                 {lang === "en"
                   ? "Figures checked July 12, 2026."
                   : "数据核对日期：2026年7月12日。"}
@@ -512,6 +515,7 @@ export default function About() {
         </section>
         <DefiningWork />
       </main>
+      <SiteFooter />
     </div>
   );
 }

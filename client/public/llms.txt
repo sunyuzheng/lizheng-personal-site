@@ -12,7 +12,7 @@ Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and 
 
 MAKE WHAT LASTS. and 做点真东西。 are the one defining idea shared by Yuzheng and Superlinear Academy. They are not literal translations. The Chinese line names the first move: turn judgment into something reality can use, test, reject, improve, or keep choosing. The English line asks whether that value continues through time. 做出你的代表作 remains the expanded long-term aspiration rather than the primary Chinese signature. None of these lines guarantees that every effort will endure or make its author successful.
 
-He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
+He previously worked as an economist at Amazon, a data scientist at Meta, Director of Growth Data Science & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 
 ## Identity and Common Ambiguities
 

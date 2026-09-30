@@ -28,7 +28,7 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
       "Invite Yuzheng Sun for a podcast, video interview, or long-form conversation. Explore defining work in the AI era, fake work, AI-native talent, and organizational judgment—with proven cross-platform cases and a complete host kit.",
     canonical: "https://www.lizheng.ai/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-09-30",
   },
   zh: {
     title: "一起做一期节目｜课代表立正·播客与视频合作",
@@ -36,7 +36,7 @@ export const CREATOR_COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
       "和课代表立正一起做一期播客或视频节目，聊AI、工作、职业选择与创业，交换经历和看法。可以做客、串台或共同策划，团队也能参与剪辑、切片与联合发布。",
     canonical: "https://www.lizheng.ai/zh/collab/creators",
     ogImage: "https://www.lizheng.ai/hero/acquired-behind-scenes-desktop.webp",
-    lastModified: "2026-09-15",
+    lastModified: "2026-09-30",
   },
 };
 

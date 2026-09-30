@@ -1,0 +1,11 @@
+/*
+ * Self-hosted serif fonts for titles and numerals. Kept out of the main
+ * stylesheet so first paint never waits for them: prerendered pages link this
+ * file without blocking render, and main.tsx loads it for client-only routes.
+ * Noto Serif SC is split by unicode-range, so browsers fetch only the slices
+ * for characters a page actually uses. Never load these from Google Fonts,
+ * which is blocked in mainland China.
+ */
+@import "@fontsource/noto-serif-sc/700.css";
+@import "@fontsource/noto-serif-sc/900.css";
+@import "@fontsource-variable/source-serif-4/opsz.css";

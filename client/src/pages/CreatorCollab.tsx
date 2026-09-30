@@ -1,4 +1,6 @@
-import CollabHeader from "@/components/collab/CollabHeader";
+import SiteBreadcrumb from "@/components/site/SiteBreadcrumb";
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -222,7 +224,7 @@ function AppearanceCard({
       href={appearance.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex min-w-0 flex-col bg-[#0F1420] p-4 transition hover:bg-[#151B28] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark"
+      className="group flex min-w-0 flex-col bg-lz-forest-2 p-4 transition hover:bg-lz-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark"
     >
       <div className="flex items-center justify-between gap-3">
         <time
@@ -570,10 +572,10 @@ const copy = {
     pdfCta: "Download the six-page Chinese guest kit",
     shortBioLabel: "Short bio",
     shortBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, which was later acquired by OpenAI. His work asks what capabilities and works matter more when AI makes execution cheaper.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He was an economist at Amazon, a data scientist at Meta, Director of Growth Data Science & AI at Tencent IEG, and an early member of Statsig, which was later acquired by OpenAI. His work asks what capabilities and works matter more when AI makes execution cheaper.",
     longBioLabel: "Long bio",
     longBio:
-      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG—where he led a 30-person team and received the highest performance rating in two consecutive cycles—and an early member of Statsig, which was later acquired by OpenAI. He founded Superlinear Academy, the parent institution for its free community, AI Builders, and Stay Superlinear. His defining idea is MAKE WHAT LASTS. As of August 2026, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of 20,000+ members with 700+ shared real-world projects. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
+      "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Director of Growth Data Science & AI at Tencent IEG—where he led a 30-person team and received the highest performance rating in two consecutive cycles—and an early member of Statsig, which was later acquired by OpenAI. He founded Superlinear Academy, the parent institution for its free community, AI Builders, and Stay Superlinear. His defining idea is MAKE WHAT LASTS. As of August 2026, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of 20,000+ members with 700+ shared real-world projects. He is co-author of Growth Data Analytics Playbook and author of 《真本事》.",
     brandLineLabel: "One line for the introduction",
     brandLine: "MAKE WHAT LASTS.",
     headshotLabel: "1280 × 1280 headshot",
@@ -880,10 +882,10 @@ const copy = {
     pdfCta: "下载六页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
-      "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI改变工作以后，什么能力和作品反而更重要。",
+      "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI改变工作以后，什么能力和作品反而更重要。",
     longBioLabel: "长介绍",
     longBio:
-      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；在腾讯带过30人的数据与AI团队，连续两个周期获得最高绩效。他也是Statsig早期成员，Statsig后被OpenAI收购。他从大厂管理岗位进入早期创业公司，后来全职创办Superlinear Academy；AI Builders课程与Stay Superlinear会员都在这个母体下。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
+      "孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监；在腾讯带过30人的数据与AI团队，连续两个周期获得最高绩效。他也是Statsig早期成员，Statsig后被OpenAI收购。他从大厂管理岗位进入早期创业公司，后来全职创办Superlinear Academy；AI Builders课程与Stay Superlinear会员都在这个母体下。截至2026年8月，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有2万+成员、700+真实项目分享的免费社区。他合著英文书《Growth Data Analytics Playbook》，著有《真本事》。",
     brandLineLabel: "节目介绍可用的一句话",
     brandLine: "学点真本事，做点真东西。",
     headshotLabel: "1280 × 1280头像",
@@ -957,16 +959,18 @@ export default function CreatorCollab() {
     <div
       lang={lang === "zh" ? "zh-CN" : "en"}
       className={cn(
-        "relative min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100",
+        "lz-site relative min-h-screen overflow-x-clip bg-lz-forest-3 text-zinc-100",
+        lang === "en" && "l-en",
         lang === "zh" && "[&_h2]:text-balance [&_h3]:text-balance"
       )}
     >
-      <CollabHeader
-        backHref="/collab"
-        section={{ en: "Podcasts & creators", zh: "播客与视频" }}
-      />
+      <SiteHeader current="collab" />
 
       <main className="relative z-10">
+        <SiteBreadcrumb
+          parent={{ href: "/collab", en: "Collaborate", zh: "合作" }}
+          current={{ en: "Podcasts & creators", zh: "播客与视频" }}
+        />
         <section className="container py-12 md:py-20">
           <div className="grid gap-7 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-16 lg:gap-y-8">
             <div className="order-1 lg:col-start-1 lg:row-start-1">
@@ -991,7 +995,7 @@ export default function CreatorCollab() {
               </h1>
             </div>
             <figure className="order-3 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-              <div className="overflow-hidden border border-white/10 bg-[#151A25]">
+              <div className="overflow-hidden border border-white/10 bg-lz-forest-2">
                 <img
                   src="/hero/acquired-behind-scenes-desktop.webp"
                   alt={
@@ -1284,7 +1288,7 @@ export default function CreatorCollab() {
 
           <section
             id="questions"
-            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 border-y border-white/10 bg-[#0F1420] py-16 md:py-24"
+            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 border-y border-white/10 bg-lz-forest-2 py-16 md:py-24"
           >
             <div className="container grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
               <div>
@@ -1525,7 +1529,7 @@ export default function CreatorCollab() {
               {t.logistics.map(item => {
                 const Icon = item.icon;
                 return (
-                  <div key={item.label} className="bg-[#0F1420] p-6">
+                  <div key={item.label} className="bg-lz-forest-2 p-6">
                     <Icon className="h-5 w-5 text-superlinear-on-dark" />
                     <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
                       {item.label}
@@ -1686,6 +1690,7 @@ export default function CreatorCollab() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

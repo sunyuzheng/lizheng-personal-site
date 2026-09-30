@@ -67,7 +67,7 @@ export default function Guests() {
     <GuestsLayout>
       <div className="container py-12 md:py-16">
         <div className="mb-10 text-center">
-          <h1 className="text-4xl font-bold text-white md:text-5xl">
+          <h1 className="text-4xl font-black text-white md:text-[3.4rem] md:leading-tight">
             {lang === "en" ? "People & conversations" : "全部访谈"}
           </h1>
           {!loading && !error && (
@@ -149,7 +149,7 @@ export default function Guests() {
             {Array.from({ length: 12 }).map((_, index) => (
               <div
                 key={index}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+                className="overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2"
               >
                 <div className="aspect-video animate-pulse bg-white/10" />
                 <div className="space-y-3 p-4">
@@ -173,7 +173,7 @@ export default function Guests() {
             {filtered.map(guest => (
               <article
                 key={guest.slug}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-superlinear-on-dark/40 hover:bg-white/10"
+                className="group flex flex-col overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2 transition duration-300 hover:-translate-y-1 hover:border-superlinear-on-dark/40"
               >
                 <Link
                   href={withLanguage(`/guests/${guest.slug}`, lang)}
@@ -187,7 +187,7 @@ export default function Guests() {
                           ? `Interview cover — ${guest.guest_en_name || guest.guest_name}`
                           : `${guest.guest_name}访谈封面`
                       }
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                      className="h-full w-full object-cover [filter:saturate(0.82)_contrast(1.02)] transition duration-300 group-hover:scale-105 group-hover:[filter:none]"
                       loading="lazy"
                       width={320}
                       height={180}
@@ -206,7 +206,7 @@ export default function Guests() {
 
                   <div className="flex flex-1 flex-col p-4">
                     <div>
-                      <h2 className="line-clamp-1 text-base font-semibold text-white">
+                      <h2 className="line-clamp-1 text-[17px] font-bold tracking-[0.02em] text-white">
                         {lang === "en" && guest.guest_en_name
                           ? guest.guest_en_name
                           : guest.guest_name}

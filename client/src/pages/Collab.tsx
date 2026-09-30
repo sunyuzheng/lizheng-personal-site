@@ -1,11 +1,11 @@
-import CollabHeader from "@/components/collab/CollabHeader";
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft,
   ArrowRight,
   Building2,
   CalendarDays,
@@ -103,7 +103,6 @@ const copy = {
     contactClose:
       "Specific context makes it much easier to give you a useful answer, including when I am not the right person.",
     contactButton: "Email Yuzheng",
-    back: "Back to homepage",
   },
   zh: {
     navSub: "合作",
@@ -185,7 +184,6 @@ const copy = {
     contactClose:
       "具体的上下文，能让我更快给你一个真正有用的回答，包括我不是最合适的人时。",
     contactButton: "发邮件给立正",
-    back: "回到主页",
   },
 };
 
@@ -224,8 +222,13 @@ export default function Collab() {
   );
 
   return (
-    <div className="relative min-h-screen overflow-x-clip bg-superlinear-canvas text-superlinear-ink">
-      <CollabHeader backHref="/" section={{ en: "Collaborate", zh: "合作" }} />
+    <div
+      className={cn(
+        "lz-site relative min-h-screen overflow-x-clip bg-superlinear-canvas text-superlinear-ink",
+        lang === "en" && "l-en"
+      )}
+    >
+      <SiteHeader current="collab" />
 
       <main className="relative z-10">
         <section className="container py-16 md:py-24">
@@ -428,20 +431,9 @@ export default function Collab() {
             <ShieldCheck className="h-4 w-4" />
             <span>yz@superlinear.academy</span>
           </div>
-          <div className="mt-8 flex justify-center">
-            <Link
-              href={withLanguage("/", lang)}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "border-superlinear-cream bg-superlinear-surface text-superlinear-body hover:bg-superlinear-hover hover:text-superlinear-ink"
-              )}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {t.back}
-            </Link>
-          </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

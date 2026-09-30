@@ -1,5 +1,8 @@
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import {
@@ -17,9 +20,7 @@ import {
 import { DECKS_LANGUAGE_ALTERNATES, DECKS_PAGE_META } from "@shared/page-meta";
 import { buildDeckLibraryStructuredData } from "@shared/structured-data";
 import {
-  ArrowLeft,
   ArrowRight,
-  Building2,
   ExternalLink,
   FileClock,
   Github,
@@ -30,14 +31,13 @@ import {
   X,
 } from "lucide-react";
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 
 type CategoryFilter = "all" | DeckCategory;
 type ScopeFilter = "all" | DeckCollection;
 
 const copy = {
   en: {
-    section: "Deck index",
-    collaboration: "Enterprise work",
     eyebrow: "YUZHENG SUN · ENTERPRISE AI DECKS · 2026",
     h1: "Different work calls for different ways to use AI.",
     intro:
@@ -71,8 +71,6 @@ const copy = {
     homepage: "Back to lizheng.ai",
   },
   zh: {
-    section: "课件与公开分享",
-    collaboration: "企业合作",
     eyebrow: "课代表立正 · 企业AI DECKS · 2026",
     h1: "不同的工作，需要不同的AI解法。",
     intro:
@@ -180,7 +178,8 @@ function DeckCover({
         <div className="mt-auto max-w-[88%]">
           <h3
             className={cn(
-              "font-semibold leading-[1.15] text-white [text-wrap:balance]",
+              // Covers keep the decks' own sans typography.
+              "font-sans font-semibold leading-[1.15] text-white [text-wrap:balance]",
               compact ? "text-base sm:text-lg" : "text-xl sm:text-2xl"
             )}
           >
@@ -361,77 +360,13 @@ export default function Decks() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#090D16] text-zinc-100 selection:bg-superlinear selection:text-white">
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#090D16]/82 backdrop-blur-xl">
-        <div className="container flex items-center justify-between gap-3 py-4">
-          <a
-            href={
-              lang === "en"
-                ? "https://www.lizheng.ai/"
-                : "https://www.lizheng.ai/zh"
-            }
-            className="flex min-w-0 items-center gap-3 text-zinc-400 transition hover:text-white"
-          >
-            <ArrowLeft className="h-4 w-4 shrink-0" />
-            <div className="min-w-0">
-              <div className="truncate text-sm font-semibold text-white">
-                {lang === "en" ? "Yuzheng Sun" : "课代表立正"}
-              </div>
-              <div className="hidden text-[11px] text-zinc-500 min-[360px]:block">
-                {t.section}
-              </div>
-            </div>
-          </a>
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <div
-              className="inline-flex shrink-0 items-center overflow-hidden rounded-full border border-white/15 bg-white/5"
-              role="group"
-              aria-label="Language"
-            >
-              <a
-                href="/en/decks"
-                aria-current={lang === "en" ? "page" : undefined}
-                className={cn(
-                  "px-2 py-1 text-[11px] font-semibold uppercase tracking-wide transition",
-                  lang === "en"
-                    ? "bg-superlinear text-white"
-                    : "text-zinc-400 hover:text-white"
-                )}
-              >
-                EN
-              </a>
-              <a
-                href="/decks"
-                aria-current={lang === "zh" ? "page" : undefined}
-                className={cn(
-                  "px-2 py-1 text-[11px] font-semibold transition",
-                  lang === "zh"
-                    ? "bg-superlinear text-white"
-                    : "text-zinc-400 hover:text-white"
-                )}
-              >
-                中文
-              </a>
-            </div>
-            <Button
-              asChild
-              size="sm"
-              className="bg-superlinear text-white hover:bg-superlinear-deep"
-            >
-              <a
-                href={
-                  lang === "en"
-                    ? "https://www.lizheng.ai/collab"
-                    : "https://www.lizheng.ai/zh/collab"
-                }
-              >
-                <Building2 className="h-3.5 w-3.5 sm:mr-1.5" />
-                <span className="hidden sm:inline">{t.collaboration}</span>
-              </a>
-            </Button>
-          </div>
-        </div>
-      </header>
+    <div
+      className={cn(
+        "lz-site min-h-screen overflow-x-clip bg-lz-forest-3 text-zinc-100 selection:bg-superlinear selection:text-white",
+        lang === "en" && "l-en"
+      )}
+    >
+      <SiteHeader current="decks" />
 
       <main>
         <section className="relative border-b border-white/10">
@@ -466,7 +401,7 @@ export default function Decks() {
 
               <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-white/10">
                 <div className="py-5 pr-3">
-                  <p className="text-3xl font-semibold text-white sm:text-4xl">
+                  <p className="lz-num text-3xl font-semibold text-white sm:text-4xl">
                     {ENTERPRISE_DECKS.length}
                   </p>
                   <p className="mt-1 text-[11px] leading-4 text-zinc-500 sm:text-xs">
@@ -474,7 +409,7 @@ export default function Decks() {
                   </p>
                 </div>
                 <div className="border-x border-white/10 px-3 py-5 sm:px-6">
-                  <p className="text-3xl font-semibold text-white sm:text-4xl">
+                  <p className="lz-num text-3xl font-semibold text-white sm:text-4xl">
                     {PUBLIC_TALK_DECKS.length}
                   </p>
                   <p className="mt-1 text-[11px] leading-4 text-zinc-500 sm:text-xs">
@@ -482,7 +417,7 @@ export default function Decks() {
                   </p>
                 </div>
                 <div className="py-5 pl-3 sm:pl-6">
-                  <p className="text-3xl font-semibold text-white sm:text-4xl">
+                  <p className="lz-num text-3xl font-semibold text-white sm:text-4xl">
                     2
                   </p>
                   <p className="mt-1 text-[11px] leading-4 text-zinc-500 sm:text-xs">
@@ -506,7 +441,7 @@ export default function Decks() {
                   loading="eager"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#090D16] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-lz-forest-3 via-transparent to-transparent" />
                 <figcaption className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-4 p-5 sm:p-6">
                   <span className="text-xs font-medium text-white/80">
                     {t.photoCaption}
@@ -546,7 +481,7 @@ export default function Decks() {
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
                 {t.indexEyebrow}
               </p>
-              <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-white md:text-5xl">
+              <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-white [text-wrap:balance] md:text-5xl">
                 {t.indexTitle}
               </h2>
             </div>
@@ -555,15 +490,15 @@ export default function Decks() {
             </p>
           </div>
 
-          <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+          <div className="mt-10 rounded-[18px] bg-lz-forest-2 p-5 sm:p-8">
             <div className="relative">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+              <Search className="pointer-events-none absolute left-[18px] top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400" />
               <input
                 value={query}
                 onChange={event => setQuery(event.target.value)}
                 placeholder={t.searchPlaceholder}
                 aria-label={t.searchPlaceholder}
-                className="h-12 w-full rounded-xl border border-white/10 bg-[#090D16] pl-11 pr-11 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-superlinear-on-dark/60"
+                className="h-14 w-full rounded-xl border-0 bg-white/[0.08] pl-12 pr-11 text-base font-medium text-white shadow-[inset_0_0_0_1px_var(--lz-forest-line)] outline-none transition placeholder:font-normal placeholder:text-zinc-500 focus:bg-white/[0.12] focus:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.5)]"
               />
               {query ? (
                 <button
@@ -584,8 +519,8 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "all"
-                    ? "border-superlinear-on-dark bg-superlinear text-white"
-                    : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+                    ? "border-transparent bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(248,241,228,0.55)]"
+                    : "border-transparent text-zinc-300 shadow-[inset_0_0_0_1px_var(--lz-forest-line)] hover:text-white hover:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.45)]"
                 )}
               >
                 {t.all} · {DECK_LIBRARY.length}
@@ -596,8 +531,8 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "enterprise"
-                    ? "border-superlinear-on-dark bg-superlinear text-white"
-                    : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+                    ? "border-transparent bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(248,241,228,0.55)]"
+                    : "border-transparent text-zinc-300 shadow-[inset_0_0_0_1px_var(--lz-forest-line)] hover:text-white hover:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.45)]"
                 )}
               >
                 {t.enterprise} · {ENTERPRISE_DECKS.length}
@@ -608,8 +543,8 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   scopeFilter === "public"
-                    ? "border-superlinear-on-dark bg-superlinear text-white"
-                    : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+                    ? "border-transparent bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(248,241,228,0.55)]"
+                    : "border-transparent text-zinc-300 shadow-[inset_0_0_0_1px_var(--lz-forest-line)] hover:text-white hover:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.45)]"
                 )}
               >
                 {t.publicTalk} · {PUBLIC_TALK_DECKS.length}
@@ -623,8 +558,8 @@ export default function Decks() {
                 className={cn(
                   "rounded-full border px-3 py-2 text-xs font-medium transition",
                   categoryFilter === "all"
-                    ? "border-white/35 bg-white/10 text-white"
-                    : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+                    ? "border-transparent bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(248,241,228,0.55)]"
+                    : "border-transparent text-zinc-300 shadow-[inset_0_0_0_1px_var(--lz-forest-line)] hover:text-white hover:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.45)]"
                 )}
               >
                 {t.all}
@@ -644,8 +579,8 @@ export default function Decks() {
                     className={cn(
                       "rounded-full border px-3 py-2 text-xs font-medium transition disabled:cursor-not-allowed disabled:opacity-35",
                       categoryFilter === category.id
-                        ? "border-white/35 bg-white/10 text-white"
-                        : "border-white/10 text-zinc-400 hover:border-white/25 hover:text-white"
+                        ? "border-transparent bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(248,241,228,0.55)]"
+                        : "border-transparent text-zinc-300 shadow-[inset_0_0_0_1px_var(--lz-forest-line)] hover:text-white hover:shadow-[inset_0_0_0_1px_rgba(248,241,228,0.45)]"
                     )}
                   >
                     {localized(category.label, lang)} · {count}
@@ -736,21 +671,16 @@ export default function Decks() {
                 variant="outline"
                 className="border-white/15 bg-transparent text-white hover:bg-white/5 hover:text-white"
               >
-                <a
-                  href={
-                    lang === "en"
-                      ? "https://www.lizheng.ai/"
-                      : "https://www.lizheng.ai/zh"
-                  }
-                >
+                <Link href={withLanguage("/", lang)}>
                   {t.homepage}
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
             </div>
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

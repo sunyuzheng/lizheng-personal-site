@@ -6,15 +6,41 @@ interface LanguageToggleProps {
   className?: string;
   size?: "sm" | "md";
   surface?: "dark" | "light";
+  /**
+   * `segmented` shows both languages; `pill` shows a single link to the other
+   * language, as in the shared site header.
+   */
+  variant?: "segmented" | "pill";
+  /** Accessible name for the `pill` variant. */
+  label?: string;
 }
 
 export default function LanguageToggle({
   className = "",
   size = "md",
   surface = "dark",
+  variant = "segmented",
+  label,
 }: LanguageToggleProps) {
   const { lang, setLang } = useLanguage();
   const [location] = useLocation();
+
+  if (variant === "pill") {
+    const other = lang === "en" ? "zh" : "en";
+    return (
+      <Link
+        href={withLanguage(location, other)}
+        onClick={() => setLang(other)}
+        hrefLang={other === "en" ? "en" : "zh-CN"}
+        lang={other === "en" ? "en" : "zh-CN"}
+        aria-label={label}
+        className={className}
+      >
+        {other === "en" ? "EN" : "中文"}
+      </Link>
+    );
+  }
+
   const pad = size === "sm" ? "px-2 py-1 text-[11px]" : "px-2.5 py-1 text-xs";
   const activeTone = "bg-superlinear text-white";
   const inactiveTone =

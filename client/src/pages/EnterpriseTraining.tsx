@@ -1,4 +1,6 @@
-import CollabHeader from "@/components/collab/CollabHeader";
+import SiteBreadcrumb from "@/components/site/SiteBreadcrumb";
+import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -383,14 +385,20 @@ export default function EnterpriseTraining() {
   );
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-[#09110C] text-zinc-100">
-      <CollabHeader
-        backHref="/collab"
-        section={{ en: "Enterprise AI training", zh: "企业AI培训" }}
-      />
+    <div
+      className={cn(
+        "lz-site min-h-screen overflow-x-clip bg-lz-forest-3 text-zinc-100",
+        lang === "en" && "l-en"
+      )}
+    >
+      <SiteHeader current="collab" />
 
       <main>
-        <section className="relative overflow-hidden border-b border-white/10 bg-[#09110C]">
+        <SiteBreadcrumb
+          parent={{ href: "/collab", en: "Collaborate", zh: "合作" }}
+          current={{ en: "Enterprise AI training", zh: "企业AI培训" }}
+        />
+        <section className="relative overflow-hidden border-b border-white/10 bg-lz-forest-3">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(35,131,67,0.16),transparent_34rem)]" />
           <div className="container relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:gap-16">
             <div>
@@ -444,7 +452,7 @@ export default function EnterpriseTraining() {
               </div>
             </div>
 
-            <aside className="border border-superlinear-on-dark/30 bg-[#123521] p-6 shadow-[0_28px_90px_rgba(0,0,0,0.25)] md:p-9">
+            <aside className="border border-superlinear-on-dark/30 bg-lz-forest p-6 shadow-[0_28px_90px_rgba(0,0,0,0.25)] md:p-9">
               <p
                 className={cn(
                   "font-mono text-[11px] leading-5 text-superlinear-on-dark",
@@ -725,7 +733,7 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-[#173C2A] py-16 md:py-24">
+        <section className="border-y border-white/10 bg-lz-forest py-16 md:py-24">
           <div className="container">
             <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-20">
               <div>
@@ -910,6 +918,7 @@ export default function EnterpriseTraining() {
           </div>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }

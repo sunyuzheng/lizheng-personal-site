@@ -1,77 +1,68 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./components/site/site.css";
+@import "./components/home/home.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Homepage conversation covers keep editable type separate from real portraits. */
-.conversation-cover {
-  container-type: inline-size;
-  display: grid;
-  grid-template-columns: 62% 38%;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: #fbf8ef;
-  color: #193d2c;
+/*
+ * lizheng.ai design language (2026-09-30): forest-green bookends, an ivory
+ * editorial middle, and serif titles. Tokens carry an `lz` prefix so they never
+ * collide with the shadcn variables below (for example `--muted`). Serif
+ * @font-face rules live in fonts.css and load without blocking first paint.
+ */
+:root {
+  --lz-ink: #121613;
+  --lz-ink-2: #343a35;
+  --lz-muted: #6c7069;
+  --lz-line: #e2ddd1;
+  --lz-line-2: #d6d0c2;
+  --lz-ivory: #f8f5ee;
+  --lz-paper: #fcfbf7;
+  --lz-sand: #efe9dc;
+  --lz-green: #238343;
+  --lz-green-2: #2c9a51;
+  --lz-green-deep: #1f7a3d;
+  --lz-green-text: #1c6b37;
+  --lz-mint: #8fd4a4;
+  --lz-forest: #0f3d23;
+  --lz-forest-2: #0b2f1b;
+  --lz-forest-3: #082313;
+  --lz-on-forest: #f8f1e4;
+  --lz-on-forest-2: rgb(248 241 228 / 0.74);
+  --lz-on-forest-3: rgb(248 241 228 / 0.5);
+  --lz-forest-line: rgb(248 241 228 / 0.14);
+  --lz-serif-zh: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --lz-serif-en:
+    "Source Serif 4 Variable", "Source Serif 4", Georgia, "Noto Serif SC", serif;
+  --lz-num:
+    "Source Serif 4 Variable", "Source Serif 4", Georgia, "Noto Serif SC", serif;
+  --lz-sans-zh:
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --lz-sans-en:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  --lz-wrap: 1200px;
+  --lz-gut: clamp(20px, 4vw, 48px);
+  --lz-header-h: 68px;
 }
 
-.conversation-cover-copy {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 6cqw 2.5cqw 6cqw 6cqw;
-}
-
-.conversation-cover-topic {
-  max-width: 100%;
-  font-size: clamp(9px, 3cqw, 12px);
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  color: #506a57;
-}
-
-.conversation-cover-title {
-  margin-block: 5cqw;
-  font-size: clamp(18px, 6.5cqw, 28px);
-  font-weight: 600;
-  line-height: 1.45;
-  letter-spacing: -0.04em;
-}
-
-.conversation-cover-title span {
-  display: block;
-}
-
-.conversation-cover-rule {
-  width: 24px;
-  height: 2px;
-  flex-shrink: 0;
-  background: #238343;
-}
-
-.conversation-cover-portrait {
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-  background: #f5f0e4;
-}
-
-.conversation-cover-portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(1.05);
-  transition: transform 250ms ease;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .group:hover .conversation-cover-portrait img,
-  .group:focus-visible .conversation-cover-portrait img {
-    transform: scale(1.035);
-  }
+@theme inline {
+  --color-lz-ink: var(--lz-ink);
+  --color-lz-ink-2: var(--lz-ink-2);
+  --color-lz-muted: var(--lz-muted);
+  --color-lz-line: var(--lz-line);
+  --color-lz-ivory: var(--lz-ivory);
+  --color-lz-paper: var(--lz-paper);
+  --color-lz-sand: var(--lz-sand);
+  --color-lz-green: var(--lz-green);
+  --color-lz-mint: var(--lz-mint);
+  --color-lz-forest: var(--lz-forest);
+  --color-lz-forest-2: var(--lz-forest-2);
+  --color-lz-forest-3: var(--lz-forest-3);
+  --color-lz-on-forest: var(--lz-on-forest);
+  --font-lz-serif: var(--lz-serif-zh);
+  --font-lz-num: var(--lz-num);
 }
 
 @theme {

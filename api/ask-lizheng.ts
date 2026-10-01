@@ -60,7 +60,9 @@ export default async function handler(request: Request): Promise<Response> {
       method: "POST",
       body,
       signal: abort.signal,
-      redirect: "error",
+      // Vercel's live Edge runtime accepts manual/follow, but rejects error.
+      // Never follow a redirect or forward a Location header to the reader.
+      redirect: "manual",
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +78,9 @@ export default async function handler(request: Request): Promise<Response> {
       void upstream.body?.cancel().catch(() => {});
       cleanup();
       return failure(
-        upstream.ok ? 502 : upstream.status,
+        upstream.ok || (upstream.status >= 300 && upstream.status < 400)
+          ? 502
+          : upstream.status,
         upstream.status === 429
           ? "rate_limited"
           : upstream.ok
@@ -125,12 +129,8 @@ export default async function handler(request: Request): Promise<Response> {
         "X-Accel-Buffering": "no",
       },
     });
-  } catch (error) {
+  } catch {
     cleanup();
-    const code =
-      error instanceof TypeError
-        ? "upstream_request_invalid"
-        : "upstream_unavailable";
-    return failure(abort.signal.aborted ? 504 : 502, code);
+    return failure(abort.signal.aborted ? 504 : 502, "upstream_unavailable");
   }
 }

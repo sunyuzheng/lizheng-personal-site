@@ -54,6 +54,21 @@ afterEach(() => {
 });
 
 describe("fixed Builder SSE relay", () => {
+  it("rejects manual redirect responses without forwarding Location or following them", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(null, {
+        status: 302,
+        headers: { Location: "https://example.com/synthetic-redirect" },
+      })
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await handler(request());
+    expect(response.status).toBe(502);
+    expect(response.headers.get("location")).toBeNull();
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(fetchMock.mock.calls[0][1].redirect).toBe("manual");
+    expect(await response.text()).not.toContain("synthetic-redirect");
+  });
   it("forwards progress and sources while the final result is still pending", async () => {
     let input!: ReadableStreamDefaultController<Uint8Array>;
     const upstream = new ReadableStream<Uint8Array>({
@@ -253,7 +268,7 @@ describe("fixed Builder SSE relay", () => {
         "Accept-Encoding": "identity",
       })
     );
-    expect(options.redirect).toBe("error");
+    expect(options.redirect).toBe("manual");
     expect(options.cache).toBe("no-store");
     expect(response.headers.get("set-cookie")).toBeNull();
     expect(response.headers.get("authorization")).toBeNull();
@@ -356,7 +371,7 @@ describe("fixed Builder SSE relay", () => {
       );
     vi.stubGlobal("fetch", fetch);
     const response = await handler(request());
-    expect(fetch.mock.calls[0][1].redirect).toBe("error");
+    expect(fetch.mock.calls[0][1].redirect).toBe("manual");
     expect(response.status).toBe(502);
     const body = await response.text();
     expect(body).not.toContain("attacker.invalid");

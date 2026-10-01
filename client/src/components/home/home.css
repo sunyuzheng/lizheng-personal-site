@@ -1803,6 +1803,113 @@
   }
 }
 
+.lz-home .lz-ask {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 36px 64px;
+  margin-top: 56px;
+  padding: clamp(24px, 3.6vw, 48px);
+  border-radius: 18px;
+  background: var(--lz-forest-2);
+  color: var(--lz-on-forest);
+}
+
+.lz-home .lz-ask h3 {
+  font-size: clamp(28px, 3vw, 36px);
+}
+
+.lz-home .lz-ask-body {
+  margin: 14px 0 24px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.lz-home .lz-ask-note {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-home .lz-ask-examples {
+  align-self: center;
+  padding-left: 32px;
+  border-left: 1px solid rgb(248 241 228 / 0.22);
+}
+
+.lz-home .lz-ask-examples p {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-home .lz-ask-examples ul {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.lz-home .lz-ask-examples li {
+  text-wrap: balance;
+}
+
+.lz-home .lz-ask-examples .phrase {
+  max-width: 100%;
+}
+
+.lz-home .lz-ask-archive {
+  margin-top: 16px;
+  padding: 18px 24px;
+  border: 1px solid var(--lz-line);
+  border-radius: 12px;
+}
+
+.lz-home .lz-ask-archive summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-archive summary:focus-visible {
+  outline: 2px solid var(--lz-green-2);
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+.lz-home .lz-ask-archive .lz-search {
+  margin-top: 20px;
+}
+
+@media (max-width: 720px) {
+  .lz-home .lz-ask {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .lz-home .lz-ask-examples {
+    padding: 22px 0 0;
+    border-top: 1px solid rgb(248 241 228 / 0.22);
+    border-left: 0;
+  }
+
+  .lz-home .lz-ask-archive {
+    padding: 18px;
+  }
+
+  .lz-home .lz-ask-archive .lz-search {
+    margin-right: -18px;
+    margin-left: -18px;
+    border-radius: 0;
+  }
+}
+
 .lz-search {
   position: relative;
   overflow: hidden;

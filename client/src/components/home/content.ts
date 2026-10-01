@@ -16,6 +16,7 @@ export const LINKS = {
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
+  askLizheng: "https://ask-lizheng.ai-builders.space/",
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,
@@ -592,6 +593,18 @@ const zh = {
         href: "https://www.superlinear.academy/c/ai-resources/quality",
       },
     ] as Essay[],
+    ask: {
+      title: "问问立正",
+      body: "想理解一个观点，或把它用到自己的处境？让AI从我的公开文章和视频中找出相关内容，整理回答并给出出处。",
+      cta: "去问问立正",
+      note: "这是AI回答，非本人实时回复；重要判断请回到原文核对。",
+      examplesLabel: "比如，你可以问",
+      examples: [
+        "用AI做出了一个项目，怎样知道自己真的学会了？",
+        "工作越来越忙，怎样判断哪些是fake work？",
+      ],
+      searchLabel: "只找原文？搜索文章和视频",
+    },
     openContext: {
       title: "立正 · Open Context",
       body: "我在社区和视频里公开发表的内容，整理成一个人和AI都能读的开放仓库：文章全文、视频字幕与英文译稿，都带来源和日期。可以检索、引用，也可以拿来做你自己的Skill或Agent。",
@@ -1009,6 +1022,18 @@ const en: HomeCopy = {
         href: "https://www.superlinear.academy/c/ai-resources-en/the-ai-native-organization-when-execution-costs-drop-the-org-chart-must-be-rewritten",
       },
     ],
+    ask: {
+      title: "Ask Lizheng",
+      body: "Trying to understand an idea, or apply it to your own situation? Ask an AI assistant that finds relevant material in my public essays and videos, then answers with sources.",
+      cta: "Open Ask Lizheng",
+      note: "Chinese interface. AI answers, not a live reply from me. Check the original sources for important decisions.",
+      examplesLabel: "Questions you could bring",
+      examples: [
+        "I built a project with AI. How do I know I actually learned something?",
+        "I’m busier than ever. How can I tell if I’m doing fake work?",
+      ],
+      searchLabel: "Just looking for a source? Search essays and talks",
+    },
     openContext: {
       title: "Open Context",
       body: "Everything I publish in the community and on video, gathered into one open repository that people and AI can both read: full posts, transcripts with English translations, each with its source and date. Search it, cite it, or build your own Skill or Agent on it.",

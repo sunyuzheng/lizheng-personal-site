@@ -10,7 +10,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 
 ## Public Content Model
 
-- **Homepage:** a forest-green hero with the defining idea, identity and compact social links; the career path; public numbers and the organizations he has spoken to; selected work; conversations; dated public calls with their later status; recent writing with a lazily loaded site search; and the Academy he is building, including one understated enterprise line with the fully custom starting price. The header and footer are shared with the personal subpages. Full beliefs, peer quotations, and learner reviews live on About. See [`docs/reviews/homepage-redesign-2026-09-30.md`](docs/reviews/homepage-redesign-2026-09-30.md).
+- **Homepage:** a forest-green hero with the defining idea, identity and compact social links; the career path; public numbers and the organizations he has spoken to; selected work; conversations; dated public calls with their later status; recent writing with native Ask Lizheng questions, cited AI answers and an optional collapsed keyword search; and the Academy he is building, including one understated enterprise line with the fully custom starting price. The header and footer are shared with the personal subpages. Full beliefs, peer quotations, and learner reviews live on About. See [`docs/reviews/homepage-redesign-2026-09-30.md`](docs/reviews/homepage-redesign-2026-09-30.md).
 - **About:** factual biography, career and project relationships, and the full defining-work philosophy relocated from the homepage. The homepage curates; this page provides depth.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
@@ -34,7 +34,7 @@ Current local review materials:
 
 - **Frontend:** React 18 + TypeScript + Vite + Tailwind CSS v4 + Shadcn UI
 - **Routing:** Wouter (client-side SPA + build-time prerendering for books, guests, and collaboration pages)
-- **API:** Vercel Edge Function for the optional 《真本事》 AI advisor
+- **API:** Vercel Edge Function for the optional 《真本事》 AI advisor; same-origin Ask Lizheng proxy to Builder Space ([contract](docs/ask-lizheng.md))
 - **Deployment:** static Vite output on Vercel; the Express bundle is retained for non-Vercel Node hosting
 - **Verification:** GitHub Actions runs the type check and production build on pull requests and `main`
 

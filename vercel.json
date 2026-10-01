@@ -6,6 +6,19 @@
   "trailingSlash": false,
   "routes": [
     {
+      "src": "/(.*)",
+      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
+      "dest": "https://ask-lizheng.ai-builders.space/$1",
+      "respectOriginCacheControl": false,
+      "headers": { "Cache-Control": "no-store" }
+    },
+    {
+      "src": "/api/ask-lizheng/(ask|meta)",
+      "dest": "https://ask-lizheng.ai-builders.space/api/$1",
+      "respectOriginCacheControl": false,
+      "headers": { "Cache-Control": "no-store" }
+    },
+    {
       "src": "/assets/(.*)",
       "headers": {
         "Cache-Control": "public, max-age=31536000, immutable"

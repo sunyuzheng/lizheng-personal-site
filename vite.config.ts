@@ -49,6 +49,13 @@ export default defineConfig({
     strictPort: false,
     host: true,
     allowedHosts: ["localhost", "127.0.0.1"],
+    proxy: {
+      "/api/ask-lizheng": {
+        target: process.env.ASK_LIZHENG_DEV_TARGET || "http://127.0.0.1:8000",
+        changeOrigin: true,
+        rewrite: value => value.replace(/^\/api\/ask-lizheng/, "/api"),
+      },
+    },
     fs: {
       strict: true,
       deny: ["**/.*"],

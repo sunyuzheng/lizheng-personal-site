@@ -16,7 +16,7 @@ export const LINKS = {
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
-  askLizheng: "https://ask-lizheng.ai-builders.space/",
+  askLizheng: "https://ask.lizheng.ai/",
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,
@@ -1026,7 +1026,7 @@ const en: HomeCopy = {
       title: "Ask Lizheng",
       body: "Trying to understand an idea, or apply it to your own situation? Ask an AI assistant that finds relevant material in my public essays and videos, then answers with sources.",
       cta: "Open Ask Lizheng",
-      note: "Chinese interface. AI answers, not a live reply from me. Check the original sources for important decisions.",
+      note: "AI answers, not a live reply from me. The source material and answers are primarily in Chinese. Check the original sources for important decisions.",
       examplesLabel: "Questions you could bring",
       examples: [
         "I built a project with AI. How do I know I actually learned something?",

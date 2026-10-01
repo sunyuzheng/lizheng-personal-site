@@ -1,30 +1,594 @@
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import ReactMarkdown from "react-markdown";
 import type { Lang } from "@/contexts/LanguageContext";
+import {
+  askLizheng,
+  AskError,
+  publicSourceUrl,
+  type AskIntent,
+  type AskResult,
+  type AskSource,
+} from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
-import { EXTERNAL, Phrases } from "./parts";
+import { EXTERNAL } from "./parts";
 import SiteSearch from "./SiteSearch";
+
+const COPY = {
+  zh: {
+    question: "你的问题",
+    placeholder: "想弄明白什么？也可以说说你的处境和卡点。",
+    context: "补充背景（选填）",
+    contextHint: "目标、事实、限制，或已经试过什么。",
+    send: "发送问题",
+    stop: "停止",
+    reset: "开始新问题",
+    full: "打开完整页面",
+    examples: "选一个问题，再改成自己的",
+    loading: "正在查找相关公开材料…",
+    seconds: "秒",
+    waited: "已等待",
+    candidates: "已找到的材料 · 候选，尚未最终采用",
+    sources: "回答依据",
+    excerpt: "查看原文片段",
+    copy: "阅读公开资料副本",
+    next: "可以继续问",
+    clarify: "还需要了解",
+    stopped: "已停止。问题和检索材料已保留，可以修改后重试。",
+    failed: "回答未完成。问题和已找到的材料仍在，可以重试。",
+    crowded: "现在提问较多，请稍后再试。问题和已找到的材料仍在。",
+    privacy: "关于回答和你的输入",
+    privacyNote:
+      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和背景会发送给Builder Space处理；本产品不保存对话记录，对话只留在当前页面，刷新后清空。请勿填写私密信息。",
+    modes: ["想明白", "聊聊我的问题", "找内容"],
+    kinds: {
+      source: "材料中的观点",
+      synthesis: "AI综合",
+      application: "结合你的处境",
+    },
+    steps: ["查找原文", "匹配材料", "整理回答", "核对来源"],
+  },
+  en: {
+    question: "Your question",
+    placeholder:
+      "What would you like to understand? You can include your situation and where you’re stuck.",
+    context: "Add context (optional)",
+    contextHint: "Your goal, facts, constraints, or what you’ve tried.",
+    send: "Ask",
+    stop: "Stop",
+    reset: "New question",
+    full: "Open full page",
+    examples: "Choose a question, then make it yours",
+    loading: "Finding relevant public material…",
+    seconds: "s",
+    waited: "Waiting",
+    candidates: "Material found · candidates, not final citations",
+    sources: "Sources used",
+    excerpt: "Read the excerpt",
+    copy: "Read public source copy",
+    next: "Keep asking",
+    clarify: "More context would help",
+    stopped:
+      "Stopped. Your question and material are still here; edit and try again.",
+    failed:
+      "The answer didn’t finish. Your question and material are still here; try again.",
+    crowded:
+      "There are many requests right now. Try again shortly; your question and material are still here.",
+    privacy: "About answers and your input",
+    privacyNote:
+      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and context are sent to Builder Space for processing. This product does not store conversations; they remain in this page’s memory and clear on refresh. Keep private information out of your input.",
+    modes: ["Understand", "Apply to my situation", "Find sources"],
+    kinds: {
+      source: "From the material",
+      synthesis: "AI synthesis",
+      application: "Applied to your situation",
+    },
+    steps: [
+      "Find sources",
+      "Match material",
+      "Draft answer",
+      "Check citations",
+    ],
+  },
+};
+type Turn = {
+  id: number;
+  question: string;
+  sources: AskSource[];
+  progress?: { stage: string; message: string };
+  result?: AskResult;
+  error?: string;
+  model?: string;
+};
+const INTENTS: AskIntent[] = ["understand", "apply", "find"];
+const STAGE: Record<string, number> = {
+  retrieving: 0,
+  matching: 1,
+  thinking: 2,
+  checking: 3,
+  repairing: 3,
+};
+
+function Source({
+  source,
+  lang,
+  turnId,
+}: {
+  source: AskSource;
+  lang: Lang;
+  turnId: number;
+}) {
+  const c = COPY[lang];
+  const url = publicSourceUrl(source.url);
+  const copy = publicSourceUrl(source.public_copy_url);
+  return (
+    <article className="lz-ask-source" id={`home-ask-${turnId}-${source.id}`}>
+      <div>
+        <span>{source.id}</span>
+        <time>{source.date?.slice(0, 10)}</time>
+      </div>
+      {url ? (
+        <a href={url} {...EXTERNAL}>
+          {source.title} ↗
+        </a>
+      ) : (
+        <b>{source.title}</b>
+      )}
+      {source.reason && <p>{source.reason}</p>}
+      {source.excerpt && (
+        <p className="lz-ask-excerpt-preview">
+          {source.excerpt.slice(0, 160)}
+          {source.excerpt.length > 160 ? "…" : ""}
+        </p>
+      )}
+      <details>
+        <summary>{c.excerpt}</summary>
+        <p>{source.excerpt}</p>
+        <small>
+          {source.author} {source.attribution_note}
+        </small>
+        {copy && (
+          <a href={copy} {...EXTERNAL}>
+            {c.copy} ↗
+          </a>
+        )}
+      </details>
+    </article>
+  );
+}
+
+function AnswerText({
+  text,
+  sources,
+  turnId,
+}: {
+  text: string;
+  sources: AskSource[];
+  turnId: number;
+}) {
+  return (
+    <ReactMarkdown
+      skipHtml
+      components={{
+        img: () => null,
+        a: ({ href, children }) => {
+          const id = href?.startsWith("#cite-") ? href.slice(6) : "";
+          return sources.some(s => s.id === id) ? (
+            <a className="lz-ask-cite" href={`#home-ask-${turnId}-${id}`}>
+              {children}
+            </a>
+          ) : (
+            <span>{children}</span>
+          );
+        },
+      }}
+    >
+      {text.replace(/\[(S\d{1,2})\](?!\()/g, "[$1](#cite-$1)")}
+    </ReactMarkdown>
+  );
+}
 
 export default function AskLizheng({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].writing.ask;
+  const c = COPY[lang];
+  const [question, setQuestion] = useState("");
+  const [context, setContext] = useState("");
+  const [intent, setIntent] = useState<AskIntent>("understand");
+  const [turns, setTurns] = useState<Turn[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [model, setModel] = useState("");
+  const input = useRef<HTMLTextAreaElement>(null);
+  const active = useRef<AbortController | null>(null);
+  const counter = useRef(0);
+  useEffect(
+    () => () => {
+      active.current?.abort();
+    },
+    []
+  );
+  useEffect(() => {
+    if (!busy) return;
+    const start = Date.now();
+    setElapsed(0);
+    const timer = setInterval(
+      () => setElapsed(Math.floor((Date.now() - start) / 1000)),
+      1000
+    );
+    return () => clearInterval(timer);
+  }, [busy]);
+  function prefill(value: string) {
+    setQuestion(value);
+    input.current?.focus();
+  }
+  async function submit(event?: FormEvent) {
+    event?.preventDefault();
+    if (active.current || !question.trim()) return;
+    const text = question.trim();
+    const id = ++counter.current;
+    const controller = new AbortController();
+    active.current = controller;
+    setBusy(true);
+    setQuestion("");
+    setTurns(prev => [
+      ...prev,
+      {
+        id,
+        question: text,
+        sources: [],
+        progress: { stage: "retrieving", message: c.loading },
+      },
+    ]);
+    const update = (value: Partial<Turn>) =>
+      setTurns(prev =>
+        prev.map(turn => (turn.id === id ? { ...turn, ...value } : turn))
+      );
+    // Metadata is fetched only on interaction; reading the homepage starts no AI request.
+    void fetch("/api/ask-lizheng/meta", {
+      signal: controller.signal,
+      cache: "no-store",
+      credentials: "omit",
+    })
+      .then(r => (r.ok ? r.json() : null))
+      .then(value => {
+        if (value?.model && !controller.signal.aborted) {
+          setModel(value.model);
+          update({ model: value.model });
+        }
+      })
+      .catch(() => {});
+    try {
+      await askLizheng(
+        {
+          question: text,
+          context,
+          intent,
+          history: turns
+            .filter(turn => turn.result)
+            .slice(-6)
+            .map(turn => ({
+              question: turn.question,
+              summary: turn.result!.summary,
+            })),
+        },
+        controller.signal,
+        event => {
+          if (controller.signal.aborted) return;
+          if (event.type === "progress") update({ progress: event.value });
+          if (event.type === "sources")
+            update({ sources: event.value.sources });
+          if (event.type === "result")
+            update({ result: event.value, sources: event.value.sources || [] });
+        }
+      );
+    } catch (error) {
+      if (active.current === controller) {
+        const crowded =
+          error instanceof AskError &&
+          (error.status === 429 || error.code === "provider_busy");
+        update({
+          error: controller.signal.aborted
+            ? c.stopped
+            : crowded
+              ? c.crowded
+              : c.failed,
+        });
+        setQuestion(text);
+      }
+    } finally {
+      if (active.current === controller) {
+        controller.abort();
+        active.current = null;
+        setBusy(false);
+      }
+    }
+  }
   return (
     <>
-      <div className="lz-ask rv grain">
-        <div className="lz-ask-intro">
-          <h3>{t.title}</h3>
-          <p className="lz-ask-body">{t.body}</p>
-          <a className="btn btn-ivory" href={LINKS.askLizheng} {...EXTERNAL}>
-            {t.cta} <span aria-hidden="true">↗</span>
+      <div className="lz-ask-native rv">
+        <div className="lz-ask-native-head grain">
+          <div>
+            <h3>{t.title}</h3>
+            <p>{t.body}</p>
+            <small>{t.note}</small>
+          </div>
+          <a href={LINKS.askLizheng} {...EXTERNAL}>
+            {c.full} ↗
           </a>
-          <p className="lz-ask-note">{t.note}</p>
         </div>
-        <div className="lz-ask-examples">
-          <p>{t.examplesLabel}</p>
-          <ul>
-            {t.examples.map(question => (
-              <li key={question}>
-                <Phrases text={question} />
-              </li>
-            ))}
-          </ul>
+        <div className="lz-ask-native-body">
+          <form onSubmit={submit} className="lz-ask-form">
+            <div
+              className="lz-ask-modes"
+              role="group"
+              aria-label={
+                lang === "zh" ? "这次想怎样使用" : "How you want to use this"
+              }
+            >
+              {INTENTS.map((value, index) => (
+                <button
+                  type="button"
+                  key={value}
+                  aria-pressed={intent === value}
+                  disabled={busy}
+                  onClick={() => setIntent(value)}
+                >
+                  {c.modes[index]}
+                </button>
+              ))}
+            </div>
+            <label className="sr-only" htmlFor="home-ask-question">
+              {c.question}
+            </label>
+            <textarea
+              ref={input}
+              id="home-ask-question"
+              value={question}
+              onChange={event => setQuestion(event.target.value)}
+              maxLength={2000}
+              disabled={busy}
+              rows={3}
+              placeholder={c.placeholder}
+              onKeyDown={event => {
+                if (
+                  (event.metaKey || event.ctrlKey) &&
+                  event.key === "Enter" &&
+                  !event.nativeEvent.isComposing
+                ) {
+                  event.preventDefault();
+                  void submit();
+                }
+              }}
+            />
+            <div className="lz-ask-form-bottom">
+              <details>
+                <summary>{c.context}</summary>
+                <label className="sr-only" htmlFor="home-ask-context">
+                  {c.context}
+                </label>
+                <textarea
+                  id="home-ask-context"
+                  maxLength={2500}
+                  disabled={busy}
+                  rows={3}
+                  value={context}
+                  onChange={event => setContext(event.target.value)}
+                  placeholder={c.contextHint}
+                />
+              </details>
+              {busy ? (
+                <button
+                  key="stop"
+                  className="btn btn-line"
+                  type="button"
+                  onClick={event => {
+                    event.preventDefault();
+                    active.current?.abort();
+                  }}
+                >
+                  {c.stop} ■
+                </button>
+              ) : (
+                <button
+                  key="send"
+                  className="btn btn-green"
+                  disabled={!question.trim()}
+                  type="submit"
+                >
+                  {c.send} ↑
+                </button>
+              )}
+            </div>
+          </form>
+          <details className="lz-ask-about">
+            <summary>{c.privacy}</summary>
+            <p>{c.privacyNote}</p>
+          </details>
+          {!turns.length && (
+            <div className="lz-ask-starters">
+              <p>{c.examples}</p>
+              {t.examples.map(value => (
+                <button key={value} onClick={() => prefill(value)}>
+                  {value} ↗
+                </button>
+              ))}
+            </div>
+          )}
+          {!!turns.length && (
+            <div className="lz-ask-turns">
+              {turns.map((turn, index) => {
+                const working = busy && index === turns.length - 1;
+                const step = STAGE[turn.progress?.stage || "retrieving"] ?? 0;
+                return (
+                  <article className="lz-ask-turn" key={turn.id}>
+                    <p className="lz-ask-question">{turn.question}</p>
+                    {working && (
+                      <div className="lz-ask-progress">
+                        <p role="status">
+                          {lang === "zh"
+                            ? turn.progress?.message
+                            : c.steps[step]}{" "}
+                          <span>
+                            {c.waited} {elapsed}
+                            {c.seconds}
+                          </span>
+                        </p>
+                        <ol>
+                          {c.steps.map((label, i) => (
+                            <li
+                              key={label}
+                              aria-current={i === step ? "step" : undefined}
+                              className={i <= step ? "reached" : ""}
+                            >
+                              {label}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                    {turn.result && (
+                      <div className="lz-ask-answer">
+                        <div className="lz-ask-answer-summary">
+                          <AnswerText
+                            text={turn.result.summary}
+                            sources={turn.sources}
+                            turnId={turn.id}
+                          />
+                        </div>
+                        {turn.result.sections?.map((section, i) => (
+                          <section key={i}>
+                            <div className="lz-ask-answer-title">
+                              <h4>{section.heading}</h4>
+                              <small>{c.kinds[section.kind]}</small>
+                            </div>
+                            <AnswerText
+                              text={section.body}
+                              sources={turn.sources}
+                              turnId={turn.id}
+                            />
+                            <div className="lz-ask-citations">
+                              {section.source_ids?.map(id => (
+                                <a key={id} href={`#home-ask-${turn.id}-${id}`}>
+                                  {id}
+                                </a>
+                              ))}
+                            </div>
+                          </section>
+                        ))}
+                        {turn.result.limitations && (
+                          <p className="lz-ask-limitations">
+                            {turn.result.limitations}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    {turn.error && (
+                      <p className="lz-ask-error" role="alert">
+                        {turn.error}
+                      </p>
+                    )}
+                    {!!turn.sources.length && (
+                      <div className="lz-ask-material">
+                        <p>{turn.result ? c.sources : c.candidates}</p>
+                        <div className="lz-ask-source-grid">
+                          {turn.sources
+                            .slice(0, turn.result ? 8 : 2)
+                            .map(source => (
+                              <Source
+                                key={`${source.id}-${source.url}`}
+                                source={source}
+                                lang={lang}
+                                turnId={turn.id}
+                              />
+                            ))}
+                        </div>
+                        {!turn.result && turn.sources.length > 2 && (
+                          <details className="lz-ask-more-sources">
+                            <summary>
+                              {lang === "zh"
+                                ? `查看全部${turn.sources.length}份候选材料`
+                                : `All ${turn.sources.length} candidate sources`}
+                            </summary>
+                            <div className="lz-ask-source-grid">
+                              {turn.sources.slice(2).map(source => (
+                                <Source
+                                  key={`${source.id}-${source.url}`}
+                                  source={source}
+                                  lang={lang}
+                                  turnId={turn.id}
+                                />
+                              ))}
+                            </div>
+                          </details>
+                        )}
+                      </div>
+                    )}
+                    <small className="lz-ask-model">
+                      {turn.model || (working ? model : "")}
+                    </small>
+                    {!working && index === turns.length - 1 && turn.result && (
+                      <div className="lz-ask-followups">
+                        {!!turn.result.clarifying_questions?.length && (
+                          <>
+                            <p>{c.clarify}</p>
+                            {turn.result.clarifying_questions.map(value => (
+                              <button
+                                key={value}
+                                onClick={() => {
+                                  setQuestion(turn.question);
+                                  setIntent("apply");
+                                  setContext(
+                                    prev =>
+                                      `${prev}${prev ? "\n" : ""}${value}\n`
+                                  );
+                                  document
+                                    .getElementById("home-ask-context")
+                                    ?.closest("details")
+                                    ?.setAttribute("open", "");
+                                  document
+                                    .getElementById("home-ask-context")
+                                    ?.focus();
+                                }}
+                              >
+                                {value} ↗
+                              </button>
+                            ))}
+                          </>
+                        )}
+                        {!!turn.result.followups?.length && (
+                          <>
+                            <p>{c.next}</p>
+                            {turn.result.followups.map(value => (
+                              <button
+                                key={value}
+                                onClick={() => {
+                                  setIntent("apply");
+                                  prefill(value);
+                                }}
+                              >
+                                {value} ↗
+                              </button>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+              <button
+                disabled={busy}
+                className="lz-ask-reset"
+                onClick={() => {
+                  setTurns([]);
+                  setQuestion("");
+                  setContext("");
+                  input.current?.focus();
+                }}
+              >
+                {c.reset} ↗
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <details className="lz-ask-archive rv">

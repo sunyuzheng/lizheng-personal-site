@@ -9,6 +9,7 @@ export default defineConfig({
       "tests/ask-auth.test.ts",
       "tests/ask-email-otp.test.ts",
       "tests/ask-quota-storage.test.ts",
+      "tests/ask-query-storage.test.ts",
       "tests/ask-logto-requester.test.ts",
     ],
     pool: "forks",

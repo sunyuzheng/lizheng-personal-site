@@ -14,8 +14,14 @@
 
 ## 当前交付状态
 
-主页架子已发布到 `https://www.lizheng.ai/#ask-lizheng`，代码位于 `sunyuzheng/lizheng-personal-site` 的 `main`。组件包含逐段显示和等待反馈的处理；这些状态依赖后端实际返回的事件。账号及每日额度开关默认关闭，未配置时不会妨碍已有问答。最新规则是每天3次、Founding Member不限次；真实验证路径和额度启用在后续配置验收后上线。
+主页架子已发布到 `https://www.lizheng.ai/#ask-lizheng`，代码位于 `sunyuzheng/lizheng-personal-site` 的 `main`。组件包含逐段显示和等待反馈的处理；这些状态依赖后端实际返回的事件。代码中账号及每日额度默认关闭；生产已完成邮箱验证码、真实会话及额度验收并启用。规则是每天3次、Founding Member不限次。
 
-当前候选包含问答、转发、邮箱一次性验证、额度存储边界与跨午夜重试测试，TypeScript检查与生产构建通过。实际Python→Node→Redis链路已用隔离合成身份验证三次限制、失败释放与不限次档位；真实账号仍须通过邮件验收后启用。
+当前候选包含问答、转发、邮箱一次性验证、额度存储边界与跨午夜重试测试，TypeScript检查与生产构建通过。实际Python→Node→Redis链路已用隔离合成身份验证三次限制、失败释放与不限次档位；获批真实邮箱及生产两入口已通过验收。
 
 整体设计刷新可先在当前主页工作区继续。问答接口、资料owner、身份核验和存储配置独立演进；无须把认证逻辑或模型调用写进页面组件。
+
+## 提问记录与模型更新候选
+
+用户指定默认DeepSeek V4 Flash，并要求保存问题。组件的输入框旁新增中英文30天保存提示，提交附query_log_notice:v1；旧客户端未附版本则继续不记录。只保存问题、时间、模型、状态和耗时，不关联账号、邮箱或IP，不保存背景、历史或完整答案，自动过期。关于输入的展开说明同步更新，布局与主页设计保持现有结构。后台meta公开query_logging启用状态。
+
+api/ask-lizheng-query.ts是固定受保护写端点，须位于ask host catchall之前；使用独立query proof前缀、字段白名单、固定Lua和30天TTL。ASK_QUERY_LOG_ENABLED默认false，服务端配置true后启用。Builder仍不持有Redis凭证。owner本机可用pnpm exec tsx scripts/read-ask-query-records.ts --limit 20读取元数据，显式--include-question才读正文；不设公开读取接口，输出不可贴到公开仓库或日志。具体协议、保留和发布协调由后台docs/QUERY_RECORDS.md维护。

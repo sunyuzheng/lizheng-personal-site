@@ -55,8 +55,9 @@ const COPY = {
     approach: "回答思路",
     approachEnglish: "整理方向与资料主要使用中文。",
     privacy: "关于回答和你的输入",
+    queryNotice: "提问会保存30天，用于改进回答。请勿填写私密信息。",
     privacyNote:
-      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和背景会发送给Builder Space处理；本产品不保存对话记录，对话只留在当前页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
+      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
     modes: ["想明白", "聊聊我的问题", "找内容"],
     kinds: {
       source: "材料中的观点",
@@ -110,8 +111,9 @@ const COPY = {
     approachEnglish:
       "The reading outline and sources are primarily in Chinese.",
     privacy: "About answers and your input",
+    queryNotice: "Questions are saved for 30 days to improve answers. Please avoid private information.",
     privacyNote:
-      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and context are sent to Builder Space. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
+      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and necessary context are sent to Builder Space. We save question text, time, model, answer status and duration to improve answers, then automatically delete them after 30 days. We do not save added context, conversation history or full answers, or link question records to email addresses or accounts. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
     modes: ["Understand", "Apply to my situation", "Find sources"],
     kinds: {
       source: "From the material",
@@ -324,6 +326,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           question: turn.question,
           summary: turn.result!.summary,
         })),
+      query_log_notice: "v1",
     };
     const text = payload.question;
     const id = retry?.id || ++counter.current;
@@ -523,6 +526,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 </button>
               )}
             </div>
+            <p className="lz-ask-query-notice">{c.queryNotice}</p>
           </form>
           <details className="lz-ask-about">
             <summary>{c.privacy}</summary>

@@ -5,6 +5,7 @@ export type AskPayload = {
   context: string;
   intent: AskIntent;
   history: { question: string; summary: string }[];
+  query_log_notice?: "v1";
 };
 export type AskSource = {
   id: string;

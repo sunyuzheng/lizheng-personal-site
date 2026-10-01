@@ -434,10 +434,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
             <div><span>{account.unavailable ? (lang === "zh" ? "暂时无法读取额度，请稍后重试。" : "Quota temporarily unavailable. Try again shortly.")
               : account.founding ? (lang === "zh" ? "Founding Member · 每日不限次" : "Founding Member · Unlimited daily answers")
               : lang === "zh" ? `今天还可问${account.remaining ?? 3}次 · 每天3次` : `${account.remaining ?? 3} answers left today · 3 daily`}</span>
-              {!account.unavailable && !account.founding && <small>{account.authenticated ? (lang === "zh" ? "已登录；当前账号未核验到Founding Member资格。" : "Signed in; no Founding Member status was found.") : (lang === "zh" ? "直接提问即可。Founding Member登录后不限次。" : "Ask without signing in. Founding Members can sign in for unlimited answers.")}</small>}</div>
+              {!account.unavailable && !account.founding && <small>{account.authenticated ? (lang === "zh" ? "已登录；当前账号未核验到Founding Member资格。" : "Signed in; no Founding Member status was found.") : (lang === "zh" ? "直接提问即可。Founding Member验证邮箱后不限次。" : "Ask without signing in. Founding Members can verify their email for unlimited answers.")}</small>}</div>
             {account.unavailable ? <button type="button" onClick={refreshAccount}>{lang === "zh" ? "重新读取" : "Retry"}</button>
               : account.authenticated ? <button type="button" disabled={busy} onClick={() => { void logoutAsk().then(refreshAccount); }}>{lang === "zh" ? "退出" : "Sign out"}</button>
-              : account.login_ready && <button type="button" disabled={busy} onClick={login}>{lang === "zh" ? "Superlinear账号登录" : "Sign in with Superlinear"}</button>}
+              : account.login_ready && <button type="button" disabled={busy} onClick={login}>{lang === "zh" ? "验证Founding身份" : "Verify Founding membership"}</button>}
           </div>}
           <form onSubmit={submit} className="lz-ask-form">
             <div

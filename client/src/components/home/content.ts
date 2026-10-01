@@ -257,6 +257,11 @@ export interface CityCopy {
   demo: string;
   open: string;
   openNamed: (name: string) => string;
+  joined: (year: number, month: number) => string;
+  posts: (count: number) => string;
+  comments: (count: number) => string;
+  /** Between the profile link and the member's facts, for screen readers. */
+  separator: string;
   random: string;
   find: {
     label: string;
@@ -635,6 +640,10 @@ const zh = {
       demo: "当前为演示数据，链接均指向立正的主页",
       open: "打开TA的主页",
       openNamed: (name: string) => `打开${name}的主页`,
+      joined: (year: number, month: number) => `${year}年${month}月加入`,
+      posts: (count: number) => `${count.toLocaleString("en-US")}个帖子`,
+      comments: (count: number) => `${count.toLocaleString("en-US")}条评论`,
+      separator: "，",
       random: "随机遇见一位成员",
       find: {
         label: "按名字找一位成员",
@@ -702,6 +711,8 @@ const zh = {
 };
 
 type HomeCopy = typeof zh;
+
+const MONTHS = "Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" ");
 
 const en: HomeCopy = {
   hero: {
@@ -1053,6 +1064,12 @@ const en: HomeCopy = {
       demo: "Demo data: every link opens Yuzheng’s own profile",
       open: "Open this member’s profile",
       openNamed: name => `Open ${name}’s profile`,
+      joined: (year, month) => `Joined ${MONTHS[month - 1]} ${year}`,
+      posts: count =>
+        `${count.toLocaleString("en-US")} ${count === 1 ? "post" : "posts"}`,
+      comments: count =>
+        `${count.toLocaleString("en-US")} ${count === 1 ? "comment" : "comments"}`,
+      separator: ". ",
       random: "Meet a random member",
       find: {
         label: "Find a member by name",

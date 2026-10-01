@@ -14,6 +14,7 @@ import {
 } from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
+import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
 import SiteSearch from "./SiteSearch";
 import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 
@@ -42,6 +43,10 @@ const COPY = {
     sources: "回答依据",
     excerpt: "查看原文片段",
     copy: "阅读公开资料副本",
+    saveImage: "保存图片",
+    savePdf: "下载PDF",
+    exporting: "正在生成…",
+    exportFailed: "这次没能生成文件，可以稍后再试。",
     next: "可以接着问",
     nextHint: "点一下放进输入框，改好再发",
     clarify: "再补充一点，回答会更贴合你",
@@ -108,6 +113,10 @@ const COPY = {
     sources: "Sources used",
     excerpt: "Read the excerpt",
     copy: "Read public source copy",
+    saveImage: "Save image",
+    savePdf: "Download PDF",
+    exporting: "Preparing…",
+    exportFailed: "The file could not be created. Try again shortly.",
     next: "Keep asking",
     nextHint: "Click to put it in the box, edit, then send",
     clarify: "A little more context would help",
@@ -308,6 +317,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
   const [account, setAccount] = useState<AskAccount | null>(null);
+  const [exporting, setExporting] = useState("");
+  const [exportError, setExportError] = useState(0);
   const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
   const loginCleanup = useRef<(() => void) | undefined>(undefined);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
@@ -357,6 +368,34 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     );
     return () => clearInterval(timer);
   }, [busy]);
+  // A long image shares well in chat apps; the PDF keeps the source links clickable.
+  async function exportTurn(kind: "png" | "pdf", turn: Turn) {
+    if (!turn.result) return;
+    setExporting(`${turn.id}-${kind}`);
+    try {
+      const { exportAnswer } = await import("@/lib/ask-share");
+      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date() }, lang);
+      const file = new File([blob], name, { type });
+      if (kind === "png" && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: lang === "zh" ? "问问立正" : "Ask Lizheng" });
+          return;
+        } catch (error) {
+          if ((error as Error)?.name === "AbortError") return;
+        }
+      }
+      const url = URL.createObjectURL(blob);
+      const link = Object.assign(document.createElement("a"), { href: url, download: name });
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch {
+      setExportError(turn.id);
+    } finally {
+      setExporting("");
+    }
+  }
   function prefill(value: string) {
     setQuestion(value);
     input.current?.focus();
@@ -832,6 +871,28 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             </div>
                           </details>
                         )}
+                      </div>
+                    )}
+                    {turn.result?.status === "answered" && !working && (
+                      <div className="lz-ask-actions">
+                        {(["png", "pdf"] as const).map(kind => (
+                          <button
+                            key={kind}
+                            type="button"
+                            disabled={!!exporting}
+                            onClick={() => void exportTurn(kind, turn)}
+                          >
+                            {exporting === `${turn.id}-${kind}` ? (
+                              <LoaderCircle aria-hidden="true" className="lz-ask-spin" />
+                            ) : kind === "png" ? (
+                              <ImageDown aria-hidden="true" />
+                            ) : (
+                              <FileDown aria-hidden="true" />
+                            )}
+                            {exporting === `${turn.id}-${kind}` ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
+                          </button>
+                        ))}
+                        {exportError === turn.id && <small role="alert">{c.exportFailed}</small>}
                       </div>
                     )}
                     {turn.result?.status !== "sources-only" && (

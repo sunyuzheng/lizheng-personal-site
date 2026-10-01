@@ -45,7 +45,7 @@ export const SITE_COPY = {
     footerName: "孙煜征 · 立正",
     footerBio: [
       "超线性学院创始人，《真本事》作者，",
-      "「课代表立正」主理人。学点真本事，做点真东西。",
+      "「课代表立正」主持人。学点真本事，做点真东西。",
     ],
     footerMore: "更多",
     footerFollow: "关注",

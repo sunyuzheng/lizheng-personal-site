@@ -54,22 +54,6 @@ import { Router as WouterRouter } from "wouter";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
-// The homepage search renders its default results on the server, so the page
-// does not grow when the browser loads the index (see SiteSearch).
-(
-  globalThis as typeof globalThis & { __LZ_SEARCH_INDEX__?: unknown }
-).__LZ_SEARCH_INDEX__ = Object.fromEntries(
-  (["zh", "en"] as const).map(lang => [
-    lang,
-    JSON.parse(
-      fs.readFileSync(
-        path.join(ROOT, "client", "public", "search", `${lang}.json`),
-        "utf-8"
-      )
-    ),
-  ])
-);
-
 // The Vite build uses the automatic JSX runtime. tsx executes these existing
 // TSX modules with the classic runtime during static generation.
 (globalThis as typeof globalThis & { React: typeof React }).React = React;

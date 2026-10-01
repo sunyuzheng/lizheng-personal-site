@@ -34,7 +34,7 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 
 - 分享图：`/og/home-zh.jpg`与`/og/home-en.jpg`，1200×630 JPG，取自新版hero（标题、介绍、肖像与立正印章）。WebP在LinkedIn、微信等平台显示不稳定，分享图一律用JPG。
 - JSON-LD：首页图谱除人物与机构外，还包含两本书、两篇置顶的公开判断（2023年2月ChatGPT、2026年9月Jev）和`立正 · Open Context`（Dataset）。
-- 公开语料：首页搜索下方链接[`lizheng-open-context`](https://github.com/sunyuzheng/lizheng-open-context)，`llms.txt`有单独一节。
+- 公开语料：首页问问立正卡片下方链接[`lizheng-open-context`](https://github.com/sunyuzheng/lizheng-open-context)（「想自己做一个？」），`llms.txt`有单独一节。
 - 社区地图的数据在Vercel Blob上，由浏览器读取，不进初始HTML，也不产生成员主页的可抓取链接。
 
 ## 构建与发布检查

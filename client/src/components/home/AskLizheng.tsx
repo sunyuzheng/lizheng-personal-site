@@ -15,7 +15,6 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
-import SiteSearch from "./SiteSearch";
 import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 
 const COPY = {
@@ -967,10 +966,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           )}
         </div>
       </div>
-      <details className="lz-ask-archive rv">
-        <summary>{t.searchLabel}</summary>
-        <SiteSearch lang={lang} />
-      </details>
     </>
   );
 }

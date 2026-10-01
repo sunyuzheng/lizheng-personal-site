@@ -234,22 +234,6 @@ export interface Video {
   year: string;
 }
 
-export interface SearchCopy {
-  title: string;
-  intro: string;
-  placeholder: string;
-  inputLabel: string;
-  count: (essays: number, talks: number) => string;
-  empty: (query: string) => string;
-  loading: string;
-  failed: string;
-  chips: string[];
-  initialQuery: string;
-  essayKind: string;
-  labels: Record<string, string>;
-  resultsLabel: string;
-}
-
 export interface CityCopy {
   label: (count: string) => string;
   fallbackLabel: string;
@@ -600,27 +584,6 @@ const zh = {
         href: "https://www.superlinear.academy/c/ai-resources/quality",
       },
     ] as Essay[],
-    openContext: {
-      title: "立正 · Open Context",
-      body: "我在社区和视频里公开发表的内容，整理成一个人和AI都能读的开放仓库：文章全文、视频字幕与英文译稿，都带来源和日期。可以检索、引用，也可以拿来做你自己的Skill或Agent。",
-      cta: "在GitHub查看",
-      href: LINKS.openContext,
-    },
-    search: {
-      title: "搜索我写过、讲过的内容",
-      intro: "在文章和视频里搜索。",
-      placeholder: "试试：Agent、面试、财富、fake work",
-      inputLabel: "搜索文章和视频",
-      count: (essays, talks) => `在${essays}篇文章和${talks}期视频里搜索。`,
-      empty: query => `没有找到“${query}”。换个词试试。`,
-      loading: "正在载入索引……",
-      failed: "索引暂时没有载入。可以稍后再试，或直接去YouTube和社区搜索。",
-      chips: ["fake work", "Agent", "面试", "财富", "升职", "刘嘉", "Context"],
-      initialQuery: "Agent",
-      essayKind: "文章",
-      labels: {},
-      resultsLabel: "搜索结果",
-    } as SearchCopy,
   },
   ask: {
     eyebrow: "AI问答",
@@ -633,7 +596,12 @@ const zh = {
       "用AI做出了一个项目，怎样知道自己真的学会了？",
       "工作越来越忙，怎样判断哪些是fake work？",
     ],
-    searchLabel: "记得关键词？直接搜文章和视频",
+    openContext: {
+      title: "想自己做一个？",
+      body: "问问立正用的材料库Open Context已经在GitHub开源。文章全文和视频字幕都带出处和日期，可以直接拿去做你自己的问答或Agent。",
+      cta: "在GitHub查看",
+      href: LINKS.openContext,
+    },
   },
   city: {
     eyebrow: "超线性学院 · Superlinear Academy",
@@ -1037,28 +1005,6 @@ const en: HomeCopy = {
         href: "https://www.superlinear.academy/c/ai-resources-en/the-ai-native-organization-when-execution-costs-drop-the-org-chart-must-be-rewritten",
       },
     ],
-    openContext: {
-      title: "Open Context",
-      body: "Everything I publish in the community and on video, gathered into one open repository that people and AI can both read: full posts, transcripts with English translations, each with its source and date. Search it, cite it, or build your own Skill or Agent on it.",
-      cta: "View on GitHub",
-      href: LINKS.openContext,
-    },
-    search: {
-      title: "Search my essays and talks",
-      intro: "Search essays and talks.",
-      placeholder: "Try: agent, context, AI native, startup",
-      inputLabel: "Search essays and talks",
-      count: (essays, talks) =>
-        `Across ${essays} essays and ${talks} talk transcripts. Talks were given in Chinese; transcripts are AI translations.`,
-      empty: query => `Nothing found for “${query}”. Try another word.`,
-      loading: "Loading the index…",
-      failed: "The index didn’t load. Please try again later.",
-      chips: ["agent", "context", "AI native", "startup", "career", "quality"],
-      initialQuery: "agent",
-      essayKind: "Essay",
-      labels: { Talk: "Talk" },
-      resultsLabel: "Search results",
-    },
   },
   ask: {
     eyebrow: "AI Q&A",
@@ -1071,7 +1017,12 @@ const en: HomeCopy = {
       "I built a project with AI. How do I know I actually learned something?",
       "I’m busier than ever. How can I tell if I’m doing fake work?",
     ],
-    searchLabel: "Know the keyword? Search essays and talks",
+    openContext: {
+      title: "Want to build your own?",
+      body: "The material behind Ask Lizheng is open source on GitHub as Open Context. Essays and video transcripts, with English translations, each carry their source and date, so you can build your own Q&A tool or agent on them.",
+      cta: "View on GitHub",
+      href: LINKS.openContext,
+    },
   },
   city: {
     eyebrow: "Superlinear Academy",

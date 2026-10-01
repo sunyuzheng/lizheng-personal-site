@@ -13,7 +13,7 @@ import {
   type AskSource,
 } from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
-import { EXTERNAL } from "./parts";
+import { EXTERNAL, Phrases } from "./parts";
 import SiteSearch from "./SiteSearch";
 import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 
@@ -254,7 +254,7 @@ function AnswerSections({
 }
 
 export default function AskLizheng({ lang }: { lang: Lang }) {
-  const t = HOME_COPY[lang].writing.ask;
+  const t = HOME_COPY[lang].ask;
   const c = COPY[lang];
   const [question, setQuestion] = useState("");
   const [context, setContext] = useState("");
@@ -421,8 +421,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       <div className="lz-ask-native rv" id="ask-lizheng">
         <div className="lz-ask-native-head grain">
           <div>
-            <h3>{t.title}</h3>
-            <p>{t.body}</p>
+            <h2>{t.title}</h2>
+            <p>
+              <Phrases text={t.body} />
+            </p>
             <small>{t.note}</small>
           </div>
           <a href={LINKS.askLizheng} {...EXTERNAL}>

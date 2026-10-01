@@ -2,7 +2,6 @@ import { SocialIcon } from "@/components/site/social";
 import type { Lang } from "@/contexts/LanguageContext";
 import { HOME_COPY, SECTION } from "./content";
 import { EXTERNAL, Lines, Phrases } from "./parts";
-import AskLizheng from "./AskLizheng";
 
 export default function Writing({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].writing;
@@ -34,7 +33,6 @@ export default function Writing({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ul>
-        <AskLizheng lang={lang} />
         <a className="open-context rv" href={t.openContext.href} {...EXTERNAL}>
           <SocialIcon id="github" className="gh" />
           <div>

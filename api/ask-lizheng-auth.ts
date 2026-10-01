@@ -1,13 +1,13 @@
 import LogtoClient, { type StorageKey } from "@logto/node";
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { sanitizedLogtoRequester } from "../shared/ask-logto-requester";
-import { COOKIE_EMAIL, emailLoginReady, requestEmailCode, verifyEmailCode } from "../shared/ask-email-otp";
+import { sanitizedLogtoRequester } from "../shared/ask-logto-requester.js";
+import { COOKIE_EMAIL, emailLoginReady, requestEmailCode, verifyEmailCode } from "../shared/ask-email-otp.js";
 import {
   ACCESS_HEADERS, AccessError, accessEnabled, admission, authCookie, backendOrigin,
   COOKIE_SESSION, COOKIE_TRANSACTION, createSession, decryptRecord, encryptRecord,
   lookupFounding, officialOrigin, opaqueSubject, randomId, readCookie, redis,
   redisKey, resolveIdentity, safeReturnPath, sameOrigin,
-} from "../shared/ask-access";
+} from "../shared/ask-access.js";
 
 type Transaction = { origin: string; returnPath: string; expiresAt: number; values: Record<string, string> };
 function logtoConfiguration() {

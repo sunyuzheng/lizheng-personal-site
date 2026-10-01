@@ -9,6 +9,7 @@ import LizhengMark from "./LizhengMark";
 import {
   COMMUNITY_URL,
   HOME_SECTIONS,
+  SHOP_URL,
   SITE_COPY,
   SITE_PAGES,
   type SitePage,
@@ -35,6 +36,7 @@ export default function SiteHeader({
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
@@ -71,13 +73,22 @@ export default function SiteHeader({
     };
   }, [menuOpen, moreOpen]);
 
-  // Overlay variant: turn solid once the hero has scrolled under the header.
+  // Overlay variant: turn solid once the hero has scrolled under the header,
+  // and mark the section that crosses a reading line a third down the screen.
   useEffect(() => {
     if (!overlay) return;
     const update = () => {
       const hero = document.getElementById("hero");
       const threshold = hero ? hero.offsetHeight - 80 : 0;
       setPastHero(window.scrollY > threshold);
+      const line = window.innerHeight / 3;
+      const active = HOME_SECTIONS.find(section => {
+        const box = document
+          .getElementById(section.id)
+          ?.getBoundingClientRect();
+        return !!box && box.top <= line && box.bottom > line;
+      });
+      setActiveId(active?.id ?? null);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -100,6 +111,7 @@ export default function SiteHeader({
         <a
           key={section.id}
           href={`#${section.id}`}
+          aria-current={activeId === section.id ? "true" : undefined}
           onClick={(event: MouseEvent<HTMLAnchorElement>) => {
             event.preventDefault();
             closeAll();
@@ -127,6 +139,20 @@ export default function SiteHeader({
     >
       {item[lang]}
     </Link>
+  );
+
+  const shopLink = (
+    <a
+      href={SHOP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={closeAll}
+    >
+      {copy.shop}
+      <span className="ext" aria-hidden="true">
+        ↗
+      </span>
+    </a>
   );
 
   const brandInner = (
@@ -193,6 +219,7 @@ export default function SiteHeader({
             {moreOpen && (
               <div id="lz-more-panel" className="lz-more-panel">
                 {SITE_PAGES.map(pageLink)}
+                {shopLink}
               </div>
             )}
           </div>
@@ -243,6 +270,7 @@ export default function SiteHeader({
                 {SITE_PAGES.map(item => (
                   <li key={item.page}>{pageLink(item)}</li>
                 ))}
+                <li>{shopLink}</li>
               </ul>
             </nav>
             <a

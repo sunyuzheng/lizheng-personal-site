@@ -1803,45 +1803,109 @@
   }
 }
 
-.lz-home .lz-ask-native {
-  overflow: hidden;
-  margin-top: 56px;
-  border: 1px solid var(--lz-line);
-  border-radius: 18px;
-  background: var(--lz-paper);
+/* ---------- Ask Lizheng ---------- */
+
+/* Its own chapter, after the writing it draws on. Unlike the editorial
+   chapters it is a tool, so it centres on one input: the component's head is
+   the section head, and the form and answers sit on one paper card. */
+.lz-home .ask {
+  background: var(--lz-sand);
 }
+
+.lz-home .ask .wrap > .eyebrow {
+  text-align: center;
+}
+
 .lz-home .lz-ask-native-head {
   position: relative;
   display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 32px clamp(24px, 3.6vw, 48px);
-  background: var(--lz-forest-2);
-  color: var(--lz-on-forest);
+  flex-direction: column;
+  align-items: center;
+  max-width: 780px;
+  margin: 0 auto 44px;
+  text-align: center;
 }
-.lz-home .lz-ask-native-head h3 {
-  font-size: clamp(28px, 3vw, 36px);
+
+.lz-home .lz-ask-native-head.grain::after {
+  display: none;
 }
+
+.lz-home .lz-ask-native-head h2 {
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+}
+
+.lz-home.l-en .lz-ask-native-head h2 {
+  font-family: var(--num);
+  letter-spacing: 0.01em;
+}
+
 .lz-home .lz-ask-native-head p {
-  max-width: 680px;
-  margin: 12px 0;
-  font-size: 15px;
+  max-width: 34em;
+  margin: 20px auto 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-native-head small {
   display: block;
-  font-size: 12.5px;
-  color: var(--lz-on-forest-2);
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-native-head > a {
-  flex-shrink: 0;
-  padding: 8px 0;
-  font-size: 13px;
-  border-bottom: 1px solid rgb(248 241 228 / 0.3);
+  margin-top: 16px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgb(28 107 55 / 0.35);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--lz-green-text);
+  transition: border-color 0.2s;
 }
+
+.lz-home .lz-ask-native-head > a:hover {
+  border-color: currentColor;
+}
+
 .lz-home .lz-ask-native-body {
-  padding: 28px clamp(24px, 3.6vw, 48px) 32px;
+  max-width: 880px;
+  margin-inline: auto;
+  padding: clamp(22px, 3.4vw, 40px);
+  border-radius: 22px;
+  background: var(--lz-paper);
+  box-shadow:
+    0 0 0 1px var(--lz-line),
+    0 48px 80px -60px rgb(20 30 20 / 0.45);
+  transition: box-shadow 0.35s ease;
 }
+
+.lz-home .lz-ask-native-body:focus-within {
+  box-shadow:
+    0 0 0 1px var(--lz-line-2),
+    0 56px 96px -60px rgb(20 30 20 / 0.6);
+}
+
+/* Phones read the head like every other chapter: left-aligned. */
+@media (max-width: 640px) {
+  .lz-home .ask .wrap > .eyebrow {
+    text-align: left;
+  }
+
+  .lz-home .lz-ask-native-head {
+    align-items: flex-start;
+    margin-bottom: 28px;
+    text-align: left;
+  }
+
+  .lz-home .lz-ask-native-head p {
+    margin-top: 16px;
+  }
+}
+
 .lz-home .lz-ask-about {
   margin-top: 14px;
   color: var(--lz-muted);
@@ -1856,44 +1920,68 @@
   margin: 10px 0 0;
 }
 .lz-home .lz-ask-modes {
-  display: flex;
+  display: inline-flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--lz-sand);
 }
 .lz-home .lz-ask-modes button {
   min-height: 40px;
-  padding: 6px 14px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font-size: 13px;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
   color: var(--lz-muted);
   cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+.lz-home .lz-ask-modes button:hover:not(:disabled) {
+  color: var(--lz-ink);
 }
 .lz-home .lz-ask-modes button[aria-pressed="true"] {
-  border-color: var(--lz-line-2);
-  background: var(--lz-sand);
+  background: var(--lz-paper);
   color: var(--lz-green-text);
+  box-shadow:
+    0 0 0 1px var(--lz-line),
+    0 2px 6px -2px rgb(20 30 20 / 0.18);
 }
 .lz-home .lz-ask-form textarea {
   display: block;
   width: 100%;
-  padding: 16px;
+  padding: 16px 18px;
   border: 1px solid var(--lz-line-2);
-  border-radius: 12px;
+  border-radius: 14px;
   background: var(--lz-ivory);
   font: inherit;
   font-size: 16px;
   line-height: 1.7;
   resize: vertical;
   color: var(--lz-ink);
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.lz-home #home-ask-question {
+  min-height: 128px;
+  font-size: 17px;
 }
 .lz-home .lz-ask-form textarea::placeholder {
   color: var(--lz-muted);
 }
 .lz-home .lz-ask-form textarea:focus-visible {
-  outline: 2px solid var(--lz-green);
-  outline-offset: 3px;
+  outline: 2px solid transparent;
+  border-color: var(--lz-green);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgb(35 131 67 / 0.14);
 }
 .lz-home .lz-ask-form-bottom {
   display: flex;
@@ -1915,7 +2003,12 @@
 }
 .lz-home .lz-ask-form-bottom textarea {
   margin-top: 8px;
-  font-size: 14px;
+  font-size: 15px;
+}
+@media (max-width: 720px) {
+  .lz-home .lz-ask-form-bottom textarea {
+    font-size: 16px;
+  }
 }
 .lz-home .lz-ask-native button:disabled {
   opacity: 0.45;
@@ -1927,22 +2020,52 @@
   border-radius: 4px;
 }
 .lz-home .lz-ask-starters {
-  margin-top: 24px;
-  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 20px;
   border-top: 1px solid var(--lz-line);
 }
 .lz-home .lz-ask-starters > p,
 .lz-home .lz-ask-followups > p {
   margin: 0 0 10px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--lz-muted);
 }
-.lz-home :is(.lz-ask-starters, .lz-ask-followups) button {
+.lz-home .lz-ask-starters > p {
+  flex-basis: 100%;
+  margin: 0;
+}
+.lz-home .lz-ask-starters button {
+  padding: 10px 16px;
+  border: 1px solid var(--lz-line-2);
+  border-radius: 12px;
+  background: var(--lz-ivory);
+  font: inherit;
+  font-size: 14.5px;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--lz-ink-2);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s,
+    transform 0.2s;
+}
+.lz-home .lz-ask-starters button:hover {
+  border-color: var(--lz-green);
+  background: #fff;
+  color: var(--lz-green-text);
+  transform: translateY(-1px);
+}
+.lz-home .lz-ask-followups button {
   display: block;
   padding: 8px 0;
   text-align: left;
   font: inherit;
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--lz-green-text);
   cursor: pointer;
 }
@@ -2144,13 +2267,8 @@
   cursor: pointer;
 }
 @media (max-width: 720px) {
-  .lz-home .lz-ask-native-head {
-    flex-direction: column;
-    gap: 10px;
-    padding-block: 24px;
-  }
   .lz-home .lz-ask-native-body {
-    padding-block: 24px;
+    border-radius: 18px;
   }
   .lz-home .lz-ask-source-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -2162,38 +2280,104 @@
 }
 
 .lz-home .lz-ask-archive {
-  margin-top: 16px;
-  padding: 18px 24px;
-  border: 1px solid var(--lz-line);
-  border-radius: 12px;
+  max-width: 880px;
+  margin: 22px auto 0;
+  text-align: center;
 }
 
 .lz-home .lz-ask-archive summary {
-  cursor: pointer;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--lz-line-2);
+  font-size: 14.5px;
   font-weight: 500;
   color: var(--lz-green-text);
+  list-style: none;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.lz-home .lz-ask-archive summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A magnifier before, a plus that turns into a close mark after. */
+.lz-home .lz-ask-archive summary::before,
+.lz-home .lz-ask-archive summary::after {
+  content: "";
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  background: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.lz-home .lz-ask-archive summary::before {
+  --icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>");
+}
+
+.lz-home .lz-ask-archive summary::after {
+  --icon: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><path d='M12 5v14M5 12h14'/></svg>");
+  width: 14px;
+  height: 14px;
+  opacity: 0.7;
+  transition: transform 0.25s ease;
+}
+
+.lz-home .lz-ask-archive[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.lz-home .lz-ask-archive summary:hover {
+  background: rgb(255 255 255 / 0.55);
+  box-shadow: inset 0 0 0 1px rgb(28 107 55 / 0.45);
 }
 
 .lz-home .lz-ask-archive summary:focus-visible {
   outline: 2px solid var(--lz-green-2);
-  outline-offset: 5px;
-  border-radius: 4px;
+  outline-offset: 3px;
 }
 
 .lz-home .lz-ask-archive .lz-search {
-  margin-top: 20px;
+  margin-top: 18px;
+  text-align: left;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .lz-home .lz-ask-archive {
-    padding: 18px;
+    text-align: left;
   }
 
-  .lz-home .lz-ask-archive .lz-search {
-    margin-right: -18px;
-    margin-left: -18px;
-    border-radius: 0;
+  /* Long labels wrap on phones, so the toggle becomes a full-width row. */
+  .lz-home .lz-ask-archive summary {
+    display: flex;
+    padding: 10px 18px;
+    border-radius: 14px;
+    line-height: 1.5;
+  }
+
+  .lz-home .lz-ask-archive summary::after {
+    margin-left: auto;
+  }
+
+  /* The three modes share one row; a long label wraps inside its segment. */
+  .lz-home .lz-ask-modes {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .lz-home .lz-ask-modes button {
+    flex: 1 1 auto;
+    padding: 6px 10px;
+    line-height: 1.35;
+    text-align: center;
   }
 }
 
@@ -2996,6 +3180,24 @@
   color: var(--lz-ink);
 }
 
+.lz-home .invite .shop-link {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 30px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--lz-line-2);
+  font-size: 14.5px;
+  color: var(--lz-muted);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.lz-home .invite .shop-link:hover {
+  border-color: currentColor;
+  color: var(--lz-green-text);
+}
+
 /* ---------- Reveal on scroll (content always stays visible) ---------- */
 
 .lz-home .rv {
@@ -3004,6 +3206,36 @@
 
 .lz-home .rv.pre {
   transform: translateY(18px);
+}
+
+/* Items that arrive together rise one after another, left to right. */
+@media (min-width: 861px) {
+  .lz-home .essays > li.rv:nth-child(2),
+  .lz-home .vids > li.rv:nth-child(3n + 2),
+  .lz-home .paths > .rv:nth-child(2),
+  .lz-home .guests > li.rv:nth-child(6n + 2) {
+    transition-delay: 0.08s;
+  }
+
+  .lz-home .essays > li.rv:nth-child(3),
+  .lz-home .vids > li.rv:nth-child(3n),
+  .lz-home .paths > .rv:nth-child(3),
+  .lz-home .guests > li.rv:nth-child(6n + 3) {
+    transition-delay: 0.16s;
+  }
+
+  .lz-home .essays > li.rv:nth-child(4),
+  .lz-home .guests > li.rv:nth-child(6n + 4) {
+    transition-delay: 0.24s;
+  }
+
+  .lz-home .guests > li.rv:nth-child(6n + 5) {
+    transition-delay: 0.32s;
+  }
+
+  .lz-home .guests > li.rv:nth-child(6n) {
+    transition-delay: 0.4s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

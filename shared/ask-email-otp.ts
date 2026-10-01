@@ -3,7 +3,7 @@ import { randomInt, timingSafeEqual } from "node:crypto";
 import {
   AccessError, authCookie, authDigest, decryptRecord, encryptRecord,
   officialOrigin, randomId, readCookie, redis, redisKey, safeReturnPath,
-} from "./ask-access";
+} from "./ask-access.js";
 
 export const COOKIE_EMAIL = "__Host-ask-email";
 const VALID_SECONDS = 600;

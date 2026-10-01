@@ -1,3 +1,4 @@
+import Ask from "@/components/home/Ask";
 import Calls from "@/components/home/Calls";
 import CareerPath from "@/components/home/CareerPath";
 import City from "@/components/home/City";
@@ -90,6 +91,7 @@ export default function Home() {
         <Talks lang={lang} />
         <Calls lang={lang} />
         <Writing lang={lang} />
+        <Ask lang={lang} />
         <Join lang={lang} />
         <Invite lang={lang} />
       </main>

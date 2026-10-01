@@ -1,3 +1,4 @@
+import { SHOP_URL } from "@/components/site/site-content";
 import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
@@ -21,6 +22,9 @@ export default function Invite({ lang }: { lang: Lang }) {
             {t.secondary}
           </Link>
         </div>
+        <a className="shop-link" href={SHOP_URL} {...EXTERNAL}>
+          {t.shop} <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </section>
   );

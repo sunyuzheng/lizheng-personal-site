@@ -1,5 +1,5 @@
 /** Node-only HTTP adapter: keep provider error bodies out of SDK console logging. */
-import { AccessError } from "./ask-access";
+import { AccessError } from "./ask-access.js";
 const ORIGIN = "https://auth.superlinear.academy";
 const DISCOVERY = "/oidc/.well-known/openid-configuration";
 export function sanitizedLogtoRequester(appId: string, appSecret: string) {

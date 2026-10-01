@@ -4,7 +4,7 @@
 
 ## 页面接入
 
-组件使用 `lang="zh"` 或 `lang="en"`；当前主页已经接入。保留根锚点 `#ask-lizheng`，登录完成和页内入口依赖它。外观在同目录 `home.css` 的 `.lz-ask-*` 下；可改排版、颜色、间距，保留状态与无障碍属性。
+组件使用 `lang="zh"` 或 `lang="en"`。主页上它单独成章：`Ask.tsx` 渲染 `#ask` 区块，位于「最近在想的事」之后、「加入超线性学院」之前，导航里叫「问问立正」。组件头部（h2标题、说明、AI回答提示、完整页面链接）就是这一章的标题区，文案在 `content.ts` 的 `HOME_COPY[lang].ask`。保留根锚点 `#ask-lizheng`，登录完成和页内入口依赖它。外观在同目录 `home.css` 的 `.lz-ask-*` 下；可改排版、颜色、间距，保留状态与无障碍属性。
 
 传输层位于 `client/src/lib/ask-lizheng.ts`：同源 `/api/ask-lizheng/ask` 和 `/api/ask-lizheng/meta`。页面不直接持有模型凭证，也不直接访问Circle。`api/ask-lizheng.ts` 负责转发SSE，`vercel.json` 保留主页和ask.lizheng.ai的路由。
 
@@ -12,7 +12,7 @@
 
 ## 当前交付状态
 
-这是本地主页架子；尚未推送或部署。稳定代码包含此前的逐段显示和等待反馈候选；账号及每日额度开关默认关闭，未配置时不会妨碍已有问答。最新规则是每天3次、Founding Member不限次；真实验证路径和额度启用在后续配置验收后上线。
+主页架子已发布到 `https://www.lizheng.ai/#ask-lizheng`，代码位于 `sunyuzheng/lizheng-personal-site` 的 `main`。组件包含逐段显示和等待反馈的处理；这些状态依赖后端实际返回的事件。账号及每日额度开关默认关闭，未配置时不会妨碍已有问答。最新规则是每天3次、Founding Member不限次；真实验证路径和额度启用在后续配置验收后上线。
 
 当前主页候选的79项问答/转发/账号测试、TypeScript检查和生产构建已通过。浏览器已用合成身份检查额度耗尽、保留问题、验证回跳和手机布局；这不代表真实账号已上线。
 

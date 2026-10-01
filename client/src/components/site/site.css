@@ -155,6 +155,38 @@
   opacity: 1;
 }
 
+/* Homepage: the section being read gets a short green rule under its link. */
+.lz-nav > a {
+  position: relative;
+}
+
+.lz-nav > a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 7px;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--lz-green);
+  transform: scaleX(0);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.lz-nav > a[aria-current="true"] {
+  opacity: 1;
+}
+
+.lz-nav > a[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lz-nav > a::after {
+    transition: none;
+  }
+}
+
 .lz-more {
   position: relative;
 }
@@ -203,6 +235,13 @@
 .lz-more-panel a[aria-current="page"] {
   color: var(--lz-green-text);
   font-weight: 500;
+}
+
+/* Marks the one link that leaves the site (the shop). */
+.lz-header .ext {
+  margin-left: 6px;
+  font-size: 0.85em;
+  opacity: 0.5;
 }
 
 .lz-actions {

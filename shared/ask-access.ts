@@ -68,11 +68,15 @@ async function hmac(value: string, key = secret("ASK_AUTH_SECRET")) {
   );
   return base64url(new Uint8Array(await crypto.subtle.sign("HMAC", imported, encoder.encode(value))));
 }
+export async function authDigest(value: string) {
+  return hmac(value);
+}
 export async function opaqueSubject(realm: "guest" | "user", value: string) {
   return `${realm}:${await hmac(`${realm}:${value}`)}`;
 }
-export async function redisKey(realm: "session" | "transaction", value: string) {
-  return `ask:auth:${realm}:${await hmac(`${realm}:${value}`)}`;
+export async function redisKey(realm: "session" | "transaction" | "otp", value: string) {
+  const digest = await hmac(`${realm}:${value}`);
+  return `ask:auth:${realm}:${realm === "otp" ? `{${digest}}` : digest}`;
 }
 export async function redis(command: (string | number)[]): Promise<unknown> {
   const endpoint = process.env.ASK_AUTH_REDIS_REST_URL;

@@ -57,7 +57,7 @@ async function call(url: string, cookie?: string, method = "GET", host = "www.li
 }
 describe("Academy SSO boundary", () => {
   it("uses a dedicated Traditional Web client and fixed SDK callback, with no redirect injection", async () => {
-    const login = await call("/api/ask-lizheng/auth/login?return=https://attacker.example&popup=1");
+    const login = await call("/api/ask-lizheng/auth/login?provider=logto&return=https://attacker.example&popup=1");
     expect(login.statusCode).toBe(302);
     expect(sdk.calls[0].value).toEqual({ redirectUri: "https://www.lizheng.ai/api/ask-lizheng/auth/callback", postRedirectUri: "https://www.lizheng.ai/?ask_login=done#ask-lizheng", firstScreen: "sign_in" });
     expect(login.headers.get("location")).toContain("auth.superlinear.academy");
@@ -65,7 +65,7 @@ describe("Academy SSO boundary", () => {
     expect(login.body).not.toContain("test-only-client-secret");
   });
   it("consumes login transactions once and reconstructs the registered callback after a Vercel rewrite", async () => {
-    const login = await call("/api/ask-lizheng/auth/login?popup=1");
+    const login = await call("/api/ask-lizheng/auth/login?provider=logto&popup=1");
     const cookie = String(login.headers.get("set-cookie")).split(";")[0];
     const callback = "/api/ask-lizheng-auth?__route=callback&code=valid&state=test-state";
     const result = await call(callback, cookie);
@@ -81,7 +81,7 @@ describe("Academy SSO boundary", () => {
     expect((await call(callback, cookie)).statusCode).toBe(401);
   });
   it("does not query Circle or create a session for an unverified email", async () => {
-    const login = await call("/api/ask-lizheng/auth/login");
+    const login = await call("/api/ask-lizheng/auth/login?provider=logto");
     sdk.claims.email_verified = false;
     const cookie = String(login.headers.get("set-cookie")).split(";")[0];
     const result = await call("/api/ask-lizheng/auth/callback?code=valid&state=test-state", cookie);
@@ -90,7 +90,7 @@ describe("Academy SSO boundary", () => {
     expect(vi.mocked(fetch).mock.calls.some(([url]) => String(url).includes("circle.so"))).toBe(false);
   });
   it("rejects callback host changes, cross-origin logout and redirects from foreign hosts", async () => {
-    const login = await call("/api/ask-lizheng/auth/login");
+    const login = await call("/api/ask-lizheng/auth/login?provider=logto");
     const cookie = String(login.headers.get("set-cookie")).split(";")[0];
     expect((await call("/api/ask-lizheng/auth/callback?code=x", cookie, "GET", "ask.lizheng.ai")).statusCode).toBe(401);
     expect((await call("/api/ask-lizheng/auth/logout", undefined, "POST", "www.lizheng.ai", "https://attacker.example")).statusCode).toBe(403);

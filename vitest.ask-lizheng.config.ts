@@ -7,6 +7,7 @@ export default defineConfig({
       "tests/ask-lizheng-relay.test.ts",
       "tests/ask-access.test.ts",
       "tests/ask-auth.test.ts",
+      "tests/ask-email-otp.test.ts",
       "tests/ask-logto-requester.test.ts",
     ],
     pool: "forks",

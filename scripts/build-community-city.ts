@@ -230,16 +230,24 @@ async function publish(json: string, data: CityFile) {
     cacheControlMaxAge: 3600,
     token,
   });
-  const published = (await (
-    await fetch(`${blob.url}?check=${now}`)
-  ).json()) as CityFile;
-  if (
-    published.count !== data.count ||
-    published.generatedAt !== data.generatedAt
-  ) {
-    throw new Error(`Uploaded, but ${blob.url} does not show the new data.`);
+  // An overwrite can take up to a minute to reach the CDN, and the URL read
+  // before the upload is cached, so read back from fresh URLs for a while.
+  for (let attempt = 0; attempt < 8; attempt++) {
+    if (attempt) await new Promise(resolve => setTimeout(resolve, 15000));
+    const published = (await (
+      await fetch(`${blob.url}?check=${Date.now()}`)
+    ).json()) as CityFile;
+    if (
+      published.count === data.count &&
+      published.generatedAt === data.generatedAt
+    ) {
+      console.log(`Published ${blob.url}`);
+      return;
+    }
   }
-  console.log(`Published ${blob.url}`);
+  throw new Error(
+    `Uploaded, but ${blob.url} still shows the old data after two minutes.`
+  );
 }
 
 // Simulated long-tail activity for local design review. Every link opens one

@@ -20,9 +20,14 @@ import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft,
 const COPY = {
   zh: {
     question: "你的问题",
-    placeholder: "想弄明白什么？可以问一个概念、一个判断，或一直没想通的地方。",
+    placeholder: "有什么你一直想弄明白的问题？",
+    hints: {
+      ask: "问一个概念、一个判断，或一直没想通的地方。",
+      personal: "回答会结合你的目标、现状和卡点，也会指出还缺什么信息。",
+      find: "说一个话题，AI挑出最值得先读的文章和视频，说明各讲什么、从哪篇开始。",
+    },
     placeholderPersonal: "说说你在做的事，以及卡在哪里。",
-    placeholderFind: "比如：想系统了解fake work，从哪几篇读起？",
+    placeholderFind: "比如：想了解AI时代怎么学习，先读哪几篇？",
     context: "结合我的处境",
     contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
     send: "发送问题",
@@ -37,8 +42,9 @@ const COPY = {
     sources: "回答依据",
     excerpt: "查看原文片段",
     copy: "阅读公开资料副本",
-    next: "可以继续问",
-    clarify: "还需要了解",
+    next: "可以接着问",
+    nextHint: "点一下放进输入框，改好再发",
+    clarify: "再补充一点，回答会更贴合你",
     stopped: "已停止。问题和检索材料已保留，可以修改后重试。",
     failed: "回答未完成。问题和已找到的材料仍在，可以重试。",
     crowded: "现在提问较多，请稍后再试。问题和已找到的材料仍在。",
@@ -56,8 +62,18 @@ const COPY = {
     partialNote: "以下段落已核对来源编号；完整回答仍在生成。",
     approach: "回答思路",
     approachEnglish: "整理方向与资料主要使用中文。",
-    privacy: "关于回答和你的输入",
+    privacy: "说明",
     queryNotice: "提问会保存30天，用于改进回答。请勿填写私密信息。",
+    quotaLeft: (n: number) => `今天还能问${n}次`,
+    quotaNone: "今天的3次已用完，北京时间0点恢复",
+    quotaUnavailable: "暂时读不到今天的次数。",
+    quotaRetry: "重试",
+    quotaExhausted: "今天的3次已经用完。北京时间每天0点恢复；Founding Member验证后不限次。",
+    founding: "Founding Member · 不限次",
+    signedIn: "已登录，未核验到Founding资格",
+    verify: "Founding Member？验证后不限次",
+    verifyButton: "验证Founding身份",
+    signOut: "退出",
     privacyNote:
       "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
     modes: ["想明白", "从哪读起"],
@@ -70,10 +86,14 @@ const COPY = {
   },
   en: {
     question: "Your question",
-    placeholder:
-      "What would you like to understand? An idea, a judgment, or something you haven’t worked out.",
+    placeholder: "What would you like to understand?",
+    hints: {
+      ask: "Ask about an idea, a judgment, or something you haven’t worked out.",
+      personal: "The answer takes your goal, situation and sticking points into account, and says what else it needs.",
+      find: "Name a topic. AI picks the essays and talks worth reading first, says what each covers and where to start.",
+    },
     placeholderPersonal: "Tell me what you’re working on and where you’re stuck.",
-    placeholderFind: "For example: where should I start reading about fake work?",
+    placeholderFind: "For example: what should I read first about learning in the AI era?",
     context: "Apply to my situation",
     contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
     send: "Ask",
@@ -89,7 +109,8 @@ const COPY = {
     excerpt: "Read the excerpt",
     copy: "Read public source copy",
     next: "Keep asking",
-    clarify: "More context would help",
+    nextHint: "Click to put it in the box, edit, then send",
+    clarify: "A little more context would help",
     stopped:
       "Stopped. Your question and material are still here; edit and try again.",
     failed:
@@ -114,8 +135,18 @@ const COPY = {
     approach: "How this answer is being prepared",
     approachEnglish:
       "The reading outline and sources are primarily in Chinese.",
-    privacy: "About answers and your input",
+    privacy: "Details",
     queryNotice: "Questions are saved for 30 days to improve answers. Please avoid private information.",
+    quotaLeft: (n: number) => `${n} answers left today`,
+    quotaNone: "Today’s 3 answers are used; they reset at midnight Beijing time",
+    quotaUnavailable: "Today’s count is unavailable right now.",
+    quotaRetry: "Retry",
+    quotaExhausted: "Your 3 daily answers are used. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
+    founding: "Founding Member · unlimited",
+    signedIn: "Signed in; no Founding Member status found",
+    verify: "Founding Member? Verify for unlimited answers",
+    verifyButton: "Verify Founding membership",
+    signOut: "Sign out",
     privacyNote:
       "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and necessary context are sent to Builder Space. We save question text, time, model, answer status and duration to improve answers, then automatically delete them after 30 days. We do not save added context, conversation history or full answers, or link question records to email addresses or accounts. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
     modes: ["Understand", "What to read first"],
@@ -138,6 +169,7 @@ type Turn = AskAnswerState & {
   request: AskPayload;
   lastActivity: number;
   error?: string;
+  quotaExhausted?: boolean;
   model?: string;
 };
 // 想明白 explains (understand) or, with the situation switched on, applies the
@@ -276,6 +308,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
   const [account, setAccount] = useState<AskAccount | null>(null);
+  const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
   const loginCleanup = useRef<(() => void) | undefined>(undefined);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
   useEffect(() => {
@@ -290,6 +323,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     refreshAccount();
     return () => loginCleanup.current?.();
   }, []);
+  const logout = () => { void logoutAsk().then(refreshAccount); };
   const login = () => {
     loginCleanup.current?.();
     loginCleanup.current = beginAskLogin({ question, context: situation, intent }, refreshAccount);
@@ -407,9 +441,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           !quotaExhausted &&
           (error.status === 429 || error.code === "provider_busy");
         update({
+          quotaExhausted,
           error:
             quotaExhausted
-              ? lang === "zh" ? "今天的3次体验已用完。Founding Member可登录后不限次提问；普通额度北京时间每天00:00恢复。" : "Your 3 daily answers are used. Founding Members can sign in for unlimited daily answers. The quota resets at midnight Beijing time."
+              ? c.quotaExhausted
               : timedOut ||
             (error instanceof AskError && error.code === "relay_timeout")
               ? c.timeout
@@ -450,15 +485,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           </a>
         </div>
         <div className="lz-ask-native-body">
-          {account?.enabled && <div className="lz-ask-account" aria-live="polite">
-            <div><span>{account.unavailable ? (lang === "zh" ? "暂时无法读取额度，请稍后重试。" : "Quota temporarily unavailable. Try again shortly.")
-              : account.founding ? (lang === "zh" ? "Founding Member · 每日不限次" : "Founding Member · Unlimited daily answers")
-              : lang === "zh" ? `今天还可问${account.remaining ?? 3}次 · 每天3次` : `${account.remaining ?? 3} answers left today · 3 daily`}</span>
-              {!account.unavailable && !account.founding && <small>{account.authenticated ? (lang === "zh" ? "已登录；当前账号未核验到Founding Member资格。" : "Signed in; no Founding Member status was found.") : (lang === "zh" ? "直接提问即可。Founding Member验证邮箱后不限次。" : "Ask without signing in. Founding Members can verify their email for unlimited answers.")}</small>}</div>
-            {account.unavailable ? <button type="button" onClick={refreshAccount}>{lang === "zh" ? "重新读取" : "Retry"}</button>
-              : account.authenticated ? <button type="button" disabled={busy} onClick={() => { void logoutAsk().then(refreshAccount); }}>{lang === "zh" ? "退出" : "Sign out"}</button>
-              : account.login_ready && <button type="button" disabled={busy} onClick={login}>{lang === "zh" ? "验证Founding身份" : "Verify Founding membership"}</button>}
-          </div>}
           <form onSubmit={submit} className="lz-ask-form">
             <div
               className="lz-ask-modes"
@@ -479,6 +505,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 </button>
               ))}
             </div>
+            <p className="lz-ask-mode-hint">
+              {mode === "find" ? c.hints.find : personal ? c.hints.personal : c.hints.ask}
+            </p>
             <label className="sr-only" htmlFor="home-ask-question">
               {c.question}
             </label>
@@ -555,19 +584,52 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 <button
                   key="send"
                   className="btn btn-green"
-                  disabled={!question.trim()}
+                  disabled={!question.trim() || outOfQuota}
                   type="submit"
                 >
                   {c.send} ↑
                 </button>
               )}
             </div>
-            <p className="lz-ask-query-notice">{c.queryNotice}</p>
           </form>
-          <details className="lz-ask-about">
-            <summary>{c.privacy}</summary>
-            <p>{c.privacyNote}</p>
-          </details>
+          <div className="lz-ask-meta">
+            <details className="lz-ask-about">
+              <summary>
+                {c.queryNotice}
+                <span>{c.privacy}</span>
+              </summary>
+              <p>{c.privacyNote}</p>
+            </details>
+            {account?.enabled && (
+              <p className="lz-ask-account" aria-live="polite">
+                {account.unavailable ? (
+                  <>
+                    <span>{c.quotaUnavailable}</span>
+                    <button type="button" onClick={refreshAccount}>{c.quotaRetry}</button>
+                  </>
+                ) : account.founding ? (
+                  <>
+                    <b>{c.founding}</b>
+                    <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
+                  </>
+                ) : (
+                  <>
+                    {outOfQuota ? <b className="empty">{c.quotaNone}</b> : <b>{c.quotaLeft(account.remaining ?? 3)}</b>}
+                    {account.authenticated ? (
+                      <>
+                        <span>{c.signedIn}</span>
+                        <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
+                      </>
+                    ) : (
+                      account.login_ready && (
+                        <button type="button" disabled={busy} onClick={login}>{c.verify}</button>
+                      )
+                    )}
+                  </>
+                )}
+              </p>
+            )}
+          </div>
           {!turns.length && (
             <div className="lz-ask-starters">
               <p>{c.examples}</p>
@@ -710,13 +772,16 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       </div>
                     )}
                     {turn.error && (
-                      <p className="lz-ask-error" role="alert">
+                      <p className={turn.quotaExhausted ? "lz-ask-error quota" : "lz-ask-error"} role="alert">
                         {turn.error}
+                        {turn.quotaExhausted && account?.login_ready && !account.authenticated && (
+                          <button type="button" className="btn btn-line" onClick={login}>{c.verifyButton}</button>
+                        )}
                       </p>
                     )}
                     {!busy &&
                       index === turns.length - 1 &&
-                      (turn.error || turn.result?.retryable) && (
+                      ((turn.error && !turn.quotaExhausted) || turn.result?.retryable) && (
                         <button
                           className="btn btn-line lz-ask-retry"
                           type="button"
@@ -769,9 +834,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         )}
                       </div>
                     )}
-                    <small className="lz-ask-model">
-                      {turn.model || (working ? model : "")}
-                    </small>
+                    {turn.result?.status !== "sources-only" && (
+                      <small className="lz-ask-model">
+                        {turn.model || (working ? model : "")}
+                      </small>
+                    )}
                     {!working && index === turns.length - 1 && turn.result && (
                       <div className="lz-ask-followups">
                         {!!turn.result.clarifying_questions?.length && (
@@ -780,6 +847,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             {turn.result.clarifying_questions.map(value => (
                               <button
                                 key={value}
+                                className="lz-ask-clarify"
                                 onClick={() => {
                                   setQuestion(turn.question);
                                   setMode("ask");
@@ -802,7 +870,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         )}
                         {!!turn.result.followups?.length && (
                           <>
-                            <p>{c.next}</p>
+                            <p>
+                              {c.next}
+                              <span>{c.nextHint}</span>
+                            </p>
                             {turn.result.followups.map(value => (
                               <button
                                 key={value}

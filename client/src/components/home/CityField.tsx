@@ -110,16 +110,30 @@ function isCityData(value: unknown): value is CityData {
   );
 }
 
-// "2024年3月加入 · 12个帖子 · 48条评论"; counts of zero are left out.
+interface Metric {
+  value: string;
+  label: string;
+}
+
+// The member card: the month they joined, then posts and comments as figures.
+// Counts of zero are left out, so quiet members show only when they joined.
 function memberFacts(data: CityData, member: number, copy: CityCopy) {
-  const facts: string[] = [];
   const month = data.joined?.[member];
-  if (month) facts.push(copy.joined(Math.floor(month / 100), month % 100));
+  const since = month ? copy.joined(Math.floor(month / 100), month % 100) : "";
+  const metrics: Metric[] = [];
   const posts = data.posts?.[member] ?? 0;
   const comments = data.comments?.[member] ?? 0;
-  if (posts) facts.push(copy.posts(posts));
-  if (comments) facts.push(copy.comments(comments));
-  return facts;
+  if (posts)
+    metrics.push({
+      value: posts.toLocaleString("en-US"),
+      label: copy.posts(posts),
+    });
+  if (comments)
+    metrics.push({
+      value: comments.toLocaleString("en-US"),
+      label: copy.comments(comments),
+    });
+  return { since, metrics };
 }
 
 // Case, width and spacing do not matter when looking someone up.
@@ -176,6 +190,8 @@ export default function CityField({
   const revealRef = useRef<number | null>(null);
   const [data, setData] = useState<CityData | null>(null);
   const [tip, setTip] = useState<Tip | null>(null);
+  // Whether the card sits below its dot, when there is no room above it.
+  const [tipBelow, setTipBelow] = useState(false);
   const [query, setQuery] = useState("");
   const [listOpen, setListOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -639,13 +655,14 @@ export default function CityField({
     if (located) setTip(located);
   }, [showList, matches, active]);
 
-  // Keep the name inside the map, and below the dot near the top edge.
+  // Keep the card inside the map, and below the dot when it does not fit above.
   useBrowserLayoutEffect(() => {
     const element = tipRef.current;
     const wrap = wrapRef.current;
     if (!element || !wrap || !tip) return;
     const half = element.offsetWidth / 2 + 8;
     element.style.left = `${Math.min(Math.max(tip.x, half), wrap.clientWidth - half)}px`;
+    setTipBelow(tip.y < element.offsetHeight + 22);
   }, [tip]);
 
   const meetRandom = () => {
@@ -679,8 +696,17 @@ export default function CityField({
 
   const tipId = tip ? linked?.[tip.member] : undefined;
   const tipName = tip ? names?.[tip.member] : undefined;
-  const tipFacts = tip && data ? memberFacts(data, tip.member, copy) : [];
-  const tipLabel = tipName ? copy.openNamed(tipName) : copy.open;
+  const facts =
+    tip && data
+      ? memberFacts(data, tip.member, copy)
+      : { since: "", metrics: [] as Metric[] };
+  const tipLabel = [
+    tipName ? copy.openNamed(tipName) : copy.open,
+    facts.since,
+    ...facts.metrics.map(metric => `${metric.value} ${metric.label}`),
+  ]
+    .filter(Boolean)
+    .join(copy.separator);
 
   // While the data loads, the caption keeps the height of its longest version
   // (drawn invisibly by CSS), so the sections below never move.
@@ -801,8 +827,8 @@ export default function CityField({
             className={[
               "city-tip",
               tip.sticky ? "sticky" : "",
-              tipFacts.length ? "with-facts" : "",
-              tip.y < (tipFacts.length ? 92 : 52) ? "below" : "",
+              facts.since || facts.metrics.length ? "full" : "",
+              tipBelow ? "below" : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -811,22 +837,21 @@ export default function CityField({
             rel="noopener noreferrer"
             style={{ left: tip.x, top: tip.y }}
             tabIndex={tip.sticky ? 0 : -1}
-            aria-label={
-              tipFacts.length
-                ? `${tipLabel}${copy.separator}${tipFacts.join(" · ")}`
-                : tipLabel
-            }
+            aria-label={tipLabel}
           >
             <span className="line">
               <span className="who">{tipName || copy.open}</span>
-              <span aria-hidden="true">↗</span>
+              <span className="arrow" aria-hidden="true">
+                ↗
+              </span>
             </span>
-            {tipFacts.length > 0 && (
-              <span className="facts">
-                {tipFacts.map((fact, index) => (
-                  <span key={fact}>
-                    {index > 0 && " · "}
-                    <span className="fact">{fact}</span>
+            {facts.since && <span className="since">{facts.since}</span>}
+            {facts.metrics.length > 0 && (
+              <span className="metrics">
+                {facts.metrics.map(metric => (
+                  <span key={metric.label} className="metric">
+                    <b>{metric.value}</b>
+                    <small>{metric.label}</small>
                   </span>
                 ))}
               </span>

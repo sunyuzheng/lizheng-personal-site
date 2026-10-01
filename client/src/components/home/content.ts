@@ -259,9 +259,10 @@ export interface CityCopy {
   open: string;
   openNamed: (name: string) => string;
   joined: (year: number, month: number) => string;
+  /** Labels shown under the member card's figures. */
   posts: (count: number) => string;
   comments: (count: number) => string;
-  /** Between the profile link and the member's facts, for screen readers. */
+  /** Between the parts of the member card, for screen readers. */
   separator: string;
   random: string;
   find: {
@@ -654,8 +655,8 @@ const zh = {
       open: "打开TA的主页",
       openNamed: (name: string) => `打开${name}的主页`,
       joined: (year: number, month: number) => `${year}年${month}月加入`,
-      posts: (count: number) => `${count.toLocaleString("en-US")}个帖子`,
-      comments: (count: number) => `${count.toLocaleString("en-US")}条评论`,
+      posts: () => "帖子",
+      comments: () => "评论",
       separator: "，",
       random: "随机遇见一位成员",
       find: {
@@ -1090,10 +1091,8 @@ const en: HomeCopy = {
       open: "Open this member’s profile",
       openNamed: name => `Open ${name}’s profile`,
       joined: (year, month) => `Joined ${MONTHS[month - 1]} ${year}`,
-      posts: count =>
-        `${count.toLocaleString("en-US")} ${count === 1 ? "post" : "posts"}`,
-      comments: count =>
-        `${count.toLocaleString("en-US")} ${count === 1 ? "comment" : "comments"}`,
+      posts: count => (count === 1 ? "post" : "posts"),
+      comments: count => (count === 1 ? "comment" : "comments"),
       separator: ". ",
       random: "Meet a random member",
       find: {

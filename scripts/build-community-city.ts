@@ -19,12 +19,17 @@
  *
  * Output (client/public/community/city.json, git-ignored; published to Vercel
  * Blob at community/city.json):
- *   { version, generatedAt, count, heat, linked, names, demo? }
+ *   { version, generatedAt, count, heat, linked, names, joined, posts,
+ *     comments, demo? }
  * - heat[i] is one digit 0–9 per member, from posts × 3 + comments (members
  *   with neither get 0–2 from how recently they visited);
- * - linked[i] is member i's public profile id and names[i] their display name.
- * E-mail addresses, other profile fields, exact counts and visit dates never
- * leave this script.
+ * - linked[i] is member i's public profile id and names[i] their display name;
+ * - joined[i] is the month member i joined as YYYYMM (0 when unknown);
+ * - posts[i] and comments[i] are member i's counts. Members are sorted by
+ *   activity, so both arrays stop after the last member with any; everyone
+ *   beyond them has neither.
+ * The map does not need e-mail addresses, other profile fields or visit dates,
+ * so they are not written.
  */
 import { BlobNotFoundError, head, put } from "@vercel/blob";
 import fs from "node:fs";
@@ -49,6 +54,8 @@ interface Member {
 interface Entry {
   uid: string;
   name: string;
+  posts: number;
+  comments: number;
   score: number;
   heat: number;
   created: number;
@@ -61,6 +68,9 @@ interface CityFile {
   heat: string;
   linked: string[];
   names: string[];
+  joined: number[];
+  posts: number[];
+  comments: number[];
   demo?: true;
 }
 
@@ -85,6 +95,13 @@ function heatFor(member: Member) {
   const seen = member.last_seen_at ? Date.parse(member.last_seen_at) : 0;
   const heat = now - seen < 30 * DAY ? 2 : now - seen < 180 * DAY ? 1 : 0;
   return { score: 0, heat };
+}
+
+// The month a member joined, as YYYYMM in UTC (0 when unknown).
+function joinedMonth(created: number) {
+  if (!created) return 0;
+  const date = new Date(created);
+  return date.getUTCFullYear() * 100 + date.getUTCMonth() + 1;
 }
 
 // The name members show on their profile. Anything that looks like contact
@@ -135,14 +152,17 @@ async function request(page: number, token: string) {
   throw new Error(`Circle API kept failing on page ${page}`);
 }
 
+const byActivity = (a: Entry, b: Entry) =>
+  b.score - a.score || b.heat - a.heat || a.created - b.created;
+
 function build(entries: Entry[], demo = false): CityFile {
-  entries.sort(
-    (a, b) => b.score - a.score || b.heat - a.heat || a.created - b.created
-  );
+  entries.sort(byActivity);
   const histogram = new Array(10).fill(0);
   for (const entry of entries) histogram[entry.heat]++;
+  // Sorted by score, so the members with posts or comments come first.
+  const active = entries.filter(entry => entry.score > 0).length;
   console.log(
-    `${entries.length} members · ${entries.filter(entry => entry.name).length} with a display name · heat histogram ${histogram.join(" ")}`
+    `${entries.length} members · ${entries.filter(entry => entry.name).length} with a display name · ${active} with posts or comments · heat histogram ${histogram.join(" ")}`
   );
   return {
     version: 1,
@@ -151,6 +171,9 @@ function build(entries: Entry[], demo = false): CityFile {
     heat: entries.map(entry => entry.heat).join(""),
     linked: entries.map(entry => entry.uid),
     names: entries.map(entry => entry.name),
+    joined: entries.map(entry => joinedMonth(entry.created)),
+    posts: entries.slice(0, active).map(entry => entry.posts),
+    comments: entries.slice(0, active).map(entry => entry.comments),
     ...(demo ? { demo: true as const } : {}),
   };
 }
@@ -229,19 +252,32 @@ function demo() {
     seed = (seed * 16807) % 2147483647;
     return seed / 2147483647;
   };
+  const first = Date.UTC(2023, 0, 1);
   const entries: Entry[] = [];
   for (let index = 0; index < count; index++) {
     const active = random() < 0.2;
-    const score = active ? Math.floor(1 / Math.pow(random() + 1e-4, 1.25)) : 0;
+    const score = active
+      ? Math.max(1, Math.floor(1 / Math.pow(random() + 1e-4, 1.25)))
+      : 0;
+    const posts = Math.floor((score / 3) * random() * random());
+    const comments = score - posts * 3;
     const heat = active
-      ? heatFor({ posts_count: 0, comments_count: Math.max(1, score) }).heat
+      ? heatFor({ posts_count: posts, comments_count: comments }).heat
       : Math.floor(random() * 3);
-    entries.push({ uid: profile, name: "", score, heat, created: index });
+    const created = Math.floor(first + random() * (now - first));
+    entries.push({
+      uid: profile,
+      name: "",
+      posts,
+      comments,
+      score,
+      heat,
+      created,
+    });
   }
   // The most active dot is Yuzheng; everyone else is a numbered placeholder.
-  entries.sort((a, b) => b.score - a.score || b.heat - a.heat);
+  entries.sort(byActivity);
   entries.forEach((entry, index) => {
-    entry.created = index;
     entry.name =
       index === 0 ? "立正" : `示例成员${String(index).padStart(5, "0")}`;
   });
@@ -285,6 +321,8 @@ async function main() {
       entries.push({
         uid: member.public_uid,
         name: displayName(member),
+        posts: member.posts_count ?? 0,
+        comments: member.comments_count ?? 0,
         score,
         heat,
         created: member.created_at ? Date.parse(member.created_at) : 0,

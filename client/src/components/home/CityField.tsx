@@ -24,7 +24,12 @@ import { Phrases } from "./parts";
  * Data contract, produced by scripts/build-community-city.ts:
  * - `heat[i]` is a digit 0–9 for member i (members sorted most active first);
  * - `linked[i]` is member i's public profile id ("" when unknown);
- * - `names[i]` is member i's display name ("" when unknown).
+ * - `names[i]` is member i's display name ("" when unknown);
+ * - `joined[i]` is the month member i joined as YYYYMM (0 when unknown);
+ * - `posts[i]` and `comments[i]` are member i's counts; members beyond the end
+ *   of these arrays have neither.
+ * Snapshots made before October 2026 have only the first three; the map then
+ * shows names alone.
  */
 export interface CityData {
   version: 1;
@@ -33,6 +38,9 @@ export interface CityData {
   heat: string;
   linked: string[];
   names?: string[];
+  joined?: number[];
+  posts?: number[];
+  comments?: number[];
   demo?: boolean;
 }
 
@@ -59,6 +67,24 @@ const MINT = (0xa4 << 16) | (0xd4 << 8) | 0x8f;
 const useBrowserLayoutEffect =
   typeof window === "undefined" ? useEffect : useLayoutEffect;
 
+const isCount = (value: unknown) =>
+  typeof value === "number" && Number.isInteger(value) && value >= 0;
+const isMonth = (value: unknown) =>
+  value === 0 ||
+  (typeof value === "number" &&
+    Number.isInteger(value) &&
+    value >= 200001 &&
+    value <= 209912 &&
+    value % 100 >= 1 &&
+    value % 100 <= 12);
+const optionalList = (
+  value: unknown,
+  count: number,
+  valid: (v: unknown) => boolean
+) =>
+  value === undefined ||
+  (Array.isArray(value) && value.length <= count && value.every(valid));
+
 function isCityData(value: unknown): value is CityData {
   if (!value || typeof value !== "object") return false;
   const data = value as Partial<CityData>;
@@ -77,8 +103,23 @@ function isCityData(value: unknown): value is CityData {
         data.names.length <= data.count &&
         data.names.every(
           name => typeof name === "string" && name.length <= 80
-        )))
+        ))) &&
+    optionalList(data.joined, data.count, isMonth) &&
+    optionalList(data.posts, data.count, isCount) &&
+    optionalList(data.comments, data.count, isCount)
   );
+}
+
+// "2024年3月加入 · 12个帖子 · 48条评论"; counts of zero are left out.
+function memberFacts(data: CityData, member: number, copy: CityCopy) {
+  const facts: string[] = [];
+  const month = data.joined?.[member];
+  if (month) facts.push(copy.joined(Math.floor(month / 100), month % 100));
+  const posts = data.posts?.[member] ?? 0;
+  const comments = data.comments?.[member] ?? 0;
+  if (posts) facts.push(copy.posts(posts));
+  if (comments) facts.push(copy.comments(comments));
+  return facts;
 }
 
 // Case, width and spacing do not matter when looking someone up.
@@ -638,6 +679,8 @@ export default function CityField({
 
   const tipId = tip ? linked?.[tip.member] : undefined;
   const tipName = tip ? names?.[tip.member] : undefined;
+  const tipFacts = tip && data ? memberFacts(data, tip.member, copy) : [];
+  const tipLabel = tipName ? copy.openNamed(tipName) : copy.open;
 
   // While the data loads, the caption keeps the height of its longest version
   // (drawn invisibly by CSS), so the sections below never move.
@@ -758,7 +801,8 @@ export default function CityField({
             className={[
               "city-tip",
               tip.sticky ? "sticky" : "",
-              tip.y < 52 ? "below" : "",
+              tipFacts.length ? "with-facts" : "",
+              tip.y < (tipFacts.length ? 92 : 52) ? "below" : "",
             ]
               .filter(Boolean)
               .join(" ")}
@@ -767,10 +811,26 @@ export default function CityField({
             rel="noopener noreferrer"
             style={{ left: tip.x, top: tip.y }}
             tabIndex={tip.sticky ? 0 : -1}
-            aria-label={tipName ? copy.openNamed(tipName) : copy.open}
+            aria-label={
+              tipFacts.length
+                ? `${tipLabel}${copy.separator}${tipFacts.join(" · ")}`
+                : tipLabel
+            }
           >
-            <span className="who">{tipName || copy.open}</span>
-            <span aria-hidden="true">↗</span>
+            <span className="line">
+              <span className="who">{tipName || copy.open}</span>
+              <span aria-hidden="true">↗</span>
+            </span>
+            {tipFacts.length > 0 && (
+              <span className="facts">
+                {tipFacts.map((fact, index) => (
+                  <span key={fact}>
+                    {index > 0 && " · "}
+                    <span className="fact">{fact}</span>
+                  </span>
+                ))}
+              </span>
+            )}
           </a>
         )}
       </div>

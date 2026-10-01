@@ -2086,20 +2086,24 @@
   pointer-events: none;
 }
 
+/* The member card: dark glass over the map, so it reads as part of the city
+   rather than a tooltip laid on top of it. */
 .lz-home .city-tip {
   position: absolute;
   z-index: 2;
-  display: inline-flex;
-  gap: 6px;
-  max-width: 240px;
-  padding: 7px 11px;
-  border-radius: 8px;
-  background: var(--lz-on-forest);
-  box-shadow: 0 12px 28px -12px rgb(0 0 0 / 0.6);
-  color: var(--lz-forest-3);
+  display: flex;
+  flex-direction: column;
+  max-width: 260px;
+  padding: 8px 12px;
+  border: 1px solid rgb(248 241 228 / 0.16);
+  border-radius: 10px;
+  background: rgb(8 35 19 / 0.84);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px -16px rgb(0 0 0 / 0.75);
+  color: var(--lz-on-forest);
   font-size: 13px;
-  font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.3;
   white-space: nowrap;
   pointer-events: none;
   transform: translate(-50%, calc(-100% - 14px));
@@ -2107,36 +2111,70 @@
 
 .lz-home .city-tip .line {
   display: flex;
-  gap: 6px;
+  align-items: baseline;
+  gap: 12px;
   min-width: 0;
-  max-width: 100%;
 }
 
 .lz-home .city-tip .who {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
-/* With the join month and counts the tip becomes a small two-line card, as
-   wide as its longer line. */
-.lz-home .city-tip.with-facts {
-  flex-direction: column;
-  gap: 4px;
-  max-width: 280px;
-  padding: 8px 12px 9px;
-}
-
-.lz-home .city-tip .facts {
-  color: var(--lz-ink-2);
+.lz-home .city-tip .arrow {
+  margin-left: auto;
+  color: var(--lz-on-forest-2);
   font-size: 12px;
-  font-weight: 400;
-  line-height: 1.35;
-  white-space: normal;
 }
 
-/* Lines break between facts, never inside one. */
-.lz-home .city-tip .fact {
-  white-space: nowrap;
+.lz-home .city-tip.full {
+  min-width: 156px;
+  padding: 11px 14px 12px;
+  border-radius: 12px;
+}
+
+.lz-home .city-tip.full .who {
+  font-size: 14px;
+}
+
+.lz-home .city-tip .since {
+  margin-top: 3px;
+  color: var(--lz-on-forest-2);
+  font-size: 12px;
+}
+
+.lz-home .city-tip .metrics {
+  display: flex;
+  gap: 24px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgb(248 241 228 / 0.12);
+}
+
+.lz-home .city-tip .metric {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.lz-home .city-tip .metric b {
+  font-family: var(--num);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.lz-home .city-tip .metric small {
+  color: var(--lz-on-forest-2);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+}
+
+.lz-home.l-en .city-tip .metric small {
+  letter-spacing: 0.02em;
 }
 
 .lz-home .city-tip.below {

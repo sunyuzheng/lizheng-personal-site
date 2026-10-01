@@ -7,13 +7,14 @@ export const SHOP_URL = "https://shop.lizheng.ai/";
 /** Pages reachable from the shared header's "More" menu and the footer. */
 export type SitePage = "about" | "book" | "decks" | "collab";
 
-/** Homepage sections, keyed by their stable element ids. */
+/** Homepage sections in page order, keyed by their stable element ids. */
 export const HOME_SECTIONS = [
   { id: "works", zh: "代表作", en: "Work" },
+  { id: "superlinear", zh: "超线性学院", en: "Academy" },
   { id: "conversations", zh: "对话", en: "Conversations" },
   { id: "judgment", zh: "判断", en: "Calls" },
   { id: "thinking", zh: "文章", en: "Writing" },
-  { id: "superlinear", zh: "超线性学院", en: "Academy" },
+  { id: "ask", zh: "问问立正", en: "Ask Lizheng" },
 ] as const;
 
 export const SITE_PAGES: Array<{

@@ -4,7 +4,7 @@
 
 ## 页面接入
 
-组件使用 `lang="zh"` 或 `lang="en"`；当前主页已经接入。保留根锚点 `#ask-lizheng`，登录完成和页内入口依赖它。外观在同目录 `home.css` 的 `.lz-ask-*` 下；可改排版、颜色、间距，保留状态与无障碍属性。
+组件使用 `lang="zh"` 或 `lang="en"`。主页上它单独成章：`Ask.tsx` 渲染 `#ask` 区块，位于「最近在想的事」之后、「加入超线性学院」之前，导航里叫「问问立正」。组件头部（h2标题、说明、AI回答提示、完整页面链接）就是这一章的标题区，文案在 `content.ts` 的 `HOME_COPY[lang].ask`。保留根锚点 `#ask-lizheng`，登录完成和页内入口依赖它。外观在同目录 `home.css` 的 `.lz-ask-*` 下；可改排版、颜色、间距，保留状态与无障碍属性。
 
 传输层位于 `client/src/lib/ask-lizheng.ts`：同源 `/api/ask-lizheng/ask` 和 `/api/ask-lizheng/meta`。页面不直接持有模型凭证，也不直接访问Circle。`api/ask-lizheng.ts` 负责转发SSE，`vercel.json` 保留主页和ask.lizheng.ai的路由。
 

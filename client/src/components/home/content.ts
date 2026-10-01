@@ -633,7 +633,7 @@ const zh = {
       "用AI做出了一个项目，怎样知道自己真的学会了？",
       "工作越来越忙，怎样判断哪些是fake work？",
     ],
-    searchLabel: "只找原文？搜索文章和视频",
+    searchLabel: "记得关键词？直接搜文章和视频",
   },
   city: {
     eyebrow: "超线性学院 · Superlinear Academy",
@@ -1071,7 +1071,7 @@ const en: HomeCopy = {
       "I built a project with AI. How do I know I actually learned something?",
       "I’m busier than ever. How can I tell if I’m doing fake work?",
     ],
-    searchLabel: "Just looking for a source? Search essays and talks",
+    searchLabel: "Know the keyword? Search essays and talks",
   },
   city: {
     eyebrow: "Superlinear Academy",

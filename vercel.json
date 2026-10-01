@@ -15,6 +15,12 @@
     },
     { "src": "/api/ask-lizheng/ask", "dest": "/api/ask-lizheng" },
     {
+      "src": "/assets/(.*)",
+      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
+      "dest": "https://ask-lizheng.ai-builders.space/assets/$1",
+      "respectOriginCacheControl": true
+    },
+    {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
       "dest": "https://ask-lizheng.ai-builders.space/$1",

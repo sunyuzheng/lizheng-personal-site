@@ -1996,16 +1996,61 @@
   justify-content: space-between;
   margin-top: 14px;
 }
-.lz-home .lz-ask-form-bottom details {
+.lz-home .lz-ask-situation {
   flex: 1;
   min-width: 0;
 }
-.lz-home .lz-ask-form-bottom summary {
+
+/* 结合我的处境: a switch, because it changes how the answer is written. */
+.lz-home .lz-ask-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   min-height: 44px;
-  padding-block: 8px;
-  font-size: 13px;
-  cursor: pointer;
+  margin-left: -4px;
+  padding: 0 8px 0 4px;
+  border-radius: 9px;
+  font-size: 14px;
   color: var(--lz-muted);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.lz-home .lz-ask-switch:hover:not(:disabled) {
+  background: var(--lz-sand);
+  color: var(--lz-ink);
+}
+.lz-home .lz-ask-switch[aria-pressed="true"] {
+  font-weight: 500;
+  color: var(--lz-green-text);
+}
+.lz-home .lz-ask-switch .switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--lz-line-2);
+  transition: background 0.2s;
+}
+.lz-home .lz-ask-switch .switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(18 22 19 / 0.25);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lz-home .lz-ask-switch[aria-pressed="true"] .switch {
+  background: var(--lz-green);
+}
+.lz-home .lz-ask-switch[aria-pressed="true"] .switch::after {
+  transform: translateX(12px);
 }
 .lz-home .lz-ask-form-bottom textarea {
   margin-top: 8px;

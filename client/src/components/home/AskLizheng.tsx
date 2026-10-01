@@ -20,9 +20,11 @@ import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft,
 const COPY = {
   zh: {
     question: "你的问题",
-    placeholder: "想弄明白什么？也可以说说你的处境和卡点。",
-    context: "补充背景（选填）",
-    contextHint: "目标、事实、限制，或已经试过什么。",
+    placeholder: "想弄明白什么？可以问一个概念、一个判断，或一直没想通的地方。",
+    placeholderPersonal: "说说你在做的事，以及卡在哪里。",
+    placeholderFind: "比如：想系统了解fake work，从哪几篇读起？",
+    context: "结合我的处境",
+    contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
     send: "发送问题",
     stop: "停止",
     reset: "开始新问题",
@@ -58,7 +60,7 @@ const COPY = {
     queryNotice: "提问会保存30天，用于改进回答。请勿填写私密信息。",
     privacyNote:
       "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
-    modes: ["想明白", "聊聊我的问题", "找内容"],
+    modes: ["想明白", "从哪读起"],
     kinds: {
       source: "材料中的观点",
       synthesis: "AI综合",
@@ -69,9 +71,11 @@ const COPY = {
   en: {
     question: "Your question",
     placeholder:
-      "What would you like to understand? You can include your situation and where you’re stuck.",
-    context: "Add context (optional)",
-    contextHint: "Your goal, facts, constraints, or what you’ve tried.",
+      "What would you like to understand? An idea, a judgment, or something you haven’t worked out.",
+    placeholderPersonal: "Tell me what you’re working on and where you’re stuck.",
+    placeholderFind: "For example: where should I start reading about fake work?",
+    context: "Apply to my situation",
+    contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
     send: "Ask",
     stop: "Stop",
     reset: "New question",
@@ -114,7 +118,7 @@ const COPY = {
     queryNotice: "Questions are saved for 30 days to improve answers. Please avoid private information.",
     privacyNote:
       "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and necessary context are sent to Builder Space. We save question text, time, model, answer status and duration to improve answers, then automatically delete them after 30 days. We do not save added context, conversation history or full answers, or link question records to email addresses or accounts. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
-    modes: ["Understand", "Apply to my situation", "Find sources"],
+    modes: ["Understand", "What to read first"],
     kinds: {
       source: "From the material",
       synthesis: "AI synthesis",
@@ -136,7 +140,10 @@ type Turn = AskAnswerState & {
   error?: string;
   model?: string;
 };
-const INTENTS: AskIntent[] = ["understand", "apply", "find"];
+// 想明白 explains (understand) or, with the situation switched on, applies the
+// material to the reader (apply). 从哪读起 picks what to read first (find).
+const MODES = ["ask", "find"] as const;
+type Mode = (typeof MODES)[number];
 const STAGE: Record<string, number> = {
   retrieving: 0,
   matching: 1,
@@ -260,7 +267,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const c = COPY[lang];
   const [question, setQuestion] = useState("");
   const [context, setContext] = useState("");
-  const [intent, setIntent] = useState<AskIntent>("understand");
+  const [mode, setMode] = useState<Mode>("ask");
+  const [personal, setPersonal] = useState(false);
+  const intent: AskIntent = mode === "find" ? "find" : personal ? "apply" : "understand";
+  const situation = mode === "ask" && personal ? context : "";
   const [turns, setTurns] = useState<Turn[]>([]);
   const [busy, setBusy] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -271,13 +281,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   useEffect(() => {
     finishAskLogin();
     const draft = takeAskDraft();
-    if (draft) { setQuestion(draft.question); setContext(draft.context); setIntent(draft.intent as AskIntent); }
+    if (draft) {
+      setQuestion(draft.question);
+      setContext(draft.context);
+      setMode(draft.intent === "find" ? "find" : "ask");
+      setPersonal(draft.intent === "apply" || !!draft.context);
+    }
     refreshAccount();
     return () => loginCleanup.current?.();
   }, []);
   const login = () => {
     loginCleanup.current?.();
-    loginCleanup.current = beginAskLogin({ question, context, intent }, refreshAccount);
+    loginCleanup.current = beginAskLogin({ question, context: situation, intent }, refreshAccount);
   };
   const input = useRef<HTMLTextAreaElement>(null);
   const latest = useRef<HTMLElement>(null);
@@ -317,7 +332,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     if (active.current || (!retry && !question.trim())) return;
     const payload: AskPayload = retry?.request || {
       question: question.trim(),
-      context,
+      context: situation,
       intent,
       history: turns
         .filter(turn => turn.result)
@@ -452,13 +467,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 lang === "zh" ? "这次想怎样使用" : "How you want to use this"
               }
             >
-              {INTENTS.map((value, index) => (
+              {MODES.map((value, index) => (
                 <button
                   type="button"
                   key={value}
-                  aria-pressed={intent === value}
+                  aria-pressed={mode === value}
                   disabled={busy}
-                  onClick={() => setIntent(value)}
+                  onClick={() => setMode(value)}
                 >
                   {c.modes[index]}
                 </button>
@@ -475,7 +490,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               maxLength={2000}
               disabled={busy}
               rows={3}
-              placeholder={c.placeholder}
+              placeholder={
+                mode === "find"
+                  ? c.placeholderFind
+                  : personal
+                    ? c.placeholderPersonal
+                    : c.placeholder
+              }
               onKeyDown={event => {
                 if (
                   (event.metaKey || event.ctrlKey) &&
@@ -488,21 +509,36 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               }}
             />
             <div className="lz-ask-form-bottom">
-              <details>
-                <summary>{c.context}</summary>
-                <label className="sr-only" htmlFor="home-ask-context">
-                  {c.context}
-                </label>
-                <textarea
-                  id="home-ask-context"
-                  maxLength={2500}
-                  disabled={busy}
-                  rows={3}
-                  value={context}
-                  onChange={event => setContext(event.target.value)}
-                  placeholder={c.contextHint}
-                />
-              </details>
+              <div className="lz-ask-situation">
+                {mode === "ask" && (
+                  <button
+                    type="button"
+                    className="lz-ask-switch"
+                    aria-pressed={personal}
+                    disabled={busy}
+                    onClick={() => setPersonal(on => !on)}
+                  >
+                    <span className="switch" aria-hidden="true" />
+                    {c.context}
+                  </button>
+                )}
+                {mode === "ask" && personal && (
+                  <>
+                    <label className="sr-only" htmlFor="home-ask-context">
+                      {c.context}
+                    </label>
+                    <textarea
+                      id="home-ask-context"
+                      maxLength={2500}
+                      disabled={busy}
+                      rows={3}
+                      value={context}
+                      onChange={event => setContext(event.target.value)}
+                      placeholder={c.contextHint}
+                    />
+                  </>
+                )}
+              </div>
               {busy ? (
                 <button
                   key="stop"
@@ -537,7 +573,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <p>{c.examples}</p>
               {t.examples.map(value => (
                 <button key={value} onClick={() => prefill(value)}>
-                  {value} ↗
+                  {value}
                 </button>
               ))}
             </div>
@@ -686,7 +722,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                           type="button"
                           onClick={() => void submit(undefined, turn)}
                         >
-                          {c.retry} ↗
+                          {c.retry}
                         </button>
                       )}
                     {!!turn.sources.length && (
@@ -746,21 +782,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 key={value}
                                 onClick={() => {
                                   setQuestion(turn.question);
-                                  setIntent("apply");
+                                  setMode("ask");
+                                  setPersonal(true);
                                   setContext(prev => {
                                     const next = `${prev}${prev ? "\n" : ""}${value}\n`;
                                     return next.length <= 2500 ? next : prev;
                                   });
-                                  document
-                                    .getElementById("home-ask-context")
-                                    ?.closest("details")
-                                    ?.setAttribute("open", "");
-                                  document
-                                    .getElementById("home-ask-context")
-                                    ?.focus();
+                                  requestAnimationFrame(() =>
+                                    document
+                                      .getElementById("home-ask-context")
+                                      ?.focus()
+                                  );
                                 }}
                               >
-                                {value} ↗
+                                {value}
                               </button>
                             ))}
                           </>
@@ -771,12 +806,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             {turn.result.followups.map(value => (
                               <button
                                 key={value}
-                                onClick={() => {
-                                  setIntent("apply");
-                                  prefill(value);
-                                }}
+                                onClick={() => prefill(value)}
                               >
-                                {value} ↗
+                                {value}
                               </button>
                             ))}
                           </>
@@ -793,10 +825,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   setTurns([]);
                   setQuestion("");
                   setContext("");
+                  setPersonal(false);
                   input.current?.focus();
                 }}
               >
-                {c.reset} ↗
+                {c.reset}
               </button>
             </div>
           )}

@@ -46,7 +46,7 @@ export default function Hero({ lang }: { lang: Lang }) {
     <section ref={heroRef} className="hero grain" id={SECTION.hero}>
       <div className="wrap">
         <div className="hero-copy">
-          <p className="kicker rise d1">{t.kicker}</p>
+          {t.kicker && <p className="kicker rise d1">{t.kicker}</p>}
           <h1 className="rise d2">
             <Lines lines={t.title} />
           </h1>

@@ -274,12 +274,14 @@ export interface Stat {
 
 const zh = {
   hero: {
-    kicker: "孙煜征 · 课代表立正",
+    // The header, the seal and the lede already name him; English keeps the
+    // line because it is where readers learn what the seal says.
+    kicker: "",
     title: ["学点真本事，", "做点真东西。"],
     lede: [
-      "我是立正。创办了",
+      "我是立正，创办了",
       { strong: "超线性学院" },
-      "，也在「课代表立正」和顶尖研究者、创业者深聊了200多场。我想帮更多人在AI时代学到真本事，做出真东西。",
+      "，两万多人在这里学着用AI做东西。从2020年起，我和顶尖研究者、创业者做了200多场深度对话，再把学到的带回教学和真实的工作里。",
     ] as Inline[],
     primary: "免费加入超线性学院",
     secondary: "看我的对话",
@@ -469,7 +471,7 @@ const zh = {
   calls: {
     eyebrow: "公开判断",
     title: ["先把判断写下来，", "再让时间检验。"],
-    intro: "说对的，说错的，都留在原处，每一条都附着当时的原始记录。",
+    intro: "说对的，说错的，都留在原处，每一条都附上当时的原始记录。",
     listLabel: "公开判断时间线",
     sources: "原始记录",
     items: [

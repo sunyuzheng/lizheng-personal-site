@@ -5,6 +5,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
+    { "src": "/api/ask-lizheng/quota-storage", "dest": "/api/ask-lizheng-quota" },
     { "src": "/api/ask-lizheng/auth/(login|callback|session|logout|email-request|email-verify)", "dest": "/api/ask-lizheng-auth?__route=$1" },
     {
       "src": "/api/ask",

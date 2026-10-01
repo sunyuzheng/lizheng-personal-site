@@ -10,10 +10,12 @@
 
 账号层位于 `client/src/lib/ask-account.ts`，前端只依赖session/login/logout合同：enabled、authenticated、founding、remaining、reset_at。验证弹窗完成后刷新身份，不自动发送问题。账号入口文案为“验证Founding身份”，可接邮箱验证或Academy SSO，不把页面设计绑定到某个认证提供方。
 
+本批身份入口默认使用邮箱验证码，路由仍为同源`/api/ask-lizheng/auth/*`。`api/ask-lizheng-quota.ts`是Builder调用的受保护额度存储端点；只接受签名的固定额度操作。邮箱、Circle及Redis凭证只保存在Vercel服务端，不能放到页面组件或Builder公开部署参数中。后端合同由`ask-lizheng`仓库的`docs/ACCOUNT_AUTH_HANDOFF.md`维护。
+
 ## 当前交付状态
 
 主页架子已发布到 `https://www.lizheng.ai/#ask-lizheng`，代码位于 `sunyuzheng/lizheng-personal-site` 的 `main`。组件包含逐段显示和等待反馈的处理；这些状态依赖后端实际返回的事件。账号及每日额度开关默认关闭，未配置时不会妨碍已有问答。最新规则是每天3次、Founding Member不限次；真实验证路径和额度启用在后续配置验收后上线。
 
-当前主页候选的79项问答/转发/账号测试、TypeScript检查和生产构建已通过。浏览器已用合成身份检查额度耗尽、保留问题、验证回跳和手机布局；这不代表真实账号已上线。
+当前候选包含问答、转发、邮箱一次性验证、额度存储边界与跨午夜重试测试，TypeScript检查与生产构建通过。实际Python→Node→Redis链路已用隔离合成身份验证三次限制、失败释放与不限次档位；真实账号仍须通过邮件验收后启用。
 
 整体设计刷新可先在当前主页工作区继续。问答接口、资料owner、身份核验和存储配置独立演进；无须把认证逻辑或模型调用写进页面组件。

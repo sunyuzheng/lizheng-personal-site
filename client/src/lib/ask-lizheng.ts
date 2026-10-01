@@ -36,8 +36,56 @@ export type AskResult = {
 export type AskEvent =
   | { type: "progress"; value: { stage: string; message: string } }
   | { type: "approach"; value: AskApproach }
+  | { type: "partial"; value: AskPartial }
   | { type: "sources"; value: { sources: AskSource[] } }
   | { type: "result"; value: AskResult };
+
+export type AskPartial = {
+  sections: AskResult["sections"];
+  sources: AskSource[];
+};
+
+export type AskAnswerState = {
+  sources: AskSource[];
+  progress?: { stage: string; message: string };
+  approach?: AskApproach;
+  partial?: AskPartial;
+  result?: AskResult;
+};
+
+export function applyAskEvent(
+  state: AskAnswerState,
+  event: AskEvent
+): AskAnswerState {
+  if (event.type === "progress")
+    return {
+      ...state,
+      progress: event.value,
+      ...(event.value.stage === "repairing" ? { partial: undefined } : {}),
+    };
+  if (event.type === "approach") return { ...state, approach: event.value };
+  if (event.type === "sources")
+    return { ...state, sources: event.value.sources };
+  if (event.type === "partial")
+    return {
+      ...state,
+      partial: event.value,
+      sources: [
+        ...new Map(
+          [...state.sources, ...event.value.sources].map(source => [
+            source.id,
+            source,
+          ])
+        ).values(),
+      ],
+    };
+  return {
+    ...state,
+    result: event.value,
+    sources: event.value.sources || [],
+    partial: undefined,
+  };
+}
 
 export type AskApproach = {
   summary: string;
@@ -82,6 +130,7 @@ export function parseAskFrame(frame: string): AskEvent | null {
     event === "progress" ||
     event === "sources" ||
     event === "approach" ||
+    event === "partial" ||
     event === "result"
   )
     return { type: event, value } as AskEvent;
@@ -91,7 +140,8 @@ export function parseAskFrame(frame: string): AskEvent | null {
 export async function askLizheng(
   payload: AskPayload,
   signal: AbortSignal,
-  onEvent: (event: AskEvent) => void
+  onEvent: (event: AskEvent) => void,
+  onActivity?: () => void
 ): Promise<void> {
   const response = await fetch("/api/ask-lizheng/ask", {
     method: "POST",
@@ -125,6 +175,7 @@ export async function askLizheng(
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  let lastActivityNotification: number | undefined;
   try {
     const process = (frame: string) => {
       const event = parseAskFrame(frame);
@@ -134,6 +185,16 @@ export async function askLizheng(
     };
     while (true) {
       const { done, value } = await reader.read();
+      if (value?.byteLength && onActivity && !signal.aborted) {
+        const now = performance.now();
+        if (
+          lastActivityNotification === undefined ||
+          now - lastActivityNotification >= 1000
+        ) {
+          lastActivityNotification = now;
+          onActivity();
+        }
+      }
       buffer += decoder.decode(value, { stream: !done });
       if (buffer.length > 512_000)
         throw new Error("The answer stream exceeded its limit.");

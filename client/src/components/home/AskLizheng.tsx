@@ -3,11 +3,12 @@ import ReactMarkdown from "react-markdown";
 import type { Lang } from "@/contexts/LanguageContext";
 import {
   askLizheng,
+  applyAskEvent,
   AskError,
   publicSourceUrl,
   type AskIntent,
   type AskPayload,
-  type AskApproach,
+  type AskAnswerState,
   type AskResult,
   type AskSource,
 } from "@/lib/ask-lizheng";
@@ -43,6 +44,13 @@ const COPY = {
     timeout: "这次回答等得太久，已结束等待。问题和材料已保留，可以重新生成。",
     retry: "重新生成回答",
     waiting: "回答还在整理，可以先读下面的资料，也可以随时停止。",
+    connecting: "正在连接服务…",
+    connectionActive: "连接保持中",
+    noRecentResponse: "暂未收到新响应，仍在等待",
+    waitingLong:
+      "这次整理时间较长，可以先打开原文阅读。停止会保留问题和已找到的材料。",
+    partial: "正在生成的回答",
+    partialNote: "以下段落已核对来源编号；完整回答仍在生成。",
     approach: "回答思路",
     approachEnglish: "整理方向与资料主要使用中文。",
     privacy: "关于回答和你的输入",
@@ -89,6 +97,14 @@ const COPY = {
     retry: "Generate again",
     waiting:
       "The answer is still being prepared. You can read the sources below or stop at any time.",
+    connecting: "Connecting to the service…",
+    connectionActive: "Connection active",
+    noRecentResponse: "No recent response; still waiting",
+    waitingLong:
+      "This is taking longer. You can open the sources while waiting; stopping keeps your question and material.",
+    partial: "Answer in progress",
+    partialNote:
+      "Citation IDs checked for these sections; the full answer is still being prepared.",
     approach: "How this answer is being prepared",
     approachEnglish:
       "The reading outline and sources are primarily in Chinese.",
@@ -109,14 +125,11 @@ const COPY = {
     ],
   },
 };
-type Turn = {
+type Turn = AskAnswerState & {
   id: number;
   question: string;
   request: AskPayload;
-  sources: AskSource[];
-  progress?: { stage: string; message: string };
-  approach?: AskApproach;
-  result?: AskResult;
+  lastActivity: number;
   error?: string;
   model?: string;
 };
@@ -125,6 +138,7 @@ const STAGE: Record<string, number> = {
   retrieving: 0,
   matching: 1,
   thinking: 2,
+  drafting: 2,
   checking: 3,
   repairing: 3,
 };
@@ -208,6 +222,36 @@ function AnswerText({
   );
 }
 
+function AnswerSections({
+  sections,
+  sources,
+  turnId,
+  lang,
+}: {
+  sections: AskResult["sections"];
+  sources: AskSource[];
+  turnId: number;
+  lang: Lang;
+}) {
+  const c = COPY[lang];
+  return sections.map((section, i) => (
+    <section key={i}>
+      <div className="lz-ask-answer-title">
+        <h4>{section.heading}</h4>
+        <small>{c.kinds[section.kind]}</small>
+      </div>
+      <AnswerText text={section.body} sources={sources} turnId={turnId} />
+      <div className="lz-ask-citations">
+        {section.source_ids?.map(id => (
+          <a key={id} href={`#home-ask-${turnId}-${id}`}>
+            {id}
+          </a>
+        ))}
+      </div>
+    </section>
+  ));
+}
+
 export default function AskLizheng({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].writing.ask;
   const c = COPY[lang];
@@ -284,6 +328,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         question: text,
         request: payload,
         sources: retry?.sources || [],
+        lastActivity: 0,
         progress: { stage: "retrieving", message: c.loading },
       },
     ]);
@@ -306,14 +351,21 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       })
       .catch(() => {});
     try {
-      await askLizheng(payload, controller.signal, event => {
-        if (controller.signal.aborted) return;
-        if (event.type === "progress") update({ progress: event.value });
-        if (event.type === "approach") update({ approach: event.value });
-        if (event.type === "sources") update({ sources: event.value.sources });
-        if (event.type === "result")
-          update({ result: event.value, sources: event.value.sources || [] });
-      });
+      await askLizheng(
+        payload,
+        controller.signal,
+        event => {
+          if (controller.signal.aborted) return;
+          setTurns(prev =>
+            prev.map(turn =>
+              turn.id === id ? { ...turn, ...applyAskEvent(turn, event) } : turn
+            )
+          );
+        },
+        () => {
+          if (!controller.signal.aborted) update({ lastActivity: Date.now() });
+        }
+      );
     } catch (error) {
       if (active.current === controller) {
         const crowded =
@@ -460,6 +512,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               {turns.map((turn, index) => {
                 const working = busy && index === turns.length - 1;
                 const step = STAGE[turn.progress?.stage || "retrieving"] ?? 0;
+                const recentActivityAge = turn.lastActivity
+                  ? Math.max(0, (Date.now() - turn.lastActivity) / 1000)
+                  : null;
+                const partialSourceIds = new Set(
+                  working ? turn.partial?.sources.map(source => source.id) : []
+                );
+                const partialSources = turn.sources.filter(source =>
+                  partialSourceIds.has(source.id)
+                );
+                const candidateSources = turn.sources.filter(
+                  source => !partialSourceIds.has(source.id)
+                );
                 return (
                   <article
                     className="lz-ask-turn"
@@ -491,7 +555,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             </li>
                           ))}
                         </ol>
-                        {elapsed >= 20 && <small>{c.waiting}</small>}
+                        <small aria-live="off">
+                          {recentActivityAge === null
+                            ? c.connecting
+                            : recentActivityAge <= 12
+                              ? c.connectionActive
+                              : c.noRecentResponse}
+                        </small>
+                        {elapsed >= 20 && (
+                          <small>
+                            {elapsed > 30 ? c.waitingLong : c.waiting}
+                          </small>
+                        )}
                         <button
                           className="btn btn-line"
                           type="button"
@@ -516,31 +591,29 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             turnId={turn.id}
                           />
                         </div>
-                        {turn.result.sections?.map((section, i) => (
-                          <section key={i}>
-                            <div className="lz-ask-answer-title">
-                              <h4>{section.heading}</h4>
-                              <small>{c.kinds[section.kind]}</small>
-                            </div>
-                            <AnswerText
-                              text={section.body}
-                              sources={turn.sources}
-                              turnId={turn.id}
-                            />
-                            <div className="lz-ask-citations">
-                              {section.source_ids?.map(id => (
-                                <a key={id} href={`#home-ask-${turn.id}-${id}`}>
-                                  {id}
-                                </a>
-                              ))}
-                            </div>
-                          </section>
-                        ))}
+                        <AnswerSections
+                          sections={turn.result.sections || []}
+                          sources={turn.sources}
+                          turnId={turn.id}
+                          lang={lang}
+                        />
                         {turn.result.limitations && (
                           <p className="lz-ask-limitations">
                             {turn.result.limitations}
                           </p>
                         )}
+                      </div>
+                    )}
+                    {working && !!turn.partial?.sections.length && (
+                      <div className="lz-ask-answer">
+                        <h4>{c.partial}</h4>
+                        <small>{c.partialNote}</small>
+                        <AnswerSections
+                          sections={turn.partial.sections}
+                          sources={turn.partial.sources}
+                          turnId={turn.id}
+                          lang={lang}
+                        />
                       </div>
                     )}
                     {working && turn.approach && (
@@ -585,8 +658,16 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       <div className="lz-ask-material">
                         <p>{turn.result ? c.sources : c.candidates}</p>
                         <div className="lz-ask-source-grid">
-                          {turn.sources
-                            .slice(0, turn.result ? turn.sources.length : 2)
+                          {partialSources.map(source => (
+                            <Source
+                              key={`${source.id}-${source.url}`}
+                              source={source}
+                              lang={lang}
+                              turnId={turn.id}
+                            />
+                          ))}
+                          {candidateSources
+                            .slice(0, turn.result ? candidateSources.length : 2)
                             .map(source => (
                               <Source
                                 key={`${source.id}-${source.url}`}
@@ -596,15 +677,15 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                               />
                             ))}
                         </div>
-                        {!turn.result && turn.sources.length > 2 && (
+                        {!turn.result && candidateSources.length > 2 && (
                           <details className="lz-ask-more-sources">
                             <summary>
                               {lang === "zh"
-                                ? `查看全部${turn.sources.length}份候选材料`
-                                : `All ${turn.sources.length} candidate sources`}
+                                ? `查看全部${candidateSources.length}份候选材料`
+                                : `All ${candidateSources.length} candidate sources`}
                             </summary>
                             <div className="lz-ask-source-grid">
-                              {turn.sources.slice(2).map(source => (
+                              {candidateSources.slice(2).map(source => (
                                 <Source
                                   key={`${source.id}-${source.url}`}
                                   source={source}

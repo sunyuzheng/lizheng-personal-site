@@ -1,8 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   askLizheng,
+  applyAskEvent,
   publicSourceUrl,
   type AskEvent,
+  type AskAnswerState,
   type AskResult,
 } from "./ask-lizheng";
 
@@ -69,9 +71,207 @@ function closedResponse(text: string, byteByByte = false) {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 describe("askLizheng stream protocol", () => {
+  it("reports comment-only bytes as activity without inventing progress or completing", async () => {
+    let controller!: ReadableStreamDefaultController<Uint8Array>;
+    const stream = new ReadableStream<Uint8Array>({
+      start(value) {
+        controller = value;
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(responseFor(stream)));
+    const firstActivity = deferred();
+    const onActivity = vi.fn(() => firstActivity.resolve());
+    const onEvent = vi.fn();
+    let settled = false;
+    const run = askLizheng(
+      payload,
+      new AbortController().signal,
+      onEvent,
+      onActivity
+    );
+    void run.then(() => {
+      settled = true;
+    });
+    await Promise.resolve();
+    expect(onActivity).not.toHaveBeenCalled();
+    controller.enqueue(
+      encoder.encode(": keep-alive " + " ".repeat(16384) + "\n\n")
+    );
+    await firstActivity.promise;
+    expect(onActivity).toHaveBeenCalledOnce();
+    expect(onEvent).not.toHaveBeenCalled();
+    expect(settled).toBe(false);
+    controller.enqueue(encoder.encode(frame("result", result)));
+    await run;
+    expect(onEvent).toHaveBeenCalledWith({ type: "result", value: result });
+    expect(stream.locked).toBe(false);
+  });
+
+  it("ignores empty chunks and throttles activity while delivering the final result immediately", async () => {
+    let now = 0;
+    vi.spyOn(performance, "now").mockImplementation(() => now);
+    let controller!: ReadableStreamDefaultController<Uint8Array>;
+    const stream = new ReadableStream<Uint8Array>({
+      start(value) {
+        controller = value;
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(responseFor(stream)));
+    const onActivity = vi.fn();
+    const onEvent = vi.fn();
+    const run = askLizheng(
+      payload,
+      new AbortController().signal,
+      onEvent,
+      onActivity
+    );
+    const flush = async () => {
+      for (let i = 0; i < 8; i++) await Promise.resolve();
+    };
+    controller.enqueue(new Uint8Array(0));
+    await flush();
+    expect(onActivity).not.toHaveBeenCalled();
+    controller.enqueue(encoder.encode(": keep"));
+    await flush();
+    expect(onActivity).toHaveBeenCalledOnce();
+    now = 999;
+    controller.enqueue(encoder.encode("-alive"));
+    await flush();
+    expect(onActivity).toHaveBeenCalledOnce();
+    now = 1000;
+    controller.enqueue(encoder.encode("\n\n"));
+    await flush();
+    expect(onActivity).toHaveBeenCalledTimes(2);
+    expect(onEvent).not.toHaveBeenCalled();
+    controller.enqueue(encoder.encode(frame("result", result)));
+    await run;
+    expect(onActivity).toHaveBeenCalledTimes(2);
+    expect(onEvent).toHaveBeenCalledOnce();
+    expect(onEvent).toHaveBeenCalledWith({ type: "result", value: result });
+    expect(stream.locked).toBe(false);
+  });
+
+  it("keeps comment activity observational when stop aborts the reader", async () => {
+    const abort = new AbortController();
+    const seenActivity = deferred();
+    let stream!: ReadableStream<Uint8Array>;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((_url: string, init: RequestInit) => {
+        stream = new ReadableStream<Uint8Array>({
+          start(controller) {
+            init.signal!.addEventListener(
+              "abort",
+              () => controller.error(new DOMException("Stopped", "AbortError")),
+              { once: true }
+            );
+            controller.enqueue(encoder.encode(": relay keep-alive\n\n"));
+          },
+        });
+        return Promise.resolve(responseFor(stream));
+      })
+    );
+    const onEvent = vi.fn();
+    const onActivity = vi.fn(() => seenActivity.resolve());
+    const run = askLizheng(payload, abort.signal, onEvent, onActivity);
+    const rejection = expect(run).rejects.toMatchObject({ name: "AbortError" });
+    await seenActivity.promise;
+    abort.abort();
+    await rejection;
+    expect(onActivity).toHaveBeenCalledOnce();
+    expect(onEvent).not.toHaveBeenCalled();
+    expect(stream.locked).toBe(false);
+  });
+
+  it("delivers validated section snapshots before the full result", async () => {
+    const partial = { sections: result.sections, sources: result.sources };
+    const seenPartial = deferred();
+    let controller!: ReadableStreamDefaultController<Uint8Array>;
+    const stream = new ReadableStream<Uint8Array>({
+      start(value) {
+        controller = value;
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(responseFor(stream)));
+    const events: AskEvent[] = [];
+    let settled = false;
+    const run = askLizheng(payload, new AbortController().signal, event => {
+      events.push(event);
+      if (event.type === "partial") seenPartial.resolve();
+    });
+    void run.then(() => {
+      settled = true;
+    });
+    controller.enqueue(encoder.encode(frame("partial", partial)));
+    await seenPartial.promise;
+    expect(events).toEqual([{ type: "partial", value: partial }]);
+    expect(settled).toBe(false);
+    controller.enqueue(encoder.encode(frame("result", result)));
+    await run;
+    expect(events.map(event => event.type)).toEqual(["partial", "result"]);
+    expect(stream.locked).toBe(false);
+  });
+
+  it("merges partial citations without duplicate source targets and clears partial on repair or result", () => {
+    const extra = { ...source, id: "S2", url: "https://example.com/other" };
+    const original: AskAnswerState = { sources: [source] };
+    const partial = {
+      sections: [{ ...result.sections[0], source_ids: ["S2"] }],
+      sources: [source, extra],
+    };
+    const state = applyAskEvent(original, { type: "partial", value: partial });
+    expect(state.partial).toEqual(partial);
+    expect(state.result).toBeUndefined();
+    expect(state.sources.map(item => item.id)).toEqual(["S1", "S2"]);
+    expect(state.sources.filter(item => item.id === "S1")).toHaveLength(1);
+    expect(
+      state.partial!.sections.every(section =>
+        section.source_ids.every(id =>
+          state.sources.some(item => item.id === id)
+        )
+      )
+    ).toBe(true);
+    expect(original).toEqual({ sources: [source] });
+    const drafting = applyAskEvent(state, {
+      type: "progress",
+      value: { stage: "drafting", message: "公开测试" },
+    });
+    expect(drafting.partial).toEqual(partial);
+    const repairing = applyAskEvent(drafting, {
+      type: "progress",
+      value: { stage: "repairing", message: "公开测试" },
+    });
+    expect(repairing.partial).toBeUndefined();
+    expect(repairing.sources).toEqual(state.sources);
+    const complete = applyAskEvent(state, { type: "result", value: result });
+    expect(complete.partial).toBeUndefined();
+    expect(complete.result).toEqual(result);
+    expect(complete.sources).toEqual(result.sources);
+  });
+
+  it("replaces partial snapshots rather than appending sections twice", () => {
+    const first = { sections: result.sections, sources: result.sources };
+    const next = {
+      sections: [
+        ...result.sections,
+        { ...result.sections[0], heading: "另一部分" },
+      ],
+      sources: result.sources,
+    };
+    const initial = applyAskEvent(
+      { sources: [] },
+      { type: "partial", value: first }
+    );
+    const updated = applyAskEvent(initial, { type: "partial", value: next });
+    expect(updated.partial!.sections).toHaveLength(2);
+    expect(updated.sources).toHaveLength(1);
+    expect(initial.partial!.sections).toHaveLength(1);
+  });
+
   it("ignores padded heartbeats while delivering the public answer outline before the result", async () => {
     const approach = {
       summary: "先对照候选材料。",

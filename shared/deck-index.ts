@@ -111,8 +111,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "使用AI开展实践的本科生与研究生",
     },
     takeaway: {
-      en: "What it means to learn when AI can do the work. Why finished projects can hide missing judgment, how that gap leads to unreliable work, and how to build capability that carries over to the next problem.",
-      zh: "当AI能替你完成任务，怎样才算真正学会？从假学习如何掩盖判断能力的缺口，讲到它为什么会造成无效工作、放大错误，以及如何练出能应对下一个问题的能力。",
+      en: "What it means to learn when AI can do the work: why your feeling of learning is often backwards, why AI is most dangerous when it’s right, and how to use it as a spotter instead of a forklift.",
+      zh: "当AI能替你完成任务，怎样才算真正学会？为什么学会的感觉常常是反的，为什么AI做对的时候最危险，以及怎样把AI当保护员，而不是叉车。",
     },
     href: "https://www.lizheng.ai/decks/fake-work-fake-learning",
     alternateEdition: {

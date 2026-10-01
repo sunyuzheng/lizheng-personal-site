@@ -198,8 +198,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
   const input = useRef<HTMLTextAreaElement>(null);
+  const latest = useRef<HTMLElement>(null);
   const active = useRef<AbortController | null>(null);
   const counter = useRef(0);
+  useEffect(() => {
+    if (busy)
+      latest.current?.scrollIntoView({
+        block: "start",
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+  }, [busy]);
   useEffect(
     () => () => {
       active.current?.abort();
@@ -419,14 +429,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 const working = busy && index === turns.length - 1;
                 const step = STAGE[turn.progress?.stage || "retrieving"] ?? 0;
                 return (
-                  <article className="lz-ask-turn" key={turn.id}>
+                  <article
+                    className="lz-ask-turn"
+                    key={turn.id}
+                    ref={index === turns.length - 1 ? latest : undefined}
+                  >
                     <p className="lz-ask-question">{turn.question}</p>
                     {working && (
                       <div className="lz-ask-progress">
-                        <p role="status">
-                          {lang === "zh"
-                            ? turn.progress?.message
-                            : c.steps[step]}{" "}
+                        <p>
+                          <span role="status">
+                            {lang === "zh"
+                              ? turn.progress?.message
+                              : c.steps[step]}
+                          </span>{" "}
                           <span>
                             {c.waited} {elapsed}
                             {c.seconds}
@@ -443,6 +459,19 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             </li>
                           ))}
                         </ol>
+                        <button
+                          className="btn btn-line"
+                          type="button"
+                          aria-label={
+                            lang === "zh" ? "停止当前回答" : "Stop this answer"
+                          }
+                          onClick={event => {
+                            event.preventDefault();
+                            active.current?.abort();
+                          }}
+                        >
+                          {c.stop} ■
+                        </button>
                       </div>
                     )}
                     {turn.result && (
@@ -491,7 +520,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         <p>{turn.result ? c.sources : c.candidates}</p>
                         <div className="lz-ask-source-grid">
                           {turn.sources
-                            .slice(0, turn.result ? 8 : 2)
+                            .slice(0, turn.result ? turn.sources.length : 2)
                             .map(source => (
                               <Source
                                 key={`${source.id}-${source.url}`}
@@ -536,10 +565,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 onClick={() => {
                                   setQuestion(turn.question);
                                   setIntent("apply");
-                                  setContext(
-                                    prev =>
-                                      `${prev}${prev ? "\n" : ""}${value}\n`
-                                  );
+                                  setContext(prev => {
+                                    const next = `${prev}${prev ? "\n" : ""}${value}\n`;
+                                    return next.length <= 2500 ? next : prev;
+                                  });
                                   document
                                     .getElementById("home-ask-context")
                                     ?.closest("details")

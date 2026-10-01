@@ -14,7 +14,8 @@
     "refresh:guests": "pnpm sync:guest-video-metadata && pnpm check && pnpm build",
     "format": "prettier --write .",
     "sync:guest-insights": "tsx scripts/sync-guest-insights.ts",
-    "community:city": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-city.ts"
+    "community:city": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-city.ts",
+    "test:ask-lizheng": "vitest run --config vitest.ask-lizheng.config.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",

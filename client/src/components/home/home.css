@@ -1969,10 +1969,16 @@
   margin: 0;
   font-size: 14px;
 }
-.lz-home .lz-ask-progress p span {
+.lz-home .lz-ask-progress p > span:last-child {
   flex-shrink: 0;
   font-size: 12px;
   color: var(--lz-muted);
+}
+.lz-home .lz-ask-turn {
+  scroll-margin-top: 100px;
+}
+.lz-home .lz-ask-progress > button {
+  margin-top: 16px;
 }
 .lz-home .lz-ask-progress ol {
   display: flex;

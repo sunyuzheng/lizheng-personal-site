@@ -6,6 +6,12 @@
   "trailingSlash": false,
   "routes": [
     {
+      "src": "/api/ask",
+      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
+      "dest": "/api/ask-lizheng"
+    },
+    { "src": "/api/ask-lizheng/ask", "dest": "/api/ask-lizheng" },
+    {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
       "dest": "https://ask-lizheng.ai-builders.space/$1",
@@ -13,8 +19,8 @@
       "headers": { "Cache-Control": "no-store" }
     },
     {
-      "src": "/api/ask-lizheng/(ask|meta)",
-      "dest": "https://ask-lizheng.ai-builders.space/api/$1",
+      "src": "/api/ask-lizheng/meta",
+      "dest": "https://ask-lizheng.ai-builders.space/api/meta",
       "respectOriginCacheControl": false,
       "headers": { "Cache-Control": "no-store" }
     },

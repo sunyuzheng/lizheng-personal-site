@@ -3,6 +3,46 @@ export const config = { runtime: "edge" };
 
 const HEADERS = { "Cache-Control": "no-store, no-transform" };
 const UPSTREAM = "https://ask-lizheng.ai-builders.space/api/ask";
+const HEARTBEAT_MS = 5_000;
+const FRAME_LIMIT = 512_000;
+const encoder = new TextEncoder();
+// Padding helps small streaming writes flush through intermediary buffers.
+const heartbeat = encoder.encode(
+  ": relay keep-alive " + " ".repeat(2_048) + "\n\n"
+);
+
+function streamFailure(code: string): Uint8Array {
+  return encoder.encode(
+    "event: error\ndata: " +
+      JSON.stringify({
+        code,
+        message: "The answer did not finish. Try again shortly.",
+      }) +
+      "\n\n"
+  );
+}
+
+function terminalFrame(frame: Uint8Array): boolean {
+  let event = "";
+  let start = 0;
+  for (let i = 0; i < frame.length; i++) {
+    if (frame[i] !== 10) continue;
+    if (
+      i - start >= 6 &&
+      i - start <= 80 &&
+      frame[start] === 101 &&
+      frame[start + 1] === 118 &&
+      frame[start + 2] === 101 &&
+      frame[start + 3] === 110 &&
+      frame[start + 4] === 116 &&
+      frame[start + 5] === 58
+    ) {
+      event = new TextDecoder().decode(frame.subarray(start + 6, i)).trim();
+    }
+    start = i + 1;
+  }
+  return event === "result" || event === "error";
+}
 
 function failure(status: number, code: string): Response {
   return Response.json(
@@ -17,9 +57,17 @@ export default async function handler(request: Request): Promise<Response> {
   const disconnected = () => abort.abort();
   request.signal.addEventListener("abort", disconnected, { once: true });
   if (request.signal.aborted) abort.abort();
-  const timeout = setTimeout(() => abort.abort(), 100_000);
+  let timedOut = false;
+  let keepAlive: ReturnType<typeof setInterval> | undefined;
+  let streamAbort: (() => void) | undefined;
+  const timeout = setTimeout(() => {
+    timedOut = true;
+    abort.abort();
+  }, 100_000);
   const cleanup = () => {
     clearTimeout(timeout);
+    if (keepAlive !== undefined) clearInterval(keepAlive);
+    if (streamAbort) abort.signal.removeEventListener("abort", streamAbort);
     request.signal.removeEventListener("abort", disconnected);
   };
   try {
@@ -90,36 +138,100 @@ export default async function handler(request: Request): Promise<Response> {
     }
     const input = upstream.body.getReader();
     let cancelled = false;
+    let ended = false;
     let released = false;
+    let terminal = false;
+    let pending = new Uint8Array(0);
+    let finish!: (code?: string) => void;
     const release = () => {
       if (!released) {
         released = true;
         input.releaseLock();
       }
     };
+    const stopUpstream = () => {
+      abort.abort();
+      void input
+        .cancel()
+        .catch(() => {})
+        .finally(release);
+    };
     const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        finish = (code?: string) => {
+          if (ended) return;
+          ended = true;
+          pending = new Uint8Array(0);
+          cleanup();
+          if (!cancelled) {
+            if (code && !request.signal.aborted) {
+              controller.enqueue(streamFailure(code));
+            }
+            controller.close();
+          }
+          stopUpstream();
+        };
+        streamAbort = () => finish(timedOut ? "relay_timeout" : undefined);
+        abort.signal.addEventListener("abort", streamAbort, { once: true });
+        keepAlive = setInterval(() => {
+          if (
+            !ended &&
+            !abort.signal.aborted &&
+            (controller.desiredSize ?? 0) > 0
+          ) {
+            controller.enqueue(heartbeat);
+          }
+        }, HEARTBEAT_MS);
+        if (abort.signal.aborted) streamAbort();
+      },
       async pull(controller) {
         try {
-          const { done, value } = await input.read();
-          if (cancelled) return;
-          if (done) {
-            cleanup();
-            release();
-            controller.close();
-          } else controller.enqueue(value);
+          while (!ended) {
+            const { done, value } = await input.read();
+            if (ended) return;
+            if (done) {
+              finish(terminal ? undefined : "upstream_stream_interrupted");
+              return;
+            }
+            const combined = new Uint8Array(pending.length + value.byteLength);
+            combined.set(pending);
+            combined.set(value, pending.length);
+            if (combined.byteLength > FRAME_LIMIT)
+              throw new Error("frame_limit");
+            let boundary = 0;
+            let start = 0;
+            for (let i = 1; i < combined.length; i++) {
+              if (
+                combined[i] !== 10 ||
+                !(
+                  combined[i - 1] === 10 ||
+                  (combined[i - 1] === 13 && i >= 2 && combined[i - 2] === 10)
+                )
+              )
+                continue;
+              boundary = i + 1;
+              terminal = terminalFrame(combined.subarray(start, boundary));
+              start = boundary;
+              if (terminal) break;
+            }
+            pending = combined.slice(boundary);
+            if (!boundary) continue;
+            controller.enqueue(combined.subarray(0, boundary));
+            if (terminal) finish();
+            return;
+          }
         } catch {
-          cleanup();
-          release();
-          if (!cancelled)
-            controller.error(new Error("The answer stream ended."));
+          finish(timedOut ? "relay_timeout" : "upstream_stream_interrupted");
+        } finally {
+          if (ended) release();
         }
       },
-      async cancel() {
+      cancel() {
         cancelled = true;
+        ended = true;
+        pending = new Uint8Array(0);
         cleanup();
-        abort.abort();
-        await input.cancel().catch(() => {});
-        release();
+        stopUpstream();
       },
     });
     return new Response(stream, {
@@ -131,6 +243,9 @@ export default async function handler(request: Request): Promise<Response> {
     });
   } catch {
     cleanup();
-    return failure(abort.signal.aborted ? 504 : 502, "upstream_unavailable");
+    return failure(
+      timedOut ? 504 : 502,
+      timedOut ? "relay_timeout" : "upstream_unavailable"
+    );
   }
 }

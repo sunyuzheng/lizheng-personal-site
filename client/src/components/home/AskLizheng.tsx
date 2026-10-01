@@ -6,6 +6,8 @@ import {
   AskError,
   publicSourceUrl,
   type AskIntent,
+  type AskPayload,
+  type AskApproach,
   type AskResult,
   type AskSource,
 } from "@/lib/ask-lizheng";
@@ -36,6 +38,13 @@ const COPY = {
     stopped: "已停止。问题和检索材料已保留，可以修改后重试。",
     failed: "回答未完成。问题和已找到的材料仍在，可以重试。",
     crowded: "现在提问较多，请稍后再试。问题和已找到的材料仍在。",
+    disconnected:
+      "连接中断了，完整回答未收到。问题和已找到的材料都保留着，可以重新生成。",
+    timeout: "这次回答等得太久，已结束等待。问题和材料已保留，可以重新生成。",
+    retry: "重新生成回答",
+    waiting: "回答还在整理，可以先读下面的资料，也可以随时停止。",
+    approach: "回答思路",
+    approachEnglish: "整理方向与资料主要使用中文。",
     privacy: "关于回答和你的输入",
     privacyNote:
       "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和背景会发送给Builder Space处理；本产品不保存对话记录，对话只留在当前页面，刷新后清空。请勿填写私密信息。",
@@ -73,6 +82,16 @@ const COPY = {
       "The answer didn’t finish. Your question and material are still here; try again.",
     crowded:
       "There are many requests right now. Try again shortly; your question and material are still here.",
+    disconnected:
+      "The connection was interrupted before the answer finished. Your question and sources are still here; generate again when ready.",
+    timeout:
+      "This answer took too long. Your question and sources are still here; you can generate again.",
+    retry: "Generate again",
+    waiting:
+      "The answer is still being prepared. You can read the sources below or stop at any time.",
+    approach: "How this answer is being prepared",
+    approachEnglish:
+      "The reading outline and sources are primarily in Chinese.",
     privacy: "About answers and your input",
     privacyNote:
       "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and context are sent to Builder Space for processing. This product does not store conversations; they remain in this page’s memory and clear on refresh. Keep private information out of your input.",
@@ -93,8 +112,10 @@ const COPY = {
 type Turn = {
   id: number;
   question: string;
+  request: AskPayload;
   sources: AskSource[];
   progress?: { stage: string; message: string };
+  approach?: AskApproach;
   result?: AskResult;
   error?: string;
   model?: string;
@@ -230,21 +251,39 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     setQuestion(value);
     input.current?.focus();
   }
-  async function submit(event?: FormEvent) {
+  async function submit(event?: FormEvent, retry?: Turn) {
     event?.preventDefault();
-    if (active.current || !question.trim()) return;
-    const text = question.trim();
-    const id = ++counter.current;
+    if (active.current || (!retry && !question.trim())) return;
+    const payload: AskPayload = retry?.request || {
+      question: question.trim(),
+      context,
+      intent,
+      history: turns
+        .filter(turn => turn.result)
+        .slice(-6)
+        .map(turn => ({
+          question: turn.question,
+          summary: turn.result!.summary,
+        })),
+    };
+    const text = payload.question;
+    const id = retry?.id || ++counter.current;
     const controller = new AbortController();
+    let timedOut = false;
+    const deadline = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 110_000);
     active.current = controller;
     setBusy(true);
-    setQuestion("");
+    setQuestion(prev => (!retry || prev.trim() === text ? "" : prev));
     setTurns(prev => [
-      ...prev,
+      ...prev.filter(turn => turn.id !== id),
       {
         id,
         question: text,
-        sources: [],
+        request: payload,
+        sources: retry?.sources || [],
         progress: { stage: "retrieving", message: c.loading },
       },
     ]);
@@ -267,44 +306,37 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       })
       .catch(() => {});
     try {
-      await askLizheng(
-        {
-          question: text,
-          context,
-          intent,
-          history: turns
-            .filter(turn => turn.result)
-            .slice(-6)
-            .map(turn => ({
-              question: turn.question,
-              summary: turn.result!.summary,
-            })),
-        },
-        controller.signal,
-        event => {
-          if (controller.signal.aborted) return;
-          if (event.type === "progress") update({ progress: event.value });
-          if (event.type === "sources")
-            update({ sources: event.value.sources });
-          if (event.type === "result")
-            update({ result: event.value, sources: event.value.sources || [] });
-        }
-      );
+      await askLizheng(payload, controller.signal, event => {
+        if (controller.signal.aborted) return;
+        if (event.type === "progress") update({ progress: event.value });
+        if (event.type === "approach") update({ approach: event.value });
+        if (event.type === "sources") update({ sources: event.value.sources });
+        if (event.type === "result")
+          update({ result: event.value, sources: event.value.sources || [] });
+      });
     } catch (error) {
       if (active.current === controller) {
         const crowded =
           error instanceof AskError &&
           (error.status === 429 || error.code === "provider_busy");
         update({
-          error: controller.signal.aborted
-            ? c.stopped
-            : crowded
-              ? c.crowded
-              : c.failed,
+          error:
+            timedOut ||
+            (error instanceof AskError && error.code === "relay_timeout")
+              ? c.timeout
+              : controller.signal.aborted
+                ? c.stopped
+                : crowded
+                  ? c.crowded
+                  : error instanceof AskError &&
+                      error.code !== "connection_lost"
+                    ? c.failed
+                    : c.disconnected,
         });
-        setQuestion(text);
+        setQuestion(prev => (prev.trim() ? prev : text));
       }
     } finally {
+      clearTimeout(deadline);
       if (active.current === controller) {
         controller.abort();
         active.current = null;
@@ -459,6 +491,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             </li>
                           ))}
                         </ol>
+                        {elapsed >= 20 && <small>{c.waiting}</small>}
                         <button
                           className="btn btn-line"
                           type="button"
@@ -510,11 +543,44 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         )}
                       </div>
                     )}
+                    {working && turn.approach && (
+                      <div className="lz-ask-approach">
+                        <h4>{c.approach}</h4>
+                        {lang === "en" && <small>{c.approachEnglish}</small>}
+                        <p>{turn.approach.summary}</p>
+                        {!!turn.approach.questions.length && (
+                          <ul>
+                            {turn.approach.questions.map(value => (
+                              <li key={value}>{value}</li>
+                            ))}
+                          </ul>
+                        )}
+                        <p className="lz-ask-approach-sources">
+                          {turn.approach.sources.map(source => (
+                            <span key={source.id}>
+                              {source.id} · {source.title}
+                            </span>
+                          ))}
+                        </p>
+                        <small>{turn.approach.note}</small>
+                      </div>
+                    )}
                     {turn.error && (
                       <p className="lz-ask-error" role="alert">
                         {turn.error}
                       </p>
                     )}
+                    {!busy &&
+                      index === turns.length - 1 &&
+                      (turn.error || turn.result?.retryable) && (
+                        <button
+                          className="btn btn-line lz-ask-retry"
+                          type="button"
+                          onClick={() => void submit(undefined, turn)}
+                        >
+                          {c.retry} ↗
+                        </button>
+                      )}
                     {!!turn.sources.length && (
                       <div className="lz-ask-material">
                         <p>{turn.result ? c.sources : c.candidates}</p>

@@ -1,5 +1,11 @@
 /** Public Ask Lizheng contract. Credentials and source validation stay upstream. */
 export type AskIntent = "understand" | "apply" | "find";
+export type AskPayload = {
+  question: string;
+  context: string;
+  intent: AskIntent;
+  history: { question: string; summary: string }[];
+};
 export type AskSource = {
   id: string;
   title: string;
@@ -24,11 +30,21 @@ export type AskResult = {
   followups: string[];
   clarifying_questions: string[];
   limitations: string;
+  retryable?: boolean;
+  failure_code?: string;
 };
 export type AskEvent =
   | { type: "progress"; value: { stage: string; message: string } }
+  | { type: "approach"; value: AskApproach }
   | { type: "sources"; value: { sources: AskSource[] } }
   | { type: "result"; value: AskResult };
+
+export type AskApproach = {
+  summary: string;
+  questions: string[];
+  sources: { id: string; title: string }[];
+  note: string;
+};
 
 export class AskError extends Error {
   constructor(
@@ -48,24 +64,32 @@ export function parseAskFrame(frame: string): AskEvent | null {
     if (line.startsWith("data:")) lines.push(line.slice(5).trimStart());
   }
   if (!lines.length) return null;
-  const value = JSON.parse(lines.join("\n"));
+  let value;
+  try {
+    value = JSON.parse(lines.join("\n"));
+  } catch {
+    throw new AskError(
+      "The answer stream could not be read.",
+      "invalid_stream"
+    );
+  }
   if (event === "error")
     throw new AskError(
       value.message || "The answer did not finish.",
       value.code
     );
-  if (event === "progress" || event === "sources" || event === "result")
+  if (
+    event === "progress" ||
+    event === "sources" ||
+    event === "approach" ||
+    event === "result"
+  )
     return { type: event, value } as AskEvent;
   return null;
 }
 
 export async function askLizheng(
-  payload: {
-    question: string;
-    context: string;
-    intent: AskIntent;
-    history: { question: string; summary: string }[];
-  },
+  payload: AskPayload,
   signal: AbortSignal,
   onEvent: (event: AskEvent) => void
 ): Promise<void> {
@@ -79,14 +103,17 @@ export async function askLizheng(
   });
   if (!response.ok) {
     let message = "";
+    let code: string | undefined;
     try {
-      message = (await response.json()).message || "";
+      const failure = await response.json();
+      message = failure.message || "";
+      code = failure.code;
     } catch {
       /* Upstream may be unavailable. */
     }
     throw new AskError(
       message || `HTTP ${response.status}`,
-      undefined,
+      code,
       response.status
     );
   }
@@ -94,7 +121,7 @@ export async function askLizheng(
     !response.body ||
     !response.headers.get("content-type")?.includes("text/event-stream")
   )
-    throw new Error("The answer stream is unavailable.");
+    throw new AskError("The answer stream is unavailable.", "invalid_stream");
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
@@ -118,8 +145,9 @@ export async function askLizheng(
       }
       if (done) {
         if (buffer.trim() && process(buffer)) return;
-        throw new Error(
-          "The connection ended before a complete answer arrived."
+        throw new AskError(
+          "The connection ended before a complete answer arrived.",
+          "connection_lost"
         );
       }
     }

@@ -72,6 +72,57 @@ afterEach(() => {
 });
 
 describe("askLizheng stream protocol", () => {
+  it("ignores padded heartbeats while delivering the public answer outline before the result", async () => {
+    const approach = {
+      summary: "先对照候选材料。",
+      questions: ["怎样验证能力？"],
+      sources: [{ id: "S1", title: source.title }],
+      note: "整理方向，尚不是结论。",
+    };
+    const { stream, response } = closedResponse(
+      ": keep-alive " +
+        " ".repeat(2048) +
+        "\n\n" +
+        frame("approach", approach) +
+        ": relay keep-alive\r\n\r\n" +
+        frame("result", result),
+      true
+    );
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(response));
+    const events: AskEvent[] = [];
+    await askLizheng(payload, new AbortController().signal, event =>
+      events.push(event)
+    );
+    expect(events).toEqual([
+      { type: "approach", value: approach },
+      { type: "result", value: result },
+    ]);
+    expect(stream.locked).toBe(false);
+  });
+
+  it.each(["relay_timeout", "upstream_stream_interrupted"])(
+    "preserves the recovery code %s without retrying the model",
+    async code => {
+      const { stream, response } = closedResponse(
+        frame("sources", { sources: [source] }) +
+          frame("error", { code, message: "The answer did not finish." })
+      );
+      const fetchMock = vi.fn().mockResolvedValue(response);
+      vi.stubGlobal("fetch", fetchMock);
+      const events: AskEvent[] = [];
+      await expect(
+        askLizheng(payload, new AbortController().signal, event =>
+          events.push(event)
+        )
+      ).rejects.toMatchObject({ code });
+      expect(events).toEqual([
+        { type: "sources", value: { sources: [source] } },
+      ]);
+      expect(fetchMock).toHaveBeenCalledOnce();
+      expect(stream.locked).toBe(false);
+    }
+  );
+
   it("decodes split UTF-8, split CRLF delimiters and multiline SSE data", async () => {
     // One-byte chunks split every Chinese character, emoji and CR/LF pair.
     const sources = `event: sources\r\ndata: {"sources":\r\ndata: ${JSON.stringify([source])}}\r\n\r\n`;

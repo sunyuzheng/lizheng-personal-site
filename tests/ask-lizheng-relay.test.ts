@@ -3,6 +3,7 @@ import handler from "../api/ask-lizheng";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+const heartbeat = ": relay keep-alive " + " ".repeat(2_048) + "\n\n";
 const endpoint = "https://www.lizheng.ai/api/ask-lizheng/ask";
 const destination = "https://ask-lizheng.ai-builders.space/api/ask";
 const publicPayload = JSON.stringify({
@@ -115,7 +116,11 @@ describe("fixed Builder SSE relay", () => {
   });
 
   it("preserves split UTF-8 bytes and SSE delimiters without decoding or reformatting", async () => {
-    const bytes = event("sources", { sources: [{ title: "中文 🧭" }] });
+    const sourceBytes = event("sources", { sources: [{ title: "中文 🧭" }] });
+    const resultBytes = event("result", { status: "answered" });
+    const bytes = new Uint8Array(sourceBytes.length + resultBytes.length);
+    bytes.set(sourceBytes);
+    bytes.set(resultBytes, sourceBytes.length);
     const stream = new ReadableStream<Uint8Array>({
       start(controller) {
         for (const byte of bytes) controller.enqueue(Uint8Array.of(byte));
@@ -199,7 +204,7 @@ describe("fixed Builder SSE relay", () => {
     const reader = response.body!.getReader();
     const pending = reader.read();
     client.abort();
-    await expect(pending).rejects.toThrow("The answer stream ended.");
+    expect((await pending).done).toBe(true);
     expect(upstreamSignal.aborted).toBe(true);
     reader.releaseLock();
     expect(upstream.locked).toBe(false);
@@ -386,7 +391,9 @@ describe("fixed Builder SSE relay", () => {
     });
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
     const response = await handler(request());
-    await expect(response.text()).rejects.toThrow("The answer stream ended.");
+    const output = await response.text();
+    expect(output).toContain('"code":"upstream_stream_interrupted"');
+    expect(output).not.toContain("synthetic private upstream body");
     expect(upstream.locked).toBe(false);
   });
 
@@ -404,7 +411,7 @@ describe("fixed Builder SSE relay", () => {
     const response = await pending;
     expect(signal.aborted).toBe(true);
     expect(response.status).toBe(504);
-    expect((await response.json()).code).toBe("upstream_unavailable");
+    expect((await response.json()).code).toBe("relay_timeout");
     expect(vi.getTimerCount()).toBe(0);
   });
 
@@ -426,12 +433,9 @@ describe("fixed Builder SSE relay", () => {
       })
     );
     const response = await handler(request());
-    const reader = response.body!.getReader();
-    const read = reader.read();
-    const checked = expect(read).rejects.toThrow("The answer stream ended.");
+    const output = response.text();
     await vi.advanceTimersByTimeAsync(100_000);
-    await checked;
-    reader.releaseLock();
+    expect(await output).toContain('"code":"relay_timeout"');
     expect(upstream.locked).toBe(false);
     expect(vi.getTimerCount()).toBe(0);
   });
@@ -530,10 +534,12 @@ describe("fixed Builder SSE relay", () => {
     vi.useFakeTimers();
     const client = new AbortController();
     let signal!: AbortSignal;
+    const aborted = vi.fn();
     vi.stubGlobal(
       "fetch",
       vi.fn((_url, options: RequestInit) => {
         signal = options.signal!;
+        signal.addEventListener("abort", aborted);
         return Promise.resolve(sse("event: result\ndata: {}\n\n"));
       })
     );
@@ -542,8 +548,183 @@ describe("fixed Builder SSE relay", () => {
     );
     await response.text();
     expect(vi.getTimerCount()).toBe(0);
+    expect(signal.aborted).toBe(true);
+    expect(aborted).toHaveBeenCalledOnce();
     client.abort();
-    expect(signal.aborted).toBe(false);
+    expect(aborted).toHaveBeenCalledOnce();
+  });
+
+  it("keeps a 45-second idle stream alive without inventing progress or retrying", async () => {
+    vi.useFakeTimers();
+    let input!: ReadableStreamDefaultController<Uint8Array>;
+    const upstream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        input = controller;
+      },
+    });
+    const fetch = vi.fn().mockResolvedValue(sse(upstream));
+    vi.stubGlobal("fetch", fetch);
+    const response = await handler(request());
+    const reader = response.body!.getReader();
+    input.enqueue(event("sources", { sources: [{ id: "S1" }] }));
+    expect(decoder.decode((await reader.read()).value)).toContain(
+      "event: sources"
+    );
+    for (let i = 0; i < 9; i++) {
+      const next = reader.read();
+      await vi.advanceTimersByTimeAsync(5_000);
+      const chunk = (await next).value!;
+      expect(chunk.byteLength).toBeGreaterThanOrEqual(2_048);
+      expect(decoder.decode(chunk)).toBe(heartbeat);
+    }
+    input.enqueue(event("result", { status: "answered" }));
+    input.close();
+    expect(decoder.decode((await reader.read()).value)).toContain(
+      "event: result"
+    );
+    expect((await reader.read()).done).toBe(true);
+    reader.releaseLock();
+    expect(fetch).toHaveBeenCalledOnce();
+    expect(upstream.locked).toBe(false);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("never inserts heartbeat bytes inside a split UTF-8/JSON frame", async () => {
+    vi.useFakeTimers();
+    let input!: ReadableStreamDefaultController<Uint8Array>;
+    const upstream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        input = controller;
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const response = await handler(request());
+    const reader = response.body!.getReader();
+    const bytes = event("sources", { sources: [{ title: "中文 🧭" }] });
+    const split = bytes.indexOf(0xe4) + 1;
+    input.enqueue(bytes.subarray(0, split));
+    const keepAlive = reader.read();
+    await vi.advanceTimersByTimeAsync(5_000);
+    expect(decoder.decode((await keepAlive).value)).toBe(heartbeat);
+    input.enqueue(bytes.subarray(split));
+    expect((await reader.read()).value).toEqual(bytes);
+    input.enqueue(event("result", { status: "answered" }));
+    input.close();
+    expect(decoder.decode((await reader.read()).value)).toContain(
+      "event: result"
+    );
+    expect((await reader.read()).done).toBe(true);
+    reader.releaseLock();
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("recognizes split mixed LF/CRLF boundaries and terminal frames", async () => {
+    const bytes = encoder.encode(
+      'event: sources\r\ndata: {"sources":[]}\n\r\nevent: result\ndata: {"status":"answered"}\r\n\n'
+    );
+    const upstream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        for (const byte of bytes) controller.enqueue(Uint8Array.of(byte));
+        controller.close();
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const response = await handler(request());
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(bytes);
+    expect(upstream.locked).toBe(false);
+  });
+
+  it("preserves early sources and emits a typed error for EOF before a complete result", async () => {
+    const upstream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(event("sources", { sources: [{ id: "S1" }] }));
+        controller.enqueue(
+          encoder.encode(
+            'event: result\ndata: {"summary":"synthetic unfinished'
+          )
+        );
+        controller.close();
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const output = await (await handler(request())).text();
+    expect(output).toContain("event: sources");
+    expect(output).toContain('"code":"upstream_stream_interrupted"');
+    expect(output).not.toContain("synthetic unfinished");
+    expect(output).not.toContain("event: result");
+    expect(upstream.locked).toBe(false);
+  });
+
+  it("bounds incomplete upstream frames and cancels an oversized response", async () => {
+    vi.useFakeTimers();
+    const cancelled = vi.fn();
+    const upstream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new Uint8Array(512_001).fill(65));
+      },
+      cancel: cancelled,
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const output = await (await handler(request())).text();
+    expect(output).toContain('"code":"upstream_stream_interrupted"');
+    expect(output.length).toBeLessThan(500);
+    expect(cancelled).toHaveBeenCalledOnce();
+    expect(upstream.locked).toBe(false);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("does not accumulate heartbeat comments when the downstream is not reading", async () => {
+    vi.useFakeTimers();
+    const upstream = new ReadableStream<Uint8Array>({});
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const response = await handler(request());
+    await vi.advanceTimersByTimeAsync(30_000);
+    const reader = response.body!.getReader();
+    expect(decoder.decode((await reader.read()).value)).toBe(heartbeat);
+    let settled = false;
+    const next = reader.read().then(value => {
+      settled = true;
+      return value;
+    });
+    await ticks();
+    expect(settled).toBe(false);
+    await vi.advanceTimersByTimeAsync(5_000);
+    expect(decoder.decode((await next).value)).toBe(heartbeat);
+    await reader.cancel();
+    reader.releaseLock();
+    expect(upstream.locked).toBe(false);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("finishes a deadline even when upstream cancellation has not completed", async () => {
+    vi.useFakeTimers();
+    let finishCancel!: () => void;
+    const gate = new Promise<void>(resolve => {
+      finishCancel = resolve;
+    });
+    const upstream = new ReadableStream<Uint8Array>({
+      cancel() {
+        return gate;
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(sse(upstream)));
+    const response = await handler(request());
+    let settled = false;
+    const output = response.text().then(value => {
+      settled = true;
+      return value;
+    });
+    try {
+      await vi.advanceTimersByTimeAsync(100_000);
+      await ticks();
+      expect(settled).toBe(true);
+      expect(await output).toContain('"code":"relay_timeout"');
+      expect(upstream.locked).toBe(false);
+      expect(vi.getTimerCount()).toBe(0);
+    } finally {
+      finishCancel();
+      await output;
+    }
   });
 
   it("rejects GET and missing bodies without contacting Builder", async () => {

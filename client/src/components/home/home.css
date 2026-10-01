@@ -2047,6 +2047,22 @@
   font-size: 14px;
   color: #8b3b25;
 }
+
+.lz-home .lz-ask-approach {
+  margin: 18px 0;
+  padding: 18px 20px;
+  border-left: 3px solid var(--lz-forest-3);
+  background: var(--lz-paper);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.lz-home .lz-ask-approach h4 { margin-bottom: 8px; }
+.lz-home .lz-ask-approach ul { padding-left: 20px; margin: 8px 0; }
+.lz-home .lz-ask-approach small { color: var(--lz-ink-2); }
+.lz-home .lz-ask-approach-sources { display: grid; gap: 4px; margin: 10px 0; }
+.lz-home .lz-ask-retry { margin: 12px 0 4px; }
+.lz-home .lz-ask-progress > small { display: block; margin: 10px 0; }
 .lz-home .lz-ask-material {
   margin-top: 24px;
 }

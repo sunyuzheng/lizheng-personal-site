@@ -5,6 +5,9 @@ export default defineConfig({
     include: [
       "client/src/lib/ask-lizheng.test.ts",
       "tests/ask-lizheng-relay.test.ts",
+      "tests/ask-access.test.ts",
+      "tests/ask-auth.test.ts",
+      "tests/ask-logto-requester.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

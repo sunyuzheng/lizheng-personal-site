@@ -1,8 +1,8 @@
 /** Fixed-destination streaming relay. Model credentials and retrieval stay in Builder. */
+import { AccessError, accessEnabled, admission, backendOrigin, resolveIdentity, sameOrigin } from "../shared/ask-access";
 export const config = { runtime: "edge" };
 
 const HEADERS = { "Cache-Control": "no-store, no-transform" };
-const UPSTREAM = "https://ask-lizheng.ai-builders.space/api/ask";
 const HEARTBEAT_MS = 5_000;
 const FRAME_LIMIT = 512_000;
 const encoder = new TextEncoder();
@@ -51,8 +51,37 @@ function failure(status: number, code: string): Response {
   );
 }
 
+async function boundedQuotaBody(response: Response): Promise<Record<string, unknown> | null> {
+  if (!response.body) return null;
+  const reader = response.body.getReader();
+  let expired = false, size = 0;
+  const chunks: Uint8Array[] = [];
+  const timer = setTimeout(() => { expired = true; void reader.cancel().catch(() => {}); }, 1_500);
+  try {
+    while (true) {
+      const { value, done } = await reader.read();
+      if (expired) return null;
+      if (done) break;
+      size += value.byteLength;
+      if (size > 4_096) { void reader.cancel().catch(() => {}); return null; }
+      chunks.push(value);
+    }
+    const body = new Uint8Array(size);
+    let offset = 0;
+    for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
+    const value = JSON.parse(new TextDecoder().decode(body));
+    return value && typeof value === "object" ? value : null;
+  } catch { return null; }
+  finally { clearTimeout(timer); reader.releaseLock(); }
+}
+
 export default async function handler(request: Request): Promise<Response> {
   if (request.method !== "POST") return failure(405, "method_not_allowed");
+  let guestCookie: string | undefined;
+  const reply = (response: Response) => {
+    if (guestCookie) response.headers.append("Set-Cookie", guestCookie);
+    return response;
+  };
   const abort = new AbortController();
   const disconnected = () => abort.abort();
   request.signal.addEventListener("abort", disconnected, { once: true });
@@ -104,7 +133,14 @@ export default async function handler(request: Request): Promise<Response> {
       body.set(chunk, offset);
       offset += chunk.byteLength;
     }
-    const upstream = await fetch(UPSTREAM, {
+    let proof: string | undefined;
+    if (accessEnabled()) {
+      sameOrigin(request);
+      const identity = await resolveIdentity(request);
+      guestCookie = identity.cookie;
+      proof = await admission(identity, "POST", "/api/ask", body);
+    }
+    const upstream = await fetch(`${backendOrigin()}/api/ask`, {
       method: "POST",
       body,
       signal: abort.signal,
@@ -116,6 +152,7 @@ export default async function handler(request: Request): Promise<Response> {
         "Content-Type": "application/json",
         Accept: "text/event-stream",
         "Accept-Encoding": "identity",
+        ...(proof ? { "X-Ask-Admission": proof } : {}),
       },
     });
     if (
@@ -123,9 +160,22 @@ export default async function handler(request: Request): Promise<Response> {
       !upstream.body ||
       !upstream.headers.get("content-type")?.includes("text/event-stream")
     ) {
+      if (accessEnabled() && upstream.status === 429 &&
+          upstream.headers.get("x-ask-error-code") === "quota_exhausted" &&
+          upstream.headers.get("content-type")?.includes("application/json")) {
+        try {
+          const value = await boundedQuotaBody(upstream);
+          if (value?.code === "quota_exhausted" && value.remaining === 0 &&
+              typeof value.reset_at === "string" && /^\d{4}-\d{2}-\d{2}T[\d:.+-]+Z?$/.test(value.reset_at)) {
+            cleanup();
+            return reply(Response.json({ code: "quota_exhausted", remaining: 0, reset_at: value.reset_at,
+              message: "今天的3次体验已用完。Founding Member可登录后不限次提问。" }, { status: 429, headers: HEADERS }));
+          }
+        } catch { /* Only the fixed quota contract is forwarded. */ }
+      }
       void upstream.body?.cancel().catch(() => {});
       cleanup();
-      return failure(
+      return reply(failure(
         upstream.ok || (upstream.status >= 300 && upstream.status < 400)
           ? 502
           : upstream.status,
@@ -134,7 +184,7 @@ export default async function handler(request: Request): Promise<Response> {
           : upstream.ok
             ? "invalid_upstream_stream"
             : "upstream_unavailable"
-      );
+      ));
     }
     const input = upstream.body.getReader();
     let cancelled = false;
@@ -234,18 +284,19 @@ export default async function handler(request: Request): Promise<Response> {
         stopUpstream();
       },
     });
-    return new Response(stream, {
+    return reply(new Response(stream, {
       headers: {
         ...HEADERS,
         "Content-Type": "text/event-stream; charset=utf-8",
         "X-Accel-Buffering": "no",
       },
-    });
-  } catch {
+    }));
+  } catch (error) {
     cleanup();
-    return failure(
+    if (error instanceof AccessError) return reply(failure(error.status, error.code));
+    return reply(failure(
       timedOut ? 504 : 502,
       timedOut ? "relay_timeout" : "upstream_unavailable"
-    );
+    ));
   }
 }

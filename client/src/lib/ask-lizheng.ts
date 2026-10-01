@@ -148,7 +148,7 @@ export async function askLizheng(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
     signal,
-    credentials: "omit",
+    credentials: "same-origin",
     cache: "no-store",
   });
   if (!response.ok) {

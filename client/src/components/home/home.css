@@ -3022,3 +3022,8 @@
     display: none;
   }
 }
+.lz-ask-account { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:0 0 20px; padding-bottom:16px; border-bottom:1px solid var(--line, #d9d7ce); font-size:14px; }
+.lz-ask-account small { display:block; margin-top:5px; color:var(--muted, #6d7268); line-height:1.5; }
+.lz-ask-account button { flex-shrink:0; padding:8px 12px; border:1px solid currentColor; border-radius:6px; color:var(--green, #286042); background:transparent; cursor:pointer; }
+.lz-ask-account button:disabled { opacity:.5; cursor:default; }
+@media(max-width:600px) { .lz-ask-account { align-items:flex-start; flex-direction:column; gap:10px; } }

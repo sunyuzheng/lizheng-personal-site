@@ -15,6 +15,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL } from "./parts";
 import SiteSearch from "./SiteSearch";
+import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 
 const COPY = {
   zh: {
@@ -55,7 +56,7 @@ const COPY = {
     approachEnglish: "整理方向与资料主要使用中文。",
     privacy: "关于回答和你的输入",
     privacyNote:
-      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和背景会发送给Builder Space处理；本产品不保存对话记录，对话只留在当前页面，刷新后清空。请勿填写私密信息。",
+      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和背景会发送给Builder Space处理；本产品不保存对话记录，对话只留在当前页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
     modes: ["想明白", "聊聊我的问题", "找内容"],
     kinds: {
       source: "材料中的观点",
@@ -110,7 +111,7 @@ const COPY = {
       "The reading outline and sources are primarily in Chinese.",
     privacy: "About answers and your input",
     privacyNote:
-      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and context are sent to Builder Space for processing. This product does not store conversations; they remain in this page’s memory and clear on refresh. Keep private information out of your input.",
+      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and context are sent to Builder Space. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
     modes: ["Understand", "Apply to my situation", "Find sources"],
     kinds: {
       source: "From the material",
@@ -262,6 +263,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [busy, setBusy] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
+  const [account, setAccount] = useState<AskAccount | null>(null);
+  const loginCleanup = useRef<(() => void) | undefined>(undefined);
+  const refreshAccount = () => { void readAskAccount().then(setAccount); };
+  useEffect(() => {
+    finishAskLogin();
+    const draft = takeAskDraft();
+    if (draft) { setQuestion(draft.question); setContext(draft.context); setIntent(draft.intent as AskIntent); }
+    refreshAccount();
+    return () => loginCleanup.current?.();
+  }, []);
+  const login = () => {
+    loginCleanup.current?.();
+    loginCleanup.current = beginAskLogin({ question, context, intent }, refreshAccount);
+  };
   const input = useRef<HTMLTextAreaElement>(null);
   const latest = useRef<HTMLElement>(null);
   const active = useRef<AbortController | null>(null);
@@ -368,12 +383,16 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       );
     } catch (error) {
       if (active.current === controller) {
+        const quotaExhausted = error instanceof AskError && error.code === "quota_exhausted";
         const crowded =
           error instanceof AskError &&
+          !quotaExhausted &&
           (error.status === 429 || error.code === "provider_busy");
         update({
           error:
-            timedOut ||
+            quotaExhausted
+              ? lang === "zh" ? "今天的3次体验已用完。Founding Member可登录后不限次提问；普通额度北京时间每天00:00恢复。" : "Your 3 daily answers are used. Founding Members can sign in for unlimited daily answers. The quota resets at midnight Beijing time."
+              : timedOut ||
             (error instanceof AskError && error.code === "relay_timeout")
               ? c.timeout
               : controller.signal.aborted
@@ -393,12 +412,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         controller.abort();
         active.current = null;
         setBusy(false);
+        refreshAccount();
       }
     }
   }
   return (
     <>
-      <div className="lz-ask-native rv">
+      <div className="lz-ask-native rv" id="ask-lizheng">
         <div className="lz-ask-native-head grain">
           <div>
             <h3>{t.title}</h3>
@@ -410,6 +430,15 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           </a>
         </div>
         <div className="lz-ask-native-body">
+          {account?.enabled && <div className="lz-ask-account" aria-live="polite">
+            <div><span>{account.unavailable ? (lang === "zh" ? "暂时无法读取额度，请稍后重试。" : "Quota temporarily unavailable. Try again shortly.")
+              : account.founding ? (lang === "zh" ? "Founding Member · 每日不限次" : "Founding Member · Unlimited daily answers")
+              : lang === "zh" ? `今天还可问${account.remaining ?? 3}次 · 每天3次` : `${account.remaining ?? 3} answers left today · 3 daily`}</span>
+              {!account.unavailable && !account.founding && <small>{account.authenticated ? (lang === "zh" ? "已登录；当前账号未核验到Founding Member资格。" : "Signed in; no Founding Member status was found.") : (lang === "zh" ? "直接提问即可。Founding Member登录后不限次。" : "Ask without signing in. Founding Members can sign in for unlimited answers.")}</small>}</div>
+            {account.unavailable ? <button type="button" onClick={refreshAccount}>{lang === "zh" ? "重新读取" : "Retry"}</button>
+              : account.authenticated ? <button type="button" disabled={busy} onClick={() => { void logoutAsk().then(refreshAccount); }}>{lang === "zh" ? "退出" : "Sign out"}</button>
+              : account.login_ready && <button type="button" disabled={busy} onClick={login}>{lang === "zh" ? "Superlinear账号登录" : "Sign in with Superlinear"}</button>}
+          </div>}
           <form onSubmit={submit} className="lz-ask-form">
             <div
               className="lz-ask-modes"

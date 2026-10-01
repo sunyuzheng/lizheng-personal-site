@@ -411,7 +411,7 @@ describe("askLizheng stream protocol", () => {
       expect.objectContaining({
         method: "POST",
         signal: abort.signal,
-        credentials: "omit",
+        credentials: "same-origin",
         cache: "no-store",
       })
     );

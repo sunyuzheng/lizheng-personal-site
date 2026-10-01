@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { webcrypto } from "node:crypto";
 import handler from "../api/ask-lizheng";
 
 const encoder = new TextEncoder();
@@ -51,7 +52,55 @@ function abortingFetch() {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
   vi.useRealTimers();
+});
+
+function protectedRequest(origin = "https://www.lizheng.ai") {
+  vi.stubGlobal("crypto", webcrypto);
+  vi.stubEnv("ASK_QUOTA_ENABLED", "true");
+  vi.stubEnv("ASK_AUTH_SECRET", "test-auth-secret-with-at-least-32-bytes");
+  vi.stubEnv("ASK_ADMISSION_SECRET", "test-admission-secret-with-at-least-32-bytes");
+  return request(publicPayload, { headers: { Origin: origin, "Content-Type": "application/json", "X-Founding": "true" } });
+}
+describe("account admission relay", () => {
+  it("adds a server proof bound to the exact body and ignores browser membership claims", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(sse(event("result", { status: "answered" })));
+    vi.stubGlobal("fetch", fetchMock);
+    const response = await handler(protectedRequest());
+    expect(response.status).toBe(200);
+    const headers = fetchMock.mock.calls[0][1].headers;
+    const proof = headers["X-Ask-Admission"];
+    const payload = JSON.parse(Buffer.from(proof.split(".")[1], "base64url").toString());
+    expect(payload.tier).toBe("public"); expect(payload.path).toBe("/api/ask");
+    const digest = await crypto.subtle.digest("SHA-256", encoder.encode(publicPayload));
+    expect(payload.body_sha256).toBe(Buffer.from(digest).toString("hex"));
+    expect(response.headers.get("set-cookie")).toContain("__Secure-ask-guest=");
+    await response.text();
+  });
+  it("rejects cross-site requests before contacting Builder", async () => {
+    const fetchMock = vi.fn(); vi.stubGlobal("fetch", fetchMock);
+    const response = await handler(protectedRequest("https://attacker.example"));
+    expect(response.status).toBe(403); expect(fetchMock).not.toHaveBeenCalled();
+  });
+  it("passes only fixed quota fields and preserves the anonymous cookie on quota rejection", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({ code: "quota_exhausted", remaining: 0,
+      reset_at: "2026-10-02T16:00:00+00:00", private_detail: "synthetic-private" },
+      { status: 429, headers: { "X-Ask-Error-Code": "quota_exhausted" } })));
+    const response = await handler(protectedRequest());
+    expect(response.status).toBe(429); expect(response.headers.get("set-cookie")).toBeTruthy();
+    const value = await response.json(); expect(value.code).toBe("quota_exhausted"); expect(value.remaining).toBe(0);
+    expect(value).not.toHaveProperty("private_detail");
+  });
+  it("bounds a marked but unfinished quota response instead of waiting for the answer deadline", async () => {
+    const cancelled = vi.fn();
+    const body = new ReadableStream({ cancel: cancelled });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(body, {
+      status: 429, headers: { "Content-Type": "application/json", "X-Ask-Error-Code": "quota_exhausted" },
+    })));
+    const response = await handler(protectedRequest());
+    expect((await response.json()).code).toBe("rate_limited"); expect(cancelled).toHaveBeenCalled();
+  });
 });
 
 describe("fixed Builder SSE relay", () => {

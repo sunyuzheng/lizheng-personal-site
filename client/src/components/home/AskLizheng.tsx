@@ -15,7 +15,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
-import { beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
+import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 
 const COPY = {
   zh: {
@@ -73,10 +73,17 @@ const COPY = {
     quotaUnavailable: "暂时读不到今天的次数。",
     quotaRetry: "重试",
     quotaExhausted: "今天的3次已经用完。北京时间每天0点恢复；Founding Member验证后不限次。",
+    networkQuotaExhausted: "今天来自这个网络的免费提问已经很多了，北京时间每天0点恢复；Founding Member验证后不限次。",
     founding: "Founding Member · 不限次",
     signedIn: "已登录，未核验到Founding资格",
     verify: "Founding Member？验证后不限次",
     verifyButton: "验证Founding身份",
+    loginPending: "请在弹出的窗口里完成验证",
+    loginHere: "没看到窗口？在本页验证",
+    loginWaiting: "正在等待验证…",
+    loginIncomplete: "这次没有完成验证",
+    verified: "验证成功 · Founding Member · 不限次",
+    verifiedRetry: "验证成功，可以重新提问了。",
     signOut: "退出",
     privacyNote:
       "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
@@ -150,10 +157,17 @@ const COPY = {
     quotaUnavailable: "Today’s count is unavailable right now.",
     quotaRetry: "Retry",
     quotaExhausted: "Your 3 daily answers are used. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
+    networkQuotaExhausted: "Free answers from this network are used up for today. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
     founding: "Founding Member · unlimited",
     signedIn: "Signed in; no Founding Member status found",
     verify: "Founding Member? Verify for unlimited answers",
     verifyButton: "Verify Founding membership",
+    loginPending: "Finish verifying in the pop-up window",
+    loginHere: "No window? Verify on this page",
+    loginWaiting: "Waiting for verification…",
+    loginIncomplete: "Verification wasn’t completed",
+    verified: "Verified · Founding Member · unlimited",
+    verifiedRetry: "Verified. You can ask again.",
     signOut: "Sign out",
     privacyNote:
       "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and necessary context are sent to Builder Space. We save question text, time, model, answer status and duration to improve answers, then automatically delete them after 30 days. We do not save added context, conversation history or full answers, or link question records to email addresses or accounts. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
@@ -319,10 +333,17 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [exporting, setExporting] = useState("");
   const [exportError, setExportError] = useState(0);
   const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
-  const loginCleanup = useRef<(() => void) | undefined>(undefined);
+  const loginCleanup = useRef<((closePopup?: boolean) => void) | undefined>(undefined);
+  // Where a Founding verification stands, so it never looks like nothing happened.
+  const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
+  const showLoginResult = (next: AskAccount | null) => {
+    setAccount(next);
+    setLoginStep(!next?.enabled || next.unavailable ? "" : next.founding ? "verified" : next.authenticated ? "member" : "incomplete");
+  };
   useEffect(() => {
-    finishAskLogin();
+    const signedIn = finishAskLogin();
+    // A draft means this tab is back from signing in on this page.
     const draft = takeAskDraft();
     if (draft) {
       setQuestion(draft.question);
@@ -330,13 +351,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setMode(draft.intent === "find" ? "find" : "ask");
       setPersonal(draft.intent === "apply" || !!draft.context);
     }
-    refreshAccount();
+    void readAskAccount().then(signedIn || draft ? showLoginResult : setAccount);
     return () => loginCleanup.current?.();
   }, []);
-  const logout = () => { void logoutAsk().then(refreshAccount); };
+  const logout = () => { setLoginStep(""); void logoutAsk().then(refreshAccount); };
   const login = () => {
     loginCleanup.current?.();
-    loginCleanup.current = beginAskLogin({ question, context: situation, intent }, refreshAccount);
+    setLoginStep("pending");
+    loginCleanup.current = beginAskLogin({ question, context: situation, intent }, () => { void readAskAccount().then(showLoginResult); });
+  };
+  const loginHere = () => {
+    loginCleanup.current?.(true);
+    askLoginHere({ question, context: situation, intent });
   };
   const input = useRef<HTMLTextAreaElement>(null);
   const latest = useRef<HTMLElement>(null);
@@ -402,6 +428,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   async function submit(event?: FormEvent, retry?: Turn) {
     event?.preventDefault();
     if (active.current || (!retry && !question.trim())) return;
+    if (loginStep !== "pending") setLoginStep("");
     const payload: AskPayload = retry?.request || {
       question: question.trim(),
       context: situation,
@@ -482,7 +509,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           quotaExhausted,
           error:
             quotaExhausted
-              ? c.quotaExhausted
+              ? (error as AskError).scope === "network" ? c.networkQuotaExhausted : c.quotaExhausted
               : timedOut ||
             (error instanceof AskError && error.code === "relay_timeout")
               ? c.timeout
@@ -647,7 +674,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   </>
                 ) : account.founding ? (
                   <>
-                    <b>{c.founding}</b>
+                    {loginStep === "verified" ? <b className="verified">{c.verified}</b> : <b>{c.founding}</b>}
                     <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
                   </>
                 ) : (
@@ -655,12 +682,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     {outOfQuota ? <b className="empty">{c.quotaNone}</b> : <b>{c.quotaLeft(account.remaining ?? 3)}</b>}
                     {account.authenticated ? (
                       <>
-                        <span>{c.signedIn}</span>
+                        <span className={loginStep === "member" ? "notice" : undefined}>{c.signedIn}</span>
                         <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
+                      </>
+                    ) : loginStep === "pending" ? (
+                      <>
+                        <span className="pending">{c.loginPending}</span>
+                        <button type="button" onClick={loginHere}>{c.loginHere}</button>
                       </>
                     ) : (
                       account.login_ready && (
-                        <button type="button" disabled={busy} onClick={login}>{c.verify}</button>
+                        <>
+                          {loginStep === "incomplete" && <span>{c.loginIncomplete}</span>}
+                          <button type="button" disabled={busy} onClick={login}>{c.verify}</button>
+                        </>
                       )
                     )}
                   </>
@@ -812,14 +847,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     {turn.error && (
                       <p className={turn.quotaExhausted ? "lz-ask-error quota" : "lz-ask-error"} role="alert">
                         {turn.error}
-                        {turn.quotaExhausted && account?.login_ready && !account.authenticated && (
-                          <button type="button" className="btn btn-line" onClick={login}>{c.verifyButton}</button>
-                        )}
+                        {turn.quotaExhausted && (account?.founding ? (
+                          loginStep === "verified" && <b className="verified">{c.verifiedRetry}</b>
+                        ) : account?.login_ready && !account.authenticated && (
+                          <button type="button" className="btn btn-line" disabled={loginStep === "pending"} onClick={login}>
+                            {loginStep === "pending" ? c.loginWaiting : c.verifyButton}
+                          </button>
+                        ))}
                       </p>
                     )}
                     {!busy &&
                       index === turns.length - 1 &&
-                      ((turn.error && !turn.quotaExhausted) || turn.result?.retryable) && (
+                      ((turn.error && (!turn.quotaExhausted || account?.founding)) || turn.result?.retryable) && (
                         <button
                           className="btn btn-line lz-ask-retry"
                           type="button"

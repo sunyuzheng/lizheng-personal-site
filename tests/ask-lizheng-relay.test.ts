@@ -152,7 +152,7 @@ describe("guest network cap", () => {
     const response = await handler(protectedRequest());
     expect(response.status).toBe(429);
     const value = await response.json();
-    expect(value.code).toBe("quota_exhausted"); expect(value.remaining).toBe(0);
+    expect(value.code).toBe("quota_exhausted"); expect(value.scope).toBe("network"); expect(value.remaining).toBe(0);
     expect(value.reset_at).toMatch(/T16:00:00\.000Z$/);
     expect(response.headers.get("set-cookie")).toContain("__Secure-ask-guest=");
     expect(upstream).not.toHaveBeenCalled();

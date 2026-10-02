@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { webcrypto } from "node:crypto";
+import { createHash, webcrypto } from "node:crypto";
 import type { IncomingMessage, ServerResponse } from "node:http";
 const sdk = vi.hoisted(() => ({
   claims: { sub: "test-user", email: "member@example.com", email_verified: true },
@@ -95,6 +95,22 @@ describe("Academy SSO boundary", () => {
     expect((await call("/api/ask-lizheng/auth/callback?code=x", cookie, "GET", "ask.lizheng.ai")).statusCode).toBe(401);
     expect((await call("/api/ask-lizheng/auth/logout", undefined, "POST", "www.lizheng.ai", "https://attacker.example")).statusCode).toBe(403);
     expect((await call("/api/ask-lizheng/auth/login", undefined, "GET", "attacker.example")).statusCode).toBe(403);
+  });
+  it("marks the clicked sign-in control busy with a script the page CSP allows only by hash", async () => {
+    const popup = await call("/api/ask-lizheng/auth/login?return=/&popup=1");
+    const scripts = [...popup.body.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(match => match[1]);
+    expect(scripts).toHaveLength(1);
+    const csp = String(popup.headers.get("content-security-policy"));
+    expect(csp).toContain(`script-src 'sha256-${createHash("sha256").update(scripts[0]).digest("base64")}'`);
+    expect(csp.split(";").find(part => part.trim().startsWith("script-src"))).not.toContain("unsafe");
+    expect(popup.body).not.toMatch(/ on[a-z]+=/);
+    expect(popup.body).toContain('data-busy="正在前往超线性学院…">使用超线性学院账号登录</a>');
+    expect(popup.body).toContain('data-busy="正在发送…">发送验证码</button>');
+    // Only the popup closes itself on 返回提问; a same-tab sign-in navigates back.
+    expect(popup.body).toContain("data-back>返回提问</a>");
+    const tab = await call("/api/ask-lizheng/auth/login?return=/en/");
+    expect(tab.body).toContain('<a href="/en/#ask-lizheng">返回提问</a>');
+    expect(tab.body).not.toContain(" data-back>");
   });
   it("leaves the current public experience unchanged until access is enabled", async () => {
     vi.stubEnv("ASK_QUOTA_ENABLED", "false");

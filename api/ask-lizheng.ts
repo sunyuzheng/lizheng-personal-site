@@ -301,7 +301,8 @@ export default async function handler(request: Request): Promise<Response> {
     await releaseNetwork?.();
     // Same contract as the per-guest quota, so both pages offer Founding sign-in.
     if (error instanceof NetworkQuotaError)
-      return reply(Response.json({ code: "quota_exhausted", remaining: 0, reset_at: error.resetAt,
+      // `scope` lets pages say it is the network, not this person's own 3, that ran out.
+      return reply(Response.json({ code: "quota_exhausted", scope: "network", remaining: 0, reset_at: error.resetAt,
         message: "今天来自这个网络的免费提问已经很多了，请明天再来。Founding Member可登录后不限次提问。" },
       { status: 429, headers: HEADERS }));
     if (error instanceof AccessError) return reply(failure(error.status, error.code));

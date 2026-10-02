@@ -99,7 +99,9 @@ export class AskError extends Error {
   constructor(
     message: string,
     readonly code?: string,
-    readonly status?: number
+    readonly status?: number,
+    /** "network" when a shared network's daily guest limit ran out, not the person's own 3. */
+    readonly scope?: string
   ) {
     super(message);
   }
@@ -155,17 +157,20 @@ export async function askLizheng(
   if (!response.ok) {
     let message = "";
     let code: string | undefined;
+    let scope: string | undefined;
     try {
       const failure = await response.json();
       message = failure.message || "";
       code = failure.code;
+      scope = failure.scope;
     } catch {
       /* Upstream may be unavailable. */
     }
     throw new AskError(
       message || `HTTP ${response.status}`,
       code,
-      response.status
+      response.status,
+      scope
     );
   }
   if (

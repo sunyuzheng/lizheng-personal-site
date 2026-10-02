@@ -12,4 +12,4 @@
 
 前端未来可调用 `GET /api/ask-lizheng/discovery/questions?window=this_week&sort=recent|frequent|liked` 及 `GET /api/ask-lizheng/discovery/detail?public_id=...`。匿名只读独立审阅的已发布版本；`POST /api/ask-lizheng/discovery/vote` 要求现有已验证登录和 HOME 同源 Origin，Body 为 public_id/expected_revision/vote，最大2048字节。HOME 从验证邮箱计算投票专用不可逆标识，不将邮箱传给 Ops，也不关联私人提问。投票证明与 owner 证明用途隔离。契约、统计口径及游标过期处理以独立 Ops 的 `docs/public-discovery.md` 为准。
 
-本次仅接入固定代理，不添加主页发现组件、不修改提问生成、额度或会员登录。部署时公开 feed 初始为空，已有私人记录需另获对具体公开版本的逐条授权后才能进入。
+本次仅接入固定代理，不添加主页发现组件、不修改提问生成、额度或会员登录。部署时公开 feed 初始为空，旧v1/v3永不进入公开列表，即使owner另行勾选授权也不能覆盖。只有v4且不带背景/intent不是apply的完整结果可整理；Ask的v4writer接通前保持空列表。可信版本/背景字段接缝以独立Ops说明为准。

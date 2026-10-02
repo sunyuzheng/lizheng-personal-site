@@ -179,7 +179,7 @@ describe("bounded body and safe business failures", () => {
     expect((await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST", body: {}, headers: { "content-length": "2049" } })).status).toBe(413);
     expect(fetch).not.toHaveBeenCalled();
   });
-  it.each([[400, "invalid_request"], [404, "discovery_not_found"], [409, "revision_conflict"], [422, "source_unavailable"],
+  it.each([[400, "invalid_request"], [404, "discovery_not_found"], [409, "revision_conflict"], [422, "source_unavailable"], [422, "source_not_public_eligible"],
     [422, "publication_requires_consent"], [422, "publication_requires_review"], [422, "publication_requires_source"], [404, "public_item_unavailable"],
     [422, "discovery_capacity"], [409, "discovery_cursor_expired"], [429, "vote_rate_limited"]])(
     "returns only allowlisted error %s/%s", async (status, code) => {
@@ -188,7 +188,16 @@ describe("bounded body and safe business failures", () => {
       expect(result).toMatchObject({ status, body: { code } }); expect(Object.keys(result.body)).toEqual(["code"]);
     }
   );
-  it.each([[409, "unknown_private_error"], [500, "revision_conflict"], [400, "revision_conflict"], [429, "unknown_private_error"]])("sanitizes unapproved status/code pairs", async (status, code) => {
+  it.each(["discovery-save", "discovery-publish"])("preserves source eligibility refusal for %s without exposing private details", async action => {
+    vi.mocked(fetch).mockResolvedValue(Response.json({ code: "source_not_public_eligible", notice_version: "v3", private_detail: "synthetic-private" }, { status: 422 }));
+    const body = action === "discovery-save" ? draft() : { public_id: ID, expected_revision: 2 };
+    const result = await call(ops, `/api/ask-lizheng/ops/${action}`, { method: "POST", body });
+    expect(result).toMatchObject({ status: 422, body: { code: "source_not_public_eligible" } });
+    expect(Object.keys(result.body)).toEqual(["code"]);
+    expect(fetch).toHaveBeenCalledOnce();
+  });
+  it.each([[409, "unknown_private_error"], [500, "revision_conflict"], [400, "revision_conflict"], [429, "unknown_private_error"],
+    [400, "source_not_public_eligible"], [500, "source_not_public_eligible"]])("sanitizes unapproved status/code pairs", async (status, code) => {
     vi.mocked(fetch).mockResolvedValue(Response.json({ code, detail: "synthetic-private" }, { status }));
     expect(await call(discovery, "/api/ask-lizheng/discovery/questions")).toMatchObject({ status: 503, body: { code: "ops_gateway_unavailable" } });
   });

@@ -106,7 +106,7 @@ export function opsGatewayEnvelope(url: URL, method: string, body?: unknown): Op
 
 function unavailable(): AccessError { return new AccessError("ops_gateway_unavailable"); }
 const SAFE_ERRORS: Record<string, number> = {
-  invalid_request: 400, discovery_not_found: 404, source_unavailable: 422, revision_conflict: 409,
+  invalid_request: 400, discovery_not_found: 404, source_unavailable: 422, source_not_public_eligible: 422, revision_conflict: 409,
   publication_requires_review: 422, publication_requires_consent: 422, publication_requires_source: 422, public_item_unavailable: 404,
   discovery_capacity: 422, discovery_cursor_expired: 409, vote_rate_limited: 429,
 };

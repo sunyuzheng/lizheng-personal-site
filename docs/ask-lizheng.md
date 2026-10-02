@@ -6,7 +6,7 @@
 - 主页API：POST /api/ask-lizheng/ask、GET /api/ask-lizheng/meta，POST通过固定目标Edge流式转发到Builder的/api/ask，GET反代到/api/meta。无客户端模型凭证；问答请求不发送浏览器凭证、不缓存。访客提问在转发前另按网络入口计数（每个北京日300次，见ask-lizheng仓库ACCOUNT_QUOTAS.md），防止不保存Cookie的客户端绕过每天3次。
 - 独立页面：ask.lizheng.ai的host路由反代现有ask-lizheng.ai-builders.space应用，包括资产和API；/api/ask同样经过流式转发，Vercel托管域名与TLS，Builder托管模型调用、检索与Docker应用。cleanUrls/trailingSlash的现有规范化可能先产生308。
 - 对话只在当前页面内存中；刷新清空。问题和背景会发送给Builder处理。本产品不保存或记录对话，不能由此承诺基础设施供应商从不处理日志。
-- 2026-10-01起主页不再有关键词搜索：找原文由「从哪读起」承担，原索引`client/public/search/`与组件一并删除。问答卡片下方是Open Context入口，告诉想自己做的人材料已在GitHub开源。
+- 2026-10-01起主页不再有关键词搜索：找原文由「从哪读起」承担，搜索组件已删除。`client/public/search/{zh,en}.json`保留为公开索引，超线性学院新标签页插件（`AI/apps/superlinear-newtab`）从`https://www.lizheng.ai/search/{lang}.json`读取，不能删除或改格式。问答卡片下方是Open Context入口，告诉想自己做的人材料已在GitHub开源。
 
 本地开发的同源代理默认为http://127.0.0.1:8000，可用ASK_LIZHENG_DEV_TARGET覆盖。先运行问答仓库的服务，再运行本仓库的pnpm dev。pnpm test:ask-lizheng使用独立node环境配置，覆盖SSE客户端与固定目标relay的分块、材料先出现、断线、取消、限额、重定向与错误。
 

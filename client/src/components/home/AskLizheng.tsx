@@ -16,6 +16,11 @@ import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
+import { discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
+import { track } from "@vercel/analytics";
+
+// Where a link to the membership page sits, so its visits can be told apart there.
+const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
 
 const COPY = {
   zh: {
@@ -43,6 +48,16 @@ const COPY = {
     reset: "开始新问题",
     full: "打开完整页面",
     examples: "选一个问题，再改成自己的",
+    discoveryTitle: "别人在问什么",
+    discoveryNote: "真实的提问，去掉个人信息后由AI挑选整理。",
+    discoveryCount: (n: number) => `${n}次类似提问`,
+    discoveryLikes: (n: number) => `${n}人觉得有帮助`,
+    discoveryLoading: "正在打开…",
+    discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
+    discoverySimilar: "问个类似的",
+    discoveryHelpful: "有帮助",
+    discoveryHelped: "觉得有帮助",
+    discoveryAttribution: "AI整理，不是立正本人回复。",
     loading: "正在查找相关公开材料…",
     seconds: "秒",
     waited: "已等待",
@@ -138,6 +153,16 @@ const COPY = {
     reset: "New question",
     full: "Open full page",
     examples: "Choose a question, then make it yours",
+    discoveryTitle: "What others are asking",
+    discoveryNote: "Real questions with personal details removed, picked and organized by AI.",
+    discoveryCount: (n: number) => `${n} similar questions`,
+    discoveryLikes: (n: number) => `${n} found this helpful`,
+    discoveryLoading: "Opening…",
+    discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
+    discoverySimilar: "Ask something similar",
+    discoveryHelpful: "Helpful",
+    discoveryHelped: "Found it helpful",
+    discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
     loading: "Finding relevant public material…",
     seconds: "s",
     waited: "Waiting",
@@ -243,6 +268,13 @@ const STAGE: Record<string, number> = {
   repairing: 3,
 };
 
+function sourceKind(url: string) {
+  const host = new URL(url).hostname;
+  if (/(^|\.)lizheng\.ai$/.test(host)) return "article";
+  if (/youtube\.com$|youtu\.be$|bilibili\.com$/.test(host)) return "video";
+  if (/superlinear\.academy$|circle\.so$/.test(host)) return "community";
+  return "other";
+}
 function Source({
   source,
   lang,
@@ -262,7 +294,7 @@ function Source({
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (
-        <a href={url} {...EXTERNAL}>
+        <a href={url} {...EXTERNAL} onClick={() => track("Ask Source Click", { surface: "home", kind: sourceKind(url) })}>
           {source.title} ↗
         </a>
       ) : (
@@ -380,12 +412,21 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
   // What a Founding Member is and how to become one, opened from the count line.
   const [foundingOpen, setFoundingOpen] = useState(false);
+  // Real questions others asked, published from Ops; shown on the Chinese page in place of the examples.
+  const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
+  // Whether this browser saw the section before: counted with each card action.
+  const discoveryVisit = useRef<"first" | "return">("first");
+  const [openCard, setOpenCard] = useState("");
+  const [cardDetails, setCardDetails] = useState<Record<string, DiscoveryDetail | "loading" | "failed">>({});
+  const [cardVotes, setCardVotes] = useState<Record<string, { likes: number; voted: boolean }>>({});
   // The count comes from Builder, which sleeps when idle: say so while it wakes.
   const [accountWaking, setAccountWaking] = useState(false);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
   const showLoginResult = (next: AskAccount | null) => {
     setAccount(next);
-    setLoginStep(!next?.enabled || next.unavailable ? "" : next.founding ? "verified" : next.authenticated ? "member" : "incomplete");
+    const step = !next?.enabled || next.unavailable ? "" : next.founding ? "verified" : next.authenticated ? "member" : "incomplete";
+    setLoginStep(step);
+    if (step) track("Ask Verify Result", { surface: "home", result: step });
   };
   useEffect(() => {
     const signedIn = finishAskLogin();
@@ -427,9 +468,45 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       if (!signal?.aborted) { setPublicArchive(v4); setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true); }
     } catch { if (!signal?.aborted) setLoggingFailed(true); }
   }
+  useEffect(() => {
+    if (lang !== "zh") return;
+    const controller = new AbortController();
+    void discoveryPool(controller.signal).then(pool => {
+      if (controller.signal.aborted || !pool.length) return;
+      const seen = readSeen();
+      const picked = pickDiscovery(pool, seen);
+      rememberSeen(seen, picked.map(item => item.public_id));
+      discoveryVisit.current = seen.length ? "return" : "first";
+      setDiscoveryCards(picked);
+    });
+    return () => controller.abort();
+  }, [lang]);
+  const toggleCard = (card: DiscoveryCard) => {
+    if (openCard === card.public_id) { setOpenCard(""); return; }
+    setOpenCard(card.public_id);
+    track("Ask Discovery Open", { surface: "home", visit: discoveryVisit.current });
+    const known = cardDetails[card.public_id];
+    if (known && known !== "failed") return;
+    setCardDetails(prev => ({ ...prev, [card.public_id]: "loading" }));
+    void discoveryDetail(card.public_id).then(detail =>
+      setCardDetails(prev => ({ ...prev, [card.public_id]: detail || "failed" })));
+  };
+  const askSimilar = (card: DiscoveryCard) => {
+    track("Ask Discovery Similar", { surface: "home", visit: discoveryVisit.current });
+    prefill(card.question, "card");
+    input.current?.scrollIntoView({ block: "center" });
+  };
+  const likeCard = async (card: DiscoveryCard) => {
+    const vote = !cardVotes[card.public_id]?.voted;
+    const result = await voteDiscovery(card.public_id, card.revision, vote);
+    if (!result) return;
+    setCardVotes(prev => ({ ...prev, [card.public_id]: result }));
+    track("Ask Discovery Vote", { surface: "home", vote });
+  };
   const logout = () => { setLoginStep(""); void logoutAsk().then(refreshAccount); };
   const login = () => {
     loginCleanup.current?.();
+    track("Ask Verify Start", { surface: "home" });
     setLoginStep("pending");
     loginCleanup.current = beginAskLogin({ question, context: situation, intent }, () => { void readAskAccount().then(showLoginResult); });
   };
@@ -440,6 +517,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const input = useRef<HTMLTextAreaElement>(null);
   const latest = useRef<HTMLElement>(null);
   const active = useRef<AbortController | null>(null);
+  // How the question box was last filled, counted with each question: typed, example, card or followup.
+  const questionFrom = useRef("typed");
   const counter = useRef(0);
   useEffect(() => {
     if (busy)
@@ -494,7 +573,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setExporting("");
     }
   }
-  function prefill(value: string) {
+  function prefill(value: string, from = "followup") {
+    questionFrom.current = from;
     setQuestion(value);
     input.current?.focus();
   }
@@ -502,6 +582,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     event?.preventDefault();
     if (active.current || !loggingReady || (!retry && !question.trim())) return;
     if (loginStep !== "pending") setLoginStep("");
+    if (!retry) { track("Ask Question", { surface: "home", from: questionFrom.current }); questionFrom.current = "typed"; }
     const payload: AskPayload = retry?.request || {
       question: question.trim(),
       context: situation,
@@ -660,7 +741,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               ref={input}
               id="home-ask-question"
               value={question}
-              onChange={event => setQuestion(event.target.value)}
+              onChange={event => { setQuestion(event.target.value); if (!event.target.value.trim()) questionFrom.current = "typed"; }}
               maxLength={2000}
               disabled={busy}
               rows={3}
@@ -779,7 +860,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       <>
                         <span className={loginStep === "member" ? "notice" : undefined}>{c.signedIn}</span>
                         <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
-                          onClick={() => setFoundingOpen(open => !open)}>{c.howToJoin}</button>
+                          onClick={() => { if (!foundingOpen) track("Ask Founding Info", { surface: "home" }); setFoundingOpen(open => !open); }}>{c.howToJoin}</button>
                         <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
                       </>
                     ) : loginStep === "pending" ? (
@@ -796,7 +877,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             <button type="button" disabled={busy} onClick={login}>{c.verifyShort}</button>
                             <span className="sep" aria-hidden="true">·</span>
                             <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
-                              onClick={() => setFoundingOpen(open => !open)}>{c.howToJoin}</button>
+                              onClick={() => { if (!foundingOpen) track("Ask Founding Info", { surface: "home" }); setFoundingOpen(open => !open); }}>{c.howToJoin}</button>
                           </span>
                         </>
                       )
@@ -811,7 +892,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 <p>{c.foundingWho}</p>
                 <p>{c.foundingGet}</p>
                 <p className="actions">
-                  <a className="join" href={LINKS.stay} {...EXTERNAL}>{c.foundingCta} ↗</a>
+                  <a className="join" href={stayLink("founding_panel")} {...EXTERNAL}
+                    onClick={() => track("Ask Membership Click", { surface: "home", location: "founding_panel" })}>{c.foundingCta} ↗</a>
                   {!account.authenticated && account.login_ready && loginStep !== "pending" && (
                     <button type="button" disabled={busy} onClick={login}>{c.foundingVerify}</button>
                   )}
@@ -819,16 +901,76 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </div>
             )}
           </div>
-          {!turns.length && (
+          {!turns.length && (lang === "zh" && !!discoveryCards.length ? (
+            <div className="lz-ask-discovery">
+              <div className="lz-ask-discovery-head">
+                <p><b>{c.discoveryTitle}</b><span>{c.discoveryNote}</span></p>
+              </div>
+              {discoveryCards.map((card, index) => {
+                const open = openCard === card.public_id;
+                const detail = cardDetails[card.public_id];
+                const vote = cardVotes[card.public_id];
+                const likes = vote?.likes ?? card.likes;
+                // A count only when it says more than this one question.
+                const meta = [card.topic_question_count >= 2 && c.discoveryCount(card.topic_question_count),
+                  likes > 0 && c.discoveryLikes(likes)].filter(Boolean).join(" · ");
+                const anchor = -(index + 1);
+                return (
+                  <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
+                    <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
+                      {card.topic_label && <small>{card.topic_label}</small>}
+                      <b>{card.question}</b>
+                      {!open && card.summary && <span className="summary">{card.summary}</span>}
+                      {meta && <span className="meta">{meta}</span>}
+                    </button>
+                    {open && (
+                      <div className="lz-ask-qcard-body">
+                        {detail === "loading" || !detail ? <p className="note">{c.discoveryLoading}</p>
+                          : detail === "failed" ? <p className="note">{c.discoveryUnavailable}</p> : (
+                          <>
+                            <div className="lz-ask-answer">
+                              <div className="lz-ask-answer-summary">
+                                <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
+                              </div>
+                              <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
+                              {detail.answer.limitations && <p className="lz-ask-limitations">{detail.answer.limitations}</p>}
+                            </div>
+                            {!!detail.answer.sources.length && (
+                              <div className="lz-ask-material">
+                                <p>{c.sources}</p>
+                                <div className="lz-ask-source-grid">
+                                  {detail.answer.sources.map(source => (
+                                    <Source key={`${source.id}-${source.url}`} source={source} lang={lang} turnId={anchor} />
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            <small className="attribution">{c.discoveryAttribution}</small>
+                          </>
+                        )}
+                        <div className="actions">
+                          <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
+                          {account?.authenticated && (
+                            <button type="button" className={vote?.voted ? "like on" : "like"} aria-pressed={!!vote?.voted}
+                              onClick={() => void likeCard(card)}>{vote?.voted ? c.discoveryHelped : c.discoveryHelpful}</button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
+          ) : (
             <div className="lz-ask-starters">
               <p>{c.examples}</p>
               {t.examples.map(value => (
-                <button key={value} onClick={() => prefill(value)}>
+                <button key={value} onClick={() => prefill(value, "example")}>
                   {value}
                 </button>
               ))}
             </div>
-          )}
+          ))}
           {!!turns.length && (
             <div className="lz-ask-turns">
               {turns.map((turn, index) => {
@@ -972,7 +1114,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 {loginStep === "pending" ? c.loginWaiting : c.verifyButton}
                               </button>
                             )}
-                            <a className="become" href={LINKS.stay} {...EXTERNAL}>{c.becomeFounding} ↗</a>
+                            <a className="become" href={stayLink("quota_card")} {...EXTERNAL}
+                              onClick={() => track("Ask Membership Click", { surface: "home", location: "quota_card" })}>{c.becomeFounding} ↗</a>
                           </span>
                         ))}
                       </p>

@@ -11,9 +11,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   })) res.setHeader(name, value);
   let action = "";
   try {
-    if (req.headers.host !== "www.lizheng.ai") throw new AccessError("invalid_origin", 403);
-    const url = new URL(req.url || "/", "https://www.lizheng.ai");
-    if (url.origin !== "https://www.lizheng.ai" || (req.headers.origin && req.headers.origin !== "https://www.lizheng.ai"))
+    // Both official pages read the public list from their own origin; neither answers for the other.
+    const host = req.headers.host;
+    if (host !== "www.lizheng.ai" && host !== "ask.lizheng.ai") throw new AccessError("invalid_origin", 403);
+    const own = `https://${host}`;
+    const url = new URL(req.url || "/", own);
+    if (url.origin !== own || (req.headers.origin && req.headers.origin !== own))
       throw new AccessError("invalid_origin", 403);
     action = url.searchParams.get("__route") || url.pathname.split("/").at(-1) || "";
     if (!["questions", "detail", "vote"].includes(action)) throw new AccessError("invalid_request", 400);

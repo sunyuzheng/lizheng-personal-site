@@ -150,10 +150,21 @@ describe("public read and account vote gateway", () => {
   it.each([["questions", "POST", "GET"], ["detail", "OPTIONS", "GET"], ["vote", "GET", "POST"]])("enforces %s method", async (action, method, allow) => {
     expect(await call(discovery, `/api/ask-lizheng/discovery/${action}`, { method })).toMatchObject({ status: 405, headers: { allow } }); expect(fetch).not.toHaveBeenCalled();
   });
-  it("rejects non-www hosts and absolute foreign URLs before any call", async () => {
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "ask.lizheng.ai" } })).status).toBe(403);
+  it("rejects foreign hosts, cross-host origins and absolute foreign URLs before any call", async () => {
+    expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "evil.example" } })).status).toBe(403);
     expect((await call(discovery, "https://evil.example/api/ask-lizheng/discovery/questions")).status).toBe(403);
+    expect((await call(discovery, "/api/ask-lizheng/discovery/questions",
+      { headers: { host: "ask.lizheng.ai", origin: "https://www.lizheng.ai" } })).status).toBe(403);
     expect(fetch).not.toHaveBeenCalled();
+  });
+  it("serves ask.lizheng.ai from its own origin, reads and signed-in votes alike", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ ok: true })));
+    expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "ask.lizheng.ai" } })).status).toBe(200);
+    expect(vi.mocked(fetch).mock.calls[0][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=list&window=this_week&sort=recent&limit=10`);
+    const vote = await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST",
+      headers: { host: "ask.lizheng.ai", origin: "https://ask.lizheng.ai" }, body: { public_id: ID, expected_revision: 2, vote: true } });
+    expect(vote.status).toBe(200);
+    expect(auth.voter).toHaveBeenCalledOnce();
   });
 });
 

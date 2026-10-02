@@ -153,9 +153,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (request.method !== "GET") throw new AccessError("method_not_allowed", 405);
       const identity = await resolveIdentity(request);
       if (identity.cookie) res.setHeader("Set-Cookie", identity.cookie);
+      // Builder reads the ledger through quota-storage, trying twice for up to 2s each. Waiting
+      // only 3s here gave up first whenever those functions were cold, and the page showed
+      // "count unavailable", even right after a successful sign-in.
       const upstream = await fetch(`${backendOrigin()}/api/quota`, {
         headers: { "X-Ask-Admission": await admission(identity, "GET", "/api/quota", new Uint8Array()) },
-        cache: "no-store", redirect: "error", signal: AbortSignal.timeout(3_000),
+        cache: "no-store", redirect: "error", signal: AbortSignal.timeout(6_000),
       });
       if (!upstream.ok) throw new AccessError("access_unavailable");
       const quota = await upstream.json();

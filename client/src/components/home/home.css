@@ -1936,17 +1936,17 @@
   max-width: 720px;
   margin: 8px 0 4px;
 }
-.lz-home .lz-ask-about .notice-v4 {
+.lz-home .lz-ask-about .notice-parts {
   max-width: 720px;
   margin: 8px 0 4px;
 }
-.lz-home .lz-ask-about .notice-v4 p {
+.lz-home .lz-ask-about .notice-parts p {
   margin: 0;
 }
-.lz-home .lz-ask-about .notice-v4 p + p {
+.lz-home .lz-ask-about .notice-parts p + p {
   margin-top: 6px;
 }
-.lz-home .lz-ask-about .notice-v4 b {
+.lz-home .lz-ask-about .notice-parts b {
   margin-right: 8px;
   font-weight: 600;
   color: var(--lz-ink-2);

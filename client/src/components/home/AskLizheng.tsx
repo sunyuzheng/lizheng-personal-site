@@ -36,11 +36,18 @@ const COPY = {
     context: "结合我的处境",
     contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
     contextPrivate: "这部分只用于分析，不会公开。",
+    noticeV3: "提问是匿名的。问答会保存下来，用来改进回答；请勿填写私密信息。",
+    noticeV3Parts: [
+      ["为什么保存", "看哪些问题答得不好、缺哪些材料，把回答做得更好；我也想知道大家关心什么。"],
+      ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。记录只有我能看到。"],
+      ["你的隐私", "提问是匿名的：记录不关联邮箱、账号或IP，我不知道是谁问的。登录只用来核验Founding身份，不会和提问记在一起。「结合我的处境」里填的内容不单独保存，但回答可能会提到它，所以请别填写私密信息。"],
+      ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
+    ] as [string, string][],
     noticeV4: "很多问题是共性的。提交即同意保存问答，去掉个人信息后可能整理公开，帮到更多人。请勿填写私密信息。",
     noticeV4Parts: [
       ["为什么保存", "很多问题是共性的，你问的往往也是别人想问的。我们会把常见的问题和回答整理出来，去掉个人信息后公开，比如「今天大家在问什么」；我也会从中找选题写文章、做视频，并用它们改进回答。"],
-      ["保存什么", "提问、完整回答和所用出处，保存到我手动删除为止。记录不关联邮箱、账号或IP。"],
-      ["你的隐私", "公开前，我们会先用模型自动去掉可能认出你的信息；模型也可能漏，所以请别填写私密信息。「结合我的处境」里填的内容只用于分析，不会公开，用到这些内容的回答也不会公开。"],
+      ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。"],
+      ["你的隐私", "提问是匿名的：记录不关联邮箱、账号或IP，我不知道是谁问的。登录只用来核验Founding身份，不会和提问记在一起。公开前，我们会先用模型自动去掉可能认出你的信息；模型也可能漏，所以请别填写私密信息。「结合我的处境」里填的内容只用于分析，不会公开，用到这些内容的回答也不会公开。"],
       ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
     ] as [string, string][],
     send: "发送问题",
@@ -141,11 +148,18 @@ const COPY = {
     context: "Apply to my situation",
     contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
     contextPrivate: "This part is used only for analysis and never published.",
+    noticeV3: "Questions are anonymous. Questions and answers are saved to improve answers; please keep private information out.",
+    noticeV3Parts: [
+      ["Why we save questions", "To see which questions get weak answers and what material is missing, so answers get better. I also want to know what people care about."],
+      ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats. Only I can see these records."],
+      ["Your privacy", "Questions are anonymous: records are not linked to email, accounts or IP, so I don’t know who asked. Signing in only checks Founding Member status and is never stored with your questions. What you write under “Apply to my situation” is not stored separately, but an answer may mention it, so please keep private information out."],
+      ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
+    ] as [string, string][],
     noticeV4: "Many questions are shared. By submitting, you agree we save your question and answer and may publish them, with personal details removed, to help more people. Please keep private information out.",
     noticeV4Parts: [
       ["Why we save questions", "Many questions are shared: what you ask is often what others want to know too. We collect common questions and answers and publish them with personal details removed, for example as “What people asked today.” I also find topics in them for articles and videos, and use them to improve answers."],
-      ["What we keep", "Questions, full answers and their sources, until I delete them. Not linked to email, accounts or IP."],
-      ["Your privacy", "Before publishing, a model removes details that could identify you. Models can miss things, so please keep private information out. What you write under “Apply to my situation” is used only for analysis and never published, and neither are answers that use it."],
+      ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats."],
+      ["Your privacy", "Questions are anonymous: records are not linked to email, accounts or IP, so I don’t know who asked. Signing in only checks Founding Member status and is never stored with your questions. Before publishing, a model removes details that could identify you. Models can miss things, so please keep private information out. What you write under “Apply to my situation” is used only for analysis and never published, and neither are answers that use it."],
       ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
     ] as [string, string][],
     send: "Ask",
@@ -825,16 +839,14 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           <div className="lz-ask-meta">
             <details className="lz-ask-about">
               <summary>
-                {publicArchive ? c.noticeV4 : opsLogging ? (lang === "zh" ? "提交即同意保存问答，直到立正手动删除" : "Submitting saves your question and answer until Lizheng deletes them") : c.queryNotice}
+                {publicArchive ? c.noticeV4 : opsLogging ? c.noticeV3 : c.queryNotice}
                 <span>{c.privacy}</span>
               </summary>
-              {publicArchive ? (
-                <div className="notice-v4">
-                  {c.noticeV4Parts.map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
+              {publicArchive || opsLogging ? (
+                <div className="notice-parts">
+                  {(publicArchive ? c.noticeV4Parts : c.noticeV3Parts).map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
                 </div>
-              ) : <p>{opsLogging ? (lang === "zh"
-                ? "AI根据立正公开文章和视频整理回答，不是立正本人回复。提问和必要上下文会发送到Builder Space。运营后台保存提问正文、完整回答和所用来源、匿名浏览器标识、对话分组和轮次、提问字数、入口和用途、时间、模型、回答状态及耗时，直到立正手动删除，用于改进回答。记录仅立正可查看，不关联邮箱或账号，不单独保存补充背景、提交的历史摘要或模型内部推理；回答可能引用你提供的背景。刷新页面会清空当前对话界面。请勿输入不愿保存的私人信息。"
-                : "AI answers from Lizheng’s public articles and videos, rather than personal replies. Questions and necessary context go to Builder Space. Lizheng’s private ops dashboard keeps question text, full answers and their sources, anonymous browser ID, conversation grouping and turns, character count, entrypoint and intent, time, model, status and duration until manual deletion. Records are not linked to email or accounts; added background, submitted history and internal model reasoning are not stored separately; an answer may quote your background. Refreshing clears this page’s conversation. Keep private information out of your input.") : c.privacyNote}</p>}
+              ) : <p>{c.privacyNote}</p>}
             </details>
             {!account && accountWaking && (
               <p className="lz-ask-account" aria-live="polite">

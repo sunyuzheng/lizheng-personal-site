@@ -11,7 +11,7 @@ export default defineConfig({
       "tests/ask-quota-storage.test.ts",
       "tests/ask-query-storage.test.ts",
       "tests/ask-logto-requester.test.ts",
-      "tests/ask-ops.test.ts",
+      "tests/ask-ops-gateway.test.ts",
       "tests/ask-archive.test.ts",
       "tests/ask-lizheng-page.test.ts",
     ],

@@ -21,8 +21,6 @@ import Decks from "./pages/Decks";
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "wouter";
 
-const AskOps = lazy(() => import("./pages/AskOps"));
-function AskOpsRoute() { return <Suspense fallback={<div style={{ minHeight: "100vh", background: "#f7f6f0", color: "#233f31", padding: "48px" }}>正在加载运营后台…</div>}><AskOps /></Suspense>; }
 function PublicAnalytics() { const [location] = useLocation(); return location.startsWith("/ops/") ? null : <Analytics />; }
 
 const HomeExperiment = lazy(() => import("./pages/HomeExperiment"));
@@ -99,7 +97,6 @@ function Router() {
     <>
       <RouteScroll />
       <Switch>
-        <Route path={"/ops/ask-lizheng"} component={AskOpsRoute} />
         <Route path={"/"} component={Home} />
         <Route path={"/en"} component={Home} />
         <Route path={"/about"} component={About} />

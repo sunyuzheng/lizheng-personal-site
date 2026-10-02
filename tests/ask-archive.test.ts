@@ -13,7 +13,6 @@ import {
 import {
   opsEvent,
   OPS_PREFIX,
-  rangeBounds,
   storeOpsEvent,
   verifyOpsProof,
 } from "../shared/ask-ops-storage";
@@ -380,17 +379,6 @@ describe("trusted v3 intake boundary", () => {
     expect(command[3]).toBe(OPS_PREFIX + "record:" + ID);
     expect(command.at(-3)).toBe(Array.from(r.question).length);
     expect(command[1]).not.toMatch(/EXPIRE/); // only deletion tombstones expire
-  });
-  it("counts Beijing calendar days, including UTC boundary", () => {
-    expect(
-      rangeBounds("today", Date.parse("2026-10-01T16:00:00Z"))
-    ).toMatchObject({
-      today: "2026-10-02",
-      min: Date.parse("2026-10-01T16:00:00Z"),
-    });
-    expect(rangeBounds("7", Date.parse("2026-10-01T15:59:59Z")).min).toBe(
-      Date.parse("2026-09-24T16:00:00Z")
-    );
   });
   it("keeps anonymous visitor across membership sign-in and only signs pair for v3", async () => {
     const guest = await resolveIdentity(request()),

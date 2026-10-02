@@ -11,11 +11,12 @@ import {
 
 type Transaction = { origin: string; returnPath: string; expiresAt: number; values: Record<string, string> };
 function ssoReady() {
-  return !!process.env.ASK_LOGTO_APP_ID && !!process.env.ASK_LOGTO_APP_SECRET;
+  return !!process.env.ASK_LOGTO_APP_ID?.trim() && !!process.env.ASK_LOGTO_APP_SECRET?.trim();
 }
 function logtoConfiguration() {
-  const appId = process.env.ASK_LOGTO_APP_ID;
-  const appSecret = process.env.ASK_LOGTO_APP_SECRET;
+  // Pasted credentials can carry stray whitespace; the provider rejects them as wrong.
+  const appId = process.env.ASK_LOGTO_APP_ID?.trim();
+  const appSecret = process.env.ASK_LOGTO_APP_SECRET?.trim();
   if (!appId || !appSecret) throw new AccessError("login_unavailable");
   return { endpoint: "https://auth.superlinear.academy", appId, appSecret,
     scopes: ["openid", "profile", "email"], includeReservedScopes: false };
@@ -242,6 +243,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     res.statusCode = 302; res.setHeader("Location", redirect!); res.end();
   } catch (error) {
     const failure = error instanceof AccessError ? error : new AccessError("login_unavailable");
+    // One line per failure: the step and an error class or code, never values or provider bodies.
+    const kind = error instanceof Error ? [error.name, (error as { code?: unknown }).code].filter(Boolean).join(":") : typeof error;
+    console.error(JSON.stringify({ event: "ask_auth_failure", action, code: failure.code, status: failure.status,
+      detail: failure.detail ?? (error instanceof AccessError ? undefined : kind.slice(0, 120)) }));
     if ((action === "email-request" || action === "email-verify") && currentUrl &&
         String(req.headers["content-type"] || "").startsWith("application/x-www-form-urlencoded")) {
       const messages: Record<string, string> = {

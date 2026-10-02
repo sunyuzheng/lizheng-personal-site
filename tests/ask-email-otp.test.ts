@@ -203,7 +203,11 @@ describe("Coffee email ownership flow", () => {
     mailResponse = async () => new Response(new ReadableStream({ cancel }), { status: 500 });
     const response = await start();
     expect(response.statusCode).toBe(503); expect(JSON.parse(response.body).code).toBe("email_unavailable");
-    expect(cancel).toHaveBeenCalledOnce(); expect(logs).not.toHaveBeenCalled();
+    expect(cancel).toHaveBeenCalledOnce();
+    // Only the structured failure line is logged: the step and code, nothing from the provider.
+    expect(logs.mock.calls.map(call => JSON.parse(String(call[0])))).toEqual([
+      { event: "ask_auth_failure", action: "email-request", code: "email_unavailable", status: 503 },
+    ]);
     expect([...store.keys()].filter(key => key.startsWith("ask:auth:otp:"))).toHaveLength(0);
     expect(circleCalls).toBe(0);
   });

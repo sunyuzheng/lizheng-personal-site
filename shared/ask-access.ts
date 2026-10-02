@@ -10,7 +10,8 @@ const SESSION_SECONDS = 12 * 60 * 60;
 const FOUNDING_CACHE_SECONDS = 15 * 60;
 
 export class AccessError extends Error {
-  constructor(readonly code: string, readonly status = 503) {
+  /** `detail` is for server logs only (a step and status, never provider bodies). */
+  constructor(readonly code: string, readonly status = 503, readonly detail?: string) {
     super(code);
   }
 }

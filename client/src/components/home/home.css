@@ -1979,6 +1979,81 @@
 .lz-home .lz-ask-account .notice {
   color: #7a5512;
 }
+/* "Unlimited for Founding Members: Verify · How to join" reads as one phrase. */
+.lz-home .lz-ask-account .offer button {
+  margin-left: 4px;
+}
+.lz-home .lz-ask-account .sep {
+  margin-left: 6px;
+  color: var(--lz-line-2);
+}
+.lz-home .lz-ask-account .toggle::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 0 2px 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.lz-home .lz-ask-account .toggle[aria-expanded="true"]::after {
+  margin-bottom: -1px;
+  transform: rotate(-135deg);
+}
+/* What a Founding Member is, opened from the count line. */
+.lz-home .lz-founding {
+  flex-basis: 100%;
+  margin-top: 8px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #eef4ec;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--lz-ink-2);
+}
+.lz-home .lz-founding p {
+  margin: 0;
+}
+.lz-home .lz-founding p + p {
+  margin-top: 4px;
+}
+.lz-home .lz-founding .title {
+  font-weight: 600;
+  color: var(--lz-green-text);
+}
+.lz-home .lz-founding .actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  margin-top: 12px;
+}
+.lz-home .lz-founding .join {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--lz-green);
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+}
+.lz-home .lz-founding .join:hover {
+  background: var(--lz-green-deep);
+}
+.lz-home .lz-founding button {
+  font: inherit;
+  font-weight: 500;
+  color: var(--lz-green-text);
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+.lz-home .lz-founding button:hover:not(:disabled) {
+  text-decoration: underline;
+}
 .lz-home b.verified {
   display: inline-flex;
   align-items: center;
@@ -2337,6 +2412,21 @@
 .lz-home .lz-ask-error.quota .btn {
   min-height: 38px;
   font-size: 14px;
+}
+.lz-home .lz-ask-error.quota .actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+.lz-home .lz-ask-error.quota .become {
+  font-weight: 500;
+  color: var(--lz-green-text);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+.lz-home .lz-ask-error.quota .become:hover {
+  text-decoration: underline;
 }
 
 .lz-home .lz-ask-approach {
@@ -3208,6 +3298,10 @@
   .lz-home .lz-ask-account .pending::before,
   .lz-home b.verified {
     animation: none;
+  }
+
+  .lz-home .lz-ask-account .toggle::after {
+    transition: none;
   }
 
   .lz-home .rv,

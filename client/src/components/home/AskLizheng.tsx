@@ -76,7 +76,15 @@ const COPY = {
     networkQuotaExhausted: "今天来自这个网络的免费提问已经很多了，北京时间每天0点恢复；Founding Member验证后不限次。",
     founding: "Founding Member · 不限次",
     signedIn: "已登录，未核验到Founding资格",
-    verify: "Founding Member？验证后不限次",
+    foundingOffer: "Founding Member不限次：",
+    verifyShort: "验证身份",
+    howToJoin: "如何成为",
+    foundingTitle: "什么是Founding Member",
+    foundingWho: "Stay Superlinear前3,000位新年费会员是Founding Member，一年$149/¥999。AI Builder、AI Architect的老学员也是。",
+    foundingGet: "会员每年有12+场嘉宾大师课，每个月和鸭哥与我直播答疑，问问立正也不限次。",
+    foundingCta: "了解会员",
+    foundingVerify: "已经是？验证身份",
+    becomeFounding: "如何成为Founding Member",
     verifyButton: "验证Founding身份",
     loginPending: "请在弹出的窗口里完成验证",
     loginHere: "没看到窗口？在本页验证",
@@ -160,7 +168,15 @@ const COPY = {
     networkQuotaExhausted: "Free answers from this network are used up for today. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
     founding: "Founding Member · unlimited",
     signedIn: "Signed in; no Founding Member status found",
-    verify: "Founding Member? Verify for unlimited answers",
+    foundingOffer: "Unlimited for Founding Members:",
+    verifyShort: "Verify",
+    howToJoin: "How to join",
+    foundingTitle: "What’s a Founding Member?",
+    foundingWho: "The first 3,000 new annual members of Stay Superlinear are Founding Members, at $149 or ¥999 a year. AI Builder and AI Architect alumni are too.",
+    foundingGet: "Members get 12+ guest masterclasses a year, a monthly live Q&A with Yage and me, and unlimited answers here.",
+    foundingCta: "About the membership",
+    foundingVerify: "Already one? Verify",
+    becomeFounding: "How to become a Founding Member",
     verifyButton: "Verify Founding membership",
     loginPending: "Finish verifying in the pop-up window",
     loginHere: "No window? Verify on this page",
@@ -336,6 +352,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const loginCleanup = useRef<((closePopup?: boolean) => void) | undefined>(undefined);
   // Where a Founding verification stands, so it never looks like nothing happened.
   const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
+  // What a Founding Member is and how to become one, opened from the count line.
+  const [foundingOpen, setFoundingOpen] = useState(false);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
   const showLoginResult = (next: AskAccount | null) => {
     setAccount(next);
@@ -683,6 +701,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     {account.authenticated ? (
                       <>
                         <span className={loginStep === "member" ? "notice" : undefined}>{c.signedIn}</span>
+                        <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
+                          onClick={() => setFoundingOpen(open => !open)}>{c.howToJoin}</button>
                         <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
                       </>
                     ) : loginStep === "pending" ? (
@@ -694,13 +714,32 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       account.login_ready && (
                         <>
                           {loginStep === "incomplete" && <span>{c.loginIncomplete}</span>}
-                          <button type="button" disabled={busy} onClick={login}>{c.verify}</button>
+                          <span className="offer">
+                            {c.foundingOffer}
+                            <button type="button" disabled={busy} onClick={login}>{c.verifyShort}</button>
+                            <span className="sep" aria-hidden="true">·</span>
+                            <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
+                              onClick={() => setFoundingOpen(open => !open)}>{c.howToJoin}</button>
+                          </span>
                         </>
                       )
                     )}
                   </>
                 )}
               </p>
+            )}
+            {foundingOpen && account?.enabled && !account.unavailable && !account.founding && (
+              <div className="lz-founding" id="lz-founding">
+                <p className="title">{c.foundingTitle}</p>
+                <p>{c.foundingWho}</p>
+                <p>{c.foundingGet}</p>
+                <p className="actions">
+                  <a className="join" href={LINKS.stay} {...EXTERNAL}>{c.foundingCta} ↗</a>
+                  {!account.authenticated && account.login_ready && loginStep !== "pending" && (
+                    <button type="button" disabled={busy} onClick={login}>{c.foundingVerify}</button>
+                  )}
+                </p>
+              </div>
             )}
           </div>
           {!turns.length && (
@@ -849,10 +888,15 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         {turn.error}
                         {turn.quotaExhausted && (account?.founding ? (
                           loginStep === "verified" && <b className="verified">{c.verifiedRetry}</b>
-                        ) : account?.login_ready && !account.authenticated && (
-                          <button type="button" className="btn btn-line" disabled={loginStep === "pending"} onClick={login}>
-                            {loginStep === "pending" ? c.loginWaiting : c.verifyButton}
-                          </button>
+                        ) : (
+                          <span className="actions">
+                            {account?.login_ready && !account.authenticated && (
+                              <button type="button" className="btn btn-line" disabled={loginStep === "pending"} onClick={login}>
+                                {loginStep === "pending" ? c.loginWaiting : c.verifyButton}
+                              </button>
+                            )}
+                            <a className="become" href={LINKS.stay} {...EXTERNAL}>{c.becomeFounding} ↗</a>
+                          </span>
                         ))}
                       </p>
                     )}

@@ -1936,6 +1936,26 @@
   max-width: 720px;
   margin: 8px 0 4px;
 }
+.lz-home .lz-ask-about .notice-v4 {
+  max-width: 720px;
+  margin: 8px 0 4px;
+}
+.lz-home .lz-ask-about .notice-v4 p {
+  margin: 0;
+}
+.lz-home .lz-ask-about .notice-v4 p + p {
+  margin-top: 6px;
+}
+.lz-home .lz-ask-about .notice-v4 b {
+  margin-right: 8px;
+  font-weight: 600;
+  color: var(--lz-ink-2);
+}
+.lz-home .lz-ask-context-note {
+  margin: 6px 4px 0;
+  font-size: 12.5px;
+  color: var(--lz-muted);
+}
 .lz-home .lz-ask-account {
   display: flex;
   flex-wrap: wrap;

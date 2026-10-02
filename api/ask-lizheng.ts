@@ -142,7 +142,8 @@ export default async function handler(request: Request): Promise<Response> {
       let ops: { visitor: string; entrypoint: "home" | "standalone" } | undefined;
       let notice: unknown;
       try { notice = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(body))?.query_log_notice; } catch {}
-      if (notice === "v3") {
+      // v4 is v3 plus consent to publish de-identified answers; the relay signs both the same way.
+      if (notice === "v3" || notice === "v4") {
         if (process.env.ASK_OPS_ENABLED !== "true") throw new AccessError("ops_storage_unavailable");
         const visitor = identity.tier === "public" ? { sub: identity.sub, cookie: identity.cookie } : await resolveOpsVisitor(request);
         if (visitor.cookie) guestCookie = visitor.cookie;

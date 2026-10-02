@@ -878,3 +878,20 @@ describe("fixed Builder SSE relay", () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 });
+
+describe("question record notices", () => {
+  it.each(["v3", "v4"])("signs the anonymous visitor and entrypoint for a %s notice", async notice => {
+    const upstream = vi.fn().mockResolvedValue(sse(event("result", { status: "answered" })));
+    vi.stubGlobal("fetch", withRedis(upstream));
+    const base = protectedRequest();
+    vi.stubEnv("ASK_OPS_ENABLED", "true");
+    const body = JSON.stringify({ ...JSON.parse(await base.text()), query_log_notice: notice,
+      conversation_id: "6f9619ff-8b86-4011-b42d-00c04fc964ff" });
+    const response = await handler(new Request(base.url, { method: "POST", body, headers: base.headers }));
+    expect(response.status).toBe(200);
+    const claims = JSON.parse(Buffer.from(upstream.mock.calls[0][1].headers["X-Ask-Admission"].split(".")[1], "base64url").toString());
+    expect(claims.visitor).toMatch(/^guest:/);
+    expect(claims.entrypoint).toBe("home");
+    await response.text();
+  });
+});

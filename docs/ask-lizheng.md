@@ -6,6 +6,7 @@
 - 主页API：POST /api/ask-lizheng/ask、GET /api/ask-lizheng/meta，POST通过固定目标Edge流式转发到Builder的/api/ask，GET反代到/api/meta。无客户端模型凭证；问答请求不发送浏览器凭证、不缓存。访客提问在转发前另按网络入口计数（每个北京日300次，见ask-lizheng仓库ACCOUNT_QUOTAS.md），防止不保存Cookie的客户端绕过每天3次。超限时同样返回quota_exhausted，另带scope: network，页面据此说明是这个网络的免费次数用完了。
 - Founding说明：次数行「如何成为」展开谁是Founding Member、会员得到什么，并链接Stay会员页；额度用完的卡片同样给出会员页链接。名额（前3,000位新年费会员）与价格（$149/¥999）取自会员页与会员事实表，Founding窗口结束或价格变化时同步改`AskLizheng.tsx`（foundingWho、foundingGet）和ask仓库`src/main.jsx`的`FoundingInfo`。
 - 独立页面：ask.lizheng.ai的host路由反代现有ask-lizheng.ai-builders.space应用，包括资产和API；/api/ask同样经过流式转发，Vercel托管域名与TLS，Builder托管模型调用、检索与Docker应用。cleanUrls/trailingSlash的现有规范化可能先产生308。
+- Builder休眠：Koyeb上的Builder闲置5分钟后深度休眠，唤醒通常几秒，最长约半分钟。ask.lizheng.ai根路径先进`api/ask-lizheng-page.ts`（Edge）：Builder在1.5秒内给出页面就原样转发；否则返回503唤醒页（显示等待秒数，轮询`/api/meta`，醒来后自动刷新；10秒内不重复自动刷新，45秒后提示手动刷新）。资产和API路径照旧直达Builder。主页与独立页读次数1.5秒未回应时显示「正在唤醒问答服务…」，失败后自动重试一次；提问5秒还没连上时说明服务在唤醒。
 - 对话只在当前页面内存中；刷新清空。问题和背景会发送给Builder处理。本产品不保存或记录对话，不能由此承诺基础设施供应商从不处理日志。
 - 2026-10-01起主页不再有关键词搜索：找原文由「从哪读起」承担，搜索组件已删除。`client/public/search/{zh,en}.json`保留为公开索引，超线性学院新标签页插件（`AI/apps/superlinear-newtab`）从`https://www.lizheng.ai/search/{lang}.json`读取，不能删除或改格式。问答卡片下方是Open Context入口，告诉想自己做的人材料已在GitHub开源。
 

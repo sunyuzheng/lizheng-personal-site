@@ -28,6 +28,11 @@
       "respectOriginCacheControl": true
     },
     {
+      "src": "/",
+      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
+      "dest": "/api/ask-lizheng-page"
+    },
+    {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
       "dest": "https://ask-lizheng.ai-builders.space/$1",

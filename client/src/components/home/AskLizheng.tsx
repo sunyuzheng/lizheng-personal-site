@@ -58,6 +58,8 @@ const COPY = {
     retry: "重新生成回答",
     waiting: "回答还在整理，可以先读下面的资料，也可以随时停止。",
     connecting: "正在连接服务…",
+    waking: "问答服务闲置时会休眠，正在唤醒，通常十几秒…",
+    accountWaking: "正在唤醒问答服务…",
     connectionActive: "连接保持中",
     noRecentResponse: "暂未收到新响应，仍在等待",
     waitingLong:
@@ -148,6 +150,8 @@ const COPY = {
     waiting:
       "The answer is still being prepared. You can read the sources below or stop at any time.",
     connecting: "Connecting to the service…",
+    waking: "The answer service sleeps when idle and is waking up. This usually takes 10 to 20 seconds…",
+    accountWaking: "Waking the answer service…",
     connectionActive: "Connection active",
     noRecentResponse: "No recent response; still waiting",
     waitingLong:
@@ -358,6 +362,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
   // What a Founding Member is and how to become one, opened from the count line.
   const [foundingOpen, setFoundingOpen] = useState(false);
+  // The count comes from Builder, which sleeps when idle: say so while it wakes.
+  const [accountWaking, setAccountWaking] = useState(false);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
   const showLoginResult = (next: AskAccount | null) => {
     setAccount(next);
@@ -373,10 +379,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setMode(draft.intent === "find" ? "find" : "ask");
       setPersonal(draft.intent === "apply" || !!draft.context);
     }
-    void readAskAccount().then(signedIn || draft ? showLoginResult : setAccount);
+    let stopped = false;
+    const slow = setTimeout(() => setAccountWaking(true), 1_500);
+    // A read that times out while Builder wakes gets one more try a second later.
+    const load = (again: boolean) => void readAskAccount().then(next => {
+      if (stopped) return;
+      if (next?.unavailable && again) { setTimeout(() => load(false), 1_000); return; }
+      clearTimeout(slow);
+      setAccountWaking(false);
+      (signedIn || draft ? showLoginResult : setAccount)(next);
+    });
+    load(true);
     const controller = new AbortController();
     void loadLogging(controller.signal);
-    return () => { controller.abort(); loginCleanup.current?.(); };
+    return () => { stopped = true; clearTimeout(slow); controller.abort(); loginCleanup.current?.(); };
   }, []);
 
   async function loadLogging(signal?: AbortSignal) {
@@ -712,6 +728,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 ? "AI根据立正公开文章和视频整理回答，不是立正本人回复。提问和必要上下文会发送到Builder Space。运营后台保存提问正文、完整回答和所用来源、匿名浏览器标识、对话分组和轮次、提问字数、入口和用途、时间、模型、回答状态及耗时，直到立正手动删除，用于改进回答。记录仅立正可查看，不关联邮箱或账号，不单独保存补充背景、提交的历史摘要或模型内部推理；回答可能引用你提供的背景。刷新页面会清空当前对话界面。请勿输入不愿保存的私人信息。"
                 : "AI answers from Lizheng’s public articles and videos, rather than personal replies. Questions and necessary context go to Builder Space. Lizheng’s private ops dashboard keeps question text, full answers and their sources, anonymous browser ID, conversation grouping and turns, character count, entrypoint and intent, time, model, status and duration until manual deletion. Records are not linked to email or accounts; added background, submitted history and internal model reasoning are not stored separately; an answer may quote your background. Refreshing clears this page’s conversation. Keep private information out of your input.") : c.privacyNote}</p>
             </details>
+            {!account && accountWaking && (
+              <p className="lz-ask-account" aria-live="polite">
+                <span className="pending">{c.accountWaking}</span>
+              </p>
+            )}
             {account?.enabled && (
               <p className="lz-ask-account" aria-live="polite">
                 {account.unavailable ? (
@@ -831,7 +852,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         </ol>
                         <small aria-live="off">
                           {recentActivityAge === null
-                            ? c.connecting
+                            ? elapsed >= 5 ? c.waking : c.connecting
                             : recentActivityAge <= 12
                               ? c.connectionActive
                               : c.noRecentResponse}

@@ -13,6 +13,7 @@ export default defineConfig({
       "tests/ask-logto-requester.test.ts",
       "tests/ask-ops.test.ts",
       "tests/ask-archive.test.ts",
+      "tests/ask-lizheng-page.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

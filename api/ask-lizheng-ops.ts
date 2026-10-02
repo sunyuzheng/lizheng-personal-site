@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, requireOpsOwner, sameOrigin } from "../shared/ask-access.js";
-import { opsGatewayEnvelope, proxyOps } from "../shared/ask-ops-gateway.js";
+import { OPS_GATEWAY_BODY_LIMIT, OPS_POST_ACTIONS, opsGatewayAction, opsGatewayEnvelope, proxyOps } from "../shared/ask-ops-gateway.js";
+import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   res.setHeader("Cache-Control", "no-store, no-transform");
@@ -22,8 +23,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (typeof req.headers[name] === "string") headers.set(name, req.headers[name]);
     const request = new Request(url, { method: req.method || "GET", headers });
     const owner = await requireOpsOwner(request);
-    const envelope = opsGatewayEnvelope(url, req.method || "GET");
-    if (envelope?.action === "delete") sameOrigin(request);
+    const action = opsGatewayAction(url);
+    if (OPS_POST_ACTIONS.has(action) && req.method !== "POST") throw new AccessError("method_not_allowed", 405);
+    if (OPS_POST_ACTIONS.has(action)) sameOrigin(request);
+    const body = action.startsWith("discovery-") && OPS_POST_ACTIONS.has(action)
+      ? await discoveryRequestBody(req, OPS_GATEWAY_BODY_LIMIT) : undefined;
+    const envelope = opsGatewayEnvelope(url, req.method || "GET", body);
     const result = envelope
       ? await proxyOps(envelope)
       : { owner: true, email: owner.email, archive_retention: "until_deleted" };
@@ -35,7 +40,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (failure.status === 405) {
       const action = new URL(req.url || "/", "https://www.lizheng.ai").searchParams.get("__route") ||
         req.url?.split("?")[0].split("/").at(-1);
-      res.setHeader("Allow", action === "delete" ? "POST" : "GET");
+      res.setHeader("Allow", OPS_POST_ACTIONS.has(action || "") ? "POST" : "GET");
     }
     res.statusCode = failure.status;
     res.end(JSON.stringify({ code: failure.code }));

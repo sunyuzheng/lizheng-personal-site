@@ -254,7 +254,8 @@ describe("bounded sanitized upstream", () => {
 describe("separate frontend route boundary", () => {
   it("routes only the exact www bookmark and hashed JS/CSS to the local stripping gateway before catchalls", () => {
     const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
-    const api = config.routes[0], page = config.routes[1], assets = config.routes[2];
+    const api = config.routes[0], page = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops-page"),
+      assets = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops-page?__asset=$1");
     expect(api.dest).toBe("/api/ask-lizheng-ops?__route=$1");
     expect(new RegExp(api.src).test("/api/ask-lizheng/ops/records/extra")).toBe(false);
     expect(page.dest).toBe("/api/ask-lizheng-ops-page");

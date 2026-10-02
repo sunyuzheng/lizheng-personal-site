@@ -243,6 +243,18 @@ export async function resolveIdentity(request: Request): Promise<AskIdentity> {
   return { ...guest, tier: "public", authenticated: !!session };
 }
 
+/** Verified account ownership only; neither guest quota nor membership enters voting. */
+export async function resolveDiscoveryVoter(request: Request): Promise<string> {
+  officialOrigin(request.url);
+  const session = await loadSession(request, Math.floor(Date.now() / 1000), 0, false);
+  if (!session) throw new AccessError("discovery_login_required", 401);
+  const email = session.email.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 320)
+    throw new AccessError("discovery_login_required", 401);
+  // Logto requires email_verified; the Coffee path consumes a valid OTP before createSession.
+  return authDigest(`discovery-vote:v1:${email}`);
+}
+
 /** Anonymous browser identity, independent of membership/account/email. */
 export async function resolveOpsVisitor(request: Request): Promise<{ sub: string; cookie?: string }> {
   officialOrigin(request.url);

@@ -130,13 +130,13 @@ describe("private Node Ops endpoint", () => {
     expect(fetcher).not.toHaveBeenCalled();
     expect(auth.require.mock.calls[0][0].headers.get("Cookie")).toBe("synthetic-cookie");
   });
-  it("accepts only the www host and GET, without a delete or storage mutation route", async () => {
+  it("restricts reads to www/GET and rejects missing delete method", async () => {
     const fetcher = mockedRedis();
     expect((await call("/api/ask-lizheng/ops/records", "POST")).status).toBe(405);
     expect((await call("/api/ask-lizheng/ops/records", "GET", "ask.lizheng.ai")).status).toBe(403);
     expect((await call("https://attacker.example/records")).status).toBe(403);
     expect((await call("/api/ask-lizheng/ops/records", "GET", "www.lizheng.ai", "", "https://attacker.example")).status).toBe(403);
-    expect((await call("/api/ask-lizheng/ops/delete")).status).toBe(400); expect(fetcher).not.toHaveBeenCalled();
+    expect((await call("/api/ask-lizheng/ops/delete")).status).toBe(405); expect(fetcher).not.toHaveBeenCalled();
   });
   it("supports rewrite and public path actions with strict range/cursor handling", async () => {
     const fetcher = mockedRedis();

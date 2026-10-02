@@ -12,6 +12,7 @@ export default defineConfig({
       "tests/ask-query-storage.test.ts",
       "tests/ask-logto-requester.test.ts",
       "tests/ask-ops.test.ts",
+      "tests/ask-archive.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

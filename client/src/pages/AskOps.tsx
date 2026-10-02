@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type {
   OpsRecord,
   OpsRange,
@@ -17,6 +17,7 @@ const STATUS: Record<string, string> = {
   "sources-only": "返回资料",
   error: "失败",
   cancelled: "取消",
+  generating: "生成中 / 尚未确认结束",
 };
 const RANGES: [OpsRange, string][] = [
   ["today", "今天"],
@@ -25,7 +26,8 @@ const RANGES: [OpsRange, string][] = [
   ["all", "当前全部"],
 ];
 const number = (n: number) => n.toLocaleString("zh-CN");
-const duration = (n: number) => (n / 1000).toFixed(1) + "秒";
+const duration = (n: number | null) =>
+  n === null ? "尚未结束" : (n / 1000).toFixed(1) + "秒";
 const date = (v: string) =>
   new Date(v).toLocaleString("zh-CN", {
     timeZone: "Asia/Shanghai",
@@ -42,6 +44,10 @@ export default function AskOps() {
     "loading" | "login" | "forbidden" | "owner"
   >("loading");
   const [email, setEmail] = useState("");
+  const [dataset, setDataset] = useState<"legacy" | "archive">("legacy");
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const [conversation, setConversation] = useState("");
+  const [deleting, setDeleting] = useState(false);
   const [range, setRange] = useState<OpsRange>("7");
   const [summary, setSummary] = useState<Summary | null>(null);
   const [page, setPage] = useState<Page>({
@@ -67,6 +73,8 @@ export default function AskOps() {
     exportController.current?.abort();
     setSession(next);
     setEmail("");
+    setExpanded(null);
+    setConversation("");
     setSummary(null);
     setPage({ records: [], next_cursor: null, truncated: false });
     setExporting(0);
@@ -80,7 +88,7 @@ export default function AskOps() {
   ): Promise<T> {
     const at = epoch.current;
     const response = await fetch(
-      BASE + action + "?" + new URLSearchParams(params),
+      BASE + action + "?" + new URLSearchParams({ dataset, ...params }),
       {
         credentials: "same-origin",
         cache: "no-store",
@@ -115,6 +123,7 @@ export default function AskOps() {
       setEmail(value.email);
       setSession("owner");
     } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") return;
       if (e instanceof OpsError && e.status === 401) {
         clear("login");
         setError("");
@@ -125,6 +134,7 @@ export default function AskOps() {
     }
   }
   useEffect(() => {
+    sessionController.current = new AbortController();
     void checkSession();
     return () => {
       epoch.current++;
@@ -142,7 +152,11 @@ export default function AskOps() {
     try {
       const [nextSummary, nextPage] = await Promise.all([
         api<Summary>("summary", { range }, controller.signal),
-        api<Page>("records", { range }, controller.signal),
+        api<Page>(
+          "records",
+          { range, ...(conversation ? { conversation } : {}) },
+          controller.signal
+        ),
       ]);
       if (!controller.signal.aborted) {
         setSummary(nextSummary);
@@ -164,7 +178,7 @@ export default function AskOps() {
       setPage({ records: [], next_cursor: null, truncated: false });
       void refresh();
     }
-  }, [session, range]);
+  }, [session, range, dataset, conversation]);
   async function more() {
     if (!page.next_cursor || paging.current || loading) return;
     paging.current = true;
@@ -174,7 +188,11 @@ export default function AskOps() {
     try {
       const next = await api<Page>(
         "records",
-        { range, cursor: page.next_cursor },
+        {
+          range,
+          cursor: page.next_cursor,
+          ...(conversation ? { conversation } : {}),
+        },
         controller.signal
       );
       setPage(old => {
@@ -237,7 +255,7 @@ export default function AskOps() {
       const url = URL.createObjectURL(blob);
       const link = Object.assign(document.createElement("a"), {
         href: url,
-        download: `ask-lizheng-${range}-${new Date().toISOString().slice(0, 10)}.jsonl`,
+        download: `ask-lizheng-${dataset}-${range}-${new Date().toISOString().slice(0, 10)}.jsonl`,
       });
       document.body.append(link);
       link.click();
@@ -256,6 +274,41 @@ export default function AskOps() {
         exportController.current = null;
         setExporting(0);
       }
+    }
+  }
+  async function deleteRecord(r: OpsRecord) {
+    if (
+      deleting ||
+      !window.confirm(
+        `永久删除这条问答及回答来源？\n\n${r.question}\n\n删除后无法恢复。`
+      )
+    )
+      return;
+    setDeleting(true);
+    const at = epoch.current;
+    try {
+      const response = await fetch(
+        BASE +
+          "delete?" +
+          new URLSearchParams({ dataset: "archive", record_id: r.record_id }),
+        {
+          method: "POST",
+          credentials: "same-origin",
+          cache: "no-store",
+          signal: AbortSignal.any([
+            sessionController.current.signal,
+            AbortSignal.timeout(8000),
+          ]),
+        }
+      );
+      if (at !== epoch.current) return;
+      if (!response.ok) throw new OpsError(response.status);
+      setExpanded(null);
+      await refresh();
+    } catch (e) {
+      if (at === epoch.current) failure(e);
+    } finally {
+      setDeleting(false);
     }
   }
   async function logout() {
@@ -329,6 +382,30 @@ export default function AskOps() {
       )}
       {session === "owner" && (
         <>
+          <div className="ops-toolbar ops-datasets" aria-label="记录类型">
+            <button
+              aria-pressed={dataset === "archive"}
+              disabled={loading || deleting}
+              onClick={() => {
+                setDataset("archive");
+                setConversation("");
+                setExpanded(null);
+              }}
+            >
+              问答归档 · 长期保存
+            </button>
+            <button
+              aria-pressed={dataset === "legacy"}
+              disabled={loading || deleting}
+              onClick={() => {
+                setDataset("legacy");
+                setConversation("");
+                setExpanded(null);
+              }}
+            >
+              旧版提问 · 原30天期限
+            </button>
+          </div>
           <div className="ops-toolbar">
             <div className="ops-ranges" aria-label="统计周期">
               {RANGES.map(([v, label]) => (
@@ -352,14 +429,16 @@ export default function AskOps() {
                 </button>
               ) : (
                 <button onClick={() => void exportRecords()}>
-                  导出本期提问
+                  导出本期{dataset === "archive" ? "问答" : "提问"}
                 </button>
               )}
             </div>
           </div>
           <p className="ops-note">
             北京时间 ·
-            只读现有已保存提问，记录仍按原30天期限删除。当前不保存人数或对话分组，因此无法计算独立提问人数和对话轮数。
+            {dataset === "archive"
+              ? "新提交的提问、完整回答和所用来源持续保存，直到你手动删除。匿名浏览器不等于独立人数；同一页面的连续提问按会话分组。"
+              : "旧版只保存问题、状态和耗时，仍按原30天期限删除。旧版没有完整回答、匿名访客或对话分组，无法补算。"}
           </p>
           {(summary?.truncated || page.truncated) && (
             <p className="ops-error" role="alert">
@@ -397,7 +476,15 @@ export default function AskOps() {
                     t.completed ? duration(t.duration_ms / t.completed) : "—",
                     "包含失败和取消",
                   ],
-                  ["独立人数 / 对话轮数", "未记录", "现有数据不能推算这些指标"],
+                  [
+                    "匿名浏览器 / 会话",
+                    summary.visitors === null
+                      ? "未记录"
+                      : `${number(summary.visitors)} / ${number(summary.conversations || 0)}`,
+                    summary.conversations
+                      ? `本期每会话${(t.questions / summary.conversations).toFixed(1)}次提问；不是人数`
+                      : "旧版数据无法推算；刷新页面会开始新会话",
+                  ],
                 ].map(([label, value, note]) => (
                   <section key={label}>
                     <h2>{label}</h2>
@@ -461,9 +548,31 @@ export default function AskOps() {
           )}
           <section className="ops-records">
             <div className="ops-section-heading">
-              <h2>提问内容</h2>
+              <h2>
+                {conversation
+                  ? "这段会话的问答"
+                  : dataset === "archive"
+                    ? "问答存档"
+                    : "历史提问内容"}
+              </h2>
               <span>{page.records.length}条已载入 · 最近在前</span>
             </div>
+            {conversation && (
+              <p className="ops-note">
+                这段会话当前保留{page.conversation_turns || 0}
+                次提问；上方指标仍统计所选周期的全部记录。
+              </p>
+            )}
+            {conversation && (
+              <button
+                onClick={() => {
+                  setConversation("");
+                  setExpanded(null);
+                }}
+              >
+                返回全部归档
+              </button>
+            )}
             {page.records.length ? (
               <div className="ops-table-scroll">
                 <table>
@@ -477,29 +586,175 @@ export default function AskOps() {
                   </thead>
                   <tbody>
                     {page.records.map(r => (
-                      <tr key={r.record_id}>
-                        <td>
-                          <time>{date(r.created_at)}</time>
-                          <small>{r.question_chars}字</small>
-                        </td>
-                        <td>
-                          <p className="ops-question">{r.question}</p>
-                        </td>
-                        <td>
-                          <span className={`ops-status ${r.status}`}>
-                            {STATUS[r.status] || r.status}
-                          </span>
-                          <small>{duration(r.duration_ms)}</small>
-                        </td>
-                        <td>{r.model}</td>
-                      </tr>
+                      <Fragment key={r.record_id}>
+                        <tr>
+                          <td>
+                            <time>{date(r.created_at)}</time>
+                            <small>{r.question_chars}字</small>
+                          </td>
+                          <td>
+                            <p className="ops-question">{r.question}</p>
+                            {dataset === "archive" && (
+                              <button
+                                className="ops-link"
+                                aria-expanded={expanded === r.record_id}
+                                onClick={() =>
+                                  setExpanded(
+                                    expanded === r.record_id
+                                      ? null
+                                      : r.record_id
+                                  )
+                                }
+                              >
+                                {expanded === r.record_id
+                                  ? "收起回答"
+                                  : "查看回答与来源"}
+                                {r.turn_number
+                                  ? ` · 第${r.turn_number}次提问`
+                                  : ""}
+                              </button>
+                            )}
+                          </td>
+                          <td>
+                            <span className={`ops-status ${r.status}`}>
+                              {STATUS[r.status] || r.status}
+                            </span>
+                            <small>{duration(r.duration_ms)}</small>
+                          </td>
+                          <td>{r.model}</td>
+                        </tr>
+                        {expanded === r.record_id && (
+                          <tr>
+                            <td colSpan={4}>
+                              <div className="ops-answer">
+                                <div className="ops-section-heading">
+                                  <h3>
+                                    当次回答
+                                    {r.answer_chars
+                                      ? ` · ${r.answer_chars}字`
+                                      : ""}
+                                  </h3>
+                                  <div>
+                                    {r.conversation_id && (
+                                      <button
+                                        onClick={() => {
+                                          setConversation(r.conversation_id!);
+                                          setExpanded(null);
+                                        }}
+                                      >
+                                        查看连续追问
+                                      </button>
+                                    )}
+                                    <button
+                                      className="ops-danger"
+                                      disabled={deleting}
+                                      onClick={() => void deleteRecord(r)}
+                                    >
+                                      永久删除这条问答
+                                    </button>
+                                  </div>
+                                </div>
+                                {r.answer ? (
+                                  <>
+                                    <p className="ops-answer-summary">
+                                      {r.answer.summary}
+                                    </p>
+                                    {r.answer.sections.map((s, i) => (
+                                      <section key={i}>
+                                        <h4>{s.heading}</h4>
+                                        <p>{s.body}</p>
+                                        <small>
+                                          {s.kind === "source"
+                                            ? "材料观点"
+                                            : s.kind === "application"
+                                              ? "结合处境"
+                                              : "AI综合"}{" "}
+                                          · {s.source_ids.join("、")}
+                                        </small>
+                                      </section>
+                                    ))}
+                                    {r.answer.limitations && (
+                                      <p>{r.answer.limitations}</p>
+                                    )}
+                                    {r.answer.clarifying_questions.length >
+                                      0 && (
+                                      <section>
+                                        <h4>澄清问题</h4>
+                                        {r.answer.clarifying_questions.map(
+                                          (q, i) => (
+                                            <p key={i}>{q}</p>
+                                          )
+                                        )}
+                                      </section>
+                                    )}
+                                    {r.answer.followups.length > 0 && (
+                                      <section>
+                                        <h4>后续问题</h4>
+                                        {r.answer.followups.map((q, i) => (
+                                          <p key={i}>{q}</p>
+                                        ))}
+                                      </section>
+                                    )}
+                                    {r.answer.sources.length > 0 && (
+                                      <section>
+                                        <h4>当时采用的来源</h4>
+                                        {r.answer.sources.map(source => (
+                                          <details key={source.id}>
+                                            <summary>
+                                              {source.id} · {source.title}
+                                            </summary>
+                                            <p>
+                                              {source.date} · {source.author}
+                                            </p>
+                                            <p>{source.reason}</p>
+                                            <p>{source.excerpt}</p>
+                                            <a
+                                              href={source.url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                            >
+                                              查看原文
+                                            </a>
+                                            {source.public_copy_url && (
+                                              <a
+                                                href={source.public_copy_url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                              >
+                                                公开资料快照
+                                              </a>
+                                            )}
+                                          </details>
+                                        ))}
+                                      </section>
+                                    )}
+                                  </>
+                                ) : (
+                                  <p>
+                                    {r.unconfirmed
+                                      ? "服务端尚未确认结束，没有归档完整回答。"
+                                      : r.status === "generating"
+                                        ? "回答还在生成。"
+                                        : "这次没有生成可归档的完整回答。"}
+                                    {r.error_code &&
+                                      ` 错误标记：${r.error_code}`}
+                                  </p>
+                                )}
+                                <small>
+                                  归档的是当次服务端生成结果，不代表用户收到或读完。回答可能引用输入背景。
+                                </small>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </Fragment>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
               <p className="ops-empty">
-                {loading ? "正在读取提问…" : "本周期没有尚未过期的记录。"}
+                {loading ? "正在读取提问…" : "本周期没有已保存的记录。"}
               </p>
             )}
             {page.next_cursor && (
@@ -509,7 +764,7 @@ export default function AskOps() {
             )}
           </section>
           <footer>
-            此后台不改变问答的收集或保存规则。不保存补充背景、完整回答或内部推理；提问记录不关联账号。未成功写入或已经过期的问题无法统计。导出文件是本地副本，请妥善管理。
+            新归档包含提问、当次完整回答、来源和匿名会话标识；不关联邮箱或账号，不单独保存补充背景、提交的历史摘要和模型内部推理。旧版未保存的回答与已过期记录无法恢复。导出文件是私人本地副本，请妥善管理。
             {summary && <span>更新于{date(summary.generated_at)}</span>}
           </footer>
         </>

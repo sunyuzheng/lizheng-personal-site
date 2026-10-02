@@ -1,6 +1,5 @@
 /** Fixed-destination streaming relay. Model credentials and retrieval stay in Builder. */
-import { AccessError, accessEnabled, admission, backendOrigin, NetworkQuotaError, reserveGuestNetwork, resolveIdentity,
-  sameOrigin } from "../shared/ask-access";
+import { AccessError, accessEnabled, admission, backendOrigin, NetworkQuotaError, reserveGuestNetwork, resolveIdentity, resolveOpsVisitor, sameOrigin } from "../shared/ask-access";
 export const config = { runtime: "edge" };
 
 const HEADERS = { "Cache-Control": "no-store, no-transform" };
@@ -47,7 +46,7 @@ function terminalFrame(frame: Uint8Array): boolean {
 
 function failure(status: number, code: string): Response {
   return Response.json(
-    { code, message: "The answer did not finish. Try again shortly." },
+    { code, message: code === "ops_storage_unavailable" ? "未能确认问题保存，这次没有开始生成，也不扣次数。请重试。" : "The answer did not finish. Try again shortly." },
     { status, headers: HEADERS }
   );
 }
@@ -140,8 +139,17 @@ export default async function handler(request: Request): Promise<Response> {
       sameOrigin(request);
       const identity = await resolveIdentity(request);
       guestCookie = identity.cookie;
+      let ops: { visitor: string; entrypoint: "home" | "standalone" } | undefined;
+      let notice: unknown;
+      try { notice = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(body))?.query_log_notice; } catch {}
+      if (notice === "v3") {
+        if (process.env.ASK_OPS_ENABLED !== "true") throw new AccessError("ops_storage_unavailable");
+        const visitor = identity.tier === "public" ? { sub: identity.sub, cookie: identity.cookie } : await resolveOpsVisitor(request);
+        if (visitor.cookie) guestCookie = visitor.cookie;
+        ops = { visitor: visitor.sub, entrypoint: new URL(request.url).pathname === "/api/ask" ? "standalone" : "home" };
+      }
       if (identity.tier !== "founding") releaseNetwork = await reserveGuestNetwork(request);
-      proof = await admission(identity, "POST", "/api/ask", body);
+      proof = await admission(identity, "POST", "/api/ask", body, ops);
     }
     const upstream = await fetch(`${backendOrigin()}/api/ask`, {
       method: "POST",
@@ -177,6 +185,12 @@ export default async function handler(request: Request): Promise<Response> {
               message: "今天的3次体验已用完。Founding Member可登录后不限次提问。" }, { status: 429, headers: HEADERS }));
           }
         } catch { /* Only the fixed quota contract is forwarded. */ }
+      }
+      if (accessEnabled() && upstream.status === 503 &&
+          upstream.headers.get("x-ask-error-code") === "ops_storage_unavailable" &&
+          upstream.headers.get("content-type")?.includes("application/json")) {
+        const value = await boundedQuotaBody(upstream);
+        if (value?.code === "ops_storage_unavailable") { cleanup(); return reply(failure(503, "ops_storage_unavailable")); }
       }
       void upstream.body?.cancel().catch(() => {});
       cleanup();

@@ -238,6 +238,14 @@ export async function resolveIdentity(request: Request): Promise<AskIdentity> {
   const now = Math.floor(Date.now() / 1000);
   const session = await loadSession(request, now);
   if (session?.founding) return { sub: session.subject, tier: "founding", authenticated: true };
+  const guest = await resolveOpsVisitor(request);
+  // Non-Founding sign-in preserves its existing browser counter.
+  return { ...guest, tier: "public", authenticated: !!session };
+}
+
+/** Anonymous browser identity, independent of membership/account/email. */
+export async function resolveOpsVisitor(request: Request): Promise<{ sub: string; cookie?: string }> {
+  officialOrigin(request.url);
   const previous = readCookie(request, COOKIE_GUEST);
   const [oldId, oldSig] = (previous || "").split(".");
   let id = oldId, cookie: string | undefined;
@@ -253,14 +261,14 @@ export async function resolveIdentity(request: Request): Promise<AskIdentity> {
     const sharedDomain = ["www.lizheng.ai", "ask.lizheng.ai"].includes(new URL(request.url).hostname) ? "; Domain=lizheng.ai" : "";
     cookie = `${COOKIE_GUEST}=${id}.${await hmac(`guest-cookie:${id}`)}${sharedDomain}; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax`;
   }
-  // Non-Founding sign-in keeps the same experience counter, rather than resetting it.
-  return { sub: await opaqueSubject("guest", id), tier: "public", authenticated: !!session, cookie };
+  return { sub: await opaqueSubject("guest", id), cookie };
 }
-export async function admission(identity: AskIdentity, method: "GET" | "POST", path: "/api/quota" | "/api/ask", body: Uint8Array) {
+export async function admission(identity: AskIdentity, method: "GET" | "POST", path: "/api/quota" | "/api/ask", body: Uint8Array, ops?: { visitor: string; entrypoint: "home" | "standalone" }) {
+  if (ops && (method !== "POST" || path !== "/api/ask" || !/^guest:[A-Za-z0-9_-]{43}$/.test(ops.visitor) || !["home", "standalone"].includes(ops.entrypoint))) throw new AccessError("invalid_request", 400);
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", body));
   const proof = { v: 1, sub: identity.sub, tier: identity.tier, attempt: crypto.randomUUID(),
     exp: Math.floor(Date.now() / 1000) + 60, method, path,
-    body_sha256: Array.from(digest, b => b.toString(16).padStart(2, "0")).join("") };
+    body_sha256: Array.from(digest, b => b.toString(16).padStart(2, "0")).join(""), ...(ops || {}) };
   const encoded = base64url(encoder.encode(JSON.stringify(proof)));
   return `v1.${encoded}.${await hmac(`v1.${encoded}`, secret("ASK_ADMISSION_SECRET"))}`;
 }

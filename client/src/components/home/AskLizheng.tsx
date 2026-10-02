@@ -345,6 +345,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [busy, setBusy] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
+  const [opsLogging, setOpsLogging] = useState(false);
+  const [loggingReady, setLoggingReady] = useState(false);
+  const [loggingFailed, setLoggingFailed] = useState(false);
+  const conversation = useRef<string | null>(null);
   const [account, setAccount] = useState<AskAccount | null>(null);
   const [exporting, setExporting] = useState("");
   const [exportError, setExportError] = useState(0);
@@ -370,8 +374,21 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setPersonal(draft.intent === "apply" || !!draft.context);
     }
     void readAskAccount().then(signedIn || draft ? showLoginResult : setAccount);
-    return () => loginCleanup.current?.();
+    const controller = new AbortController();
+    void loadLogging(controller.signal);
+    return () => { controller.abort(); loginCleanup.current?.(); };
   }, []);
+
+  async function loadLogging(signal?: AbortSignal) {
+    setLoggingFailed(false);
+    try {
+      const response = await fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(4000)]) : AbortSignal.timeout(4000) });
+      if (!response.ok) throw new Error();
+      const value = await response.json();
+      if (value?.query_logging?.enabled !== true) throw new Error();
+      if (!signal?.aborted) { setOpsLogging(value?.ops_logging?.enabled === true && value.ops_logging.retention === "until_deleted" && value.ops_logging.notice === "v3" && value.ops_logging.answer_archive === true); setLoggingReady(true); }
+    } catch { if (!signal?.aborted) setLoggingFailed(true); }
+  }
   const logout = () => { setLoginStep(""); void logoutAsk().then(refreshAccount); };
   const login = () => {
     loginCleanup.current?.();
@@ -445,7 +462,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   }
   async function submit(event?: FormEvent, retry?: Turn) {
     event?.preventDefault();
-    if (active.current || (!retry && !question.trim())) return;
+    if (active.current || !loggingReady || (!retry && !question.trim())) return;
     if (loginStep !== "pending") setLoginStep("");
     const payload: AskPayload = retry?.request || {
       question: question.trim(),
@@ -458,7 +475,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           question: turn.question,
           summary: turn.result!.summary,
         })),
-      query_log_notice: "v1",
+      ...(opsLogging ? {
+        query_log_notice: "v3" as const,
+        conversation_id: conversation.current || (conversation.current = crypto.randomUUID()),
+      } : { query_log_notice: "v1" as const }),
     };
     const text = payload.question;
     const id = retry?.id || ++counter.current;
@@ -486,7 +506,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setTurns(prev =>
         prev.map(turn => (turn.id === id ? { ...turn, ...value } : turn))
       );
-    // Metadata is fetched only on interaction; reading the homepage starts no AI request.
+    // Public model metadata does not start an AI request.
     void fetch("/api/ask-lizheng/meta", {
       signal: controller.signal,
       cache: "no-store",
@@ -528,6 +548,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           error:
             quotaExhausted
               ? (error as AskError).scope === "network" ? c.networkQuotaExhausted : c.quotaExhausted
+              : error instanceof AskError && error.code === "ops_storage_unavailable"
+                ? (lang === "zh" ? "未能确认问题保存，这次没有开始生成，也不扣次数。请重试。" : "Question storage was not confirmed. No answer was generated and your quota was not used. Please retry.")
+              : error instanceof AskError && error.code === "answer_archive_failed"
+                ? (lang === "zh" ? "本次回答未能确认保存，未扣次数。请重试。" : "We could not confirm this answer was saved. Your quota was not used. Please retry.")
               : timedOut ||
             (error instanceof AskError && error.code === "relay_timeout")
               ? c.timeout
@@ -667,7 +691,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 <button
                   key="send"
                   className="btn btn-green"
-                  disabled={!question.trim() || outOfQuota}
+                  disabled={!question.trim() || outOfQuota || !loggingReady}
                   type="submit"
                 >
                   {c.send} ↑
@@ -675,13 +699,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               )}
             </div>
           </form>
+          {!loggingReady && <p role="status">{loggingFailed
+            ? <>{lang === "zh" ? "未能确认提问保存设置。" : "Could not confirm question storage."} <button type="button" onClick={() => void loadLogging()}>{lang === "zh" ? "重试" : "Retry"}</button></>
+            : (lang === "zh" ? "正在确认提问保存设置…" : "Checking question storage…")}</p>}
           <div className="lz-ask-meta">
             <details className="lz-ask-about">
               <summary>
-                {c.queryNotice}
+                {opsLogging ? (lang === "zh" ? "提交即同意保存问答，直到立正手动删除" : "Submitting saves your question and answer until Lizheng deletes them") : c.queryNotice}
                 <span>{c.privacy}</span>
               </summary>
-              <p>{c.privacyNote}</p>
+              <p>{opsLogging ? (lang === "zh"
+                ? "AI根据立正公开文章和视频整理回答，不是立正本人回复。提问和必要上下文会发送到Builder Space。运营后台保存提问正文、完整回答和所用来源、匿名浏览器标识、对话分组和轮次、提问字数、入口和用途、时间、模型、回答状态及耗时，直到立正手动删除，用于改进回答。记录仅立正可查看，不关联邮箱或账号，不单独保存补充背景、提交的历史摘要或模型内部推理；回答可能引用你提供的背景。刷新页面会清空当前对话界面。请勿输入不愿保存的私人信息。"
+                : "AI answers from Lizheng’s public articles and videos, rather than personal replies. Questions and necessary context go to Builder Space. Lizheng’s private ops dashboard keeps question text, full answers and their sources, anonymous browser ID, conversation grouping and turns, character count, entrypoint and intent, time, model, status and duration until manual deletion. Records are not linked to email or accounts; added background, submitted history and internal model reasoning are not stored separately; an answer may quote your background. Refreshing clears this page’s conversation. Keep private information out of your input.") : c.privacyNote}</p>
             </details>
             {account?.enabled && (
               <p className="lz-ask-account" aria-live="polite">
@@ -1036,6 +1065,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 disabled={busy}
                 className="lz-ask-reset"
                 onClick={() => {
+                  conversation.current = null;
                   setTurns([]);
                   setQuestion("");
                   setContext("");

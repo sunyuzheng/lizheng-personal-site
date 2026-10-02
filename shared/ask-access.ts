@@ -126,6 +126,7 @@ export function authCookie(name: string, value: string, seconds: number) {
   return `${name}=${value}; Path=/; Max-Age=${seconds}; HttpOnly; Secure; SameSite=Lax`;
 }
 export function safeReturnPath(value: string | null) {
+  if (value === "/ops/ask-lizheng") return value;
   return value === "/en" || value === "/en/" ? "/en/#ask-lizheng" : "/#ask-lizheng";
 }
 export async function lookupFounding(rawEmail: string): Promise<boolean> {
@@ -164,7 +165,7 @@ export async function createSession(subject: string, email: string, founding: bo
   await redis(["SET", await redisKey("session", id), await encryptRecord(record), "EX", SESSION_SECONDS]);
   return authCookie(COOKIE_SESSION, id, SESSION_SECONDS);
 }
-async function loadSession(request: Request, now: number, retry = 0): Promise<SessionRecord | null> {
+async function loadSession(request: Request, now: number, retry = 0, refreshMembership = true): Promise<SessionRecord | null> {
   const id = readCookie(request, COOKIE_SESSION);
   if (!id || !/^[a-f0-9]{64}$/.test(id)) return null;
   const key = await redisKey("session", id);
@@ -175,14 +176,14 @@ async function loadSession(request: Request, now: number, retry = 0): Promise<Se
       typeof value.founding !== "boolean" || !Number.isInteger(value.expiresAt) ||
       !Number.isInteger(value.checkedAt)) throw new AccessError("access_unavailable");
   if (value.expiresAt <= now) return null;
-  if (now - value.checkedAt >= FOUNDING_CACHE_SECONDS) {
+  if (refreshMembership && now - value.checkedAt >= FOUNDING_CACHE_SECONDS) {
     value.founding = await lookupFounding(value.email);
     value.checkedAt = now;
     const changed = await redis(["EVAL", "if redis.call('GET',KEYS[1]) ~= ARGV[1] then return 0 end; redis.call('SET',KEYS[1],ARGV[2],'EX',ARGV[3]); return 1", 1, key, stored as string, await encryptRecord(value), value.expiresAt - now]);
     if (changed !== 1) {
       if (retry >= 1) throw new AccessError("access_unavailable");
       // Logout or another refresh won the race; never resurrect the old identity.
-      return loadSession(request, now, retry + 1);
+      return loadSession(request, now, retry + 1, refreshMembership);
     }
   }
   return value;
@@ -262,4 +263,16 @@ export async function admission(identity: AskIdentity, method: "GET" | "POST", p
     body_sha256: Array.from(digest, b => b.toString(16).padStart(2, "0")).join("") };
   const encoded = base64url(encoder.encode(JSON.stringify(proof)));
   return `v1.${encoded}.${await hmac(`v1.${encoded}`, secret("ASK_ADMISSION_SECRET"))}`;
+}
+
+/** Separate operator authorization: Founding membership never grants this access. */
+export async function requireOpsOwner(request: Request) {
+  officialOrigin(request.url);
+  if (!accessEnabled() || process.env.ASK_OPS_ENABLED !== "true") throw new AccessError("ops_unavailable");
+  const emails = (process.env.ASK_OPS_ADMIN_EMAILS || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
+  if (!emails.length || emails.some(e => e.length > 320 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e))) throw new AccessError("ops_unavailable");
+  const session = await loadSession(request, Math.floor(Date.now() / 1000), 0, false);
+  if (!session) throw new AccessError("ops_login_required", 401);
+  if (!emails.includes(session.email.trim().toLowerCase())) throw new AccessError("ops_forbidden", 403);
+  return { email: session.email };
 }

@@ -101,30 +101,33 @@ function page(title: string, body: string) {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>问问立正 · ${title}</title><style>${PAGE_STYLE}</style></head><body><main><div class="brand">${SEAL}<span>问问立正</span></div>${body}</main><script>${PAGE_SCRIPT}</script></body></html>`;
 }
 function emailPage(url: URL, verifying: boolean, message = "") {
-  const params = new URLSearchParams({ return: safeReturnPath(url.searchParams.get("return")).startsWith("/en/") ? "/en/" : "/" });
+  const returnPath = safeReturnPath(url.searchParams.get("return"));
+  const ops = returnPath === "/ops/ask-lizheng";
+  const params = new URLSearchParams({ return: ops ? returnPath : returnPath.startsWith("/en/") ? "/en/" : "/" });
   const popup = url.searchParams.get("popup") === "1";
   if (popup) params.set("popup", "1");
   const query = params.toString();
   const action = `/api/ask-lizheng/auth/${verifying ? "email-verify" : "email-request"}?${query}`;
-  const returnPath = safeReturnPath(url.searchParams.get("return"));
+  const backLabel = ops ? "返回后台" : "返回提问";
+  const heading = ops ? "登录运营后台" : "验证Founding Member身份";
   const control = verifying
     ? '<label for="code">邮箱里的6位验证码</label><input id="code" class="code" name="code" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" required autofocus>'
     : '<label for="email">邮箱</label><input id="email" name="email" type="email" maxlength="320" autocomplete="email" placeholder="你在超线性学院用的邮箱" required autofocus>';
   const lead = verifying
     ? "验证码已发到你的邮箱，10分钟内有效。没收到的话，看看垃圾邮件，或者重新发送。"
-    : "输入你在超线性学院用的邮箱，我们发一个6位验证码。核验后，Founding Member每天提问不限次。";
+    : ops ? "输入运营账号邮箱，我们发一个6位验证码。" : "输入你在超线性学院用的邮箱，我们发一个6位验证码。核验后，Founding Member每天提问不限次。";
   const note = verifying
     ? "验证码只能用一次；输错5次需要重新发送。"
-    : "邮箱只用于核验身份。不是Founding Member也可以直接提问，每天3次。";
+    : ops ? "只有预先配置的运营账号能查看提问。社区会员身份不授予后台权限。" : "邮箱只用于核验身份。不是Founding Member也可以直接提问，每天3次。";
   const links = verifying
-    ? `<a href="/api/ask-lizheng/auth/login?${query}">重新发送或换个邮箱</a><a href="${returnPath}"${popup ? " data-back" : ""}>返回提问</a>`
-    : `<a href="${returnPath}"${popup ? " data-back" : ""}>返回提问</a>`;
+    ? `<a href="/api/ask-lizheng/auth/login?${query}">重新发送或换个邮箱</a><a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`
+    : `<a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`;
   // With a dedicated Academy application, SSO leads and the email code is the fallback, as at Story Coffee.
   if (!verifying && ssoReady()) {
-    const intro = message ? `<p class="alert" role="alert">${message}</p>` : '<p class="lead">用超线性学院账号登录，核验后Founding Member每天提问不限次。</p>';
-    return page("验证Founding身份", `<h1>验证Founding Member身份</h1>${intro}<a class="sso" href="/api/ask-lizheng/auth/login?provider=logto&${query}" data-busy="正在前往超线性学院…">使用超线性学院账号登录</a><p class="or">没有学院账号？用邮箱收验证码</p><form action="${action}" method="post">${control.replace(" autofocus", "")}<button type="submit" data-busy="正在发送…">发送验证码</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
+    const intro = message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${ops ? "使用超线性学院账号登录，随后核验后台访问权限。" : "用超线性学院账号登录，核验后Founding Member每天提问不限次。"}</p>`;
+    return page(ops ? "运营后台登录" : "验证Founding身份", `<h1>${heading}</h1>${intro}<a class="sso" href="/api/ask-lizheng/auth/login?provider=logto&${query}" data-busy="正在前往超线性学院…">使用超线性学院账号登录</a><p class="or">没有学院账号？用邮箱收验证码</p><form action="${action}" method="post">${control.replace(" autofocus", "")}<button type="submit" data-busy="正在发送…">发送验证码</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
   }
-  return page("验证Founding身份", `<h1>验证Founding Member身份</h1><ol><li data-n="1" class="${verifying ? "done" : "on"}">输入邮箱</li><li data-n="2" class="${verifying ? "on" : ""}">填写验证码</li></ol>${message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${lead}</p>`}<form action="${action}" method="post">${control}<button type="submit" data-busy="${verifying ? "正在核验…" : "正在发送…"}">${verifying ? "确认验证码" : "发送验证码"}</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
+  return page(ops ? "运营后台登录" : "验证Founding身份", `<h1>${heading}</h1><ol><li data-n="1" class="${verifying ? "done" : "on"}">输入邮箱</li><li data-n="2" class="${verifying ? "on" : ""}">填写验证码</li></ol>${message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${lead}</p>`}<form action="${action}" method="post">${control}<button type="submit" data-busy="${verifying ? "正在核验…" : "正在发送…"}">${verifying ? "确认验证码" : "发送验证码"}</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
 }
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   for (const [key, value] of Object.entries(ACCESS_HEADERS)) res.setHeader(key, value);

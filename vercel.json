@@ -5,6 +5,13 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
+    { "src": "/api/ask-lizheng/ops/(session|summary|records|export)", "dest": "/api/ask-lizheng-ops?__route=$1" },
+    {
+      "src": "/ops/ask-lizheng",
+      "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }],
+      "dest": "/index.html",
+      "headers": { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow, noarchive", "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY" }
+    },
     { "src": "/api/ask-lizheng/query-storage", "dest": "/api/ask-lizheng-query" },
     { "src": "/api/ask-lizheng/quota-storage", "dest": "/api/ask-lizheng-quota" },
     { "src": "/api/ask-lizheng/auth/(login|callback|session|logout|email-request|email-verify)", "dest": "/api/ask-lizheng-auth?__route=$1" },

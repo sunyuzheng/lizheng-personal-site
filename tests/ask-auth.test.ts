@@ -19,7 +19,7 @@ vi.mock("@logto/node", () => ({ default: class {
   async getIdTokenClaims() { return sdk.claims; }
 } }));
 import handler from "../api/ask-lizheng-auth";
-import { decryptRecord } from "../shared/ask-access";
+import { decryptRecord, requireOpsOwner, safeReturnPath } from "../shared/ask-access";
 const store = new Map<string, string>();
 beforeEach(() => {
   vi.stubGlobal("crypto", webcrypto); sdk.calls.length = 0;
@@ -56,6 +56,24 @@ async function call(url: string, cookie?: string, method = "GET", host = "www.li
   return result;
 }
 describe("Academy SSO boundary", () => {
+  it("returns a verified Logto owner to Ops using the existing session, with no broader redirect or member access", async () => {
+    vi.stubEnv("ASK_OPS_ENABLED", "true");
+    vi.stubEnv("ASK_OPS_ADMIN_EMAILS", "member@example.com");
+    const choice = await call("/api/ask-lizheng/auth/login?return=%2Fops%2Fask-lizheng");
+    expect(choice.body).toContain("登录运营后台");
+    expect(choice.body).toContain("provider=logto&return=%2Fops%2Fask-lizheng");
+    const login = await call("/api/ask-lizheng/auth/login?provider=logto&return=%2Fops%2Fask-lizheng");
+    expect((sdk.calls[0].value as { postRedirectUri: string }).postRedirectUri).toBe("https://www.lizheng.ai/ops/ask-lizheng");
+    const callback = await call("/api/ask-lizheng/auth/callback?code=valid&state=test-state", String(login.headers.get("set-cookie")).split(";")[0]);
+    expect(callback.headers.get("location")).toBe("https://www.lizheng.ai/ops/ask-lizheng");
+    const cookie = String((callback.headers.get("set-cookie") as string[])[0]).split(";")[0];
+    const request = new Request("https://www.lizheng.ai/api/ask-lizheng/ops/session", { headers: { cookie } });
+    expect(await requireOpsOwner(request)).toEqual({ email: "member@example.com" });
+    vi.stubEnv("ASK_OPS_ADMIN_EMAILS", "different-owner@example.com");
+    await expect(requireOpsOwner(request)).rejects.toMatchObject({ status: 403 });
+    for (const path of ["//attacker.example/ops/ask-lizheng", "/ops/ask-lizheng?next=evil", "/ops/other", "https://www.lizheng.ai/ops/ask-lizheng"])
+      expect(safeReturnPath(path)).toBe("/#ask-lizheng");
+  });
   it("uses a dedicated Traditional Web client and fixed SDK callback, with no redirect injection", async () => {
     const login = await call("/api/ask-lizheng/auth/login?provider=logto&return=https://attacker.example&popup=1");
     expect(login.statusCode).toBe(302);

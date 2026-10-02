@@ -98,6 +98,15 @@ function sentCode(index = deliveries.length - 1) { return String(deliveries[inde
 async function start(options: Parameters<typeof call>[1] = {}) { return call("email-request?popup=1&return=/en/", { body: { email: " Member@Example.com " }, ...options }); }
 
 describe("Coffee email ownership flow", () => {
+  it("preserves the exact Ops return through the native email fallback", async () => {
+    const choice = await call("login?return=%2Fops%2Fask-lizheng", { method: "GET" });
+    expect(choice.body).toContain("email-request?return=%2Fops%2Fask-lizheng");
+    const started = await call("email-request?return=%2Fops%2Fask-lizheng", { form: true, body: "email=member%40example.com" });
+    expect(started.body).toContain("email-verify?return=%2Fops%2Fask-lizheng");
+    const verified = await call("email-verify", { form: true, body: `code=${sentCode()}`, cookie: cookieOf(started) });
+    expect(verified.statusCode).toBe(303);
+    expect(verified.headers.get("location")).toBe(`${origin}/ops/ask-lizheng`);
+  });
   it("defaults to a self-contained mailbox form without a Logto app or secret disclosure", async () => {
     const response = await call("login?popup=1&return=https://attacker.example", { method: "GET" });
     expect(response.statusCode).toBe(200); expect(response.body).toContain("email-request");

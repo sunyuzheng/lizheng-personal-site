@@ -58,3 +58,7 @@ docs/                ← Content system, narrative, and guest maintenance guides
 ```
 
 See `QUICK_START.md` for common update tasks and deployment details.
+
+## 私人运营入口
+
+问问立正现有提问的私人后台与权限、统计边界见[运营后台说明](docs/ask-ops.md)。后台候选与问答APP的完整保存升级分开发布。

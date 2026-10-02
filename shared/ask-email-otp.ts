@@ -148,7 +148,7 @@ export async function verifyEmailCode(request: Request, rawCode: unknown): Promi
   if (!challenge || challenge.v !== 1 || challenge.origin !== origin ||
       !Number.isInteger(challenge.expiresAt) || challenge.expiresAt <= Date.now() / 1000 ||
       typeof challenge.codeHash !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(challenge.codeHash) ||
-      !["/#ask-lizheng", "/en/#ask-lizheng", "/?ask_login=done#ask-lizheng", "/en/?ask_login=done#ask-lizheng"].includes(challenge.returnPath))
+      !["/ops/ask-lizheng", "/#ask-lizheng", "/en/#ask-lizheng", "/?ask_login=done#ask-lizheng", "/en/?ask_login=done#ask-lizheng"].includes(challenge.returnPath))
     throw new AccessError("email_expired", 401);
   const email = emailAddress(challenge.email);
   const submitted = await codeHash(id, email, rawCode.trim());

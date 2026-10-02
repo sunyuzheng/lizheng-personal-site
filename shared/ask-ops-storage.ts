@@ -27,6 +27,11 @@ export type OpsStart = {
   conversation_id: string;
   intent: "understand" | "apply" | "find";
   entrypoint: "home" | "standalone";
+  // Asked under the v4 notice: the answer may be published with personal details removed,
+  // unless a situation or earlier turns took part ("1"). The situation itself stays owner-only.
+  notice_version?: "v4";
+  has_background?: "0" | "1";
+  context?: string;
 };
 export type OpsFinish = {
   v: 3;
@@ -57,20 +62,23 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
   }
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) fail();
   const r = parsed as OpsStart | OpsFinish;
+  const start = [
+    "v",
+    "event",
+    "record_id",
+    "question",
+    "created_at",
+    "model",
+    "visitor_id",
+    "conversation_id",
+    "intent",
+    "entrypoint",
+  ];
   const keys =
     r.event === "start"
-      ? [
-          "v",
-          "event",
-          "record_id",
-          "question",
-          "created_at",
-          "model",
-          "visitor_id",
-          "conversation_id",
-          "intent",
-          "entrypoint",
-        ]
+      ? "notice_version" in r
+        ? [...start, "notice_version", "has_background", "context"]
+        : start
       : [
           "v",
           "event",
@@ -126,6 +134,16 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
     !["home", "standalone"].includes(r.entrypoint)
   )
     fail();
+  if (
+    "notice_version" in r &&
+    (r.notice_version !== "v4" ||
+      (r.has_background !== "0" && r.has_background !== "1") ||
+      typeof r.context !== "string" ||
+      Array.from(r.context).length > 2500 ||
+      /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/.test(r.context) ||
+      (r.context.trim() !== "" && r.has_background !== "1"))
+  )
+    fail();
   const created = Date.parse(r.created_at);
   if (
     !Number.isFinite(created) ||
@@ -164,7 +182,7 @@ if redis.call('EXISTS',KEYS[1]) == 1 then
   return 0
 end
 local turn=redis.call('INCR',KEYS[5])
-redis.call('HSET',KEYS[1],'start_hash',ARGV[1],'record_id',ARGV[2],'question',ARGV[3],'created_at',ARGV[4],'model',ARGV[5],'visitor_id',ARGV[6],'conversation_id',ARGV[7],'intent',ARGV[8],'entrypoint',ARGV[9],'question_chars',ARGV[10],'turn_number',turn,'day',ARGV[11],'status','generating','duration_ms','','answer','','error_code','')
+redis.call('HSET',KEYS[1],'start_hash',ARGV[1],'record_id',ARGV[2],'question',ARGV[3],'created_at',ARGV[4],'model',ARGV[5],'visitor_id',ARGV[6],'conversation_id',ARGV[7],'intent',ARGV[8],'entrypoint',ARGV[9],'question_chars',ARGV[10],'turn_number',turn,'day',ARGV[11],'status','generating','duration_ms','','answer','','error_code','','notice_version',ARGV[13],'has_background',ARGV[14],'context',ARGV[15])
 redis.call('ZADD',KEYS[3],ARGV[12],ARGV[2])
 redis.call('ZADD',KEYS[4],turn,ARGV[2])
 for i=6,7 do
@@ -235,6 +253,10 @@ export async function storeOpsEvent(
       Array.from(r.question).length,
       day,
       ms,
+      // v3 records keep no background flag or situation; Ops reads them as never public.
+      r.notice_version ?? "v3",
+      r.has_background ?? "",
+      r.context ?? "",
     ]);
   } else
     result = await send([

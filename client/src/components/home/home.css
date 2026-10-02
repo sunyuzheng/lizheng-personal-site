@@ -2319,6 +2319,17 @@
   font-weight: 600;
   color: var(--lz-ink);
 }
+.lz-home .lz-ask-discovery-more {
+  justify-self: start;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lz-green-text);
+  text-underline-offset: 3px;
+}
+.lz-home .lz-ask-discovery-more:hover {
+  text-decoration: underline;
+}
 .lz-home .lz-ask-qcard {
   border: 1px solid var(--lz-line-2);
   border-radius: 14px;

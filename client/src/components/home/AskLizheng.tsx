@@ -62,6 +62,7 @@ const COPY = {
     discoveryLoading: "正在打开…",
     discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
     discoverySimilar: "问个类似的",
+    discoveryMore: "看更多问题",
     discoveryHelpful: "有帮助",
     discoveryHelped: "觉得有帮助",
     discoveryAttribution: "AI整理，不是立正本人回复。",
@@ -174,6 +175,7 @@ const COPY = {
     discoveryLoading: "Opening…",
     discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
     discoverySimilar: "Ask something similar",
+    discoveryMore: "See more questions",
     discoveryHelpful: "Helpful",
     discoveryHelped: "Found it helpful",
     discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
@@ -428,6 +430,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [foundingOpen, setFoundingOpen] = useState(false);
   // Real questions others asked, published from Ops; shown on the Chinese page in place of the examples.
   const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
+  // More than the four picks exist: link to the full list on ask.lizheng.ai.
+  const [discoveryMore, setDiscoveryMore] = useState(false);
   // Whether this browser saw the section before: counted with each card action.
   const discoveryVisit = useRef<"first" | "return">("first");
   const [openCard, setOpenCard] = useState("");
@@ -491,6 +495,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       const picked = pickDiscovery(pool, seen);
       rememberSeen(seen, picked.map(item => item.public_id));
       discoveryVisit.current = seen.length ? "return" : "first";
+      setDiscoveryMore(pool.length > picked.length);
       setDiscoveryCards(picked);
     });
     return () => controller.abort();
@@ -972,6 +977,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   </article>
                 );
               })}
+              {discoveryMore && (
+                <a className="lz-ask-discovery-more" href="https://ask.lizheng.ai/#questions" {...EXTERNAL}
+                  onClick={() => track("Ask Discovery More", { surface: "home", page: 1 })}>{c.discoveryMore} ↗</a>
+              )}
             </div>
           ) : (
             <div className="lz-ask-starters">

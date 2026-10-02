@@ -377,8 +377,39 @@ describe("trusted v3 intake boundary", () => {
     expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
     const command = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
     expect(command[3]).toBe(OPS_PREFIX + "record:" + ID);
-    expect(command.at(-3)).toBe(Array.from(r.question).length);
+    expect(command.at(-6)).toBe(Array.from(r.question).length);
+    // A v3 record says so, with no background flag or situation.
+    expect(command.slice(-3)).toEqual(["v3", "", ""]);
     expect(command[1]).not.toMatch(/EXPIRE/); // only deletion tombstones expire
+  });
+  it("stores a v4 record's notice, background flag and owner-only situation", async () => {
+    const r = { ...start(), notice_version: "v4", has_background: "1", context: "目前的情况与限制：合成处境" },
+      body = Buffer.from(JSON.stringify(r));
+    expect(opsEvent(body)).toEqual(r);
+    expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
+    const command = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
+    expect(command.slice(-3)).toEqual(["v4", "1", "目前的情况与限制：合成处境"]);
+    const plain = { ...start(), notice_version: "v4", has_background: "0", context: "" };
+    expect(opsEvent(Buffer.from(JSON.stringify(plain)))).toEqual(plain);
+  });
+  it("rejects a v4 record that is incomplete or inconsistent", () => {
+    const v4 = { ...start(), notice_version: "v4", has_background: "0", context: "" };
+    for (const mutation of [
+      { notice_version: "v5" },
+      { notice_version: "v3" },
+      { has_background: "2" },
+      { has_background: 0 },
+      { context: null },
+      { context: "\ud800" },
+      { context: "a".repeat(2501) },
+      // A situation always marks the record as carrying background.
+      { context: "合成处境" },
+    ])
+      expect(() => opsEvent(Buffer.from(JSON.stringify({ ...v4, ...mutation })))).toThrow("invalid_request");
+    for (const field of ["notice_version", "has_background", "context"]) {
+      const { [field]: _dropped, ...partial } = v4 as Record<string, unknown>;
+      expect(() => opsEvent(Buffer.from(JSON.stringify(partial)))).toThrow("invalid_request");
+    }
   });
   it("keeps anonymous visitor across membership sign-in and only signs pair for v3", async () => {
     const guest = await resolveIdentity(request()),

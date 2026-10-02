@@ -18,13 +18,13 @@ def r():
     return fakeredis.FakeRedis(decode_responses=True)
 
 def rid(n): return str(UUID(int=n))
-def start(r, n=1, visitor=V, conversation=C, day=D, score=1790870400000, digest=None):
+def start(r, n=1, visitor=V, conversation=C, day=D, score=1790870400000, digest=None, notice=('v3', '', '')):
     i = rid(n)
     keys = [P+'record:'+i, P+'deleted:'+i, P+'records', P+'conversation:'+conversation,
         P+'sequence:'+conversation, P+'total', P+'day:'+day, P+'visitors', P+'day-visitors:'+day,
         P+'conversations', P+'day-conversations:'+day]
     args = [digest or 'synthetic'+i, i, '合成提问😀', '2026-10-01T16:00:00.000Z', 'deepseek-v4-flash',
-        visitor, conversation, 'understand', 'home', 5, day, score]
+        visitor, conversation, 'understand', 'home', 5, day, score, *notice]
     return r.eval(SCRIPTS['OPS_START_SCRIPT'], len(keys), *keys, *args)
 
 def finish(r,n=1,status='answered',duration=1200):
@@ -60,3 +60,13 @@ def test_finish_once_and_no_resurrection_without_start(r):
     assert r.hget(P+'total','generating')=='0'
     assert json.loads(r.hget(P+'record:'+rid(1),'answer'))['summary']=='合成回答'
     assert r.ttl(P+'record:'+rid(1))==-1
+
+
+def test_v4_intake_keeps_notice_background_and_situation(r):
+    assert start(r, notice=('v4', '1', '合成处境')) == 1
+    record = r.hgetall(P+'record:'+rid(1))
+    assert (record['notice_version'], record['has_background'], record['context']) == ('v4', '1', '合成处境')
+    assert start(r, n=2, notice=('v4', '0', '')) == 1
+    assert r.hget(P+'record:'+rid(2), 'has_background') == '0'
+    assert start(r, n=3) == 1
+    assert (r.hget(P+'record:'+rid(3), 'notice_version'), r.hget(P+'record:'+rid(3), 'has_background')) == ('v3', '')

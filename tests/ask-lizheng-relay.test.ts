@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { webcrypto } from "node:crypto";
 import handler from "../api/ask-lizheng";
+import { clientNetwork, createSession, GUEST_NETWORK_DAILY_LIMIT } from "../shared/ask-access";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -50,23 +51,48 @@ function abortingFetch() {
   );
 }
 
+// A small Redis stand-in: the network counter script, DECR, and session records.
+const redisStore = new Map<string, string | number>();
+const redisCalls: unknown[][] = [];
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.unstubAllEnvs();
   vi.useRealTimers();
+  redisStore.clear();
+  redisCalls.length = 0;
 });
 
-function protectedRequest(origin = "https://www.lizheng.ai") {
+function withRedis(upstream: ReturnType<typeof vi.fn>) {
+  return vi.fn(async (url: string | URL, init?: RequestInit) => {
+    if (!String(url).includes("upstash.io")) return upstream(url, init);
+    const args = JSON.parse(String(init?.body));
+    redisCalls.push(args);
+    const [command, key] = args;
+    let result: unknown = null;
+    if (command === "EVAL") { result = Number(redisStore.get(args[3]) ?? 0) + 1; redisStore.set(args[3], result as number); }
+    else if (command === "DECR") { result = Number(redisStore.get(key) ?? 0) - 1; redisStore.set(key, result as number); }
+    else if (command === "SET") { redisStore.set(key, args[2]); result = "OK"; }
+    else if (command === "GET") result = redisStore.get(key) ?? null;
+    return Response.json({ result });
+  });
+}
+function networkCounts() {
+  return [...redisStore.entries()].filter(([key]) => key.startsWith("ask:net:v1:"));
+}
+function protectedRequest(origin = "https://www.lizheng.ai", headers: Record<string, string> = {}) {
   vi.stubGlobal("crypto", webcrypto);
   vi.stubEnv("ASK_QUOTA_ENABLED", "true");
   vi.stubEnv("ASK_AUTH_SECRET", "test-auth-secret-with-at-least-32-bytes");
   vi.stubEnv("ASK_ADMISSION_SECRET", "test-admission-secret-with-at-least-32-bytes");
-  return request(publicPayload, { headers: { Origin: origin, "Content-Type": "application/json", "X-Founding": "true" } });
+  vi.stubEnv("ASK_AUTH_REDIS_REST_URL", "https://test-ask.upstash.io");
+  vi.stubEnv("ASK_AUTH_REDIS_REST_TOKEN", "test-only-redis-token");
+  return request(publicPayload, { headers: { Origin: origin, "Content-Type": "application/json", "X-Founding": "true",
+    "x-vercel-forwarded-for": "203.0.113.7", ...headers } });
 }
 describe("account admission relay", () => {
   it("adds a server proof bound to the exact body and ignores browser membership claims", async () => {
     const fetchMock = vi.fn().mockResolvedValue(sse(event("result", { status: "answered" })));
-    vi.stubGlobal("fetch", fetchMock);
+    vi.stubGlobal("fetch", withRedis(fetchMock));
     const response = await handler(protectedRequest());
     expect(response.status).toBe(200);
     const headers = fetchMock.mock.calls[0][1].headers;
@@ -78,15 +104,15 @@ describe("account admission relay", () => {
     expect(response.headers.get("set-cookie")).toContain("__Secure-ask-guest=");
     await response.text();
   });
-  it("rejects cross-site requests before contacting Builder", async () => {
+  it("rejects cross-site requests before contacting Builder or counting the network", async () => {
     const fetchMock = vi.fn(); vi.stubGlobal("fetch", fetchMock);
     const response = await handler(protectedRequest("https://attacker.example"));
     expect(response.status).toBe(403); expect(fetchMock).not.toHaveBeenCalled();
   });
   it("passes only fixed quota fields and preserves the anonymous cookie on quota rejection", async () => {
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({ code: "quota_exhausted", remaining: 0,
+    vi.stubGlobal("fetch", withRedis(vi.fn().mockResolvedValue(Response.json({ code: "quota_exhausted", remaining: 0,
       reset_at: "2026-10-02T16:00:00+00:00", private_detail: "synthetic-private" },
-      { status: 429, headers: { "X-Ask-Error-Code": "quota_exhausted" } })));
+      { status: 429, headers: { "X-Ask-Error-Code": "quota_exhausted" } }))));
     const response = await handler(protectedRequest());
     expect(response.status).toBe(429); expect(response.headers.get("set-cookie")).toBeTruthy();
     const value = await response.json(); expect(value.code).toBe("quota_exhausted"); expect(value.remaining).toBe(0);
@@ -95,11 +121,77 @@ describe("account admission relay", () => {
   it("bounds a marked but unfinished quota response instead of waiting for the answer deadline", async () => {
     const cancelled = vi.fn();
     const body = new ReadableStream({ cancel: cancelled });
-    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(body, {
+    vi.stubGlobal("fetch", withRedis(vi.fn().mockResolvedValue(new Response(body, {
       status: 429, headers: { "Content-Type": "application/json", "X-Ask-Error-Code": "quota_exhausted" },
-    })));
+    }))));
     const response = await handler(protectedRequest());
     expect((await response.json()).code).toBe("rate_limited"); expect(cancelled).toHaveBeenCalled();
+  });
+});
+
+describe("guest network cap", () => {
+  it("counts cookie-less guests from one network together, so dropping the cookie does not reset anything", async () => {
+    const upstream = vi.fn(async () => sse(event("result", { status: "answered" })));
+    vi.stubGlobal("fetch", withRedis(upstream));
+    for (let i = 0; i < 3; i++) {
+      const response = await handler(protectedRequest());
+      expect(response.status).toBe(200);
+      await response.text();
+    }
+    expect(networkCounts()).toHaveLength(1);
+    expect(networkCounts()[0][1]).toBe(3);
+    await (await handler(protectedRequest(undefined, { "x-vercel-forwarded-for": "198.51.100.4" }))).text();
+    expect(networkCounts()).toHaveLength(2);
+  });
+  it("answers over the cap with the quota contract and never contacts Builder", async () => {
+    const upstream = vi.fn(); vi.stubGlobal("fetch", withRedis(upstream));
+    await handler(protectedRequest());
+    const [key] = networkCounts()[0];
+    redisStore.set(key, GUEST_NETWORK_DAILY_LIMIT);
+    upstream.mockClear();
+    const response = await handler(protectedRequest());
+    expect(response.status).toBe(429);
+    const value = await response.json();
+    expect(value.code).toBe("quota_exhausted"); expect(value.remaining).toBe(0);
+    expect(value.reset_at).toMatch(/T16:00:00\.000Z$/);
+    expect(response.headers.get("set-cookie")).toContain("__Secure-ask-guest=");
+    expect(upstream).not.toHaveBeenCalled();
+  });
+  it("gives the count back when Builder made no answer", async () => {
+    vi.stubGlobal("fetch", withRedis(vi.fn().mockResolvedValue(Response.json({ code: "quota_exhausted", remaining: 0,
+      reset_at: "2026-10-02T16:00:00+00:00" }, { status: 429, headers: { "X-Ask-Error-Code": "quota_exhausted" } }))));
+    expect((await handler(protectedRequest())).status).toBe(429);
+    vi.stubGlobal("fetch", withRedis(vi.fn().mockRejectedValue(new Error("synthetic network failure"))));
+    expect((await handler(protectedRequest())).status).toBe(502);
+    expect(networkCounts()[0][1]).toBe(0);
+  });
+  it("fails closed when the counter is unavailable", async () => {
+    const upstream = vi.fn();
+    vi.stubGlobal("fetch", vi.fn(async (url: string | URL, init?: RequestInit) =>
+      String(url).includes("upstash.io") ? new Response("down", { status: 500 }) : upstream(url, init)));
+    const response = await handler(protectedRequest());
+    expect(response.status).toBe(503);
+    expect((await response.json()).code).toBe("access_unavailable");
+    expect(upstream).not.toHaveBeenCalled();
+  });
+  it("does not count Founding sessions", async () => {
+    const upstream = vi.fn(async () => sse(event("result", { status: "answered" })));
+    vi.stubGlobal("fetch", withRedis(upstream));
+    protectedRequest();
+    const cookie = await createSession(`user:${"f".repeat(43)}`, "member@example.com", true);
+    const response = await handler(protectedRequest(undefined, { cookie: cookie.split(";")[0] }));
+    expect(response.status).toBe(200);
+    await response.text();
+    expect(networkCounts()).toHaveLength(0);
+    expect(upstream).toHaveBeenCalledOnce();
+  });
+  it("keys IPv6 clients by their /64 and unwraps IPv4-mapped addresses", () => {
+    const at = (address: string) => clientNetwork(new Request("https://www.lizheng.ai/", { headers: { "x-forwarded-for": address } }));
+    expect(at("2001:db8:85a3:12:1:2:3:4")).toBe(at("2001:0db8:85a3:0012:ffff::9"));
+    expect(at("2001:db8::1")).toBe("2001:db8:0:0::/64");
+    expect(at("2001:db8:85a3:12::1")).not.toBe(at("2001:db8:85a3:13::1"));
+    expect(at("::ffff:203.0.113.7")).toBe("203.0.113.7");
+    expect(at("203.0.113.7, 10.0.0.1")).toBe("203.0.113.7");
   });
 });
 

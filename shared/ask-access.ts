@@ -186,6 +186,49 @@ async function loadSession(request: Request, now: number, retry = 0): Promise<Se
   }
   return value;
 }
+/**
+ * The guest quota counts by cookie, so a client that drops cookies (a script,
+ * a blocked or cross-site browser) would be a new guest on every request. Each
+ * network therefore also has a daily cap on guest questions, generous enough
+ * for a room of people sharing one Wi-Fi.
+ */
+export const GUEST_NETWORK_DAILY_LIMIT = 300;
+export class NetworkQuotaError extends AccessError {
+  constructor(readonly resetAt: string) {
+    super("quota_exhausted", 429);
+  }
+}
+export function clientNetwork(request: Request) {
+  // Vercel overwrites these forwarded headers. Never persist the raw address.
+  const raw = (request.headers.get("x-vercel-forwarded-for") || request.headers.get("x-forwarded-for") || "")
+    .split(",")[0].trim().toLowerCase().slice(0, 100);
+  const mapped = /^::ffff:(\d{1,3}(?:\.\d{1,3}){3})$/.exec(raw);
+  if (mapped) return mapped[1];
+  if (!raw.includes(":")) return raw || "unknown";
+  // An IPv6 client usually controls a whole /64, so count the prefix.
+  const [head, tail] = raw.split("::");
+  const left = head ? head.split(":") : [];
+  const right = tail ? tail.split(":") : [];
+  const groups = tail === undefined ? left : [...left, ...Array(Math.max(0, 8 - left.length - right.length)).fill("0"), ...right];
+  return `${groups.slice(0, 4).map(group => group.replace(/^0+(?=.)/, "")).join(":")}::/64`;
+}
+/** Counts one guest question for the network; the returned function gives it back when no answer was made. */
+export async function reserveGuestNetwork(request: Request, now = Date.now()) {
+  const day = new Date(now + 8 * 3_600_000).toISOString().slice(0, 10); // Beijing day, like the quota
+  const key = `ask:net:v1:${await hmac(`network:${clientNetwork(request)}`)}:${day}`;
+  const used = await redis(["EVAL",
+    "local n = redis.call('INCR', KEYS[1]); if n == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end; return n",
+    1, key, 172_800]);
+  if (typeof used !== "number" || !Number.isInteger(used)) throw new AccessError("access_unavailable");
+  if (used > GUEST_NETWORK_DAILY_LIMIT)
+    throw new NetworkQuotaError(new Date(Date.parse(`${day}T00:00:00+08:00`) + 86_400_000).toISOString());
+  let released = false;
+  return async () => {
+    if (released) return;
+    released = true;
+    try { await redis(["DECR", key]); } catch { /* The count expires with the day. */ }
+  };
+}
 export type AskIdentity = { sub: string; tier: "public" | "founding"; authenticated: boolean; cookie?: string };
 export async function resolveIdentity(request: Request): Promise<AskIdentity> {
   officialOrigin(request.url);

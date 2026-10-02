@@ -1,5 +1,6 @@
 /** Fixed-destination streaming relay. Model credentials and retrieval stay in Builder. */
-import { AccessError, accessEnabled, admission, backendOrigin, resolveIdentity, sameOrigin } from "../shared/ask-access";
+import { AccessError, accessEnabled, admission, backendOrigin, NetworkQuotaError, reserveGuestNetwork, resolveIdentity,
+  sameOrigin } from "../shared/ask-access";
 export const config = { runtime: "edge" };
 
 const HEADERS = { "Cache-Control": "no-store, no-transform" };
@@ -78,6 +79,7 @@ async function boundedQuotaBody(response: Response): Promise<Record<string, unkn
 export default async function handler(request: Request): Promise<Response> {
   if (request.method !== "POST") return failure(405, "method_not_allowed");
   let guestCookie: string | undefined;
+  let releaseNetwork: (() => Promise<void>) | undefined;
   const reply = (response: Response) => {
     if (guestCookie) response.headers.append("Set-Cookie", guestCookie);
     return response;
@@ -138,6 +140,7 @@ export default async function handler(request: Request): Promise<Response> {
       sameOrigin(request);
       const identity = await resolveIdentity(request);
       guestCookie = identity.cookie;
+      if (identity.tier !== "founding") releaseNetwork = await reserveGuestNetwork(request);
       proof = await admission(identity, "POST", "/api/ask", body);
     }
     const upstream = await fetch(`${backendOrigin()}/api/ask`, {
@@ -160,6 +163,8 @@ export default async function handler(request: Request): Promise<Response> {
       !upstream.body ||
       !upstream.headers.get("content-type")?.includes("text/event-stream")
     ) {
+      // No answer was made, so the network's guest count is given back.
+      await releaseNetwork?.();
       if (accessEnabled() && upstream.status === 429 &&
           upstream.headers.get("x-ask-error-code") === "quota_exhausted" &&
           upstream.headers.get("content-type")?.includes("application/json")) {
@@ -293,6 +298,12 @@ export default async function handler(request: Request): Promise<Response> {
     }));
   } catch (error) {
     cleanup();
+    await releaseNetwork?.();
+    // Same contract as the per-guest quota, so both pages offer Founding sign-in.
+    if (error instanceof NetworkQuotaError)
+      return reply(Response.json({ code: "quota_exhausted", remaining: 0, reset_at: error.resetAt,
+        message: "今天来自这个网络的免费提问已经很多了，请明天再来。Founding Member可登录后不限次提问。" },
+      { status: 429, headers: HEADERS }));
     if (error instanceof AccessError) return reply(failure(error.status, error.code));
     return reply(failure(
       timedOut ? 504 : 502,

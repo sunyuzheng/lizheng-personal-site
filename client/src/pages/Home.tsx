@@ -80,9 +80,12 @@ function useHomeCounts(rootRef: RefObject<HTMLElement | null>, lang: Lang) {
     const onClick = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
       if (!link || link.closest("#ask-lizheng")) return;
-      const section = link.closest("section[id], header, footer");
+      // The chapter's id; blocks without one (the numbers, the photos, the closing invitation)
+      // by their own class name; the header and footer by name.
+      const owner = link.closest("section[id], header, footer") ?? link.closest("section");
+      const section = !owner ? "page" : owner.id || (owner.tagName === "SECTION" ? owner.classList[owner.classList.length - 1] : owner.tagName.toLowerCase());
       try {
-        track("Home Link", { section: section?.id || section?.tagName.toLowerCase() || "page", to: linkTarget(link.href, location.href) });
+        track("Home Link", { section: section || "page", to: linkTarget(link.href, location.href) });
       } catch {}
     };
     root.addEventListener("click", onClick);

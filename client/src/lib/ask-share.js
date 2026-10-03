@@ -5,6 +5,7 @@
 // src/share.js in the ask-lizheng repository (that copy is Chinese only).
 import qrcode from 'qrcode-generator';
 import {MARK_PATHS} from '@/components/site/LizhengMark';
+import {isMemberVideo} from './ask-lizheng';
 
 const MARK_VIEWBOX = [1219.044577, 649.234004];
 const MARK_TRANSFORM = {translate: [-17.980429, 953.72375], scale: [0.1, -0.1]};
@@ -258,7 +259,7 @@ function sourceRow(ctx, source, number) {
   const all = wrap(ctx, units([{text: source.title || ''}], style), INNER - 70);
   const titleLines = all.slice(0, 2);
   const h = 24 + titleLines.length * 40 + 34 + 24;
-  const type = source.source_visibility === 'members-only' && source.membership_platform === 'youtube' ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
+  const type = isMemberVideo(source) ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
   const meta = [type, source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
   return {h, link: source.url, draw(c, y) {
     c.fillStyle = C.line; c.fillRect(PAD, y, INNER, 2);

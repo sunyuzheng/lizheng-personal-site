@@ -9,6 +9,9 @@
   --serif: var(--lz-serif-zh);
   --sans: var(--lz-sans-zh);
   --num: var(--lz-num);
+  --lz-member-ink: #79603f;
+  --lz-member-line: #d9cfbb;
+  --lz-member-surface: #faf8f2;
   background: var(--lz-ivory);
   color: var(--lz-ink);
   font-family: var(--sans);
@@ -2619,19 +2622,69 @@
 .lz-home .lz-ask-source:target {
   border-color: var(--lz-green);
 }
-.lz-home .lz-ask-source-member { border-color: #c6a55d; background: #fbf7ed; }
-.lz-home .lz-ask-member-badge { padding: 3px 8px; border-radius: 5px; color: #705111; background: #f1e2bd; }
-.lz-home .lz-ask-source .lz-ask-member-note { color: #705111; font-size: 12px; }
-.lz-home .lz-ask-source .lz-ask-member-watch { margin: 10px 0; font-weight: 600; }
-.lz-home .lz-ask-member-invite { margin-top: 16px; padding: 14px 18px; border-left: 3px solid #c6a55d; background: #fbf7ed; font-size: 13px; }
+.lz-home .lz-ask-source-member {
+  border-color: var(--lz-member-line);
+  background: linear-gradient(150deg, var(--lz-member-surface), var(--lz-paper) 85%);
+}
+.lz-home .lz-ask-member-badge {
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--lz-member-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .05em;
+}
+.lz-home .lz-ask-source .lz-ask-member-note {
+  padding-top: 12px;
+  border-top: 1px solid #e9e3d6;
+  color: var(--lz-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.lz-home .lz-ask-source .lz-ask-member-watch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin: 10px 0;
+  padding: 0 12px;
+  border: 1px solid var(--lz-member-line);
+  border-radius: 7px;
+  color: var(--lz-member-ink);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+.lz-home .lz-ask-source .lz-ask-member-watch:hover {
+  background: #f0eadf;
+}
+.lz-home .lz-ask-member-invite {
+  margin-top: 16px;
+  padding: 20px 0 0;
+  border-top: 1px solid var(--lz-line);
+  background: transparent;
+  color: var(--lz-muted);
+  font-size: 12.5px;
+}
 .lz-home .lz-ask-member-invite p { margin: 0 0 6px; }
-.lz-home .lz-ask-member-invite a { color: #705111; font-weight: 600; }
+.lz-home .lz-ask-member-invite a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--lz-member-ink);
+  font-weight: 500;
+}
 .lz-home .lz-ask-source > div {
   display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   justify-content: space-between;
   margin-bottom: 8px;
   font-size: 12px;
   color: var(--lz-muted);
+}
+.lz-home .lz-ask-source > div > time {
+  margin-left: auto;
 }
 .lz-home .lz-ask-source a {
   display: block;

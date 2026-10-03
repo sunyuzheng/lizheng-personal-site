@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+vi.mock("@/components/site/LizhengMark", () => ({ MARK_PATHS: [] }));
 import {
   askLizheng,
   applyAskEvent,
@@ -77,6 +78,38 @@ afterEach(() => {
 });
 
 describe("askLizheng stream protocol", () => {
+  it("exports membership-derived articles as articles and only actual member videos as member videos", async () => {
+    const drawn: string[] = [];
+    const context = new Proxy<Record<string, unknown>>({
+      measureText: (text: string) => ({ width: text.length * 12 }),
+      fillText: (text: string) => drawn.push(text),
+    }, {
+      get(target, key: string) { return target[key] ?? (() => {}); },
+      set(target, key: string, value) { target[key] = value; return true; },
+    });
+    vi.stubGlobal("document", {
+      fonts: { ready: Promise.resolve(), load: () => Promise.resolve([]) },
+      createElement: () => ({
+        getContext: () => context,
+        toBlob: (done: (blob: Blob) => void) => done(new Blob(["synthetic PNG"])),
+      }),
+    });
+    const membership = { source_visibility: "members-only", membership_platform: "youtube" };
+    const { exportAnswer } = await import("./ask-share.js");
+    await exportAnswer("png", {
+      question: "合成导出分类测试",
+      date: new Date("2026-10-02T00:00:00Z"),
+      result: { ...result, sources: [
+        { ...source, ...membership, source_type: "community-post", date: "2026-01-01" },
+        { ...source, id: "S2", ...membership, source_type: "video-transcript", date: "2026-01-02" },
+        { ...source, id: "S3", source_type: "video-transcript", date: "2026-01-03" },
+      ] },
+    });
+    expect(drawn).toContain("文章 · 2026-01-01 · ");
+    expect(drawn).toContain("会员视频 · 2026-01-02 · ");
+    expect(drawn).toContain("视频 · 2026-01-03 · ");
+    expect(drawn.filter(text => text.startsWith("会员视频 · "))).toHaveLength(1);
+  });
   it("carries membership metadata through SSE and only links the actual channel membership", async () => {
     const member = { ...source, source_type: "video-transcript", source_visibility: "members-only", text_access: "public", membership_platform: "youtube",
       membership_url: "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join", transcript_quality: "uncorrected-asr" };

@@ -45,7 +45,7 @@ const COPY = {
       ["你的隐私", "提问是匿名的：记录不关联邮箱、账号或IP，我不知道是谁问的。登录只用来核验Founding身份，不会和提问记在一起。「结合我的处境」里填的内容不单独保存，但回答可能会提到它，所以请别填写私密信息。"],
       ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
     ] as [string, string][],
-    noticeV4: "很多问题是共性的。提交即同意保存问答，去掉个人信息后可能整理公开，帮到更多人。请勿填写私密信息。",
+    noticeV4: "问答会保存，去掉个人信息后可能公开，帮到有同样问题的人。请别写私密信息。",
     noticeV4Parts: [
       ["为什么保存", "很多问题是共性的，你问的往往也是别人想问的。我们会把常见的问题和回答整理出来，去掉个人信息后公开，比如「今天大家在问什么」；我也会从中找选题写文章、做视频，并用它们改进回答。"],
       ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。"],
@@ -160,7 +160,7 @@ const COPY = {
       ["Your privacy", "Questions are anonymous: records are not linked to email, accounts or IP, so I don’t know who asked. Signing in only checks Founding Member status and is never stored with your questions. What you write under “Apply to my situation” is not stored separately, but an answer may mention it, so please keep private information out."],
       ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
     ] as [string, string][],
-    noticeV4: "Many questions are shared. By submitting, you agree we save your question and answer and may publish them, with personal details removed, to help more people. Please keep private information out.",
+    noticeV4: "Questions and answers are saved and, with personal details removed, may be published to help people with the same question. Please keep private details out.",
     noticeV4Parts: [
       ["Why we save questions", "Many questions are shared: what you ask is often what others want to know too. We collect common questions and answers and publish them with personal details removed, for example as “What people asked today.” I also find topics in them for articles and videos, and use them to improve answers."],
       ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats."],

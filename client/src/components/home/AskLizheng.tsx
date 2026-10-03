@@ -18,7 +18,7 @@ import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
+import { askedAgo, discoveryDetail, discoveryPool, newestFirst, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
@@ -525,7 +525,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       rememberSeen(seen, picked.map(item => item.public_id));
       discoveryVisit.current = seen.length ? "return" : "first";
       setDiscoveryMore(pool.length > picked.length);
-      setDiscoveryCards(picked);
+      setDiscoveryCards(newestFirst(picked));
     });
     return () => controller.abort();
   }, [lang]);
@@ -964,7 +964,12 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 return (
                   <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
                     <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
-                      {card.topic_label && <small>{card.topic_label}</small>}
+                      {card.published_at && (
+                        <time className={Date.now() - Date.parse(card.published_at) < 3600000 ? "fresh" : undefined} dateTime={card.published_at}
+                          title={new Date(card.published_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
+                          {askedAgo(card.published_at)}
+                        </time>
+                      )}
                       <b>{card.question}</b>
                       {!open && card.summary && <span className="summary">{card.summary}</span>}
                       {meta && <span className="meta">{meta}</span>}

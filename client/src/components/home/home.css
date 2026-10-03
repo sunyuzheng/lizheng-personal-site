@@ -2350,9 +2350,17 @@
   text-align: left;
   cursor: pointer;
 }
-.lz-home .lz-ask-qcard-head small {
+.lz-home .lz-ask-qcard-head :is(small, time) {
   font-size: 12px;
   font-weight: 600;
+  color: var(--lz-green-text);
+}
+/* When a question appeared; green while it is under an hour old. */
+.lz-home .lz-ask-qcard-head time {
+  color: var(--lz-muted);
+  font-variant-numeric: tabular-nums;
+}
+.lz-home .lz-ask-qcard-head time.fresh {
   color: var(--lz-green-text);
 }
 .lz-home .lz-ask-qcard-head b {

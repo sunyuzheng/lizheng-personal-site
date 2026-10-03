@@ -3,7 +3,7 @@ import type { AskResult, AskSource } from "./ask-lizheng";
 /** Published, de-identified questions people asked, curated in the separate Ops service. */
 export type DiscoveryCard = {
   public_id: string; revision: number; topic_key?: string; topic_label: string; question: string; summary: string;
-  published_at: string; topic_question_count: number; likes: number;
+  published_at: string; asked_at?: string; topic_question_count: number; likes: number;
 };
 export type DiscoveryAnswer = {
   summary: string; sections: AskResult["sections"]; sources: AskSource[]; limitations?: string;
@@ -78,8 +78,8 @@ export function rememberSeen(seen: string[], shown: string[]) {
  * toward common topics, so a refresh shows something else while the pool allows. One per topic
  * where possible.
  */
-// When a question appeared, the way people say it: 刚刚, 12分钟前, 3小时前, 2天前, then the date.
-// Questions appear about 15 to 30 minutes after they are asked (Ops publishes every 15 minutes).
+// When a question was asked, the way people say it: 刚刚, 23分钟前, 3小时前, 2天前, then the date.
+// Ops gives the time to five minutes; a question shows up 15 to 30 minutes after it is asked.
 export function askedAgo(iso: string, now = Date.now()): string {
   const time = Date.parse(iso);
   if (!Number.isFinite(time)) return "";
@@ -92,9 +92,10 @@ export function askedAgo(iso: string, now = Date.now()): string {
   return `${date.getFullYear() === new Date(now).getFullYear() ? "" : `${date.getFullYear()}年`}${date.getMonth() + 1}月${date.getDate()}日`;
 }
 
-// The picks show newest first, so their times read like a feed.
+// The picks show the most recently asked first, so their times read like a feed. Seeds, common
+// questions written fresh rather than asked, have no time and come last.
 export const newestFirst = (cards: DiscoveryCard[]) =>
-  [...cards].sort((a, b) => (Date.parse(b.published_at) || 0) - (Date.parse(a.published_at) || 0));
+  [...cards].sort((a, b) => (Date.parse(b.asked_at ?? "") || 0) - (Date.parse(a.asked_at ?? "") || 0));
 
 export function pickDiscovery(pool: DiscoveryCard[], seen: string[], count = 4, random = Math.random): DiscoveryCard[] {
   const weight = (item: DiscoveryCard) => 1 + Math.log2(1 + item.topic_question_count);

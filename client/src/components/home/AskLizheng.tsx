@@ -964,11 +964,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 return (
                   <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
                     <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
-                      {card.published_at && (
-                        <time className={Date.now() - Date.parse(card.published_at) < 3600000 ? "fresh" : undefined} dateTime={card.published_at}
-                          title={new Date(card.published_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
-                          {askedAgo(card.published_at)}
+                      {card.asked_at ? (
+                        <time className={Date.now() - Date.parse(card.asked_at) < 3600000 ? "fresh" : undefined} dateTime={card.asked_at}
+                          title={new Date(card.asked_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
+                          {askedAgo(card.asked_at)}
                         </time>
+                      ) : (
+                        <small>常被问到</small>
                       )}
                       <b>{card.question}</b>
                       {!open && card.summary && <span className="summary">{card.summary}</span>}

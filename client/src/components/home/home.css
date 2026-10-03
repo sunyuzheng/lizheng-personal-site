@@ -2358,8 +2358,8 @@
   font-weight: 600;
   color: var(--lz-green-text);
 }
-/* When a question appeared; green while it is under an hour old. */
-.lz-home .lz-ask-qcard-head time {
+/* When a question was asked; green while it is under an hour old. 常被问到 reads the same, in grey. */
+.lz-home .lz-ask-qcard-head :is(time, small) {
   color: var(--lz-muted);
   font-variant-numeric: tabular-nums;
 }

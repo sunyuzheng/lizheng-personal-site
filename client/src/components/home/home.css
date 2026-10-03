@@ -1808,25 +1808,19 @@
 
 /* ---------- Ask Lizheng ---------- */
 
-/* Its own chapter, after the writing it draws on. Unlike the editorial
-   chapters it is a tool, so it centres on one input: the component's head is
-   the section head, and the form and answers sit on one paper card. */
+/* Its own chapter, after the writing it draws on. The head reads like every other chapter's,
+   left-aligned. Below it, as on ask.lizheng.ai: a cream question box whose 提问 is the one solid
+   green thing, then type, space and hairlines instead of cards and icons. */
 .lz-home .ask {
   background: var(--lz-sand);
 }
 
-.lz-home .ask .wrap > .eyebrow {
-  text-align: center;
-}
-
 .lz-home .lz-ask-native-head {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 780px;
-  margin: 0 auto 44px;
-  text-align: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 16px 48px;
+  margin: 0 0 36px;
 }
 
 .lz-home .lz-ask-native-head.grain::after {
@@ -1834,9 +1828,9 @@
 }
 
 .lz-home .lz-ask-native-head h2 {
-  font-size: clamp(38px, 5vw, 64px);
-  line-height: 1.15;
-  letter-spacing: 0.04em;
+  font-size: clamp(40px, 5.6vw, 76px);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
 }
 
 .lz-home.l-en .lz-ask-native-head h2 {
@@ -1846,27 +1840,27 @@
 
 .lz-home .lz-ask-native-head p {
   max-width: 34em;
-  margin: 20px auto 0;
+  margin: 18px 0 0;
   font-size: 17px;
   line-height: 1.8;
-  color: var(--lz-muted);
+  color: var(--lz-ink-2);
 }
 
 .lz-home .lz-ask-native-head small {
   display: block;
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 13.5px;
   line-height: 1.7;
   color: var(--lz-muted);
 }
 
 .lz-home .lz-ask-native-head > a {
-  margin-top: 16px;
   padding-bottom: 2px;
   border-bottom: 1px solid rgb(28 107 55 / 0.35);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   color: var(--lz-green-text);
+  white-space: nowrap;
   transition: border-color 0.2s;
 }
 
@@ -1874,91 +1868,303 @@
   border-color: currentColor;
 }
 
-.lz-home .lz-ask-native-body {
-  max-width: 880px;
-  margin-inline: auto;
-  padding: clamp(22px, 3.4vw, 40px);
-  border-radius: 22px;
-  background: var(--lz-paper);
+@media (max-width: 720px) {
+  .lz-home .lz-ask-native-head {
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: 28px;
+  }
+
+  .lz-home .lz-ask-native-head > a {
+    justify-self: start;
+  }
+}
+
+.lz-home .lz-ask-native button:disabled {
+  cursor: default;
+}
+
+.lz-home .lz-ask-native :is(button, a, summary):focus-visible {
+  outline: 2px solid var(--lz-green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* The question box. */
+.lz-home .lz-ask-form {
+  max-width: 760px;
+  border-radius: 14px;
+  background: #fffefb;
   box-shadow:
     0 0 0 1px var(--lz-line),
-    0 48px 80px -60px rgb(20 30 20 / 0.45);
-  transition: box-shadow 0.35s ease;
+    0 30px 60px -44px rgb(20 30 20 / 0.45);
+  transition: box-shadow 0.2s;
 }
 
-.lz-home .lz-ask-native-body:focus-within {
+.lz-home .lz-ask-form:focus-within {
   box-shadow:
-    0 0 0 1px var(--lz-line-2),
-    0 56px 96px -60px rgb(20 30 20 / 0.6);
+    0 0 0 1px var(--lz-green),
+    0 0 0 4px rgb(35 131 67 / 0.14),
+    0 30px 60px -44px rgb(20 30 20 / 0.45);
 }
 
-/* Phones read the head like every other chapter: left-aligned. */
-@media (max-width: 640px) {
-  .lz-home .ask .wrap > .eyebrow {
-    text-align: left;
+/* Two ways to ask, as text tabs: the chosen one in ink with a green rule under it. */
+.lz-home .lz-ask-modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 14px 20px 0;
+}
+
+.lz-home .lz-ask-modes button {
+  min-height: 34px;
+  padding: 2px 0 6px;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--lz-muted);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    box-shadow 0.2s;
+}
+
+.lz-home .lz-ask-modes button:hover:not(:disabled) {
+  color: var(--lz-ink);
+}
+
+.lz-home .lz-ask-modes button[aria-pressed="true"] {
+  color: var(--lz-ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--lz-green);
+}
+
+.lz-home .lz-ask-mode-hint {
+  margin: 8px 20px 0;
+  font-size: 13.5px;
+  color: #9a9b93;
+}
+
+.lz-home #home-ask-question {
+  display: block;
+  width: 100%;
+  padding: 10px 20px 8px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--lz-ink);
+  resize: none;
+  outline: none;
+}
+
+.lz-home .lz-ask-form textarea::placeholder {
+  color: #9a9b93;
+}
+
+.lz-home .lz-ask-form-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 8px 8px 14px;
+}
+
+.lz-home .lz-ask-situation {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 结合我的处境: a checkbox, because it changes how the answer is written. */
+.lz-home .lz-ask-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 8px 0 6px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--lz-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lz-home .lz-ask-switch:hover:not(:disabled) {
+  color: var(--lz-ink);
+}
+
+.lz-home .lz-ask-switch[aria-pressed="true"] {
+  font-weight: 600;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-switch .switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1.5px var(--lz-line-2);
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.lz-home .lz-ask-switch .switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 5.5px;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.lz-home .lz-ask-switch[aria-pressed="true"] .switch {
+  background: var(--lz-green);
+  box-shadow: none;
+}
+
+.lz-home .lz-ask-switch[aria-pressed="true"] .switch::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.lz-home #home-ask-context {
+  display: block;
+  width: 100%;
+  margin: 6px 0 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--lz-line-2);
+  border-radius: 8px;
+  background: var(--lz-paper);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--lz-ink);
+  resize: vertical;
+}
+
+.lz-home #home-ask-context:focus-visible {
+  outline: none;
+  border-color: var(--lz-green);
+  background: #fff;
+}
+
+.lz-home .lz-ask-context-note {
+  margin: 4px 2px 0;
+  font-size: 12.5px;
+  color: var(--lz-muted);
+}
+
+/* The one solid green thing; before there is a question it stays green, faded. */
+.lz-home .lz-ask-form .btn {
+  flex-shrink: 0;
+  min-width: 76px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.lz-home .lz-ask-form .btn:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.lz-home .lz-ask-form .btn-green:disabled {
+  opacity: 0.32;
+}
+
+.lz-home .lz-ask-form .btn-line {
+  background: var(--lz-ink);
+  color: #fff;
+  box-shadow: none;
+}
+
+@media (max-width: 720px) {
+  .lz-home .lz-ask-modes {
+    gap: 4px 20px;
+    padding: 12px 16px 0;
   }
 
-  .lz-home .lz-ask-native-head {
-    align-items: flex-start;
-    margin-bottom: 28px;
-    text-align: left;
+  .lz-home .lz-ask-mode-hint {
+    margin: 6px 16px 0;
+    font-size: 13px;
   }
 
-  .lz-home .lz-ask-native-head p {
-    margin-top: 16px;
+  .lz-home #home-ask-question {
+    padding: 8px 16px 6px;
+    font-size: 17px;
+  }
+
+  .lz-home .lz-ask-form-bottom {
+    padding: 4px 6px 6px 10px;
+  }
+
+  .lz-home #home-ask-context {
+    font-size: 16px;
   }
 }
 
+/* What happens to a question, and today's count: quiet lines under the box. */
 .lz-home .lz-ask-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 4px 20px;
-  margin-top: 14px;
-  font-size: 12.5px;
+  gap: 4px 24px;
+  max-width: 760px;
+  margin-top: 12px;
+  padding: 0 4px;
+  font-size: 13px;
   line-height: 1.8;
   color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-about[open] {
   flex-basis: 100%;
 }
+
 .lz-home .lz-ask-about summary {
   list-style: none;
   cursor: pointer;
 }
+
 .lz-home .lz-ask-about summary::-webkit-details-marker {
   display: none;
 }
+
 .lz-home .lz-ask-about summary span {
   margin-left: 8px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--lz-green-text);
 }
-.lz-home .lz-ask-about p {
-  max-width: 720px;
-  margin: 8px 0 4px;
-}
+
+.lz-home .lz-ask-about p,
 .lz-home .lz-ask-about .notice-parts {
   max-width: 720px;
   margin: 8px 0 4px;
 }
+
 .lz-home .lz-ask-about .notice-parts p {
   margin: 0;
 }
+
 .lz-home .lz-ask-about .notice-parts p + p {
   margin-top: 6px;
 }
+
 .lz-home .lz-ask-about .notice-parts b {
   margin-right: 8px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--lz-ink-2);
 }
-.lz-home .lz-ask-context-note {
-  margin: 6px 4px 0;
-  font-size: 12.5px;
-  color: var(--lz-muted);
-}
+
 .lz-home .lz-ask-account {
   display: flex;
   flex-wrap: wrap;
@@ -1966,13 +2172,17 @@
   gap: 2px 10px;
   margin: 0;
 }
+
 .lz-home .lz-ask-account b {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--lz-green-text);
 }
-.lz-home .lz-ask-account b.empty {
+
+.lz-home .lz-ask-account b.empty,
+.lz-home .lz-ask-account .notice {
   color: #7a5512;
 }
+
 .lz-home .lz-ask-account button {
   font: inherit;
   font-weight: 500;
@@ -1980,17 +2190,18 @@
   cursor: pointer;
   text-underline-offset: 3px;
 }
+
 .lz-home .lz-ask-account button:hover:not(:disabled) {
   text-decoration: underline;
 }
-/* Founding verification: a waiting note while the popup is open, then a result
-   that stays until the next question. */
+
 .lz-home .lz-ask-account .pending {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   color: var(--lz-ink-2);
 }
+
 .lz-home .lz-ask-account .pending::before {
   content: "";
   width: 7px;
@@ -1999,53 +2210,58 @@
   background: var(--lz-green);
   animation: lz-ask-pulse 1.2s ease-in-out infinite;
 }
-.lz-home .lz-ask-account .notice {
-  color: #7a5512;
-}
+
 /* "Unlimited for Founding Members: Verify · How to join" reads as one phrase. */
 .lz-home .lz-ask-account .offer button {
   margin-left: 4px;
 }
+
 .lz-home .lz-ask-account .sep {
   margin-left: 6px;
   color: var(--lz-line-2);
 }
+
 .lz-home .lz-ask-account .toggle::after {
   content: "";
   display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 0 0 2px 6px;
+  width: 5px;
+  height: 5px;
+  margin: 0 0 3px 6px;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg);
   transition: transform 0.2s ease;
 }
+
 .lz-home .lz-ask-account .toggle[aria-expanded="true"]::after {
-  margin-bottom: -1px;
+  margin-bottom: 0;
   transform: rotate(-135deg);
 }
+
 /* What a Founding Member is, opened from the count line. */
 .lz-home .lz-founding {
   flex-basis: 100%;
-  margin-top: 8px;
-  padding: 16px 18px;
-  border-radius: 14px;
-  background: #eef4ec;
-  font-size: 13.5px;
-  line-height: 1.75;
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--lz-line-2);
+  font-size: 14px;
+  line-height: 1.8;
   color: var(--lz-ink-2);
 }
+
 .lz-home .lz-founding p {
   margin: 0;
 }
+
 .lz-home .lz-founding p + p {
   margin-top: 4px;
 }
+
 .lz-home .lz-founding .title {
-  font-weight: 600;
-  color: var(--lz-green-text);
+  font-weight: 700;
+  color: var(--lz-ink);
 }
+
 .lz-home .lz-founding .actions {
   display: flex;
   flex-wrap: wrap;
@@ -2053,20 +2269,23 @@
   gap: 8px 18px;
   margin-top: 12px;
 }
+
 .lz-home .lz-founding .join {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 40px;
   padding: 0 16px;
-  border-radius: 999px;
+  border-radius: 10px;
   background: var(--lz-green);
-  font-weight: 500;
+  font-weight: 600;
   color: #fff;
   text-decoration: none;
 }
+
 .lz-home .lz-founding .join:hover {
   background: var(--lz-green-deep);
 }
+
 .lz-home .lz-founding button {
   font: inherit;
   font-weight: 500;
@@ -2074,310 +2293,112 @@
   cursor: pointer;
   text-underline-offset: 3px;
 }
+
 .lz-home .lz-founding button:hover:not(:disabled) {
   text-decoration: underline;
 }
+
 .lz-home b.verified {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin: -2px 0;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: #e4efe3;
   font-weight: 600;
   color: var(--lz-green-text);
-  animation: lz-ask-arrive 0.6s ease-out;
 }
+
 .lz-home b.verified::before {
   content: "✓";
 }
+
 @keyframes lz-ask-pulse {
   50% {
     opacity: 0.25;
   }
 }
-@keyframes lz-ask-arrive {
-  from {
-    box-shadow: 0 0 0 7px rgb(35 131 67 / 0.2);
-  }
-}
-.lz-home .lz-ask-mode-hint {
-  margin: -8px 4px 10px;
-  font-size: 13px;
-  color: var(--lz-muted);
-}
-.lz-home .lz-ask-modes {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 18px;
-  padding: 4px;
-  border-radius: 12px;
-  background: var(--lz-sand);
-}
-.lz-home .lz-ask-modes button {
-  min-height: 40px;
-  padding: 6px 16px;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  font: inherit;
-  font-size: 14px;
-  color: var(--lz-muted);
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s,
-    box-shadow 0.2s;
-}
-.lz-home .lz-ask-modes button:hover:not(:disabled) {
-  color: var(--lz-ink);
-}
-.lz-home .lz-ask-modes button[aria-pressed="true"] {
-  background: var(--lz-paper);
-  color: var(--lz-green-text);
-  box-shadow:
-    0 0 0 1px var(--lz-line),
-    0 2px 6px -2px rgb(20 30 20 / 0.18);
-}
-.lz-home .lz-ask-form textarea {
-  display: block;
-  width: 100%;
-  padding: 16px 18px;
-  border: 1px solid var(--lz-line-2);
-  border-radius: 14px;
-  background: var(--lz-ivory);
-  font: inherit;
-  font-size: 16px;
-  line-height: 1.7;
-  resize: vertical;
-  color: var(--lz-ink);
-  transition:
-    border-color 0.2s,
-    background 0.2s,
-    box-shadow 0.2s;
-}
-.lz-home #home-ask-question {
-  min-height: 128px;
-  font-size: 17px;
-}
-.lz-home .lz-ask-form textarea::placeholder {
-  color: var(--lz-muted);
-}
-.lz-home .lz-ask-form textarea:focus-visible {
-  outline: 2px solid transparent;
-  border-color: var(--lz-green);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgb(35 131 67 / 0.14);
-}
-.lz-home .lz-ask-form-bottom {
-  display: flex;
-  align-items: start;
-  gap: 20px;
-  justify-content: space-between;
-  margin-top: 14px;
-}
-.lz-home .lz-ask-situation {
-  flex: 1;
-  min-width: 0;
+
+/* Example questions (the English page): rows under hairlines. */
+.lz-home .lz-ask-starters {
+  display: grid;
+  max-width: 760px;
+  margin-top: 48px;
+  border-bottom: 1px solid var(--lz-line-2);
 }
 
-/* 结合我的处境: a switch, because it changes how the answer is written. */
-.lz-home .lz-ask-switch {
+.lz-home .lz-ask-starters > p,
+.lz-home .lz-ask-followups > p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--lz-ink-2);
+}
+
+.lz-home .lz-ask-starters button {
+  padding: 16px 0;
+  border-top: 1px solid var(--lz-line-2);
+  font: inherit;
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: left;
+  color: var(--lz-ink);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lz-home .lz-ask-starters button:hover {
+  color: var(--lz-green-text);
+}
+
+/* 别人在问什么: the title and its links on the left, rows under hairlines on the right. */
+.lz-home .lz-ask-discovery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  margin-top: clamp(56px, 7vw, 88px);
+}
+
+@media (min-width: 960px) {
+  .lz-home .lz-ask-discovery {
+    grid-template-columns: 240px minmax(0, 1fr);
+    column-gap: 64px;
+  }
+}
+
+.lz-home .lz-ask-discovery-head h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.lz-home .lz-ask-discovery-head p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--lz-muted);
+}
+
+@media (min-width: 960px) {
+  .lz-home .lz-ask-discovery-head {
+    padding-top: 20px;
+  }
+}
+
+/* How many questions arrived in the last day: the one live thing beside the title. */
+.lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 44px;
-  margin-left: -4px;
-  padding: 0 8px 0 4px;
-  border-radius: 9px;
-  font-size: 14px;
-  color: var(--lz-muted);
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-.lz-home .lz-ask-switch:hover:not(:disabled) {
-  background: var(--lz-sand);
-  color: var(--lz-ink);
-}
-.lz-home .lz-ask-switch[aria-pressed="true"] {
-  font-weight: 500;
-  color: var(--lz-green-text);
-}
-.lz-home .lz-ask-switch .switch {
-  position: relative;
-  flex-shrink: 0;
-  width: 30px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--lz-line-2);
-  transition: background 0.2s;
-}
-.lz-home .lz-ask-switch .switch::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 2px rgb(18 22 19 / 0.25);
-  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.lz-home .lz-ask-switch[aria-pressed="true"] .switch {
-  background: var(--lz-green);
-}
-.lz-home .lz-ask-switch[aria-pressed="true"] .switch::after {
-  transform: translateX(12px);
-}
-.lz-home .lz-ask-form-bottom textarea {
-  margin-top: 8px;
-  font-size: 15px;
-}
-@media (max-width: 720px) {
-  .lz-home .lz-ask-form-bottom textarea {
-    font-size: 16px;
-  }
-}
-.lz-home .lz-ask-native button:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-.lz-home .lz-ask-native :is(button, a, summary):focus-visible {
-  outline: 2px solid var(--lz-green-2);
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-.lz-home .lz-ask-starters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
-  padding-top: 20px;
-  border-top: 1px solid var(--lz-line);
-}
-.lz-home .lz-ask-starters > p,
-.lz-home .lz-ask-followups > p {
-  margin: 0 0 10px;
-  font-size: 13px;
-  color: var(--lz-muted);
-}
-.lz-home .lz-ask-starters > p {
-  flex-basis: 100%;
-  margin: 0;
-}
-.lz-home .lz-ask-starters button {
-  padding: 10px 16px;
-  border: 1px solid var(--lz-line-2);
-  border-radius: 12px;
-  background: var(--lz-ivory);
-  font: inherit;
-  font-size: 14.5px;
-  line-height: 1.6;
-  text-align: left;
-  color: var(--lz-ink-2);
-  cursor: pointer;
-  transition:
-    border-color 0.2s,
-    color 0.2s,
-    background 0.2s,
-    transform 0.2s;
-}
-.lz-home .lz-ask-starters button:hover {
-  border-color: var(--lz-green);
-  background: #fff;
-  color: var(--lz-green-text);
-  transform: translateY(-1px);
-}
-/* Real questions others asked, in place of the examples once some are published. */
-.lz-home .lz-ask-discovery {
-  display: grid;
-  gap: 10px;
-  margin-top: 22px;
-  padding-top: 20px;
-  border-top: 1px solid var(--lz-line);
-}
-.lz-home .lz-ask-discovery-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 8px 16px;
-  margin-bottom: 4px;
-}
-.lz-home .lz-ask-discovery-head p {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 4px 10px;
-  margin: 0;
-  font-size: 13px;
-  color: var(--lz-muted);
-}
-.lz-home .lz-ask-discovery-head b {
-  font-size: 15px;
+  margin-top: 14px;
+  font-size: 13.5px;
   font-weight: 600;
-  color: var(--lz-ink);
-}
-.lz-home .lz-ask-discovery-more {
-  justify-self: start;
-  margin-top: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--lz-green-text);
-  text-underline-offset: 3px;
-}
-.lz-home .lz-ask-discovery-more:hover {
-  text-decoration: underline;
-}
-.lz-home .lz-ask-qcard {
-  border: 1px solid var(--lz-line-2);
-  border-radius: 14px;
-  background: var(--lz-ivory);
-  transition: border-color 0.2s, background 0.2s;
-}
-.lz-home .lz-ask-qcard:hover,
-.lz-home .lz-ask-qcard.open {
-  border-color: var(--lz-green);
-  background: #fff;
-}
-.lz-home .lz-ask-qcard-head {
-  display: grid;
-  gap: 4px;
-  width: 100%;
-  padding: 14px 18px;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-.lz-home .lz-ask-qcard-head :is(small, time) {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--lz-green-text);
-}
-/* When a question was asked, in green; under an hour old it gets a live dot. A common question,
-   never asked as written, reads 常被问到 in grey. */
-.lz-home .lz-ask-qcard-head :is(time, small) {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   color: var(--lz-green-text);
   font-variant-numeric: tabular-nums;
 }
-.lz-home .lz-ask-qcard-head small {
-  color: var(--lz-muted);
-}
-/* Picked for being asked often: how many similar askings it stands for, in ink. */
-.lz-home .lz-ask-qcard-head small.often {
-  color: var(--lz-ink);
-  font-weight: 600;
-}
-.lz-home .lz-ask-qcard-head small.often svg {
-  color: var(--lz-muted);
-}
+
 .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
   content: "";
   width: 6px;
@@ -2386,54 +2407,147 @@
   background: var(--lz-green);
   animation: lz-live-dot 2.4s ease-out infinite;
 }
+
 @keyframes lz-live-dot {
-  0% { box-shadow: 0 0 0 0 rgb(35 131 67 / 0.45); }
-  100% { box-shadow: 0 0 0 7px rgb(35 131 67 / 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgb(35 131 67 / 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 7px rgb(35 131 67 / 0);
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
-  .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before { animation: none; }
+  .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
+    animation: none;
+  }
 }
-/* How many questions arrived in the last day, beside the note. */
-.lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
+
+/* 最近问 · 最常问 open every question on ask.lizheng.ai, in one order or the other. */
+.lz-home .lz-ask-discovery-views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-top: 18px;
+}
+
+.lz-home .lz-ask-discovery-views a {
   display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  align-items: baseline;
+  min-height: 36px;
+  padding-top: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--lz-ink);
+  transition: color 0.2s;
+}
+
+.lz-home .lz-ask-discovery-views a:hover {
   color: var(--lz-green-text);
 }
-.lz-home .lz-ask-qcard-head b {
-  font-size: 15.5px;
+
+/* The list shown here: in ink, with a green rule under it, like the chosen tab on ask.lizheng.ai. */
+.lz-home .lz-ask-discovery-views [aria-current] {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 36px;
+  padding-top: 6px;
+  font-size: 15px;
   font-weight: 600;
-  line-height: 1.6;
+  color: var(--lz-ink);
+  box-shadow: inset 0 -2px 0 var(--lz-green);
+}
+
+.lz-home .lz-ask-discovery-list {
+  display: grid;
+  align-content: start;
+}
+
+.lz-home .lz-ask-qcard {
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-home .lz-ask-qcard:last-of-type {
+  border-bottom: 1px solid var(--lz-line-2);
+}
+
+.lz-home .lz-ask-qcard-head {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 20px 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* When a question was asked, in green; a count of similar askings in ink; 常被问到 in grey. */
+.lz-home .lz-ask-qcard-head :is(time, small) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lz-green-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.lz-home .lz-ask-qcard-head small {
+  font-weight: 500;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-qcard-head small.often {
+  font-weight: 600;
   color: var(--lz-ink);
 }
+
+.lz-home .lz-ask-qcard-head b {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--lz-ink);
+  transition: color 0.2s;
+}
+
+.lz-home .lz-ask-qcard-head:hover b,
+.lz-home .lz-ask-qcard.open .lz-ask-qcard-head b {
+  color: var(--lz-green-text);
+}
+
 .lz-home .lz-ask-qcard-head .summary {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--lz-ink-2);
-}
-.lz-home .lz-ask-qcard-head .meta {
-  font-size: 12.5px;
+  font-size: 15px;
+  line-height: 1.75;
   color: var(--lz-muted);
 }
-.lz-home .lz-ask-qcard-body {
-  padding: 0 18px 16px;
+
+.lz-home .lz-ask-qcard-head .meta {
+  font-size: 13px;
+  color: #9a9b93;
 }
+
+.lz-home .lz-ask-qcard-body {
+  max-width: 700px;
+  padding: 0 0 28px;
+}
+
 .lz-home .lz-ask-qcard-body .note {
   margin: 0 0 12px;
   font-size: 14px;
   color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-qcard-body .attribution {
   display: block;
-  margin-top: 10px;
+  margin-top: 18px;
   font-size: 12.5px;
   color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-qcard-body .actions {
   display: flex;
   flex-wrap: wrap;
@@ -2441,10 +2555,22 @@
   gap: 10px 16px;
   margin-top: 14px;
 }
+
 .lz-home .lz-ask-qcard-body .actions .btn {
-  min-height: 38px;
-  font-size: 14px;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  color: var(--lz-ink);
+  box-shadow: inset 0 0 0 1px var(--lz-line-2);
 }
+
+.lz-home .lz-ask-qcard-body .actions .btn:hover {
+  transform: none;
+  color: var(--lz-green-text);
+  box-shadow: inset 0 0 0 1px var(--lz-green);
+}
+
 .lz-home .lz-ask-qcard-body .like {
   font: inherit;
   font-size: 14px;
@@ -2453,69 +2579,88 @@
   cursor: pointer;
   text-underline-offset: 3px;
 }
+
 .lz-home .lz-ask-qcard-body .like.on::before {
   content: "✓ ";
 }
-.lz-home .lz-ask-followups button {
-  display: flex;
-  gap: 8px;
-  padding: 8px 0;
-  text-align: left;
-  font: inherit;
-  font-size: 14.5px;
-  color: var(--lz-green-text);
-  cursor: pointer;
-}
-.lz-home .lz-ask-followups button::before {
-  content: "↳";
-  flex-shrink: 0;
-  color: var(--lz-green);
-}
-.lz-home .lz-ask-followups button.lz-ask-clarify::before {
-  content: "+";
-}
-.lz-home .lz-ask-followups button:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.lz-home .lz-ask-followups > p span {
-  margin-left: 10px;
-  font-size: 12px;
-}
-.lz-home .lz-ask-turn {
-  margin-top: 28px;
-  padding-top: 24px;
-  border-top: 1px solid var(--lz-line);
-}
-.lz-home .lz-ask-question {
-  margin: 0 0 20px;
-  font-size: 18px;
+
+.lz-home .lz-ask-discovery-more {
+  justify-self: start;
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 44px;
+  padding-top: 12px;
+  font-size: 15px;
   font-weight: 600;
+  color: var(--lz-green-text);
+  text-underline-offset: 4px;
 }
+
+.lz-home .lz-ask-discovery-more:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .lz-home .lz-ask-qcard-head {
+    padding: 18px 0;
+  }
+
+  .lz-home .lz-ask-qcard-head b {
+    font-size: 17px;
+  }
+
+  .lz-home .lz-ask-qcard-head .summary {
+    font-size: 14.5px;
+  }
+}
+
+/* ---------- Ask Lizheng: a conversation, set for reading ---------- */
+
+.lz-home .lz-ask-turns {
+  max-width: 760px;
+}
+
+.lz-home .lz-ask-turn {
+  margin-top: 48px;
+  scroll-margin-top: 100px;
+}
+
+.lz-home .lz-ask-turn + .lz-ask-turn {
+  padding-top: 48px;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-home .lz-ask-question {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.8vw, 32px);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
 .lz-home .lz-ask-progress {
-  padding: 16px 18px;
-  border: 1px solid var(--lz-line);
-  border-radius: 12px;
-  background: var(--lz-ivory);
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 2px solid var(--lz-ink);
 }
+
 .lz-home .lz-ask-progress p {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 600;
 }
+
 .lz-home .lz-ask-progress p > span:last-child {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 12.5px;
+  font-weight: 400;
   color: var(--lz-muted);
 }
-.lz-home .lz-ask-turn {
-  scroll-margin-top: 100px;
-}
-.lz-home .lz-ask-progress > button {
-  margin-top: 16px;
-}
+
 .lz-home .lz-ask-progress ol {
   display: flex;
   flex-wrap: wrap;
@@ -2523,369 +2668,577 @@
   margin: 12px 0 0;
   padding: 0;
   list-style: none;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-progress .reached {
   color: var(--lz-green-text);
 }
+
 .lz-home .lz-ask-progress li[aria-current="step"] {
   font-weight: 600;
 }
+
+.lz-home .lz-ask-progress > small {
+  display: block;
+  margin: 10px 0;
+  font-size: 12.5px;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-progress > .btn,
+.lz-home .lz-ask-retry {
+  min-height: 40px;
+  margin-top: 12px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  box-shadow: inset 0 0 0 1px var(--lz-line-2);
+}
+
+.lz-home .lz-ask-progress > .btn:hover,
+.lz-home .lz-ask-retry:hover {
+  transform: none;
+  color: var(--lz-green-text);
+  box-shadow: inset 0 0 0 1px var(--lz-green);
+}
+
 .lz-home .lz-ask-answer {
-  max-width: 850px;
-  font-size: 16px;
+  max-width: 700px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 2px solid var(--lz-ink);
+  font-size: 16.5px;
   line-height: 1.9;
 }
+
+.lz-home .lz-ask-qcard-body .lz-ask-answer {
+  margin-top: 0;
+}
+
 .lz-home .lz-ask-answer p {
-  margin-block: 12px;
+  margin-block: 10px;
+  color: var(--lz-ink-2);
 }
+
 /* The answer in a sentence or two: the line a reader should remember. */
-.lz-home .lz-ask-answer-summary {
-  font-family: var(--serif);
-  font-size: 19.5px;
-  font-weight: 600;
-  line-height: 1.7;
+.lz-home .lz-ask-answer-summary,
+.lz-home .lz-ask-answer-summary p {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: var(--lz-ink);
 }
+
+.lz-home .lz-ask-qcard-body .lz-ask-answer-summary,
+.lz-home .lz-ask-qcard-body .lz-ask-answer-summary p {
+  font-size: 18px;
+}
+
+.lz-home .lz-ask-answer > h4 {
+  margin: 0;
+  font-size: 15px;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-answer > small {
+  font-size: 12.5px;
+  color: var(--lz-muted);
+}
+
 .lz-home .lz-ask-answer section {
-  margin-top: 24px;
+  margin-top: 32px;
 }
+
 .lz-home .lz-ask-answer-title {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 4px 12px;
 }
+
 .lz-home .lz-ask-answer-title h4 {
   margin: 0;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--lz-ink);
 }
-.lz-home .lz-ask-answer-title small,
-.lz-home .lz-ask-limitations {
+
+.lz-home .lz-ask-answer-title small {
   font-size: 12.5px;
+  font-weight: 600;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-answer :is(ul, ol) {
+  margin: 10px 0 0;
+  padding-left: 1.3em;
+  color: var(--lz-ink-2);
+}
+
+.lz-home .lz-ask-answer ul {
+  list-style: disc;
+}
+
+.lz-home .lz-ask-answer ol {
+  list-style: decimal;
+}
+
+.lz-home .lz-ask-answer li::marker {
+  color: var(--lz-green);
+}
+
+.lz-home .lz-ask-limitations,
+.lz-home .lz-ask-limitations p {
+  font-size: 14px;
+  line-height: 1.8;
   color: var(--lz-muted);
 }
+
+.lz-home .lz-ask-limitations {
+  margin-top: 24px;
+}
+
 .lz-home .lz-ask-limitations p {
   margin: 0;
 }
-.lz-home .lz-ask-answer :is(ul, ol) {
-  padding-left: 24px;
+
+/* Citations: small green numbers in the line, like footnote marks, with a larger hidden hit area. */
+.lz-home .lz-ask-cite {
+  position: relative;
+  margin-left: 1px;
+  padding: 1px 2px;
+  border-radius: 3px;
+  font-size: 0.68em;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: super;
+  color: var(--lz-green-text);
+  font-variant-numeric: tabular-nums;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
+
+.lz-home .lz-ask-cite::after {
+  content: "";
+  position: absolute;
+  inset: -10px -7px;
+}
+
+.lz-home .lz-ask-cite:hover,
+.lz-home .lz-ask-citations a:hover {
+  background: var(--lz-green);
+  color: #fff;
+}
+
 .lz-home .lz-ask-citations {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
 }
-.lz-home :is(.lz-ask-citations a, .lz-ask-cite) {
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--lz-sand);
-  font-size: 12px;
+
+.lz-home .lz-ask-citations a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--lz-green-text);
 }
+
 .lz-home .lz-ask-error {
-  padding: 14px 0;
-  font-size: 14px;
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #f7e6df;
+  font-size: 14.5px;
   color: #8b3b25;
 }
+
 .lz-home .lz-ask-error.quota {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
-  margin-top: 16px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #f5ead3;
+  background: #f6ecd6;
   color: #7a5512;
 }
+
 .lz-home .lz-ask-error.quota .btn {
   min-height: 38px;
+  border-radius: 10px;
   font-size: 14px;
 }
+
 .lz-home .lz-ask-error.quota .actions {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px 16px;
 }
+
 .lz-home .lz-ask-error.quota .become {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--lz-green-text);
   text-decoration: none;
   text-underline-offset: 3px;
 }
+
 .lz-home .lz-ask-error.quota .become:hover {
   text-decoration: underline;
 }
 
 .lz-home .lz-ask-approach {
   margin: 18px 0;
-  padding: 18px 20px;
-  border-left: 3px solid var(--lz-forest-3);
-  background: var(--lz-paper);
-  font-size: 14px;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--lz-green);
+  font-size: 14.5px;
   line-height: 1.8;
+  color: var(--lz-ink-2);
 }
 
-.lz-home .lz-ask-approach h4 { margin-bottom: 8px; }
-.lz-home .lz-ask-approach ul { padding-left: 20px; margin: 8px 0; }
-.lz-home .lz-ask-approach small { color: var(--lz-ink-2); }
-.lz-home .lz-ask-approach-sources { display: grid; gap: 4px; margin: 10px 0; }
-.lz-home .lz-ask-retry { margin: 12px 0 4px; }
-.lz-home .lz-ask-progress > small { display: block; margin: 10px 0; }
-.lz-home .lz-ask-material {
-  margin-top: 24px;
+.lz-home .lz-ask-approach h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
 }
-.lz-home .lz-ask-material > p {
-  font-size: 13px;
+
+.lz-home .lz-ask-approach ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.lz-home .lz-ask-approach small {
   color: var(--lz-muted);
 }
+
+.lz-home .lz-ask-approach-sources {
+  display: grid;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+/* Sources: numbered notes under hairlines, not cards. */
+.lz-home .lz-ask-material {
+  max-width: 700px;
+  margin-top: 32px;
+}
+
+.lz-home .lz-ask-material > p {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--lz-ink-2);
+}
+
 .lz-home .lz-ask-source-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  border-bottom: 1px solid var(--lz-line-2);
 }
+
 .lz-home .lz-ask-source {
-  padding: 18px;
-  border: 1px solid var(--lz-line);
-  border-radius: 10px;
+  padding: 16px 0;
+  border-top: 1px solid var(--lz-line-2);
   scroll-margin-top: 100px;
+  transition:
+    box-shadow 0.25s,
+    padding 0.25s;
 }
+
 .lz-home .lz-ask-source:target {
-  border-color: var(--lz-green);
+  padding-left: 14px;
+  box-shadow: inset 2px 0 0 var(--lz-green);
 }
-.lz-home .lz-ask-source-member {
-  border-color: var(--lz-member-line);
-  background: linear-gradient(150deg, var(--lz-member-surface), var(--lz-paper) 85%);
-}
-.lz-home .lz-ask-member-badge {
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--lz-member-ink);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .05em;
-}
-.lz-home .lz-ask-source .lz-ask-member-note {
-  padding-top: 12px;
-  border-top: 1px solid #e9e3d6;
+
+.lz-home .lz-ask-source > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 10px;
+  margin-bottom: 4px;
+  font-size: 12.5px;
   color: var(--lz-muted);
-  font-size: 12px;
-  line-height: 1.8;
 }
-.lz-home .lz-ask-source .lz-ask-member-watch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  margin: 10px 0;
-  padding: 0 12px;
-  border: 1px solid var(--lz-member-line);
-  border-radius: 7px;
+
+.lz-home .lz-ask-source > div > .num {
+  min-width: 1.2em;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-source > div > time {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.lz-home .lz-ask-member-badge {
   color: var(--lz-member-ink);
   font-size: 12.5px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
-.lz-home .lz-ask-source .lz-ask-member-watch:hover {
-  background: #f0eadf;
+
+.lz-home .lz-ask-source a {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--lz-ink);
+  overflow-wrap: anywhere;
 }
+
+.lz-home .lz-ask-source a:hover {
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-source p {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+  white-space: pre-wrap;
+}
+
+.lz-home .lz-ask-excerpt-preview {
+  color: var(--lz-muted) !important;
+}
+
+.lz-home .lz-ask-source .lz-ask-member-note {
+  font-size: 12.5px;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-source .lz-ask-member-watch,
+.lz-home .lz-ask-source .lz-ask-member-join a {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 36px;
+  padding-top: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--lz-member-ink);
+}
+
+.lz-home .lz-ask-source .lz-ask-member-watch:hover,
+.lz-home .lz-ask-source .lz-ask-member-join a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Under a member video only: where to join the channel, and that it is not Founding. */
 .lz-home .lz-ask-source .lz-ask-member-join {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: 0 10px;
   margin: 0;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--lz-muted);
 }
-.lz-home .lz-ask-source .lz-ask-member-join a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--lz-member-ink);
-}
-.lz-home .lz-ask-source > div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 12px;
-  color: var(--lz-muted);
-}
-.lz-home .lz-ask-source > div > time {
-  margin-left: auto;
-}
-.lz-home .lz-ask-source a {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--lz-green-text);
-  overflow-wrap: anywhere;
-}
-.lz-home .lz-ask-source p {
-  margin: 10px 0;
-  font-size: 13px;
-  line-height: 1.8;
-  white-space: pre-wrap;
-}
-.lz-home .lz-ask-excerpt-preview {
-  color: var(--lz-ink-2);
-}
+
 .lz-home .lz-ask-source details {
-  margin-top: 12px;
+  margin-top: 6px;
 }
+
 .lz-home .lz-ask-source summary,
 .lz-home .lz-ask-more-sources summary {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--lz-muted);
 }
+
+.lz-home .lz-ask-source details p {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--lz-ivory);
+}
+
 .lz-home .lz-ask-source small {
   display: block;
   font-size: 12px;
   color: var(--lz-muted);
 }
+
 .lz-home .lz-ask-more-sources {
-  margin-top: 16px;
-}
-.lz-home .lz-ask-more-sources .lz-ask-source-grid {
   margin-top: 14px;
 }
+
+.lz-home .lz-ask-more-sources .lz-ask-source-grid {
+  margin-top: 10px;
+}
+
 .lz-home .lz-ask-model {
   display: block;
-  margin-top: 14px;
+  margin-top: 12px;
   font-family: var(--num);
   font-size: 12px;
   color: var(--lz-muted);
 }
-.lz-home .lz-ask-followups {
-  margin-top: 22px;
-}
+
 .lz-home .lz-ask-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 10px;
-  margin-top: 18px;
+  gap: 4px;
+  margin: 20px 0 0 -10px;
 }
+
 .lz-home .lz-ask-actions button {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  min-height: 38px;
-  padding: 0 14px;
-  border-radius: 999px;
-  box-shadow: inset 0 0 0 1px var(--lz-line-2);
+  min-height: 40px;
+  padding: 0 10px;
+  border-radius: 8px;
   font: inherit;
-  font-size: 13.5px;
-  color: var(--lz-ink-2);
+  font-size: 14px;
+  color: var(--lz-muted);
   cursor: pointer;
   transition:
-    box-shadow 0.2s,
+    background 0.2s,
     color 0.2s;
 }
+
 .lz-home .lz-ask-actions button:hover:not(:disabled) {
-  box-shadow: inset 0 0 0 1px var(--lz-green);
-  color: var(--lz-green-text);
+  background: rgb(255 255 255 / 0.6);
+  color: var(--lz-ink);
 }
-.lz-home .lz-ask-actions svg {
-  width: 15px;
-  height: 15px;
+
+.lz-home .lz-ask-actions button:disabled {
+  opacity: 0.5;
 }
+
 .lz-home .lz-ask-actions small {
   font-size: 12.5px;
   color: #8b3b25;
 }
-.lz-home .lz-ask-spin {
-  animation: lz-ask-spin 0.9s linear infinite;
+
+.lz-home .lz-ask-followups {
+  max-width: 700px;
+  margin-top: 32px;
 }
-@keyframes lz-ask-spin {
-  to {
-    transform: rotate(360deg);
-  }
+
+.lz-home .lz-ask-followups button {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  border-top: 1px solid var(--lz-line-2);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.65;
+  text-align: left;
+  color: var(--lz-ink);
+  cursor: pointer;
+  transition: color 0.2s;
 }
-.lz-home .lz-ask-reset {
-  margin-top: 26px;
-  font-size: 13px;
+
+.lz-home .lz-ask-followups button:last-child {
+  border-bottom: 1px solid var(--lz-line-2);
+}
+
+.lz-home .lz-ask-followups button::after {
+  content: "→";
+  margin-left: 8px;
+  color: #9a9b93;
+  transition:
+    color 0.2s,
+    margin 0.2s;
+}
+
+.lz-home .lz-ask-followups button.lz-ask-clarify::after {
+  content: none;
+}
+
+.lz-home .lz-ask-followups button.lz-ask-clarify::before {
+  content: "＋";
+  margin-right: 8px;
+  color: #7a5512;
+}
+
+.lz-home .lz-ask-followups button:hover {
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-followups button:hover::after {
+  margin-left: 12px;
+  color: var(--lz-green);
+}
+
+.lz-home .lz-ask-followups > p span {
+  margin-left: 10px;
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-reset {
+  margin-top: 28px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lz-green-text);
   cursor: pointer;
 }
+
+.lz-home .lz-ask-reset:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 720px) {
-  .lz-home .lz-ask-native-body {
-    border-radius: 18px;
-  }
-  .lz-home .lz-ask-source-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .lz-home .lz-ask-progress p {
     flex-direction: column;
     gap: 6px;
   }
-}
 
-@media (max-width: 640px) {
-  /* The modes share one row; a long label wraps inside its segment. */
-  .lz-home .lz-ask-modes {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-
-  .lz-home .lz-ask-modes button {
-    flex: 1 1 auto;
-    padding: 6px 10px;
-    line-height: 1.35;
-    text-align: center;
+  .lz-home .lz-ask-answer-summary,
+  .lz-home .lz-ask-answer-summary p {
+    font-size: 18.5px;
   }
 }
 
-/* Open Context: the public corpus Ask answers from, under the Ask card. */
+/* Open Context: the public corpus Ask answers from, closing the chapter as one quiet line. */
 .lz-home .open-context {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 16px 24px;
-  max-width: 880px;
-  margin: 22px auto 0;
-  padding: 22px 28px;
-  border-radius: 16px;
-  background: var(--lz-paper);
-  box-shadow: 0 0 0 1px var(--lz-line);
+  gap: 12px 20px;
+  margin-top: clamp(56px, 7vw, 88px);
+  padding-top: 24px;
+  border-top: 1px solid var(--lz-line-2);
   color: var(--lz-ink-2);
-  transition:
-    box-shadow 0.25s,
-    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.lz-home .open-context:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 0 1px var(--lz-line-2),
-    0 20px 40px -30px rgb(20 30 20 / 0.45);
 }
 
 .lz-home .open-context .gh {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   color: var(--lz-ink);
 }
 
 .lz-home .open-context b {
   font-family: var(--num);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--lz-ink);
+  transition: color 0.2s;
+}
+
+.lz-home .open-context:hover b {
+  color: var(--lz-green-text);
 }
 
 .lz-home .open-context p {
-  margin-top: 4px;
+  margin-top: 2px;
   font-size: 14.5px;
   line-height: 1.7;
   color: var(--lz-muted);
@@ -2893,18 +3246,16 @@
 
 .lz-home .open-context .go {
   font-size: 14.5px;
-  font-weight: 500;
-  color: var(--lz-green);
+  font-weight: 600;
+  color: var(--lz-green-text);
   white-space: nowrap;
 }
 
 @media (max-width: 720px) {
   .lz-home .open-context {
     grid-template-columns: auto minmax(0, 1fr);
-    padding: 20px 22px;
   }
 
-  /* The text wraps to several lines on phones; the mark stays by the title. */
   .lz-home .open-context .gh {
     align-self: start;
   }

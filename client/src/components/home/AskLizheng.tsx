@@ -16,7 +16,6 @@ import {
 } from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
-import { FileDown, ImageDown, Layers, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
@@ -53,7 +52,7 @@ const COPY = {
       ["你的隐私", "提问是匿名的：记录不关联邮箱、账号或IP，我不知道是谁问的。登录只用来核验Founding身份，不会和提问记在一起。公开前，我们会先用模型自动去掉可能认出你的信息；模型也可能漏，所以请别填写私密信息。「结合我的处境」里填的内容只用于分析，不会公开，用到这些内容的回答也不会公开。"],
       ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
     ] as [string, string][],
-    send: "发送问题",
+    send: "提问",
     stop: "停止",
     reset: "开始新问题",
     full: "打开完整页面",
@@ -66,6 +65,7 @@ const COPY = {
     discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
     discoverySimilar: "问个类似的",
     discoveryMore: "看更多问题",
+    discoveryViews: ["最近问", "最常问", "没看过"],
     discoveryHelpful: "有帮助",
     discoveryHelped: "觉得有帮助",
     discoveryAttribution: "AI整理，不是立正本人回复。",
@@ -180,6 +180,7 @@ const COPY = {
     discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
     discoverySimilar: "Ask something similar",
     discoveryMore: "See more questions",
+    discoveryViews: ["Newest", "Most asked", "Not seen"],
     discoveryHelpful: "Helpful",
     discoveryHelped: "Found it helpful",
     discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
@@ -311,7 +312,7 @@ function Source({
   return (
     <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
       <div>
-        <span>{source.id}</span>
+        <span className="num">{source.id.slice(1)}</span>
         {member && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
         <time>{source.date?.slice(0, 10)}</time>
       </div>
@@ -374,10 +375,11 @@ function AnswerText({
         img: () => null,
         a: ({ href, children }) => {
           const id = href?.startsWith("#cite-") ? href.slice(6) : "";
+          // A footnote mark: the number only, joined to the word it marks.
           return sources.some(s => s.id === id) ? (
-            <a className="lz-ask-cite" href={`#home-ask-${turnId}-${id}`}>
-              {children}
-            </a>
+            <>{"\u2060"}<a className="lz-ask-cite" href={`#home-ask-${turnId}-${id}`} aria-label={`S${id.slice(1)}`}>
+              {id.slice(1)}
+            </a></>
           ) : (
             <span>{children}</span>
           );
@@ -417,8 +419,8 @@ function AnswerSections({
       {!/\[S\d+\]/.test(section.body) && (
         <div className="lz-ask-citations">
           {section.source_ids?.map(id => (
-            <a key={id} href={`#home-ask-${turnId}-${id}`}>
-              {id}
+            <a key={id} href={`#home-ask-${turnId}-${id}`} aria-label={id}>
+              {id.slice(1)}
             </a>
           ))}
         </div>
@@ -872,7 +874,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     active.current?.abort();
                   }}
                 >
-                  {c.stop} ■
+                  {c.stop}
                 </button>
               ) : (
                 <button
@@ -881,7 +883,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   disabled={!question.trim() || outOfQuota || !loggingReady}
                   type="submit"
                 >
-                  {c.send} ↑
+                  {c.send}
                 </button>
               )}
             </div>
@@ -969,9 +971,23 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           {!turns.length && (lang === "zh" && !!discoveryCards.length ? (
             <div className="lz-ask-discovery" ref={discoveryList}>
               <div className="lz-ask-discovery-head">
-                <p><b>{c.discoveryTitle}</b><span>{c.discoveryNote}</span>
-                  {askedRecently >= 3 && <span className="lz-ask-discovery-live">最近24小时 {askedRecently >= 20 ? "20+" : askedRecently} 个新问题</span>}</p>
+                <h3>{c.discoveryTitle}</h3>
+                <p>{c.discoveryNote}</p>
+                {askedRecently >= 3 && <p className="lz-ask-discovery-live">最近24小时 {askedRecently >= 20 ? "20+" : askedRecently} 个新问题</p>}
+                {/* Every question, newest or most asked first, opens on ask.lizheng.ai, so a question
+                    seen on an earlier visit can always be found again; here is 没看过, the picks that
+                    put questions this browser has not seen first. */}
+                <nav className="lz-ask-discovery-views" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
+                  {(["recent", "frequent"] as const).map((sort, i) => (
+                    <a key={sort} href={`https://ask.lizheng.ai/#${sort}`} {...EXTERNAL}
+                      onClick={() => { markUsage("d_more"); track("Ask Discovery Sort", { surface: "home", sort }); }}>
+                      {c.discoveryViews[i]} ↗
+                    </a>
+                  ))}
+                  <span aria-current="true">{c.discoveryViews[2]}</span>
+                </nav>
               </div>
+              <div className="lz-ask-discovery-list">
               {discoveryCards.map((card, index) => {
                 const open = openCard === card.public_id;
                 const detail = cardDetails[card.public_id];
@@ -988,7 +1004,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
                     <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
                       {often ? (
-                        <small className="often"><Layers size={13} aria-hidden="true" />{c.discoveryCount(similar)}</small>
+                        <small className="often">{c.discoveryCount(similar)}</small>
                       ) : card.asked_at ? (
                         <time className={Date.now() - Date.parse(card.asked_at) < 3600000 ? "fresh" : undefined} dateTime={card.asked_at}
                           title={new Date(card.asked_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
@@ -1042,6 +1058,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 <a className="lz-ask-discovery-more" href="https://ask.lizheng.ai/#questions" {...EXTERNAL}
                   onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", page: 1 }); }}>{c.discoveryMore} ↗</a>
               )}
+              </div>
             </div>
           ) : (
             <div className="lz-ask-starters">
@@ -1124,7 +1141,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             active.current?.abort();
                           }}
                         >
-                          {c.stop} ■
+                          {c.stop}
                         </button>
                       </div>
                     )}
@@ -1268,13 +1285,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             disabled={!!exporting}
                             onClick={() => void exportTurn(kind, turn)}
                           >
-                            {exporting === `${turn.id}-${kind}` ? (
-                              <LoaderCircle aria-hidden="true" className="lz-ask-spin" />
-                            ) : kind === "png" ? (
-                              <ImageDown aria-hidden="true" />
-                            ) : (
-                              <FileDown aria-hidden="true" />
-                            )}
                             {exporting === `${turn.id}-${kind}` ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
                           </button>
                         ))}

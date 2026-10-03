@@ -892,7 +892,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
             ? <>{lang === "zh" ? "未能确认提问保存设置。" : "Could not confirm question storage."} <button type="button" onClick={() => void loadLogging()}>{lang === "zh" ? "重试" : "Retry"}</button></>
             : (lang === "zh" ? "正在确认提问保存设置…" : "Checking question storage…")}</p>}
           <div className="lz-ask-meta">
-            <details className="lz-ask-about">
+            {/* The notice waits for the service's saving settings, so an older one never shows first. */}
+            {loggingReady && <details className="lz-ask-about">
               <summary>
                 {publicArchive ? c.noticeV4 : opsLogging ? c.noticeV3 : c.queryNotice}
                 <span>{c.privacy}</span>
@@ -902,7 +903,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   {(publicArchive ? c.noticeV4Parts : c.noticeV3Parts).map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
                 </div>
               ) : <p>{c.privacyNote}</p>}
-            </details>
+            </details>}
             {!account && accountWaking && (
               <p className="lz-ask-account" aria-live="polite">
                 <span className="pending">{c.accountWaking}</span>

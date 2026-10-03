@@ -18,7 +18,7 @@ import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, discoveryDetail, discoveryPool, newestFirst, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
+import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, newestFirst, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
@@ -326,6 +326,12 @@ function Source({
       {source.transcript_quality === "uncorrected-asr" && <small>{lang === "zh" ? "自动转录未校正，请以原视频核实措辞。" : "Uncorrected ASR; verify wording in the original video."}</small>}
       {source.transcript_quality === "source-unverified" && <small>{lang === "zh" ? "字幕来源未确认，请以原视频核实。" : "Caption provenance is unverified; check the original video."}</small>}
       {member && url && <a className="lz-ask-member-watch" href={url} {...EXTERNAL}>{lang === "zh" ? "观看会员完整视频" : "Watch the full members video"} ↗</a>}
+      {memberJoinUrl(source) && (
+        <p className="lz-ask-member-join">
+          <a href={memberJoinUrl(source)} {...EXTERNAL}>{lang === "zh" ? "加入 YouTube 频道会员" : "Join the YouTube channel membership"} ↗</a>
+          <span>{lang === "zh" ? "与 Founding Member 的提问次数无关" : "Separate from Founding Member question limits"}</span>
+        </p>
+      )}
       {source.excerpt && (
         <p className="lz-ask-excerpt-preview">
           {source.excerpt.slice(0, 160)}
@@ -346,15 +352,6 @@ function Source({
       </details>
     </article>
   );
-}
-
-function MemberSourcesNote({ sources, lang }: { sources: AskSource[]; lang: Lang }) {
-  const member = sources.find(source => memberJoinUrl(source));
-  if (!member) return null;
-  return <aside className="lz-ask-member-invite">
-    <p>{lang === "zh" ? "想看这些内容的完整讲解与对话？" : "Want the complete talks and conversations?"}</p>
-    <a href={memberJoinUrl(member)} {...EXTERNAL}>{lang === "zh" ? "了解YouTube频道会员" : "Explore YouTube channel membership"} ↗</a>
-  </aside>;
 }
 
 // A boundary note may name a source as S6; show it as a citation, like in the text.
@@ -459,6 +456,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [foundingOpen, setFoundingOpen] = useState(false);
   // Real questions others asked, published from Ops; shown on the Chinese page in place of the examples.
   const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
+  // Questions asked in the last day among those this visit read, shown beside the note.
+  const [askedRecently, setAskedRecently] = useState(0);
   // More than the four picks exist: link to the full list on ask.lizheng.ai.
   const [discoveryMore, setDiscoveryMore] = useState(false);
   // Whether this browser saw the section before: counted with each card action.
@@ -525,6 +524,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       rememberSeen(seen, picked.map(item => item.public_id));
       discoveryVisit.current = seen.length ? "return" : "first";
       setDiscoveryMore(pool.length > picked.length);
+      setAskedRecently(askedLastDay(pool));
       setDiscoveryCards(newestFirst(picked));
     });
     return () => controller.abort();
@@ -950,7 +950,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           {!turns.length && (lang === "zh" && !!discoveryCards.length ? (
             <div className="lz-ask-discovery">
               <div className="lz-ask-discovery-head">
-                <p><b>{c.discoveryTitle}</b><span>{c.discoveryNote}</span></p>
+                <p><b>{c.discoveryTitle}</b><span>{c.discoveryNote}</span>
+                  {askedRecently >= 3 && <span className="lz-ask-discovery-live">最近24小时 {askedRecently >= 20 ? "20+" : askedRecently} 个新问题</span>}</p>
               </div>
               {discoveryCards.map((card, index) => {
                 const open = openCard === card.public_id;
@@ -998,7 +999,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 </div>
                               </div>
                             )}
-                            <MemberSourcesNote sources={detail.answer.sources} lang={lang} />
                             <small className="attribution">{c.discoveryAttribution}</small>
                           </>
                         )}
@@ -1235,7 +1235,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         )}
                       </div>
                     )}
-                    {turn.result && <MemberSourcesNote sources={turn.result.sources} lang={lang} />}
                     {turn.result?.status === "answered" && !working && (
                       <div className="lz-ask-actions">
                         {(["png", "pdf"] as const).map(kind => (

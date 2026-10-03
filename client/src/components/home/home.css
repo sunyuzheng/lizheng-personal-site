@@ -2358,12 +2358,39 @@
   font-weight: 600;
   color: var(--lz-green-text);
 }
-/* When a question was asked; green while it is under an hour old. 常被问到 reads the same, in grey. */
+/* When a question was asked, in green; under an hour old it gets a live dot. A common question,
+   never asked as written, reads 常被问到 in grey. */
 .lz-home .lz-ask-qcard-head :is(time, small) {
-  color: var(--lz-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--lz-green-text);
   font-variant-numeric: tabular-nums;
 }
-.lz-home .lz-ask-qcard-head time.fresh {
+.lz-home .lz-ask-qcard-head small {
+  color: var(--lz-muted);
+}
+.lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lz-green);
+  animation: lz-live-dot 2.4s ease-out infinite;
+}
+@keyframes lz-live-dot {
+  0% { box-shadow: 0 0 0 0 rgb(35 131 67 / 0.45); }
+  100% { box-shadow: 0 0 0 7px rgb(35 131 67 / 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before { animation: none; }
+}
+/* How many questions arrived in the last day, beside the note. */
+.lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
   color: var(--lz-green-text);
 }
 .lz-home .lz-ask-qcard-head b {
@@ -2658,21 +2685,23 @@
 .lz-home .lz-ask-source .lz-ask-member-watch:hover {
   background: #f0eadf;
 }
-.lz-home .lz-ask-member-invite {
-  margin-top: 16px;
-  padding: 20px 0 0;
-  border-top: 1px solid var(--lz-line);
-  background: transparent;
+/* Under a member video only: where to join the channel, and that it is not Founding. */
+.lz-home .lz-ask-source .lz-ask-member-join {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 10px;
+  margin: 0;
+  font-size: 12px;
   color: var(--lz-muted);
-  font-size: 12.5px;
 }
-.lz-home .lz-ask-member-invite p { margin: 0 0 6px; }
-.lz-home .lz-ask-member-invite a {
+.lz-home .lz-ask-source .lz-ask-member-join a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: var(--lz-member-ink);
+  font-size: 12px;
   font-weight: 500;
+  color: var(--lz-member-ink);
 }
 .lz-home .lz-ask-source > div {
   display: flex;

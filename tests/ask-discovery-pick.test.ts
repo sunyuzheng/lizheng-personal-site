@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { discoveryDetail, pickDiscovery, readSeen, rememberSeen, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { askedLastDay, discoveryDetail, pickDiscovery, readSeen, rememberSeen, sameQuestion, type DiscoveryCard } from "../client/src/lib/ask-discovery";
 import { isMemberVideo, memberJoinUrl } from "../client/src/lib/ask-lizheng";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -85,6 +85,47 @@ describe("which questions a visit shows", () => {
     const small = [card(1, 3), card(2, 2), card(3, 1)];
     expect(ids(pickDiscovery(small, ids(small), 4, seeded())).sort()).toEqual(ids(small).sort());
     expect(pickDiscovery([], [id(1)], 4, seeded())).toEqual([]);
+  });
+
+  it("puts the newest question this browser has not seen first, then the usual picks", () => {
+    const now = Date.parse("2026-10-03T12:00:00Z");
+    const ago = (minutes: number) => new Date(now - minutes * 60000).toISOString();
+    const pool = POOL.map((item, i) => ({ ...item, asked_at: ago(600 + i * 60) }));
+    pool[6] = { ...pool[6], asked_at: ago(20) };
+    expect(ids(pickDiscovery(pool, [], 4, seeded()))).toEqual([id(7), id(2), id(5), id(9)]);
+    // Once seen, it no longer jumps the queue; a refresh shows other questions.
+    const again = ids(pickDiscovery(pool, [id(7), id(2), id(5), id(9)], 4, seeded()));
+    expect(again.filter(item => [id(7), id(2), id(5), id(9)].includes(item))).toEqual([]);
+    // A card without a time (a common question written fresh) never takes that place.
+    expect(ids(pickDiscovery(POOL, [], 4, seeded()))).toEqual([id(2), id(5), id(9), id(4)]);
+  });
+
+  it("never shows one question asked two ways, even under different topics", () => {
+    const pool = [
+      { ...card(1, 9, "a"), question: "怎么判断自己是真的学会了一个新技能，而不只是看懂了？" },
+      { ...card(2, 8, "b"), question: "怎么判断自己真的学会了一个新技能，而不只是看懂？" },
+      card(3, 2), card(4, 1), card(5, 1),
+    ];
+    const shown = ids(pickDiscovery(pool, [], 4, seeded()));
+    expect(shown).toContain(id(1));
+    expect(shown).not.toContain(id(2));
+    expect(shown).toHaveLength(4);
+  });
+
+  it("tells a reworded question from a different one", () => {
+    expect(sameQuestion("AI时代，应该先想清楚方向，还是先行动起来？", "应该先想清楚方向还是先行动起来")).toBe(true);
+    expect(sameQuestion("Should I learn to code?", "should i learn to code")).toBe(true);
+    expect(sameQuestion("怎么选第一份工作？", "怎么写一份好的简历？")).toBe(false);
+    expect(sameQuestion("怎样给产品定价？", "怎么找到第一批用户？")).toBe(false);
+  });
+
+  it("counts the questions asked in the last day", () => {
+    const now = Date.parse("2026-10-03T12:00:00Z");
+    const at = (hours: number) => new Date(now - hours * 3600000).toISOString();
+    const pool = [card(1, 1), card(2, 1), card(3, 1), card(4, 1)]
+      .map((item, i) => ({ ...item, asked_at: [at(0.5), at(23), at(25), undefined][i] }));
+    expect(askedLastDay(pool, now)).toBe(2);
+    expect(askedLastDay([], now)).toBe(0);
   });
 
   it("treats a browser without storage as a first visit", () => {

@@ -65,8 +65,17 @@ Serif fonts are self-hosted: Noto Serif SC (700 and 900, split by unicode-range 
 - With reduced motion there is no parallax, count-up, marquee or reveal; the community map is always a still image.
 - The main text of each changed subpage was compared with production; the only differences are the title, the About career band, breadcrumbs and removed back-to-home buttons.
 
+## October 4, 2026
+
+Approved by Yuzheng for publication on October 4, 2026, after a review of the live homepage's design and copy.
+
+- **Writing.** The four essays became a list between hairlines, newest first: date, then the title and its one line, with `↗` at the end of the row, which opens the essay. As four narrow cards, long Chinese titles broke inside words (差/距, 第二/次, 自己/的) and the dates read out of order.
+- **Selected work.** The Chinese title is 「这几件事，我会负责到底。」, echoing the closing invitation's 「先做一件自己能负责到底……的小事」; 「我愿意长期站在它们后面」 read as a translation of "stand behind". The intro now says each one puts the judgment before real readers, learners and the market to be tested, in place of 「离开了我的脑子」. The show card no longer repeats the conversations chapter's question two screens later (in English too); it keeps its meta line, title and link. The English title stays "Work I'll keep standing behind."
+- **Counting.** Each chapter's arrival on screen and each followed link are counted for the owner (Ops 「使用情况」 and the Vercel Analytics event Home Link); see [ask-lizheng.md](../ask-lizheng.md).
+
 ## Open decisions
 
 - Keep headline numbers (followers, community members, paying learners) up to date automatically.
 - Full-text search over articles and transcripts.
 - English guest pages at their own addresses (`/en/guests/…`), if English search traffic to guest pages turns out to matter.
+- On phones the page runs about 22 screens, the conversations chapter alone about 4: whether phones show fewer guests and episodes, once the chapter counts show how far phone readers get.

@@ -109,7 +109,7 @@ export default function Works({ lang }: { lang: Lang }) {
                   <Phrases text={t.show.title} />
                 </SectionLink>
               </h3>
-              <p>{t.show.body}</p>
+              {t.show.body && <p>{t.show.body}</p>}
               <SectionLink className="go" to={SECTION.talks}>
                 {t.show.go} <Arrow />
               </SectionLink>

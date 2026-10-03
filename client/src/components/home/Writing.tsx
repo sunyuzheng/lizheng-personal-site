@@ -25,9 +25,7 @@ export default function Writing({ lang }: { lang: Lang }) {
                   <Phrases text={essay.title} />
                 </h3>
                 <p>{essay.line}</p>
-                <span className="go">
-                  {t.go} <span aria-hidden="true">→</span>
-                </span>
+                <span className="go" aria-hidden="true">↗</span>
               </a>
             </li>
           ))}

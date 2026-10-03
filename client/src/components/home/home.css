@@ -1715,52 +1715,38 @@
   background: var(--lz-ivory);
 }
 
+/* A list, not cards: date, then the title and its one line, between hairlines; the whole row
+   opens the essay. Titles get the width they need, so they break only between phrases. */
 .lz-home .essays {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 18px;
   margin: 0;
   padding: 0;
   list-style: none;
+  border-top: 1px solid var(--lz-ink);
 }
 
-/* Subgrid: every card's date, title, line and link sit on shared rows. */
 .lz-home .essays > li {
-  display: grid;
-  grid-row: span 4;
-  grid-template-rows: subgrid;
+  border-bottom: 1px solid var(--lz-line);
 }
 
 .lz-home .essay {
   display: grid;
-  grid-row: span 4;
-  grid-template-rows: subgrid;
-  padding: 28px 26px;
-  border-radius: 14px;
-  background: var(--lz-paper);
-  box-shadow: 0 0 0 1px var(--lz-line);
-  transition:
-    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
-    box-shadow 0.35s;
-}
-
-.lz-home .essay:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 0 0 1px var(--lz-line-2),
-    0 24px 40px -28px rgb(20 30 20 / 0.4);
+  grid-template-columns: 8rem minmax(0, 1fr) auto;
+  column-gap: 28px;
+  align-items: baseline;
+  padding: 26px 0;
 }
 
 .lz-home .essay .meta {
+  grid-row: 1 / span 2;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
   color: var(--lz-muted);
 }
 
 .lz-home .essay h3 {
-  margin-top: 10px;
-  font-size: 21px;
-  line-height: 1.5;
+  font-size: 22px;
+  line-height: 1.45;
+  transition: color 0.2s;
 }
 
 .lz-home.l-en .essay h3 {
@@ -1768,10 +1754,9 @@
 }
 
 .lz-home .essay p {
-  align-self: start;
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--lz-line);
+  grid-column: 2;
+  max-width: 40em;
+  margin-top: 8px;
   font-size: 15px;
   line-height: 1.8;
   color: var(--lz-ink-2);
@@ -1783,26 +1768,49 @@
 }
 
 .lz-home .essay .go {
-  align-self: end;
-  padding-top: 18px;
-  font-size: 14px;
-  font-weight: 500;
+  grid-column: 3;
+  grid-row: 1;
+  font-size: 15px;
+  color: var(--lz-muted);
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.lz-home .essay:hover h3,
+.lz-home .essay:hover .go {
   color: var(--lz-green);
 }
 
-@media (max-width: 1040px) {
-  .lz-home .essays {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .lz-home .essays > li {
-    margin-bottom: 18px;
-  }
+.lz-home .essay:hover .go {
+  transform: translate(2px, -2px);
 }
 
 @media (max-width: 560px) {
-  .lz-home .essays {
-    grid-template-columns: 1fr;
+  .lz-home .essay {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 16px;
+    padding: 20px 0;
+  }
+
+  .lz-home .essay .meta {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .lz-home .essay h3 {
+    grid-column: 1;
+    margin-top: 6px;
+    font-size: 19px;
+  }
+
+  .lz-home .essay p {
+    grid-column: 1 / -1;
+  }
+
+  .lz-home .essay .go {
+    grid-row: 2;
+    grid-column: 2;
   }
 }
 
@@ -3866,21 +3874,18 @@
 
 /* Items that arrive together rise one after another, left to right. */
 @media (min-width: 861px) {
-  .lz-home .essays > li.rv:nth-child(2),
   .lz-home .vids > li.rv:nth-child(3n + 2),
   .lz-home .paths > .rv:nth-child(2),
   .lz-home .guests > li.rv:nth-child(6n + 2) {
     transition-delay: 0.08s;
   }
 
-  .lz-home .essays > li.rv:nth-child(3),
   .lz-home .vids > li.rv:nth-child(3n),
   .lz-home .paths > .rv:nth-child(3),
   .lz-home .guests > li.rv:nth-child(6n + 3) {
     transition-delay: 0.16s;
   }
 
-  .lz-home .essays > li.rv:nth-child(4),
   .lz-home .guests > li.rv:nth-child(6n + 4) {
     transition-delay: 0.24s;
   }

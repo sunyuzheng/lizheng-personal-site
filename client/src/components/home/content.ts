@@ -350,13 +350,13 @@ const zh = {
   ]),
   works: {
     eyebrow: "代表作",
-    title: ["我愿意长期站在", "它们后面。"],
+    title: ["这几件事，", "我会负责到底。"],
     intro:
-      "一档做了六年的节目，两本书，还有下面这座正在建的城。每一件都是一个判断，离开了我的脑子，交给了真实的读者、学员和市场。",
+      "一档做了六年的节目，两本书，还有下面这座正在建的城。每一件都把我的判断交给真实的读者、学员和市场去检验。",
     show: {
       meta: "节目 · 2020年至今",
       title: "课代表立正 · 200+场对话",
-      body: "问真正把事做成的人：到底做对了什么？",
+      body: "",
       go: "看对话",
       photo: {
         src: "/english-network/acquired.webp",
@@ -557,19 +557,18 @@ const zh = {
     title: ["最近在想的事"],
     intro:
       "在教学、访谈和做产品的过程中，反复遇到的问题。每篇都尽量讲到能被检验的程度。",
-    go: "读文章",
     essays: [
-      {
-        date: "2026.08",
-        title: "如何识别与消灭|fake work",
-        line: "Fake work，就是用可见的动作，代替难以衡量的价值。",
-        href: "https://www.superlinear.academy/c/ai-resources/fake-work",
-      },
       {
         date: "2026.09",
         title: "AI会带来第二次文艺复兴，我们需要自己的佛罗伦萨",
         line: "人从生产的工具，重新成为生产的目的。",
         href: LINKS.florence,
+      },
+      {
+        date: "2026.08",
+        title: "如何识别与消灭|fake work",
+        line: "Fake work，就是用可见的动作，代替难以衡量的价值。",
+        href: "https://www.superlinear.academy/c/ai-resources/fake-work",
       },
       {
         date: "2026.04",
@@ -795,7 +794,7 @@ const en: HomeCopy = {
     show: {
       meta: "Show · 2020 to now",
       title: "200+ conversations",
-      body: "Asking people who built consequential things what they actually got right.",
+      body: "",
       go: "See the conversations",
       photo: {
         src: "/english-network/acquired.webp",
@@ -977,7 +976,6 @@ const en: HomeCopy = {
     title: ["What I’m thinking about now"],
     intro:
       "Questions that keep coming up in teaching, interviews, and building. English versions of essays first written in Chinese.",
-    go: "Read",
     essays: [
       {
         date: "2026.04",

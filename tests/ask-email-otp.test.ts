@@ -112,6 +112,8 @@ describe("Coffee email ownership flow", () => {
     expect(response.statusCode).toBe(200); expect(response.body).toContain("email-request");
     expect(response.body).not.toContain("attacker.example"); expect(response.body).not.toContain("test-only-");
     expect(response.headers.get("content-security-policy")).toContain("form-action 'self'");
+    // A form posted under no-referrer carries `Origin: null` and would fail the origin check.
+    expect(response.headers.get("referrer-policy")).toBe("same-origin");
     expect(fetch).not.toHaveBeenCalled();
     const session = await call("session", { method: "GET" });
     expect(JSON.parse(session.body).login_ready).toBe(true);

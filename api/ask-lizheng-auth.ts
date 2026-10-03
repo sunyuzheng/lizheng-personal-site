@@ -142,6 +142,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   const html = (status: number, value: string) => {
     res.statusCode = status; res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Content-Security-Policy", PAGE_CSP);
+    // These pages' forms post back here. Under no-referrer, browsers send `Origin: null` with
+    // such a form, which the origin check refuses; same-origin still tells other sites nothing.
+    res.setHeader("Referrer-Policy", "same-origin");
     res.end(value);
   };
   let action: string | undefined, currentUrl: URL | undefined;

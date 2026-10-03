@@ -2494,9 +2494,12 @@
 .lz-home .lz-ask-answer p {
   margin-block: 12px;
 }
+/* The answer in a sentence or two: the line a reader should remember. */
 .lz-home .lz-ask-answer-summary {
-  font-size: 19px;
-  font-weight: 500;
+  font-family: var(--serif);
+  font-size: 19.5px;
+  font-weight: 600;
+  line-height: 1.7;
 }
 .lz-home .lz-ask-answer section {
   margin-top: 24px;
@@ -2516,6 +2519,9 @@
 .lz-home .lz-ask-limitations {
   font-size: 12.5px;
   color: var(--lz-muted);
+}
+.lz-home .lz-ask-limitations p {
+  margin: 0;
 }
 .lz-home .lz-ask-answer :is(ul, ol) {
   padding-left: 24px;

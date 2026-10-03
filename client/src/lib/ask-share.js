@@ -15,7 +15,7 @@ const LABELS = {
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
     video: '视频', memberVideo: '会员视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
     cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问',
-    kinds: {application: '结合你的处境', source: '材料里的观点', synthesis: 'AI综合'},
+    kinds: {application: 'AI推演', personal: '结合你的处境', source: '材料里的观点'},
   },
   en: {
     site: 'https://www.lizheng.ai/en#ask', host: 'lizheng.ai/en', brand: 'Ask Lizheng', file: 'Ask-Lizheng', question: 'Your question',
@@ -23,7 +23,7 @@ const LABELS = {
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
     video: 'Video', memberVideo: 'Members video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
     cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask',
-    kinds: {application: 'Applied to you', source: 'From the material', synthesis: 'AI synthesis'},
+    kinds: {application: 'AI’s application', personal: 'Applied to you', source: 'From the material'},
   },
 };
 let L = LABELS.zh;
@@ -41,8 +41,8 @@ const SERIF = '"Noto Serif SC", "Songti SC", "STSong", serif';
 const SANS = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", sans-serif';
 const KIND = {
   application: [C.amberTint, C.amber],
+  personal: [C.amberTint, C.amber],
   source: [C.greenTint, C.greenText],
-  synthesis: [C.sand, C.muted],
 };
 const font = (weight, size, family = SANS) => `${weight} ${size}px ${family}`;
 
@@ -220,13 +220,15 @@ function header() {
 // A section heading with its kind badge after the last line, or under it when
 // the line is full.
 function headingRows(ctx, heading, kind) {
-  const [bg, fg] = KIND[kind] || KIND.synthesis;
-  const label = L.kinds[kind] || L.kinds.synthesis;
-  ctx.font = font(500, 20);
-  const bw = ctx.measureText(label).width + 28;
   const style = {size: 34, lh: 1.5, weight: 700, family: SERIF, color: C.ink, keep: true};
   const lines = wrap(ctx, units([{text: heading}], style), INNER);
   const lh = Math.round(style.size * style.lh);
+  // AI synthesis is the default and goes unlabeled, as on the page.
+  if (!KIND[kind]) return lines.map(line => ({h: lh, keep: true, draw(c, y) { drawLine(c, line, PAD, y + lh / 2, style.size); }}));
+  const [bg, fg] = KIND[kind];
+  const label = L.kinds[kind];
+  ctx.font = font(500, 20);
+  const bw = ctx.measureText(label).width + 28;
   const badge = (c, x, mid) => {
     c.fillStyle = bg; roundRect(c, x, mid - 17, bw, 34, 17); c.fill();
     c.fillStyle = fg; c.font = font(500, 20); c.textBaseline = 'middle'; c.fillText(label, x + 14, mid + 1);
@@ -239,8 +241,8 @@ function headingRows(ctx, heading, kind) {
   return rows;
 }
 
-function limitsRow(ctx, text) {
-  const lines = textRows(ctx, [{text}], {size: 23, lh: 1.75, weight: 400, color: C.muted}, {width: INNER - 56});
+function limitsRow(ctx, text, cites) {
+  const lines = textRows(ctx, inlineRuns(text.replace(/\[?\b(S\d+)\b\]?/g, '[$1]'), cites), {size: 23, lh: 1.75, weight: 400, color: C.muted}, {width: INNER - 56});
   const h = 28 + 36 + lines.reduce((sum, r) => sum + r.h, 0) + 24;
   return {h, draw(c, y) {
     c.fillStyle = C.sand; roundRect(c, PAD, y, INNER, h, 20); c.fill();
@@ -310,7 +312,7 @@ function footerRow() {
   }};
 }
 
-function layout(ctx, {question, result, date}) {
+function layout(ctx, {question, result, date, personal}) {
   // Number sources 1..n in the shared file; the answer's ids skip sources it did not use.
   const cites = new Map((result.sources || []).map((s, i) => [s.id, String(i + 1)]));
   const rows = [header(), gap(62)];
@@ -323,7 +325,8 @@ function layout(ctx, {question, result, date}) {
     rows.push(...textRows(ctx, inlineRuns(block.text, cites), {size: 32, lh: 1.75, weight: 600, color: C.ink, strong: C.ink}));
   }
   for (const section of result.sections || []) {
-    rows.push(gap(46), ...headingRows(ctx, section.heading, section.kind), gap(8));
+    const kind = section.kind === 'application' && personal ? 'personal' : section.kind;
+    rows.push(gap(46), ...headingRows(ctx, section.heading, kind), gap(8));
     markdownBlocks(section.body).forEach((block, i) => {
       if (i) rows.push(gap(16));
       rows.push(...textRows(ctx, inlineRuns(block.text, cites),
@@ -331,7 +334,7 @@ function layout(ctx, {question, result, date}) {
         block.marker ? {indent: 40, marker: block.marker} : {}));
     });
   }
-  if (result.limitations) rows.push(gap(44), limitsRow(ctx, result.limitations));
+  if (result.limitations) rows.push(gap(44), limitsRow(ctx, result.limitations, cites));
   if (result.sources?.length) {
     rows.push(gap(54), {h: 52, keep: true, draw(c, y) {
       c.textBaseline = 'middle';

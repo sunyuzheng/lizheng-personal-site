@@ -131,10 +131,11 @@ const COPY = {
     privacyNote:
       "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
     modes: ["想明白", "从哪读起"],
+    // AI synthesis is the default and goes unlabeled; the answer says once that AI wrote it.
     kinds: {
-      source: "材料中的观点",
-      synthesis: "AI综合",
-      application: "结合你的处境",
+      source: "材料里的观点",
+      application: "AI推演",
+      personal: "结合你的处境",
     },
     steps: ["查找原文", "匹配材料", "整理回答", "核对来源"],
   },
@@ -253,8 +254,8 @@ const COPY = {
     modes: ["Understand", "What to read first"],
     kinds: {
       source: "From the material",
-      synthesis: "AI synthesis",
-      application: "Applied to your situation",
+      application: "AI’s application",
+      personal: "Applied to your situation",
     },
     steps: [
       "Find sources",
@@ -356,6 +357,9 @@ function MemberSourcesNote({ sources, lang }: { sources: AskSource[]; lang: Lang
   </aside>;
 }
 
+// A boundary note may name a source as S6; show it as a citation, like in the text.
+const citeIds = (text: string) => text.replace(/\[?\b(S\d+)\b\]?/g, "[$1]");
+
 function AnswerText({
   text,
   sources,
@@ -387,12 +391,16 @@ function AnswerText({
   );
 }
 
+// Only sections that differ from AI synthesis say so. Sources show as numbers in the
+// text; a section that cites none in its text lists them below.
 function AnswerSections({
   sections,
   sources,
   turnId,
   lang,
+  personal = false,
 }: {
+  personal?: boolean;
   sections: AskResult["sections"];
   sources: AskSource[];
   turnId: number;
@@ -403,16 +411,20 @@ function AnswerSections({
     <section key={i}>
       <div className="lz-ask-answer-title">
         <h4>{section.heading}</h4>
-        <small>{c.kinds[section.kind]}</small>
+        {section.kind !== "synthesis" && (
+          <small>{section.kind === "application" && personal ? c.kinds.personal : c.kinds[section.kind]}</small>
+        )}
       </div>
       <AnswerText text={section.body} sources={sources} turnId={turnId} />
-      <div className="lz-ask-citations">
-        {section.source_ids?.map(id => (
-          <a key={id} href={`#home-ask-${turnId}-${id}`}>
-            {id}
-          </a>
-        ))}
-      </div>
+      {!/\[S\d+\]/.test(section.body) && (
+        <div className="lz-ask-citations">
+          {section.source_ids?.map(id => (
+            <a key={id} href={`#home-ask-${turnId}-${id}`}>
+              {id}
+            </a>
+          ))}
+        </div>
+      )}
     </section>
   ));
 }
@@ -587,7 +599,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     setExporting(`${turn.id}-${kind}`);
     try {
       const { exportAnswer } = await import("@/lib/ask-share");
-      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date() }, lang);
+      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context }, lang);
       const file = new File([blob], name, { type });
       if (kind === "png" && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
         try {
@@ -967,7 +979,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
                               </div>
                               <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
-                              {detail.answer.limitations && <p className="lz-ask-limitations">{detail.answer.limitations}</p>}
+                              {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
                             </div>
                             {!!detail.answer.sources.length && (
                               <div className="lz-ask-material">
@@ -1099,11 +1111,12 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                           sources={turn.sources}
                           turnId={turn.id}
                           lang={lang}
+                          personal={!!turn.request.context}
                         />
                         {turn.result.limitations && (
-                          <p className="lz-ask-limitations">
-                            {turn.result.limitations}
-                          </p>
+                          <div className="lz-ask-limitations">
+                            <AnswerText text={citeIds(turn.result.limitations)} sources={turn.sources} turnId={turn.id} />
+                          </div>
                         )}
                       </div>
                     )}
@@ -1116,6 +1129,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                           sources={turn.partial.sources}
                           turnId={turn.id}
                           lang={lang}
+                          personal={!!turn.request.context}
                         />
                       </div>
                     )}

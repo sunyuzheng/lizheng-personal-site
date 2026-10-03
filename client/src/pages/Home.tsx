@@ -12,8 +12,12 @@ import Works from "@/components/home/Works";
 import Writing from "@/components/home/Writing";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
+import { SECTION } from "@/components/home/content";
 import { useLanguage, type Lang } from "@/contexts/LanguageContext";
+import { watchUsage, type UsageMark } from "@/lib/ask-usage";
+import { linkTarget } from "@/lib/link-target";
 import { prefersReducedMotion } from "@/lib/scroll";
+import { track } from "@vercel/analytics";
 import { applyPageSeo } from "@/lib/seo";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
@@ -54,6 +58,38 @@ function useReveal(rootRef: RefObject<HTMLElement | null>, lang: Lang) {
   }, [rootRef, lang]);
 }
 
+// The chapters whose arrival on screen the owner's usage stats count (lib/ask-usage), in page
+// order; the Ask section counts itself (h_seen).
+const CHAPTERS: [string, UsageMark][] = [
+  [SECTION.works, "c_works"], [SECTION.academy, "c_city"], [SECTION.talks, "c_talks"],
+  [SECTION.calls, "c_calls"], [SECTION.writing, "c_writing"], [SECTION.join, "c_join"],
+];
+
+/**
+ * Counts the homepage for its owner: which chapters come into view (Ops 「使用情况」), and which
+ * links are followed, by section and destination (Vercel Analytics event "Home Link"). The Ask
+ * section counts its own actions.
+ */
+function useHomeCounts(rootRef: RefObject<HTMLElement | null>, lang: Lang) {
+  useEffect(() => {
+    for (const [id, mark] of CHAPTERS) watchUsage(document.getElementById(id), mark);
+  }, [lang]);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const onClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!link || link.closest("#ask-lizheng")) return;
+      const section = link.closest("section[id], header, footer");
+      try {
+        track("Home Link", { section: section?.id || section?.tagName.toLowerCase() || "page", to: linkTarget(link.href, location.href) });
+      } catch {}
+    };
+    root.addEventListener("click", onClick);
+    return () => root.removeEventListener("click", onClick);
+  }, [rootRef]);
+}
+
 export default function Home() {
   const { lang } = useLanguage();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -73,6 +109,7 @@ export default function Home() {
   }, [lang]);
 
   useReveal(rootRef, lang);
+  useHomeCounts(rootRef, lang);
 
   return (
     <div

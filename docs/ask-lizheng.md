@@ -65,6 +65,7 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 - 服务端：`POST /api/ask-lizheng/usage`（两个域名各自同源，`api/ask-lizheng-usage.ts` → `shared/ask-usage.ts`），只收这五个字段，记号有白名单；爬虫、预览和无头浏览器不算；同一网络每天最多600次；`ASK_USAGE_ENABLED=false` 可以关掉。浏览器用主站已有的匿名 Cookie（`__Secure-ask-guest`，30天），存进统计的是另一种用途的加密摘要；`__Secure-ask-first` 记第一次来的日期（400天），用来算回访。
 - 存储：Upstash 里 `ask-ops:{v3}:usage:` 下按天的计数（`day:<日>`，每个入口和合计）、HyperLogLog 去重的浏览器数（每天、每个入口、几个漏斗记号、按第一次来那天分组的回访），按天的键400天后过期；`total` 和全部时间的去重数不过期。Ops 的 `shared/usage-store.ts` 读这些键。
 - 隐私政策的「访问统计」写明了这些（停留、滚动、看到和点开「别人在问什么」、回访，按天合计，不含提问内容）。
+- 主页（2026-10-04，待上线）：每一章出现在屏幕上时记一次（`c_works` 代表作、`c_city` 这座城、`c_talks` 对话、`c_calls` 公开判断、`c_writing` 文章、`c_join` 加入；问问立正还是 `h_seen`），Ops 面板的「主页读到哪一章」按主页打开次数算比例。主页上点了哪个链接记成 Vercel Analytics 事件「Home Link」：`section` 是链接所在章节的 id（或 header/footer），`to` 是去向（本站页面去掉语言前缀如 `/guests`，页内锚点如 `#join`，外站是域名加第一段路径，如 `superlinear.academy/` 是免费加入、`superlinear.academy/c` 是帖子）。问问立正区里的链接不重复记，它有自己的「Ask …」事件。代码在 `client/src/pages/Home.tsx`（`useHomeCounts`）和 `client/src/lib/link-target.ts`。
 
 ## 设计（2026-10-03）
 

@@ -5,14 +5,17 @@
  * counts the anonymous browser cookie the daily limit already uses. ask.lizheng.ai has the same
  * module (src/usage.js); the server's list of marks is in shared/ask-usage.ts.
  */
-export type UsageMark = "h_seen" | "d_shown" | "d_seen" | "d_open" | "d_similar" | "d_more" | "ask" | "answer" | "source" | "export";
+export type UsageMark = "h_seen" | "d_shown" | "d_seen" | "d_open" | "d_similar" | "d_more" | "ask" | "answer" | "source" | "export"
+  | "c_works" | "c_city" | "c_talks" | "c_calls" | "c_writing" | "c_join";
 type Usage = { mark(name: UsageMark): void; watch(element: Element | null, name: UsageMark): void; stop(): void };
 const ENDPOINT = "/api/ask-lizheng/usage";
 const IDLE_MS = 30_000;
 const TIME: [number, string][] = [[10_000, "t10"], [30_000, "t30"], [60_000, "t60"], [180_000, "t180"], [600_000, "t600"]];
 const DEPTH: [number, string][] = [[0.25, "s25"], [0.5, "s50"], [0.75, "s75"], [0.98, "s100"]];
 const INPUT = ["pointerdown", "pointermove", "keydown", "wheel", "touchstart", "scroll"];
-const NONE: Usage = { mark() {}, watch() {}, stop() {} };
+// Sections watched before the count starts are watched once it does.
+const pending: [Element | null, UsageMark][] = [];
+const NONE: Usage = { mark() {}, watch(element, name) { pending.push([element, name]); }, stop() {} };
 let current = NONE;
 
 /** Notes that this page view did `name` (sent once). */
@@ -23,9 +26,10 @@ export const watchUsage = (element: Element | null, name: UsageMark) => current.
 /** Starts counting this page view; returns the stop, which sends what is left. */
 export function startUsage(surface: "ask" | "home" | "app"): () => void {
   current.stop();
-  if (typeof window === "undefined" || /HeadlessChrome|bot|crawl|spider/i.test(navigator.userAgent)) return () => {};
+  if (typeof window === "undefined" || /HeadlessChrome|bot|crawl|spider/i.test(navigator.userAgent)) { pending.length = 0; return () => {}; }
   current = tracker(surface);
   const mine = current;
+  for (const [element, name] of pending.splice(0)) mine.watch(element, name);
   return () => { mine.stop(); if (current === mine) current = NONE; };
 }
 

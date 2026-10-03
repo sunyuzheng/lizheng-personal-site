@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import handler from "../api/ask-lizheng-usage";
 import { recordUsage, usageDay, usageEvent, USAGE_PREFIX, USAGE_RECORD_SCRIPT, USAGE_TTL_SECONDS } from "../shared/ask-usage";
+import { linkTarget } from "../client/src/lib/link-target";
 
 const NOW = Date.parse("2026-10-03T12:00:00.000Z");
 const TODAY = usageDay(NOW);
@@ -27,6 +28,9 @@ afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs();
 describe("what a page may send", () => {
   it("takes a view, reading time and known marks, nothing else", () => {
     expect(usageEvent(event({ marks: ["t10", "s50", "d_open", "ask"] }))).toMatchObject({ surface: "ask", marks: ["t10", "s50", "d_open", "ask"] });
+    // The homepage's chapters, as they come into view.
+    const chapters = ["c_works", "c_city", "c_talks", "c_calls", "c_writing", "c_join"];
+    expect(usageEvent(event({ surface: "home", marks: chapters })).marks).toEqual(chapters);
     for (const bad of [
       event({ question: "synthetic text" }), event({ marks: ["typed:hello"] }), event({ marks: ["t10", "t10"] }),
       event({ surface: "admin" }), event({ view: 2 }), event({ engaged_ms: -1 }), event({ engaged_ms: 1.5 }),
@@ -103,5 +107,18 @@ describe("the endpoint", () => {
     expect((await post("x".repeat(1025))).status).toBe(413);
     expect((await post("{\"v\":1}")).status).toBe(400);
     expect(fetcher).not.toHaveBeenCalled();
+  });
+});
+
+describe("homepage link labels", () => {
+  it("names a link by page, anchor, or site and first path part", () => {
+    const here = "https://www.lizheng.ai/";
+    expect(linkTarget("https://www.superlinear.academy/", here)).toBe("superlinear.academy/");
+    expect(linkTarget("https://www.superlinear.academy/c/ai-resources/verb", here)).toBe("superlinear.academy/c");
+    expect(linkTarget("https://www.youtube.com/@kedaibiao", here)).toBe("youtube.com/@kedaibiao");
+    expect(linkTarget("/guests/reynold-xin", here)).toBe("/guests");
+    expect(linkTarget("/en/collab/enterprise", "https://www.lizheng.ai/en")).toBe("/collab");
+    expect(linkTarget("#join", here)).toBe("#join");
+    expect(linkTarget("/", "https://www.lizheng.ai/about")).toBe("/");
   });
 });

@@ -13,10 +13,12 @@ export const USAGE_SURFACES = ["ask", "home", "app"] as const;
 // Sent once per page view, the first time each happens: reading time (seconds), scroll depth
 // (percent), seeing the homepage's Ask section, the list of questions others asked (shown,
 // scrolled into view, a card opened, 问个类似的, 看更多问题), asking, an answer, opening a
-// source, saving an image or PDF.
+// source, saving an image or PDF, and on the homepage which chapters came into view (selected
+// work, the community map, conversations, public calls, writing, join).
 export const USAGE_MARKS = [
   "t10", "t30", "t60", "t180", "t600", "s25", "s50", "s75", "s100",
   "h_seen", "d_shown", "d_seen", "d_open", "d_similar", "d_more", "ask", "answer", "source", "export",
+  "c_works", "c_city", "c_talks", "c_calls", "c_writing", "c_join",
 ] as const;
 // Also counted as distinct browsers, for the funnel.
 export const USAGE_UNIQUE_MARKS = ["h_seen", "d_seen", "d_open", "ask", "answer"] as const;

@@ -326,6 +326,15 @@ describe("trusted v3 intake boundary", () => {
       })
     ).toThrow();
   });
+  it("keeps member source metadata in the archived answer and rejects unsafe membership URLs", () => {
+    const source = { ...answer().sources[0], source_visibility: "members-only", text_access: "public",
+      membership_platform: "youtube", membership_url: "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join",
+      membership_verified_at: "2026-10-02", transcript_source_kind: "local_qwen_uncorrected",
+      transcript_quality: "uncorrected-asr", speaker_classification: "mixed-or-unresolved" };
+    expect(archivedAnswer({ ...answer(), sources: [source] }).sources[0]).toEqual(source);
+    for (const membership_url of ["javascript:alert(1)", "https://user:pass@example.com/join", "http://example.com/join"])
+      expect(() => archivedAnswer({ ...answer(), sources: [{ ...source, membership_url }] })).toThrow();
+  });
   it("uses body-bound v3 domain and deadline, rejects replay in v1/quota domain", () => {
     const body = Buffer.from(JSON.stringify(start()));
     verifyOpsProof(body, proof(body));

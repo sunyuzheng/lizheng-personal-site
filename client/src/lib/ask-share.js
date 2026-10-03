@@ -13,7 +13,7 @@ const LABELS = {
     site: 'https://ask.lizheng.ai/', host: 'ask.lizheng.ai', brand: '问问立正', file: '问问立正', question: '你的问题',
     meta: day => `AI根据立正公开的文章和视频整理 · ${day}`, day: d => `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
-    video: '视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
+    video: '视频', memberVideo: '会员视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
     cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问',
     kinds: {application: '结合你的处境', source: '材料里的观点', synthesis: 'AI综合'},
   },
@@ -21,7 +21,7 @@ const LABELS = {
     site: 'https://www.lizheng.ai/en#ask', host: 'lizheng.ai/en', brand: 'Ask Lizheng', file: 'Ask-Lizheng', question: 'Your question',
     meta: day => `AI synthesis of Lizheng’s public essays and talks · ${day}`, day: d => d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}),
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
-    video: 'Video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
+    video: 'Video', memberVideo: 'Members video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
     cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask',
     kinds: {application: 'Applied to you', source: 'From the material', synthesis: 'AI synthesis'},
   },
@@ -256,7 +256,7 @@ function sourceRow(ctx, source, number) {
   const all = wrap(ctx, units([{text: source.title || ''}], style), INNER - 70);
   const titleLines = all.slice(0, 2);
   const h = 24 + titleLines.length * 40 + 34 + 24;
-  const type = source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
+  const type = source.source_visibility === 'members-only' && source.membership_platform === 'youtube' ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
   const meta = [type, source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
   return {h, link: source.url, draw(c, y) {
     c.fillStyle = C.line; c.fillRect(PAD, y, INNER, 2);

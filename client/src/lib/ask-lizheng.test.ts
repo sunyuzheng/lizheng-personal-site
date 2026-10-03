@@ -3,6 +3,8 @@ import {
   askLizheng,
   applyAskEvent,
   publicSourceUrl,
+  isMemberVideo,
+  memberJoinUrl,
   type AskEvent,
   type AskAnswerState,
   type AskResult,
@@ -75,6 +77,22 @@ afterEach(() => {
 });
 
 describe("askLizheng stream protocol", () => {
+  it("carries membership metadata through SSE and only links the actual channel membership", async () => {
+    const member = { ...source, source_type: "video-transcript", source_visibility: "members-only", text_access: "public", membership_platform: "youtube",
+      membership_url: "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join", transcript_quality: "uncorrected-asr" };
+    const complete = { ...result, sources: [member] };
+    const { response } = closedResponse(frame("sources", { sources: [member] }) + frame("result", complete), true);
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(response));
+    const events: AskEvent[] = [];
+    await askLizheng(payload, new AbortController().signal, event => events.push(event));
+    expect(events.find(e => e.type === "sources")?.value).toEqual({ sources: [member] });
+    expect(events.find(e => e.type === "result")?.value).toEqual(complete);
+    expect(isMemberVideo(member)).toBe(true);
+    expect(memberJoinUrl(member)).toBe(member.membership_url);
+    expect(isMemberVideo({ ...member, membership_platform: "circle" })).toBe(false);
+    expect(isMemberVideo({ ...member, source_type: "community-post" })).toBe(false);
+    expect(memberJoinUrl({ ...member, membership_url: "https://unrelated.example/join" })).toBeUndefined();
+  });
   it("reports comment-only bytes as activity without inventing progress or completing", async () => {
     let controller!: ReadableStreamDefaultController<Uint8Array>;
     const stream = new ReadableStream<Uint8Array>({

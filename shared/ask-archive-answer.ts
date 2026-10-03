@@ -39,6 +39,14 @@ const SOURCE_LIMITS: Record<string, number> = {
   evidence_role: 100,
   public_copy_url: 2048,
   timecode: 30,
+  source_visibility: 64,
+  text_access: 32,
+  membership_platform: 32,
+  membership_url: 2048,
+  membership_verified_at: 35,
+  transcript_source_kind: 100,
+  transcript_quality: 64,
+  speaker_classification: 100,
 };
 function invalid(): never {
   throw new AccessError("invalid_request", 400);
@@ -123,7 +131,8 @@ export function archivedAnswer(value: unknown): ArchivedAnswer {
       Object.entries(s).some(
         ([k, v]) => !(k in SOURCE_LIMITS) || !text(v, SOURCE_LIMITS[k])
       ) ||
-      (typeof s.public_copy_url === "string" && !https(s.public_copy_url))
+      (typeof s.public_copy_url === "string" && !https(s.public_copy_url)) ||
+      (typeof s.membership_url === "string" && !https(s.membership_url))
     )
       invalid();
     ids.add(s.id);

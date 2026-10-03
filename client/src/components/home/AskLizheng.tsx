@@ -6,6 +6,8 @@ import {
   applyAskEvent,
   AskError,
   publicSourceUrl,
+  isMemberVideo,
+  memberJoinUrl,
   type AskIntent,
   type AskPayload,
   type AskAnswerState,
@@ -303,10 +305,12 @@ function Source({
   const c = COPY[lang];
   const url = publicSourceUrl(source.url);
   const copy = publicSourceUrl(source.public_copy_url);
+  const member = isMemberVideo(source);
   return (
-    <article className="lz-ask-source" id={`home-ask-${turnId}-${source.id}`}>
+    <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
       <div>
         <span>{source.id}</span>
+        {member && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (
@@ -317,6 +321,10 @@ function Source({
         <b>{source.title}</b>
       )}
       {source.reason && <p>{source.reason}</p>}
+      {member && <p className="lz-ask-member-note">{lang === "zh" ? "字幕资料已开放，完整视频需YouTube频道会员。" : "Transcript text is open; the full video requires YouTube channel membership."}</p>}
+      {source.transcript_quality === "uncorrected-asr" && <small>{lang === "zh" ? "自动转录未校正，请以原视频核实措辞。" : "Uncorrected ASR; verify wording in the original video."}</small>}
+      {source.transcript_quality === "source-unverified" && <small>{lang === "zh" ? "字幕来源未确认，请以原视频核实。" : "Caption provenance is unverified; check the original video."}</small>}
+      {member && url && <a className="lz-ask-member-watch" href={url} {...EXTERNAL}>{lang === "zh" ? "观看会员完整视频" : "Watch the full members video"} ↗</a>}
       {source.excerpt && (
         <p className="lz-ask-excerpt-preview">
           {source.excerpt.slice(0, 160)}
@@ -337,6 +345,15 @@ function Source({
       </details>
     </article>
   );
+}
+
+function MemberSourcesNote({ sources, lang }: { sources: AskSource[]; lang: Lang }) {
+  const member = sources.find(source => memberJoinUrl(source));
+  if (!member) return null;
+  return <aside className="lz-ask-member-invite">
+    <p>{lang === "zh" ? "想看这些内容的完整讲解与对话？" : "Want the complete talks and conversations?"}</p>
+    <a href={memberJoinUrl(member)} {...EXTERNAL}>{lang === "zh" ? "了解YouTube频道会员" : "Explore YouTube channel membership"} ↗</a>
+  </aside>;
 }
 
 function AnswerText({
@@ -962,6 +979,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                                 </div>
                               </div>
                             )}
+                            <MemberSourcesNote sources={detail.answer.sources} lang={lang} />
                             <small className="attribution">{c.discoveryAttribution}</small>
                           </>
                         )}
@@ -1196,6 +1214,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                         )}
                       </div>
                     )}
+                    {turn.result && <MemberSourcesNote sources={turn.result.sources} lang={lang} />}
                     {turn.result?.status === "answered" && !working && (
                       <div className="lz-ask-actions">
                         {(["png", "pdf"] as const).map(kind => (

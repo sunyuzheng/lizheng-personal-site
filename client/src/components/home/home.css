@@ -2605,6 +2605,13 @@
 .lz-home .lz-ask-source:target {
   border-color: var(--lz-green);
 }
+.lz-home .lz-ask-source-member { border-color: #c6a55d; background: #fbf7ed; }
+.lz-home .lz-ask-member-badge { padding: 3px 8px; border-radius: 5px; color: #705111; background: #f1e2bd; }
+.lz-home .lz-ask-source .lz-ask-member-note { color: #705111; font-size: 12px; }
+.lz-home .lz-ask-source .lz-ask-member-watch { margin: 10px 0; font-weight: 600; }
+.lz-home .lz-ask-member-invite { margin-top: 16px; padding: 14px 18px; border-left: 3px solid #c6a55d; background: #fbf7ed; font-size: 13px; }
+.lz-home .lz-ask-member-invite p { margin: 0 0 6px; }
+.lz-home .lz-ask-member-invite a { color: #705111; font-weight: 600; }
 .lz-home .lz-ask-source > div {
   display: flex;
   justify-content: space-between;

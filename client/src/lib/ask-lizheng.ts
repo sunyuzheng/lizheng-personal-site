@@ -18,6 +18,16 @@ export type AskSource = {
   attribution_note?: string;
   public_copy_url?: string;
   reason?: string;
+  source_type?: string;
+  timecode?: string;
+  source_visibility?: string;
+  text_access?: string;
+  membership_platform?: string;
+  membership_url?: string;
+  membership_verified_at?: string;
+  transcript_source_kind?: string;
+  transcript_quality?: string;
+  speaker_classification?: string;
 };
 export type AskResult = {
   status: "answered" | "clarify" | "unsupported" | "sources-only";
@@ -233,4 +243,13 @@ export function publicSourceUrl(value?: string): string | undefined {
   } catch {
     return undefined;
   }
+}
+
+export function isMemberVideo(source: AskSource): boolean {
+  return source.source_visibility === "members-only" && source.membership_platform === "youtube" && !!source.source_type?.startsWith("video");
+}
+
+export function memberJoinUrl(source: AskSource): string | undefined {
+  const join = "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join";
+  return isMemberVideo(source) && source.membership_url === join ? join : undefined;
 }

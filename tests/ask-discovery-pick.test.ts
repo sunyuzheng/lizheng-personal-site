@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
-import { pickDiscovery, readSeen, rememberSeen, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { discoveryDetail, pickDiscovery, readSeen, rememberSeen, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { isMemberVideo, memberJoinUrl } from "../client/src/lib/ask-lizheng";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const card = (n: number, count: number, topic = `t${n}`): DiscoveryCard => ({
@@ -10,6 +11,46 @@ const card = (n: number, count: number, topic = `t${n}`): DiscoveryCard => ({
 const seeded = (seed = 7) => () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
 const POOL = [card(1, 2), card(2, 9), card(3, 1), card(4, 5), card(5, 7), card(6, 3), card(7, 1), card(8, 4), card(9, 6), card(10, 2)];
 const ids = (cards: DiscoveryCard[]) => cards.map(item => item.public_id);
+afterEach(() => vi.unstubAllGlobals());
+
+describe("public answer source metadata", () => {
+  const join = "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join";
+  const source = {
+    id: "S1", title: "Synthetic member video", url: "https://www.youtube.com/watch?v=synthetic",
+    source_type: "video-transcript", source_visibility: "members-only", text_access: "public",
+    membership_platform: "youtube", membership_url: join, membership_verified_at: "2026-10-02",
+    transcript_source_kind: "previously-included-transcript", transcript_quality: "human-caption",
+    speaker_classification: "mixed-or-unresolved",
+  };
+  function respond(value: unknown) {
+    const fetch = vi.fn(async () => Response.json({
+      question: "Synthetic published question", revision: 1,
+      answer: { summary: "Synthetic public answer", sections: [], sources: [value] },
+    }));
+    vi.stubGlobal("fetch", fetch);
+    return fetch;
+  }
+
+  it("preserves the exact optional fields needed by member badges and links", async () => {
+    const fetch = respond({ ...source, email: "must-not-pass", reasoning_content: "must-not-pass" });
+    const detail = await discoveryDetail(id(1));
+    expect(fetch).toHaveBeenCalledWith(`/api/ask-lizheng/discovery/detail?public_id=${id(1)}`,
+      expect.objectContaining({ cache: "no-store", credentials: "omit" }));
+    expect(detail?.answer.sources).toEqual([source]);
+    expect(isMemberVideo(detail!.answer.sources[0])).toBe(true);
+    expect(memberJoinUrl(detail!.answer.sources[0])).toBe(join);
+  });
+
+  it("continues to omit unknown and non-string fields and supports old sources", async () => {
+    const old = { id: "S1", title: "Synthetic old source", url: "https://example.test/source" };
+    respond({ ...old, source_type: {}, source_visibility: ["members-only"], text_access: null,
+      membership_url: 42, transcript_quality: false, background: "must-not-pass" });
+    const detail = await discoveryDetail(id(2));
+    expect(detail?.answer.sources).toEqual([old]);
+    expect(isMemberVideo(detail!.answer.sources[0])).toBe(false);
+    expect(memberJoinUrl(detail!.answer.sources[0])).toBeUndefined();
+  });
+});
 
 describe("which questions a visit shows", () => {
   it("shows a first visit the most asked topics, most asked first", () => {

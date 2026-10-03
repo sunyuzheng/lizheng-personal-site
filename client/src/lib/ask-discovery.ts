@@ -24,7 +24,9 @@ function card(value: unknown): value is DiscoveryCard {
 }
 
 // The answer renders with the conversation's own components, so only the fields they read, as strings.
-const SOURCE_FIELDS = ["id", "title", "url", "date", "excerpt", "author", "attribution_note", "public_copy_url", "reason"] as const;
+const SOURCE_FIELDS = ["id", "title", "url", "date", "excerpt", "author", "attribution_note", "public_copy_url", "reason", "source_type",
+  "source_visibility", "text_access", "membership_platform", "membership_url", "membership_verified_at",
+  "transcript_source_kind", "transcript_quality", "speaker_classification"] as const;
 const KINDS = ["source", "synthesis", "application"];
 function source(value: unknown): AskSource | null {
   const v = value as Record<string, unknown>;

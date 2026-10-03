@@ -17,6 +17,7 @@ export default defineConfig({
       "tests/ask-usage.test.ts",
       "tests/ask-archive.test.ts",
       "tests/ask-lizheng-page.test.ts",
+      "tests/ask-public-page.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

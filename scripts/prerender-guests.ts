@@ -463,6 +463,14 @@ const emilExperimentAlternates = languageAlternates(
   experimentMeta.emil.zh.canonical
 );
 const fontStylesheet = findBuiltStylesheet(/^fonts-.+\.css$/);
+// A fixed address for the same fonts, for pages rendered outside this build: the public answer
+// pages at /ask/… (shared/ask-public-page.ts) link /fonts/serif.css.
+fs.mkdirSync(path.join(ROOT, "dist", "public", "fonts"), { recursive: true });
+fs.writeFileSync(
+  path.join(ROOT, "dist", "public", "fonts", "serif.css"),
+  `@import url("${fontStylesheet}");\n`,
+  "utf-8"
+);
 const vercelExperimentStylesheet = findBuiltStylesheet(
   /^home-experiment-(?!emil-).+\.css$/
 );

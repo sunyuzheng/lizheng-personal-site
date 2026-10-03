@@ -7,6 +7,9 @@
   "routes": [
     { "src": "^/api/ask-lizheng/ops/(session|summary|records|export|delete|discovery-list|discovery-save|discovery-publish|discovery-withdraw)$", "dest": "/api/ask-lizheng-ops?__route=$1" },
     { "src": "^/api/ask-lizheng/discovery/(questions|detail|vote)$", "has": [{ "type": "host", "value": "(?:www|ask)\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-discovery?__route=$1" },
+    { "src": "^/ask$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=index" },
+    { "src": "^/ask/sitemap\\.xml$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=sitemap" },
+    { "src": "^/ask/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=page&id=$1" },
     {
       "src": "^/ops/ask-lizheng$",
       "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }],

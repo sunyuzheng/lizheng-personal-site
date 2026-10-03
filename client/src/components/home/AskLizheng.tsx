@@ -16,9 +16,9 @@ import {
 } from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
-import { FileDown, ImageDown, LoaderCircle } from "lucide-react";
+import { FileDown, ImageDown, Layers, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, newestFirst, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
+import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
@@ -525,7 +525,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       discoveryVisit.current = seen.length ? "return" : "first";
       setDiscoveryMore(pool.length > picked.length);
       setAskedRecently(askedLastDay(pool));
-      setDiscoveryCards(newestFirst(picked));
+      setDiscoveryCards(picked);
     });
     return () => controller.abort();
   }, [lang]);
@@ -958,14 +958,19 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 const detail = cardDetails[card.public_id];
                 const vote = cardVotes[card.public_id];
                 const likes = vote?.likes ?? card.likes;
-                // A count only when it says more than this one question.
-                const meta = [card.topic_question_count >= 2 && c.discoveryCount(card.topic_question_count),
+                // Picked for being asked often: the count of similar askings leads. Otherwise the
+                // time does, and the count, when it says more than this one question, sits below.
+                const similar = card.similar_count ?? card.topic_question_count;
+                const often = card.role === "common" && similar >= 2;
+                const meta = [!often && similar >= 2 && c.discoveryCount(similar),
                   likes > 0 && c.discoveryLikes(likes)].filter(Boolean).join(" · ");
                 const anchor = -(index + 1);
                 return (
                   <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
                     <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
-                      {card.asked_at ? (
+                      {often ? (
+                        <small className="often"><Layers size={13} aria-hidden="true" />{c.discoveryCount(similar)}</small>
+                      ) : card.asked_at ? (
                         <time className={Date.now() - Date.parse(card.asked_at) < 3600000 ? "fresh" : undefined} dateTime={card.asked_at}
                           title={new Date(card.asked_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
                           {askedAgo(card.asked_at)}

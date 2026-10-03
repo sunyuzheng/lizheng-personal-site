@@ -2370,6 +2370,14 @@
 .lz-home .lz-ask-qcard-head small {
   color: var(--lz-muted);
 }
+/* Picked for being asked often: how many similar askings it stands for, in ink. */
+.lz-home .lz-ask-qcard-head small.often {
+  color: var(--lz-ink);
+  font-weight: 600;
+}
+.lz-home .lz-ask-qcard-head small.often svg {
+  color: var(--lz-muted);
+}
 .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
   content: "";
   width: 6px;

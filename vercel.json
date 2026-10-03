@@ -19,6 +19,7 @@
       "dest": "/api/ask-lizheng-ops-page?__asset=$1",
       "headers": { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow, noarchive", "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY" }
     },
+    { "src": "^/api/ask-lizheng/usage$", "has": [{ "type": "host", "value": "(?:www|ask)\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-usage" },
     { "src": "/api/ask-lizheng/query-storage", "dest": "/api/ask-lizheng-query" },
     { "src": "/api/ask-lizheng/quota-storage", "dest": "/api/ask-lizheng-quota" },
     { "src": "/api/ask-lizheng/auth/(login|callback|session|logout|email-request|email-verify)", "dest": "/api/ask-lizheng-auth?__route=$1" },

@@ -25,7 +25,7 @@
 <li><b>每天的次数。</b>浏览器里一个签名的随机标识，用来计算你今天问了几次；同一网络的免费提问总数按网络地址的加密摘要计数。</li>
 <li><b>验证Founding身份（可选）。</b>你输入的邮箱用来发送验证码，并向超线性学院社区核验你是不是Founding Member。登录状态加密保存，最长12小时。</li>
 <li><b>点赞（可选）。</b>验证身份后点「有帮助」，会用邮箱的加密摘要记下你点过哪些公开问答，只用来避免重复计数。</li>
-<li><b>访问统计。</b>页面访问和按钮点击的匿名计数（比如点开了哪一类出处），不含提问内容。</li>
+<li><b>访问统计。</b>页面访问和按钮点击的匿名计数（比如点开了哪一类出处），以及每次打开看了多久、滑到哪里、有没有看到和点开「别人在问什么」、隔几天有没有再来。这些按天合计成数字，用的是随机的浏览器标识和第一次来的日期，不含提问内容。</li>
 </ul>
 
 <h2>我们不做的事</h2>
@@ -39,7 +39,7 @@
 <ul>
 <li><b>Builder Space</b>：运行问答服务，并用它的AI模型服务生成回答。你的提问、处境和本次对话的上文会发给它处理。</li>
 <li><b>Vercel</b>：网站托管和访问统计。</li>
-<li><b>Upstash</b>：保存次数、登录状态和问答记录。</li>
+<li><b>Upstash</b>：保存次数、登录状态、问答记录和访问统计。</li>
 <li><b>Resend</b>：发送验证码邮件。</li>
 <li><b>Circle（超线性学院社区）</b>：核验Founding Member身份。</li>
 </ul>
@@ -48,6 +48,7 @@
 <ul>
 <li>问答记录保存到立正删除为止；公开的问答随时可以撤下。</li>
 <li>次数记录两天后自动删除；验证码10分钟内有效；登录状态最长12小时。</li>
+<li>按天的访问统计400天后删除；浏览器里记的第一次来的日期400天后过期。</li>
 </ul>
 
 <h2>你可以</h2>
@@ -77,7 +78,7 @@
 <li><b>Daily limit.</b> A signed random identifier in your browser counts today's questions; free questions from the same network are counted by a keyed hash of the network address.</li>
 <li><b>Founding Member verification (optional).</b> The email you enter receives a one-time code and is checked against the Superlinear Academy community for Founding Member status. The signed-in state is kept encrypted for up to 12 hours.</li>
 <li><b>Likes (optional).</b> After verifying, tapping “有帮助” (helpful) records which published answers you liked under a keyed hash of your email, only to avoid double counting.</li>
-<li><b>Visit statistics.</b> Anonymous counts of page views and button taps (for example, which kind of source was opened), never the question text.</li>
+<li><b>Visit statistics.</b> Anonymous counts of page views and button taps (for example, which kind of source was opened), how long each visit lasted, how far the page was scrolled, whether “别人在问什么” was seen or opened, and whether the browser came back on a later day. They are totalled by day using a random browser identifier and the date of the first visit, never the question text.</li>
 </ul>
 
 <h2>What we don't do</h2>
@@ -91,7 +92,7 @@
 <ul>
 <li><b>Builder Space</b> runs the Q&amp;A service and generates answers with its AI model service. Your question, your situation and the earlier turns of the conversation are sent to it.</li>
 <li><b>Vercel</b> hosts the website and counts visits.</li>
-<li><b>Upstash</b> stores daily counts, sign-in state and question records.</li>
+<li><b>Upstash</b> stores daily counts, sign-in state, question records and visit statistics.</li>
 <li><b>Resend</b> sends verification emails.</li>
 <li><b>Circle</b> (the Superlinear Academy community) confirms Founding Member status.</li>
 </ul>
@@ -100,6 +101,7 @@
 <ul>
 <li>Question records are kept until the owner deletes them; published questions can be withdrawn at any time.</li>
 <li>Daily counts are deleted after two days; verification codes expire after 10 minutes; sign-in lasts at most 12 hours.</li>
+<li>Visit statistics by day are deleted after 400 days; the first-visit date kept in your browser expires after 400 days.</li>
 </ul>
 
 <h2>Your choices</h2>

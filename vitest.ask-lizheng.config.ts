@@ -14,6 +14,7 @@ export default defineConfig({
       "tests/ask-ops-gateway.test.ts",
       "tests/ask-discovery-gateway.test.ts",
       "tests/ask-discovery-pick.test.ts",
+      "tests/ask-usage.test.ts",
       "tests/ask-archive.test.ts",
       "tests/ask-lizheng-page.test.ts",
     ],

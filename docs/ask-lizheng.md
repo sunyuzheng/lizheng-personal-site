@@ -56,3 +56,12 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 ## 回答排版（2026-10-03）
 
 主页问答区和 ask.lizheng.ai 用同一套段落标签：「AI综合」是默认，不标；只标「材料里的观点」和「AI推演」，提问带了处境时显示「结合你的处境」。正文已有角标的段落不再重复出处行；「边界」里提到的 S 编号显示成角标；摘要用衬线字体。导出长图（`client/src/lib/ask-share.js`）同步。回答写法的规则在 ask-lizheng 仓库的 `server/answers.py`。
+
+## 使用统计（2026-10-03）
+
+用户想知道用户时长、滚动深度、留存、多少人看「别人在问什么」，并问去哪里看。Vercel Analytics 只有访问量、来源、设备和按钮点击次数，没有停留时间、滚动和回访，所以另做了一份自己的匿名统计，在私人Ops（https://www.lizheng.ai/ops/ask-lizheng ）的「使用情况」里看；流量来源、国家、设备和按钮点击次数照旧看 Vercel 项目的 Analytics。
+
+- 页面：主页问答区（`client/src/lib/ask-usage.ts`，surface `home`）、ask.lizheng.ai（ask 仓库 `src/usage.js`，`ask`，App 里是 `app`）。每次打开页面先发一次（普通请求，好让 Cookie 留下），之后页面隐藏或关闭时用 beacon 补发新增部分。阅读时间只算页面在前台、30秒内有操作的时间。每个记号一次打开只发一次：阅读满10秒/30秒/1分钟/3分钟/10分钟（`t10`…`t600`）、滚过25%/50%/75%/到底（`s25`…`s100`）、看到主页问答区（`h_seen`）、「别人在问什么」显示/看到/点开/问个类似的/看更多（`d_shown` `d_seen` `d_open` `d_similar` `d_more`）、提问、得到回答、点开出处、保存图片或PDF。
+- 服务端：`POST /api/ask-lizheng/usage`（两个域名各自同源，`api/ask-lizheng-usage.ts` → `shared/ask-usage.ts`），只收这五个字段，记号有白名单；爬虫、预览和无头浏览器不算；同一网络每天最多600次；`ASK_USAGE_ENABLED=false` 可以关掉。浏览器用主站已有的匿名 Cookie（`__Secure-ask-guest`，30天），存进统计的是另一种用途的加密摘要；`__Secure-ask-first` 记第一次来的日期（400天），用来算回访。
+- 存储：Upstash 里 `ask-ops:{v3}:usage:` 下按天的计数（`day:<日>`，每个入口和合计）、HyperLogLog 去重的浏览器数（每天、每个入口、几个漏斗记号、按第一次来那天分组的回访），按天的键400天后过期；`total` 和全部时间的去重数不过期。Ops 的 `shared/usage-store.ts` 读这些键。
+- 隐私政策的「访问统计」写明了这些（停留、滚动、看到和点开「别人在问什么」、回访，按天合计，不含提问内容）。

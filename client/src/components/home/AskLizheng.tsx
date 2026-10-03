@@ -20,6 +20,7 @@ import { FileDown, ImageDown, Layers, LoaderCircle } from "lucide-react";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
+import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
 const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
@@ -315,7 +316,7 @@ function Source({
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (
-        <a href={url} {...EXTERNAL} onClick={() => track("Ask Source Click", { surface: "home", kind: sourceKind(url) })}>
+        <a href={url} {...EXTERNAL} onClick={() => { markUsage("source"); track("Ask Source Click", { surface: "home", kind: sourceKind(url) }); }}>
           {source.title} ↗
         </a>
       ) : (
@@ -458,6 +459,20 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
   // Questions asked in the last day among those this visit read, shown beside the note.
   const [askedRecently, setAskedRecently] = useState(0);
+  const discoveryList = useRef<HTMLDivElement>(null);
+  const hasDiscovery = discoveryCards.length > 0;
+  // Anonymous usage of this page view for the owner's dashboard (lib/ask-usage): reading time,
+  // scroll depth, whether this section and its list were seen, and what was used.
+  useEffect(() => {
+    const stop = startUsage("home");
+    watchUsage(document.getElementById("ask-lizheng"), "h_seen");
+    return stop;
+  }, []);
+  useEffect(() => {
+    if (!hasDiscovery) return;
+    markUsage("d_shown");
+    watchUsage(discoveryList.current, "d_seen");
+  }, [hasDiscovery]);
   // More than the four picks exist: link to the full list on ask.lizheng.ai.
   const [discoveryMore, setDiscoveryMore] = useState(false);
   // Whether this browser saw the section before: counted with each card action.
@@ -532,6 +547,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const toggleCard = (card: DiscoveryCard) => {
     if (openCard === card.public_id) { setOpenCard(""); return; }
     setOpenCard(card.public_id);
+    markUsage("d_open");
     track("Ask Discovery Open", { surface: "home", visit: discoveryVisit.current });
     const known = cardDetails[card.public_id];
     if (known && known !== "failed") return;
@@ -540,6 +556,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setCardDetails(prev => ({ ...prev, [card.public_id]: detail || "failed" })));
   };
   const askSimilar = (card: DiscoveryCard) => {
+    markUsage("d_similar");
     track("Ask Discovery Similar", { surface: "home", visit: discoveryVisit.current });
     prefill(card.question, "card");
     input.current?.scrollIntoView({ block: "center" });
@@ -596,6 +613,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   // A long image shares well in chat apps; the PDF keeps the source links clickable.
   async function exportTurn(kind: "png" | "pdf", turn: Turn) {
     if (!turn.result) return;
+    markUsage("export");
     setExporting(`${turn.id}-${kind}`);
     try {
       const { exportAnswer } = await import("@/lib/ask-share");
@@ -630,7 +648,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     event?.preventDefault();
     if (active.current || !loggingReady || (!retry && !question.trim())) return;
     if (loginStep !== "pending") setLoginStep("");
-    if (!retry) { track("Ask Question", { surface: "home", from: questionFrom.current }); questionFrom.current = "typed"; }
+    if (!retry) { markUsage("ask"); track("Ask Question", { surface: "home", from: questionFrom.current }); questionFrom.current = "typed"; }
     const payload: AskPayload = retry?.request || {
       question: question.trim(),
       context: situation,
@@ -693,6 +711,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         controller.signal,
         event => {
           if (controller.signal.aborted) return;
+          if (event.type === "result" && event.value.status === "answered") markUsage("answer");
           setTurns(prev =>
             prev.map(turn =>
               turn.id === id ? { ...turn, ...applyAskEvent(turn, event) } : turn
@@ -948,7 +967,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
             )}
           </div>
           {!turns.length && (lang === "zh" && !!discoveryCards.length ? (
-            <div className="lz-ask-discovery">
+            <div className="lz-ask-discovery" ref={discoveryList}>
               <div className="lz-ask-discovery-head">
                 <p><b>{c.discoveryTitle}</b><span>{c.discoveryNote}</span>
                   {askedRecently >= 3 && <span className="lz-ask-discovery-live">最近24小时 {askedRecently >= 20 ? "20+" : askedRecently} 个新问题</span>}</p>
@@ -1021,7 +1040,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               })}
               {discoveryMore && (
                 <a className="lz-ask-discovery-more" href="https://ask.lizheng.ai/#questions" {...EXTERNAL}
-                  onClick={() => track("Ask Discovery More", { surface: "home", page: 1 })}>{c.discoveryMore} ↗</a>
+                  onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", page: 1 }); }}>{c.discoveryMore} ↗</a>
               )}
             </div>
           ) : (

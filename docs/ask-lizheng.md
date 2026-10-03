@@ -6,7 +6,7 @@
 - 主页API：POST /api/ask-lizheng/ask、GET /api/ask-lizheng/meta，POST通过固定目标Edge流式转发到Builder的/api/ask，GET反代到/api/meta。无客户端模型凭证；问答请求不发送浏览器凭证、不缓存。访客提问在转发前另按网络入口计数（每个北京日300次，见ask-lizheng仓库ACCOUNT_QUOTAS.md），防止不保存Cookie的客户端绕过每天3次。超限时同样返回quota_exhausted，另带scope: network，页面据此说明是这个网络的免费次数用完了。
 - Founding说明：次数行「如何成为」展开谁是Founding Member、会员得到什么，并链接Stay会员页；额度用完的卡片同样给出会员页链接。名额（前3,000位新年费会员）与价格（$149/¥999）取自会员页与会员事实表，Founding窗口结束或价格变化时同步改`AskLizheng.tsx`（foundingWho、foundingGet）和ask仓库`src/main.jsx`的`FoundingInfo`。
 - 独立页面：ask.lizheng.ai的host路由反代现有ask-lizheng.ai-builders.space应用，包括资产和API；/api/ask同样经过流式转发，Vercel托管域名与TLS，Builder托管模型调用、检索与Docker应用。cleanUrls/trailingSlash的现有规范化可能先产生308。
-- Builder休眠：Koyeb上的Builder闲置5分钟后深度休眠，唤醒通常几秒，最长约半分钟。ask.lizheng.ai根路径先进`api/ask-lizheng-page.ts`（Edge）：Builder在1.5秒内给出页面就原样转发；否则返回503唤醒页（显示等待秒数，轮询`/api/meta`，醒来后自动刷新；10秒内不重复自动刷新，45秒后提示手动刷新）。资产和API路径照旧直达Builder。主页与独立页读次数1.5秒未回应时显示「正在唤醒问答服务…」，失败后自动重试一次；提问5秒还没连上时说明服务在唤醒。
+- Builder休眠：Koyeb上的Builder闲置5分钟后深度休眠，唤醒通常几秒，最长约半分钟。2026-10-04起 ask.lizheng.ai 的页面不再从 Builder 取：页面文件放在本站 `client/public/ask-app/`，打开即显示（见下文「ask.lizheng.ai 的页面文件」）；Builder 只回答提问和给 `/api/meta`。页面读 `/api/meta` 最多等一分钟，3秒没回就显示「问答服务正在唤醒，通常十几秒，可以先写问题」，醒来前不能发送。原来的唤醒页（`api/ask-lizheng-page.ts`）已删。主页与独立页读次数1.5秒未回应时显示「正在唤醒问答服务…」，失败后自动重试一次；提问5秒还没连上时说明服务在唤醒。
 - 提问说明v4（2026-10-02已定，前后端已实现并宣布）：主页在`/api/meta`宣布`ops_logging.notice: "v4"`（并有`context_archive: true`、`public_display: "deidentified"`）时，换成「问答会保存，去掉个人信息后可能公开，帮到有同样问题的人」的说明（2026-10-03改写，原句是「很多问题是共性的……去掉个人信息后可能整理公开」，含义不变）和四段细则，请求带`query_log_notice: "v4"`；转发层对v4与v3一样签入匿名visitor。完整约定与文案见ask-lizheng仓库`docs/QUERY_RECORDS.md`。
 - 个人站writer（`shared/ask-ops-storage.ts`）接受v4开始记录，多带notice_version、has_background和处境原文（只给所有者），写入同一记录HASH；v3形状不变。
 - 保存说明的写法（2026-10-02）：输入框下一句写匿名与用途（「提问是匿名的。问答会保存下来，用来改进回答；请勿填写私密信息。」），「说明」展开后与v4同样分四段（为什么保存、保存什么、你的隐私、另外），「你的隐私」讲提问匿名、登录只核验身份且不和提问记在一起。不写「不追踪」或「验证后立刻忘掉」：有匿名的访问计数和使用标识，登录状态加密保存12小时。「直到立正手动删除」这类实现细节不写给用户，保存与删除行为不变；两边文案在`AskLizheng.tsx`的noticeV3/noticeV3Parts与ask仓库`src/main.jsx`的OPS_NOTICE/V3_PARTS。
@@ -83,3 +83,12 @@ Cursor 的设计负责人 Ryo Lu 说问问立正「有点太AI了」，用户要
 收录规则：只收录一个问题的第一种问法（同一问题换个说法问的，网页保留，但告诉搜索引擎不要收录，判断方法和主页折叠相同，在 `shared/ask-question-shape.ts`）；回答要完整、有出处、正文至少200字。不是每次被问都新造一页：页面只来自已经去掉个人信息、经提问人同意公开的问答，撤下的问答网页返回404。CDN 缓存10分钟，所以撤下后网页大约十分钟内失效，搜索引擎下次抓取时移除；急需从 Google 搜索结果里拿掉，用 Search Console 的删除工具。隐私政策的「提问和回答」和「保存多久」已写明这些。
 
 这和 `docs/seo-geo.md` 「不为GEO批量生成文章」的原则不冲突：这些页面不是为搜索写的，是已经公开给人看的问答换了一个能被找到的地址；数量随真实提问增长，质量不够的不收录。
+
+## ask.lizheng.ai 的页面文件（2026-10-04）
+
+用户提出：「别人在问什么」不用等 Builder 启动就该能看。Builder 闲置后休眠，原来 ask.lizheng.ai 的页面本身也从 Builder 取，所以休眠时人人先等十几秒唤醒页；其实页面只是静态文件，问题列表来自 Ops（经本站），都不需要 Builder。现在：
+
+- 页面文件放在本站 `client/public/ask-app/`（`index.html`、脚本和样式，`version.json` 记着来自 ask-lizheng 的哪个提交）。`vercel.json`：ask.lizheng.ai 的 `/` 给 `/ask-app`，`/ask-app/assets/` 下的脚本样式是本站文件，标题字体（`noto-serif-sc-*.woff2`）用本站构建出的同一批文件；ask.lizheng.ai 的 `/robots.txt` 指向公开问答的 sitemap；www 上打开 `/ask-app` 跳到 ask.lizheng.ai。其他路径（`/api/meta` 等）照旧给 Builder。
+- 页面一打开就显示，问题列表随即出现；读 `/api/meta`（Builder）最多等一分钟，3秒没回就说「问答服务正在唤醒，通常十几秒，可以先写问题」，醒来前不能发送。主页问答区同样。
+- 改了 ask-lizheng 的前端（`src/`、`index.html`）：在 ask-lizheng 提交并推到 main，然后在本仓库 `pnpm sync:ask-app [ask-lizheng 路径]`（默认 `/Users/sunyuzheng/Desktop/AI/apps/ask-lizheng`），提交，按主站流程上线。不用再为纯前端改动部署 Builder。改了后端才部署 Builder。脚本要求 ask-lizheng 没有未提交的改动、两边 `@fontsource/noto-serif-sc` 版本相同，并把上一版的文件多留一次，给更新前刚打开的页面用。
+- 守护：`tests/ask-app-files.test.ts` 查页面引用的文件都在；构建时 `scripts/prerender-guests.ts` 查页面要的每个字体本站都有，缺了构建失败。

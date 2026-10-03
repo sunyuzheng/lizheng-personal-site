@@ -32,17 +32,17 @@
       "dest": "/api/ask-lizheng"
     },
     { "src": "/api/ask-lizheng/ask", "dest": "/api/ask-lizheng" },
+    { "src": "^/ask-app/assets/(noto-serif-sc-[A-Za-z0-9_-]+\\.woff2)$", "dest": "/assets/$1", "headers": { "Cache-Control": "public, max-age=31536000, immutable" } },
+    { "src": "^/ask-app/assets/([A-Za-z0-9_.-]+)$", "dest": "/ask-app/assets/$1", "headers": { "Cache-Control": "public, max-age=31536000, immutable" } },
+    { "src": "^/ask-app/?$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://ask.lizheng.ai/" } },
     {
       "src": "/assets/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
       "dest": "https://ask-lizheng.ai-builders.space/assets/$1",
       "respectOriginCacheControl": true
     },
-    {
-      "src": "/",
-      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
-      "dest": "/api/ask-lizheng-page"
-    },
+    { "src": "^/$", "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }], "dest": "/ask-app" },
+    { "src": "^/robots\\.txt$", "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }], "dest": "/ask-app/robots.txt" },
     {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],

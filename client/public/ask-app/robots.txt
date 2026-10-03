@@ -1,0 +1,6 @@
+# ask.lizheng.ai: the Ask Lizheng page. Questions published with personal details removed
+# have their own pages on www.lizheng.ai/ask.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.lizheng.ai/ask/sitemap.xml

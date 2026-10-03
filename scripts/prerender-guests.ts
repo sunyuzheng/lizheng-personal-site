@@ -471,6 +471,18 @@ fs.writeFileSync(
   `@import url("${fontStylesheet}");\n`,
   "utf-8"
 );
+// ask.lizheng.ai's page (client/public/ask-app, from scripts/sync-ask-app.mjs) takes its title
+// fonts from this build (vercel.json): every font its styles name must be here.
+const askAppAssets = path.join(ROOT, "dist", "public", "ask-app", "assets");
+if (fs.existsSync(askAppAssets)) {
+  const built = new Set(fs.readdirSync(path.join(ROOT, "dist", "public", "assets")));
+  const missing = new Set<string>();
+  for (const name of fs.readdirSync(askAppAssets).filter(file => file.endsWith(".css")))
+    for (const [, font] of fs.readFileSync(path.join(askAppAssets, name), "utf-8").matchAll(/\/ask-app\/assets\/(noto-serif-sc-[A-Za-z0-9_-]+\.woff2)/g))
+      if (!built.has(font)) missing.add(font);
+  if (missing.size)
+    throw new Error(`ask.lizheng.ai's page needs ${missing.size} title fonts this build lacks (${[...missing][0]}, …); align @fontsource/noto-serif-sc and run pnpm sync:ask-app`);
+}
 const vercelExperimentStylesheet = findBuiltStylesheet(
   /^home-experiment-(?!emil-).+\.css$/
 );

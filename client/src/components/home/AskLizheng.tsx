@@ -447,6 +447,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [publicArchive, setPublicArchive] = useState(false);
   const [loggingReady, setLoggingReady] = useState(false);
   const [loggingFailed, setLoggingFailed] = useState(false);
+  // Builder, which sends these settings, sleeps when idle and takes up to half a minute to wake.
+  const [loggingWaking, setLoggingWaking] = useState(false);
   const conversation = useRef<string | null>(null);
   const [account, setAccount] = useState<AskAccount | null>(null);
   const [exporting, setExporting] = useState("");
@@ -520,19 +522,35 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     return () => { stopped = true; clearTimeout(slow); controller.abort(); loginCleanup.current?.(); };
   }, []);
 
+  // Asks for up to a minute, 20 seconds a try, saying the service is waking after three seconds;
+  // settings that came back but do not match fail at once.
   async function loadLogging(signal?: AbortSignal) {
     setLoggingFailed(false);
+    setLoggingWaking(false);
+    const started = Date.now();
+    const slow = setTimeout(() => { if (!signal?.aborted) setLoggingWaking(true); }, 3000);
     try {
-      const response = await fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(4000)]) : AbortSignal.timeout(4000) });
-      if (!response.ok) throw new Error();
-      const value = await response.json();
-      if (value?.query_logging?.enabled !== true) throw new Error();
-      const ops = value?.ops_logging;
-      const archive = ops?.enabled === true && ops.retention === "until_deleted" && ops.answer_archive === true;
-      // The page shows v4's notice only once the service says it keeps to v4.
-      const v4 = archive && ops.notice === "v4" && ops.context_archive === true && ops.public_display === "deidentified";
-      if (!signal?.aborted) { setPublicArchive(v4); setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true); }
+      for (;;) {
+        let value: Record<string, any> | undefined;
+        try {
+          const response = await fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(20_000)]) : AbortSignal.timeout(20_000) });
+          if (!response.ok) throw new Error();
+          value = await response.json();
+        } catch (error) {
+          if (signal?.aborted || Date.now() - started >= 60_000) throw error;
+          await new Promise(resolve => setTimeout(resolve, 2_000));
+          continue;
+        }
+        if (value?.query_logging?.enabled !== true) throw new Error();
+        const ops = value?.ops_logging;
+        const archive = ops?.enabled === true && ops.retention === "until_deleted" && ops.answer_archive === true;
+        // The page shows v4's notice only once the service says it keeps to v4.
+        const v4 = archive && ops.notice === "v4" && ops.context_archive === true && ops.public_display === "deidentified";
+        if (!signal?.aborted) { setPublicArchive(v4); setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true); }
+        return;
+      }
     } catch { if (!signal?.aborted) setLoggingFailed(true); }
+    finally { clearTimeout(slow); if (!signal?.aborted) setLoggingWaking(false); }
   }
   useEffect(() => {
     if (lang !== "zh") { setDiscoveryState("none"); return; }
@@ -898,7 +916,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
           </form>
           {!loggingReady && <p role="status">{loggingFailed
             ? <>{lang === "zh" ? "未能确认提问保存设置。" : "Could not confirm question storage."} <button type="button" onClick={() => void loadLogging()}>{lang === "zh" ? "重试" : "Retry"}</button></>
-            : (lang === "zh" ? "正在确认提问保存设置…" : "Checking question storage…")}</p>}
+            : loggingWaking
+              ? (lang === "zh" ? "问答服务正在唤醒，通常十几秒，可以先写问题。" : "Waking the answer service, usually 10 to 20 seconds. You can start typing.")
+              : (lang === "zh" ? "正在确认提问保存设置…" : "Checking question storage…")}</p>}
           <div className="lz-ask-meta">
             {/* The notice waits for the service's saving settings, so an older one never shows first. */}
             {loggingReady && <details className="lz-ask-about">

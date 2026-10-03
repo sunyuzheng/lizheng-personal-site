@@ -114,3 +114,6 @@ __pycache__/
 
 # Community map data: member profile ids stay out of Git (see docs/community-city.md)
 client/public/community/
+
+# Playwright CLI console logs from local checks
+.playwright-cli/

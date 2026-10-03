@@ -14,6 +14,10 @@
   - `podcast.lizheng.ai`
   - `speaker.lizheng.ai`
   - `notify.lizheng.ai`
+  - `pod.lizheng.ai`
+  - `shop.lizheng.ai` / `www.shop.lizheng.ai`
+  - `members.shop.lizheng.ai`
+  - `support.shop.lizheng.ai`
 - DNS期望状态：[`lizheng.ai.records.json`](lizheng.ai.records.json)
 - 自动验证：[`scripts/verify-domain.ts`](../../../scripts/verify-domain.ts)
 
@@ -21,13 +25,13 @@
 
 ## 当前阶段
 
-GoDaddy仍是注册商与权威DNS；`lizheng.ai.records.json`中的`lifecyclePhase`只描述公开可验证的DNS迁移阶段。Domain Lock、Auto Renewal、联系人验证和其他注册商后台状态不会由本仓库脚本验证，也不在这个公开仓库记录；需要变更时回到注册商后台单独核验和审批。
+2026-09-15权威DNS已切换到Vercel，域名服务器为`ns1.vercel-dns.com`与`ns2.vercel-dns.com`。两台.ai注册局服务器已确认新委派；新播客域名`pod.lizheng.ai`已通过Transistor DNS验证、HTTPS与实际播放验收。切换当天部分递归解析器仍可能命中旧缓存。GoDaddy继续作为注册商。`lizheng.ai.records.json`中的`lifecyclePhase`只描述公开可验证的DNS迁移阶段。Domain Lock、Auto Renewal、联系人验证和其他注册商后台状态不会由本仓库脚本验证，也不在这个公开仓库记录；需要变更时回到注册商后台单独核验和审批。
 
 ## 为什么DNS不能只看网站
 
-`lizheng.ai`除了主站和Podcast子域，还有`notify.lizheng.ai`的发信认证。更换Nameserver时，必须同时保留SPF、DKIM、MX与DMARC；网站能打开不等于迁移已经成功。
+`lizheng.ai`除了主站和Podcast子域，还有`notify.lizheng.ai`的Resend/SES发信认证，以及`support.shop.lizheng.ai`的Fourthwall、SendGrid和Zendesk客服邮件配置。更换Nameserver时，必须同时保留SPF、DKIM、MX与DMARC；网站能打开不等于迁移已经成功。
 
-`creators.lizheng.ai`是中文播客与视频合作页的传播短入口；它以308永久跳转到`https://www.lizheng.ai/zh/collab/creators`，避免维护两份页面状态。
+`creators.lizheng.ai`是中文播客与视频合作页的传播短入口；它以308永久跳转到`https://www.lizheng.ai/collab/creators`（2026-09-30起中文页不带`/zh`前缀），避免维护两份页面状态。
 
 `speaker.lizheng.ai`是定向嘉宾邀请页的独立入口；它承载邀请别人来到立正节目中的页面，与邀请立正参加别人节目的`creators.lizheng.ai`分工相反。
 
@@ -77,3 +81,17 @@ pnpm verify:domain -- --ns target
 - [Vercel：转入与转出域名](https://vercel.com/docs/domains/working-with-domains/transfer-your-domain)
 - [Vercel：域名续费](https://vercel.com/docs/domains/working-with-domains/renew-a-domain)
 - [Vercel：DNS管理](https://vercel.com/docs/domains/working-with-dns)
+
+## 2026-09-15切换记录
+
+当前GoDaddy完整导出共29条，包括26条服务记录、2条NS和1条SOA。26条服务记录全部保留；其中主站、www、podcast、creators和speaker继续使用已存在的Vercel项目绑定，解析由默认ALIAS提供。其余21条原服务记录与新增pod CNAME组成22条Vercel自定义记录。原始zone与完整核验结果保存在迁移工作包private目录，不提交Git。
+
+- `pod.lizheng.ai`：Transistor原生节目主页；与现有`podcast.lizheng.ai`独立网站分开。
+- 商店继续由Fourthwall提供，会员入口保留原有跳转。
+- 自定义TTL按原值保留为600/3600；Vercel默认ALIAS的展开A记录TTL由提供商管理。
+- 切换前，对四台权威DNS完成112次查询，记录值、TXT全文、MX优先级与自定义TTL全部通过。
+- 本轮仅迁DNS，注册商迁移需要另行安排。
+
+原GoDaddy Nameservers为`ns43.domaincontrol.com`与`ns44.domaincontrol.com`；如需回滚，须先确认原zone仍可用，并按本手册变更规则审批。
+
+07:41 PDT后，目标权威DNS复核56/56项通过。随后Transistor Custom Domain通过DNS验证，`pod.lizheng.ai`的HTTPS主页与E531单集可正常打开，E531实际播放后暂停且无媒体错误。已保存旧Transistor网址自动跳转到新域名。RSS仍使用`https://feeds.transistor.fm/kedaibiao`，现有订阅无须更换。

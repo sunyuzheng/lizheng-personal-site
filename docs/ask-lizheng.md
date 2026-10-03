@@ -48,3 +48,7 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 ## 私人Ops与问答归档候选
 
 用户要求提问和回答都存档。新v3保存提示对应问题、完整已核验回答、所用来源快照及匿名会话统计，持续至立正手动删除；旧v1仍30天自动过期。最小新增仅包括保存提示与签名标识、服务端归档、私人Ops，不改变模型、Logto、额度及最新主页/会员说明。详见[Ops说明](ask-ops.md)。
+
+## iPhone App
+
+问问立正iPhone App（ask-lizheng-ios仓库）显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`。2026-10-03为上架App Store：App里的验证页只给邮箱验证码，不给「使用超线性学院账号登录」，因为学院登录页带注册入口，而苹果要求允许注册的App也能在App里删除账号；邮箱验证码不建账号。隐私政策在`/ask/privacy`，帮助与联系在`/ask/support`（`client/public/ask/`下的静态页，中英文），App Store的隐私政策与支持网址指向这两页。数据用途改变时，两页、ask页面的「说明」和App的隐私声明要一起改。

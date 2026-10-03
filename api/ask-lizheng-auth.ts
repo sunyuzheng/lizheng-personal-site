@@ -99,7 +99,10 @@ const PAGE_CSP = `default-src 'none'; style-src 'unsafe-inline'; script-src 'sha
 function page(title: string, body: string) {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>问问立正 · ${title}</title><style>${PAGE_STYLE}</style></head><body><main><div class="brand">${SEAL}<span>问问立正</span></div>${body}</main><script>${PAGE_SCRIPT}</script></body></html>`;
 }
-function emailPage(url: URL, verifying: boolean, message = "") {
+// The iPhone app verifies by email code only. The Academy's sign-in page also lets people create
+// an account, and App Store rules require an app that allows sign-up to offer account deletion too.
+const fromApp = (req: IncomingMessage) => /AskLizhengApp\//.test(String(req.headers["user-agent"] || ""));
+function emailPage(url: URL, verifying: boolean, message = "", inApp = false) {
   const returnPath = safeReturnPath(url.searchParams.get("return"));
   const ops = returnPath === "/ops/ask-lizheng";
   const params = new URLSearchParams({ return: ops ? returnPath : returnPath.startsWith("/en/") ? "/en/" : "/" });
@@ -122,7 +125,7 @@ function emailPage(url: URL, verifying: boolean, message = "") {
     ? `<a href="/api/ask-lizheng/auth/login?${query}">重新发送或换个邮箱</a><a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`
     : `<a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`;
   // With a dedicated Academy application, SSO leads and the email code is the fallback, as at Story Coffee.
-  if (!verifying && ssoReady()) {
+  if (!verifying && ssoReady() && !inApp) {
     const intro = message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${ops ? "使用超线性学院账号登录，随后核验后台访问权限。" : "用超线性学院账号登录，核验后Founding Member每天提问不限次。"}</p>`;
     return page(ops ? "运营后台登录" : "验证Founding身份", `<h1>${heading}</h1>${intro}<a class="sso" href="/api/ask-lizheng/auth/login?provider=logto&${query}" data-busy="正在前往超线性学院…">使用超线性学院账号登录</a><p class="or">没有学院账号？用邮箱收验证码</p><form action="${action}" method="post">${control.replace(" autofocus", "")}<button type="submit" data-busy="正在发送…">发送验证码</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
   }
@@ -201,7 +204,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (action !== "login" && action !== "callback") throw new AccessError("not_found", 404);
     if (action === "login" && url.searchParams.get("provider") !== "logto") {
       if (!emailLoginReady() && !ssoReady()) throw new AccessError("email_unavailable");
-      return html(200, emailPage(url, false));
+      return html(200, emailPage(url, false, "", fromApp(req)));
     }
     let transaction: Transaction, id: string;
     if (action === "login") {
@@ -268,7 +271,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         email_throttled: "验证码发送较频繁，请稍后再试。",
       };
       const fallback = action === "email-request" ? "验证码暂时没能发出，请稍后再试。" : "暂时未能完成核验，请稍后再试。";
-      return html(failure.status, emailPage(currentUrl, action === "email-verify", messages[failure.code] || fallback));
+      return html(failure.status, emailPage(currentUrl, action === "email-verify", messages[failure.code] || fallback, fromApp(req)));
     }
     if ((req.url || "").includes("callback") || (req.url || "").includes("/login") || (req.url || "").includes("__route=login")) {
       res.statusCode = failure.status;

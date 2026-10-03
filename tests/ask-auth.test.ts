@@ -47,15 +47,25 @@ beforeEach(() => {
   }));
 });
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
-async function call(url: string, cookie?: string, method = "GET", host = "www.lizheng.ai", origin?: string) {
+async function call(url: string, cookie?: string, method = "GET", host = "www.lizheng.ai", origin?: string, userAgent?: string) {
   const result = { statusCode: 200, headers: new Map<string, unknown>(), body: "",
     setHeader(name: string, value: unknown) { this.headers.set(name.toLowerCase(), value); },
     end(value = "") { this.body = value; } };
-  const req = { url, method, headers: { host, cookie, origin } };
+  const req = { url, method, headers: { host, cookie, origin, "user-agent": userAgent } };
   await handler(req as unknown as IncomingMessage, result as unknown as ServerResponse);
   return result;
 }
 describe("Academy SSO boundary", () => {
+  it("offers the Academy's sign-in in browsers but only the email code in the iPhone app", async () => {
+    const browser = await call("/api/ask-lizheng/auth/login?popup=1&return=%2F", undefined, "GET", "ask.lizheng.ai");
+    expect(browser.body).toContain("provider=logto");
+    expect(browser.body).toContain("email-request");
+    const app = await call("/api/ask-lizheng/auth/login?popup=1&return=%2F", undefined, "GET", "ask.lizheng.ai", undefined,
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 AskLizhengApp/1.0.0");
+    expect(app.statusCode).toBe(200);
+    expect(app.body).not.toContain("provider=logto");
+    expect(app.body).toContain("email-request?return=%2F&popup=1");
+  });
   it("returns a verified Logto owner to Ops using the existing session, with no broader redirect or member access", async () => {
     vi.stubEnv("ASK_OPS_ENABLED", "true");
     vi.stubEnv("ASK_OPS_ADMIN_EMAILS", "member@example.com");

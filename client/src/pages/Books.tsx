@@ -235,7 +235,7 @@ export default function Books() {
                       <Badge
                         key={item}
                         variant="secondary"
-                        className="rounded-full border border-lz-line bg-lz-ivory px-2.5 py-1 text-[11px] font-normal text-lz-ink-2"
+                        className="rounded border border-lz-line bg-lz-ivory px-2.5 py-1 text-[11px] font-normal text-lz-ink-2"
                       >
                         {item}
                       </Badge>
@@ -248,7 +248,7 @@ export default function Books() {
                       external={book.primary.external}
                       className={cn(
                         buttonVariants(),
-                        "min-h-11 rounded-full bg-lz-green px-5 text-white hover:bg-superlinear-deep"
+                        "min-h-11 rounded-[10px] bg-lz-green px-5 text-white hover:bg-superlinear-deep"
                       )}
                     >
                       <BookOpen className="mr-2 h-4 w-4" />
@@ -265,7 +265,7 @@ export default function Books() {
                         external={book.secondary.external}
                         className={cn(
                           buttonVariants({ variant: "outline" }),
-                          "min-h-11 rounded-full border-lz-ink/45 bg-transparent px-5 text-lz-ink hover:bg-lz-sand"
+                          "min-h-11 rounded-[10px] border-lz-ink/45 bg-transparent px-5 text-lz-ink hover:bg-lz-sand"
                         )}
                       >
                         {book.secondary.label}

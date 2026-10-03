@@ -459,6 +459,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [foundingOpen, setFoundingOpen] = useState(false);
   // Real questions others asked, published from Ops; shown on the Chinese page in place of the examples.
   const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
+  // Chinese page: loading until the list arrives, then ready; none when it cannot be read or takes
+  // past eight seconds, and only then the examples show in its place.
+  const [discoveryState, setDiscoveryState] = useState<"loading" | "ready" | "none">(lang === "zh" ? "loading" : "none");
   // Questions asked in the last day among those this visit read, shown beside the note.
   const [askedRecently, setAskedRecently] = useState(0);
   const discoveryList = useRef<HTMLDivElement>(null);
@@ -532,10 +535,14 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     } catch { if (!signal?.aborted) setLoggingFailed(true); }
   }
   useEffect(() => {
-    if (lang !== "zh") return;
+    if (lang !== "zh") { setDiscoveryState("none"); return; }
+    setDiscoveryState(state => (state === "ready" ? state : "loading"));
     const controller = new AbortController();
+    const late = setTimeout(() => setDiscoveryState(state => (state === "loading" ? "none" : state)), 8000);
     void discoveryPool(controller.signal).then(pool => {
-      if (controller.signal.aborted || !pool.length) return;
+      clearTimeout(late);
+      if (controller.signal.aborted) return;
+      if (!pool.length) { setDiscoveryState("none"); return; }
       const seen = readSeen();
       const picked = pickDiscovery(pool, seen);
       rememberSeen(seen, picked.map(item => item.public_id));
@@ -543,8 +550,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setDiscoveryMore(pool.length > picked.length);
       setAskedRecently(askedLastDay(pool));
       setDiscoveryCards(picked);
+      setDiscoveryState("ready");
     });
-    return () => controller.abort();
+    return () => { clearTimeout(late); controller.abort(); };
   }, [lang]);
   const toggleCard = (card: DiscoveryCard) => {
     if (openCard === card.public_id) { setOpenCard(""); return; }
@@ -969,7 +977,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </div>
             )}
           </div>
-          {!turns.length && (lang === "zh" && !!discoveryCards.length ? (
+          {!turns.length && (lang === "zh" && discoveryState !== "none" ? (
             <div className="lz-ask-discovery" ref={discoveryList}>
               <div className="lz-ask-discovery-head">
                 <h3>{c.discoveryTitle}</h3>
@@ -988,7 +996,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                   <span aria-current="true">{c.discoveryViews[2]}</span>
                 </nav>
               </div>
-              <div className="lz-ask-discovery-list">
+              <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
+              {/* While the questions load, the rows they will fill; never the examples first. */}
+              {!discoveryCards.length && [0, 1, 2, 3].map(i => <div key={i} className="lz-ask-qcard-placeholder" aria-hidden="true"><i /><b /></div>)}
               {discoveryCards.map((card, index) => {
                 const open = openCard === card.public_id;
                 const detail = cardDetails[card.public_id];

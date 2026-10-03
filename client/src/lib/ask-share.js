@@ -258,9 +258,15 @@ function sourceRow(ctx, source, number) {
   const style = {size: 27, weight: 600, color: C.ink};
   const all = wrap(ctx, units([{text: source.title || ''}], style), INNER - 70);
   const titleLines = all.slice(0, 2);
-  const h = 24 + titleLines.length * 40 + 34 + 24;
   const type = isMemberVideo(source) ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
   const meta = [type, source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
+  // An image cannot be clicked, so the address must be readable in full: when it does not fit
+  // after the details (a video with a start time, say), it gets lines of its own.
+  const url = plainUrl(source.url);
+  ctx.font = font(400, 21);
+  const urlLines = ctx.measureText(`${meta} · ${url}`).width <= INNER - 70 ? null
+    : wrap(ctx, units([{text: url}], {size: 21, weight: 400, color: C.greenText}), INNER - 70);
+  const h = 24 + titleLines.length * 40 + 34 + (urlLines ? urlLines.length * 30 : 0) + 24;
   return {h, link: source.url, draw(c, y) {
     c.fillStyle = C.line; c.fillRect(PAD, y, INNER, 2);
     c.fillStyle = C.greenTint; roundRect(c, PAD, y + 26, 44, 44, 10); c.fill();
@@ -275,11 +281,15 @@ function sourceRow(ctx, source, number) {
       ty += 40;
     });
     c.font = font(400, 21); c.fillStyle = C.muted;
-    const metaText = `${meta} · `;
-    c.fillText(metaText, PAD + 70, ty + 17);
-    const mw = c.measureText(metaText).width;
-    c.fillStyle = C.greenText;
-    c.fillText(fitEllipsis(c, plainUrl(source.url), INNER - 70 - mw), PAD + 70 + mw, ty + 17);
+    if (urlLines) {
+      c.fillText(meta, PAD + 70, ty + 17);
+      for (const line of urlLines) { ty += 30; drawLine(c, line, PAD + 70, ty + 17, 21); }
+    } else {
+      const metaText = `${meta} · `;
+      c.fillText(metaText, PAD + 70, ty + 17);
+      c.fillStyle = C.greenText;
+      c.fillText(url, PAD + 70 + c.measureText(metaText).width, ty + 17);
+    }
   }};
 }
 

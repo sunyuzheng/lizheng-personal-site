@@ -11,7 +11,12 @@
  */
 import { sameQuestion } from "./ask-question-shape.js";
 import { SEAL } from "./ask-seal.js";
-import { PERSON_ID, SITE_URL, WEBSITE_ID } from "./structured-data.js";
+
+// The site's ids in structured-data.ts, written out here: that module imports without file
+// extensions, which a Vercel function cannot load.
+const SITE_URL = "https://www.lizheng.ai";
+const PERSON_ID = `${SITE_URL}/#person`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
 
 export const ASK_APP = "https://ask.lizheng.ai/";
 export const ASK_INDEX = `${SITE_URL}/ask`;

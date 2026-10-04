@@ -588,9 +588,10 @@ const zh = {
   ask: {
     eyebrow: "AI问答",
     title: "问问立正",
-    body: "卡住的时候，先来这里问。AI会从我六年、四百多期视频（一半是会员视频）、两百多篇文章和《真本事》整门课里，找出和你的问题相关的部分，整理成回答，每段都标明出处。",
+    // Same two points as ask.lizheng.ai's first screen (2026-10-04): what sets it apart, not a list of material.
+    body: "卡住的时候，先来这里问。回答只从我讲过、写过的东西里来，每一段都能点回原文。这里的问答是公开的：别人刚问了什么，你都能看到。",
     cta: "去问问立正",
-    note: "这是AI回答，非本人实时回复；重要判断请回到原文核对。",
+    note: "这是AI回答，不是我本人实时回复。",
     examplesLabel: "比如，你可以问",
     examples: [
       "用AI做出了一个项目，怎样知道自己真的学会了？",
@@ -1008,9 +1009,9 @@ const en: HomeCopy = {
   ask: {
     eyebrow: "AI Q&A",
     title: "Ask Lizheng",
-    body: "Stuck on something? Ask here first. An AI searches six years of my work, 400+ videos (half of them for members), 200+ essays and the whole Zhenbenshi course, for what bears on your question, and answers with a source for every part.",
+    body: "Stuck on something? Ask here first. Answers come only from what I have said and written, and every paragraph links back to its source.",
     cta: "Open Ask Lizheng",
-    note: "AI answers, not a live reply from me. The source material and answers are primarily in Chinese. Check the original sources for important decisions.",
+    note: "AI answers, not a live reply from me. The material and answers are mostly in Chinese.",
     examplesLabel: "Questions you could bring",
     examples: [
       "I built a project with AI. How do I know I actually learned something?",

@@ -47,7 +47,7 @@ export const heroCopy = {
     primary: "看我正在做什么",
     secondary: "免费加入社区",
     credentials:
-      "康奈尔经济学博士·Amazon、Meta、腾讯经历·OpenAI收购团队早期成员·创始人、作者、访谈者",
+      "康奈尔经济学博士·Amazon、Meta、腾讯经历·OpenAI收购团队早期成员·联合创始人、作者、访谈者",
     imageAlt: "孙煜征与Acquired的Ben Gilbert、David Rosenthal对谈",
     caption: "与Acquired的Ben Gilbert、David Rosenthal对谈",
     location: "SIGNIFICANCE SUMMIT",
@@ -105,7 +105,7 @@ export const pageCopy = {
       "Superlinear is the most important long-term work I have chosen. It is already useful to many people, and it is still far from finished.",
     ],
     yageCaption:
-      "With Yage (Wang Yan), Columbia electrical engineering PhD, AI researcher, and my long-term teaching partner.",
+      "With Yage (Wang Yan), Columbia electrical engineering PhD, AI researcher, and my co-founder at Superlinear Academy.",
     doorDashCaption: "DoorDash team AI training · Seattle",
     quote:
       "Yuzheng distills years of product growth wisdom into actionable insight, helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
@@ -129,7 +129,7 @@ export const pageCopy = {
     builders: "Explore AI Builders",
     collaborate: "Collaborate with me",
     footer:
-      "Cornell Economics PhD, author, and founder of Superlinear Academy.",
+      "Cornell Economics PhD, author, and co-founder of Superlinear Academy.",
   },
   zh: {
     nav: { thesis: "主张", record: "经历", work: "作品", more: "目录" },
@@ -163,7 +163,7 @@ export const pageCopy = {
       "Superlinear是我选择长期做的、最重要的作品。它已经对许多人有用，也还远没有做完。",
     ],
     yageCaption:
-      "与鸭哥（王言）。哥伦比亚大学电子工程博士、AI研究者，也是我长期共同授课的伙伴。",
+      "与鸭哥（王言）。哥伦比亚大学电子工程博士、AI研究者，也是超线性学院的联合创始人。",
     doorDashCaption: "DoorDash团队线下AI培训·西雅图",
     quote:
       "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略，也帮助创始人找到能够持续复利的PMF路径。",
@@ -186,7 +186,7 @@ export const pageCopy = {
     builders: "了解AI Builders",
     collaborate: "与我合作",
     footer:
-      "康奈尔大学经济学博士、作者，Superlinear Academy创始人。",
+      "康奈尔大学经济学博士、作者，Superlinear Academy联合创始人。",
   },
 };
 

@@ -298,7 +298,7 @@ const zh = {
         latin: true,
         role: ["Principal数据科学家", "OpenAI收购团队早期成员"],
       },
-      { org: "超线性学院", latin: false, role: ["创始人 · 全职投入"] },
+      { org: "超线性学院", latin: false, role: ["联合创始人 · 全职投入"] },
     ],
   },
   proof: {
@@ -732,7 +732,7 @@ const en: HomeCopy = {
           "Principal Data Scientist · early team, later acquired by OpenAI",
         ],
       },
-      { org: "Superlinear Academy", latin: true, role: ["Founder, full time"] },
+      { org: "Superlinear Academy", latin: true, role: ["Co-founder, full time"] },
     ],
   },
   proof: {

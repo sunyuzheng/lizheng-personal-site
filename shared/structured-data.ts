@@ -19,8 +19,8 @@ export const SUPERLINEAR_ID = "https://www.superlinear.academy/#organization";
 export const PODCAST_URL = "https://podcast.lizheng.ai";
 
 const PERSON_DESCRIPTION = {
-  en: "Yuzheng Sun (孙煜征, 立正, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy. He studies what's worth building and how judgment becomes work people keep choosing.",
-  zh: "立正，本名孙煜征，亦以课代表立正为人所知；康奈尔大学经济学博士，Superlinear Academy创始人，现居西雅图。他研究什么值得做，以及怎样把判断和本事做成人们真正会用的东西。",
+  en: "Yuzheng Sun (孙煜征, 立正, 课代表立正) has a PhD in Economics from Cornell and is a Seattle-based co-founder of Superlinear Academy. He studies what's worth building and how judgment becomes work people keep choosing.",
+  zh: "立正，本名孙煜征，亦以课代表立正为人所知；康奈尔大学经济学博士，Superlinear Academy联合创始人，现居西雅图。他研究什么值得做，以及怎样把判断和本事做成人们真正会用的东西。",
 } satisfies Record<SiteLang, string>;
 
 function personNode(lang: SiteLang) {
@@ -33,7 +33,7 @@ function personNode(lang: SiteLang) {
     image: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
     description: PERSON_DESCRIPTION[lang],
     slogan: lang === "en" ? "MAKE WHAT LASTS." : "学点真本事，做点真东西。",
-    jobTitle: "Founder of Superlinear Academy; educator and author",
+    jobTitle: "Co-founder of Superlinear Academy; educator and author",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "PhD in Economics",
@@ -102,7 +102,7 @@ function organizationNodes(lang: SiteLang) {
       name: "Stay Superlinear",
       url: "https://stay.superlinear.academy/",
       description:
-        "A paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a long-term teaching partner and technical authority.",
+        "A paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a co-founder and technical authority.",
     },
   ];
 }

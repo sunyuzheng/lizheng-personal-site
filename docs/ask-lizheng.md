@@ -92,3 +92,7 @@ Cursor 的设计负责人 Ryo Lu 说问问立正「有点太AI了」，用户要
 - 页面一打开就显示，问题列表随即出现；读 `/api/meta`（Builder）最多等一分钟，3秒没回就说「问答服务正在唤醒，通常十几秒，可以先写问题」，醒来前不能发送。主页问答区同样。
 - 改了 ask-lizheng 的前端（`src/`、`index.html`）：在 ask-lizheng 提交并推到 main，然后在本仓库 `pnpm sync:ask-app [ask-lizheng 路径]`（默认 `/Users/sunyuzheng/Desktop/AI/apps/ask-lizheng`），提交，按主站流程上线。不用再为纯前端改动部署 Builder。改了后端才部署 Builder。脚本要求 ask-lizheng 没有未提交的改动、两边 `@fontsource/noto-serif-sc` 版本相同，并把上一版的文件多留一次，给更新前刚打开的页面用。
 - 守护：`tests/ask-app-files.test.ts` 查页面引用的文件都在；构建时 `scripts/prerender-guests.ts` 查页面要的每个字体本站都有，缺了构建失败。
+
+## 首屏标题（2026-10-04）
+
+ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一句「六年、四百多期视频（一半是会员视频）、两百多篇文章。AI从里面找出和你的问题相关的部分，整理成回答，每段都标明出处。」（数字依据和取舍见 ask-lizheng 仓库 docs/PRODUCT.md 同日一条）。主页问答区的介绍和公开问答页页尾跟着改成同一说法。App Store 上的介绍还是旧说法，下次更新 App 时再改。

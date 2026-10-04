@@ -386,7 +386,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 ${sections}
 ${limits}
 ${sources ? `<section class="block" aria-labelledby="sources"><h2 id="sources">出处</h2><ol class="sources">\n${sources}\n</ol></section>` : ""}
-<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>问问立正会从立正公开的文章和视频里找出相关内容，整理回答，并给出出处。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
+<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：它会从立正六年、四百多期视频（一半是会员视频）和两百多篇文章里找出相关内容，整理成回答，每段都标明出处。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
 ${related}
 </article>`,
   });

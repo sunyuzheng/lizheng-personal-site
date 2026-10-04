@@ -587,7 +587,7 @@ const zh = {
   ask: {
     eyebrow: "AI问答",
     title: "问问立正",
-    body: "想理解一个观点，或把它用到自己的处境里？让AI从我的公开文章和视频中找出相关内容，整理回答并给出出处。",
+    body: "卡住的时候，先来这里问。AI会从我六年、四百多期视频（一半是会员视频）和两百多篇文章里，找出和你的问题相关的部分，整理成回答，每段都标明出处。",
     cta: "去问问立正",
     note: "这是AI回答，非本人实时回复；重要判断请回到原文核对。",
     examplesLabel: "比如，你可以问",
@@ -1007,7 +1007,7 @@ const en: HomeCopy = {
   ask: {
     eyebrow: "AI Q&A",
     title: "Ask Lizheng",
-    body: "Trying to understand an idea, or apply it to your own situation? Ask an AI assistant that finds relevant material in my public essays and videos, then answers with sources.",
+    body: "Stuck on something? Ask here first. An AI searches six years of my work, 400+ videos (half of them for members) and 200+ essays, for what bears on your question, and answers with a source for every part.",
     cta: "Open Ask Lizheng",
     note: "AI answers, not a live reply from me. The source material and answers are primarily in Chinese. Check the original sources for important decisions.",
     examplesLabel: "Questions you could bring",

@@ -39,6 +39,18 @@ describe("what readers see, from files", () => {
     expect(publicFileFor("/api/ops")).toBeNull();
   });
 
+  it("says where each answer came from", async () => {
+    const heard: string[] = [];
+    const onSource = (source: string) => heard.push(source);
+    const fresh = store({ [PUBLIC_FILES.state]: beat(0), [PUBLIC_FILES.lists]: '{"from":"file"}' }).read;
+    await publicJson(LISTS, { read: fresh, ops: fromOps({ from: "ops" }), now: NOW, onSource });
+    forgetHeartbeat();
+    const stale = store({ [PUBLIC_FILES.state]: beat(600_000), [PUBLIC_FILES.lists]: '{"from":"file"}' }).read;
+    await publicJson(LISTS, { read: stale, ops: fromOps({ from: "ops" }), now: NOW, onSource });
+    await publicJson(LISTS, { read: stale, ops: fromOps(new AccessError("ops_gateway_unavailable")), now: NOW, onSource });
+    expect(heard).toEqual(["files", "ops", "last-files"]);
+  });
+
   it("asks Ops when there is no store", async () => {
     const ops = fromOps({ from: "ops" });
     expect(await publicJson(LISTS, { read: null, ops, now: NOW })).toEqual({ from: "ops" });

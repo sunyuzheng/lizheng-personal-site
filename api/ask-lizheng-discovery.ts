@@ -42,7 +42,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const vote = discoveryVoteBody(await discoveryRequestBody(req, 2048));
       result = await proxyDiscoveryVote(vote, voter_key);
     } else {
-      result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" }) : publicJson(discoveryReadPath(url, action)));
+      result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" })
+        : publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
       if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
     }
     res.statusCode = 200;

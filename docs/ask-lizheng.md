@@ -137,4 +137,5 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - `public/`：Ops 在公开问答变化时写列表、索引和每条回答，每次完整导出后写心跳 `public/state.json`（ask-lizheng-ops 的 docs/public-discovery.md「公开内容写成文件」）。本站 `shared/ask-public-files.ts` 的 `publicJson`：心跳三分钟内就用文件，文件里没有的问题就是已撤下（404）；心跳过期就问 Ops；Ops 也答不上来才拿最后一份文件顶上。所以导出一直失败也不会让撤下的问答留着。`/api/ask-lizheng/discovery/lists`、`detail` 和 `/ask` 的页面都走它；旧的分页列表照旧问 Ops。CDN 缓存不变（列表1分钟、问答页10分钟）。
 - `share/<day>/<slug>.json`：分享时本站顺手写一份回答的副本（没配令牌就不写）。分享页照旧实时读记录（删除立刻生效、真人打开要计数），只在数据库答不上来时用副本；数据库说已经没有了，就不用副本。Ops 删除记录前先删副本，删不掉就不删记录。这个功能上线前分享过的页面没有副本，要等再被分享一次。
 - 隐私政策「保存多久」加了一句：每天另存一份备份，留30天，删除的问答在之前的备份里最多再留30天（备份在 Ops，见它的 docs/backup.md）。
+- 看实际读的是哪里：列表、回答和 `/ask` 页面的响应头 `X-Ask-Public-Source` 是 `files`（文件）、`ops`（问了 Ops）或 `last-files`（Ops 答不上来，用了最后一份文件）。
 - 测试：`tests/ask-public-files.test.ts`（什么时候信文件、什么时候问 Ops）、`tests/ask-share-copy.test.ts`（副本只在数据库答不上来时顶上）。

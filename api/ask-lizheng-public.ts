@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError } from "../shared/ask-access.js";
-import { publicJson } from "../shared/ask-public-files.js";
+import { publicJson, type PublicSource } from "../shared/ask-public-files.js";
 import {
   indexable, publicCard, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
   renderSitemap, representatives, similarAskings, type PublicCard,
@@ -14,14 +14,16 @@ const CACHE = "public, max-age=0, s-maxage=600, stale-while-revalidate=600";
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 // Every published card, newest first, in one read of Ops' index, kept for five minutes in a warm
 // function so a crawl of many pages reads it once.
-let memo: { at: number; cards: PublicCard[] } | undefined;
-async function loadCards(): Promise<PublicCard[]> {
-  if (memo && Date.now() - memo.at < 300_000) return memo.cards;
-  const value = await publicJson("/api/discovery?action=index");
+let memo: { at: number; cards: PublicCard[]; source: PublicSource } | undefined;
+async function loadCards(onSource: (source: PublicSource) => void = () => {}): Promise<PublicCard[]> {
+  if (memo && Date.now() - memo.at < 300_000) { onSource(memo.source); return memo.cards; }
+  let source: PublicSource = "ops";
+  const value = await publicJson("/api/discovery?action=index", { onSource: heard => { source = heard; } });
+  onSource(source);
   if (!Array.isArray(value.items)) throw new AccessError("ops_gateway_unavailable");
   const cards: PublicCard[] = [];
   for (const item of value.items) { const card = publicCard(item); if (card) cards.push(card); }
-  memo = { at: Date.now(), cards };
+  memo = { at: Date.now(), cards, source };
   return cards;
 }
 
@@ -53,7 +55,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       }
       let detail;
       try {
-        detail = publicDetail(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`));
+        detail = publicDetail(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`,
+          { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
       } catch (error) {
         if (error instanceof AccessError && error.status === 404) {
           send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
@@ -73,11 +76,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       return;
     }
     if (route === "index") {
-      send(res, 200, html, renderIndexPage(await loadCards()), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
+      send(res, 200, html, renderIndexPage(await loadCards(source => res.setHeader("X-Ask-Public-Source", source))), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
       return;
     }
     if (route === "sitemap") {
-      send(res, 200, "application/xml; charset=utf-8", renderSitemap(await loadCards()),
+      send(res, 200, "application/xml; charset=utf-8", renderSitemap(await loadCards(source => res.setHeader("X-Ask-Public-Source", source))),
         { ...own, "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600" });
       return;
     }

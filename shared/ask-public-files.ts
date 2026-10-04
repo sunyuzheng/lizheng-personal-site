@@ -90,29 +90,37 @@ function object(raw: string): Record<string, unknown> {
   return value as Record<string, unknown>;
 }
 
+/** Where a read came from: the fresh files, Ops, or the last files while Ops could not answer. */
+export type PublicSource = "files" | "ops" | "last-files";
+
 /**
  * One of Ops' public reads (lists, index, a question's detail): from its file while the files are
  * fresh, otherwise from Ops, and from the last file only when Ops cannot answer. Errors are Ops':
- * public_item_unavailable (404) for a question that is not published.
+ * public_item_unavailable (404) for a question that is not published. `onSource` hears where the
+ * answer came from (the routes say it in X-Ask-Public-Source, to check the files are used).
  */
-export async function publicJson(opsPath: string, options: { read?: FileReader | null; ops?: typeof fetchOpsJson; now?: number } = {}) {
+export async function publicJson(opsPath: string, options: {
+  read?: FileReader | null; ops?: typeof fetchOpsJson; now?: number; onSource?: (source: PublicSource) => void;
+} = {}) {
   const ops = options.ops ?? fetchOpsJson;
+  const heard = options.onSource ?? (() => {});
   const read = options.read === undefined ? fileReader() : options.read;
   const file = publicFileFor(opsPath);
-  if (!read || !file) return ops(opsPath, { method: "GET" });
+  const fromOps = async () => { const value = await ops(opsPath, { method: "GET" }); heard("ops"); return value; };
+  if (!read || !file) return fromOps();
   if (await filesFresh(read, options.now ?? Date.now())) {
     let raw: string | null | undefined;
     try { raw = await read(file); } catch { raw = undefined; }
     if (raw !== undefined) {
-      if (raw === null && file.startsWith("public/detail/")) throw new AccessError("public_item_unavailable", 404);
-      if (raw !== null) { try { return object(raw); } catch { /* ask Ops */ } }
+      if (raw === null && file.startsWith("public/detail/")) { heard("files"); throw new AccessError("public_item_unavailable", 404); }
+      if (raw !== null) { try { const value = object(raw); heard("files"); return value; } catch { /* ask Ops */ } }
     }
   }
-  try { return await ops(opsPath, { method: "GET" }); }
+  try { return await fromOps(); }
   catch (error) {
     // Ops answered (a question that is not published): that stands. Ops could not answer: the last file.
     if (error instanceof AccessError && error.status !== 503) throw error;
-    try { const raw = await read(file); if (raw !== null) return object(raw); } catch { /* none */ }
+    try { const raw = await read(file); if (raw !== null) { const value = object(raw); heard("last-files"); return value; } } catch { /* none */ }
     throw error;
   }
 }

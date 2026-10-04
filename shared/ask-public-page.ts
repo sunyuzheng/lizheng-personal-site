@@ -193,6 +193,7 @@ const phrases = (value: string) => (value.match(/[^，：；、？！。]+[，�
 function sourceKind(source: PublicSource): string {
   const host = new URL(source.url).hostname;
   const member = source.source_visibility === "members-only";
+  if (source.source_type === "course-lesson") return member ? "会员课程" : "课程";
   if (/(^|\.)youtube\.com$|youtu\.be$/.test(host)) return member ? "会员视频" : "视频";
   if (/superlinear\.academy$/.test(host)) return member ? "超线性学院 · 会员" : "超线性学院";
   if (/(^|\.)lizheng\.ai$/.test(host)) return "文章";
@@ -386,7 +387,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 ${sections}
 ${limits}
 ${sources ? `<section class="block" aria-labelledby="sources"><h2 id="sources">出处</h2><ol class="sources">\n${sources}\n</ol></section>` : ""}
-<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：它会从立正六年、四百多期视频（一半是会员视频）和两百多篇文章里找出相关内容，整理成回答，每段都标明出处。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
+<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：它会从立正六年、四百多期视频（一半是会员视频）、两百多篇文章和《真本事》整门课里找出相关内容，整理成回答，每段都标明出处。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
 ${related}
 </article>`,
   });

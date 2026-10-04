@@ -6,6 +6,7 @@ import {
   applyAskEvent,
   AskError,
   publicSourceUrl,
+  isMemberCourse,
   isMemberVideo,
   memberJoinUrl,
   type AskIntent,
@@ -309,11 +310,13 @@ function Source({
   const url = publicSourceUrl(source.url);
   const copy = publicSourceUrl(source.public_copy_url);
   const member = isMemberVideo(source);
+  const course = isMemberCourse(source);
   return (
     <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
       <div>
         <span className="num">{source.id.slice(1)}</span>
         {member && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
+        {course && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员课程" : "Members course"}</strong>}
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (
@@ -325,6 +328,7 @@ function Source({
       )}
       {source.reason && <p>{source.reason}</p>}
       {member && <p className="lz-ask-member-note">{lang === "zh" ? "字幕资料已开放，完整视频需YouTube频道会员。" : "Transcript text is open; the full video requires YouTube channel membership."}</p>}
+      {course && <p className="lz-ask-member-note">{lang === "zh" ? "文字稿已开放，课程视频需超线性学院会员。" : "The lesson text is open; the course videos are for Superlinear members."}</p>}
       {source.transcript_quality === "uncorrected-asr" && <small>{lang === "zh" ? "自动转录未校正，请以原视频核实措辞。" : "Uncorrected ASR; verify wording in the original video."}</small>}
       {source.transcript_quality === "source-unverified" && <small>{lang === "zh" ? "字幕来源未确认，请以原视频核实。" : "Caption provenance is unverified; check the original video."}</small>}
       {member && url && <a className="lz-ask-member-watch" href={url} {...EXTERNAL}>{lang === "zh" ? "观看会员完整视频" : "Watch the full members video"} ↗</a>}

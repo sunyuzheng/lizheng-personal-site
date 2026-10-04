@@ -249,6 +249,11 @@ export function isMemberVideo(source: AskSource): boolean {
   return source.source_visibility === "members-only" && source.membership_platform === "youtube" && !!source.source_type?.startsWith("video");
 }
 
+/** A members-only course's lesson text the author opened for answers (《真本事》). */
+export function isMemberCourse(source: AskSource): boolean {
+  return source.source_visibility === "members-only" && source.source_type === "course-lesson";
+}
+
 export function memberJoinUrl(source: AskSource): string | undefined {
   const join = "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join";
   return isMemberVideo(source) && source.membership_url === join ? join : undefined;

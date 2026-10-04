@@ -65,6 +65,7 @@ Metrics change and should retain their dates.
 ## Books
 
 - [Growth Data Analytics Playbook](https://www.lizheng.ai/en/book): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
+- [Growth Data Analytics Playbook 中文版](https://www.lizheng.ai/book/growth-data-analytics-playbook): the free Chinese edition, rewritten in Yuzheng's Chinese voice with every chart and exercise kept; read each chapter online or download the EPUB or PDF.
 - [真本事：从会工作到会赚钱](https://www.lizheng.ai/zbs): written by Yuzheng Sun and published by 人民邮电出版社; career agency, capability building, side projects, and compounding work.
 
 ## Dated Public Judgment

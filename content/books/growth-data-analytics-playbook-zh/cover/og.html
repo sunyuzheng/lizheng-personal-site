@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Growth Data Analytics Playbook 中文版分享图</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; }
+  .og { position: relative; width: 1200px; height: 630px; box-sizing: border-box; display: flex; align-items: center; gap: 64px;
+    padding: 0 80px 0 96px; color: #f8f1e4;
+    background: radial-gradient(110% 90% at 92% -10%, #1a5132 0%, rgb(26 81 50 / 0) 60%), linear-gradient(180deg, #0f3d23 0%, #0b2f1b 100%); }
+  .cover { flex: none; width: 330px; height: 495px; border-radius: 4px 8px 8px 4px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.65), inset 4px 0 0 rgba(255,255,255,.18); }
+  .text { min-width: 0; }
+  .kicker { font: 700 26px/1.4 "Noto Sans SC", sans-serif; color: #8fd6a9; letter-spacing: .04em; }
+  h1 { margin: 22px 0 0; font: 400 76px/0.98 "Anton", Impact, sans-serif; text-transform: uppercase; letter-spacing: .005em; color: #fbfaf7; }
+  .edition { margin-top: 18px; font: 900 64px/1.15 "Noto Serif SC", serif; letter-spacing: .06em; }
+  .meta { margin-top: 30px; font: 500 24px/1.6 "Noto Sans SC", sans-serif; color: rgb(248 241 228 / .78); }
+</style>
+</head>
+<body>
+<div class="og">
+  <img class="cover" src="cover.png" alt="">
+  <div class="text">
+    <div class="kicker">免费在线读 · 下载EPUB和PDF</div>
+    <h1>Growth Data<br>Analytics Playbook</h1>
+    <div class="edition">中文版</div>
+    <div class="meta">Mengying Li · Joe Kumar · 孙煜征<br>lizheng.ai</div>
+  </div>
+</div>
+<script>document.fonts.ready.then(() => { const img = document.querySelector('img'); (img.complete ? Promise.resolve() : new Promise(r => img.onload = r)).then(() => document.body.dataset.ready = '1'); });</script>
+</body>
+</html>

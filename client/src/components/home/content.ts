@@ -1,5 +1,5 @@
 import type { Lang } from "@/contexts/LanguageContext";
-import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
+import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "@shared/book-links";
 
 // Homepage copy and curation for / (English) and /zh. Facts and wording follow
 // the reviewed homepage handoff of 2026-09-30; see
@@ -15,6 +15,7 @@ export const LINKS = {
   chatgptEssay: "https://www.superlinear.academy/c/ai-resources/chatgpt",
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
+  growthBookZh: GROWTH_BOOK_ZH_PATH,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
   askLizheng: "https://ask.lizheng.ai/",
 };
@@ -377,8 +378,8 @@ const zh = {
     growth: {
       meta: "书 · 合著 · 入选2025年WSJ CIO Journal书单",
       title: "Growth Data Analytics Playbook",
-      body: "讲产品市场匹配、增长与实验的实战书。与Mengying Li、Joe Kumar合著。",
-      go: "在Amazon查看",
+      body: "讲产品市场匹配、增长与实验的实战书。与Mengying Li、Joe Kumar合著。中文版可以免费读。",
+      go: "免费读中文版",
       alt: "《Growth Data Analytics Playbook》封面",
     },
   },

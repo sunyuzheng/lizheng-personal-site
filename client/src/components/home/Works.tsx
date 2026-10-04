@@ -44,8 +44,9 @@ export default function Works({ lang }: { lang: Lang }) {
     <a
       key="growth"
       className="card c-book rv"
-      href={LINKS.growthBook}
-      {...EXTERNAL}
+      // Chinese readers get the free Chinese edition on this site; English readers the book on Amazon.
+      href={lang === "zh" ? LINKS.growthBookZh : LINKS.growthBook}
+      {...(lang === "zh" ? {} : EXTERNAL)}
     >
       <img
         className="cover"

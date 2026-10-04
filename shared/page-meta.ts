@@ -70,15 +70,15 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "Books by Yuzheng Sun: Growth Data Analytics Playbook and 真本事：从会工作到会赚钱.",
     canonical: "https://www.lizheng.ai/en/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-10-04",
   },
   zh: {
     title: "两本书 · 课代表立正",
     description:
-      "孙煜征的两本书：英文《Growth Data Analytics Playbook》与中文《真本事：从会工作到会赚钱》。",
+      "孙煜征的两本书：英文《Growth Data Analytics Playbook》（中文版免费在线读）与中文《真本事：从会工作到会赚钱》。",
     canonical: "https://www.lizheng.ai/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-10-04",
   },
 };
 

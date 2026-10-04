@@ -41,6 +41,7 @@ import {
   buildZhenbenshiStructuredData,
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
+import { bookSitemapUrls } from "./book-pages.ts";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -302,6 +303,7 @@ function buildSitemapXml(guests: GuestProfile[]) {
       loc: `${SITE_URL}/decks/fake-work-fake-learning/zh`,
       lastmod: "2026-09-29",
     },
+    ...bookSitemapUrls(),
     ...guests.map(guest => ({
       loc: guest.share_url,
       lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),

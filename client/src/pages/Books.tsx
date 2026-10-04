@@ -1,4 +1,4 @@
-import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
+import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "@shared/book-links";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Badge } from "@/components/ui/badge";
@@ -32,6 +32,12 @@ const books = {
         href: GROWTH_BOOK_AMAZON_URL,
         external: true,
       },
+      secondary: {
+        label: "Free Chinese edition",
+        href: GROWTH_BOOK_ZH_PATH,
+        external: false,
+        page: true,
+      },
     },
     {
       id: "zbs",
@@ -56,18 +62,24 @@ const books = {
   zh: [
     {
       id: "growth",
-      label: "英文书",
+      label: "英文书 · 有免费中文版",
       title: "Growth Data Analytics Playbook",
       subtitle: "产品为什么增长？",
       description:
-        "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。",
+        "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。中文版完整重写，保留全部图表和练习，可以免费在线读，也可以下载EPUB和PDF。",
       meta: [
         "入选《华尔街日报》CIO Journal 2025年书单",
         "Statsig · 2025",
         "ISBN 9781544549828",
       ],
       primary: {
-        label: "在Amazon查看",
+        label: "免费读中文版",
+        href: GROWTH_BOOK_ZH_PATH,
+        external: false,
+        page: true,
+      },
+      secondary: {
+        label: "在Amazon查看英文版",
         href: GROWTH_BOOK_AMAZON_URL,
         external: true,
       },
@@ -128,15 +140,26 @@ function BookVisual({ id }: { id: string }) {
 function SmartLink({
   href,
   external,
+  page,
   children,
   className,
 }: {
   href: string;
   external: boolean;
+  // A static page outside the React app (the Chinese edition): load it instead of routing.
+  page?: boolean;
   children: ReactNode;
   className?: string;
 }) {
   const { lang } = useLanguage();
+
+  if (page) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
 
   if (external) {
     return (
@@ -246,6 +269,7 @@ export default function Books() {
                     <SmartLink
                       href={book.primary.href}
                       external={book.primary.external}
+                      page={"page" in book.primary && book.primary.page}
                       className={cn(
                         buttonVariants(),
                         "min-h-11 rounded-[10px] bg-lz-green px-5 text-white hover:bg-superlinear-deep"
@@ -263,6 +287,7 @@ export default function Books() {
                       <SmartLink
                         href={book.secondary.href}
                         external={book.secondary.external}
+                        page={"page" in book.secondary && book.secondary.page}
                         className={cn(
                           buttonVariants({ variant: "outline" }),
                           "min-h-11 rounded-[10px] border-lz-ink/45 bg-transparent px-5 text-lz-ink hover:bg-lz-sand"

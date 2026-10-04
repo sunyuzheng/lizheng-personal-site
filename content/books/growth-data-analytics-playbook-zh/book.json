@@ -1,0 +1,119 @@
+{
+  "slug": "growth-data-analytics-playbook",
+  "path": "/book/growth-data-analytics-playbook",
+  "title": "Growth Data Analytics Playbook",
+  "edition": "中文版",
+  "subtitle": "找到、衡量并放大产品市场匹配的现代指南",
+  "description": "《Growth Data Analytics Playbook》中文版，免费在线读，也可以下载EPUB和PDF。讲怎么判断产品市场匹配，怎么用growth accounting拆开增长，以及获客、留存、召回、变现、定目标和做实验。",
+  "authors": [
+    "Mengying Li",
+    "Joe Kumar",
+    "孙煜征（Yuzheng Sun）"
+  ],
+  "original": {
+    "title": "Growth Data Analytics Playbook: The Modern Guide to Finding, Measuring, and Scaling Product Market Fit",
+    "publisher": "Statsig Press",
+    "year": 2025,
+    "isbn": "9781544549828",
+    "language": "en"
+  },
+  "datePublished": "2026-10-04",
+  "dateModified": "2026-10-04",
+  "files": {
+    "pdf": "growth-data-analytics-playbook-zh.pdf",
+    "epub": "growth-data-analytics-playbook-zh.epub",
+    "downloadName": "Growth Data Analytics Playbook 中文版"
+  },
+  "front": "00-about.md",
+  "back": "12-authors.md",
+  "chapters": [
+    {
+      "slug": "1",
+      "file": "01.md",
+      "label": "第1章",
+      "title": "用增长分析驱动产品成功",
+      "original": "Chapter 1: Leverage Growth Analytics to Drive Product Success",
+      "description": "全书的地图：增长有PLG和SLG两种。先判断产品在生命周期的哪个阶段，立一个北极星指标，用growth accounting看懂它怎么变，再按常见的增长问题选对分析方法。"
+    },
+    {
+      "slug": "2",
+      "file": "02.md",
+      "label": "第2章",
+      "title": "找到产品价值的早期信号",
+      "original": "Chapter 2: Identify Early Signals of Product Value and Success",
+      "description": "怎么判断产品有没有找到PMF：留存曲线的三种形态，怎么读cohort表，留存上常见的四个坑；留存太慢的时候，怎么用可预测、可测量的领先指标提前判断。"
+    },
+    {
+      "slug": "3",
+      "file": "03.md",
+      "label": "第3章",
+      "title": "用growth accounting打地基",
+      "original": "Chapter 3: Build the Foundation with Growth Accounting Framework",
+      "description": "把北极星指标拆成新增、留存、流失、回流和沉睡五种状态，用重叠窗口准确计算，再用一款手游的一月复盘，演示怎么从净增长里找出流失的问题。"
+    },
+    {
+      "slug": "4",
+      "file": "04.md",
+      "label": "第4章",
+      "title": "获取并培养高质量用户",
+      "original": "Chapter 4: Acquire and Foster High-Quality Users",
+      "description": "怎么衡量用户价值（LTV、ARPU、留存），注册前就能看到哪些质量信号，病毒系数K怎么解读，怎么分析注册漏斗，以及怎么让新用户更快看到产品的价值。"
+    },
+    {
+      "slug": "5",
+      "file": "05.md",
+      "label": "第5章",
+      "title": "留住用户，让他们常来",
+      "original": "Chapter 5: Retain Existing Users and Keep Them Engaged",
+      "description": "黏性和留存有什么区别，黏性-留存矩阵怎么用，DAU/MAU怎么按使用频率调整，怎么用Lness衡量活跃天数、找出重度用户，以及判断PMF的三个维度。"
+    },
+    {
+      "slug": "6",
+      "file": "06.md",
+      "label": "第6章",
+      "title": "把流失的用户找回来",
+      "original": "Chapter 6: Resurrect Churned Customers: Strategies for Reengagement",
+      "description": "三种流失，怎么用预测模型提前发现要走的用户、处理样本不平衡，怎么用通知召回流失的用户，以及Facebook少发通知反而更好的长期实验。"
+    },
+    {
+      "slug": "7",
+      "file": "07.md",
+      "label": "第7章",
+      "title": "加速转化，增加收入",
+      "original": "Chapter 7: Accelerate User Conversion for Increased Revenue Generation",
+      "description": "免费增值、订阅、按量付费和广告四种收入模式各看什么指标，收入的growth accounting，NRR和GRR怎么算，PLG和SLG怎么选，以及定价和套餐分析。"
+    },
+    {
+      "slug": "8",
+      "file": "08.md",
+      "label": "第8章",
+      "title": "优化性能，打造增长飞轮",
+      "original": "Chapter 8: Optimize Performance and Build Sustainable Growth Flywheels",
+      "description": "性能为什么要看P90和P95，怎么用回归和人为减速实验证明速度的价值，怎么用放弃曲线定目标；以及怎么找出、衡量和加速自己产品的增长飞轮。"
+    },
+    {
+      "slug": "9",
+      "file": "09.md",
+      "label": "第9章",
+      "title": "估算增长空间，定可实现的目标",
+      "original": "Chapter 9: Size Growth Opportunity and Set Achievable Growth Goals",
+      "description": "目标指标、制衡指标和护栏指标，绝对数目标和比率目标怎么选，怎么结合基线、自上而下和自下而上定出目标值，以及怎么追踪进展、及时校准。"
+    },
+    {
+      "slug": "10",
+      "file": "10.md",
+      "label": "第10章",
+      "title": "设计并实施有效的实验",
+      "original": "Chapter 10: Design and Implement Effective Experiments",
+      "description": "为什么有用的分析都是因果分析，证据金字塔和随机对照试验，为什么大多数想法会失败；Marketplace白底图和降低视频画质两个真实实验，以及怎么搭建可规模化的实验体系。"
+    },
+    {
+      "slug": "conclusion",
+      "file": "11-conclusion.md",
+      "label": "结语",
+      "title": "结语",
+      "original": "Conclusion",
+      "description": "全书的收尾：增长是动词，回到growth accounting找最弱的一环，拿不准的时候用实验确认因果，以及AI时代的增长分析会怎样变化。"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { GROWTH_BOOK_AMAZON_URL } from "./book-links";
+import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "./book-links";
 import {
   ABOUT_PAGE_META,
   AIE_SHANGHAI_DECK_PAGE_META,
@@ -345,6 +345,15 @@ function growthBookNode() {
     ],
     publisher: { "@type": "Organization", name: "Statsig" },
     sameAs: GROWTH_BOOK_AMAZON_URL,
+    workTranslation: {
+      "@type": "Book",
+      "@id": `${SITE_URL}${GROWTH_BOOK_ZH_PATH}#book`,
+      name: "Growth Data Analytics Playbook 中文版",
+      url: `${SITE_URL}${GROWTH_BOOK_ZH_PATH}`,
+      inLanguage: "zh-CN",
+      bookFormat: "https://schema.org/EBook",
+      isAccessibleForFree: true,
+    },
   };
 }
 

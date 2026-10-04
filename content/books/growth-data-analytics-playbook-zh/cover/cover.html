@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Growth Data Analytics Playbook 中文版封面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+SC:wght@500;700;900&family=Noto+Serif+SC:wght@900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { width: 1600px; height: 2400px; overflow: hidden; background: #232323; }
+  .cover { position: relative; width: 1600px; height: 2400px; overflow: hidden;
+    background-color: #232323;
+    background-image:
+      linear-gradient(rgba(255,255,255,.065) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(255,255,255,.065) 2px, transparent 2px);
+    background-size: 100px 100px; background-position: -2px -2px; }
+  .sub { position: absolute; top: 150px; left: 0; right: 0; text-align: center;
+    font: 700 84px/1.38 "Noto Sans SC", sans-serif; color: #f4f1ea; letter-spacing: .04em; }
+  .sub .g { color: #6cc68f; }
+  .title { position: absolute; left: 0; right: 0; top: 470px; text-align: center; color: #fbfaf7;
+    font-family: "Anton", Impact, sans-serif; text-transform: uppercase; line-height: .9; }
+  .title div { white-space: nowrap; }
+  .title span { display: inline-block; }
+  .edition { position: absolute; left: 50%; transform: translateX(-50%); top: 1640px;
+    padding: 18px 54px 24px; border-radius: 18px; background: #2f9e5b; color: #fff;
+    font: 900 92px/1 "Noto Serif SC", serif; letter-spacing: .12em; box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+  .authors { position: absolute; left: 0; right: 0; bottom: 130px; display: flex; justify-content: center; gap: 84px;
+    font: 500 66px/1 "Noto Sans SC", sans-serif; color: #f4f1ea; letter-spacing: .01em; }
+  svg { position: absolute; inset: 0; }
+</style>
+</head>
+<body>
+<div class="cover">
+  <svg width="1600" height="2400" viewBox="0 0 1600 2400" aria-hidden="true">
+    <defs>
+      <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#5a5a5a"/><stop offset="1" stop-color="#3a3a3a"/>
+      </linearGradient>
+      <linearGradient id="line" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#e07a64"/>
+        <stop offset=".22" stop-color="#b07aa0"/>
+        <stop offset=".42" stop-color="#7e80c6"/>
+        <stop offset=".6" stop-color="#5487cc"/>
+        <stop offset=".78" stop-color="#4aa5a2"/>
+        <stop offset="1" stop-color="#5ec98d"/>
+      </linearGradient>
+    </defs>
+    <polygon points="0,2090 360,2040 700,1930 1000,1860 1260,1700 1600,1460 1600,2400 0,2400" fill="url(#hill)"/>
+  </svg>
+  <div class="sub"><span class="g">找到、衡量并放大</span><br>产品市场匹配的现代指南</div>
+  <div class="title" id="title">
+    <div id="l1"><span>Growth</span></div>
+    <div id="l2"><span>Data</span></div>
+    <div id="l3"><span>Analytics Playbook</span></div>
+  </div>
+  <svg width="1600" height="2400" viewBox="0 0 1600 2400" aria-hidden="true"><g id="chart"></g></svg>
+  <div class="edition">中文版</div>
+  <div class="authors"><span>Mengying Li</span><span>Joe Kumar</span><span>Yuzheng Sun</span></div>
+</div>
+<script>
+  // Fit each title line to its width, then draw the rising line over the title.
+  async function layout() {
+    await document.fonts.ready;
+    const fit = (line, target) => {
+      line.style.fontSize = '100px';
+      const w = line.querySelector('span').getBoundingClientRect().width;
+      return 100 * target / w;
+    };
+    const l1 = document.getElementById('l1'), l2 = document.getElementById('l2'), l3 = document.getElementById('l3');
+    const big = fit(l1, 1430);
+    l1.style.fontSize = big + 'px'; l2.style.fontSize = big + 'px';
+    l3.style.fontSize = fit(l3, 1430) + 'px';
+    const pts = [[-40,1980],[110,1570],[220,1770],[330,1590],[430,1700],[600,1010],[720,1250],[860,1050],[960,1000],[1060,940],[1180,640],[1300,800],[1490,330]];
+    const d = 'M' + pts.map(p => p.join(',')).join(' L');
+    const g = document.getElementById('chart');
+    const ns = 'http://www.w3.org/2000/svg';
+    const path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', d); path.setAttribute('fill', 'none'); path.setAttribute('stroke', 'url(#line)');
+    path.setAttribute('stroke-width', '58'); path.setAttribute('stroke-linejoin', 'miter'); path.setAttribute('stroke-miterlimit', '6');
+    g.appendChild(path);
+    const [x1, y1] = pts[pts.length - 2], [x2, y2] = pts[pts.length - 1];
+    const ang = Math.atan2(y2 - y1, x2 - x1);
+    const L = 150, W = 120;
+    const tip = [x2 + Math.cos(ang) * 60, y2 + Math.sin(ang) * 60];
+    const back = [tip[0] - Math.cos(ang) * L, tip[1] - Math.sin(ang) * L];
+    const left = [back[0] + Math.cos(ang + Math.PI / 2) * W / 2 * 1.4, back[1] + Math.sin(ang + Math.PI / 2) * W / 2 * 1.4];
+    const right = [back[0] - Math.cos(ang + Math.PI / 2) * W / 2 * 1.4, back[1] - Math.sin(ang + Math.PI / 2) * W / 2 * 1.4];
+    const head = document.createElementNS(ns, 'polygon');
+    head.setAttribute('points', [tip, left, right].map(p => p.join(',')).join(' '));
+    head.setAttribute('fill', '#5ec98d');
+    g.appendChild(head);
+    document.body.dataset.ready = '1';
+  }
+  layout();
+</script>
+</body>
+</html>

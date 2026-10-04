@@ -51,7 +51,7 @@ function failure(status: number, code: string): Response {
   );
 }
 
-async function boundedQuotaBody(response: Response): Promise<Record<string, unknown> | null> {
+async function boundedErrorBody(response: Response): Promise<Record<string, unknown> | null> {
   if (!response.body) return null;
   const reader = response.body.getReader();
   let expired = false, size = 0;
@@ -174,11 +174,22 @@ export default async function handler(request: Request): Promise<Response> {
     ) {
       // No answer was made, so the network's guest count is given back.
       await releaseNetwork?.();
+      if (upstream.status === 409 &&
+          upstream.headers.get("x-ask-error-code") === "ai_consent_changed" &&
+          upstream.headers.get("content-type")?.includes("application/json")) {
+        const value = await boundedErrorBody(upstream);
+        if (value?.code === "ai_consent_changed" && typeof value.model === "string" &&
+            value.model.length > 0 && value.model.length <= 128) {
+          cleanup();
+          return reply(Response.json({ code: "ai_consent_changed", model: value.model },
+            { status: 409, headers: HEADERS }));
+        }
+      }
       if (accessEnabled() && upstream.status === 429 &&
           upstream.headers.get("x-ask-error-code") === "quota_exhausted" &&
           upstream.headers.get("content-type")?.includes("application/json")) {
         try {
-          const value = await boundedQuotaBody(upstream);
+          const value = await boundedErrorBody(upstream);
           if (value?.code === "quota_exhausted" && value.remaining === 0 &&
               typeof value.reset_at === "string" && /^\d{4}-\d{2}-\d{2}T[\d:.+-]+Z?$/.test(value.reset_at)) {
             cleanup();
@@ -190,7 +201,7 @@ export default async function handler(request: Request): Promise<Response> {
       if (accessEnabled() && upstream.status === 503 &&
           upstream.headers.get("x-ask-error-code") === "ops_storage_unavailable" &&
           upstream.headers.get("content-type")?.includes("application/json")) {
-        const value = await boundedQuotaBody(upstream);
+        const value = await boundedErrorBody(upstream);
         if (value?.code === "ops_storage_unavailable") { cleanup(); return reply(failure(503, "ops_storage_unavailable")); }
       }
       void upstream.body?.cancel().catch(() => {});

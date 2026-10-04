@@ -115,3 +115,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - 处境不保存：Builder 的 `/api/meta` 里 `context_archive` 为 false，v4 开始记录的 `context` 为空。主页问答区和 ask 页对 v4 同时接受 true 和 false；false 时处境输入框下面用深色字写「这里填的内容只用来生成这次回答，我们不保存。」，「说明」里的「你的隐私」同样改写；隐私政策「结合我的处境」一条已改。
 - 统计：usage 的 day 和 total 哈希里 `<入口>:share`、`all:share`（每条第一次分享）、`<入口>:share_bonus`、`all:share_bonus`、`all:share_view`（分享页被真人打开，不算爬虫和链接预览），私人 Ops「使用情况」的「分享」一栏读这些数；不记分享了什么。Vercel 事件「Ask Share」（surface 和 action：open、link、bonus、send）。
 - 上线顺序：本站先上（页面先接受 `context_archive` 为 false），再上 Builder（开始附 `share`、不再保存处境），最后 Ops。反过来的话，旧页面看到 false 会暂停提问。测试：`tests/ask-share.test.ts`，`tests/test_ask_share_lua.py`（和真实的记录写入脚本、额度脚本一起跑）。
+
+## 数据库升级提醒（2026-10-04）
+
+问问立正、Ops 和分享都用 Vercel Storage 里的 Upstash 库 `ask-lizheng-kv`（原名 upstash-kv-byzantium-school；Fixed 250MB）。10-04 立正要求打开 Auto Upgrade（在 Upstash 控制台的库 Settings 里开，Vercel 的配置窗口里那个开关是锁住的），并且升级时要通知他。`api/ask-lizheng-db-watch.ts` 由 Vercel Cron 每天 01:00 UTC 调一次（`vercel.json` 的 `crons`）：读 `INFO memory` 的 `maxmemory`（套餐上限），和上次记在 `ask:watch:v1:db` 的不同就用邮箱验证码那把 Resend 密钥从 `立正 <podcast@notify.lizheng.ai>` 发信到 sunyuzheng@gmail.com；第一次运行发一封「提醒已开启」。项目设了 `CRON_SECRET` 时只有 Cron 能调；没设时谁调都只在套餐变化时发信。`used_memory` 和控制台的数据大小对不上（10-04 是 0.3MB 对 4–7MB），所以不用它判断快满了。同一天 Coffee Pass 换成自己的按量付费库 `stay-coffee-pass-kv`，不再和问问立正共用。

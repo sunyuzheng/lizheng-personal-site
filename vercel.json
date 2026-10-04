@@ -1,4 +1,5 @@
 {
+  "crons": [{ "path": "/api/ask-lizheng-db-watch", "schedule": "0 1 * * *" }],
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": "vite",

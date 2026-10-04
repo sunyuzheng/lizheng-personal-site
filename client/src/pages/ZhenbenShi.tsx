@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,6 @@ import {
   ArrowLeft,
   Menu,
   X,
-  Send,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -208,139 +207,16 @@ function FaqItem({ q, a }: { q: string; a: string }) {
   );
 }
 
-// ─── Markdown renderer ───────────────────────────────────
-function renderInline(text: string): React.ReactNode {
-  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**"))
-      return (
-        <strong key={i} className="text-white font-semibold">
-          {part.slice(2, -2)}
-        </strong>
-      );
-    if (part.startsWith("`") && part.endsWith("`"))
-      return (
-        <code
-          key={i}
-          className="text-superlinear-on-dark bg-white/10 px-1 rounded text-xs font-mono"
-        >
-          {part.slice(1, -1)}
-        </code>
-      );
-    return part;
-  });
-}
-
-function MarkdownMessage({ content }: { content: string }) {
-  const lines = content.split("\n");
-  const nodes: React.ReactNode[] = [];
-  let listBuffer: React.ReactNode[] = [];
-
-  const flushList = () => {
-    if (listBuffer.length) {
-      nodes.push(
-        <ul key={`ul-${nodes.length}`} className="space-y-1 my-1">
-          {listBuffer}
-        </ul>
-      );
-      listBuffer = [];
-    }
-  };
-
-  lines.forEach((line, i) => {
-    if (line.startsWith("## ")) {
-      flushList();
-      nodes.push(
-        <p key={i} className="text-white font-bold text-sm mt-3 mb-1">
-          {renderInline(line.slice(3))}
-        </p>
-      );
-    } else if (line.startsWith("### ")) {
-      flushList();
-      nodes.push(
-        <p key={i} className="text-white font-semibold text-sm mt-2 mb-0.5">
-          {renderInline(line.slice(4))}
-        </p>
-      );
-    } else if (line.trim() === "---") {
-      flushList();
-      nodes.push(<hr key={i} className="border-white/10 my-2" />);
-    } else if (/^[-*] /.test(line)) {
-      listBuffer.push(
-        <li
-          key={i}
-          className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
-        >
-          <span className="text-superlinear-on-dark flex-shrink-0 mt-0.5">
-            •
-          </span>
-          <span>{renderInline(line.slice(2))}</span>
-        </li>
-      );
-    } else if (/^\d+\. /.test(line)) {
-      const m = line.match(/^(\d+)\. (.*)/);
-      if (m)
-        listBuffer.push(
-          <li
-            key={i}
-            className="flex gap-2 text-sm text-zinc-300 leading-relaxed"
-          >
-            <span className="text-superlinear-on-dark font-mono text-xs flex-shrink-0 mt-0.5 w-4">
-              {m[1]}.
-            </span>
-            <span>{renderInline(m[2])}</span>
-          </li>
-        );
-    } else if (line.startsWith("> ")) {
-      flushList();
-      nodes.push(
-        <blockquote
-          key={i}
-          className="border-l-2 border-superlinear-on-dark/40 pl-3 text-zinc-400 text-sm italic my-1"
-        >
-          {renderInline(line.slice(2))}
-        </blockquote>
-      );
-    } else if (line.trim() === "") {
-      flushList();
-      nodes.push(<div key={i} className="h-1.5" />);
-    } else {
-      flushList();
-      nodes.push(
-        <p key={i} className="text-sm text-zinc-300 leading-relaxed">
-          {renderInline(line)}
-        </p>
-      );
-    }
-  });
-  flushList();
-
-  return <div className="space-y-0.5">{nodes}</div>;
-}
-
-// ─── AI Advisor Chat ──────────────────────────────────────
-type ChatMessage = { role: "user" | "assistant"; content: string };
-
-const ADVISOR_STARTERS = [
-  "我做了三年但一直没晋升，问题出在哪？",
-  "想做副业但不知道从哪里开始",
-  "如何判断是否该跳槽换行业？",
-  "怎么跟老板谈薪资才不吃亏？",
-];
-
+// ─── 问问立正 ─────────────────────────────────────────────
+// The book's own chat (/api/chat) gave way to 问问立正 on 2026-10-05: it answers from the 《真本事》
+// course texts and frameworks along with everything else Lizheng has said and written. The words
+// below are the ones ask.lizheng.ai and the homepage already use; the Skill stays for people who
+// want the book's advisor in their own AI tools.
 const SKILL_REPOSITORY_URL = "https://github.com/sunyuzheng/zhenbenshi-advisor";
-
-const EXAMPLE_QUESTION =
-  "我在一家200人的互联网公司做产品经理，工作三年，去年和今年绩效都是B+，但两次晋升都被卡住了，上级说我\u201c影响力不足\u201d。我自认为项目交付没问题，但不太擅长向上汇报。我希望在年底前晋升，目前不考虑跳槽。";
+const ASK_LIZHENG_URL = "https://ask.lizheng.ai/";
 
 function AdvisorSection() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showExample, setShowExample] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const copyInstallLink = () => {
     navigator.clipboard.writeText(SKILL_REPOSITORY_URL).then(() => {
@@ -349,212 +225,30 @@ function AdvisorSection() {
     });
   };
 
-  const prefillFromStarter = (starter: string) => {
-    const hint =
-      "（在这里补充你的背景，建议越具体回答越准：所在行业/职级、工作年限、具体情况、已经试过什么、最希望达到什么）";
-    setInput(`${starter}\n\n${hint}`);
-    setTimeout(() => {
-      if (!textareaRef.current) return;
-      textareaRef.current.focus();
-      // Place cursor right after the question so user types context naturally
-      textareaRef.current.setSelectionRange(
-        starter.length + 2,
-        starter.length + 2
-      );
-    }, 0);
-  };
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
-
-  const sendMessage = async (text: string) => {
-    const trimmed = text.trim();
-    if (!trimmed || loading) return;
-
-    const newMessages: ChatMessage[] = [
-      ...messages,
-      { role: "user", content: trimmed },
-    ];
-    setMessages(newMessages);
-    setInput("");
-    setLoading(true);
-
-    const callApi = async () => {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: trimmed,
-          history: messages.map(m => ({ role: m.role, content: m.content })),
-        }),
-      });
-      if (!res.ok) throw new Error(`${res.status}`);
-      const data = (await res.json()) as { content: string };
-      return data.content;
-    };
-
-    try {
-      // First attempt
-      let content: string;
-      try {
-        content = await callApi();
-      } catch (firstErr) {
-        // Cold-start retry: wait 1.5s and try once more before giving up
-        console.warn("Chat first attempt failed, retrying…", firstErr);
-        await new Promise(r => setTimeout(r, 1500));
-        content = await callApi();
-      }
-      setMessages(prev => [...prev, { role: "assistant", content }]);
-    } catch (err) {
-      console.error("Chat failed after retry:", err);
-      setMessages(prev => [
-        ...prev,
-        { role: "assistant", content: "抱歉，出现了一点问题，请稍后再试。" },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229) return;
-
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage(input);
-    }
-  };
-
   return (
     <section id="advisor" className="py-16 md:py-20">
       <div className="container mx-auto px-4 max-w-3xl">
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <div className="flex items-center justify-center gap-3 text-superlinear-on-dark text-xs font-semibold uppercase tracking-widest mb-3">
             <span className="w-6 h-px bg-superlinear inline-block" />
-            AI顾问
+            AI问答
             <span className="w-6 h-px bg-superlinear inline-block" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center">
-            与《真本事》AI顾问对话
-          </h2>
-          <p className="text-zinc-400 mt-3 text-sm text-center max-w-lg mx-auto">
-            基于书中七大框架，帮你诊断思维陷阱、做对职业选择、给出可执行建议。
+          <h2 className="text-3xl md:text-4xl font-bold text-white">问问立正</h2>
+          {/* Word joiners keep 东西里来 together, so a phone breaks the line at the comma. */}
+          <p className="text-zinc-400 mt-3 text-sm max-w-lg mx-auto text-balance">
+            {"回答只从立正讲过、写过的东\u2060西\u2060里\u2060来，每一段都能点回原文。"}
           </p>
-        </div>
-
-        {messages.length === 0 ? (
-          <div className="mb-5 space-y-3">
-            {/* Starter prompts — prefill only, do not send */}
-            <div className="grid sm:grid-cols-2 gap-2">
-              {ADVISOR_STARTERS.map(s => (
-                <button
-                  key={s}
-                  onClick={() => prefillFromStarter(s)}
-                  className="text-left p-3.5 border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-superlinear-on-dark/40 transition-all text-sm text-zinc-300 group"
-                >
-                  <span className="text-superlinear-on-dark mr-2 group-hover:text-white">
-                    ▸
-                  </span>
-                  {s}
-                </button>
-              ))}
-            </div>
-
-            {/* Example question toggle */}
-            <button
-              onClick={() => setShowExample(v => !v)}
-              className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
+          <div className="mt-6 flex justify-center">
+            <Button
+              className="bg-superlinear hover:bg-superlinear-deep text-white font-semibold"
+              asChild
             >
-              <span
-                className={`transition-transform ${showExample ? "rotate-90" : ""}`}
-              >
-                ▸
-              </span>
-              看看什么样的问题能得到最好的回答
-            </button>
-
-            {showExample && (
-              <div className="border border-superlinear-on-dark/15 bg-superlinear/[0.04] p-4 space-y-2">
-                <p className="text-[10px] text-superlinear-on-dark/70 uppercase tracking-widest">
-                  优秀提问示范
-                </p>
-                <p className="text-zinc-300 text-sm leading-relaxed">
-                  "{EXAMPLE_QUESTION}"
-                </p>
-                <p className="text-zinc-600 text-xs">
-                  包含：职级背景 · 具体卡点 · 已知信息 · 明确目标 · 限制条件
-                </p>
-              </div>
-            )}
+              <a href={ASK_LIZHENG_URL}>去问问立正 →</a>
+            </Button>
           </div>
-        ) : (
-          <div className="border border-white/10 bg-white/[0.03] mb-4 max-h-[52vh] overflow-y-auto p-4 space-y-5">
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                {m.role === "assistant" && (
-                  <div className="w-6 h-6 rounded-full bg-superlinear/20 border border-superlinear-on-dark/30 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-superlinear-on-dark text-[10px] font-bold">
-                      真
-                    </span>
-                  </div>
-                )}
-                <div
-                  className={`max-w-[82%] ${
-                    m.role === "user"
-                      ? "bg-superlinear/15 border border-superlinear-on-dark/20 text-superlinear-pale text-sm leading-relaxed px-3 py-2"
-                      : ""
-                  }`}
-                >
-                  {m.role === "user" ? (
-                    m.content
-                  ) : (
-                    <MarkdownMessage content={m.content} />
-                  )}
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div className="flex gap-3">
-                <div className="w-6 h-6 rounded-full bg-superlinear/20 border border-superlinear-on-dark/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-superlinear-on-dark text-[10px] font-bold">
-                    真
-                  </span>
-                </div>
-                <div className="text-zinc-500 text-sm">正在思考...</div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-
-        <div className="flex gap-2">
-          <textarea
-            ref={textareaRef}
-            aria-label="描述你的职场问题"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="说说你的情况：行业/职级/工作年限，遇到了什么问题，已经尝试过什么，希望达到什么目标——背景越具体，建议越准。"
-            rows={3}
-            maxLength={2000}
-            className="flex-1 bg-white/5 border border-white/10 text-white placeholder:text-zinc-600 text-sm px-3 py-2.5 resize-none focus:outline-none focus:border-superlinear-on-dark/50 transition-colors"
-          />
-          <Button
-            onClick={() => sendMessage(input)}
-            disabled={loading || !input.trim()}
-            aria-label="发送问题"
-            className="bg-superlinear hover:bg-superlinear-deep text-white px-4 self-end disabled:opacity-40"
-          >
-            <Send className="w-4 h-4" />
-          </Button>
+          <p className="text-zinc-600 text-xs mt-3">这是AI回答，不是立正本人实时回复。</p>
         </div>
-        <p className="text-zinc-600 text-xs mt-1.5">
-          按Enter发送 · Shift+Enter换行 · 最多2,000字。请勿输入敏感信息。
-        </p>
 
         {/* Multi-tool install callout */}
         <div className="mt-3 border border-white/10 bg-white/[0.03] p-3">
@@ -654,7 +348,7 @@ export default function ZhenbenShi() {
             <div className="hidden lg:flex items-center gap-6">
               {[
                 ["核心框架", "framework"],
-                ["AI顾问", "advisor"],
+                ["问问立正", "advisor"],
                 ["课程大纲", "outline"],
                 ["封面推荐", "endorsements"],
                 ["关于作者", "author"],
@@ -715,7 +409,7 @@ export default function ZhenbenShi() {
             <div className="lg:hidden py-4 space-y-3 border-t border-white/[0.08]">
               {[
                 ["核心框架", "framework"],
-                ["AI顾问", "advisor"],
+                ["问问立正", "advisor"],
                 ["课程大纲", "outline"],
                 ["封面推荐", "endorsements"],
                 ["关于作者", "author"],

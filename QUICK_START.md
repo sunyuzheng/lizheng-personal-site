@@ -48,7 +48,7 @@ docs/             ← 数据结构和嘉宾维护说明
 | `/guests`            | 嘉宾目录                     |
 | `/guests/:slug`      | 单个嘉宾详情                 |
 | `/book`              | 两本书总览                   |
-| `/zbs`               | 《真本事》单书页与AI顾问     |
+| `/zbs`               | 《真本事》单书页             |
 | `/decks`             | 企业培训与演讲资料索引       |
 | `/collab`            | 演讲、企业项目与长期合作入口 |
 | `/collab/creators`   | 播客、视频与创作者邀请       |
@@ -93,11 +93,7 @@ pnpm build        # 本地构建（Vite + 预渲染嘉宾页和合作页）
 ./deploy.sh       # 只检查、构建并推送已经审阅和提交的 main
 ```
 
-**Vercel 环境变量**（在 Vercel Dashboard → Settings → Environment Variables 配置）：
-
-| 变量                | 说明                                    |
-| ------------------- | --------------------------------------- |
-| `ANTHROPIC_API_KEY` | 《真本事》AI 顾问所用；纯静态页面不需要 |
+**Vercel 环境变量**：纯静态页面不需要。问问立正用的见 `docs/ask-lizheng.md`，社区地图用的见 `docs/community-city.md`。
 
 ---
 

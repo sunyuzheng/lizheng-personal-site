@@ -21,6 +21,7 @@ import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount,
 import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
+import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
 const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
@@ -39,6 +40,9 @@ const COPY = {
     context: "结合我的处境",
     contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
     contextPrivate: "这部分只用于分析，不会公开。",
+    // Since 2026-10-04 the situation is not kept (/api/meta says context_archive: false).
+    contextNotKept: "这里填的内容只用来生成这次回答，我们不保存。",
+    privacyNotKept: "「结合我的处境」里填的内容只用来生成这次回答，我们不保存。",
     noticeV3: "提问是匿名的。问答会保存下来，用来改进回答；请勿填写私密信息。",
     noticeV3Parts: [
       ["为什么保存", "看哪些问题答得不好、缺哪些材料，把回答做得更好；我也想知道大家关心什么。"],
@@ -81,6 +85,21 @@ const COPY = {
     savePdf: "下载PDF",
     exporting: "正在生成…",
     exportFailed: "这次没能生成文件，可以稍后再试。",
+    // 分享这条回答: the answer's own public page; sharing may give back one of today's questions.
+    shareLabel: "分享这条回答",
+    shareBonusLabel: "分享这条回答，今天多问一次",
+    shareQuota: "分享上面的回答，今天多问一次",
+    shareWhat: "分享页只显示这个问题和回答，不显示你的处境和其他提问。",
+    shareCreate: "复制分享链接",
+    shareCreating: "正在生成链接…",
+    shareCopied: "链接已复制。",
+    shareSelect: "没能自动复制，长按或选中链接就能复制。",
+    shareBonus: "今天多了一次提问机会。",
+    shareSend: "发给朋友…",
+    shareCopy: "复制链接",
+    shareCopiedAgain: "已复制",
+    shareFailed: "这次没能生成链接，可以稍后再试。",
+    shareWechat: "打开链接后，点右上角「···」就能发给朋友。",
     next: "可以接着问",
     nextHint: "点一下放进输入框，改好再发",
     clarify: "再补充一点，回答会更贴合你",
@@ -154,6 +173,8 @@ const COPY = {
     context: "Apply to my situation",
     contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
     contextPrivate: "This part is used only for analysis and never published.",
+    contextNotKept: "What you write here is used only for this answer. We don’t keep it.",
+    privacyNotKept: "What you write under “Apply to my situation” is used only for this answer. We don’t keep it.",
     noticeV3: "Questions are anonymous. Questions and answers are saved to improve answers; please keep private information out.",
     noticeV3Parts: [
       ["Why we save questions", "To see which questions get weak answers and what material is missing, so answers get better. I also want to know what people care about."],
@@ -196,6 +217,20 @@ const COPY = {
     savePdf: "Download PDF",
     exporting: "Preparing…",
     exportFailed: "The file could not be created. Try again shortly.",
+    shareLabel: "Share this answer",
+    shareBonusLabel: "Share this answer, ask one more today",
+    shareQuota: "Share an answer above to ask one more today",
+    shareWhat: "The shared page shows only this question and answer, not your situation or your other questions.",
+    shareCreate: "Copy share link",
+    shareCreating: "Creating the link…",
+    shareCopied: "Link copied.",
+    shareSelect: "Couldn’t copy it automatically; press and hold or select the link to copy it.",
+    shareBonus: "You can ask one more today.",
+    shareSend: "Send…",
+    shareCopy: "Copy link",
+    shareCopiedAgain: "Copied",
+    shareFailed: "The link could not be created. Try again shortly.",
+    shareWechat: "Open the link, then tap ··· at the top right to send it.",
     next: "Keep asking",
     nextHint: "Click to put it in the box, edit, then send",
     clarify: "A little more context would help",
@@ -360,6 +395,52 @@ function Source({
   );
 }
 
+type ShareState = {
+  open?: boolean; phase?: "confirm" | "working" | "ready"; url?: string; copied?: boolean;
+  bonus?: ShareResult["bonus"]; error?: string;
+};
+
+// Sharing one answer: its own page (what that page shows, then its link and how to send it), a long
+// image or a PDF. `link` is false for an answer that cannot have a page; the image and PDF remain.
+function SharePanel({ state, lang, link, exporting, onCreate, onCopy, onSend, onExport }: {
+  state: ShareState; lang: Lang; link: boolean; exporting: string;
+  onCreate: () => void; onCopy: () => void; onSend: () => void; onExport: (kind: "png" | "pdf") => void;
+}) {
+  const c = COPY[lang];
+  const ready = link && state.phase === "ready";
+  return (
+    <div className="lz-ask-share">
+      {ready ? (
+        <>
+          <a className="url" href={state.url} {...EXTERNAL}>{shareDisplay(state.url || "")} ↗</a>
+          <p className="status" role="status">{state.copied ? c.shareCopied : c.shareSelect}{state.bonus === "granted" && <b>{c.shareBonus}</b>}</p>
+        </>
+      ) : link && <p>{c.shareWhat}</p>}
+      {state.error && <p className="error" role="alert">{state.error}</p>}
+      <div className="actions">
+        {ready ? (
+          <>
+            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
+              <button type="button" className="btn btn-line" onClick={onSend}>{c.shareSend}</button>
+            )}
+            <button type="button" className="btn btn-line" onClick={onCopy}>{state.copied ? c.shareCopiedAgain : c.shareCopy}</button>
+          </>
+        ) : link && (
+          <button type="button" className="btn btn-line" disabled={state.phase === "working"} onClick={onCreate}>
+            {state.phase === "working" ? c.shareCreating : c.shareCreate}
+          </button>
+        )}
+        {(["png", "pdf"] as const).map(kind => (
+          <button key={kind} type="button" className="btn btn-line" disabled={!!exporting} onClick={() => onExport(kind)}>
+            {exporting === kind ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
+          </button>
+        ))}
+      </div>
+      {ready && IN_WECHAT && <p className="hint">{c.shareWechat}</p>}
+    </div>
+  );
+}
+
 // A boundary note may name a source as S6; show it as a citation, like in the text.
 const citeIds = (text: string) => text.replace(/\[?\b(S\d+)\b\]?/g, "[$1]");
 
@@ -449,6 +530,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [opsLogging, setOpsLogging] = useState(false);
   // v4: answers may be published with personal details removed; the situation is kept for analysis only.
   const [publicArchive, setPublicArchive] = useState(false);
+  // Whether the situation is kept for analysis (before 2026-10-04) or used for the answer only.
+  const [contextKept, setContextKept] = useState(true);
   const [loggingReady, setLoggingReady] = useState(false);
   const [loggingFailed, setLoggingFailed] = useState(false);
   // Builder, which sends these settings, sleeps when idle and takes up to half a minute to wake.
@@ -456,6 +539,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const conversation = useRef<string | null>(null);
   const [account, setAccount] = useState<AskAccount | null>(null);
   const [exporting, setExporting] = useState("");
+  // Each answer's share, by turn: whether its panel is open, and how far it got.
+  const [shares, setShares] = useState<Record<number, ShareState>>({});
   const [exportError, setExportError] = useState(0);
   const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
   const loginCleanup = useRef<((closePopup?: boolean) => void) | undefined>(undefined);
@@ -549,8 +634,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         const ops = value?.ops_logging;
         const archive = ops?.enabled === true && ops.retention === "until_deleted" && ops.answer_archive === true;
         // The page shows v4's notice only once the service says it keeps to v4.
-        const v4 = archive && ops.notice === "v4" && ops.context_archive === true && ops.public_display === "deidentified";
-        if (!signal?.aborted) { setPublicArchive(v4); setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true); }
+        const v4 = archive && ops.notice === "v4" && typeof ops.context_archive === "boolean" && ops.public_display === "deidentified";
+        if (!signal?.aborted) {
+          setPublicArchive(v4); setContextKept(ops?.context_archive === true);
+          setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true);
+        }
         return;
       }
     } catch { if (!signal?.aborted) setLoggingFailed(true); }
@@ -671,6 +759,47 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       setExporting("");
     }
   }
+  // 分享这条回答. Sharing may give back one of today's questions, once a day, after one was used.
+  const bonusOffer = !IN_WECHAT && !!account?.enabled && !account.unavailable && !account.founding &&
+    account.share_bonus === true && (account.remaining ?? 3) < 3;
+  const setShare = (id: number, patch: ShareState) => setShares(prev => ({ ...prev, [id]: { ...prev[id], ...patch } }));
+  const toggleShare = (turn: Turn) => {
+    const current = shares[turn.id];
+    const open = !current?.open;
+    setShare(turn.id, { open, ...(!current ? { phase: "confirm", error: "" } : {}) });
+    if (open) track("Ask Share", { surface: "home", action: "open" });
+  };
+  const openShare = (turn: Turn) => {
+    setShare(turn.id, { open: true, ...(shares[turn.id]?.phase === "ready" ? {} : { phase: "confirm", error: "" }) });
+    requestAnimationFrame(() => document.getElementById(`home-share-${turn.id}`)?.scrollIntoView({ block: "center" }));
+  };
+  async function createShare(turn: Turn) {
+    if (!turn.result?.share) return;
+    setShare(turn.id, { phase: "working", error: "" });
+    const link = createShareLink(turn.result.share, { bonus: bonusOffer });
+    const copied = copyWhenReady(link.then(value => value.url));
+    try {
+      const value = await link;
+      if (value.bonus === "granted" || value.bonus === "claimed")
+        setAccount(prev => (prev ? { ...prev, share_bonus: false, ...(Number.isFinite(value.remaining) ? { remaining: value.remaining } : {}) } : prev));
+      setShare(turn.id, { phase: "ready", url: value.url, bonus: value.bonus, copied: await copied });
+      track("Ask Share", { surface: "home", action: value.bonus === "granted" ? "bonus" : "link" });
+    } catch {
+      setShare(turn.id, { phase: "confirm", error: c.shareFailed });
+    }
+  }
+  async function copyShare(turn: Turn) {
+    setShare(turn.id, { copied: await copyWhenReady(shares[turn.id]?.url || "") });
+  }
+  async function sendShare(turn: Turn) {
+    track("Ask Share", { surface: "home", action: "send" });
+    try { await navigator.share({ title: turn.question, url: shares[turn.id]?.url }); } catch { /* Closed, or not allowed here. */ }
+  }
+  // Since 2026-10-04 the situation is not kept: the privacy part says so in place of its last sentence.
+  const v4Parts = contextKept ? c.noticeV4Parts : c.noticeV4Parts.map(([title, text], i): [string, string] =>
+    [title, i === 2 ? text.replace(/(「结合我的处境」|What you write under “Apply to my situation”).*$/, c.privacyNotKept) : text]);
+  // The answer above that the count line offers to share once the day's questions are used.
+  const shareable = bonusOffer ? turns.filter(turn => turn.result?.share).at(-1) : undefined;
   function prefill(value: string, from = "followup") {
     questionFrom.current = from;
     setQuestion(value);
@@ -890,7 +1019,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       onChange={event => setContext(event.target.value)}
                       placeholder={c.contextHint}
                     />
-                    {publicArchive && <p className="lz-ask-context-note">{c.contextPrivate}</p>}
+                    {publicArchive && <p className="lz-ask-context-note">{contextKept ? c.contextPrivate : c.contextNotKept}</p>}
                   </>
                 )}
               </div>
@@ -932,7 +1061,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </summary>
               {publicArchive || opsLogging ? (
                 <div className="notice-parts">
-                  {(publicArchive ? c.noticeV4Parts : c.noticeV3Parts).map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
+                  {(publicArchive ? v4Parts : c.noticeV3Parts).map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
                 </div>
               ) : <p>{c.privacyNote}</p>}
             </details>}
@@ -984,6 +1113,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     )}
                   </>
                 )}
+              </p>
+            )}
+            {outOfQuota && shareable && (
+              <p className="lz-ask-share-nudge">
+                <button type="button" onClick={() => openShare(shareable)}>{c.shareQuota}</button>
               </p>
             )}
             {foundingOpen && account?.enabled && !account.unavailable && !account.founding && (
@@ -1258,7 +1392,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                     )}
                     {!busy &&
                       index === turns.length - 1 &&
-                      ((turn.error && (!turn.quotaExhausted || account?.founding)) || turn.result?.retryable) && (
+                      ((turn.error && (!turn.quotaExhausted || account?.founding || (account?.remaining ?? 0) > 0)) || turn.result?.retryable) && (
                         <button
                           className="btn btn-line lz-ask-retry"
                           type="button"
@@ -1312,19 +1446,18 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       </div>
                     )}
                     {turn.result?.status === "answered" && !working && (
-                      <div className="lz-ask-actions">
-                        {(["png", "pdf"] as const).map(kind => (
-                          <button
-                            key={kind}
-                            type="button"
-                            disabled={!!exporting}
-                            onClick={() => void exportTurn(kind, turn)}
-                          >
-                            {exporting === `${turn.id}-${kind}` ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
-                          </button>
-                        ))}
+                      <div className="lz-ask-actions" id={`home-share-${turn.id}`}>
+                        <button type="button" className="share" aria-expanded={!!shares[turn.id]?.open} onClick={() => toggleShare(turn)}>
+                          {bonusOffer && turn.result.share ? c.shareBonusLabel : c.shareLabel}
+                        </button>
                         {exportError === turn.id && <small role="alert">{c.exportFailed}</small>}
                       </div>
+                    )}
+                    {turn.result?.status === "answered" && !working && shares[turn.id]?.open && (
+                      <SharePanel state={shares[turn.id]} lang={lang} link={!!turn.result.share}
+                        exporting={exporting === `${turn.id}-png` ? "png" : exporting === `${turn.id}-pdf` ? "pdf" : exporting ? "other" : ""}
+                        onCreate={() => void createShare(turn)} onCopy={() => void copyShare(turn)} onSend={() => void sendShare(turn)}
+                        onExport={kind => void exportTurn(kind, turn)} />
                     )}
                     {turn.result?.status !== "sources-only" && (
                       <small className="lz-ask-model">

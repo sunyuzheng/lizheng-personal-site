@@ -1,6 +1,8 @@
 export type AskAccount = {
   enabled: boolean; authenticated?: boolean; founding?: boolean;
   remaining?: number | null; reset_at?: string; login_ready?: boolean; unavailable?: boolean;
+  /** Whether sharing an answer today would still give a question back. */
+  share_bonus?: boolean;
 };
 export async function readAskAccount(): Promise<AskAccount | null> {
   try {

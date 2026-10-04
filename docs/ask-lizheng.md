@@ -100,3 +100,18 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 ## 《真本事》课程进入材料库（2026-10-04）
 
 用户授权把《真本事》会员课程23节视频课的文字稿补进 Open Context（`course-lesson`），问问立正重建了语义索引。出处上标「会员课程」（主页问答区、ask.lizheng.ai、公开问答页一致），说明文字稿已公开、课程视频需超线性学院会员。首屏、主页问答区和公开问答页的介绍加上「《真本事》整门课」。
+
+## 分享这条回答（2026-10-04）
+
+用户要求每个提问和回答都能成为一个可以分享的单独页面，比图片和PDF轻，也能把人引来提问；分享就多一次提问机会，鼓励分享。用户在开发中定的规则：链接带日期，用一个和问题相关的英文词而不是随机码（`ask.lizheng.ai/s/2026-10-04/ai-work-value`，同一天撞词加 -2、-3）；能分享的就给搜索引擎，不给的就不分享；分享不是同意（提问时已同意保存和使用），只是一个功能，所以链接一直有效，提问者不能撤回；「保存图片」「下载PDF」收进「分享这条回答」；「结合我的处境」里填的内容不保存，并在界面上写明；奖励不提微信。
+
+- 流程：Builder 在 v4 的完整回答里附 `share: {record_id, word, proof}`（proof 是 `HMAC-SHA256(ASK_QUOTA_STORE_SECRET, "ask-share:v1:<record_id>:<word>")`，word 来自模型的 `slug`，见 ask-lizheng 仓库 docs/QUERY_RECORDS.md）。页面点「分享这条回答」展开：一句话说清分享页显示什么，「复制分享链接」「保存图片」「下载PDF」。复制分享链接时 `POST /api/ask-lizheng/share`（www 和 ask 各自同源，`api/ask-lizheng-share.ts` → `shared/ask-share-link.ts`），返回链接并复制；手机上还有「发给朋友…」。没有 `share` 的回答（v3、旧服务器）只有图片和PDF。
+- 存储（固定 Lua，`{v3}` 同一个 hash tag）：记录 HASH 加 `share_slug`、`shared_at`；`ask-ops:{v3}:share:<day>:<slug>` 指向记录 id，永久留给这条记录（记录删除后也不让给别的问题）；`ask-ops:{v3}:shares` 有序集合给站点地图用。只有 answered 的 v4 记录、还在、没有删除墓碑，才能分享；同一条再分享还是原地址。
+- 分享页：`vercel.json` 把 ask.lizheng.ai 的 `/s/<day>/<slug>` 交给同一个函数，`shared/ask-share-page.ts` 按公开问答页的样式渲染问题、摘要、段落、边界、出处（不放字幕摘录）、页尾「去问问立正」和「也可以接着问」；用到处境的回答，推演段落标「结合提问者的处境」。每次实时读记录，`Cache-Control: no-store`，立正在 Ops 删除记录后立刻 404（「这个分享不在了」）。日期是记录自己的 `day`，日期或词对不上都打不开。www 上的 `/s/*` 308 到 ask；ask 上其他 `/s/*` 都给 404 页，不落到 Builder。
+- 搜索：每个分享页都 `index, follow`，带和公开问答页一样的结构化数据；站点地图 `ask.lizheng.ai/s/sitemap.xml` 列出全部，ask 的 robots.txt 已写。
+- 预览卡片：og:title 是问题，og:description 是摘要开头，og:image 是 `/og/ask-share.jpg`（1200×630，森林绿底、印章、「卡住的时候，问问立正。」，文字都在正中的正方形里，被裁成方图也完整），`itemprop` 的 image 是 `/og/ask-share-square.jpg`（印章方图，给微信缩略图）。微信不接公众号 JS-SDK 时，卡片取什么由微信决定，标题和描述一定对。
+- 字体与脚本：分享页在 ask 域名上，只认 vercel.json 指定的路径。`/s/fonts.css` 由构建时的 `scripts/prerender-guests.ts` 写出，引用 ask-app 当前版本的标题字体样式；`/s/page.js` 加载字体，并把点击记为 Vercel 事件「Ask Page Link」（page 是 share）。
+- 分享奖励：「分享这条回答，今天多问一次」。次数账本的主体本来就是本站 `resolveIdentity` 算的（Builder 只取 sha256），所以奖励由本站直接改账本键 `ask-quota:v1:{sha256(subject)}:<北京日>:used`：固定 Lua，当天 used 大于0才减1，同时写 `…:share-bonus` 标记（和账本一起过期），每天一次；不经过 quota-storage 的命令校验，也不碰它。Founding 不给；User-Agent 带 MicroMessenger 或 AskLizhengApp/ 不给，页面在这两处也不显示。session 多返回 `share_bonus`（今天分享还能不能多问一次），次数用完时次数行下面多一行「分享上面的回答，今天多问一次」。
+- 处境不保存：Builder 的 `/api/meta` 里 `context_archive` 为 false，v4 开始记录的 `context` 为空。主页问答区和 ask 页对 v4 同时接受 true 和 false；false 时处境输入框下面用深色字写「这里填的内容只用来生成这次回答，我们不保存。」，「说明」里的「你的隐私」同样改写；隐私政策「结合我的处境」一条已改。
+- 统计：usage 的 day 和 total 哈希里 `<入口>:share`、`all:share`（每条第一次分享）、`<入口>:share_bonus`、`all:share_bonus`、`all:share_view`（分享页被真人打开，不算爬虫和链接预览），私人 Ops「使用情况」的「分享」一栏读这些数；不记分享了什么。Vercel 事件「Ask Share」（surface 和 action：open、link、bonus、send）。
+- 上线顺序：本站先上（页面先接受 `context_archive` 为 false），再上 Builder（开始附 `share`、不再保存处境），最后 Ops。反过来的话，旧页面看到 false 会暂停提问。测试：`tests/ask-share.test.ts`，`tests/test_ask_share_lua.py`（和真实的记录写入脚本、额度脚本一起跑）。

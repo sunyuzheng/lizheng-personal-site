@@ -14,7 +14,7 @@ import { SEAL } from "./ask-seal.js";
 
 // The site's ids in structured-data.ts, written out here: that module imports without file
 // extensions, which a Vercel function cannot load.
-const SITE_URL = "https://www.lizheng.ai";
+export const SITE_URL = "https://www.lizheng.ai";
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
@@ -146,7 +146,7 @@ export function indexable(detail: PublicDetail, rep?: string): boolean {
 
 const ESCAPES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
 export const escapeHtml = (value: string) => value.replace(/[&<>"']/g, c => ESCAPES[c]);
-const clip = (value: string, max: number) => {
+export const clip = (value: string, max: number) => {
   const chars = Array.from(value.replace(/\s+/g, " ").trim());
   if (chars.length <= max) return chars.join("");
   const cut = chars.slice(0, max).join("");
@@ -176,7 +176,7 @@ function inline(value: string, ids: Set<string>): string {
     return escapeHtml(part).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   }).join("");
 }
-function paragraphs(value: string, ids: Set<string>): string {
+export function paragraphs(value: string, ids: Set<string>): string {
   return value.split(/\n\s*\n/).map(block => block.trim()).filter(Boolean).map(block => {
     const lines = block.split("\n").map(line => line.trim()).filter(Boolean);
     if (lines.length > 1 && lines.every(line => /^([-*•]|\d+[.、])\s+/.test(line)))
@@ -184,13 +184,13 @@ function paragraphs(value: string, ids: Set<string>): string {
     return `<p>${inline(lines.join(""), ids)}</p>`;
   }).join("");
 }
-const plainText = (value: string) => value.replace(/\[([^\]]+)\]\((?:[^)]+)\)/g, "$1").replace(/\[S\d{1,2}\]/g, "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+export const plainText = (value: string) => value.replace(/\[([^\]]+)\]\((?:[^)]+)\)/g, "$1").replace(/\[S\d{1,2}\]/g, "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
 
 const KIND: Record<string, string> = { source: "材料里的观点", application: "AI推演" };
 /** A title in phrases that break only between them, at Chinese punctuation (as on the homepage). */
-const phrases = (value: string) => (value.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [value])
+export const phrases = (value: string) => (value.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [value])
   .map(part => `<span class="phrase">${escapeHtml(part)}</span>`).join("");
-function sourceKind(source: PublicSource): string {
+export function sourceKind(source: PublicSource): string {
   const host = new URL(source.url).hostname;
   const member = source.source_visibility === "members-only";
   if (source.source_type === "course-lesson") return member ? "会员课程" : "课程";
@@ -205,7 +205,7 @@ function sourceKind(source: PublicSource): string {
 
 /* ---------- Page ---------- */
 
-const STYLE = `
+export const STYLE = `
 :root{--paper:#fbf9f5;--ink:#141714;--ink-2:#3b3f3a;--muted:#6b6e67;--faint:#9a9b93;--rule:#e6e0d4;--rule-2:#d5cebf;--green:#238343;--green-deep:#1c6f38;--green-text:#1c6b37;--forest:#0f3d23;--forest-2:#0b2f1b;--forest-glow:#1a5132;--on-forest:#f8f1e4;--on-forest-2:rgb(248 241 228/.78);--on-forest-3:rgb(248 241 228/.56);--forest-rule:rgb(248 241 228/.18);--member:#79603f;--serif:"Noto Serif SC","Songti SC","STSong",serif;--sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--measure:700px;--gut:clamp(20px,5vw,56px);color-scheme:light}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.75 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit;text-decoration:none}h1,h2,h3,p,ol,ul{margin:0}

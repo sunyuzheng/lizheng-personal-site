@@ -4,6 +4,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { sanitizedLogtoRequester } from "../shared/ask-logto-requester.js";
 import { SEAL } from "../shared/ask-seal.js";
 import { COOKIE_EMAIL, emailLoginReady, requestEmailCode, verifyEmailCode } from "../shared/ask-email-otp.js";
+import { shareBonusOpen } from "../shared/ask-share-link.js";
 import {
   ACCESS_HEADERS, AccessError, accessEnabled, admission, authCookie, backendOrigin,
   COOKIE_SESSION, COOKIE_TRANSACTION, createSession, decryptRecord, encryptRecord,
@@ -164,6 +165,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       // Builder reads the ledger through quota-storage, trying twice for up to 2s each. Waiting
       // only 3s here gave up first whenever those functions were cold, and the page showed
       // "count unavailable", even right after a successful sign-in.
+      // Whether sharing an answer today would still give a question back, read alongside the count.
+      const bonus = shareBonusOpen(identity);
       const upstream = await fetch(`${backendOrigin()}/api/quota`, {
         headers: { "X-Ask-Admission": await admission(identity, "GET", "/api/quota", new Uint8Array()) },
         cache: "no-store", redirect: "error", signal: AbortSignal.timeout(6_000),
@@ -171,10 +174,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (!upstream.ok) throw new AccessError("access_unavailable");
       const quota = await upstream.json();
       if (typeof quota.remaining !== "number" && quota.remaining !== null) throw new AccessError("access_unavailable");
+      const shareBonus = await bonus;
       return json(200, { enabled: true, authenticated: identity.authenticated,
         founding: identity.tier === "founding", remaining: quota.remaining,
         reset_at: quota.reset_at, limit: identity.tier === "founding" ? null : 3,
-        login_ready: emailLoginReady() || ssoReady() });
+        login_ready: emailLoginReady() || ssoReady(), ...(shareBonus === undefined ? {} : { share_bonus: shareBonus }) });
     }
     if (action === "logout") {
       if (request.method !== "POST" || request.headers.get("origin") !== origin)

@@ -19,7 +19,8 @@ vi.mock("@logto/node", () => ({ default: class {
   async getIdTokenClaims() { return sdk.claims; }
 } }));
 import handler from "../api/ask-lizheng-auth";
-import { decryptRecord, requireOpsOwner, safeReturnPath } from "../shared/ask-access";
+import { decryptRecord, opaqueSubject, requireOpsOwner, safeReturnPath } from "../shared/ask-access";
+import { quotaDay } from "../shared/ask-share-link";
 const store = new Map<string, string>();
 beforeEach(() => {
   vi.stubGlobal("crypto", webcrypto); sdk.calls.length = 0;
@@ -39,6 +40,7 @@ beforeEach(() => {
       if (command[0] === "SET") { store.set(command[1], command[2]); result = "OK"; }
       if (command[0] === "GET") result = store.get(command[1]) ?? null;
       if (command[0] === "DEL") result = store.delete(command[1]) ? 1 : 0;
+      if (command[0] === "EXISTS") result = store.has(command[1]) ? 1 : 0;
       if (command[0] === "EVAL") { result = store.get(command[3]) ?? null; store.delete(command[3]); }
       return Response.json({ result });
     }
@@ -145,5 +147,30 @@ describe("Academy SSO boundary", () => {
     const result = await call("/api/ask-lizheng/auth/session");
     expect(JSON.parse(result.body)).toEqual({ enabled: false });
     expect(fetch).not.toHaveBeenCalled();
+  });
+});
+
+describe("the share bonus on the count line", () => {
+  it("says whether sharing an answer today would still give a question back", async () => {
+    const first = await call("/api/ask-lizheng/auth/session");
+    expect(JSON.parse(first.body)).toMatchObject({ enabled: true, founding: false, remaining: 3, share_bonus: true });
+    const cookie = String((first.headers.get("set-cookie") as string)).split(";")[0];
+    // Once today's bonus is taken (the key the share endpoint sets), the offer is gone.
+    const subject = await opaqueSubject("guest", cookie.split("=")[1].split(".")[0]);
+    const digest = createHash("sha256").update(subject, "ascii").digest("hex");
+    store.set(`ask-quota:v1:{${digest}}:${quotaDay().day}:share-bonus`, "1");
+    expect(JSON.parse((await call("/api/ask-lizheng/auth/session", cookie)).body).share_bonus).toBe(false);
+  });
+
+  it("leaves the offer out when it cannot be read, and keeps the count", async () => {
+    const fetcher = vi.mocked(fetch);
+    const real = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation(async (url, init) => {
+      if (String(url).includes("upstash.io") && JSON.parse(String(init?.body))[0] === "EXISTS") throw new Error("down");
+      return real(url, init);
+    });
+    const body = JSON.parse((await call("/api/ask-lizheng/auth/session")).body);
+    expect(body.remaining).toBe(3);
+    expect(body).not.toHaveProperty("share_bonus");
   });
 });

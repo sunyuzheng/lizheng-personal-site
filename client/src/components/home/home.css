@@ -2061,10 +2061,12 @@
   background: #fff;
 }
 
+/* What happens to the situation, said where it is written: in ink, not small print. */
 .lz-home .lz-ask-context-note {
   margin: 4px 2px 0;
-  font-size: 12.5px;
-  color: var(--lz-muted);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lz-ink);
 }
 
 /* The one solid green thing; before there is a question it stays green, faded. */
@@ -3155,6 +3157,101 @@
 .lz-home .lz-ask-actions small {
   font-size: 12.5px;
   color: #8b3b25;
+}
+
+/* 分享这条回答: the one action in green, since it is the one to take; its panel sits on a hairline. */
+.lz-home .lz-ask-actions {
+  scroll-margin-top: 96px;
+}
+
+.lz-home .lz-ask-actions button.share {
+  font-weight: 600;
+  color: var(--lz-green-text);
+}
+
+.lz-home .lz-ask-actions button.share[aria-expanded="true"] {
+  background: rgb(255 255 255 / 0.6);
+}
+
+.lz-home .lz-ask-share {
+  max-width: 700px;
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--lz-line);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-ink-2);
+}
+
+.lz-home .lz-ask-share p {
+  margin: 0;
+}
+
+.lz-home .lz-ask-share .url {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+  color: var(--lz-green-text);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.lz-home .lz-ask-share .url:hover {
+  text-decoration: underline;
+}
+
+.lz-home .lz-ask-share .status {
+  margin-top: 2px;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-share .status b {
+  margin-left: 6px;
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
+.lz-home .lz-ask-share .actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 12px;
+}
+
+.lz-home .lz-ask-share .btn {
+  min-height: 38px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.lz-home .lz-ask-share .error {
+  margin-top: 6px;
+  color: #8b3b25;
+}
+
+.lz-home .lz-ask-share .hint {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-share-nudge {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+}
+
+.lz-home .lz-ask-share-nudge button {
+  font: inherit;
+  font-weight: 600;
+  color: var(--lz-green-text);
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+
+.lz-home .lz-ask-share-nudge button:hover {
+  text-decoration: underline;
 }
 
 .lz-home .lz-ask-followups {

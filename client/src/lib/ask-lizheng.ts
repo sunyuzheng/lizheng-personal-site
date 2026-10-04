@@ -44,7 +44,10 @@ export type AskResult = {
   limitations: string;
   retryable?: boolean;
   failure_code?: string;
+  /** Only on an answer its asker may share (ask-share-link.ts): the record, its address word, Builder's proof. */
+  share?: AskShare;
 };
+export type AskShare = { record_id: string; word: string; proof: string };
 export type AskEvent =
   | { type: "progress"; value: { stage: string; message: string } }
   | { type: "approach"; value: AskApproach }

@@ -484,6 +484,15 @@ if (fs.existsSync(askAppAssets)) {
       if (!built.has(font)) missing.add(font);
   if (missing.size)
     throw new Error(`ask.lizheng.ai's page needs ${missing.size} title fonts this build lacks (${[...missing][0]}, …); align @fontsource/noto-serif-sc and run pnpm sync:ask-app`);
+  // The shared answer pages on ask.lizheng.ai (shared/ask-share-page.ts) take the same title fonts
+  // from a fixed address there: /s/fonts.css names the current release's font styles.
+  const release = JSON.parse(fs.readFileSync(path.join(ROOT, "dist", "public", "ask-app", "version.json"), "utf-8")) as { files: string[] };
+  const titleStyles = release.files.filter(name => name.endsWith(".css") &&
+    fs.readFileSync(path.join(askAppAssets, name), "utf-8").includes("/ask-app/assets/noto-serif-sc-"));
+  if (!titleStyles.length) throw new Error("ask.lizheng.ai's page names no title font styles; the shared answer pages need them");
+  fs.mkdirSync(path.join(ROOT, "dist", "public", "s"), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, "dist", "public", "s", "fonts.css"),
+    titleStyles.map(name => `@import url("/ask-app/assets/${name}");\n`).join(""), "utf-8");
 }
 const vercelExperimentStylesheet = findBuiltStylesheet(
   /^home-experiment-(?!emil-).+\.css$/

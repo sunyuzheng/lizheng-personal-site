@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError } from "../shared/ask-access.js";
 import { publicJson, type PublicSource } from "../shared/ask-public-files.js";
+import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 import {
   indexable, publicCard, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
   renderSitemap, representatives, similarAskings, type PublicCard,
@@ -55,8 +56,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       }
       let detail;
       try {
-        detail = publicDetail(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`,
-          { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
+        detail = publicDetail(detailWithPlainSourceLabels(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`,
+          { onSource: source => res.setHeader("X-Ask-Public-Source", source) })));
       } catch (error) {
         if (error instanceof AccessError && error.status === 404) {
           send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });

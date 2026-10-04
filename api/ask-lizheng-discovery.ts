@@ -3,6 +3,7 @@ import { AccessError, resolveDiscoveryVoter, sameOrigin } from "../shared/ask-ac
 import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscoveryVote } from "../shared/ask-discovery-gateway.js";
 import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
 import { publicJson } from "../shared/ask-public-files.js";
+import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // The lists and each answer are the same for every reader and carry no cookie, so the CDN keeps them
 // a minute, then serves that copy while it fetches the next: a reader costs Ops nothing, and a
@@ -44,6 +45,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     } else {
       result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" })
         : publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
+      if (action === "detail") result = detailWithPlainSourceLabels(result);
       if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
     }
     res.statusCode = 200;

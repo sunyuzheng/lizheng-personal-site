@@ -4,6 +4,7 @@ import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 import { claimShareBonus, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
 import { fileWriter, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
+import { withPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
@@ -44,7 +45,7 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
       if (!share) throw error;
     }
     if (!share) send(res, 404, html, renderShareMissingPage(), headers);
-    else send(res, 200, html, renderSharePage(share), headers);
+    else send(res, 200, html, renderSharePage({ ...share, answer: withPlainSourceLabels(share.answer) }), headers);
   } catch {
     send(res, 503, "text/plain; charset=utf-8", "这个分享暂时打不开，请稍后再试。", { ...own, "Cache-Control": "no-store", "Retry-After": "60" });
   }

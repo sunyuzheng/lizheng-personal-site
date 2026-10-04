@@ -21,6 +21,7 @@ export default defineConfig({
       "tests/ask-db-watch.test.ts",
       "tests/api-imports.test.ts",
       "tests/ask-app-files.test.ts",
+      "tests/ask-public-qa.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

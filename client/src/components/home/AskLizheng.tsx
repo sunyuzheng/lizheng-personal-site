@@ -22,6 +22,8 @@ import { askedAgo, askedLastDay, discoveryDetail, discoveryLists, discoveryPage,
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
+// What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
+import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
 const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
@@ -39,22 +41,11 @@ const COPY = {
     placeholderFind: "比如：想了解AI时代怎么学习，先读哪几篇？",
     context: "结合我的处境",
     contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
-    contextPrivate: "处境原文只用于分析；回答可能引用其中细节，并随问答公开使用。",
-    // Since 2026-10-04 the situation is not kept (/api/meta says context_archive: false).
-    contextNotKept: "不保存处境原文；回答可能引用其中细节，并随问答公开使用。",
-    privacyNotKept: "「结合我的处境」原文只用于生成回答，不保存、不单独公开；完整回答可能引用其中细节，并随问答公开使用。",
     noticeV3: "问答会保存下来，用来改进回答；请勿填写私密信息。",
     noticeV3Parts: [
       ["为什么保存", "看哪些问题答得不好、缺哪些材料，把回答做得更好；我也想知道大家关心什么。"],
       ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。记录只有我能看到。"],
       ["你的隐私", "提问记录不关联邮箱、账号或IP；输入文字仍可能识别个人，发送给AI前不会自动去掉。登录只用来核验Founding身份，不会和提问记在一起。「结合我的处境」里填的内容不单独保存，但回答可能会提到它，所以请别填写私密信息。"],
-      ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
-    ] as [string, string][],
-    noticeV4: "这里是公开问答。提问表示同意保存、公开使用问题和回答，帮助有同样问题的人。只写愿意公开的内容。",
-    noticeV4Parts: [
-      ["公开问答", "你问的往往也是别人想问的。提问时，你同意保存和公开使用问题、完整回答与出处，帮助有同样问题的人；我也会从中找选题写文章、做视频，并改进回答。常见问答会去掉个人信息后精选展示；你也可以分享问答，公开页面能被搜索找到。"],
-      ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。"],
-      ["你的隐私", "提问记录不关联邮箱、账号或IP；输入文字仍可能识别个人，发送给AI前不会自动去掉。登录只用来核验Founding身份，不会和提问记在一起。常见问答在精选展示前会由AI去掉个人信息；主动分享页直接显示问题和完整回答。「结合我的处境」原文只用于分析、不单独公开；回答可能引用其中细节，并随问答公开使用。"],
       ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
     ] as [string, string][],
     send: "提问",
@@ -90,7 +81,6 @@ const COPY = {
     shareLabel: "分享这条回答",
     shareBonusLabel: "分享这条回答，今天多问一次",
     shareQuota: "分享上面的回答，今天多问一次",
-    shareWhat: "分享页公开显示这个问题、完整回答与出处，搜索引擎也能找到；回答可能引用处境中的细节。",
     shareCreate: "复制分享链接",
     shareCreating: "正在生成链接…",
     shareCopied: "链接已复制。",
@@ -173,21 +163,11 @@ const COPY = {
     placeholderFind: "For example: what should I read first about learning in the AI era?",
     context: "Apply to my situation",
     contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
-    contextPrivate: "The situation text is used for analysis. An answer may quote its details and be used publicly with the question.",
-    contextNotKept: "We don’t keep the situation text. An answer may quote its details and be used publicly with the question.",
-    privacyNotKept: "What you write under “Apply to my situation” is used to generate the answer and is not kept or published separately. The complete answer may quote its details and be used publicly with the question.",
     noticeV3: "Questions and answers are saved to improve answers; please keep private information out.",
     noticeV3Parts: [
       ["Why we save questions", "To see which questions get weak answers and what material is missing, so answers get better. I also want to know what people care about."],
       ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats. Only I can see these records."],
       ["Your privacy", "Question records are not linked to email, accounts or IP. Your words may still identify you and are not automatically redacted before AI processing. Signing in only checks Founding Member status and is never stored with your questions. What you write under “Apply to my situation” is not stored separately, but an answer may mention it, so please keep private information out."],
-      ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
-    ] as [string, string][],
-    noticeV4: "This is public Q&A. Asking means agreeing to save and use the question and answer publicly to help others. Write only what you’re willing to make public.",
-    noticeV4Parts: [
-      ["Public Q&A", "What you ask is often what others want to know too. Asking means agreeing to save and use the question, complete answer and sources publicly, to help others, improve answers and find topics for articles and videos. Common questions are selected for display with personal details removed. You can also share an answer on a public page that search engines can find."],
-      ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats."],
-      ["Your privacy", "Question records are not linked to email, accounts or IP. Your words may still identify you and are not automatically redacted before AI processing. Signing in only checks Founding Member status and is never stored with your questions. A model removes personal details before selected common questions are displayed; a shared page shows the question and complete answer directly. What you write under “Apply to my situation” is used for analysis and not published separately. The answer may quote its details and be used publicly with the question."],
       ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
     ] as [string, string][],
     send: "Ask",
@@ -222,7 +202,6 @@ const COPY = {
     shareLabel: "Share this answer",
     shareBonusLabel: "Share this answer, ask one more today",
     shareQuota: "Share an answer above to ask one more today",
-    shareWhat: "The shared page publicly shows this question, the complete answer and sources. Search engines can find it; the answer may quote details from your situation.",
     shareCreate: "Copy share link",
     shareCreating: "Creating the link…",
     shareCopied: "Link copied.",
@@ -418,7 +397,7 @@ function SharePanel({ state, lang, link, exporting = "", onCreate, onCopy, onSen
           <a className="url" href={state.url} {...EXTERNAL}>{shareDisplay(state.url || "")} ↗</a>
           <p className="status" role="status">{state.copied ? c.shareCopied : c.shareSelect}{state.bonus === "granted" && <b>{c.shareBonus}</b>}</p>
         </>
-      ) : link && <p>{c.shareWhat}</p>}
+      ) : link && <p>{PUBLIC_QA[lang].share}</p>}
       {state.error && <p className="error" role="alert">{state.error}</p>}
       <div className="actions">
         {ready ? (
@@ -644,6 +623,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         const v4 = archive && ops.notice === "v4" && typeof ops.context_archive === "boolean" && ops.public_display === "deidentified";
         if (!signal?.aborted) {
           setPublicArchive(v4); setContextKept(ops?.context_archive === true);
+          if (typeof value?.model === "string") setModel(value.model);
           setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true);
         }
         return;
@@ -820,9 +800,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     track("Ask Share", { surface: "home", action: "send" });
     try { await navigator.share({ title: turn.question, url: shares[turn.id]?.url }); } catch { /* Closed, or not allowed here. */ }
   }
-  // Since 2026-10-04 the situation is not kept: the privacy part says so in place of its last sentence.
-  const v4Parts = contextKept ? c.noticeV4Parts : c.noticeV4Parts.map(([title, text], i): [string, string] =>
-    [title, i === 2 ? text.replace(/(「结合我的处境」|What you write under “Apply to my situation”).*$/, c.privacyNotKept) : text]);
+  // v4, public Q&A, in this page's voice; the situation is not kept since 2026-10-04 (/api/meta says context_archive: false).
+  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), contextKept });
   // The answer above that the count line offers to share once the day's questions are used.
   const shareable = bonusOffer ? turns.filter(turn => turn.result?.share).at(-1) : undefined;
   function prefill(value: string, from = "followup") {
@@ -1044,7 +1023,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                       onChange={event => setContext(event.target.value)}
                       placeholder={c.contextHint}
                     />
-                    {publicArchive && <p className="lz-ask-context-note">{contextKept ? c.contextPrivate : c.contextNotKept}</p>}
+                    {publicArchive && <p className="lz-ask-context-note">{qa.situation}</p>}
                   </>
                 )}
               </div>
@@ -1081,12 +1060,14 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
             {/* The notice waits for the service's saving settings, so an older one never shows first. */}
             {loggingReady && <details className="lz-ask-about">
               <summary>
-                {publicArchive ? c.noticeV4 : opsLogging ? c.noticeV3 : c.queryNotice}
+                {publicArchive ? qa.notice : opsLogging ? c.noticeV3 : c.queryNotice}
                 <span>{c.privacy}</span>
               </summary>
               {publicArchive || opsLogging ? (
                 <div className="notice-parts">
-                  {(publicArchive ? v4Parts : c.noticeV3Parts).map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
+                  {publicArchive
+                    ? <><p><b>{qa.title}</b></p>{qa.about.map(text => <p key={text}>{text}</p>)}</>
+                    : c.noticeV3Parts.map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
                 </div>
               ) : <p>{c.privacyNote}</p>}
             </details>}

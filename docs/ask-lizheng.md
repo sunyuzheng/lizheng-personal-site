@@ -55,7 +55,7 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 
 ## iPhone App
 
-问问立正iPhone App（ask-lizheng-ios仓库）显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`。2026-10-03为上架App Store：App里的验证页只给邮箱验证码，不给「使用超线性学院账号登录」，因为学院登录页带注册入口，而苹果要求允许注册的App也能在App里删除账号；邮箱验证码不建账号。隐私政策在`/ask/privacy`，帮助与联系在`/ask/support`（`client/public/ask/`下的静态页，中英文），App Store的隐私政策与支持网址指向这两页。数据用途改变时，两页、ask页面的「说明」和App的隐私声明要一起改。
+问问立正iPhone App（ask-lizheng-ios仓库）显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`。2026-10-03为上架App Store：App里的验证页只给邮箱验证码，不给「使用超线性学院账号登录」，因为学院登录页带注册入口，而苹果要求允许注册的App也能在App里删除账号；邮箱验证码不建账号。隐私政策在`/ask/privacy`，帮助与联系在`/ask/support`（`client/public/ask/`下的静态页，中英文），App Store的隐私政策与支持网址指向这两页。数据用途改变时，两页、ask页面的「说明」和App的隐私声明要一起改；输入框下那句、「说明」里的「这里是公开问答」、处境和分享的说明以及隐私政策开头那段，只在 ask-lizheng 的 `src/public-qa.js` 改（见下面「公开问答怎么说」）。
 
 ## 回答排版（2026-10-03）
 
@@ -94,7 +94,7 @@ Cursor 的设计负责人 Ryo Lu 说问问立正「有点太AI了」，用户要
 
 - 页面文件放在本站 `client/public/ask-app/`（`index.html`、脚本和样式，`version.json` 记着来自 ask-lizheng 的哪个提交）。`vercel.json`：ask.lizheng.ai 的 `/` 给 `/ask-app`，`/ask-app/assets/` 下的脚本样式是本站文件，标题字体（`noto-serif-sc-*.woff2`）用本站构建出的同一批文件；ask.lizheng.ai 的 `/robots.txt` 指向公开问答的 sitemap；www 上打开 `/ask-app` 跳到 ask.lizheng.ai。其他路径（`/api/meta` 等）照旧给 Builder。
 - 页面一打开就显示，问题列表随即出现；读 `/api/meta`（Builder）最多等一分钟，3秒没回就说「问答服务正在唤醒，通常十几秒，可以先写问题」，醒来前不能发送。主页问答区同样。
-- 改了 ask-lizheng 的前端（`src/`、`index.html`）：在 ask-lizheng 提交并推到 main，然后在本仓库 `pnpm sync:ask-app [ask-lizheng 路径]`（默认 `/Users/sunyuzheng/Desktop/AI/apps/ask-lizheng`），提交，按主站流程上线。不用再为纯前端改动部署 Builder。改了后端才部署 Builder。脚本要求 ask-lizheng 没有未提交的改动、两边 `@fontsource/noto-serif-sc` 版本相同，并把上一版的文件多留一次，给更新前刚打开的页面用。
+- 改了 ask-lizheng 的前端（`src/`、`index.html`）：在 ask-lizheng 提交并推到 main，然后在本仓库 `pnpm sync:ask-app [ask-lizheng 路径]`（默认 `/Users/sunyuzheng/Desktop/AI/apps/ask-lizheng`），提交，按主站流程上线。不用再为纯前端改动部署 Builder。改了后端才部署 Builder。脚本要求 ask-lizheng 没有未提交的改动、两边 `@fontsource/noto-serif-sc` 版本相同，并把上一版的文件多留一次，给更新前刚打开的页面用。它同时把 ask-lizheng 的 `src/public-qa.js` 拷成 `shared/ask-public-qa.js`，并在 `version.json` 里记下哈希。
 - 守护：`tests/ask-app-files.test.ts` 查页面引用的文件都在；构建时 `scripts/prerender-guests.ts` 查页面要的每个字体本站都有，缺了构建失败。
 
 ## 首屏标题（2026-10-04）
@@ -123,3 +123,9 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 ## 数据库升级提醒（2026-10-04）
 
 问问立正、Ops 和分享都用 Vercel Storage 里的 Upstash 库 `ask-lizheng-kv`（原名 upstash-kv-byzantium-school；Fixed 250MB）。10-04 立正要求打开 Auto Upgrade（在 Upstash 控制台的库 Settings 里开，Vercel 的配置窗口里那个开关是锁住的），并且升级时要通知他。`api/ask-lizheng-db-watch.ts` 由 Vercel Cron 每天 01:00 UTC 调一次（`vercel.json` 的 `crons`）：读 `INFO memory` 的 `maxmemory`（套餐上限），和上次记在 `ask:watch:v1:db` 的不同就用邮箱验证码那把 Resend 密钥从 `立正 <podcast@notify.lizheng.ai>` 发信到 sunyuzheng@gmail.com；第一次运行发一封「提醒已开启」。项目设了 `CRON_SECRET` 时只有 Cron 能调；没设时谁调都只在套餐变化时发信。`used_memory` 和控制台的数据大小对不上（10-04 是 0.3MB 对 4–7MB），所以不用它判断快满了。同一天 Coffee Pass 换成自己的按量付费库 `stay-coffee-pass-kv`，不再和问问立正共用。
+
+## 公开问答怎么说（2026-10-04）
+
+立正想用一个比方让大家直观理解这个场域。定为「在讲座上举手提问」：问答会公开，像讲座有录像、放到网上、搜得到；不记名，我们不知道是谁问的；「结合我的处境」像递给台上的一张纸条，只用来回答、不保存，但回答可能提到纸条上的内容；做法是只写愿意当众说的话。输入框下写「这里像在讲座上举手提问：问答会公开，但不记名。只写愿意当众说的话。」（立正同意不再写「提问表示同意」）。
+
+这些话只有一份：ask-lizheng 的 `src/public-qa.js`。`pnpm sync:ask-app` 把它拷成本仓库的 `shared/ask-public-qa.js`（类型在 `shared/ask-public-qa.d.ts`），主页问答区的提示、「说明」、处境和分享面板都从它取（主页用「我」，ask页面用「立正」）。`tests/ask-public-qa.test.ts` 检查拷贝和 `version.json` 记的哈希一致（不能在这里手改），并检查隐私政策中英文开头那段和它的 `policy` 一字不差。改措辞：在 ask-lizheng 改、提交、推 main，再在这里同步；要改隐私政策开头，同时改这页。App 第一次提问前的同意页（ask-lizheng `AppConsent`）不在这份文件里，改它要顾及苹果审核。

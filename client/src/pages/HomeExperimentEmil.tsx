@@ -679,8 +679,8 @@ export default function HomeExperimentEmil() {
         <strong>Yuzheng Sun·课代表立正</strong>
         <span>
           {lang === "en"
-            ? "Cornell Economics PhD · Co-founder of Superlinear Academy"
-            : "康奈尔大学经济学博士·Superlinear Academy联合创始人"}
+            ? "Cornell Economics PhD · Founder of Superlinear Academy"
+            : "康奈尔大学经济学博士·Superlinear Academy创始人"}
         </span>
         <a href="#emil-main">{lang === "en" ? "Back to top" : "回到顶部"}</a>
       </footer>

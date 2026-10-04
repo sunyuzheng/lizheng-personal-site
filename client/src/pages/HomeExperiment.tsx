@@ -47,7 +47,7 @@ export const heroCopy = {
     primary: "看我正在做什么",
     secondary: "免费加入社区",
     credentials:
-      "康奈尔经济学博士·Amazon、Meta、腾讯经历·OpenAI收购团队早期成员·联合创始人、作者、访谈者",
+      "康奈尔经济学博士·Amazon、Meta、腾讯经历·OpenAI收购团队早期成员·创始人、作者、访谈者",
     imageAlt: "孙煜征与Acquired的Ben Gilbert、David Rosenthal对谈",
     caption: "与Acquired的Ben Gilbert、David Rosenthal对谈",
     location: "SIGNIFICANCE SUMMIT",
@@ -129,7 +129,7 @@ export const pageCopy = {
     builders: "Explore AI Builders",
     collaborate: "Collaborate with me",
     footer:
-      "Cornell Economics PhD, author, and co-founder of Superlinear Academy.",
+      "Cornell Economics PhD, author, and founder of Superlinear Academy.",
   },
   zh: {
     nav: { thesis: "主张", record: "经历", work: "作品", more: "目录" },
@@ -186,7 +186,7 @@ export const pageCopy = {
     builders: "了解AI Builders",
     collaborate: "与我合作",
     footer:
-      "康奈尔大学经济学博士、作者，Superlinear Academy联合创始人。",
+      "康奈尔大学经济学博士、作者，Superlinear Academy创始人。",
   },
 };
 

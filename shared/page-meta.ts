@@ -29,7 +29,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Yuzheng Sun (立正 / 课代表立正) — MAKE WHAT LASTS",
     description:
-      "Yuzheng Sun (立正), Cornell Economics PhD, co-founder of Superlinear Academy. 200+ conversations with AI researchers and founders, two books, dated calls on AI.",
+      "Yuzheng Sun (立正), Cornell Economics PhD, founder of Superlinear Academy. 200+ conversations with AI researchers and founders, two books, dated calls on AI.",
     canonical: "https://www.lizheng.ai/en",
     ogImage: "https://www.lizheng.ai/og/home-en.jpg",
     lastModified: "2026-09-30",
@@ -37,7 +37,7 @@ export const HOME_PAGE_META: Record<SiteLang, PageMeta> = {
   zh: {
     title: "立正（孙煜征，课代表立正）｜学点真本事，做点真东西",
     description:
-      "立正（孙煜征，课代表立正），康奈尔经济学博士，超线性学院联合创始人，《真本事》作者。和AI研究者、创业者做了200多场深度对话，关于AI的判断先写下来，再让时间检验。",
+      "立正（孙煜征，课代表立正），康奈尔经济学博士，超线性学院创始人，《真本事》作者。和AI研究者、创业者做了200多场深度对话，关于AI的判断先写下来，再让时间检验。",
     canonical: "https://www.lizheng.ai/",
     ogImage: "https://www.lizheng.ai/og/home-zh.jpg",
     lastModified: "2026-09-30",
@@ -48,7 +48,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title: "Profile · Yuzheng Sun · 孙煜征",
     description:
-      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is a co-founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
+      "Yuzheng Sun (孙煜征, 课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. His career spans Amazon, Meta, Tencent, and the early Statsig team later acquired by OpenAI.",
     canonical: "https://www.lizheng.ai/en/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
     lastModified: "2026-09-30",
@@ -56,7 +56,7 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
   zh: {
     title: "课代表立正（孙煜征）· 人物简介",
     description:
-      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy联合创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队早期成员。",
+      "课代表立正（孙煜征），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队早期成员。",
     canonical: "https://www.lizheng.ai/about",
     ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
     lastModified: "2026-09-30",

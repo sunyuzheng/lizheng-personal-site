@@ -1,10 +1,10 @@
 # Social Profiles — Current State And Working Copy
 
-> 2026-10-04：立正与鸭哥的头衔都是Superlinear Academy联合创始人，本文所有简介已改为「联合创始人」；各平台上已经设置的简介需要手动同步。
-
 **Status:** 2026-08-27 Xiaohongshu current copy confirmed by owner; other Chinese-profile revisions require separate review. No social account is changed by this document.
 
 **Owner inputs:** `yuzheng-profile/BIOS.md`, `THESIS.md`, `EVIDENCE.md`, and `facts.json`
+
+**Title:** These profiles introduce Yuzheng alone, so they say 创始人 / founder. Only where Yuzheng and Yage appear together are both titled 联合创始人 / co-founders (owner-confirmed 2026-10-04).
 
 The profiles share one first memory, then adapt proof and invitation to the job of each platform. They do not all repeat the same paragraph.
 
@@ -63,7 +63,7 @@ Its order is deliberate: aspiration → AI-era tension and desired identity → 
 
 我关心AI到底改变了什么，人怎样形成真正的判断，最后做出了什么。这里有对AI技术本质、产品、商业和个人选择的深度分析，也有200+场与AI研究者、创始人、投资人和一线操盘者的公开对话。
 
-我是孙煜征（课代表立正），康奈尔经济学博士、Superlinear Academy联合创始人。
+我是孙煜征（课代表立正），康奈尔经济学博士、Superlinear Academy创始人。
 
 2万+认真用AI做事的人正在Superlinear Academy分享700+真实项目。免费加入：superlinear.academy｜App搜索「超线性学院」
 ```
@@ -82,16 +82,16 @@ MAKE WHAT LASTS.
 免费加入：https://superlinear.academy
 App Store / Google Play搜索「超线性学院」
 
-康奈尔经济学博士｜Superlinear Academy联合创始人｜曾任职Amazon、Meta、腾讯与Statsig
+康奈尔经济学博士｜Superlinear Academy创始人｜曾任职Amazon、Meta、腾讯与Statsig
 个人主页：https://lizheng.ai
 ```
 
 ## LinkedIn headline
 
-**Job:** make the co-founder role and idea legible in search results, comments, connection requests, and speaker discovery.
+**Job:** make the founder role and idea legible in search results, comments, connection requests, and speaker discovery.
 
 ```text
-Co-founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
+Founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
 ```
 
 ## LinkedIn About
@@ -144,7 +144,7 @@ Essays on AI, product judgment, craft, and making work that outlives the task.
 **Author bio:**
 
 ```text
-Yuzheng Sun (课代表立正) is a co-founder of Superlinear Academy and a Cornell Economics PhD. He writes about AI, products, organizations, and the work people choose to make their own.
+Yuzheng Sun (课代表立正) is the founder of Superlinear Academy and a Cornell Economics PhD. He writes about AI, products, organizations, and the work people choose to make their own.
 ```
 
 ## WeChat 视频号 / 公众号
@@ -152,7 +152,7 @@ Yuzheng Sun (课代表立正) is a co-founder of Superlinear Academy and a Corne
 **Job:** preserve the personal memory, explain the content in one breath, and make the in-platform search route obvious.
 
 ```text
-学点真本事，做点真东西。深聊AI、产品、商业和个人选择。Superlinear Academy联合创始人｜加入2万+认真用AI做事的人：搜索「超线性学院」
+学点真本事，做点真东西。深聊AI、产品、商业和个人选择。Superlinear Academy创始人｜加入2万+认真用AI做事的人：搜索「超线性学院」
 ```
 
 ## WeChat / private profile
@@ -177,7 +177,7 @@ Yuzheng Sun (课代表立正) is a co-founder of Superlinear Academy and a Corne
 
 ```text
 Yuzheng Sun / 课代表立正
-Co-founder, Superlinear Academy
+Founder, Superlinear Academy
 MAKE WHAT LASTS.
 lizheng.ai · superlinear.academy
 ```
@@ -186,7 +186,7 @@ lizheng.ai · superlinear.academy
 
 ```text
 孙煜征 / 课代表立正
-Superlinear Academy联合创始人
+Superlinear Academy创始人
 学点真本事，做点真东西。
 lizheng.ai · superlinear.academy
 ```
@@ -196,13 +196,13 @@ lizheng.ai · superlinear.academy
 **One sentence, Chinese:**
 
 ```text
-孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy联合创始人。他从腾讯管理岗位进入早期创业公司，再全职建设Superlinear；他的个人主线是：学点真本事，做点真东西。
+孙煜征，人称课代表立正，是康奈尔经济学博士、Superlinear Academy创始人。他从腾讯管理岗位进入早期创业公司，再全职建设Superlinear；他的个人主线是：学点真本事，做点真东西。
 ```
 
 **One sentence, English:**
 
 ```text
-Yuzheng Sun is a Cornell Economics PhD and a co-founder of Superlinear Academy. His work asks what deserves to be built in the AI era—and is guided by one line: MAKE WHAT LASTS.
+Yuzheng Sun is a Cornell Economics PhD and the founder of Superlinear Academy. His work asks what deserves to be built in the AI era—and is guided by one line: MAKE WHAT LASTS.
 ```
 
 For a longer event introduction, use the current `yuzheng-profile/BIOS.md` rather than extending these short lines from memory.

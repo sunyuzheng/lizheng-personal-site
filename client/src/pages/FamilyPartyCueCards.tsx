@@ -78,7 +78,7 @@ function CardBody({ index }: { index: number }) {
         <BulletList>
           <Bullet>三次举手：老朋友 / 通过自媒体认识 / 第一次见</Bullet>
           <Bullet>自媒体≈工作的一成，是我与外界连接的公开接口</Bullet>
-          <Bullet>第一身份：Superlinear联合创始人 + builder</Bullet>
+          <Bullet>第一身份：Superlinear创始人 + builder</Bullet>
           <Bullet>拿掉学校、公司、职位、平台，你靠什么说明价值？</Bullet>
         </BulletList>
         <MustSay>

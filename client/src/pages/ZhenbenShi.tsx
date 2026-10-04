@@ -1172,7 +1172,7 @@ export default function ZhenbenShi() {
                     孙煜征
                   </h2>
                   <p className="text-zinc-400 text-sm mt-1">
-                    康奈尔大学经济学博士 · Superlinear Academy · 联合创始人 · 作者
+                    康奈尔大学经济学博士 · Superlinear Academy · 创始人 · 作者
                   </p>
                 </div>
 
@@ -1180,7 +1180,7 @@ export default function ZhenbenShi() {
                   {[
                     "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任增长数据科学与AI总监",
                     "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一evangelist",
-                    "Superlinear Academy联合创始人，长期从事AI教育、社区与企业实践",
+                    "Superlinear Academy创始人，长期从事AI教育、社区与企业实践",
                     "截至2026年8月，累计完成200+场公开对话；合著《Growth Data Analytics Playbook》，著有《真本事》",
                     "现居西雅图",
                   ].map(item => (

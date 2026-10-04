@@ -36,7 +36,7 @@ const career: Record<Lang, CareerStep[]> = {
         "Early team, later acquired by OpenAI",
       ],
     },
-    { org: "Superlinear Academy", latin: true, role: ["Co-founder, full time"] },
+    { org: "Superlinear Academy", latin: true, role: ["Founder, full time"] },
   ],
   zh: [
     { org: "康奈尔大学", latin: false, role: ["经济学博士"] },
@@ -55,7 +55,7 @@ const career: Record<Lang, CareerStep[]> = {
         "OpenAI收购团队早期成员",
       ],
     },
-    { org: "超线性学院", latin: false, role: ["联合创始人 · 全职投入"] },
+    { org: "超线性学院", latin: false, role: ["创始人 · 全职投入"] },
   ],
 };
 
@@ -206,7 +206,7 @@ export default function About() {
     zh: {
       eyebrow: "关于我",
       intro:
-        "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院Superlinear Academy联合创始人，现居西雅图。",
+        "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院Superlinear Academy创始人，现居西雅图。",
       belief:
         "学点真本事，做点真东西。对我来说，就是离开职位和公司名，仍能做出别人需要的东西。",
       backgroundTitle: "经历",
@@ -298,7 +298,7 @@ export default function About() {
                 [lang === "en" ? "Public name" : "公开名称", "课代表立正"],
                 [
                   lang === "en" ? "Current role" : "现在",
-                  lang === "en" ? "Co-founder · Author" : "联合创始人 · 作者",
+                  lang === "en" ? "Founder · Author" : "创始人 · 作者",
                 ],
               ].map(([label, value]) => (
                 <div key={label} className="bg-lz-forest-2 p-5">

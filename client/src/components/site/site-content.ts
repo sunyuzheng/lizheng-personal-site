@@ -44,7 +44,7 @@ export const SITE_COPY = {
     switchLabel: "Switch to English",
     footerName: "孙煜征 · 立正",
     footerBio: [
-      "超线性学院联合创始人，《真本事》作者，",
+      "超线性学院创始人，《真本事》作者，",
       "「课代表立正」主持人。学点真本事，做点真东西。",
     ],
     footerMore: "更多",
@@ -67,7 +67,7 @@ export const SITE_COPY = {
     switchLabel: "切换到中文",
     footerName: "Yuzheng Sun · 立正",
     footerBio: [
-      "Co-founder of Superlinear Academy. Cornell PhD in Economics.",
+      "Founder of Superlinear Academy. Cornell PhD in Economics.",
       "Make what lasts.",
     ],
     footerMore: "More",

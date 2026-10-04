@@ -2,10 +2,13 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, resolveDiscoveryVoter, sameOrigin } from "../shared/ask-access.js";
 import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscoveryVote } from "../shared/ask-discovery-gateway.js";
 import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
+import { publicJson } from "../shared/ask-public-files.js";
 
 // The lists and each answer are the same for every reader and carry no cookie, so the CDN keeps them
 // a minute, then serves that copy while it fetches the next: a reader costs Ops nothing, and a
-// question withdrawn in Ops leaves the lists and its answer within about two minutes.
+// question withdrawn in Ops leaves the lists and its answer within about two minutes. They come from
+// the files Ops writes when they change (shared/ask-public-files.ts), so they stay up while the
+// database or Ops is down; the older paged list still asks Ops.
 const SHARED = "public, max-age=0, s-maxage=60, stale-while-revalidate=60";
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
@@ -39,7 +42,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const vote = discoveryVoteBody(await discoveryRequestBody(req, 2048));
       result = await proxyDiscoveryVote(vote, voter_key);
     } else {
-      result = await fetchOpsJson(discoveryReadPath(url, action), { method: "GET" });
+      result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" }) : publicJson(discoveryReadPath(url, action)));
       if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
     }
     res.statusCode = 200;

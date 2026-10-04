@@ -22,6 +22,8 @@ export default defineConfig({
       "tests/api-imports.test.ts",
       "tests/ask-app-files.test.ts",
       "tests/ask-public-qa.test.ts",
+      "tests/ask-public-files.test.ts",
+      "tests/ask-share-copy.test.ts",
     ],
     pool: "forks",
     minWorkers: 1,

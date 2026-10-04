@@ -129,3 +129,12 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 立正想用一个比方让大家直观理解这个场域。定为「在讲座上举手提问」：问答会公开，像讲座有录像、放到网上、搜得到；不记名，我们不知道是谁问的；「结合我的处境」像递给台上的一张纸条，只用来回答、不保存，但回答可能提到纸条上的内容；做法是只写愿意当众说的话。输入框下写「这里像在讲座上举手提问：问答会公开，但不记名。只写愿意当众说的话。」（立正同意不再写「提问表示同意」）。
 
 这些话只有一份：ask-lizheng 的 `src/public-qa.js`。`pnpm sync:ask-app` 把它拷成本仓库的 `shared/ask-public-qa.js`（类型在 `shared/ask-public-qa.d.ts`），主页问答区的提示、「说明」、处境和分享面板都从它取（主页用「我」，ask页面用「立正」）。`tests/ask-public-qa.test.ts` 检查拷贝和 `version.json` 记的哈希一致（不能在这里手改），并检查隐私政策中英文开头那段和它的 `policy` 一字不差。改措辞：在 ask-lizheng 改、提交、推 main，再在这里同步；要改隐私政策开头，同时改这页。App 第一次提问前的同意页（ask-lizheng `AppConsent`）不在这份文件里，改它要顾及苹果审核。
+
+## 看的东西写成文件（2026-10-04）
+
+立正看了整体架构后决定：大家看的东西在写的时候就生成好，看的时候不再去查数据库，这样数据库或后台出事时，「别人在问什么」、公开问答页和分享页照常能看（ask-lizheng 的 `docs/ARCHITECTURE.md`）。两个站都读一个私有的 Vercel Blob 存储，用它自己的令牌 `ASK_FILES_BLOB_TOKEN`（本项目原有的 `BLOB_READ_WRITE_TOKEN` 是社区地图的公开存储，不混用）：
+
+- `public/`：Ops 在公开问答变化时写列表、索引和每条回答，每次完整导出后写心跳 `public/state.json`（ask-lizheng-ops 的 docs/public-discovery.md「公开内容写成文件」）。本站 `shared/ask-public-files.ts` 的 `publicJson`：心跳三分钟内就用文件，文件里没有的问题就是已撤下（404）；心跳过期就问 Ops；Ops 也答不上来才拿最后一份文件顶上。所以导出一直失败也不会让撤下的问答留着。`/api/ask-lizheng/discovery/lists`、`detail` 和 `/ask` 的页面都走它；旧的分页列表照旧问 Ops。CDN 缓存不变（列表1分钟、问答页10分钟）。
+- `share/<day>/<slug>.json`：分享时本站顺手写一份回答的副本（没配令牌就不写）。分享页照旧实时读记录（删除立刻生效、真人打开要计数），只在数据库答不上来时用副本；数据库说已经没有了，就不用副本。Ops 删除记录前先删副本，删不掉就不删记录。这个功能上线前分享过的页面没有副本，要等再被分享一次。
+- 隐私政策「保存多久」加了一句：每天另存一份备份，留30天，删除的问答在之前的备份里最多再留30天（备份在 Ops，见它的 docs/backup.md）。
+- 测试：`tests/ask-public-files.test.ts`（什么时候信文件、什么时候问 Ops）、`tests/ask-share-copy.test.ts`（副本只在数据库答不上来时顶上）。

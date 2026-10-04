@@ -1,13 +1,14 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError } from "../shared/ask-access.js";
-import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
+import { publicJson } from "../shared/ask-public-files.js";
 import {
   indexable, publicCard, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
   renderSitemap, representatives, similarAskings, type PublicCard,
 } from "../shared/ask-public-page.js";
 
 // The public answer pages on www.lizheng.ai (vercel.json): /ask/<public_id> (page), /ask (index)
-// and /ask/sitemap.xml (sitemap), read from Ops' public index. The CDN keeps a page for ten
+// and /ask/sitemap.xml (sitemap), read from Ops' public index: the files Ops writes when it changes,
+// so the pages stay up while the database or Ops is down (shared/ask-public-files.ts). The CDN keeps a page for ten
 // minutes, so a question withdrawn in Ops leaves search results' pages within about that long.
 const CACHE = "public, max-age=0, s-maxage=600, stale-while-revalidate=600";
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
@@ -16,7 +17,7 @@ const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-
 let memo: { at: number; cards: PublicCard[] } | undefined;
 async function loadCards(): Promise<PublicCard[]> {
   if (memo && Date.now() - memo.at < 300_000) return memo.cards;
-  const value = await fetchOpsJson("/api/discovery?action=index", { method: "GET" });
+  const value = await publicJson("/api/discovery?action=index");
   if (!Array.isArray(value.items)) throw new AccessError("ops_gateway_unavailable");
   const cards: PublicCard[] = [];
   for (const item of value.items) { const card = publicCard(item); if (card) cards.push(card); }
@@ -52,7 +53,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       }
       let detail;
       try {
-        detail = publicDetail(await fetchOpsJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`, { method: "GET" }));
+        detail = publicDetail(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`));
       } catch (error) {
         if (error instanceof AccessError && error.status === 404) {
           send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });

@@ -3,6 +3,7 @@ import { AccessError, accessEnabled, resolveIdentity } from "../shared/ask-acces
 import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 import { claimShareBonus, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
+import { fileWriter, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
@@ -33,9 +34,15 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
     return;
   }
   try {
-    const share = await readShare(url.searchParams.get("day") || "", url.searchParams.get("slug") || "", {
-      reader: req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot")),
-    });
+    const day = url.searchParams.get("day") || "", slug = url.searchParams.get("slug") || "";
+    let share;
+    try {
+      share = await readShare(day, slug, { reader: req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot")) });
+    } catch (error) {
+      // The database cannot say: the copy kept when it was shared (Ops deletes it before the record).
+      share = await readShareCopy(day, slug);
+      if (!share) throw error;
+    }
     if (!share) send(res, 404, html, renderShareMissingPage(), headers);
     else send(res, 200, html, renderSharePage(share), headers);
   } catch {
@@ -76,6 +83,14 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (key !== "__route" || url.searchParams.getAll(key).length !== 1) throw new AccessError("invalid_request", 400);
     const request = shareRequest(await discoveryRequestBody(req, SHARE_BODY_LIMIT), host);
     const shared = await createShare(request);
+    // A copy for when the database is down (shared/ask-public-files.ts); the link stands without it.
+    const write = fileWriter();
+    if (write) {
+      try {
+        const share = await readShare(shared.day, shared.slug, { reader: false });
+        if (share) await saveShareCopy(share, write);
+      } catch { /* the page reads the live record */ }
+    }
     let bonus: ShareBonus = "off", remaining: number | undefined;
     if (request.bonus && accessEnabled() && !NO_BONUS.test(String(req.headers["user-agent"] || ""))) {
       try {

@@ -15,6 +15,9 @@ const SOURCE = path.join(ROOT, "content", "writing", "statsig-blog-zh");
 const SITE_URL = "https://www.lizheng.ai";
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
+// The same person the rest of the site describes at PERSON_ID, named here too so a page read on its own
+// still says who wrote it.
+const PERSON = { "@type": "Person", "@id": PERSON_ID, name: "Yuzheng Sun", alternateName: ["孙煜征", "立正", "课代表立正"], url: `${SITE_URL}/` };
 
 interface Collection {
   path: string;
@@ -201,7 +204,7 @@ ${page.main}
 }
 
 function authorNodes(post: Post) {
-  return post.authors.map(author => (author.yuzheng ? { "@id": PERSON_ID } : { "@type": "Person", name: author.name }));
+  return post.authors.map(author => (author.yuzheng ? PERSON : { "@type": "Person", name: author.name }));
 }
 
 function breadcrumbs(collection: Collection, last?: { name: string; url: string }) {
@@ -221,7 +224,7 @@ function renderIndex(collection: Collection, posts: Post[]): string {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "CollectionPage", "@id": `${url}#webpage`, url, name: collection.title, description: collection.description, inLanguage: "zh-CN", isPartOf: { "@id": WEBSITE_ID }, author: { "@id": PERSON_ID }, datePublished: collection.datePublished, dateModified: collection.dateModified, mainEntity: { "@id": `${url}#posts` }, breadcrumb: { "@id": `${url}#breadcrumb` } },
+      { "@type": "CollectionPage", "@id": `${url}#webpage`, url, name: collection.title, description: collection.description, inLanguage: "zh-CN", isPartOf: { "@id": WEBSITE_ID }, author: PERSON, datePublished: collection.datePublished, dateModified: collection.dateModified, mainEntity: { "@id": `${url}#posts` }, breadcrumb: { "@id": `${url}#breadcrumb` } },
       { "@type": "ItemList", "@id": `${url}#posts`, numberOfItems: newest.length, itemListElement: newest.map((post, i) => ({ "@type": "ListItem", position: i + 1, url: `${SITE_URL}${postPath(collection, post)}`, name: post.title })) },
       { ...breadcrumbs(collection), "@id": `${url}#breadcrumb` },
     ],
@@ -263,7 +266,7 @@ function renderPost(collection: Collection, posts: Post[], index: number): strin
         description: post.description,
         inLanguage: "zh-CN",
         author: authorNodes(post),
-        publisher: { "@id": PERSON_ID },
+        publisher: PERSON,
         datePublished: collection.datePublished,
         dateModified: collection.dateModified,
         isAccessibleForFree: true,
@@ -298,7 +301,7 @@ ${byline}</div>`,
 ${body(post.slug)}
 </div>
 ${pager}
-<p class="closing">这是Statsig博客英文原文的中文版，原文发表于${chineseDate(post.date)}，图表来自原文。<a href="${collection.path}">看全部${posts.length}篇</a></p>
+<p class="closing">这是Statsig博客英文原文的中文版。原文发表于${chineseDate(post.date)}，中文版发布于${chineseDate(collection.datePublished)}，图表来自原文。<a href="${collection.path}">看全部${posts.length}篇</a></p>
 </article>`,
   });
 }

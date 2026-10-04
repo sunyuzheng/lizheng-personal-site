@@ -112,6 +112,7 @@
 | `/collab/creators`                             | 中文播客与视频主的邀请页                                                                 | 母品牌首页                                       |
 | `/en/collab/creators`                          | 英文节目邀请与host kit                                                                   | 泛合作入口                                       |
 | `/decks`、`/en/decks`                          | 企业AI培训、定制方案与公开工作坊的可搜索索引；展示不同受众、问题与方法                   | 复制每套deck、暴露客户原始材料或替代企业销售页   |
+| `/writing/statsig`                             | 立正在Statsig博客写的19篇文章的中文版：保存这段工作期的公开写作，供搜索、引用和问问立正取材；每页链接英文原文，合著与活动回顾注明归属 | 上首页、和Knowledge Bank精选文章混排、替代英文原文 |
 
 Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心的对话方式，因为它在该场景有具体工作；这不意味着它重新成为个人母题。
 

@@ -88,10 +88,10 @@ App Store / Google Play搜索「超线性学院」
 
 ## LinkedIn headline
 
-**Job:** make the founder role and idea legible in search results, comments, connection requests, and speaker discovery.
+**Job:** make the co-founder role and idea legible in search results, comments, connection requests, and speaker discovery.
 
 ```text
-Founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
+Co-founder, Superlinear Academy | MAKE WHAT LASTS | Cornell Economics PhD | Former Amazon, Meta, Tencent & Statsig
 ```
 
 ## LinkedIn About
@@ -177,7 +177,7 @@ Yuzheng Sun (课代表立正) is a co-founder of Superlinear Academy and a Corne
 
 ```text
 Yuzheng Sun / 课代表立正
-Founder, Superlinear Academy
+Co-founder, Superlinear Academy
 MAKE WHAT LASTS.
 lizheng.ai · superlinear.academy
 ```

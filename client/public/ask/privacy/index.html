@@ -20,8 +20,8 @@
 
 <h2>我们保存什么、为什么</h2>
 <ul>
-<li><b>提问和回答。</b>你的提问、AI生成的完整回答和所用出处会保存下来，用来改进回答、了解大家关心什么，立正也会从中找写文章、做视频的选题。常见的问答去掉个人信息后，可能公开在「别人在问什么」。每条公开的问答有自己的网页，搜索引擎也能找到；页面上显示大约什么时候问的（精确到5分钟）。你也可以分享自己的问答：分享后它有自己的网页，显示问题和回答，不显示你填的处境，搜索引擎也能找到。</li>
-<li><b>「结合我的处境」。</b>你填写的处境会和提问一起发给AI模型，只用来生成这次回答；我们不保存，也不公开。</li>
+<li><b>提问和回答。</b>你的提问、AI生成的完整回答和所用出处会保存下来，用来改进回答、了解大家关心什么，立正也会从中找写文章、做视频的选题。常见的问答去掉个人信息后，可能公开在「别人在问什么」。每条公开的问答有自己的网页，搜索引擎也能找到；页面上显示大约什么时候问的（精确到5分钟）。你也可以分享自己的问答：分享后它有自己的网页，显示问题和回答，不显示你填的处境原文，搜索引擎也能找到。回答可能引用处境中的细节，请在分享前检查。</li>
+<li><b>「结合我的处境」。</b>你填写的处境会和提问一起发给AI模型，只用来生成这次回答；我们不保存处境原文，也不单独公开它。回答可能引用其中的细节，并随完整回答保存；你主动分享回答时，这些细节也可能公开。</li>
 <li><b>匿名使用统计。</b>随机生成的浏览器标识和对话标识、这是第几轮、问题字数、问法和入口，用来了解使用情况。</li>
 <li><b>每天的次数。</b>浏览器里一个签名的随机标识，用来计算你今天问了几次；同一网络的免费提问总数按网络地址的加密摘要计数。</li>
 <li><b>验证Founding身份（可选）。</b>你输入的邮箱用来发送验证码，并向超线性学院社区核验你是不是Founding Member。登录状态加密保存，最长12小时。</li>
@@ -31,19 +31,23 @@
 
 <h2>我们不做的事</h2>
 <ul>
-<li>提问记录不关联邮箱、账号或IP，我们不知道是谁问的。登录信息不和提问记在一起，也不交给AI模型。</li>
+<li>提问记录不关联邮箱、账号或IP。登录信息不和提问记在一起，也不交给AI模型。但你输入的文字仍可能包含能识别个人的信息，发送给AI前不会自动去掉；请别填写私密信息。</li>
 <li>不保存原始IP，不收集位置、通讯录或广告标识，不做跨App跟踪，不出售数据，也不用于广告。</li>
 <li>App只在你选择保存图片时把回答长图写入相册，不读取相册。</li>
 </ul>
 
 <h2>谁会处理这些数据</h2>
 <ul>
-<li><b>Builder Space</b>：运行问答服务，并用它的AI模型服务生成回答。你的提问、处境和本次对话的上文会发给它处理。</li>
+<li><b>Builder Space（space.ai-builders.com）</b>：运行问答服务，并提供第三方AI处理。你的当前提问、开启「结合我的处境」后填写的内容，以及本次对话最近最多6轮的提问和回答摘要，会交给它匹配资料和生成回答；同时发送检索到的公开资料片段。当前回答模型是deepseek-v4-flash，匹配资料使用text-embedding-3-small。常见问答在公开前也会交给同一AI服务去掉个人信息、挑选和整理。</li>
 <li><b>Vercel</b>：网站托管和访问统计。</li>
 <li><b>Upstash</b>：保存次数、登录状态、问答记录和访问统计。</li>
 <li><b>Resend</b>：发送验证码邮件。</li>
 <li><b>Circle（超线性学院社区）</b>：核验Founding Member身份。</li>
 </ul>
+
+<h2>App中的AI同意</h2>
+<p>在App里，第一次AI提问前会单独展示发送的数据、接收服务和用途。只有点「同意发送并提问」才会发送；点「不同意」不发送，也不扣提问次数，仍可浏览已有问答和出处。新版披露或回答模型变化时会重新征求同意。</p>
+<p>可以在「说明」里点「撤回AI数据发送同意」。撤回后，新提问和重新生成回答都需要再次同意。撤回不收回已经发出的内容，也不自动删除已有记录；如需删除，请按下文联系我们。</p>
 
 <h2>保存多久</h2>
 <ul>
@@ -73,8 +77,8 @@
 
 <h2>What we keep, and why</h2>
 <ul>
-<li><b>Questions and answers.</b> Your question, the complete AI answer and the sources it used are kept to improve answers, to learn what people care about, and to find topics for essays and videos. With personal details removed, common questions and answers may be published in “别人在问什么” (What others ask). Each published question has its own web page that search engines can show, with roughly when it was asked (to five minutes). You can also share your own question: it then gets its own page showing the question and the answer, never the situation you wrote, and search engines can show it.</li>
-<li><b>Your situation (optional).</b> If you turn on “结合我的处境”, what you write is sent to the AI model with your question, only to produce this answer. We don't keep it or publish it.</li>
+<li><b>Questions and answers.</b> Your question, the complete AI answer and the sources it used are kept to improve answers, to learn what people care about, and to find topics for essays and videos. With personal details removed, common questions and answers may be published in “别人在问什么” (What others ask). Each published question has its own web page that search engines can show, with roughly when it was asked (to five minutes). You can also share your own question: it then gets its own page showing the question and the answer, without a separate copy of the situation you wrote, and search engines can show it. The answer may quote details from your situation; check it before sharing.</li>
+<li><b>Your situation (optional).</b> If you turn on “结合我的处境”, what you write is sent to the AI model with your question, only to produce this answer. We don't keep the situation text or publish it separately. The answer may quote details from it, which are kept with the complete answer and may become public if you choose to share that answer.</li>
 <li><b>Anonymous usage statistics.</b> Random browser and conversation identifiers, the turn number, question length, the way of asking and the entry point.</li>
 <li><b>Daily limit.</b> A signed random identifier in your browser counts today's questions; free questions from the same network are counted by a keyed hash of the network address.</li>
 <li><b>Founding Member verification (optional).</b> The email you enter receives a one-time code and is checked against the Superlinear Academy community for Founding Member status. The signed-in state is kept encrypted for up to 12 hours.</li>
@@ -84,19 +88,23 @@
 
 <h2>What we don't do</h2>
 <ul>
-<li>Question records are not linked to an email, account or IP address; we don't know who asked. Sign-in details are never stored with questions or sent to the AI model.</li>
+<li>Question records are not linked to an email, account or IP address. Sign-in details are never stored with questions or sent to the AI model. However, the text you enter may identify you and is not automatically redacted before AI processing. Please do not enter private information.</li>
 <li>We don't keep raw IP addresses, collect location, contacts or advertising identifiers, track you across apps, sell data or use it for advertising.</li>
 <li>The app writes an answer image to your photo library only when you choose to save it, and never reads your photos.</li>
 </ul>
 
 <h2>Who processes the data</h2>
 <ul>
-<li><b>Builder Space</b> runs the Q&amp;A service and generates answers with its AI model service. Your question, your situation and the earlier turns of the conversation are sent to it.</li>
+<li><b>Builder Space (space.ai-builders.com)</b> runs the Q&amp;A service and provides third-party AI processing. Your current question, the situation you enter when enabled, and the questions and answer summaries from up to the six most recent turns of this conversation are sent to it to match sources and generate an answer, together with retrieved public source excerpts. The current answer model is deepseek-v4-flash; source matching uses text-embedding-3-small. Before publication, common questions and answers are also sent to the same AI service to remove personal details, select and organize them.</li>
 <li><b>Vercel</b> hosts the website and counts visits.</li>
 <li><b>Upstash</b> stores daily counts, sign-in state, question records and visit statistics.</li>
 <li><b>Resend</b> sends verification emails.</li>
 <li><b>Circle</b> (the Superlinear Academy community) confirms Founding Member status.</li>
 </ul>
+
+<h2>AI permission in the app</h2>
+<p>Before the first AI question in the app, a separate dialog lists the data, receiving service and purposes. Data is sent only after you tap “同意发送并提问” (Agree to send and ask). “不同意” (Do not agree) sends nothing and does not use your daily allowance; you can still browse existing answers and sources. A revised disclosure or a change of answer model requires fresh permission.</p>
+<p>In “说明” (About), tap “撤回AI数据发送同意” to withdraw permission. New questions and answer retries then require permission again. Withdrawal cannot recall data already sent and does not automatically delete existing records. Contact us as described below to request deletion.</p>
 
 <h2>How long we keep it</h2>
 <ul>

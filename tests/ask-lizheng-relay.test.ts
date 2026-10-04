@@ -422,6 +422,53 @@ describe("fixed Builder SSE relay", () => {
     await response.text();
   });
 
+  it("relays the model-change contract, preserves the consent field and refunds the network count", async () => {
+    const upstream = vi.fn().mockResolvedValue(Response.json({
+      code: "ai_consent_changed", model: "new-answer-model", private_detail: "synthetic private upstream detail",
+    }, { status: 409, headers: { "X-Ask-Error-Code": "ai_consent_changed", "Set-Cookie": "upstream=private" } }));
+    vi.stubGlobal("fetch", withRedis(upstream));
+    const base = protectedRequest();
+    const payload = JSON.stringify({ ...JSON.parse(publicPayload), ai_consent_model: "old-answer-model" });
+    const response = await handler(new Request(base.url, { method: "POST", body: payload, headers: base.headers }));
+    expect(decoder.decode(upstream.mock.calls[0][1].body)).toBe(payload);
+    expect(response.status).toBe(409);
+    expect(await response.json()).toEqual({ code: "ai_consent_changed", model: "new-answer-model" });
+    expect(response.headers.get("cache-control")).toBe("no-store, no-transform");
+    expect(response.headers.get("set-cookie")).not.toContain("upstream=private");
+    expect(networkCounts()).toHaveLength(1);
+    expect(networkCounts()[0][1]).toBe(0);
+  });
+
+  it.each([
+    { value: { code: "other_error", model: "new-model" }, header: "ai_consent_changed" },
+    { value: { code: "ai_consent_changed", model: "" }, header: "ai_consent_changed" },
+    { value: { code: "ai_consent_changed", model: "x".repeat(129) }, header: "ai_consent_changed" },
+    { value: { code: "ai_consent_changed", model: 123 }, header: "ai_consent_changed" },
+    { value: { code: "ai_consent_changed", model: "new-model" }, header: "other_error" },
+    { value: { code: "ai_consent_changed", model: "new-model", extra: "x".repeat(4096) }, header: "ai_consent_changed" },
+  ])("sanitizes an invalid model-change response %#", async ({ value, header }) => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json(value,
+      { status: 409, headers: { "X-Ask-Error-Code": header } })));
+    const response = await handler(request());
+    expect(response.status).toBe(409);
+    expect((await response.json()).code).toBe("upstream_unavailable");
+  });
+
+  it("bounds a stalled model-change response instead of hanging the app", async () => {
+    vi.useFakeTimers();
+    const cancelled = vi.fn();
+    const body = new ReadableStream<Uint8Array>({ cancel: cancelled });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(body, { status: 409,
+      headers: { "X-Ask-Error-Code": "ai_consent_changed", "Content-Type": "application/json" } })));
+    const pending = handler(request());
+    await ticks();
+    await vi.advanceTimersByTimeAsync(1_500);
+    const response = await pending;
+    expect(response.status).toBe(409);
+    expect((await response.json()).code).toBe("upstream_unavailable");
+    expect(cancelled).toHaveBeenCalledOnce();
+  });
+
   it.each([429, 503])(
     "sanitizes upstream HTTP %s without reading or relaying its body",
     async status => {

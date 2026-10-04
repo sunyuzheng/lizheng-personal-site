@@ -3,6 +3,11 @@ import { AccessError, resolveDiscoveryVoter, sameOrigin } from "../shared/ask-ac
 import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscoveryVote } from "../shared/ask-discovery-gateway.js";
 import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
 
+// The lists and each answer are the same for every reader and carry no cookie, so the CDN keeps them
+// a minute, then serves that copy while it fetches the next: a reader costs Ops nothing, and a
+// question withdrawn in Ops leaves the lists and its answer within about two minutes.
+const SHARED = "public, max-age=0, s-maxage=60, stale-while-revalidate=60";
+
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   for (const [name, value] of Object.entries({
     "Cache-Control": "no-store, no-transform", "X-Robots-Tag": "noindex, nofollow, noarchive", "Vary": "Cookie",
@@ -19,7 +24,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (url.origin !== own || (req.headers.origin && req.headers.origin !== own))
       throw new AccessError("invalid_origin", 403);
     action = url.searchParams.get("__route") || url.pathname.split("/").at(-1) || "";
-    if (!["questions", "detail", "vote"].includes(action)) throw new AccessError("invalid_request", 400);
+    if (!["lists", "questions", "detail", "vote"].includes(action)) throw new AccessError("invalid_request", 400);
     if (req.method !== (action === "vote" ? "POST" : "GET")) throw new AccessError("method_not_allowed", 405);
     let result;
     if (action === "vote") {
@@ -33,7 +38,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         if (key !== "__route" || url.searchParams.getAll(key).length !== 1) throw new AccessError("invalid_request", 400);
       const vote = discoveryVoteBody(await discoveryRequestBody(req, 2048));
       result = await proxyDiscoveryVote(vote, voter_key);
-    } else result = await fetchOpsJson(discoveryReadPath(url, action), { method: "GET" });
+    } else {
+      result = await fetchOpsJson(discoveryReadPath(url, action), { method: "GET" });
+      if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
+    }
     res.statusCode = 200;
     res.end(JSON.stringify(result));
   } catch (error) {

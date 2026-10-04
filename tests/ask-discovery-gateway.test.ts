@@ -29,7 +29,8 @@ async function call(fn: typeof ops, path: string, options: Options = {}) {
   if ("body" in options) Object.assign(req, { body: options.body });
   const headers: Record<string, string> = {};
   let raw = "";
-  const res = { statusCode: 200, setHeader(name: string, value: string) { headers[name.toLowerCase()] = value; }, end(text: string) { raw = text; } };
+  const res = { statusCode: 200, setHeader(name: string, value: string) { headers[name.toLowerCase()] = value; },
+    removeHeader(name: string) { delete headers[name.toLowerCase()]; }, end(text: string) { raw = text; } };
   await fn(req as IncomingMessage, res as unknown as ServerResponse);
   return { status: res.statusCode, headers, body: JSON.parse(raw) };
 }
@@ -118,6 +119,28 @@ describe("public read and account vote gateway", () => {
       expect((await call(discovery, `/api/ask-lizheng/discovery/questions${query}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
     }
   );
+  it("reads 最近问 and 最常问 in one fixed call, and lets the CDN share them and each answer for a minute", async () => {
+    vi.mocked(fetch).mockImplementation(async () => Response.json({ ok: true }));
+    const lists = await call(discovery, "/api/ask-lizheng/discovery/lists", { headers: { cookie: "synthetic-cookie" } });
+    expect(lists.status).toBe(200);
+    const [url, init] = vi.mocked(fetch).mock.calls[0];
+    expect(url).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=lists`);
+    expect(init).not.toHaveProperty("headers");
+    expect(lists.headers["cache-control"]).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=60");
+    expect(lists.headers).not.toHaveProperty("vary");
+    const detail = await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`);
+    expect(detail.headers["cache-control"]).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=60");
+    // The older paged list carries a cursor per reader: never shared.
+    expect((await call(discovery, "/api/ask-lizheng/discovery/questions")).headers["cache-control"]).toBe("no-store, no-transform");
+    // A failure is never kept.
+    vi.mocked(fetch).mockResolvedValue(new Response("{}", { status: 503 }));
+    const failed = await call(discovery, "/api/ask-lizheng/discovery/lists");
+    expect(failed.status).toBe(503);
+    expect(failed.headers["cache-control"]).toBe("no-store, no-transform");
+  });
+  it.each(["?window=all", "?sort=recent", "?cursor=abc", `?public_id=${ID}`, "?__route=lists&__route=lists"])("takes no options for the lists %s", async query => {
+    expect((await call(discovery, `/api/ask-lizheng/discovery/lists${query}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
+  });
   it.each(["", "?public_id=bad", `?public_id=${ID}&range=all`, `?public_id=${ID}&public_id=${ID}`])("validates detail ID %s", async query => {
     expect((await call(discovery, `/api/ask-lizheng/discovery/detail${query}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
   });

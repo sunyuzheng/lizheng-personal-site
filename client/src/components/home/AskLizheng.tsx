@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import type { Lang } from "@/contexts/LanguageContext";
 import {
@@ -18,7 +18,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, voteDiscovery, type DiscoveryCard, type DiscoveryDetail } from "@/lib/ask-discovery";
+import { askedAgo, askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, voteDiscovery, DISCOVERY_LIST_SIZE, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
@@ -70,7 +70,8 @@ const COPY = {
     discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
     discoverySimilar: "问个类似的",
     discoveryMore: "看更多问题",
-    discoveryViews: ["最近问", "最常问", "没看过"],
+    discoveryViews: ["最近问", "最常问"],
+    discoveryShare: "分享",
     discoveryHelpful: "有帮助",
     discoveryHelped: "觉得有帮助",
     discoveryAttribution: "AI整理，不是立正本人回复。",
@@ -202,7 +203,8 @@ const COPY = {
     discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
     discoverySimilar: "Ask something similar",
     discoveryMore: "See more questions",
-    discoveryViews: ["Newest", "Most asked", "Not seen"],
+    discoveryViews: ["Newest", "Most asked"],
+    discoveryShare: "Share",
     discoveryHelpful: "Helpful",
     discoveryHelped: "Found it helpful",
     discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
@@ -402,9 +404,10 @@ type ShareState = {
 
 // Sharing one answer: its own page (what that page shows, then its link and how to send it), a long
 // image or a PDF. `link` is false for an answer that cannot have a page; the image and PDF remain.
-function SharePanel({ state, lang, link, exporting, onCreate, onCopy, onSend, onExport }: {
-  state: ShareState; lang: Lang; link: boolean; exporting: string;
-  onCreate: () => void; onCopy: () => void; onSend: () => void; onExport: (kind: "png" | "pdf") => void;
+// A question others asked already has its page: only its link and how to send it (no onExport).
+function SharePanel({ state, lang, link, exporting = "", onCreate, onCopy, onSend, onExport }: {
+  state: ShareState; lang: Lang; link: boolean; exporting?: string;
+  onCreate?: () => void; onCopy: () => void; onSend: () => void; onExport?: (kind: "png" | "pdf") => void;
 }) {
   const c = COPY[lang];
   const ready = link && state.phase === "ready";
@@ -430,7 +433,7 @@ function SharePanel({ state, lang, link, exporting, onCreate, onCopy, onSend, on
             {state.phase === "working" ? c.shareCreating : c.shareCreate}
           </button>
         )}
-        {(["png", "pdf"] as const).map(kind => (
+        {onExport && (["png", "pdf"] as const).map(kind => (
           <button key={kind} type="button" className="btn btn-line" disabled={!!exporting} onClick={() => onExport(kind)}>
             {exporting === kind ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
           </button>
@@ -548,8 +551,12 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
   // What a Founding Member is and how to become one, opened from the count line.
   const [foundingOpen, setFoundingOpen] = useState(false);
-  // Real questions others asked, published from Ops; shown on the Chinese page in place of the examples.
-  const [discoveryCards, setDiscoveryCards] = useState<DiscoveryCard[]>([]);
+  // Real questions others asked, published from Ops: 最近问 and 最常问, the same lists for everyone;
+  // shown on the Chinese page in place of the examples, four at a time.
+  const [questionLists, setQuestionLists] = useState<DiscoveryLists | null>(null);
+  const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("recent");
+  const discoveryShown = useMemo(() => (questionLists ? discoveryView(questionLists, discoveryTab) : []), [questionLists, discoveryTab]);
+  const discoveryCards = discoveryShown.slice(0, 4);
   // Chinese page: loading until the list arrives, then ready; none when it cannot be read or takes
   // past eight seconds, and only then the examples show in its place.
   const [discoveryState, setDiscoveryState] = useState<"loading" | "ready" | "none">(lang === "zh" ? "loading" : "none");
@@ -569,10 +576,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     markUsage("d_shown");
     watchUsage(discoveryList.current, "d_seen");
   }, [hasDiscovery]);
-  // More than the four picks exist: link to the full list on ask.lizheng.ai.
-  const [discoveryMore, setDiscoveryMore] = useState(false);
-  // Whether this browser saw the section before: counted with each card action.
-  const discoveryVisit = useRef<"first" | "return">("first");
+  // More than four in the list: link to the whole list on ask.lizheng.ai.
+  const discoveryMore = discoveryShown.length > discoveryCards.length;
+  // Each card's share: the link to its public page, and whether it was copied.
+  const [cardShares, setCardShares] = useState<Record<string, ShareState>>({});
   const [openCard, setOpenCard] = useState("");
   const [cardDetails, setCardDetails] = useState<Record<string, DiscoveryDetail | "loading" | "failed">>({});
   const [cardVotes, setCardVotes] = useState<Record<string, { likes: number; voted: boolean }>>({});
@@ -649,17 +656,14 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     setDiscoveryState(state => (state === "ready" ? state : "loading"));
     const controller = new AbortController();
     const late = setTimeout(() => setDiscoveryState(state => (state === "loading" ? "none" : state)), 8000);
-    void discoveryPool(controller.signal).then(pool => {
+    void discoveryLists(controller.signal).then(lists => {
       clearTimeout(late);
       if (controller.signal.aborted) return;
-      if (!pool.length) { setDiscoveryState("none"); return; }
-      const seen = readSeen();
-      const picked = pickDiscovery(pool, seen);
-      rememberSeen(seen, picked.map(item => item.public_id));
-      discoveryVisit.current = seen.length ? "return" : "first";
-      setDiscoveryMore(pool.length > picked.length);
-      setAskedRecently(askedLastDay(pool));
-      setDiscoveryCards(picked);
+      if (!lists || (!lists.recent.length && !lists.frequent.length)) { setDiscoveryState("none"); return; }
+      // Until someone has asked, the common questions written fresh are all there is.
+      if (!discoveryView(lists, "recent").length) setDiscoveryTab("frequent");
+      setAskedRecently(askedLastDay(lists.recent));
+      setQuestionLists(lists);
       setDiscoveryState("ready");
     });
     return () => { clearTimeout(late); controller.abort(); };
@@ -668,7 +672,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     if (openCard === card.public_id) { setOpenCard(""); return; }
     setOpenCard(card.public_id);
     markUsage("d_open");
-    track("Ask Discovery Open", { surface: "home", visit: discoveryVisit.current });
+    track("Ask Discovery Open", { surface: "home", view: discoveryTab });
     const known = cardDetails[card.public_id];
     if (known && known !== "failed") return;
     setCardDetails(prev => ({ ...prev, [card.public_id]: "loading" }));
@@ -677,9 +681,30 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   };
   const askSimilar = (card: DiscoveryCard) => {
     markUsage("d_similar");
-    track("Ask Discovery Similar", { surface: "home", visit: discoveryVisit.current });
+    track("Ask Discovery Similar", { surface: "home", view: discoveryTab });
     prefill(card.question, "card");
     input.current?.scrollIntoView({ block: "center" });
+  };
+  const showTab = (view: DiscoveryView) => {
+    if (view === discoveryTab) return;
+    setDiscoveryTab(view);
+    setOpenCard("");
+    track("Ask Discovery Sort", { surface: "home", sort: view });
+  };
+  // A question others asked already has its public page: sharing copies its link at once, and a
+  // phone can also send it on.
+  const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
+  const shareCard = async (card: DiscoveryCard) => {
+    if (cardShares[card.public_id]?.open) { setCardShare(card.public_id, { open: false }); return; }
+    const url = discoveryPage(card.public_id);
+    setCardShare(card.public_id, { open: true, phase: "ready", url });
+    markUsage("d_share");
+    track("Ask Discovery Share", { surface: "home", view: discoveryTab });
+    setCardShare(card.public_id, { copied: await copyWhenReady(url) });
+  };
+  const copyCard = async (card: DiscoveryCard) => setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
+  const sendCard = async (card: DiscoveryCard) => {
+    try { await navigator.share({ title: card.question, url: discoveryPage(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
   };
   const likeCard = async (card: DiscoveryCard) => {
     const vote = !cardVotes[card.public_id]?.voted;
@@ -1140,19 +1165,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <div className="lz-ask-discovery-head">
                 <h3>{c.discoveryTitle}</h3>
                 <p>{c.discoveryNote}</p>
-                {askedRecently >= 3 && <p className="lz-ask-discovery-live">最近24小时 {askedRecently >= 20 ? "20+" : askedRecently} 个新问题</p>}
-                {/* Every question, newest or most asked first, opens on ask.lizheng.ai, so a question
-                    seen on an earlier visit can always be found again; here is 没看过, the picks that
-                    put questions this browser has not seen first. */}
-                <nav className="lz-ask-discovery-views" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
-                  {(["recent", "frequent"] as const).map((sort, i) => (
-                    <a key={sort} href={`https://ask.lizheng.ai/#${sort}`} {...EXTERNAL}
-                      onClick={() => { markUsage("d_more"); track("Ask Discovery Sort", { surface: "home", sort }); }}>
-                      {c.discoveryViews[i]} ↗
-                    </a>
+                {askedRecently >= 3 && <p className="lz-ask-discovery-live">最近24小时 {askedRecently >= DISCOVERY_LIST_SIZE ? `${DISCOVERY_LIST_SIZE}+` : askedRecently} 个新问题</p>}
+                {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
+                <div className="lz-ask-discovery-views" role="group" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
+                  {(["recent", "frequent"] as const).map((view, i) => (
+                    <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
                   ))}
-                  <span aria-current="true">{c.discoveryViews[2]}</span>
-                </nav>
+                </div>
               </div>
               <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
               {/* While the questions load, the rows they will fill; never the examples first. */}
@@ -1217,15 +1236,21 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                             <button type="button" className={vote?.voted ? "like on" : "like"} aria-pressed={!!vote?.voted}
                               onClick={() => void likeCard(card)}>{vote?.voted ? c.discoveryHelped : c.discoveryHelpful}</button>
                           )}
+                          <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
+                            onClick={() => void shareCard(card)}>{c.discoveryShare}</button>
                         </div>
+                        {cardShares[card.public_id]?.open && (
+                          <SharePanel state={cardShares[card.public_id]} lang={lang} link
+                            onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} />
+                        )}
                       </div>
                     )}
                   </article>
                 );
               })}
               {discoveryMore && (
-                <a className="lz-ask-discovery-more" href="https://ask.lizheng.ai/#questions" {...EXTERNAL}
-                  onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", page: 1 }); }}>{c.discoveryMore} ↗</a>
+                <a className="lz-ask-discovery-more" href={`https://ask.lizheng.ai/#${discoveryTab}`} {...EXTERNAL}
+                  onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} ↗</a>
               )}
               </div>
             </div>

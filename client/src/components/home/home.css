@@ -2441,29 +2441,27 @@
   margin-top: 18px;
 }
 
-.lz-home .lz-ask-discovery-views a {
+.lz-home .lz-ask-discovery-views button {
   display: inline-flex;
   align-items: baseline;
   min-height: 36px;
-  padding-top: 6px;
+  padding: 6px 0 0;
+  border: 0;
+  background: none;
+  font: inherit;
   font-size: 15px;
   font-weight: 600;
+  color: var(--lz-muted);
+  cursor: pointer;
+  transition: color 0.2s, box-shadow 0.2s;
+}
+
+.lz-home .lz-ask-discovery-views button:hover {
   color: var(--lz-ink);
-  transition: color 0.2s;
 }
 
-.lz-home .lz-ask-discovery-views a:hover {
-  color: var(--lz-green-text);
-}
-
-/* The list shown here: in ink, with a green rule under it, like the chosen tab on ask.lizheng.ai. */
-.lz-home .lz-ask-discovery-views [aria-current] {
-  display: inline-flex;
-  align-items: baseline;
-  min-height: 36px;
-  padding-top: 6px;
-  font-size: 15px;
-  font-weight: 600;
+/* The list shown: in ink, with a green rule under it, like the chosen tab on ask.lizheng.ai. */
+.lz-home .lz-ask-discovery-views [aria-pressed="true"] {
   color: var(--lz-ink);
   box-shadow: inset 0 -2px 0 var(--lz-green);
 }

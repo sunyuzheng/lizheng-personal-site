@@ -26,7 +26,7 @@ export const PUBLIC_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a
 
 export type PublicCard = {
   public_id: string; revision: number; topic_key: string; topic_label: string; question: string; summary: string;
-  published_at: string; updated_at: string; asked_at?: string; topic_question_count: number; likes: number;
+  published_at: string; updated_at: string; asked_at?: string; topic_question_count: number;
 };
 export type PublicSource = {
   id: string; title: string; url: string; date?: string; source_type?: string; reason?: string; source_visibility?: string;
@@ -52,17 +52,17 @@ function https(value: unknown): value is string {
   } catch { return false; }
 }
 
-/** A card from the Ops list, or null when it is not one. */
+/** A card from Ops' public index, or null when it is not one. Likes are not shown on these pages. */
 export function publicCard(value: unknown): PublicCard | null {
   const r = value as Record<string, unknown> | null;
   if (!r || typeof r !== "object" || typeof r.public_id !== "string" || !PUBLIC_ID.test(r.public_id) || !count(r.revision) ||
       typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 300) || typeof r.summary !== "string" ||
-      !time(r.published_at) || !time(r.updated_at) || !count(r.topic_question_count) || !count(r.likes) ||
+      !time(r.published_at) || !time(r.updated_at) || !count(r.topic_question_count) ||
       (r.asked_at !== undefined && !time(r.asked_at))) return null;
   return {
     public_id: r.public_id, revision: r.revision as number, topic_key: r.topic_key, topic_label: r.topic_label as string,
     question: (r.question as string).trim(), summary: r.summary.trim(), published_at: r.published_at as string,
-    updated_at: r.updated_at as string, topic_question_count: r.topic_question_count as number, likes: r.likes as number,
+    updated_at: r.updated_at as string, topic_question_count: r.topic_question_count as number,
     ...(r.asked_at ? { asked_at: r.asked_at as string } : {}),
   };
 }

@@ -13,7 +13,7 @@ const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")
 const card = (n: number, question: string, extra: Partial<PublicCard> = {}): PublicCard => ({
   public_id: id(n), revision: 1, topic_key: `${n}`.padStart(32, "a"), topic_label: `Topic ${n}`, question, summary: `Summary of question ${n}.`,
   published_at: `2026-10-0${Math.min(n, 9)}T00:00:00.000Z`, updated_at: `2026-10-0${Math.min(n, 9)}T00:00:00.000Z`,
-  asked_at: `2026-10-0${Math.min(n, 9)}T00:00:00.000Z`, topic_question_count: 1, likes: 0, ...extra,
+  asked_at: `2026-10-0${Math.min(n, 9)}T00:00:00.000Z`, topic_question_count: 1, ...extra,
 });
 const BODY = "合成的回答段落，用来测试页面怎么排。".repeat(14);
 const detail = (n: number, question: string, extra: Partial<PublicDetail["answer"]> = {}): PublicDetail => ({
@@ -111,7 +111,8 @@ async function call(path: string, host = "www.lizheng.ai", method = "GET"): Prom
   await handler(req as unknown as IncomingMessage, res as unknown as ServerResponse);
   return { status: res.statusCode, headers, body };
 }
-const list = (items: PublicCard[], next: string | null = null) => Response.json({ v: 1, items, next_cursor: next });
+// Ops' index: every published card in one reply.
+const list = (items: PublicCard[]) => Response.json({ v: 1, frequency_basis: "published_source_questions", items });
 
 describe("public answer page handler", () => {
   beforeEach(() => { vi.stubEnv("ASK_OPS_BACKEND_ORIGIN", OPS_BACKEND_ORIGIN); });
@@ -151,6 +152,8 @@ describe("public answer page handler", () => {
     const sitemap = await call("/api/ask-lizheng-public?__route=sitemap");
     expect(sitemap.headers["content-type"]).toBe("application/xml; charset=utf-8");
     expect(sitemap.body).toContain(`/ask/${id(7)}`);
+    // One read of the whole index, kept for both pages, however many questions there are.
+    expect(vi.mocked(fetch).mock.calls.map(c => String(c[0]))).toEqual([`${OPS_BACKEND_ORIGIN}/api/discovery?action=index`]);
     expect((await call("/api/ask-lizheng-public?__route=index", "www.lizheng.ai", "POST")).status).toBe(405);
   });
 });

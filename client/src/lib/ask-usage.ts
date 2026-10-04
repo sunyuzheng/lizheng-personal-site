@@ -5,8 +5,9 @@
  * counts the anonymous browser cookie the daily limit already uses. ask.lizheng.ai has the same
  * module (src/usage.js); the server's list of marks is in shared/ask-usage.ts.
  */
-export type UsageMark = "h_seen" | "d_shown" | "d_seen" | "d_open" | "d_similar" | "d_more" | "ask" | "answer" | "source" | "export"
-  | "c_works" | "c_city" | "c_talks" | "c_calls" | "c_writing" | "c_join";
+// The server's list, so a mark the page sends is always one the server counts.
+import type { UsageMark } from "../../../shared/ask-usage";
+export type { UsageMark };
 type Usage = { mark(name: UsageMark): void; watch(element: Element | null, name: UsageMark): void; stop(): void };
 const ENDPOINT = "/api/ask-lizheng/usage";
 const IDLE_MS = 30_000;

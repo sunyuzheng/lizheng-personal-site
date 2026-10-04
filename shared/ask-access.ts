@@ -93,11 +93,17 @@ export async function redis(command: (string | number)[]): Promise<unknown> {
       body: JSON.stringify(command), cache: "no-store", redirect: "manual",
       signal: AbortSignal.timeout(3_000),
     });
-    if (!response.ok) throw new Error();
-    const value = await response.json();
-    if (!value || value.error || !("result" in value)) throw new Error();
+    const value = await response.json().catch(() => null);
+    if (!response.ok || !value || value.error || !("result" in value))
+      throw new Error(`upstash ${response.status}${value?.error ? `: ${String(value.error)}` : ""}`);
     return value.result;
-  } catch { throw new AccessError("access_unavailable"); }
+  } catch (error) {
+    // Why, for the logs, never the command, its keys or values, or the token: Upstash's own message
+    // (a plan limit, a script error), an HTTP status or a timeout. Without it an outage shows only
+    // as access_unavailable.
+    console.error("redis_unavailable", error instanceof Error ? error.message.slice(0, 200) : "unknown");
+    throw new AccessError("access_unavailable");
+  }
 }
 async function encryptionKey() {
   const digest = await crypto.subtle.digest("SHA-256", encoder.encode(secret("ASK_AUTH_SECRET")));

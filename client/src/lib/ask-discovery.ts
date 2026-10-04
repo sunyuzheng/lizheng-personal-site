@@ -15,10 +15,13 @@ export type DiscoveryAnswer = {
 };
 export type DiscoveryDetail = { public_id: string; revision: number; question: string; answer: DiscoveryAnswer };
 
-// The pool a visit draws from: every topic once, most asked first, up to three pages of 20 (the
-// common questions written fresh, asked once, rank last), and the 20 newest questions.
-const VIEWS: [string, number][] = [["window=all&sort=frequent&limit=20", 3], ["window=all&sort=recent&limit=20", 1]];
-const CURSOR = /^[A-Za-z0-9_-]{1,512}$/;
+/** 最近问 and 最常问: two short lists, the same for every reader, so the CDN can serve them. */
+export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[] };
+export type DiscoveryView = "recent" | "frequent";
+/** How many questions each list holds (Ops' DISCOVERY_LIST_SIZE). */
+export const DISCOVERY_LIST_SIZE = 30;
+/** Every published question has its own public page, which is what sharing one sends. */
+export const discoveryPage = (id: string) => `https://www.lizheng.ai/ask/${id}`;
 const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const text = (value: unknown) => typeof value === "string" && value.trim().length > 0;
 const count = (value: unknown) => Number.isInteger(value) && (value as number) >= 0;
@@ -50,41 +53,15 @@ function section(value: unknown): AskResult["sections"][number] | null {
   };
 }
 
-async function list(view: string, pages: number, signal?: AbortSignal): Promise<DiscoveryCard[]> {
-  const items: DiscoveryCard[] = [];
-  let cursor: string | null = null;
+/** Both lists in one read; null when they cannot be read (other hosts, Ops down). */
+export async function discoveryLists(signal?: AbortSignal): Promise<DiscoveryLists | null> {
   try {
-    for (let page = 0; page < pages; page++) {
-      const response: Response = await fetch(`/api/ask-lizheng/discovery/questions?${view}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ""}`,
-        { cache: "no-store", credentials: "omit", signal });
-      if (!response.ok) break;
-      const value: { items?: unknown[]; next_cursor?: unknown } = await response.json();
-      if (Array.isArray(value?.items)) items.push(...value.items.filter(card));
-      cursor = typeof value?.next_cursor === "string" && CURSOR.test(value.next_cursor) ? value.next_cursor : null;
-      if (!cursor) break;
-    }
-  } catch {}
-  return items;
-}
-
-export async function discoveryPool(signal?: AbortSignal): Promise<DiscoveryCard[]> {
-  const pool = new Map<string, DiscoveryCard>();
-  for (const item of (await Promise.all(VIEWS.map(([view, pages]) => list(view, pages, signal)))).flat()) {
-    if (!pool.has(item.public_id)) pool.set(item.public_id, item);
-  }
-  return [...pool.values()];
-}
-
-// What this browser was shown before, oldest first. Without storage every visit is a first visit.
-const SEEN = "ask-discovery-seen";
-export function readSeen(): string[] {
-  try {
-    const value = JSON.parse(localStorage.getItem(SEEN) || "[]");
-    return Array.isArray(value) ? value.filter((id): id is string => typeof id === "string" && ID.test(id)) : [];
-  } catch { return []; }
-}
-export function rememberSeen(seen: string[], shown: string[]) {
-  try { localStorage.setItem(SEEN, JSON.stringify([...seen.filter(id => !shown.includes(id)), ...shown].slice(-60))); } catch {}
+    const response = await fetch("/api/ask-lizheng/discovery/lists", { credentials: "omit", signal });
+    if (!response.ok) return null;
+    const value = await response.json();
+    if (!Array.isArray(value?.recent) || !Array.isArray(value?.frequent)) return null;
+    return { recent: value.recent.filter(card), frequent: value.frequent.filter(card) };
+  } catch { return null; }
 }
 
 // When a question was asked, the way people say it: 刚刚, 23分钟前, 3小时前, 2天前, then the date.
@@ -131,50 +108,35 @@ export function foldDiscovery(cards: DiscoveryCard[]): DiscoveryCard[] {
   });
 }
 
-// How many published questions were asked in the last day. The pool holds the 20 newest, so
-// below 20 the count is exact; at 20 there may be more, and the page says 20+.
+// How many published questions were asked in the last day. 最近问 holds the 30 newest, so
+// below 30 the count is exact; at 30 there may be more, and the page says 30+.
 export const askedLastDay = (pool: DiscoveryCard[], now = Date.now()) =>
   pool.filter(card => now - Date.parse(card.asked_at ?? "") < 24 * 3600000).length;
 
+const topicOf = (card: DiscoveryCard) => card.topic_key || card.public_id;
+const often = (a: DiscoveryCard, b: DiscoveryCard) => b.similar_count! - a.similar_count! || b.likes - a.likes
+  || Number(!!askedTime(a)) - Number(!!askedTime(b)) || Date.parse(b.published_at) - Date.parse(a.published_at);
+
 /**
- * The questions a visit shows, taking turns: the most recently asked (role fresh), then the most
- * often asked (role common). Each topic stands for itself once among the often asked, through the
- * question in it asked most recently, ranked by its similar askings, then likes, then a common
- * question written fresh before a single asking. In each, questions this browser has not seen come
- * first, then older ones, then the last set, so a refresh shows others while the pool allows. One
- * per topic while topics remain; one question asked two ways shows once.
+ * What a list shows, the same for everyone; one question asked two ways shows once, as its wording
+ * asked most recently, counting the similar askings of them all (over both lists).
+ * 最近问 (recent): the questions people asked, most recently asked first; a common question written
+ * fresh was never asked and is left to 最常问.
+ * 最常问 (frequent): each topic once, through its question asked most recently, ranked by similar
+ * askings, then likes, then a common question written fresh before a single asking, then newest.
  */
-export function pickDiscovery(pool: DiscoveryCard[], seen: string[], count = 4): DiscoveryCard[] {
-  const cards = foldDiscovery(pool);
-  const before = new Set(seen), last = new Set(seen.slice(-count));
-  const visit = (card: DiscoveryCard) => last.has(card.public_id) ? 2 : before.has(card.public_id) ? 1 : 0;
-  const topic = (card: DiscoveryCard) => card.topic_key || card.public_id;
-  const often = (a: DiscoveryCard, b: DiscoveryCard) => b.similar_count! - a.similar_count! || b.likes - a.likes
-    || Number(!!askedTime(a)) - Number(!!askedTime(b)) || Date.parse(b.published_at) - Date.parse(a.published_at);
+export function discoveryView(lists: DiscoveryLists, view: DiscoveryView): DiscoveryCard[] {
+  const pool = new Map<string, DiscoveryCard>();
+  for (const card of [...lists.frequent, ...lists.recent]) if (!pool.has(card.public_id)) pool.set(card.public_id, card);
+  const cards = foldDiscovery([...pool.values()]);
+  if (view === "recent")
+    return cards.filter(askedTime).sort((a, b) => askedTime(b) - askedTime(a)).map(card => ({ ...card, role: "fresh" as const }));
   const latest = new Map<string, DiscoveryCard>();
   for (const card of cards) {
-    const current = latest.get(topic(card));
-    if (!current || askedTime(card) > askedTime(current)) latest.set(topic(card), card);
+    const current = latest.get(topicOf(card));
+    if (!current || askedTime(card) > askedTime(current)) latest.set(topicOf(card), card);
   }
-  const lists = {
-    fresh: cards.filter(askedTime).sort((a, b) => visit(a) - visit(b) || askedTime(b) - askedTime(a)),
-    common: [...latest.values()].sort((a, b) => visit(a) - visit(b) || often(a, b)),
-  };
-  // Once the topics run out, the rest in the same order, so a small pool still fills the list.
-  const rest = [...cards].sort((a, b) => visit(a) - visit(b) || often(a, b));
-  const picked: DiscoveryCard[] = [], topics = new Set<string>();
-  const add = (card: DiscoveryCard, role: "fresh" | "common") => { picked.push({ ...card, role }); topics.add(topic(card)); return true; };
-  const free = (card: DiscoveryCard) => !picked.some(other => other.public_id === card.public_id);
-  const take = (role: "fresh" | "common") => {
-    const card = lists[role].find(card => free(card) && !topics.has(topic(card)));
-    return !!card && add(card, role);
-  };
-  const fill = () => { const card = rest.find(free); return !!card && add(card, askedTime(card) ? "fresh" : "common"); };
-  while (picked.length < count) {
-    const [role, other] = picked.length % 2 ? ["common", "fresh"] as const : ["fresh", "common"] as const;
-    if (!(take(role) || take(other) || fill())) break;
-  }
-  return picked;
+  return [...latest.values()].sort(often).map(card => ({ ...card, role: "common" as const }));
 }
 
 export async function discoveryDetail(id: string, signal?: AbortSignal): Promise<DiscoveryDetail | null> {

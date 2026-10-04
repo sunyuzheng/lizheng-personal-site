@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { askedLastDay, discoveryDetail, discoveryPool, pickDiscovery, readSeen, rememberSeen, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
 import { isMemberVideo, memberJoinUrl } from "../client/src/lib/ask-lizheng";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -54,89 +54,78 @@ describe("public answer source metadata", () => {
   });
 });
 
-describe("which questions a visit shows", () => {
-  it("shows a first visit the most asked topics, most asked first, when none has an ask time", () => {
-    const shown = pickDiscovery(POOL, []);
-    expect(ids(shown)).toEqual([id(2), id(5), id(9), id(4)]);
-    expect(shown.map(card => card.role)).toEqual(["common", "common", "common", "common"]);
+describe("what 最近问 and 最常问 show, the same for everyone", () => {
+  const now = Date.parse("2026-10-03T12:00:00Z");
+  const ago = (minutes: number) => new Date(now - minutes * 60000).toISOString();
+  const frequent = (cards: DiscoveryCard[]) => discoveryView({ recent: [], frequent: cards }, "frequent");
+
+  it("lists each topic once in 最常问, the most asked first", () => {
+    const shown = frequent(POOL);
+    expect(ids(shown)).toEqual([id(2), id(5), id(9), id(4), id(8), id(6), id(1), id(10), id(3), id(7)]);
+    expect(shown.every(card => card.role === "common")).toBe(true);
+    const pool = [card(1, 9, "same"), card(2, 9, "same"), card(3, 2)];
+    expect(frequent(pool).filter(item => item.topic_key === "same")).toHaveLength(1);
   });
 
-  it("shows something else on each refresh while the pool allows", () => {
-    let seen: string[] = [];
-    const visits: string[][] = [];
-    for (let visit = 0; visit < 6; visit++) {
-      const shown = ids(pickDiscovery(POOL, seen));
-      visits.push(shown);
-      seen = [...seen.filter(item => !shown.includes(item)), ...shown];
-    }
-    for (let visit = 1; visit < visits.length; visit++) {
-      expect(visits[visit].filter(item => visits[visit - 1].includes(item))).toEqual([]);
-      expect(new Set(visits[visit]).size).toBe(4);
-    }
-    // Unseen questions come before repeats: the first three visits cover the pool.
-    expect(new Set(visits.slice(0, 3).flat()).size).toBe(POOL.length);
+  it("shows a topic through the question in it asked most recently", () => {
+    const pool = [{ ...card(1, 3, "a"), asked_at: ago(90) }, { ...card(2, 3, "a"), asked_at: ago(10) }, card(3, 1)];
+    expect(ids(frequent(pool))).toEqual([id(2), id(3)]);
   });
 
-  it("keeps one question per topic while other topics remain", () => {
-    const pool = [card(1, 9, "same"), card(2, 8, "same"), card(3, 2), card(4, 1), card(5, 1)];
-    const shown = pickDiscovery(pool, []);
-    expect(shown.filter(item => item.topic_key === "same")).toHaveLength(1);
-    expect(shown).toHaveLength(4);
-  });
-
-  it("fills from the same topic, then repeats, when the pool is small", () => {
-    expect(pickDiscovery([card(1, 3, "a"), card(2, 2, "a")], [])).toHaveLength(2);
-    const small = [card(1, 3), card(2, 2), card(3, 1)];
-    expect(ids(pickDiscovery(small, ids(small))).sort()).toEqual(ids(small).sort());
-    expect(pickDiscovery([], [id(1)])).toEqual([]);
-  });
-
-  it("takes turns: the most recently asked, then the most often asked", () => {
-    const now = Date.parse("2026-10-03T12:00:00Z");
-    const ago = (minutes: number) => new Date(now - minutes * 60000).toISOString();
-    // The later in POOL, the more recently asked; the counts stay as they are.
-    const pool = POOL.map((item, i) => ({ ...item, asked_at: ago(600 - i * 50) }));
-    const first = pickDiscovery(pool, []);
-    expect(ids(first)).toEqual([id(10), id(2), id(9), id(5)]);
-    expect(first.map(card => card.role)).toEqual(["fresh", "common", "fresh", "common"]);
-    // A refresh takes the next of each that this browser has not seen.
-    expect(ids(pickDiscovery(pool, ids(first)))).toEqual([id(8), id(4), id(7), id(6)]);
-    // A common question written fresh has no ask time, so it only ever takes a common turn.
+  it("lists the questions people asked in 最近问, most recently asked first, without the ones written fresh", () => {
+    const recent = POOL.slice(0, 4).map((item, i) => ({ ...item, asked_at: ago(400 - i * 100) }));
     const seed = { ...card(11, 8), asked_at: undefined };
-    expect(pickDiscovery([...pool, seed], []).find(card => card.public_id === id(11))?.role).toBe("common");
+    const shown = discoveryView({ recent: [...recent, seed], frequent: [] }, "recent");
+    expect(ids(shown)).toEqual([id(4), id(3), id(2), id(1)]);
+    expect(shown.every(card => card.role === "fresh")).toBe(true);
   });
 
-  it("among equally common questions, the most liked first", () => {
+  it("among equally common questions, the most liked first, and one written fresh before a single asking", () => {
     const at = (day: number) => `2026-10-0${day}T00:00:00Z`;
-    const shown = pickDiscovery([
+    const shown = frequent([
       { ...card(1, 2), published_at: at(1) },
       { ...card(2, 2), asked_at: at(2), published_at: at(2) },
       { ...card(3, 2), likes: 1, published_at: at(1) },
       { ...card(4, 3), asked_at: at(1), published_at: at(1) },
-    ], []);
-    expect(ids(shown)).toEqual([id(2), id(4), id(3), id(1)]);
-    expect(shown.map(card => card.role)).toEqual(["fresh", "common", "common", "common"]);
+    ]);
+    expect(ids(shown)).toEqual([id(4), id(3), id(1), id(2)]);
   });
 
-  it("never shows one question asked two ways, even under different topics, and counts both", () => {
+  it("never lists one question asked two ways, even under different topics, and counts both", () => {
     const pool = [
       { ...card(1, 9, "a"), question: "怎么判断自己是真的学会了一个新技能，而不只是看懂了？" },
       { ...card(2, 8, "b"), question: "怎么判断自己真的学会了一个新技能，而不只是看懂？" },
       card(3, 2), card(4, 1), card(5, 1),
     ];
-    const shown = pickDiscovery(pool, []);
+    const shown = frequent(pool);
     expect(ids(shown)).toContain(id(1));
     expect(ids(shown)).not.toContain(id(2));
-    expect(shown).toHaveLength(4);
-    // Its own topic's nine, and the other wording filed elsewhere.
     expect(shown.find(card => card.public_id === id(1))?.similar_count).toBe(10);
-    // The wording asked most recently is the one shown.
-    const later = pickDiscovery(pool.map(item => item.public_id === id(2) ? { ...item, asked_at: "2026-10-03T00:00:00Z" } : item), []);
-    expect(ids(later)).toContain(id(2));
-    expect(ids(later)).not.toContain(id(1));
-    expect(later.find(card => card.public_id === id(2))?.similar_count).toBe(9);
+    // The wording asked most recently is the one listed, in either list.
+    const asked = pool.map(item => item.public_id === id(2) ? { ...item, asked_at: ago(5) } : item);
+    expect(ids(frequent(asked))).toContain(id(2));
+    expect(ids(frequent(asked))).not.toContain(id(1));
+    expect(ids(discoveryView({ recent: asked, frequent: [] }, "recent"))).toEqual([id(2)]);
     expect(similarCount(pool[0], pool)).toBe(10);
     expect(similarCount(pool[2], pool)).toBe(2);
+  });
+
+  it("folds a rewording across the two lists, counting it as one more asking", () => {
+    const common = { ...card(1, 4, "a"), question: "AI时代，应该先想清楚方向，还是先行动起来？" };
+    const reworded = { ...card(2, 1, "b"), question: "应该先想清楚方向还是先行动起来", asked_at: ago(3) };
+    const shown = discoveryView({ recent: [reworded], frequent: [common] }, "frequent");
+    // Listed once, as the wording asked most recently: its topic's one asking, and the other wording.
+    expect(ids(shown)).toEqual([id(2)]);
+    expect(shown[0].similar_count).toBe(2);
+  });
+
+  it("is the same on every visit: nothing is kept in the browser", () => {
+    const lists = { recent: POOL.slice(0, 3).map((item, i) => ({ ...item, asked_at: ago(i) })), frequent: POOL };
+    const storage = vi.fn();
+    vi.stubGlobal("localStorage", { getItem: storage, setItem: storage });
+    expect(discoveryView(lists, "frequent")).toEqual(discoveryView(lists, "frequent"));
+    expect(discoveryView(lists, "recent")).toEqual(discoveryView(lists, "recent"));
+    expect(storage).not.toHaveBeenCalled();
   });
 
   it("tells a reworded question from a different one", () => {
@@ -147,7 +136,6 @@ describe("which questions a visit shows", () => {
   });
 
   it("counts the questions asked in the last day", () => {
-    const now = Date.parse("2026-10-03T12:00:00Z");
     const at = (hours: number) => new Date(now - hours * 3600000).toISOString();
     const pool = [card(1, 1), card(2, 1), card(3, 1), card(4, 1)]
       .map((item, i) => ({ ...item, asked_at: [at(0.5), at(23), at(25), undefined][i] }));
@@ -155,22 +143,21 @@ describe("which questions a visit shows", () => {
     expect(askedLastDay([], now)).toBe(0);
   });
 
-  it("reads every topic, up to three pages, and the 20 newest", async () => {
-    const calls: string[] = [];
-    vi.stubGlobal("fetch", vi.fn(async (url: string) => {
-      calls.push(url);
-      const page = Number(/cursor=p(\d)/.exec(url)?.[1] || 0);
-      if (url.includes("sort=recent")) return Response.json({ items: [card(9, 1), card(1, 1)], next_cursor: "p1" });
-      return Response.json({ items: [card(page + 1, 3 - page)], next_cursor: `p${page + 1}` });
-    }));
-    const pool = await discoveryPool();
-    expect(calls.filter(url => url.includes("sort=frequent")).map(url => /cursor=(\w+)/.exec(url)?.[1] ?? "")).toEqual(["", "p1", "p2"]);
-    expect(calls.filter(url => url.includes("sort=recent"))).toHaveLength(1);
-    expect(ids(pool).sort()).toEqual([id(1), id(2), id(3), id(9)].sort());
+  it("reads both lists in one request, without cookies, and keeps only well-formed cards", async () => {
+    const fetch = vi.fn(async () => Response.json({ recent: [card(1, 1), { public_id: "x" }], frequent: [card(2, 3)] }));
+    vi.stubGlobal("fetch", fetch);
+    const lists = await discoveryLists();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledWith("/api/ask-lizheng/discovery/lists", expect.objectContaining({ credentials: "omit" }));
+    expect(ids(lists!.recent)).toEqual([id(1)]);
+    expect(ids(lists!.frequent)).toEqual([id(2)]);
+    vi.stubGlobal("fetch", vi.fn(async () => new Response("{}", { status: 503 })));
+    expect(await discoveryLists()).toBeNull();
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ items: [] })));
+    expect(await discoveryLists()).toBeNull();
   });
 
-  it("treats a browser without storage as a first visit", () => {
-    expect(readSeen()).toEqual([]);
-    expect(() => rememberSeen([], [id(1)])).not.toThrow();
+  it("shares a question as its public page", () => {
+    expect(discoveryPage(id(7))).toBe(`https://www.lizheng.ai/ask/${id(7)}`);
   });
 });

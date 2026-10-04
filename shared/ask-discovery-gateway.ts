@@ -41,8 +41,10 @@ export async function discoveryRequestBody(req: IncomingMessage, limit: number):
 
 export function discoveryReadPath(url: URL, action: string): string {
   const query = url.searchParams;
-  const allowed = action === "questions" ? ["__route", "window", "sort", "limit", "cursor"] : ["__route", "public_id"];
+  // lists: 最近问 and 最常问, the same for everyone, with no options; questions: the older paged list.
+  const allowed = action === "questions" ? ["__route", "window", "sort", "limit", "cursor"] : action === "lists" ? ["__route"] : ["__route", "public_id"];
   for (const key of query.keys()) if (!allowed.includes(key) || query.getAll(key).length !== 1) invalid();
+  if (action === "lists") return "/api/discovery?action=lists";
   const out = new URLSearchParams({ action: action === "questions" ? "list" : "detail" });
   if (action === "detail") {
     const id = query.get("public_id") || "";

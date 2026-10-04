@@ -258,14 +258,15 @@ export default function Books() {
                       <Badge
                         key={item}
                         variant="secondary"
-                        className="rounded border border-lz-line bg-lz-ivory px-2.5 py-1 text-[11px] font-normal text-lz-ink-2"
+                        className="max-w-full whitespace-normal break-keep rounded border border-lz-line bg-lz-ivory px-2.5 py-1 text-left text-[11px] font-normal text-lz-ink-2"
                       >
                         {item}
                       </Badge>
                     ))}
                   </div>
 
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                  {/* Two cards share a row from lg, so the buttons wrap instead of running past the card. */}
+                  <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <SmartLink
                       href={book.primary.href}
                       external={book.primary.external}

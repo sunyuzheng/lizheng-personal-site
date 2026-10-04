@@ -194,6 +194,8 @@ function sourceKind(source: PublicSource): string {
   const host = new URL(source.url).hostname;
   const member = source.source_visibility === "members-only";
   if (source.source_type === "course-lesson") return member ? "会员课程" : "课程";
+  if (source.source_type === "book-chapter") return "书";
+  if (source.source_type === "blog-post") return "Statsig博客";
   if (/(^|\.)youtube\.com$|youtu\.be$/.test(host)) return member ? "会员视频" : "视频";
   if (/superlinear\.academy$/.test(host)) return member ? "超线性学院 · 会员" : "超线性学院";
   if (/(^|\.)lizheng\.ai$/.test(host)) return "文章";

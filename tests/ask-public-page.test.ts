@@ -40,6 +40,16 @@ describe("public answer pages", () => {
     expect(publicDetail({ ...raw, answer: null })).toBeNull();
   });
 
+  it("names the book and blog Chinese editions by what they are", () => {
+    const raw = detail(1, "一个合成的问题？");
+    const html = renderQuestionPage({ ...raw, answer: { ...raw.answer, sources: [
+      { id: "S1", title: "合成的一章", url: "https://www.lizheng.ai/book/growth-data-analytics-playbook/3", source_type: "book-chapter" },
+      { id: "S2", title: "合成的博客", url: "https://www.statsig.com/blog/synthetic", source_type: "blog-post" },
+    ] } }, { related: [], similar: 1, indexable: true });
+    expect(html).toContain("<span>书</span>");
+    expect(html).toContain("<span>Statsig博客</span>");
+  });
+
   it("indexes only the first wording of a question, newest asked first", () => {
     const cards = [card(1, "怎样判断自己是不是在做fake work？"), card(2, "怎么判断自己是不是在做fake work？"), card(3, "模型后训练的本质是什么？")];
     const reps = representatives(cards);

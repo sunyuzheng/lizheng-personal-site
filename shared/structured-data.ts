@@ -335,7 +335,7 @@ function growthBookNode() {
     url: `${SITE_URL}/book#growth-data-analytics-playbook`,
     image: `${SITE_URL}/book/growth-data-analytics-playbook.jpg`,
     isbn: "9781544549828",
-    datePublished: "2025-11-11",
+    datePublished: "2025-11-18",
     bookFormat: "https://schema.org/Paperback",
     inLanguage: "en",
     author: [

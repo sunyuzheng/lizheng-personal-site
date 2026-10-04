@@ -1,0 +1,991 @@
+{
+  "collection": "Statsig博客文章中文版（立正）",
+  "source_site": "https://www.statsig.com/blog",
+  "generated_at": "2026-10-04",
+  "language": "zh-CN",
+  "article_count": 19,
+  "coauthored_count": 2,
+  "image_count": 35,
+  "header_image_count": 2,
+  "zh_char_count_total": 43898,
+  "rights_note": "立正说明他是这些内容的权利方，可做中文改写并公开；合著文章需写明合著者。标为third-party/unknown的图片版权不属于立正，公开前需单独处理。",
+  "articles": [
+    {
+      "slug": "pragmatic-data-science-launch",
+      "file": "20240208-pragmatic-data-science-launch.md",
+      "url": "https://www.statsig.com/blog/pragmatic-data-science-launch",
+      "title_en": "Why I launched a data science YouTube channel",
+      "title_zh": "为什么我要开一个数据科学YouTube频道",
+      "published_date": "2024-02-08",
+      "published_at": "2024-02-08T00:01-08:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": true,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/2RUjrs2nBNHQ76bfQJVPMX/b97e7b8c93595222f04f4bad378622e1/24.02.07_1200x600_WhyIStartedMyChannel.jpg",
+      "header_image": {
+        "file": "images/pragmatic-data-science-launch/00-header-photo.jpg",
+        "caption_zh": "原文头图：我拿着电脑，屏幕上是我的一期YouTube视频，前面是录视频用的麦克风和三脚架。",
+        "original_url": "https://images.ctfassets.net/083zfbgkrzxz/2RUjrs2nBNHQ76bfQJVPMX/b97e7b8c93595222f04f4bad378622e1/24.02.07_1200x600_WhyIStartedMyChannel.jpg",
+        "source_type": "statsig",
+        "source_note": "Statsig博客的原文头图，是立正本人的照片",
+        "bytes": 64950
+      },
+      "en_word_count": 1342,
+      "zh_char_count": 2119,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文嵌入的3个YouTube视频改为文字链接。",
+        "头图是立正本人的照片，按立正的意思放回了文章开头。"
+      ]
+    },
+    {
+      "slug": "novelty-effects",
+      "file": "20240320-novelty-effects.md",
+      "url": "https://www.statsig.com/blog/novelty-effects",
+      "title_en": "Novelty effects: Everything you need to know",
+      "title_zh": "关于新奇效应，你需要知道的都在这里",
+      "published_date": "2024-03-20",
+      "published_at": "2024-03-20T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/novelty-effects/01-cumulative-scorecard.png",
+          "caption_zh": "图1　实验结果的累计视图（Cumulative）。这是Statsig实验结果页的截图：一个示例实验在2024年1月22日到2月22日之间，三个实验组相对对照组在Purchase Revenue（购买收入）上的累计差值和置信区间。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1C9252OL7VP6uw8MaI6eFT/2651097fcf1358dfa60f44f8fe090d1c/image2.png",
+          "original_alt": "novelty effects time series ",
+          "source_type": "statsig",
+          "source_note": "Statsig实验结果页面截图",
+          "bytes": 68164
+        },
+        {
+          "file": "images/novelty-effects/02-daily-view-of-treatment-effects.jpg",
+          "caption_zh": "图2　处理效应的每日视图（Daily）：同一个实验里「Social Proof」组对比对照组，每天单独计算的Purchase Revenue差值和置信区间。原文这两张截图的图注写反了，这里按截图实际内容标注。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1coMoafupEsSqvCy0fvQFb/7c0f4e3e225230caf35f7c826a0b8a23/image3.jpg",
+          "original_alt": "novelty effects days since exposure view",
+          "source_type": "statsig",
+          "source_note": "Statsig实验结果页面截图",
+          "bytes": 74717
+        },
+        {
+          "file": "images/novelty-effects/03-days-since-exposure-view.jpg",
+          "caption_zh": "图3　距首次曝光天数的视图（Days Since Exposure）：把用户按「第一次进入实验之后的第几天」对齐，看每一天的处理效应。越往右，曝光够久的用户越少，置信区间越宽，结果也越不显著（灰色）。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1cXGXbpus0uvp8jqVS2pUM/e60c49407893544a796aaeae7d6eb92f/image1.jpg",
+          "original_alt": "novelty effects daily view of treatment effects",
+          "source_type": "statsig",
+          "source_note": "Statsig实验结果页面截图",
+          "bytes": 79916
+        }
+      ],
+      "images_in_original_body": 3,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/69Ykeiv522qAAezxMPi0ya/db6f8535decfb4aa59aceab283ffdc5b/image.png",
+      "header_image": null,
+      "en_word_count": 1395,
+      "zh_char_count": 2330,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文第2、3张截图的图注写反了：标着「daily view」的其实是「Days Since Exposure」视图，反之亦然。中文版按截图实际内容配图注，并把两张图放到与正文对应的位置；文件已按内容重命名。"
+      ]
+    },
+    {
+      "slug": "hypothesis-testing-explained",
+      "file": "20240722-hypothesis-testing-explained.md",
+      "url": "https://www.statsig.com/blog/hypothesis-testing-explained",
+      "title_en": "Hypothesis Testing explained in 4 parts",
+      "title_zh": "四步讲清楚假设检验",
+      "published_date": "2024-07-22",
+      "published_at": "2024-07-22T11:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/hypothesis-testing-explained/01-central-limit-theorem.webp",
+          "caption_zh": "图1　中心极限定理：不管总体是正态、均匀、偏态还是不规则的分布（第一行），样本量为10和30时，样本均值的抽样分布（第二、三行）都越来越接近正态分布。图片来源：[一篇Medium文章](https://medium.com/@amanatulla1606/python-implementation-of-central-limit-theorem-exploring-sample-data-to-infer-population-595e39e0c98e)，原文引用。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6GdqxMfglGqqF4e6PoHpnh/998cd723a6edcf13339fa87f8738e1ad/1.webp",
+          "original_alt": "Central Limit Theorem",
+          "source_type": "third-party",
+          "source_note": "中心极限定理示意图，原文注明来自一篇Medium文章（https://medium.com/@amanatulla1606/python-implementation-of-central-limit-theorem-exploring-sample-data-to-infer-population-595e39e0c98e）",
+          "bytes": 9060
+        },
+        {
+          "file": "images/hypothesis-testing-explained/02-standard-deviation-v-standard-error.png",
+          "caption_zh": "图2　原假设下的「背后的分布」：均值为0，标准差为1。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/5HsnVtsCkY5R6kG3RHwnHD/5e8e9f312d22268dab1dc4346ca4f91a/2.png",
+          "original_alt": "Standard Deviation v Standard Error",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 44635
+        },
+        {
+          "file": "images/hypothesis-testing-explained/03-standard-deviation-and-standard-error-2-images.png",
+          "caption_zh": "图3　上：背后的分布，标准差为1。下：样本量为30时样本均值的分布，标准误为0.18，窄得多。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/7yOvLZQKR7LhfC1uSFXodj/caaf724a78ecc649ef54f2e3958f3e53/3.png",
+          "original_alt": "Standard Deviation and Standard Error 2 Images",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 100905
+        },
+        {
+          "file": "images/hypothesis-testing-explained/04-null-hypothesis-yz.png",
+          "caption_zh": "图4　样本量为30时，原假设下样本均值的分布。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/4Yx41sPzmBrKzLDOJWT9vL/5705820dbd93a212032aa77a52853bd6/4.png",
+          "original_alt": "Null Hypothesis YZ",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 22017
+        },
+        {
+          "file": "images/hypothesis-testing-explained/05-type-i-error-alpha-critical-value.png",
+          "caption_zh": "图5　样本量为30时，α=5%对应的临界值是0.30。样本均值落在0.30左边就接受原假设，落在右边就拒绝原假设；蓝色阴影的面积就是α。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/nmNvbWG1dZifvkHnwJu1P/98a2f8d48d4c4d3846b067513dc30aa3/5.png",
+          "original_alt": "Type I Error Alpha Critical Value",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 140527
+        },
+        {
+          "file": "images/hypothesis-testing-explained/06-alternative-hypotheses-theoretical.png",
+          "caption_zh": "图6　样本量为30时，观察到的样本均值约为0.51（橙色竖线）。蓝色是原假设，红色是均值从0.1到0.9的一系列备择假设：它们都有可能是真的。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/5LWScOdqUBl8l6IiUxknAM/b3b4d6025bcbb76365120745774203b9/6.png",
+          "original_alt": "Alternative hypotheses theoretical",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 565755
+        },
+        {
+          "file": "images/hypothesis-testing-explained/07-type-ii-error-and-beta.png",
+          "caption_zh": "图7　样本量为30时，原假设（蓝）和均值为0.5的备择假设（红）。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1HNzluqafkCFMkJvHeQNYi/905922626b57bdee3c742b4b8d899719/7.png",
+          "original_alt": "Type II Error and Beta",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 34096
+        },
+        {
+          "file": "images/hypothesis-testing-explained/08-reject-alternative-and-accept-null.png",
+          "caption_zh": "图8　同样以0.30为临界值：左边是「拒绝备择假设、接受原假设」，右边是「拒绝原假设、接受备择假设」。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/7wfCbK2OHZ5Ty2W9fCtmgp/d9b166a4742d1d08c541e17ac3681750/8.png",
+          "original_alt": "Reject alternative and accept null",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 213413
+        },
+        {
+          "file": "images/hypothesis-testing-explained/09-null-hypothesis-alternative-hypothesis.png",
+          "caption_zh": "图9　临界值0.30时，α=5.0%（蓝色面积），β=13.7%（红色面积）。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/2WEC9f9ccH4GfzBVn7aXYj/74987566e8ec74fb9ae8e92b0dd2adf9/9.png",
+          "original_alt": "Null hypothesis alternative hypothesis",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 41789
+        },
+        {
+          "file": "images/hypothesis-testing-explained/10-sample-size-30-for-null-and-alternative-hypothesis.png",
+          "caption_zh": "图10　备择假设的均值换成1以后，在同样的临界值0.30下，β从13.7%变成了0.0%。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6lvnInDFkiYlChUVNBdDLv/75b51fdf25e9be99224ad7b13c5643f1/10.png",
+          "original_alt": "Sample Size 30 for Null and Alternative Hypothesis",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 41168
+        },
+        {
+          "file": "images/hypothesis-testing-explained/11-understand-power-hypothesis.png",
+          "caption_zh": "图11　样本量为30、α=5%时，对均值为0.5的备择假设，power = 1−β = 86.3%（黄色面积）。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/72zqlc8TvKDRkqVdMNfZQZ/80b493ecf517d1e0c38c8dd36d866dd9/11.png",
+          "original_alt": "Understand Power Hypothesis",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 45852
+        },
+        {
+          "file": "images/hypothesis-testing-explained/12-same-size-from-30-to-100.png",
+          "caption_zh": "图12　上：样本量30，临界值0.30，power为86.3%（红色阴影是β）。下：样本量100，两个分布都变窄，保持α=5%，临界值降到0.16，power接近100%（图中显示为100.0%）。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/3uRSUdRywaauKgbaxj7Jj8/9e9e0c7ac308f271b230b07984b2ae8a/12.png",
+          "original_alt": "Same size from 30 to 100 ",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 80452
+        },
+        {
+          "file": "images/hypothesis-testing-explained/13-relationship-between-mde.png",
+          "caption_zh": "图13　样本量为30时，均值为0.50的备择假设对应的power是86.3%。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1o4goddGBnT06YYD1BRynq/277b32907c3b4ba1ff06adae2764bd38/13.png",
+          "original_alt": "Relationship between MDE",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 45911
+        },
+        {
+          "file": "images/hypothesis-testing-explained/14-mde-alternative-hypothesis-pt-2.png",
+          "caption_zh": "图14　样本量为30、α=5%时，均值为0.45的备择假设对应的power正好是80%。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/61e5TZbYbyIw6bXyl8PHQR/ff2a04585e63690442491f44cdedbfbe/14.png",
+          "original_alt": "MDE Alternative Hypothesis pt 2",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 46067
+        },
+        {
+          "file": "images/hypothesis-testing-explained/15-not-enough-power-mde.png",
+          "caption_zh": "图15　以均值0.45为界：备择假设的均值落在它左边，power不够；落在右边，power足够。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6jNkxC7TE7nbmGuQ8BEU72/f9f39f53de3a43b291714be99fb04f3b/15.png",
+          "original_alt": "Not enough power MDE",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 235045
+        },
+        {
+          "file": "images/hypothesis-testing-explained/16-how-mde-changes-with-sample-size.png",
+          "caption_zh": "图16　保持α=5%、power=80%不变，样本量从30增加到100：临界值从0.30降到0.16，MDE从0.45降到0.25。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6MjKycjFEXccROPwBjNpJJ/a0bc17df8d7e947fb66a987bfbf146ee/16.png",
+          "original_alt": "How MDE changes with sample size",
+          "source_type": "first-party",
+          "source_note": "作者为本文绘制的统计示意图",
+          "bytes": 89053
+        },
+        {
+          "file": "images/hypothesis-testing-explained/17-statistical-power-curve.webp",
+          "caption_zh": "图17　统计功效曲线：同样的统计功效下，日活用户数和MDE（相对提升）的对应关系。日活100时MDE为68%，1,000时为21%，1万时为6.5%，10万时为2.1%，100万时为0.65%，1,000万时为0.20%。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/3eqIMlh9FaRTZguUsgy1ob/013f506a422de0dec44a7304307e1433/17.webp",
+          "original_alt": "Statistical Power Curve",
+          "source_type": "unknown",
+          "source_note": "原文未注明出处的统计功效曲线图",
+          "bytes": 69930
+        }
+      ],
+      "images_in_original_body": 17,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/4Igb5KJ4Zty8RKCzy6ZVcM/44493e7964ff7666040ce9be03ca66e0/Blog_Hypothesis_1800x900_071624.png",
+      "header_image": null,
+      "en_word_count": 3629,
+      "zh_char_count": 5799,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文第三部分有一句「we just fail to accept it」，是「fail to reject」的笔误，中文按原意写作「没能拒绝它」。",
+        "原文样本量从30增加到100那一段说两类错误都更少，中文按图中实际设定（α保持5%）写明了临界值和β的变化。"
+      ]
+    },
+    {
+      "slug": "technical-insights-to-a-scalable-experimentation-system",
+      "file": "20240828-technical-insights-to-a-scalable-experimentation-system.md",
+      "url": "https://www.statsig.com/blog/technical-insights-to-a-scalable-experimentation-system",
+      "title_en": "Technical insights to a scalable experimentation system",
+      "title_zh": "让实验系统能规模化：几条技术洞察",
+      "published_date": "2024-08-28",
+      "published_at": "2024-08-28T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/1kenlLE2PHISkIM0div4d9/c52328120827469dce37a893ca58faa4/456074312_399998679778467_2424593640802145152_n.jpg",
+      "header_image": null,
+      "en_word_count": 1209,
+      "zh_char_count": 2090,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文引言说提炼成「三条」技术洞察，正文实际列了四条；中文引言写作「几条」，正文保留四条。"
+      ]
+    },
+    {
+      "slug": "what-is-a-b-testing-and-why-is-it-important",
+      "file": "20240905-what-is-a-b-testing-and-why-is-it-important.md",
+      "url": "https://www.statsig.com/blog/what-is-a-b-testing-and-why-is-it-important",
+      "title_en": "What is A/B testing and why is it important?",
+      "title_zh": "什么是A/B实验，它为什么重要？",
+      "published_date": "2024-09-05",
+      "published_at": "2024-09-05T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/what-is-a-b-testing-and-why-is-it-important/01-systemic-reviews-of-meta-analysis.png",
+          "caption_zh": "图1　证据等级金字塔：从下往上依次是社论和专家意见、机理研究、病例报告和案例研究、横断面研究和调查、病例对照研究、队列研究、随机对照试验，最顶端是对RCT的系统综述和元分析。越往上，证据质量越高，偏差风险越低。图片来源：[ResearchGate](https://www.researchgate.net/figure/Hierarchy-of-evidence-pyramid-The-pyramidal-shape-qualitatively-integrates-the-amount-of_fig1_311504831)，原文引用。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6GYqpwv83ocJBCjwviOu2d/5d525d82553588d4cf7eee36568603c9/image2-min.png",
+          "original_alt": "systemic reviews of meta analysis",
+          "source_type": "third-party",
+          "source_note": "证据等级金字塔，原文链接到ResearchGate上的论文配图",
+          "bytes": 62090
+        },
+        {
+          "file": "images/what-is-a-b-testing-and-why-is-it-important/02-statsig-customer-story-with-recroom.png",
+          "caption_zh": "图2　Rec Room改版前（左）和改版后（右）的个人主页界面。新界面看起来更漂亮，却带来了核心指标的大幅下降。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/2ja16MhM94zikYiOBtYvCy/ef6f91d24be46406a9eee08f4764c1a1/image3-min.png",
+          "original_alt": "statsig customer story with recroom",
+          "source_type": "statsig-with-third-party-ui",
+          "source_note": "Statsig客户案例素材，含Rec Room的产品界面",
+          "bytes": 105897
+        },
+        {
+          "file": "images/what-is-a-b-testing-and-why-is-it-important/03-rec-room-shipping-features-with-statsig.png",
+          "caption_zh": "图3　Rec Room迭代过程中核心指标相对V0基线的变化：V1上线后跌到约−35%，V2上线后回升到约−20%，直到V3上线才超过基线。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/7r4ZXmSwcfdsF5oJKEJVrm/0699f751fd46497826e0d12a4ad79809/image1-min.png",
+          "original_alt": "rec room shipping features with statsig",
+          "source_type": "statsig",
+          "source_note": "Statsig客户案例中的Rec Room指标走势图",
+          "bytes": 126906
+        },
+        {
+          "file": "images/what-is-a-b-testing-and-why-is-it-important/04-your-product-metric-over-time.png",
+          "caption_zh": "图4　左：上线的功能里，有的达到了预期效果，有的需要继续迭代，有的应该关掉。右：如果把有负面影响的功能X、Y、Z都上线了，产品指标走的是下面那条绿红曲线；没上线它们，走的是上面那条黑色曲线。图片来源：Vineeth Madhusudanan，Statsig。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1GZGYucI1rQ2CnSnz5RIMg/43241335acf95f64072ea1b89f8614b9/image4-min.png",
+          "original_alt": "your product metric over time",
+          "source_type": "statsig",
+          "source_note": "图上注明Source: Vineeth Madhusudanan, Statsig",
+          "bytes": 33393
+        }
+      ],
+      "images_in_original_body": 4,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/5NgNnhuGk9Ug9HLOEYAqfU/c1132dc1a72ee21ed9fcd830302629af/Blog_ABtesting_1800x900_090524.png",
+      "header_image": null,
+      "en_word_count": 750,
+      "zh_char_count": 1413,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "身高例子的英寸后补了厘米换算。"
+      ]
+    },
+    {
+      "slug": "meta-a-b-testing",
+      "file": "20240910-meta-a-b-testing.md",
+      "url": "https://www.statsig.com/blog/meta-a-b-testing",
+      "title_en": "How Meta made me a big-time A/B testing advocate",
+      "title_zh": "Meta怎样把我变成了A/B实验的铁杆支持者",
+      "published_date": "2024-09-10",
+      "published_at": "2024-09-10T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/meta-a-b-testing/01-yuzheng-sun-on-youtube-reviewing-statsig.png",
+          "caption_zh": "图1　那期视频的YouTube后台截图：「How can Big Techs run AB Testing so efficiently? An insider view by Statsig CEO」，从发布到2024年7月30日共有4,960次观看。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/4JyPjC69yNeibjZdhJevdi/054aa899349a0fc8cce4348437dff856/image1.png",
+          "original_alt": "yuzheng sun on youtube reviewing statsig",
+          "source_type": "first-party",
+          "source_note": "立正自己YouTube后台的截图",
+          "bytes": 95454
+        },
+        {
+          "file": "images/meta-a-b-testing/02-two-masks.jpg",
+          "caption_zh": "图2　实验的两个版本：同一件商品（30美元的LED光疗面罩），左边是带场景的原生图片，右边是白底图。哪一个更像电商？",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/03rZ7y30qvt9CmrJ9eNtR/5b7b7ecac6cd3bd93bd714575999a458/two_masks.jpg",
+          "original_alt": "two masks",
+          "source_type": "unknown",
+          "source_note": "实验两个版本的示意（Marketplace商品图），商品照片来源原文未说明",
+          "bytes": 65925
+        }
+      ],
+      "images_in_original_body": 2,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/3lqVrjBTgAZuJiPlOTP2LR/b23697c3810eae62f01bc69aa3968ff4/Blog_Believer_1800x900_090524.png",
+      "header_image": null,
+      "en_word_count": 800,
+      "zh_char_count": 1325,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "hypothesis-testing-accept-null",
+      "file": "20240925-hypothesis-testing-accept-null.md",
+      "url": "https://www.statsig.com/blog/hypothesis-testing-accept-null",
+      "title_en": "Why you should \"accept\" the null hypothesis when hypothesis testing",
+      "title_zh": "做假设检验，为什么你应该「接受」原假设",
+      "published_date": "2024-09-25",
+      "published_at": "2024-09-25T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/hypothesis-testing-accept-null/01-a-poll-on-whether-or-not-to-accept-a-null-hypothes.png",
+          "caption_zh": "图1　一个关于「你能接受原假设吗？」的投票：45票里，89%选「不能，只能说无法拒绝」，4%选「能」，7%选「看情况」。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/3vu5B9xrigdE3QXyGNRyzj/c0fd57890fc2395fc067924a44ec70a4/null_hypothesis_screenshot.png",
+          "original_alt": "a poll on whether or not to accept a null hypothesis",
+          "source_type": "unknown",
+          "source_note": "投票截图，原文未说明是谁发起的投票",
+          "bytes": 63001
+        }
+      ],
+      "images_in_original_body": 1,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/4Igb5KJ4Zty8RKCzy6ZVcM/44493e7964ff7666040ce9be03ca66e0/Blog_Hypothesis_1800x900_071624.png",
+      "header_image": null,
+      "en_word_count": 1176,
+      "zh_char_count": 1727,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "how-ab-testing-platforms-make-data-science-more-interesting",
+      "file": "20241016-how-ab-testing-platforms-make-data-science-more-interesting.md",
+      "url": "https://www.statsig.com/blog/how-ab-testing-platforms-make-data-science-more-interesting",
+      "title_en": "How A/B testing platforms make data science more interesting",
+      "title_zh": "A/B实验平台怎样让数据科学变得更有意思",
+      "published_date": "2024-10-16",
+      "published_at": "2024-10-16T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/how-ab-testing-platforms-make-data-science-more-interesting/01-a-chart-showing-what-we-expect-the-impact-of-our-f.jpg",
+          "caption_zh": "图1　预期与现实。预期：我们做的每个功能都是好的。现实：逐个衡量影响以后，大约1/3应该关掉，1/3没什么影响、有时需要继续迭代，1/3达到了预期效果，另外还有一些你在过程中学到并做出来的新东西。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/lMcaBVEEbZpCWisKTXoBf/0b7230a84383184621de2a9d1af78437/which_features_to_ship.jpg",
+          "original_alt": "a chart showing what we expect the impact of our features will be, versus the reality: that many should be turned off, or have no impact",
+          "source_type": "unknown",
+          "source_note": "「预期与现实」示意图，原文未注明出处",
+          "bytes": 62527
+        }
+      ],
+      "images_in_original_body": 1,
+      "header_image_retained": true,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/2br4LrfutE9xz5uh5gDnRx/d25d4a5b0ad8651890a7806432dc86dc/data_scientists_jobs_are_more_interesting_with_ab_testing_platforms.jpg",
+      "header_image": {
+        "file": "images/how-ab-testing-platforms-make-data-science-more-interesting/00-header-meetup-poster.jpg",
+        "caption_zh": "原文头图：这场线上分享的宣传海报，题目是「Data Scientists’ job is more interesting with A/B testing platforms」，两位嘉宾是Yuzheng Sun（Principal Data Scientist, Statsig）和Ronny Kohavi（Vice President & Technical Fellow）。",
+        "original_url": "https://images.ctfassets.net/083zfbgkrzxz/2br4LrfutE9xz5uh5gDnRx/d25d4a5b0ad8651890a7806432dc86dc/data_scientists_jobs_are_more_interesting_with_ab_testing_platforms.jpg",
+        "source_type": "statsig",
+        "source_note": "Statsig为这场线上分享做的宣传海报，上面有立正和Ronny Kohavi的照片",
+        "bytes": 81193
+      },
+      "en_word_count": 926,
+      "zh_char_count": 1684,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "这是一场线上分享的回顾，嘉宾Ronny Kohavi。引号里的原话和他讲的经历属于Ronny，已在文首说明。",
+        "原文嵌入的活动视频改为文字链接；头图是这场活动的宣传海报，按立正的意思放回了文章开头。"
+      ]
+    },
+    {
+      "slug": "balancing-scale-cost-performance-experimentation-systems",
+      "file": "20250211-balancing-scale-cost-performance-experimentation-systems.md",
+      "url": "https://www.statsig.com/blog/balancing-scale-cost-performance-experimentation-systems",
+      "title_en": "Balancing scale, cost, and performance in experimentation systems",
+      "title_zh": "实验系统怎样平衡规模、成本和性能",
+      "published_date": "2025-02-11",
+      "published_at": "2025-02-11T00:00-08:00",
+      "authors": [
+        {
+          "name": "Pushpendra Nagtode",
+          "role_on_page": "Data Engineer, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/pushpendra-nagtode",
+          "is_yuzheng": false
+        },
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Pushpendra Nagtode",
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [
+        "Pushpendra Nagtode"
+      ],
+      "coauthored": true,
+      "images": [
+        {
+          "file": "images/balancing-scale-cost-performance-experimentation-systems/01-image1.png",
+          "caption_zh": "图1　架构图。曝光事件和自定义/SDK事件进入流式系统；导入的事件和预先算好的指标由导入任务接入；两路数据都写进原始事件表。在BigQuery和Dataproc上运行的批处理任务分别计算用户指标和曝光，再计算实验结果，写入NoSQL数据库，用户通过Statsig控制台查看实验结果（Pulse）。另有每小时运行的批处理任务计算结果，支持用户在控制台里做分析。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/4iHeSImnKNm8xYLzZSDXq4/571db4f61244149ce7131acbd74724b4/image1.png",
+          "original_alt": "image1",
+          "source_type": "first-party",
+          "source_note": "原文Figure 1架构图（合著文章）",
+          "bytes": 252327
+        }
+      ],
+      "images_in_original_body": 1,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/3OLynayBfTBYw6CgFWfXsE/5e4326fec362e074bcff18eeb1acfe07/23.07.12_1200x600_Fast-tracking_your_growth_analytics.png",
+      "header_image": null,
+      "en_word_count": 712,
+      "zh_char_count": 1427,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "合著文章，第一作者Pushpendra Nagtode。文首已说明「我们」指两位作者，观点不归立正一人。"
+      ]
+    },
+    {
+      "slug": "bayesian-vs-frequentist-statistics",
+      "file": "20250211-bayesian-vs-frequentist-statistics.md",
+      "url": "https://www.statsig.com/blog/bayesian-vs-frequentist-statistics",
+      "title_en": "Bayesian vs. frequentist statistics: Not a big deal?",
+      "title_zh": "贝叶斯和频率学派之争，没那么大不了？",
+      "published_date": "2025-02-11",
+      "published_at": "2025-02-11T00:00-08:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/2ApFRAxIvN1Y3DABf4x0js/9e60056aa6faa604beaac5324dc3ad88/Blog_SeamlesslyTracking_1800x900_100724.png",
+      "header_image": null,
+      "en_word_count": 1151,
+      "zh_char_count": 1864,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "身高例子的英尺/英寸后补了厘米换算。"
+      ]
+    },
+    {
+      "slug": "correlation-vs-causation-guide",
+      "file": "20250227-correlation-vs-causation-guide.md",
+      "url": "https://www.statsig.com/blog/correlation-vs-causation-guide",
+      "title_en": "How to think about the relationship between correlation and causation",
+      "title_zh": "怎样想清楚相关和因果的关系",
+      "published_date": "2025-02-27",
+      "published_at": "2025-02-27T00:00-08:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/correlation-vs-causation-guide/01-survivorship-bias-plane-meme.png",
+          "caption_zh": "图1　讲幸存者偏差时常用的示意图：返航飞机上弹孔的分布。这个故事你可能已经听过了。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6rHPHhwKrmKlwBnaqCrEfX/c0fdef394d4b6b4222487c46f52d51e6/survivorship_bias_plane_meme.png",
+          "original_alt": "survivorship bias plane meme",
+          "source_type": "third-party",
+          "source_note": "广为流传的幸存者偏差飞机示意图，原文未注明出处；疑似维基共享资源上的Survivorship-bias图（CC BY-SA 4.0），公开前请核实",
+          "bytes": 101419
+        },
+        {
+          "file": "images/correlation-vs-causation-guide/02-linkedin-premium-upsell.png",
+          "caption_zh": "图2　LinkedIn的推销：「Premium会员的主页浏览量平均是普通会员的4倍」。截图来自我的LinkedIn主页。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/3xXI4z9lUYkUhfOcOm3wSD/5b68bc1c7eb86bf42409c5379d0b2a0d/linkedin_premium_upsell.png",
+          "original_alt": "linkedin premium upsell",
+          "source_type": "first-party-with-third-party-ui",
+          "source_note": "立正自己LinkedIn主页的截图，含LinkedIn界面和他的主页数据",
+          "bytes": 106162
+        },
+        {
+          "file": "images/correlation-vs-causation-guide/03-erik-gregory-linkedin-post.png",
+          "caption_zh": "图3　Erik Gregory的LinkedIn帖子「All useful analysis implies something causal」。他的论证是：分析有用，是因为它增加了效用；分析改变效用，是通过改变行动；分析能改变行动，是因为它让我们更理解做X和做Y分别会带来什么。所以，所有有用的分析都在提供因果上的理解。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/6GR2Q0Ua9XaZcq9COYYc0H/591fbabf448c598e21d09048056c500b/erik_gregory_linkedin_post.png",
+          "original_alt": "erik gregory linkedin post",
+          "source_type": "third-party",
+          "source_note": "Erik Gregory的LinkedIn帖子截图（他人内容和头像）",
+          "bytes": 100876
+        },
+        {
+          "file": "images/correlation-vs-causation-guide/04-a-simple-illustration-of-a-medical-bottle-that-say.jpg",
+          "caption_zh": "图4　示意图：一瓶「增高药」。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/3V3delPkqpc4g6jRGst5bJ/4205c934d92b6ec0009a8494768e4e87/height_boosting_pills.jpg",
+          "original_alt": "a simple illustration of a medical bottle that says ",
+          "source_type": "unknown",
+          "source_note": "「增高药」示意插画，原文未注明出处",
+          "bytes": 44207
+        },
+        {
+          "file": "images/correlation-vs-causation-guide/05-a-list-of.jpg",
+          "caption_zh": "图5　常被引用的「知名公司的aha moment」：Slack是团队之间发了2000条消息，Dropbox是在一台设备的一个Dropbox文件夹里放了一个文件，Zynga是用户注册后第二天回来，Twitter是关注了X个用户、其中Y%回关，Facebook是7天内加了10个好友，LinkedIn是Y天内建立X个联系。图片来源：Amplitude和Apptimize。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/2Pz69JjQ6qc22SU4Byccll/92ded568ef6b96eafa902c47f1d8aa1c/aha_moments.jpg",
+          "original_alt": "a list of ",
+          "source_type": "third-party",
+          "source_note": "图上有Amplitude和Apptimize标识，原文链接到Apptimize博客",
+          "bytes": 104617
+        }
+      ],
+      "images_in_original_body": 5,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/6CsBwRNiazmLF9bDZd18eU/02d1cdc8b2a313f5161d3ffaad5d12ce/Blog_1200x600_MarketplaceExperiments_041624.jpg",
+      "header_image": null,
+      "en_word_count": 1265,
+      "zh_char_count": 2329,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "身高例子的英寸后补了厘米换算。",
+        "原文正文把Erik Gregory误写作Erick，中文按截图署名写Erik。",
+        "Tom Cunningham的引文译成了中文，保留出处链接。"
+      ]
+    },
+    {
+      "slug": "data-driven-marketing-attribution-shortcomings",
+      "file": "20250311-data-driven-marketing-attribution-shortcomings.md",
+      "url": "https://www.statsig.com/blog/data-driven-marketing-attribution-shortcomings",
+      "title_en": "Why data-driven marketing attribution models don't work as promised",
+      "title_zh": "为什么「数据驱动」的营销归因模型兑现不了承诺",
+      "published_date": "2025-03-11",
+      "published_at": "2025-03-11T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [
+        {
+          "file": "images/data-driven-marketing-attribution-shortcomings/01-someone-shouting-random-numbers.png",
+          "caption_zh": "图1　「Claire's number dump」：一个人随口报出一串数字（「Eleventy-five」「Forty-twelve percent」）的表情包，截自美剧《摩登家庭》。",
+          "original_url": "https://images.ctfassets.net/083zfbgkrzxz/1hSclruEtYoaIfjHyUliDN/f29a207a5518ee668a2d6acf32fbe72c/image1.png",
+          "original_alt": "someone shouting random numbers",
+          "source_type": "third-party",
+          "source_note": "美剧《摩登家庭》截图做成的表情包",
+          "bytes": 72546
+        }
+      ],
+      "images_in_original_body": 1,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/2b96iJe6LTbFwn05XUJyrv/3be24d69a843961179046a211e05cc85/24.02.02_1200x600_FeatureFlagsToLaunchAIproduct.jpg",
+      "header_image": null,
+      "en_word_count": 1174,
+      "zh_char_count": 2239,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "informed-bayesian-ab-testing",
+      "file": "20250313-informed-bayesian-ab-testing.md",
+      "url": "https://www.statsig.com/blog/informed-bayesian-ab-testing",
+      "title_en": "Informed bayesian A/B testing: Two approaches",
+      "title_zh": "带信息先验的贝叶斯A/B实验：两种做法",
+      "published_date": "2025-03-13",
+      "published_at": "2025-03-13T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/19bfh1Nu9ii2gy1e0UPq0N/d8854761f867a7ec3f95b144aa9e4052/cover.jpg",
+      "header_image": null,
+      "en_word_count": 2083,
+      "zh_char_count": 3833,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文的「Type 1 / Type 2」指两种做法，不是第一类/第二类错误；中文写作「做法一/做法二」以免混淆。"
+      ]
+    },
+    {
+      "slug": "marketplace-challenges-in-ab-testing",
+      "file": "20250326-marketplace-challenges-in-ab-testing.md",
+      "url": "https://www.statsig.com/blog/marketplace-challenges-in-ab-testing",
+      "title_en": "Marketplace challenges in A/B testing and how to address them",
+      "title_zh": "在双边市场里做A/B实验：难在哪，怎么办",
+      "published_date": "2025-03-26",
+      "published_at": "2025-03-26T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/7IbY1CCVHtpE2fW66Zpi25/e508340b4cdb704d4b69492cee91c5fc/24.02.15_1200x600_HyperPersonalization.jpg",
+      "header_image": null,
+      "en_word_count": 1178,
+      "zh_char_count": 1849,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "why-ab-testing-is-ultimately-qualitative",
+      "file": "20250409-why-ab-testing-is-ultimately-qualitative.md",
+      "url": "https://www.statsig.com/blog/why-ab-testing-is-ultimately-qualitative",
+      "title_en": "Why A/B testing is ultimately qualitative",
+      "title_zh": "为什么说A/B实验最终是定性的",
+      "published_date": "2025-04-09",
+      "published_at": "2025-04-09T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/3lqVrjBTgAZuJiPlOTP2LR/b23697c3810eae62f01bc69aa3968ff4/Blog_Believer_1800x900_090524.png",
+      "header_image": null,
+      "en_word_count": 502,
+      "zh_char_count": 926,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "marketing-attribution-models-tech-survey",
+      "file": "20250417-marketing-attribution-models-tech-survey.md",
+      "url": "https://www.statsig.com/blog/marketing-attribution-models-tech-survey",
+      "title_en": "Digital marketing attribution models: A tech survey",
+      "title_zh": "数字营销归因模型：一份技术综述",
+      "published_date": "2025-04-17",
+      "published_at": "2025-04-17T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/3w1D8l9CjZW6jVxDqKjvyU/7a3acfad3171a7ce2dd38561f41aea26/Blog_Kubernetes_1800x900_091624.png",
+      "header_image": null,
+      "en_word_count": 3724,
+      "zh_char_count": 5816,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "公式改用$$…$$的LaTeX写法；参考文献保留英文原题，括号里补中文说明。"
+      ]
+    },
+    {
+      "slug": "addressing-complexity-in-enterprise-scale-experimentation",
+      "file": "20250423-addressing-complexity-in-enterprise-scale-experimentation.md",
+      "url": "https://www.statsig.com/blog/addressing-complexity-in-enterprise-scale-experimentation",
+      "title_en": "Addressing complexity in enterprise-scale experimentation",
+      "title_zh": "实验跑到成千上万个时，怎样应对复杂度",
+      "published_date": "2025-04-23",
+      "published_at": "2025-04-23T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/4pg6R80pIvY2KRf5PlkfV7/a78a5b5bd54662b0c1db11448b03151c/24.02.15_1200x600_AbTestingVsSplitTesting.jpg",
+      "header_image": null,
+      "en_word_count": 847,
+      "zh_char_count": 1507,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": []
+    },
+    {
+      "slug": "speeding-up-a-b-tests-with-discipline",
+      "file": "20250624-speeding-up-a-b-tests-with-discipline.md",
+      "url": "https://www.statsig.com/blog/speeding-up-a-b-tests-with-discipline",
+      "title_en": "Speeding up A/B tests with discipline",
+      "title_zh": "靠纪律给A/B实验提速",
+      "published_date": "2025-06-24",
+      "published_at": "2025-06-24T00:00-07:00",
+      "authors": [
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [],
+      "coauthored": false,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/3ILBg0yLyzgq4idhOwdVIJ/dc7687c24f770aa48403cff153daee54/23.12.19_1200x600_CMS2.jpg",
+      "header_image": null,
+      "en_word_count": 1072,
+      "zh_char_count": 1777,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "原文「Bring an ___ only when…」漏了一个词（链接指向带信息先验的文章），中文按原意补为「带信息的先验」。",
+        "原文「If you have clear results for mutually exclusive tests」按上下文理解为「确实需要互斥的实验」。"
+      ]
+    },
+    {
+      "slug": "ai-startups-lessons-learned",
+      "file": "20250808-ai-startups-lessons-learned.md",
+      "url": "https://www.statsig.com/blog/ai-startups-lessons-learned",
+      "title_en": "Sink, swim, or scale: What startups teach us about launching AI",
+      "title_zh": "被浪打翻，还是乘浪而起：从创业公司看AI产品怎样上线",
+      "published_date": "2025-08-08",
+      "published_at": "2025-08-08T00:00-07:00",
+      "authors": [
+        {
+          "name": "Alexey Komissarouk",
+          "role_on_page": "Growth Engineering Advisor",
+          "author_page": "https://www.statsig.com/blog/author/alexey-komissarouk",
+          "is_yuzheng": false
+        },
+        {
+          "name": "Yuzheng Sun, PhD",
+          "role_on_page": "Data Scientist, Statsig",
+          "author_page": "https://www.statsig.com/blog/author/yuzheng-sun",
+          "is_yuzheng": true
+        }
+      ],
+      "byline_order": [
+        "Alexey Komissarouk",
+        "Yuzheng Sun, PhD"
+      ],
+      "co_authors": [
+        "Alexey Komissarouk"
+      ],
+      "coauthored": true,
+      "images": [],
+      "images_in_original_body": 0,
+      "header_image_retained": false,
+      "header_image_url": "https://images.ctfassets.net/083zfbgkrzxz/HNEGavZiNTzJrEGaLbsyu/fe007169b0175bf87008b0a4c356d85c/Blog_ExpAgeofAI_062525-min.jpg",
+      "header_image": null,
+      "en_word_count": 1020,
+      "zh_char_count": 1844,
+      "zh_char_count_note": "正文汉字数（不含标点、英文、数字和文首信息）",
+      "editorial_notes": [
+        "合著文章，第一作者Alexey Komissarouk（客座作者）。文首已说明「我们」指两位作者，观点不归立正一人。"
+      ]
+    }
+  ]
+}

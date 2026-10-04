@@ -42,6 +42,7 @@ import {
 } from "../shared/structured-data.ts";
 import App from "../client/src/App.tsx";
 import { bookSitemapUrls } from "./book-pages.ts";
+import { writingSitemapUrls } from "./writing-pages.ts";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -304,6 +305,7 @@ function buildSitemapXml(guests: GuestProfile[]) {
       lastmod: "2026-09-29",
     },
     ...bookSitemapUrls(),
+    ...writingSitemapUrls(),
     ...guests.map(guest => ({
       loc: guest.share_url,
       lastmod: latestDate(guest.episodes.map(episode => episode.publishedAt)),

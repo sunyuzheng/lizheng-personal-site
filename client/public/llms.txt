@@ -68,6 +68,10 @@ Metrics change and should retain their dates.
 - [Growth Data Analytics Playbook 中文版](https://www.lizheng.ai/book/growth-data-analytics-playbook): the free Chinese edition, rewritten in Yuzheng's Chinese voice with every chart and exercise kept; read each chapter online or download the EPUB or PDF.
 - [真本事：从会工作到会赚钱](https://www.lizheng.ai/zbs): written by Yuzheng Sun and published by 人民邮电出版社; career agency, capability building, side projects, and compounding work.
 
+## Statsig Blog Posts in Chinese
+
+- [在Statsig写的文章](https://www.lizheng.ai/writing/statsig): Chinese editions of the 19 posts Yuzheng wrote on the Statsig blog between February 2024 and August 2025, one page each, on A/B testing, hypothesis testing, Bayesian and frequentist statistics, correlation and causation, marketing attribution, and experimentation systems. Every chart is kept and every page links its English original. Two posts are co-authored (with Pushpendra Nagtode and with Alexey Komissarouk, each listed first on the original), and one is a recap of a webinar with Ronny Kohavi; those pages say whose views are whose.
+
 ## Dated Public Judgment
 
 Two public videos in April 2021 explained the limits of the dominant AI paradigm and how to distinguish useful machine-learning applications from impressive-looking demonstrations. In February 2023, before GPT-4, Yuzheng wrote [关于ChatGPT最重要的五个问题](https://www.superlinear.academy/c/ai-resources/chatgpt). A [public snapshot available by 2023-03-06](https://www.huxiu.com/article/812076.html) argued that ChatGPT was a new natural-language interface to data and computation and reasoned forward to falling inference costs, tool-connected workflows, persistent memory, direct result delivery, and ChatGPT-native systems. The living article preserves its original probabilities and later records two major errors. Private search and the Microsoft 365 Copilot section were later additions, not part of the pre-GPT-4 snapshot.

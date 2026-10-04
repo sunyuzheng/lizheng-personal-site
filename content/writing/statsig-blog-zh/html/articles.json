@@ -1,0 +1,379 @@
+[
+  {
+    "slug": "pragmatic-data-science-launch",
+    "title": "为什么我要开一个数据科学YouTube频道",
+    "description": "数据分析做得再好，决策也可能很糟。得有人把基本概念一遍遍讲清楚，这是我开频道的原因。",
+    "originalTitle": "Why I launched a data science YouTube channel",
+    "originalUrl": "https://www.statsig.com/blog/pragmatic-data-science-launch",
+    "date": "2024-02-08",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 1
+  },
+  {
+    "slug": "novelty-effects",
+    "title": "关于新奇效应，你需要知道的都在这里",
+    "description": "新奇效应是处理效应的一部分，不该用统计方法去修正。看处理效应的时间序列，就能发现和控制它。",
+    "originalTitle": "Novelty effects: Everything you need to know",
+    "originalUrl": "https://www.statsig.com/blog/novelty-effects",
+    "date": "2024-03-20",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 3
+  },
+  {
+    "slug": "hypothesis-testing-explained",
+    "title": "四步讲清楚假设检验",
+    "description": "从标准误一路推到α、β、power和MDE，用17张图讲清楚：样本越大，能发现的效应越小。",
+    "originalTitle": "Hypothesis Testing explained in 4 parts",
+    "originalUrl": "https://www.statsig.com/blog/hypothesis-testing-explained",
+    "date": "2024-07-22",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 17
+  },
+  {
+    "slug": "technical-insights-to-a-scalable-experimentation-system",
+    "title": "让实验系统能规模化：几条技术洞察",
+    "description": "限制实验规模化的，是信息过载和管理复杂度。四条系统设计上的做法，让多跑实验不再越来越贵。",
+    "originalTitle": "Technical insights to a scalable experimentation system",
+    "originalUrl": "https://www.statsig.com/blog/technical-insights-to-a-scalable-experimentation-system",
+    "date": "2024-08-28",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "what-is-a-b-testing-and-why-is-it-important",
+    "title": "什么是A/B实验，它为什么重要？",
+    "description": "随机分组让两组的差异只来自处理本身。人不擅长归因，也不擅长预测自己的想法，所以需要A/B实验。",
+    "originalTitle": "What is A/B testing and why is it important?",
+    "originalUrl": "https://www.statsig.com/blog/what-is-a-b-testing-and-why-is-it-important",
+    "date": "2024-09-05",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 4
+  },
+  {
+    "slug": "meta-a-b-testing",
+    "title": "Meta怎样把我变成了A/B实验的铁杆支持者",
+    "description": "在Facebook Marketplace做电商，上线后几乎所有指标都在跌。一个白底图实验，让争论很快平息。",
+    "originalTitle": "How Meta made me a big-time A/B testing advocate",
+    "originalUrl": "https://www.statsig.com/blog/meta-a-b-testing",
+    "date": "2024-09-10",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 2
+  },
+  {
+    "slug": "hypothesis-testing-accept-null",
+    "title": "做假设检验，为什么你应该「接受」原假设",
+    "description": "能不能「接受」原假设，要看你用的是Fisher的框架，还是Neyman-Pearson的框架。",
+    "originalTitle": "Why you should \"accept\" the null hypothesis when hypothesis testing",
+    "originalUrl": "https://www.statsig.com/blog/hypothesis-testing-accept-null",
+    "date": "2024-09-25",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 1
+  },
+  {
+    "slug": "how-ab-testing-platforms-make-data-science-more-interesting",
+    "title": "A/B实验平台怎样让数据科学变得更有意思",
+    "description": "Ronny Kohavi线上分享的回顾。自动化把数据科学家从重复劳动里解放出来，实验规模化真正的敌人是一厢情愿。",
+    "originalTitle": "How A/B testing platforms make data science more interesting",
+    "originalUrl": "https://www.statsig.com/blog/how-ab-testing-platforms-make-data-science-more-interesting",
+    "date": "2024-10-16",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [
+      "这篇回顾的是Ronny Kohavi的一场线上分享。引号里的原话和他讲的经历是Ronny的，三点收获和评论是我的。"
+    ],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 2
+  },
+  {
+    "slug": "balancing-scale-cost-performance-experimentation-systems",
+    "title": "实验系统怎样平衡规模、成本和性能",
+    "description": "从Databricks到BigQuery，再到Spark加Iceberg：实验数据平台在规模变大时怎样控制成本。",
+    "originalTitle": "Balancing scale, cost, and performance in experimentation systems",
+    "originalUrl": "https://www.statsig.com/blog/balancing-scale-cost-performance-experimentation-systems",
+    "date": "2025-02-11",
+    "byline": "Pushpendra Nagtode（Statsig数据工程师）、Yuzheng Sun（立正，Statsig数据科学家），按原文署名顺序",
+    "notes": [
+      "这篇是Pushpendra Nagtode和我合写的，原文他署名在前。文中的「我们」指我们两人和当时的Statsig团队。"
+    ],
+    "authors": [
+      {
+        "name": "Pushpendra Nagtode",
+        "role": "Data Engineer, Statsig",
+        "yuzheng": false
+      },
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": true,
+    "figures": 1
+  },
+  {
+    "slug": "bayesian-vs-frequentist-statistics",
+    "title": "贝叶斯和频率学派之争，没那么大不了？",
+    "description": "两派对同一份数据给出不同的解读，做出的决策往往一样。真正会改变决策的，是带信息的先验。",
+    "originalTitle": "Bayesian vs. frequentist statistics: Not a big deal?",
+    "originalUrl": "https://www.statsig.com/blog/bayesian-vs-frequentist-statistics",
+    "date": "2025-02-11",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "correlation-vs-causation-guide",
+    "title": "怎样想清楚相关和因果的关系",
+    "description": "相关 ≈ 因果 + 选择偏差。记住这个公式，就能看穿大多数「aha moment」。",
+    "originalTitle": "How to think about the relationship between correlation and causation",
+    "originalUrl": "https://www.statsig.com/blog/correlation-vs-causation-guide",
+    "date": "2025-02-27",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 5
+  },
+  {
+    "slug": "data-driven-marketing-attribution-shortcomings",
+    "title": "为什么「数据驱动」的营销归因模型兑现不了承诺",
+    "description": "马尔可夫链和Shapley值算出来的仍然是相关。渠道真正带来多少增量，要靠实验来量。",
+    "originalTitle": "Why data-driven marketing attribution models don't work as promised",
+    "originalUrl": "https://www.statsig.com/blog/data-driven-marketing-attribution-shortcomings",
+    "date": "2025-03-11",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 1
+  },
+  {
+    "slug": "informed-bayesian-ab-testing",
+    "title": "带信息先验的贝叶斯A/B实验：两种做法",
+    "description": "用先验移动点估计，容易被拿来操纵结果；用先验收紧区间，又会拖慢决策。怎样负责任地用先验。",
+    "originalTitle": "Informed bayesian A/B testing: Two approaches",
+    "originalUrl": "https://www.statsig.com/blog/informed-bayesian-ab-testing",
+    "date": "2025-03-13",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "marketplace-challenges-in-ab-testing",
+    "title": "在双边市场里做A/B实验：难在哪，怎么办",
+    "description": "买家和卖家互相影响，按用户随机会污染对照组。按簇随机、轮换实验和分阶段放量各有取舍。",
+    "originalTitle": "Marketplace challenges in A/B testing and how to address them",
+    "originalUrl": "https://www.statsig.com/blog/marketplace-challenges-in-ab-testing",
+    "date": "2025-03-26",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "why-ab-testing-is-ultimately-qualitative",
+    "title": "为什么说A/B实验最终是定性的",
+    "description": "实验给出效应大小，决策还要权衡品牌、信任和相互冲突的目标。",
+    "originalTitle": "Why A/B testing is ultimately qualitative",
+    "originalUrl": "https://www.statsig.com/blog/why-ab-testing-is-ultimately-qualitative",
+    "date": "2025-04-09",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "marketing-attribution-models-tech-survey",
+    "title": "数字营销归因模型：一份技术综述",
+    "description": "从首次触达、最后触达，到马尔可夫链、Shapley值、uplift和深度学习：各类归因模型的公式和局限。",
+    "originalTitle": "Digital marketing attribution models: A tech survey",
+    "originalUrl": "https://www.statsig.com/blog/marketing-attribution-models-tech-survey",
+    "date": "2025-04-17",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "addressing-complexity-in-enterprise-scale-experimentation",
+    "title": "实验跑到成千上万个时，怎样应对复杂度",
+    "description": "实验多到成千上万个时，覆盖率、指标成熟度和假设质量，决定复杂度是催生洞察还是拖垮进度。",
+    "originalTitle": "Addressing complexity in enterprise-scale experimentation",
+    "originalUrl": "https://www.statsig.com/blog/addressing-complexity-in-enterprise-scale-experimentation",
+    "date": "2025-04-23",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "speeding-up-a-b-tests-with-discipline",
+    "title": "靠纪律给A/B实验提速",
+    "description": "并行跑实验、换成代理指标、用CUPED降方差、做序贯检验，把十一周的实验缩短到几周。",
+    "originalTitle": "Speeding up A/B tests with discipline",
+    "originalUrl": "https://www.statsig.com/blog/speeding-up-a-b-tests-with-discipline",
+    "date": "2025-06-24",
+    "byline": "Yuzheng Sun（立正）",
+    "notes": [],
+    "authors": [
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": false,
+    "figures": 0
+  },
+  {
+    "slug": "ai-startups-lessons-learned",
+    "title": "被浪打翻，还是乘浪而起：从创业公司看AI产品怎样上线",
+    "description": "AI产品上线时的四个增长难题：病毒式爆发、用量推高成本、提示词让新用户卡住，以及按用量定价。",
+    "originalTitle": "Sink, swim, or scale: What startups teach us about launching AI",
+    "originalUrl": "https://www.statsig.com/blog/ai-startups-lessons-learned",
+    "date": "2025-08-08",
+    "byline": "Alexey Komissarouk（客座作者，增长工程顾问）、Yuzheng Sun（立正，Statsig数据科学家），按原文署名顺序",
+    "notes": [
+      "这篇是Alexey Komissarouk和我合写的，原文他署名在前，是客座作者。文中的「我们」指我们两人。"
+    ],
+    "authors": [
+      {
+        "name": "Alexey Komissarouk",
+        "role": "Growth Engineering Advisor",
+        "yuzheng": false
+      },
+      {
+        "name": "Yuzheng Sun",
+        "role": "Data Scientist, Statsig",
+        "yuzheng": true
+      }
+    ],
+    "coauthored": true,
+    "figures": 0
+  }
+]

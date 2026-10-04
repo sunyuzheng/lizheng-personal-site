@@ -1,0 +1,71 @@
+<p>「原假设永远不能被接受！只能说无法拒绝！」这句话流传很广，但它根本上是有问题的。</p>
+<p>这个误解让很多人，甚至包括资深的统计学家，对假设检验的本质感到困惑。</p>
+<figure><img src="/writing/statsig/images/hypothesis-testing-accept-null/01-a-poll-on-whether-or-not-to-accept-a-null-hypothes.webp" alt="关于能否接受原假设的投票" width="948" height="437" loading="lazy" decoding="async" /><figcaption>图1　一个关于「你能接受原假设吗？」的投票：45票里，89%选「不能，只能说无法拒绝」，4%选「能」，7%选「看情况」。</figcaption></figure>
+<p>这篇文章把这件事讲清楚：</p>
+<ol type="1">
+<li>这个误解是从哪来的；</li>
+<li>为什么大家认为不应该接受原假设；</li>
+<li>为什么、以及在什么情况下，你其实应该接受它。</li>
+</ol>
+<h2 id="这个误解从哪来">这个误解从哪来</h2>
+<p>根源在于，现代教科书经常把Fisher的显著性检验和Neyman-Pearson的假设检验混在一起讲，却不解释两者之间的关键区别（<a href="https://en.wikipedia.org/wiki/Statistical_hypothesis_test">参考</a>）。</p>
+<p>这就像把两种运动的规则搅在一起。能不能用手碰球？要看你打的是篮球还是足球。在篮球场上说「用手碰球犯规」，毫无道理；可在假设检验框架下宣布「接受原假设是错的」，本质上就是在干这件事。</p>
+<p>那么，你到底能不能「接受」原假设？在Fisher的框架里，不能。在Neyman-Pearson的框架里，能，而且必须。</p>
+<h2 id="在fisher的框架下为什么接受原假设不好">在Fisher的框架下，为什么「接受原假设」不好</h2>
+<p>第一，光凭观察，我们永远没法确定地「证明」一个假设。因为对任何一个观察，可能为真的假设都有无穷多个，只是各自的概率不同。</p>
+<p>第二，在严格的Fisher p值框架里，根本没有备择假设。我们可以给拒绝原假设定一个阈值（比如p &lt; 0.05），但如果没能拒绝原假设，并没有一条同样清楚的规则告诉我们该「接受」哪个备择假设。Neyman-Pearson框架就不一样，那里有一个具体的备择假设，以及它对应的具体的β。</p>
+<p>第三，Fisher本来的立场就是，我们不应该把原假设当作百分之百确定为真。事实上，他并不支持一个固定的显著性水平（比如0.05），而是主张把p值看作一个连续的、反对原假设的证据强度。</p>
+<p>总结一下，在p值框架里说「接受一个假设」，危险在于：</p>
+<ul>
+<li>很多人会把「接受」原假设误读成「证明」了原假设，这是错的；</li>
+<li>「接受原假设」不是一个有严格定义的概念，而且偏离了检验的核心目的：根据观察，决定要不要拒绝原假设。</li>
+</ul>
+<p>所以，在Fisher的p值框架里，说「接受原假设」基本上是不成立的。但要注意，<strong>备择假设、α、β、power和最小可检测效应（MDE）这些说法，在这个语境里同样不该出现。</strong>如果有人一边用这些词，一边又说接受假设是犯规的，那这个人自己就不一致。</p>
+<h2 id="在neyman-pearson的框架下为什么接受原假设是必要的">在Neyman-Pearson的框架下，为什么「接受原假设」是必要的</h2>
+<p>在Neyman-Pearson框架里，「接受」原假设和备择假设，不仅是允许的，而且是必要的。不过，<strong>「接受」一个假设，不代表你相信它，只代表你按它为真来行动。</strong></p>
+<p>回想一下，做假设检验的时候，我们能把原假设和备择假设画出来，精确地算出α和β。如果不暂时假定其中一个假设为真，这一步根本做不了。</p>
+<p>Neyman-Pearson框架，也就是通常说的假设检验框架，是一套数学上自洽的方法，把观察、假设和决策规则连在一起，同时算出相关的概率。我有一期<a href="https://youtu.be/9q1Tn1HnY6I">15分钟的视频</a>，配了很多可视化，一步步带你走一遍这个框架。如果你曾经被教科书搞糊涂过，强烈推荐看一看。</p>
+<h2 id="选读fisher的框架和neyman-pearson的框架">选读：Fisher的框架和Neyman-Pearson的框架</h2>
+<p>如果你是第一次听说这是两套不同的框架，请先暂时忘掉你学过的东西，把这两套框架当成篮球和足球。下面是两者的对比。</p>
+<h3 id="fisher的框架">Fisher的框架</h3>
+<ul>
+<li><strong>重点是显著性检验</strong>：Fisher提出了显著性检验的概念，主要目标是判断观察到的数据是否提供了足够强的证据，让我们拒绝原假设。</li>
+<li><strong>原假设是默认的出发点</strong>：在Fisher的方法里，原假设（H₀）代表一个默认的立场：没有效应，或者没有差别。它是一个具体的假设，检验它的时候不一定要指定备择假设。</li>
+<li><strong>p值是核心</strong>：p值衡量的是，假设原假设为真，观察到和眼前一样极端、甚至更极端的数据的概率。p值越小，反对H₀的证据越强。</li>
+<li><strong>没有固定的显著性水平</strong>：Fisher不主张一个固定的显著性水平（比如0.05），而是建议把p值解读为反对H₀的连续的证据强度。</li>
+</ul>
+<h3 id="neyman-pearson的框架">Neyman-Pearson的框架</h3>
+<ul>
+<li><strong>把假设检验当作决策</strong>：Neyman和Pearson把假设检验形式化为在两个相互竞争的假设之间做决策的过程：原假设（H₀）和备择假设（H₁）。</li>
+<li><strong>原假设和备择假设对称对待</strong>：H₀和H₁都有明确的定义，检验的设计就是根据数据在两者之间做出选择。</li>
+<li><strong>控制错误率</strong>：这个框架引入了第一类错误（H₀为真时拒绝了H₀）和第二类错误（H₁为真时没能拒绝H₀）。显著性水平（α）和power（1−β）都是事先定好的，用来控制这两种错误率。</li>
+<li><strong>用临界区域做判断</strong>：Neyman-Pearson的方法不用p值，而是基于似然比或检验统计量，用临界值和临界区域来决定是否拒绝H₀。</li>
+</ul>
+<h2 id="两套框架定义原假设的主要区别">两套框架定义原假设的主要区别</h2>
+<ol type="1">
+<li><strong>目的和解读</strong>
+<ul>
+<li><em>Fisher</em>：原假设是一个有待检验的临时假定。它不一定要被明确地接受或拒绝，而是用来衡量反对它的证据有多强。</li>
+<li><em>Neyman-Pearson</em>：原假设是两个相互竞争的假设之一，检验程序的设计目的，就是在控制错误概率的前提下，对接受还是拒绝H₀做出明确的决定。</li>
+</ul></li>
+<li><strong>备择假设的角色</strong>
+<ul>
+<li><em>Fisher</em>：备择假设往往是隐含的，或者没有正式指定，重点在于评估反对H₀的证据。</li>
+<li><em>Neyman-Pearson</em>：备择假设（H₁）有明确的定义，检验就是为了区分H₀和H₁而构造的。</li>
+</ul></li>
+<li><strong>做决策还是评估证据</strong>
+<ul>
+<li><em>Fisher</em>：强调衡量反对H₀的证据，不一定要做出最终的决定。</li>
+<li><em>Neyman-Pearson</em>：强调在H₀和H₁之间做出决定，并把长期来看各类错误发生的频率考虑进去。</li>
+</ul></li>
+</ol>
+<h2 id="小结">小结</h2>
+<ul>
+<li><strong>Fisher的原假设</strong>：一个独一无二的具体假设，检验的是有没有显著的证据反对它，用p值来衡量证据。</li>
+<li><strong>Neyman-Pearson的原假设</strong>：决策框架里两个明确定义的假设之一，检验的设计目的是控制错误率，并在H₀和H₁之间做出选择。</li>
+</ul>
+<p><strong>参考文献：</strong></p>
+<ul>
+<li>Fisher, R.A. (1925). <em>Statistical Methods for Research Workers.</em></li>
+<li>Neyman, J., &amp; Pearson, E.S. (1933). “On the Problem of the Most Efficient Tests of Statistical Hypotheses.” <em>Philosophical Transactions of the Royal Society A</em>, 231(694-706), 289-337.</li>
+</ul>

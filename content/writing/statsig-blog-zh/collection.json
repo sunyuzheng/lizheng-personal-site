@@ -1,0 +1,90 @@
+{
+  "path": "/writing/statsig",
+  "title": "在Statsig写的文章",
+  "kicker": "文章 · 中文版",
+  "lede": "2024到2025年，我在Statsig博客上写了19篇英文文章，讲A/B实验、统计和数据科学。这里是中文版，保留了原文的图表，每篇都附原文链接。",
+  "description": "孙煜征（立正）2024到2025年在Statsig博客写的19篇文章的中文版：A/B实验、假设检验、贝叶斯与频率学派、因果推断、营销归因和实验系统，保留原文图表。",
+  "datePublished": "2026-10-04",
+  "dateModified": "2026-10-04",
+  "articles": [
+    {
+      "slug": "pragmatic-data-science-launch",
+      "description": "数据分析做得再好，决策也可能很糟。得有人把基本概念一遍遍讲清楚，这是我开频道的原因。"
+    },
+    {
+      "slug": "novelty-effects",
+      "description": "新奇效应是处理效应的一部分，不该用统计方法去修正。看处理效应的时间序列，就能发现和控制它。"
+    },
+    {
+      "slug": "hypothesis-testing-explained",
+      "description": "从标准误一路推到α、β、power和MDE，用17张图讲清楚：样本越大，能发现的效应越小。"
+    },
+    {
+      "slug": "technical-insights-to-a-scalable-experimentation-system",
+      "description": "限制实验规模化的，是信息过载和管理复杂度。四条系统设计上的做法，让多跑实验不再越来越贵。"
+    },
+    {
+      "slug": "what-is-a-b-testing-and-why-is-it-important",
+      "description": "随机分组让两组的差异只来自处理本身。人不擅长归因，也不擅长预测自己的想法，所以需要A/B实验。"
+    },
+    {
+      "slug": "meta-a-b-testing",
+      "description": "在Facebook Marketplace做电商，上线后几乎所有指标都在跌。一个白底图实验，让争论很快平息。"
+    },
+    {
+      "slug": "hypothesis-testing-accept-null",
+      "description": "能不能「接受」原假设，要看你用的是Fisher的框架，还是Neyman-Pearson的框架。"
+    },
+    {
+      "slug": "how-ab-testing-platforms-make-data-science-more-interesting",
+      "description": "Ronny Kohavi线上分享的回顾。自动化把数据科学家从重复劳动里解放出来，实验规模化真正的敌人是一厢情愿。",
+      "note": "这篇回顾的是Ronny Kohavi的一场线上分享。引号里的原话和他讲的经历是Ronny的，三点收获和评论是我的。"
+    },
+    {
+      "slug": "balancing-scale-cost-performance-experimentation-systems",
+      "description": "从Databricks到BigQuery，再到Spark加Iceberg：实验数据平台在规模变大时怎样控制成本。",
+      "note": "这篇是Pushpendra Nagtode和我合写的，原文他署名在前。文中的「我们」指我们两人和当时的Statsig团队。"
+    },
+    {
+      "slug": "bayesian-vs-frequentist-statistics",
+      "description": "两派对同一份数据给出不同的解读，做出的决策往往一样。真正会改变决策的，是带信息的先验。"
+    },
+    {
+      "slug": "correlation-vs-causation-guide",
+      "description": "相关 ≈ 因果 + 选择偏差。记住这个公式，就能看穿大多数「aha moment」。"
+    },
+    {
+      "slug": "data-driven-marketing-attribution-shortcomings",
+      "description": "马尔可夫链和Shapley值算出来的仍然是相关。渠道真正带来多少增量，要靠实验来量。"
+    },
+    {
+      "slug": "informed-bayesian-ab-testing",
+      "description": "用先验移动点估计，容易被拿来操纵结果；用先验收紧区间，又会拖慢决策。怎样负责任地用先验。"
+    },
+    {
+      "slug": "marketplace-challenges-in-ab-testing",
+      "description": "买家和卖家互相影响，按用户随机会污染对照组。按簇随机、轮换实验和分阶段放量各有取舍。"
+    },
+    {
+      "slug": "why-ab-testing-is-ultimately-qualitative",
+      "description": "实验给出效应大小，决策还要权衡品牌、信任和相互冲突的目标。"
+    },
+    {
+      "slug": "marketing-attribution-models-tech-survey",
+      "description": "从首次触达、最后触达，到马尔可夫链、Shapley值、uplift和深度学习：各类归因模型的公式和局限。"
+    },
+    {
+      "slug": "addressing-complexity-in-enterprise-scale-experimentation",
+      "description": "实验多到成千上万个时，覆盖率、指标成熟度和假设质量，决定复杂度是催生洞察还是拖垮进度。"
+    },
+    {
+      "slug": "speeding-up-a-b-tests-with-discipline",
+      "description": "并行跑实验、换成代理指标、用CUPED降方差、做序贯检验，把十一周的实验缩短到几周。"
+    },
+    {
+      "slug": "ai-startups-lessons-learned",
+      "description": "AI产品上线时的四个增长难题：病毒式爆发、用量推高成本、提示词让新用户卡住，以及按用量定价。",
+      "note": "这篇是Alexey Komissarouk和我合写的，原文他署名在前，是客座作者。文中的「我们」指我们两人。"
+    }
+  ]
+}

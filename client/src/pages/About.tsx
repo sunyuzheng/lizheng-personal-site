@@ -5,6 +5,7 @@ import CareerPath, { type CareerStep } from "@/components/home/CareerPath";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
+import { STATSIG_WRITING_PATH } from "@shared/writing-links";
 import { Button } from "@/components/ui/button";
 import { pick, useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -324,17 +325,29 @@ export default function About() {
               <p className="mt-5 text-lg leading-9 text-[#48443B]">
                 {copy.background}
               </p>
-              <a
-                href="https://economics.cornell.edu/historical-placement-phd-students"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-              >
-                {lang === "en"
-                  ? "Cornell Economics placement record"
-                  : "康奈尔经济学博士去向记录"}
-                <ExternalLink className="h-4 w-4" />
-              </a>
+              <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:gap-x-8">
+                <a
+                  href="https://economics.cornell.edu/historical-placement-phd-students"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                >
+                  {lang === "en"
+                    ? "Cornell Economics placement record"
+                    : "康奈尔经济学博士去向记录"}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+                {lang === "zh" && (
+                  // A static page outside the React app, so a plain link.
+                  <a
+                    href={STATSIG_WRITING_PATH}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                  >
+                    在Statsig写的19篇文章（中文版）
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </section>

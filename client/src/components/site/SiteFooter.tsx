@@ -2,6 +2,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Mail } from "lucide-react";
 import { Link } from "wouter";
+import { STATSIG_WRITING_PATH } from "@shared/writing-links";
 import LizhengMark from "./LizhengMark";
 import { CONTACT_EMAIL, SHOP_URL, SITE_COPY, SITE_PAGES } from "./site-content";
 import { SocialIcon, socialLinks } from "./social";
@@ -61,6 +62,12 @@ export default function SiteFooter() {
                   <Link href={withLanguage(item.href, lang)}>{item[lang]}</Link>
                 </li>
               ))}
+              {lang === "zh" && (
+                <li>
+                  {/* A static page outside the React app, so a plain link. */}
+                  <a href={STATSIG_WRITING_PATH}>Statsig文章</a>
+                </li>
+              )}
               <li>
                 <a href={SHOP_URL} target="_blank" rel="noopener noreferrer">
                   {copy.shop}

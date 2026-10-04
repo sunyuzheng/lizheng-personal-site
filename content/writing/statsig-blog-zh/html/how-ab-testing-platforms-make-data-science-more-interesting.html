@@ -1,0 +1,47 @@
+<figure><img src="/writing/statsig/images/how-ab-testing-platforms-make-data-science-more-interesting/00-header-meetup-poster.webp" alt="这场线上分享的宣传海报" width="1200" height="600" loading="lazy" decoding="async" /><figcaption>原文头图：这场线上分享的宣传海报，题目是「Data Scientists’ job is more interesting with A/B testing platforms」，两位嘉宾是Yuzheng Sun（Principal Data Scientist, Statsig）和Ronny Kohavi（Vice President &amp; Technical Fellow）。</figcaption></figure>
+<p>过去几年，数据科学这一行的格局发生了根本的变化。</p>
+<p>A/B实验平台变得非常高效，把设置实验、计算结果、出报告这些繁琐的工作大部分都自动化了。</p>
+<p>这个变化有两面。一方面，它<strong>把数据科学家从重复劳动里解放了出来</strong>；另一方面，很多人也开始问：<em>那我们现在该把精力放在哪里，才能创造更多价值，让自己的职业更进一步？</em></p>
+<p>所以我们邀请了实验领域最受尊敬的专家之一<a href="https://www.linkedin.com/in/ronnyk/">Ronny Kohavi</a>，做了一场线上分享，讲讲为什么他认为有了A/B实验平台之后，数据科学的工作反而变得更有意思了。</p>
+<p>完整视频在<a href="https://www.youtube.com/watch?v=nLyZ7e4VqKA">这里</a>，这篇文章分享一下我从这场活动里得到的几个要点。</p>
+<h3 id="我问ronny的问题">我问Ronny的问题</h3>
+<ol type="1">
+<li>自从《Trustworthy Online Controlled Experiments》（也就是常说的「河马书」）出版以来，实验自动化发展到了什么程度？</li>
+<li>这种自动化对数据科学家的角色有什么影响？</li>
+<li>接下来，数据科学家应该把重点放在哪里？</li>
+<li>怎样让领导层支持实验？</li>
+</ol>
+<p>如果你对这些话题感兴趣，可以看看<a href="https://1drv.ms/p/s!AuRxCGEOCRKGoux2TDawQXRGeXIYyg?e=Z2FXqt">他的slides</a>。他的完整回答我就不在这里重复了，下面总结三个最重要的收获，再摘几段值得一读的原话和它们的上下文。</p>
+<h2 id="三个收获">三个收获</h2>
+<h3 id="实验自动化对数据科学家有直接和间接两种好处">实验自动化对数据科学家有直接和间接两种好处</h3>
+<p>最明显的好处是，自动化把数据科学家从低价值的重复工作里解放了出来。A/B实验基本自动化以后，他们可以专注于更高层次的事情，比如形成业务洞察和制定策略。</p>
+<p>间接的好处影响更大。<a href="https://www.statsig.com/blog/product-development-cycle-improvement-guide">一个组织一旦形成了实验文化</a>，团队会被真实的数据教育得更谦虚，也更愿意接受推翻自己假设的证据。</p>
+<p>数据科学家经常抱怨，领导只重视那些支持他们既有看法的数据。可数据真正的力量，就在于改变决策。</p>
+<p>要建立这样的数据驱动文化，就得跑更多的实验。</p>
+<h3 id="实验规模化真正的敌人是一厢情愿的文化">实验规模化真正的敌人，是一厢情愿的文化</h3>
+<p>Ronny分享了一段很能说明问题的经历，来自他在Amazon和Microsoft的时候，这段经历他在<a href="https://youtu.be/3zB6Juog7gk?si=gWdWeRuscYzLi1hm">Acquired的一期小节目</a>里也讲过。</p>
+<p>在Amazon，他发现超过50%的实验都「失败」了，也就是没有带来预期的结果。到了Microsoft，他发现那里的人普遍坚信所有想法都会成功。问为什么，得到的回答是：<em>「因为我们的PM更好。」</em></p>
+<p>今天，大多数在跑大规模实验的人都知道，大约80%的假设不会成功。可对没有直接参与实验的人来说，这个现实很难接受，他们更愿意待在一个自己的想法永远正确的泡泡里。打破这种心态，是实现规模化实验的关键。</p>
+<figure><img src="/writing/statsig/images/how-ab-testing-platforms-make-data-science-more-interesting/01-a-chart-showing-what-we-expect-the-impact-of-our-f.webp" alt="预期与现实：功能上线后的真实影响" width="1400" height="940" loading="lazy" decoding="async" /><figcaption>图1　预期与现实。预期：我们做的每个功能都是好的。现实：逐个衡量影响以后，大约1/3应该关掉，1/3没什么影响、有时需要继续迭代，1/3达到了预期效果，另外还有一些你在过程中学到并做出来的新东西。</figcaption></figure>
+<h3 id="今天可靠的自动化工具是可以买到的">今天，可靠的自动化工具是可以买到的</h3>
+<p>Ronny在2020年出版《<a href="https://www.cambridge.org/core/books/trustworthy-online-controlled-experiments/D97B26382EB0EB2DC2019A7A7B518F59">Trustworthy Online Controlled Experiments</a>》的时候，今天这种程度的自动化还不存在。</p>
+<p>现在，像Statsig这样的平台提供了完整的解决方案，从<a href="https://docs.statsig.com/statsig-warehouse-native/configuration/assignment-sources/">分组</a>和<a href="https://docs.statsig.com/metrics/how-metrics-work/">指标计算</a>，到<a href="https://docs.statsig.com/experiments-plus/sequential-testing/">序贯检验</a>、<a href="https://www.statsig.com/blog/sample-ratio-mismatch">样本比例不匹配（SRM）</a>监控、<a href="https://www.statsig.com/blog/cuped">CUPED</a>和<a href="https://www.statsig.com/blog/differential-impact-detection">差异化影响检测</a>这些高级功能，都覆盖了。</p>
+<p>过去，<strong>公司要想做可靠、成熟的实验，得自己内部搭这些工具</strong>。今天，像Statsig这样的平台往往比大多数内部方案更强大，也更划算，实验自动化比以往任何时候都更容易获得。</p>
+<h2 id="原话摘录">原话摘录</h2>
+<p><strong>「大多数实验，都没能提升它们本来要提升的指标。」</strong></p>
+<p>Kohavi强调了一个反直觉的现实：大多数实验都得不到预期的正向结果。</p>
+<p>他没有把这看成挫折，而是强调这样的失败率本来就是创新的一部分。它反映了预测用户行为有多复杂，也说明了实验作为学习和发现的工具有多重要。</p>
+<p><strong>「如果最上面的人不尊重数据，事情就难办了。」</strong></p>
+<p>谈到组织文化，Kohavi指出领导层必须真正接受数据驱动的决策。他提到了<a href="https://en.wikipedia.org/wiki/Semmelweis_reflex">塞麦尔维斯反射（Semmelweis reflex）</a>：人们倾向于拒绝和既有信念相矛盾的新信息。</p>
+<p>没有高层的支持，再扎实的数据也可能推动不了有意义的改变。</p>
+<p><strong>「设计多条路径。评估它们，在其中一些上学会快速失败，在另一些上学会加倍投入。」</strong></p>
+<p>Kohavi主张保持敏捷，不要死守僵化的长期计划。组织应该探索多种方向，快速验证想法，把资源集中到真正有希望的方向上。这样既能加快创新，也能降低建立在未经验证的假设上的风险。</p>
+<p><strong>「数据科学家更有意思的工作之一，是把结果，也就是那些数字和统计，翻译成一个故事。」</strong></p>
+<p>自动化接手的日常工作越多，数据科学家的角色就越在变化。</p>
+<p>Kohavi强调了<strong>讲故事的重要性</strong>：让数据对合作方来说看得懂、能行动。围绕数据构建叙事，数据科学家才能更好地影响决策，推动战略层面的事情。</p>
+<p><strong>「一个工程师只要把服务器性能提升10毫秒，就足以覆盖他或她一年的全部成本，还有富余。」</strong></p>
+<p>为了说明小改进能带来多实在的影响，Kohavi举了这个很有力的例子。哪怕是很小的性能提升，也可能带来可观的成本节省，这正说明了持续优化和持续实验的价值。</p>
+<h2 id="结论">结论</h2>
+<p>结论很简单：实验自动化对数据科学家是好事，我们应该拥抱它。</p>
+<p>如果你想开始，这里有一份<a href="https://docs.google.com/presentation/d/1wg5kU12z5jM-deoRqQln2W_deSlWo-GZ1GTRvYjha9I/edit?usp=sharing">slides</a>，讲的是怎样在你的组织里设计一套可规模化的实验系统和实验文化。</p>
+<p>欢迎在<a href="https://www.linkedin.com/in/yuzhengsun/">LinkedIn</a>上加我，在<a href="https://www.youtube.com/channel/UCDMkAQ8ASnVMVHvnbiGRvvQ">YouTube</a>上关注我。我们一起来打这场仗！</p>

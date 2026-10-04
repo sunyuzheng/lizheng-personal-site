@@ -48,6 +48,10 @@ beforeEach(() => {
           store.set(keys[3], "1"); expiry.set(keys[3], Date.now() + Number(values[4]) * 1_000); result = 1;
         }
       }
+      // The member check's monthly count (shared/ask-access.ts foundingStatus).
+      if (command === "EVAL" && args[2] === 1 && String(args[1]).includes("INCR")) {
+        increment(args[3], Number(args[4])); result = Number(get(args[3]));
+      }
       if (command === "EVAL" && args[2] === 2) {
         const [key, attemptsKey, expected, valid, max] = args.slice(3);
         if (get(key) === null) result = "missing";

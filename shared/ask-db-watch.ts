@@ -5,7 +5,7 @@
  * maxmemory, and mails when it differs from the size last seen; the first run says the check is on.
  * It reads nothing else, and mails at most once for each change.
  */
-import { AccessError, redis } from "./ask-access.js";
+import { AccessError, CIRCLE_MONTHLY_LIMIT, memberBudgetKey, redis } from "./ask-access.js";
 
 export const DB_WATCH_KEY = "ask:watch:v1:db";
 const OWNER = "sunyuzheng@gmail.com";
@@ -72,4 +72,27 @@ export async function watchDatabase(send = redis, mail = sendMail, now = Date.no
   await mail(watchMail(result, before, after));
   await send(["HSET", DB_WATCH_KEY, "plan_bytes", after, "changed_at", at, "checked_at", at]);
   return result;
+}
+
+/**
+ * Member checks (shared/ask-access.ts foundingStatus) ask Circle at most CIRCLE_MONTHLY_LIMIT times a
+ * month. At 80% this mails the owner, once a month, before new sign-ins stop being checked.
+ */
+export function memberChecksMail(month: string, used: number): Mail {
+  return {
+    key: `ask-member-checks:${month}`,
+    subject: `问问立正：会员核验本月已查${used}次（上限${CIRCLE_MONTHLY_LIMIT}次）`,
+    text: `登录问问立正时，会向超线性学院社区（Circle）核验是不是 Founding Member，查过的结果会记一段时间。这个月已经查了${used}次，上限是${CIRCLE_MONTHLY_LIMIT}次。\n\n` +
+      `到了上限，查过的人照旧按原来的身份；从没查过的人先按普通身份算，下个月恢复。Circle 管理接口的月度额度和学院其他工具共用，要调高上限，改 lizheng-personal-site 里 shared/ask-access.ts 的 CIRCLE_MONTHLY_LIMIT。\n\n` +
+      `这封是自动提醒，每月最多一封，不用回复。`,
+  };
+}
+export async function watchMemberChecks(send = redis, mail = sendMail, now = Date.now()): Promise<"quiet" | "mailed"> {
+  const month = new Date(now).toISOString().slice(0, 7);
+  const used = Number(await send(["GET", memberBudgetKey(month)])) || 0;
+  if (used < CIRCLE_MONTHLY_LIMIT * 0.8) return "quiet";
+  if ((await send(["HGET", DB_WATCH_KEY, "member_checks_mailed"])) === month) return "quiet";
+  await mail(memberChecksMail(month, used));
+  await send(["HSET", DB_WATCH_KEY, "member_checks_mailed", month]);
+  return "mailed";
 }

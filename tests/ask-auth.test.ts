@@ -41,7 +41,9 @@ beforeEach(() => {
       if (command[0] === "GET") result = store.get(command[1]) ?? null;
       if (command[0] === "DEL") result = store.delete(command[1]) ? 1 : 0;
       if (command[0] === "EXISTS") result = store.has(command[1]) ? 1 : 0;
-      if (command[0] === "EVAL") { result = store.get(command[3]) ?? null; store.delete(command[3]); }
+      if (command[0] === "EVAL" && String(command[1]).includes("INCR")) {
+        result = Number(store.get(command[3]) ?? 0) + 1; store.set(command[3], String(result));
+      } else if (command[0] === "EVAL") { result = store.get(command[3]) ?? null; store.delete(command[3]); }
       return Response.json({ result });
     }
     if (String(url).includes("ai-builders.space")) return Response.json({ remaining: 3, reset_at: "2026-10-02T16:00:00Z" });
@@ -104,7 +106,10 @@ describe("Academy SSO boundary", () => {
     expect(result.headers.get("location")).toBe("https://www.lizheng.ai/?ask_login=done#ask-lizheng");
     const session = String((result.headers.get("set-cookie") as string[])[0]);
     expect(session).toContain("__Host-ask-session="); expect(session).not.toContain("Domain=");
-    const values = [...store.values()]; expect(values).toHaveLength(1);
+    const values = [...store].filter(([key]) => key.startsWith("ask:auth:session:")).map(([, value]) => value);
+    expect(values).toHaveLength(1);
+    // What Circle said is kept for the next sign-in, under a digest: no email in any key or value.
+    expect([...store].flat().join(" ")).not.toContain("member@example.com");
     const record = await decryptRecord(values[0]) as Record<string, unknown>;
     expect(record.founding).toBe(true);
     expect(record).not.toHaveProperty("values"); expect(record).not.toHaveProperty("idToken");

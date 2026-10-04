@@ -8,7 +8,7 @@ import { shareBonusOpen } from "../shared/ask-share-link.js";
 import {
   ACCESS_HEADERS, AccessError, accessEnabled, admission, authCookie, backendOrigin,
   COOKIE_SESSION, COOKIE_TRANSACTION, createSession, decryptRecord, encryptRecord,
-  lookupFounding, officialOrigin, opaqueSubject, randomId, readCookie, redis,
+  foundingStatus, officialOrigin, opaqueSubject, randomId, readCookie, redis,
   redisKey, resolveIdentity, safeReturnPath, sameOrigin,
 } from "../shared/ask-access.js";
 
@@ -201,7 +201,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         return form ? html(200, emailPage(url, true)) : json(200, { ok: true, expires_in: challenge.expires_in });
       }
       const verified = await verifyEmailCode(request, input.code);
-      const founding = await lookupFounding(verified.email);
+      const founding = await foundingStatus(verified.email, { signIn: true });
       const cookie = await createSession(await opaqueSubject("user", `email:${verified.email}`), verified.email, founding);
       res.setHeader("Set-Cookie", [cookie, authCookie(COOKIE_EMAIL, "", 0)]);
       if (!form) return json(200, { ok: true, redirect: verified.redirect });
@@ -256,7 +256,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (!claims.sub || typeof claims.email !== "string" || claims.email_verified !== true)
         throw new AccessError("identity_unverified", 403);
       const email = claims.email.trim().toLowerCase();
-      const founding = await lookupFounding(email);
+      const founding = await foundingStatus(email, { signIn: true });
       const cookie = await createSession(await opaqueSubject("user", claims.sub), email, founding);
       res.setHeader("Set-Cookie", [cookie, authCookie(COOKIE_TRANSACTION, "", 0)]);
       redirect = `${origin}${transaction.returnPath}`;

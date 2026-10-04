@@ -7,7 +7,8 @@ export const ACCESS_HEADERS = { "Cache-Control": "no-store, no-transform" };
 const ORIGINS = new Set(["https://www.lizheng.ai", "https://ask.lizheng.ai"]);
 export const FOUNDING_TAG = 271455;
 const SESSION_SECONDS = 12 * 60 * 60;
-const FOUNDING_CACHE_SECONDS = 15 * 60;
+// A session asks again after an hour; foundingStatus usually answers from what Circle said last.
+const MEMBER_RECHECK_SECONDS = 60 * 60;
 
 export class AccessError extends Error {
   /** `detail` is for server logs only (a step and status, never provider bodies). */
@@ -161,6 +162,48 @@ export async function lookupFounding(rawEmail: string): Promise<boolean> {
     return member.active !== false && member.member_tags.some((tag: { id: number }) => tag.id === FOUNDING_TAG);
   } catch { throw new AccessError("membership_unavailable"); }
 }
+
+/**
+ * Founding status by email, asking Circle rarely (2026-10-05). Circle's Admin API has a monthly
+ * quota shared with Superlinear's other tools, and the Ask used to ask it at every sign-in and every
+ * 15 minutes of a session. Now what Circle said is kept 30 days under an opaque digest of the email
+ * and used while fresh: a week for Founding, a day for not Founding (an hour at sign-in, so someone
+ * who has just joined is seen when they sign in again). Circle is asked at most
+ * CIRCLE_MONTHLY_LIMIT times a calendar month (UTC); past that, or while Circle cannot answer, the
+ * last answer stands (or `known`, the session's own). With neither, a sign-in over the limit is not
+ * Founding, and Circle's error still stops a sign-in. The daily database watch mails the owner at
+ * 80% of the limit (shared/ask-db-watch.ts).
+ */
+export const CIRCLE_MONTHLY_LIMIT = 1_000;
+const MEMBER_KEEP_SECONDS = 30 * 24 * 60 * 60;
+const MEMBER_FRESH_SECONDS = { founding: 7 * 24 * 60 * 60, other: 24 * 60 * 60, otherAtSignIn: 60 * 60 };
+const COUNT_SCRIPT = "local n = redis.call('INCR', KEYS[1]); if n == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end; return n";
+export const memberBudgetKey = (month: string) => `ask:member:v1:circle:${month}`;
+export async function foundingStatus(rawEmail: string, options: { signIn?: boolean; known?: boolean; now?: number } = {}): Promise<boolean> {
+  const email = rawEmail.trim().toLowerCase();
+  const now = options.now ?? Math.floor(Date.now() / 1000);
+  const key = `ask:member:v1:${await hmac(`member:${email}`)}`;
+  const saved = await redis(["GET", key]);
+  const match = typeof saved === "string" ? /^([01]):(\d{1,12})$/.exec(saved) : null;
+  const last = match ? { founding: match[1] === "1", at: Number(match[2]) } : null;
+  const fallback = last ? last.founding : options.known;
+  if (last && last.at <= now + 60) {
+    const fresh = last.founding ? MEMBER_FRESH_SECONDS.founding
+      : options.signIn ? MEMBER_FRESH_SECONDS.otherAtSignIn : MEMBER_FRESH_SECONDS.other;
+    if (now - last.at < fresh) return last.founding;
+  }
+  const month = new Date(now * 1000).toISOString().slice(0, 7);
+  const used = await redis(["EVAL", COUNT_SCRIPT, 1, memberBudgetKey(month), 40 * 24 * 60 * 60]);
+  if (typeof used !== "number" || used > CIRCLE_MONTHLY_LIMIT) return fallback ?? false;
+  let founding: boolean;
+  try { founding = await lookupFounding(email); }
+  catch (error) {
+    if (fallback !== undefined) return fallback;
+    throw error;
+  }
+  try { await redis(["SET", key, `${founding ? 1 : 0}:${now}`, "EX", MEMBER_KEEP_SECONDS]); } catch { /* Asked again next time. */ }
+  return founding;
+}
 export type SessionRecord = {
   subject: string; email: string; founding: boolean; checkedAt: number; expiresAt: number;
 };
@@ -182,8 +225,8 @@ async function loadSession(request: Request, now: number, retry = 0, refreshMemb
       typeof value.founding !== "boolean" || !Number.isInteger(value.expiresAt) ||
       !Number.isInteger(value.checkedAt)) throw new AccessError("access_unavailable");
   if (value.expiresAt <= now) return null;
-  if (refreshMembership && now - value.checkedAt >= FOUNDING_CACHE_SECONDS) {
-    value.founding = await lookupFounding(value.email);
+  if (refreshMembership && now - value.checkedAt >= MEMBER_RECHECK_SECONDS) {
+    value.founding = await foundingStatus(value.email, { known: value.founding, now });
     value.checkedAt = now;
     const changed = await redis(["EVAL", "if redis.call('GET',KEYS[1]) ~= ARGV[1] then return 0 end; redis.call('SET',KEYS[1],ARGV[2],'EX',ARGV[3]); return 1", 1, key, stored as string, await encryptRecord(value), value.expiresAt - now]);
     if (changed !== 1) {

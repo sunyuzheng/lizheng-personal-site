@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { DB_WATCH_KEY, planBytes, planSize, sendMail, watchDatabase, watchMail, type Mail } from "../shared/ask-db-watch.js";
+import { DB_WATCH_KEY, planBytes, planSize, sendMail, watchDatabase, watchMail, watchMemberChecks, type Mail } from "../shared/ask-db-watch.js";
+import { CIRCLE_MONTHLY_LIMIT, memberBudgetKey } from "../shared/ask-access.js";
 
 const MB256 = 268435456, GB1 = 1073741824;
 const info = (bytes: number) => `# Memory\r\nused_memory:334774\r\nused_memory_human:326.928KB\r\nmaxmemory:${bytes}\r\nmaxmemory_human:256.000MB\r\nmaxmemory_policy:noeviction\r\n`;
@@ -61,5 +62,37 @@ describe("the database plan check", () => {
     expect(url).toBe("https://api.resend.com/emails");
     expect((init.headers as Record<string, string>)["Idempotency-Key"]).toBe(`ask-db-watch:${MB256}:${GB1}`);
     expect(JSON.parse(String(init.body))).toMatchObject({ from: "立正 <podcast@notify.lizheng.ai>", to: ["sunyuzheng@gmail.com"], reply_to: "sunyuzheng@gmail.com" });
+  });
+});
+
+describe("the member-check count", () => {
+  const NOW = Date.parse("2026-10-20T01:00:00Z");
+  function counts(used: number) {
+    const hash: Record<string, string> = {};
+    const send = vi.fn(async (command: (string | number)[]) => {
+      if (command[0] === "GET" && command[1] === memberBudgetKey("2026-10")) return used ? String(used) : null;
+      if (command[0] === "HGET" && command[1] === DB_WATCH_KEY) return hash[String(command[2])] ?? null;
+      if (command[0] === "HSET" && command[1] === DB_WATCH_KEY) { hash[String(command[2])] = String(command[3]); return 1; }
+      throw new Error("unexpected command");
+    });
+    return { send, hash };
+  }
+
+  it("stays quiet below 80% of the month's limit", async () => {
+    const { send } = counts(CIRCLE_MONTHLY_LIMIT * 0.8 - 1);
+    const mail = vi.fn(async (_: Mail) => {});
+    expect(await watchMemberChecks(send, mail, NOW)).toBe("quiet");
+    expect(mail).not.toHaveBeenCalled();
+  });
+
+  it("mails once a month from 80%", async () => {
+    const { send, hash } = counts(CIRCLE_MONTHLY_LIMIT * 0.8);
+    const mail = vi.fn(async (_: Mail) => {});
+    expect(await watchMemberChecks(send, mail, NOW)).toBe("mailed");
+    expect(await watchMemberChecks(send, mail, NOW + 86_400_000)).toBe("quiet");
+    expect(mail).toHaveBeenCalledTimes(1);
+    expect(mail.mock.calls[0][0].subject).toBe("问问立正：会员核验本月已查800次（上限1000次）");
+    expect(mail.mock.calls[0][0].text).toContain("查过的人照旧按原来的身份");
+    expect(hash.member_checks_mailed).toBe("2026-10");
   });
 });

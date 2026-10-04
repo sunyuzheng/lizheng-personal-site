@@ -2,6 +2,10 @@
 
 问答和公开资料检索的owner是[ask-lizheng](https://github.com/sunyuzheng/ask-lizheng)，资料owner是[lizheng-open-context](https://github.com/sunyuzheng/lizheng-open-context)。本仓库只负责主页原生组件与Vercel入口，不复制语义索引、模型密钥或回答生成逻辑。本站、Builder、Ops 和数据库怎样配合，每份数据归谁、每条规则在哪执行，见 ask-lizheng 仓库的 [docs/ARCHITECTURE.md](https://github.com/sunyuzheng/ask-lizheng/blob/main/docs/ARCHITECTURE.md)。
 
+2026-10-04当前产品原则：问问立正是公开问答，提问时同意保存和公开使用问题、完整回答与出处，帮助别人、改进回答并用于内容选题。主页与独立页输入旁明确写这一点；App在发送前单独列明实际AI处理方，按钮写「同意AI处理与公开使用」。分享是取得链接和传播的功能。处境原文不保存、不单独公开，完整回答可能引用细节并随问答公开使用；邮箱和登录身份按其核验用途处理。历史v1/v3保留原使用范围。产品owner的当前规则在ask仓库docs/PRODUCT.md和docs/QUERY_RECORDS.md；以下日期段落保留当时实施记录。
+
+当前AI转发对象由Builder负责人核实为DeepSeek（生成）和OpenAI（向量匹配）；网关只记用量元数据、不留问答正文。本仓库中英文隐私政策按具体请求数据分别披露，不使用未经核实的训练或同等保护保证。App本机v3同意包含模型、已核实接收方和记录模式；未知回答服务商无法在App确认发送。部署问答后端后，再从其干净提交执行sync:ask-app更新这里实际提供的App页面。
+
 - 主页：文章之后独立的问问立正章节（AskLizheng组件）；两种问法（想明白，可打开「结合我的处境」；从哪读起）、可修改预填、真实阶段、候选资料片段、核验后的回答和出处、停止与追问，完整回答可保存为长图或PDF。英文界面明确资料与回答主要使用中文。
 - 主页API：POST /api/ask-lizheng/ask、GET /api/ask-lizheng/meta，POST通过固定目标Edge流式转发到Builder的/api/ask，GET反代到/api/meta。无客户端模型凭证；问答请求不发送浏览器凭证、不缓存。访客提问在转发前另按网络入口计数（每个北京日300次，见ask-lizheng仓库ACCOUNT_QUOTAS.md），防止不保存Cookie的客户端绕过每天3次。超限时同样返回quota_exhausted，另带scope: network，页面据此说明是这个网络的免费次数用完了。
 - Founding说明：次数行「如何成为」展开谁是Founding Member、会员得到什么，并链接Stay会员页；额度用完的卡片同样给出会员页链接。名额（前3,000位新年费会员）与价格（$149/¥999）取自会员页与会员事实表，Founding窗口结束或价格变化时同步改`AskLizheng.tsx`（foundingWho、foundingGet）和ask仓库`src/main.jsx`的`FoundingInfo`。

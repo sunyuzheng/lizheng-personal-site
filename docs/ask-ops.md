@@ -10,6 +10,6 @@
 
 独立 Ops 同时管理私人整理候选、逐条授权/审阅、公开版本、主题统计和点赞。保存候选不公开；来源删除由 Ops 原子清除相关公开副本/点赞/榜单。私人整理四种路由仍经过 HOME owner gate 和用途独立的短时证明，正文最大262144字节。
 
-主页与ask.lizheng.ai首页的「大家最近在问」卡片（2026-10-02）调用 `GET /api/ask-lizheng/discovery/questions?window=this_week&sort=recent|frequent|liked` 及 `GET /api/ask-lizheng/discovery/detail?public_id=...`。匿名只读独立审阅的已发布版本；`POST /api/ask-lizheng/discovery/vote` 要求现有已验证登录和同源 Origin（www 与 ask 两个 host 各自同源），Body 为 public_id/expected_revision/vote，最大2048字节。HOME 从验证邮箱计算投票专用不可逆标识，不将邮箱传给 Ops，也不关联私人提问。投票证明与 owner 证明用途隔离。契约、统计口径及游标过期处理以独立 Ops 的 `docs/public-discovery.md` 为准。
+主页与ask.lizheng.ai首页的「大家最近在问」卡片（2026-10-02）调用 `GET /api/ask-lizheng/discovery/questions?window=this_week&sort=recent|frequent|liked` 及 `GET /api/ask-lizheng/discovery/detail?public_id=...`。匿名只读独立审阅的已发布版本；`POST /api/ask-lizheng/discovery/vote` 只要求同源 Origin（www 与 ask 两个 host 各自同源），2026-10-05 起不用登录；Body 为 public_id/expected_revision/vote，最大2048字节。HOME 从浏览器的匿名访客 Cookie 换算投票专用的不可逆标识（`discovery-vote:v2:`，没有 Cookie 时顺带发一个），不关联账号、邮箱或私人提问；同一网络每天给同一条最多点赞20次、总共500次（网络地址的加密摘要，两天后过期，取消点赞不计）。投票证明与 owner 证明用途隔离。契约、统计口径及游标过期处理以独立 Ops 的 `docs/public-discovery.md` 为准。
 
 本次仅接入固定代理，不添加主页发现组件、不修改提问生成、额度或会员登录。部署时公开 feed 初始为空，旧v1/v3永不进入公开列表，即使owner另行勾选授权也不能覆盖。只有v4且不带背景/intent不是apply的完整结果可整理；Ask的v4writer接通前保持空列表。可信版本/背景字段接缝以独立Ops说明为准。

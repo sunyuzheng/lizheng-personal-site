@@ -2,13 +2,14 @@ import { createHash, createHmac, webcrypto } from "node:crypto";
 import { Readable } from "node:stream";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-const auth = vi.hoisted(() => ({ owner: vi.fn(), voter: vi.fn(), realVoter: undefined as unknown as (r: Request) => Promise<string> }));
+type Voter = (r: Request, like?: { publicId: string }, now?: number) => Promise<{ voter: string; cookie?: string }>;
+const auth = vi.hoisted(() => ({ owner: vi.fn(), voter: vi.fn(), realVoter: undefined as unknown as Voter }));
 vi.mock("../shared/ask-access.js", async importOriginal => {
   const actual = await importOriginal<typeof import("../shared/ask-access.js")>();
   auth.realVoter = actual.resolveDiscoveryVoter;
   return { ...actual, requireOpsOwner: auth.owner, resolveDiscoveryVoter: auth.voter };
 });
-import { AccessError, authDigest, createSession, decryptRecord, encryptRecord } from "../shared/ask-access.js";
+import { AccessError, authDigest, createSession, VOTE_CARD_DAILY_LIMIT, VOTE_NETWORK_DAILY_LIMIT } from "../shared/ask-access.js";
 import ops from "../api/ask-lizheng-ops.js";
 import discovery from "../api/ask-lizheng-discovery.js";
 import { OPS_BACKEND_ORIGIN, OPS_GATEWAY_BODY_LIMIT } from "../shared/ask-ops-gateway.js";
@@ -37,7 +38,7 @@ async function call(fn: typeof ops, path: string, options: Options = {}) {
 beforeEach(() => {
   vi.useFakeTimers(); vi.setSystemTime(NOW); vi.stubGlobal("crypto", webcrypto);
   vi.stubEnv("ASK_OPS_GATEWAY_SECRET", SECRET); vi.stubEnv("ASK_OPS_BACKEND_ORIGIN", OPS_BACKEND_ORIGIN);
-  auth.owner.mockResolvedValue({ email: "synthetic-owner@example.test" }); auth.voter.mockResolvedValue(VOTER);
+  auth.owner.mockResolvedValue({ email: "synthetic-owner@example.test" }); auth.voter.mockResolvedValue({ voter: VOTER });
   vi.stubGlobal("fetch", vi.fn().mockResolvedValue(Response.json({ ok: true })));
 });
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); auth.owner.mockReset(); auth.voter.mockReset(); });
@@ -97,7 +98,7 @@ describe("owner review gateway", () => {
   });
 });
 
-describe("public read and account vote gateway", () => {
+describe("public read and browser vote gateway", () => {
   it("reads only published public data with defaults and no identity/cookie headers", async () => {
     const result = await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { authorization: "synthetic-authorization" } });
     expect(result.status).toBe(200); expect(auth.owner).not.toHaveBeenCalled(); expect(auth.voter).not.toHaveBeenCalled();
@@ -154,10 +155,21 @@ describe("public read and account vote gateway", () => {
     expect(init?.body).toBe(raw); expect(init?.headers).toEqual({ "Content-Type": "application/octet-stream", "x-ask-discovery-vote-proof": `v1.${expiry}.${sig}` });
     expect(raw).not.toMatch(/email|cookie|identity|subject/);
   });
-  it("rejects an anonymous vote before reading its input", async () => {
-    auth.voter.mockRejectedValue(new AccessError("discovery_login_required", 401));
-    expect((await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST", headers: { "content-length": "999999" } })).status).toBe(401);
-    expect(fetch).not.toHaveBeenCalled();
+  it("lets a browser without the cookie like, giving it the cookie, and counts only likes against the caps", async () => {
+    const cookie = "__Secure-ask-guest=synthetic; Domain=lizheng.ai; Path=/; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax";
+    auth.voter.mockResolvedValue({ voter: VOTER, cookie });
+    const liked = await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST", body: { public_id: ID, expected_revision: 2, vote: true },
+      headers: { cookie: undefined, "x-vercel-forwarded-for": "203.0.113.7" } });
+    expect(liked).toMatchObject({ status: 200, headers: { "set-cookie": cookie } });
+    const [request, like] = auth.voter.mock.calls[0];
+    expect(like).toEqual({ publicId: ID });
+    expect((request as Request).headers.get("x-vercel-forwarded-for")).toBe("203.0.113.7");
+    await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST", body: { public_id: ID, expected_revision: 2, vote: false } });
+    expect(auth.voter.mock.calls[1][1]).toBeUndefined();
+  });
+  it("reads no identity for a vote it cannot take", async () => {
+    expect((await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST", headers: { "content-length": "999999" } })).status).toBe(413);
+    expect(auth.voter).not.toHaveBeenCalled(); expect(fetch).not.toHaveBeenCalled();
   });
   it("rejects missing/foreign Origin before identity lookup or body input", async () => {
     for (const origin of [undefined, "https://ask.lizheng.ai", "https://evil.example"])
@@ -180,7 +192,7 @@ describe("public read and account vote gateway", () => {
       { headers: { host: "ask.lizheng.ai", origin: "https://www.lizheng.ai" } })).status).toBe(403);
     expect(fetch).not.toHaveBeenCalled();
   });
-  it("serves ask.lizheng.ai from its own origin, reads and signed-in votes alike", async () => {
+  it("serves ask.lizheng.ai from its own origin, reads and votes alike", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => Response.json({ ok: true })));
     expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "ask.lizheng.ai" } })).status).toBe(200);
     expect(vi.mocked(fetch).mock.calls[0][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=list&window=this_week&sort=recent&limit=10`);
@@ -247,35 +259,58 @@ describe("bounded body and safe business failures", () => {
   });
 });
 
-describe("verified-email voter continuity", () => {
-  const store = new Map<string, string>();
+describe("likes counted by browser", () => {
+  const store = new Map<string, string>(), counts = new Map<string, number>();
+  const vote = (headers: Record<string, string> = {}) => new Request("https://www.lizheng.ai/api/ask-lizheng/discovery/vote", { headers });
   beforeEach(() => {
     vi.stubEnv("ASK_AUTH_SECRET", "test-auth-key-at-least32bytes-long");
     vi.stubEnv("ASK_AUTH_REDIS_REST_URL", "https://synthetic-test.upstash.io"); vi.stubEnv("ASK_AUTH_REDIS_REST_TOKEN", "synthetic-token");
-    vi.stubEnv("ASK_CIRCLE_ADMIN_V2_TOKEN", ""); store.clear();
+    store.clear(); counts.clear();
     vi.stubGlobal("fetch", vi.fn(async (_url, init) => {
       expect(String(_url)).toBe("https://synthetic-test.upstash.io/");
       const args = JSON.parse(String(init.body));
       if (args[0] === "SET") { store.set(args[1], args[2]); return Response.json({ result: "OK" }); }
       if (args[0] === "GET") return Response.json({ result: store.get(args[1]) ?? null });
+      if (args[0] === "EVAL" && args[2] === 2) {
+        expect(args[5]).toBe(172800);
+        return Response.json({ result: [args[3], args[4]].map(key => { counts.set(key, (counts.get(key) ?? 0) + 1); return counts.get(key); }) });
+      }
       throw new Error("unexpected synthetic command");
     }));
   });
-  it("deduplicates verified email/Logto sessions across subjects and browsers without membership refresh", async () => {
-    const first = await createSession(`user:${"a".repeat(43)}`, " Synthetic@Example.test ", false);
-    const second = await createSession(`user:${"b".repeat(43)}`, "synthetic@example.test", true);
-    for (const [key, encrypted] of store) { const record = await decryptRecord(encrypted) as Record<string, unknown>; record.checkedAt = 0; store.set(key, await encryptRecord(record)); }
-    const key1 = await auth.realVoter(new Request("https://www.lizheng.ai/api/ask-lizheng/discovery/vote", { headers: { cookie: first.split(";")[0] } }));
-    const key2 = await auth.realVoter(new Request("https://www.lizheng.ai/api/ask-lizheng/discovery/vote", { headers: { cookie: second.split(";")[0] } }));
-    expect(key1).toBe(key2); expect(key1).toBe(await authDigest("discovery-vote:v1:synthetic@example.test")); expect(key1).toMatch(/^[A-Za-z0-9_-]{43}$/);
-    expect(key1).not.toContain("synthetic");
-    expect(vi.mocked(fetch).mock.calls).toHaveLength(4); //2 SET,2 GET; no Circle
+  it("gives a browser a voter of its own, the same each time, tied to no account", async () => {
+    const first = await auth.realVoter(vote());
+    expect(first.voter).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    expect(first.cookie).toMatch(/^__Secure-ask-guest=[a-f0-9]{64}\.[A-Za-z0-9_-]{43}; Domain=lizheng\.ai; Path=\/; Max-Age=2592000; HttpOnly; Secure; SameSite=Lax$/);
+    const guest = first.cookie!.split(";")[0];
+    expect(await auth.realVoter(vote({ cookie: guest }))).toEqual({ voter: first.voter });
+    // Signing in changes nothing: the browser likes, not the account.
+    const session = (await createSession(`user:${"a".repeat(43)}`, "synthetic@example.test", false)).split(";")[0];
+    expect(await auth.realVoter(vote({ cookie: `${guest}; ${session}` }))).toEqual({ voter: first.voter });
+    expect(first.voter).not.toBe(await authDigest("discovery-vote:v1:synthetic@example.test"));
+    // Another browser is another voter; a forged cookie is a new browser.
+    const other = await auth.realVoter(vote({ cookie: "__Secure-ask-guest=forged.forged" }));
+    expect(other.voter).not.toBe(first.voter); expect(other.cookie).toBeDefined();
+    expect(counts.size).toBe(0);
   });
-  it("rejects missing, forged and expired sessions without guest fallback", async () => {
-    for (const cookie of [undefined, "__Host-ask-session=forged", `__Host-ask-session=${"f".repeat(64)}`])
-      await expect(auth.realVoter(new Request("https://www.lizheng.ai/api/ask-lizheng/discovery/vote", { headers: cookie ? { cookie, "x-email": "synthetic@example.test" } : undefined }))).rejects.toMatchObject({ status: 401 });
-    const cookie = await createSession(`user:${"a".repeat(43)}`, "synthetic@example.test", false);
-    for (const [key, encrypted] of store) { const record = await decryptRecord(encrypted) as Record<string, unknown>; record.expiresAt = 1; store.set(key, await encryptRecord(record)); }
-    await expect(auth.realVoter(new Request("https://www.lizheng.ai/api/ask-lizheng/discovery/vote", { headers: { cookie: cookie.split(";")[0] } }))).rejects.toMatchObject({ status: 401 });
+  it("caps the likes a network adds to one question and in all each day, never keeping the address", async () => {
+    const from = (address: string) => vote({ "x-vercel-forwarded-for": address });
+    for (let i = 0; i < VOTE_CARD_DAILY_LIMIT; i++) await auth.realVoter(from("203.0.113.7"), { publicId: ID }, NOW);
+    await expect(auth.realVoter(from("203.0.113.7"), { publicId: ID }, NOW)).rejects.toMatchObject({ code: "vote_rate_limited", status: 429 });
+    // Another question, or another network, still can; taking a like back is never counted.
+    const other = "11111111-2222-4333-8444-555555555555";
+    await expect(auth.realVoter(from("203.0.113.7"), { publicId: other }, NOW)).resolves.toBeDefined();
+    await expect(auth.realVoter(from("198.51.100.4"), { publicId: ID }, NOW)).resolves.toBeDefined();
+    const before = [...counts.values()].reduce((a, b) => a + b, 0);
+    await auth.realVoter(from("203.0.113.7"), undefined, NOW);
+    expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(before);
+    for (let i = 0; i < VOTE_NETWORK_DAILY_LIMIT; i++) {
+      try { await auth.realVoter(from("192.0.2.9"), { publicId: `${String(i).padStart(8, "0")}-2222-4333-8444-555555555555` }, NOW); }
+      catch { throw new Error(`like ${i + 1} refused`); }
+    }
+    await expect(auth.realVoter(from("192.0.2.9"), { publicId: other }, NOW)).rejects.toMatchObject({ status: 429 });
+    expect(JSON.stringify([...counts.keys()])).not.toMatch(/203\.0\.113|198\.51\.100|192\.0\.2|11111111-2222/);
+    // A new Beijing day starts the counts again.
+    await expect(auth.realVoter(from("203.0.113.7"), { publicId: ID }, NOW + 86_400_000)).resolves.toBeDefined();
   });
 });

@@ -292,16 +292,29 @@ export async function resolveIdentity(request: Request): Promise<AskIdentity> {
   return { ...guest, tier: "public", authenticated: !!session };
 }
 
-/** Verified account ownership only; neither guest quota nor membership enters voting. */
-export async function resolveDiscoveryVoter(request: Request): Promise<string> {
-  officialOrigin(request.url);
-  const session = await loadSession(request, Math.floor(Date.now() / 1000), 0, false);
-  if (!session) throw new AccessError("discovery_login_required", 401);
-  const email = session.email.trim().toLowerCase();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 320)
-    throw new AccessError("discovery_login_required", 401);
-  // Logto requires email_verified; the Coffee path consumes a valid OTP before createSession.
-  return authDigest(`discovery-vote:v1:${email}`);
+/**
+ * Likes count by browser, with no sign-in (2026-10-05, the user's decision; before, only signed-in
+ * accounts could like). The voter is the browser's anonymous cookie, the one that counts a guest's
+ * questions, under a key of its own: a like is tied to no account or email, and Ops cannot match
+ * likes with questions. A script that drops cookies would be a new voter every time, so each
+ * network may add at most VOTE_CARD_DAILY_LIMIT likes to one question a day and
+ * VOTE_NETWORK_DAILY_LIMIT in all, counted like guest questions (a keyed digest, kept two days).
+ * `like` names the question when the vote adds a like; taking one back is never counted.
+ */
+export const VOTE_CARD_DAILY_LIMIT = 20;
+export const VOTE_NETWORK_DAILY_LIMIT = 500;
+export async function resolveDiscoveryVoter(request: Request, like?: { publicId: string }, now = Date.now()): Promise<{ voter: string; cookie?: string }> {
+  const visitor = await resolveOpsVisitor(request);
+  if (like) {
+    const day = new Date(now + 8 * 3_600_000).toISOString().slice(0, 10); // Beijing day, like the quota
+    const network = clientNetwork(request);
+    const used = await redis(["EVAL",
+      "local out={} for i,key in ipairs(KEYS) do out[i]=redis.call('INCR',key) if out[i]==1 then redis.call('EXPIRE',key,ARGV[1]) end end return out",
+      2, `ask:vote:v1:${await hmac(`vote-card:${network}:${like.publicId}`)}:${day}`, `ask:vote:v1:${await hmac(`vote-network:${network}`)}:${day}`, 172_800]);
+    if (!Array.isArray(used) || used.length !== 2 || !used.every(Number.isInteger)) throw new AccessError("access_unavailable");
+    if (used[0] > VOTE_CARD_DAILY_LIMIT || used[1] > VOTE_NETWORK_DAILY_LIMIT) throw new AccessError("vote_rate_limited", 429);
+  }
+  return { voter: await authDigest(`discovery-vote:v2:${visitor.sub}`), cookie: visitor.cookie };
 }
 
 /** Anonymous browser identity, independent of membership/account/email. */

@@ -29,7 +29,8 @@
 <li><b>匿名使用统计。</b>随机生成的浏览器标识和对话标识、这是第几轮、问题字数、问法和入口，用来了解使用情况。</li>
 <li><b>每天的次数。</b>浏览器里一个签名的随机标识，用来计算你今天问了几次；同一网络的免费提问总数按网络地址的加密摘要计数。</li>
 <li><b>验证Founding身份（可选）。</b>你输入的邮箱用来发送验证码，并向超线性学院社区核验你是不是Founding Member。登录状态加密保存，最长12小时。</li>
-<li><b>点赞（可选）。</b>验证身份后点「有帮助」，会用邮箱的加密摘要记下你点过哪些公开问答，只用来避免重复计数。</li>
+<li><b>点赞（可选）。</b>不用登录，按浏览器计数：从浏览器里那个随机标识换算出一个点赞专用的标识，记下它点过哪些公开问答，只用来避免重复计数，不和提问记在一起。为了防止刷赞，同一网络每天的点赞次数按网络地址的加密摘要计数，两天后删除。你点过哪些，也记在这个浏览器里，方便显示。</li>
+<li><b>「我的提问」只在你的设备上。</b>在ask.lizheng.ai和App里，你问过的问题和回答存在这台设备的浏览器里，最多50条，方便回头看、接着问或分享；处境原文不存。这份记录不会发给我们：提问不和账号、邮箱或IP记在一起，我们不知道哪个问题是谁问的，也就没法替你保存或找回。换了设备或浏览器、清除了浏览器数据，就看不到了；也可以在「我的提问」里删掉单条或全部清除。</li>
 <li><b>访问统计。</b>页面访问和按钮点击的匿名计数（比如点开了哪一类出处），以及每次打开看了多久、滑到哪里、有没有看到和点开「别人在问什么」、分享了几次、隔几天有没有再来。这些按天合计成数字，用的是随机的浏览器标识和第一次来的日期，不含提问内容。</li>
 </ul>
 
@@ -65,6 +66,7 @@
 <li>问答记录每天另存一份备份，留30天。删除的问答在之前的备份里最多再留30天，随备份一起删除。</li>
 <li>次数记录两天后自动删除；验证码10分钟内有效；登录状态最长12小时；Founding身份的核验结果最多保存30天，这样不用每次登录都重新核验。</li>
 <li>按天的访问统计400天后删除；浏览器里记的第一次来的日期400天后过期。</li>
+<li>点赞记录随那条公开问答保存，问答删除时一并删除。浏览器里记的「我的提问」和点过的赞，留到你删除或清除浏览器数据为止。</li>
 </ul>
 
 <h2>你可以</h2>
@@ -97,7 +99,8 @@
 <li><b>Anonymous usage statistics.</b> Random browser and conversation identifiers, the turn number, question length, the way of asking and the entry point.</li>
 <li><b>Daily limit.</b> A signed random identifier in your browser counts today's questions; free questions from the same network are counted by a keyed hash of the network address.</li>
 <li><b>Founding Member verification (optional).</b> The email you enter receives a one-time code and is checked against the Superlinear Academy community for Founding Member status. The signed-in state is kept encrypted for up to 12 hours.</li>
-<li><b>Likes (optional).</b> After verifying, tapping “有帮助” (helpful) records which published answers you liked under a keyed hash of your email, only to avoid double counting.</li>
+<li><b>Likes (optional).</b> No sign-in needed; likes count by browser. A like-only identifier derived from your browser's random identifier records which published answers it liked, only to avoid double counting, and is never stored with questions. To prevent like stuffing, likes from the same network each day are counted by a keyed hash of the network address, deleted after two days. Your browser also remembers which ones you liked, to show them.</li>
+<li><b>“我的提问” (My questions) stays on your device.</b> On ask.lizheng.ai and in the app, the questions you asked and their answers are kept in this device's browser, up to 50, so you can reread, follow up or share them; the situation text is not kept. This list is never sent to us: questions aren't linked to an account, email or IP address, so we don't know who asked what and can't keep or restore it for you. Another device or browser, or clearing browser data, starts empty; you can also delete one or all in “我的提问”.</li>
 <li><b>Visit statistics.</b> Anonymous counts of page views and button taps (for example, which kind of source was opened), how long each visit lasted, how far the page was scrolled, whether “别人在问什么” was seen or opened, how often answers were shared, and whether the browser came back on a later day. They are totalled by day using a random browser identifier and the date of the first visit, never the question text.</li>
 </ul>
 
@@ -133,6 +136,7 @@
 <li>A backup copy of the records is made each day and kept for 30 days. A deleted question stays in earlier copies for at most 30 more days, then leaves with them.</li>
 <li>Daily counts are deleted after two days; verification codes expire after 10 minutes; sign-in lasts at most 12 hours; a Founding Member check result is kept up to 30 days, so you are not checked again at every sign-in.</li>
 <li>Visit statistics by day are deleted after 400 days; the first-visit date kept in your browser expires after 400 days.</li>
+<li>Likes are kept with their published question and deleted with it. “我的提问” and the likes your browser remembers stay until you delete them or clear browser data.</li>
 </ul>
 
 <h2>Your choices</h2>

@@ -32,16 +32,19 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (req.method !== (action === "vote" ? "POST" : "GET")) throw new AccessError("method_not_allowed", 405);
     let result;
     if (action === "vote") {
+      // Anyone may like, counted by browser (ask-access.ts resolveDiscoveryVoter); the network is
+      // read only to cap likes, never kept.
       const headers = new Headers();
-      for (const name of ["cookie", "origin"])
+      for (const name of ["cookie", "origin", "x-vercel-forwarded-for", "x-forwarded-for"])
         if (typeof req.headers[name] === "string") headers.set(name, req.headers[name]);
       const request = new Request(url, { method: "POST", headers });
       sameOrigin(request);
-      const voter_key = await resolveDiscoveryVoter(request);
       for (const key of url.searchParams.keys())
         if (key !== "__route" || url.searchParams.getAll(key).length !== 1) throw new AccessError("invalid_request", 400);
       const vote = discoveryVoteBody(await discoveryRequestBody(req, 2048));
-      result = await proxyDiscoveryVote(vote, voter_key);
+      const { voter, cookie } = await resolveDiscoveryVoter(request, vote.vote ? { publicId: vote.public_id } : undefined);
+      if (cookie) res.setHeader("Set-Cookie", cookie);
+      result = await proxyDiscoveryVote(vote, voter);
     } else {
       result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" })
         : publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));

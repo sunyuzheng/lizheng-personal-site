@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import type { Lang } from "@/contexts/LanguageContext";
 import {
@@ -18,7 +18,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, voteDiscovery, DISCOVERY_LIST_SIZE, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView } from "@/lib/ask-discovery";
+import { askedAgo, askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, DISCOVERY_LIST_SIZE, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
@@ -56,7 +56,7 @@ const COPY = {
     discoveryTitle: "别人在问什么",
     discoveryNote: "真实的提问和回答，由AI挑选后原样展示。",
     discoveryCount: (n: number) => `${n}次类似提问`,
-    discoveryLikes: (n: number) => `${n}人觉得有帮助`,
+    discoveryOthers: (n: number) => `另外${n}个类似提问`,
     discoveryLoading: "正在打开…",
     discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
     discoverySimilar: "问个类似的",
@@ -64,7 +64,8 @@ const COPY = {
     discoveryViews: ["最近问", "最常问"],
     discoveryShare: "分享",
     discoveryHelpful: "有帮助",
-    discoveryHelped: "觉得有帮助",
+    discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
+    discoveryUnlike: "取消",
     discoveryAttribution: "AI整理，不是立正本人回复。",
     loading: "正在查找相关公开材料…",
     seconds: "秒",
@@ -178,7 +179,7 @@ const COPY = {
     discoveryTitle: "What others are asking",
     discoveryNote: "Real questions and answers, picked by AI and shown as asked.",
     discoveryCount: (n: number) => `${n} similar questions`,
-    discoveryLikes: (n: number) => `${n} found this helpful`,
+    discoveryOthers: (n: number) => `${n} more similar questions`,
     discoveryLoading: "Opening…",
     discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
     discoverySimilar: "Ask something similar",
@@ -186,7 +187,8 @@ const COPY = {
     discoveryViews: ["Newest", "Most asked"],
     discoveryShare: "Share",
     discoveryHelpful: "Helpful",
-    discoveryHelped: "Found it helpful",
+    discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
+    discoveryUnlike: "Undo",
     discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
     loading: "Finding relevant public material…",
     seconds: "s",
@@ -561,7 +563,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [cardShares, setCardShares] = useState<Record<string, ShareState>>({});
   const [openCard, setOpenCard] = useState("");
   const [cardDetails, setCardDetails] = useState<Record<string, DiscoveryDetail | "loading" | "failed">>({});
-  const [cardVotes, setCardVotes] = useState<Record<string, { likes: number; voted: boolean }>>({});
+  // In 最常问: whose similar questions are open (any number), and which of those shows its answer.
+  const [openSimilar, setOpenSimilar] = useState<Set<string>>(() => new Set());
+  const [openNested, setOpenNested] = useState("");
+  // Likes: what this browser liked (kept on this device), and the votes on their way, shown at once.
+  const [likes, setLikes] = useState<LikeMemory>(readLikes);
+  const [voting, setVoting] = useState<Record<string, { voted: boolean; likes: number }>>({});
+  const votingNow = useRef(new Set<string>());
   // The count comes from Builder, which sleeps when idle: say so while it wakes.
   const [accountWaking, setAccountWaking] = useState(false);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
@@ -649,18 +657,19 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     });
     return () => { clearTimeout(late); controller.abort(); };
   }, [lang]);
-  const toggleCard = (card: DiscoveryCard) => {
-    if (openCard === card.public_id) { setOpenCard(""); return; }
-    setOpenCard(card.public_id);
+  const toggleCard = (card: DiscoveryCard | SimilarQuestion, nested = false) => {
+    const [shown, show] = nested ? [openNested, setOpenNested] : [openCard, setOpenCard];
+    if (shown === card.public_id) { show(""); return; }
+    show(card.public_id);
     markUsage("d_open");
-    track("Ask Discovery Open", { surface: "home", view: discoveryTab });
+    track("Ask Discovery Open", { surface: "home", view: nested ? "similar" : discoveryTab });
     const known = cardDetails[card.public_id];
     if (known && known !== "failed") return;
     setCardDetails(prev => ({ ...prev, [card.public_id]: "loading" }));
     void discoveryDetail(card.public_id).then(detail =>
       setCardDetails(prev => ({ ...prev, [card.public_id]: detail || "failed" })));
   };
-  const askSimilar = (card: DiscoveryCard) => {
+  const askSimilar = (card: DiscoveryCard | SimilarQuestion) => {
     markUsage("d_similar");
     track("Ask Discovery Similar", { surface: "home", view: discoveryTab });
     prefill(card.question, "card");
@@ -669,13 +678,13 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const showTab = (view: DiscoveryView) => {
     if (view === discoveryTab) return;
     setDiscoveryTab(view);
-    setOpenCard("");
+    setOpenCard(""); setOpenNested(""); setOpenSimilar(new Set());
     track("Ask Discovery Sort", { surface: "home", sort: view });
   };
   // A question others asked already has its public page: sharing copies its link at once, and a
   // phone can also send it on.
   const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
-  const shareCard = async (card: DiscoveryCard) => {
+  const shareCard = async (card: DiscoveryCard | SimilarQuestion) => {
     if (cardShares[card.public_id]?.open) { setCardShare(card.public_id, { open: false }); return; }
     const url = discoveryPage(card.public_id);
     setCardShare(card.public_id, { open: true, phase: "ready", url });
@@ -683,16 +692,27 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     track("Ask Discovery Share", { surface: "home", view: discoveryTab });
     setCardShare(card.public_id, { copied: await copyWhenReady(url) });
   };
-  const copyCard = async (card: DiscoveryCard) => setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
-  const sendCard = async (card: DiscoveryCard) => {
+  const copyCard = async (card: DiscoveryCard | SimilarQuestion) => setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
+  const sendCard = async (card: DiscoveryCard | SimilarQuestion) => {
     try { await navigator.share({ title: card.question, url: discoveryPage(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
   };
-  const likeCard = async (card: DiscoveryCard) => {
-    const vote = !cardVotes[card.public_id]?.voted;
-    const result = await voteDiscovery(card.public_id, card.revision, vote);
-    if (!result) return;
-    setCardVotes(prev => ({ ...prev, [card.public_id]: result }));
-    track("Ask Discovery Vote", { surface: "home", vote });
+  const likeOf = (card: DiscoveryCard | SimilarQuestion) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);
+  // Anyone may like, counted by browser. A like shows at once; if it does not go through, it goes back.
+  const likeCard = async (card: DiscoveryCard | SimilarQuestion) => {
+    const id = card.public_id;
+    if (votingNow.current.has(id)) return;
+    votingNow.current.add(id);
+    const shown = likeOf(card), vote = !shown.voted;
+    setVoting(prev => ({ ...prev, [id]: { voted: vote, likes: Math.max(0, shown.likes + (vote ? 1 : -1)) } }));
+    const result = await voteDiscovery(id, card.revision, vote);
+    votingNow.current.delete(id);
+    if (result) { setLikes(prev => rememberLike(prev, id, result)); track("Ask Discovery Vote", { surface: "home", vote }); }
+    setVoting(prev => { const next = { ...prev }; delete next[id]; return next; });
+  };
+  const toggleSimilar = (card: DiscoveryCard) => {
+    const open = !openSimilar.has(card.public_id);
+    setOpenSimilar(prev => { const next = new Set(prev); if (open) next.add(card.public_id); else next.delete(card.public_id); return next; });
+    if (open) track("Ask Discovery Similar List", { surface: "home" });
   };
   const logout = () => { setLoginStep(""); void logoutAsk().then(refreshAccount); };
   const login = () => {
@@ -704,6 +724,94 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const loginHere = () => {
     loginCleanup.current?.(true);
     askLoginHere({ question, context: situation, intent });
+  };
+  // One question others asked: its like beside it, its answer opening in place; in 最常问, the topic's
+  // other questions open under it, each with its own like and answer. `anchor` keeps its sources'
+  // anchors apart from the conversation's.
+  const renderCard = (card: DiscoveryCard | SimilarQuestion, anchor: number, nested = false): ReactNode => {
+    const open = (nested ? openNested : openCard) === card.public_id;
+    const detail = cardDetails[card.public_id];
+    const like = likeOf(card);
+    const full = "summary" in card ? card : null;
+    // Picked for being asked often: the count of similar askings leads. Otherwise the time does, and
+    // the count, when it says more than this one question, sits below.
+    const similar = full ? full.similar_count ?? full.topic_question_count : 0;
+    const often = full?.role === "common" && similar >= 2;
+    const others = full?.role === "common" && !nested ? full.similar ?? [] : [];
+    return (
+      <article key={card.public_id} className={["lz-ask-qcard", open && "open", nested && "nested"].filter(Boolean).join(" ")}>
+        <div className="lz-ask-qcard-row">
+          <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card, nested)}>
+            {often ? (
+              <small className="often">{c.discoveryCount(similar)}</small>
+            ) : card.asked_at ? (
+              <time className={Date.now() - Date.parse(card.asked_at) < 3600000 ? "fresh" : undefined} dateTime={card.asked_at}
+                title={new Date(card.asked_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
+                {askedAgo(card.asked_at)}
+              </time>
+            ) : (
+              <small>常被问到</small>
+            )}
+            <b>{card.question}</b>
+            {!open && !nested && full?.summary && <span className="summary">{full.summary}</span>}
+            {!often && similar >= 2 && <span className="meta">{c.discoveryCount(similar)}</span>}
+          </button>
+          {/* A like, as Product Hunt and Reddit show one: an arrow over the count. */}
+          <button type="button" className={like.voted ? "lz-ask-upvote on" : "lz-ask-upvote"} aria-pressed={like.voted}
+            aria-label={like.likes > 0 ? c.discoveryHelpfulCount(like.likes) : c.discoveryHelpful}
+            title={like.voted ? c.discoveryUnlike : c.discoveryHelpful} onClick={() => void likeCard(card)}>
+            <span className="arrow" aria-hidden="true" />
+            {like.likes > 0 && <span className="count">{like.likes}</span>}
+          </button>
+        </div>
+        {open && (
+          <div className="lz-ask-qcard-body">
+            {detail === "loading" || !detail ? <p className="note">{c.discoveryLoading}</p>
+              : detail === "failed" ? <p className="note">{c.discoveryUnavailable}</p> : (
+              <>
+                <div className="lz-ask-answer">
+                  <div className="lz-ask-answer-summary">
+                    <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
+                  </div>
+                  <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
+                  {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
+                </div>
+                {!!detail.answer.sources.length && (
+                  <div className="lz-ask-material">
+                    <p>{c.sources}</p>
+                    <div className="lz-ask-source-grid">
+                      {detail.answer.sources.map(source => (
+                        <Source key={`${source.id}-${source.url}`} source={source} lang={lang} turnId={anchor} />
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <small className="attribution">{c.discoveryAttribution}</small>
+              </>
+            )}
+            <div className="actions">
+              <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
+              <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
+                onClick={() => void shareCard(card)}>{c.discoveryShare}</button>
+            </div>
+            {cardShares[card.public_id]?.open && (
+              <SharePanel state={cardShares[card.public_id]} lang={lang} link
+                onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} />
+            )}
+          </div>
+        )}
+        {others.length > 0 && full && (
+          <div className="lz-ask-qcard-similar">
+            <button type="button" className="toggle" aria-expanded={openSimilar.has(card.public_id)} onClick={() => toggleSimilar(full)}>
+              {c.discoveryOthers(others.length)}
+            </button>
+            {openSimilar.has(card.public_id) && (
+              <div className="list">{others.map((item, i) => renderCard(item, anchor * 100 - i - 1, true))}</div>
+            )}
+          </div>
+        )}
+      </article>
+    );
   };
   const input = useRef<HTMLTextAreaElement>(null);
   const latest = useRef<HTMLElement>(null);
@@ -1158,78 +1266,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
               {/* While the questions load, the rows they will fill; never the examples first. */}
               {!discoveryCards.length && [0, 1, 2, 3].map(i => <div key={i} className="lz-ask-qcard-placeholder" aria-hidden="true"><i /><b /></div>)}
-              {discoveryCards.map((card, index) => {
-                const open = openCard === card.public_id;
-                const detail = cardDetails[card.public_id];
-                const vote = cardVotes[card.public_id];
-                const likes = vote?.likes ?? card.likes;
-                // Picked for being asked often: the count of similar askings leads. Otherwise the
-                // time does, and the count, when it says more than this one question, sits below.
-                const similar = card.similar_count ?? card.topic_question_count;
-                const often = card.role === "common" && similar >= 2;
-                const meta = [!often && similar >= 2 && c.discoveryCount(similar),
-                  likes > 0 && c.discoveryLikes(likes)].filter(Boolean).join(" · ");
-                const anchor = -(index + 1);
-                return (
-                  <article key={card.public_id} className={open ? "lz-ask-qcard open" : "lz-ask-qcard"}>
-                    <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card)}>
-                      {often ? (
-                        <small className="often">{c.discoveryCount(similar)}</small>
-                      ) : card.asked_at ? (
-                        <time className={Date.now() - Date.parse(card.asked_at) < 3600000 ? "fresh" : undefined} dateTime={card.asked_at}
-                          title={new Date(card.asked_at).toLocaleString("zh-CN", { dateStyle: "long", timeStyle: "short" })}>
-                          {askedAgo(card.asked_at)}
-                        </time>
-                      ) : (
-                        <small>常被问到</small>
-                      )}
-                      <b>{card.question}</b>
-                      {!open && card.summary && <span className="summary">{card.summary}</span>}
-                      {meta && <span className="meta">{meta}</span>}
-                    </button>
-                    {open && (
-                      <div className="lz-ask-qcard-body">
-                        {detail === "loading" || !detail ? <p className="note">{c.discoveryLoading}</p>
-                          : detail === "failed" ? <p className="note">{c.discoveryUnavailable}</p> : (
-                          <>
-                            <div className="lz-ask-answer">
-                              <div className="lz-ask-answer-summary">
-                                <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
-                              </div>
-                              <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
-                              {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
-                            </div>
-                            {!!detail.answer.sources.length && (
-                              <div className="lz-ask-material">
-                                <p>{c.sources}</p>
-                                <div className="lz-ask-source-grid">
-                                  {detail.answer.sources.map(source => (
-                                    <Source key={`${source.id}-${source.url}`} source={source} lang={lang} turnId={anchor} />
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            <small className="attribution">{c.discoveryAttribution}</small>
-                          </>
-                        )}
-                        <div className="actions">
-                          <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
-                          {account?.authenticated && (
-                            <button type="button" className={vote?.voted ? "like on" : "like"} aria-pressed={!!vote?.voted}
-                              onClick={() => void likeCard(card)}>{vote?.voted ? c.discoveryHelped : c.discoveryHelpful}</button>
-                          )}
-                          <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
-                            onClick={() => void shareCard(card)}>{c.discoveryShare}</button>
-                        </div>
-                        {cardShares[card.public_id]?.open && (
-                          <SharePanel state={cardShares[card.public_id]} lang={lang} link
-                            onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} />
-                        )}
-                      </div>
-                    )}
-                  </article>
-                );
-              })}
+              {discoveryCards.map((card, index) => renderCard(card, -(index + 1)))}
               {discoveryMore && (
                 <a className="lz-ask-discovery-more" href={`https://ask.lizheng.ai/#${discoveryTab}`} {...EXTERNAL}
                   onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} ↗</a>

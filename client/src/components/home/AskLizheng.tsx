@@ -54,7 +54,7 @@ const COPY = {
     full: "打开完整页面",
     examples: "选一个问题，再改成自己的",
     discoveryTitle: "别人在问什么",
-    discoveryNote: "真实的提问，去掉个人信息后由AI挑选整理。",
+    discoveryNote: "真实的提问和回答，由AI挑选后原样展示。",
     discoveryCount: (n: number) => `${n}次类似提问`,
     discoveryLikes: (n: number) => `${n}人觉得有帮助`,
     discoveryLoading: "正在打开…",
@@ -176,7 +176,7 @@ const COPY = {
     full: "Open full page",
     examples: "Choose a question, then make it yours",
     discoveryTitle: "What others are asking",
-    discoveryNote: "Real questions with personal details removed, picked and organized by AI.",
+    discoveryNote: "Real questions and answers, picked by AI and shown as asked.",
     discoveryCount: (n: number) => `${n} similar questions`,
     discoveryLikes: (n: number) => `${n} found this helpful`,
     discoveryLoading: "Opening…",
@@ -510,7 +510,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
   const [opsLogging, setOpsLogging] = useState(false);
-  // v4: answers may be published with personal details removed; the situation is kept for analysis only.
+  // v4: answers may be published, as asked since 2026-10-05 (public_display "as_asked"; before, "deidentified").
   const [publicArchive, setPublicArchive] = useState(false);
   // Whether the situation is kept for analysis (before 2026-10-04) or used for the answer only.
   const [contextKept, setContextKept] = useState(true);
@@ -620,7 +620,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
         const ops = value?.ops_logging;
         const archive = ops?.enabled === true && ops.retention === "until_deleted" && ops.answer_archive === true;
         // The page shows v4's notice only once the service says it keeps to v4.
-        const v4 = archive && ops.notice === "v4" && typeof ops.context_archive === "boolean" && ops.public_display === "deidentified";
+        const v4 = archive && ops.notice === "v4" && typeof ops.context_archive === "boolean"
+          && (ops.public_display === "as_asked" || ops.public_display === "deidentified");
         if (!signal?.aborted) {
           setPublicArchive(v4); setContextKept(ops?.context_archive === true);
           if (typeof value?.model === "string") setModel(value.model);

@@ -27,7 +27,7 @@ export type OpsStart = {
   conversation_id: string;
   intent: "understand" | "apply" | "find";
   entrypoint: "home" | "standalone";
-  // Asked under the v4 notice: the answer may be published with personal details removed,
+  // Asked under the v4 notice: the answer may be published (as asked since 2026-10-05; before, with personal details removed),
   // unless a situation or earlier turns took part ("1"). The situation itself stays owner-only.
   notice_version?: "v4";
   has_background?: "0" | "1";

@@ -38,5 +38,5 @@ User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://www.lizheng.ai/sitemap.xml
-# Questions people asked Ask Lizheng, published with personal details removed.
+# Questions people asked Ask Lizheng, published as asked.
 Sitemap: https://www.lizheng.ai/ask/sitemap.xml

@@ -790,6 +790,11 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </>
             )}
             <div className="actions">
+              {/* Where reading an answer ends, the same like as beside the question. */}
+              <button type="button" className={like.voted ? "btn btn-line like on" : "btn btn-line like"} aria-pressed={like.voted}
+                onClick={() => void likeCard(card)}>
+                <span className="arrow" aria-hidden="true" />{c.discoveryHelpful}{like.likes > 0 && <span className="count">{like.likes}</span>}
+              </button>
               <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
               <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
                 onClick={() => void shareCard(card)}>{c.discoveryShare}</button>

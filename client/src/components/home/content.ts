@@ -18,6 +18,8 @@ export const LINKS = {
   growthBookZh: GROWTH_BOOK_ZH_PATH,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
   askLizheng: "https://ask.lizheng.ai/",
+  // Feedback and reports on 问问立正: comments under the community post that introduced it.
+  askFeedback: "https://www.superlinear.academy/c/tools/ask-lizheng",
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,

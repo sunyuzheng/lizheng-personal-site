@@ -66,6 +66,8 @@ const COPY = {
     discoveryHelpful: "有帮助",
     discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
     discoveryUnlike: "取消",
+    discoveryFeedback: "反馈或举报",
+    discoveryFeedbackCopied: "这条问答的链接已复制，留言时贴上就行。",
     discoveryAttribution: "AI整理，不是立正本人回复。",
     loading: "正在查找相关公开材料…",
     seconds: "秒",
@@ -189,6 +191,8 @@ const COPY = {
     discoveryHelpful: "Helpful",
     discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
     discoveryUnlike: "Undo",
+    discoveryFeedback: "Feedback or report",
+    discoveryFeedbackCopied: "This Q&A’s link is copied; paste it in your comment.",
     discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
     loading: "Finding relevant public material…",
     seconds: "s",
@@ -570,6 +574,9 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [likes, setLikes] = useState<LikeMemory>(readLikes);
   const [voting, setVoting] = useState<Record<string, { voted: boolean; likes: number }>>({});
   const votingNow = useRef(new Set<string>());
+  // Which answers' links were copied on the way to the community post for feedback (2026-10-06,
+  // the user: feedback and reports are comments under the post that introduced the Ask).
+  const [cardFeedback, setCardFeedback] = useState<Record<string, boolean>>({});
   // The count comes from Builder, which sleeps when idle: say so while it wakes.
   const [accountWaking, setAccountWaking] = useState(false);
   const refreshAccount = () => { void readAskAccount().then(setAccount); };
@@ -798,7 +805,12 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
               <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
                 onClick={() => void shareCard(card)}>{c.discoveryShare}</button>
+              <a className="feedback" href={LINKS.askFeedback} {...EXTERNAL} onClick={() => {
+                track("Ask Feedback", { surface: "home", location: "card" });
+                void copyWhenReady(discoveryPage(card.public_id)).then(copied => { if (copied) setCardFeedback(prev => ({ ...prev, [card.public_id]: true })); });
+              }}>{c.discoveryFeedback} ↗</a>
             </div>
+            {cardFeedback[card.public_id] && <p className="feedback-note" role="status">{c.discoveryFeedbackCopied}</p>}
             {cardShares[card.public_id]?.open && (
               <SharePanel state={cardShares[card.public_id]} lang={lang} link
                 onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} />

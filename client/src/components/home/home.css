@@ -2754,6 +2754,29 @@
   box-shadow: inset 0 0 0 1px var(--lz-green);
 }
 
+/* 反馈或举报: quiet, apart from the other actions; it leaves for the community post. */
+.lz-home .lz-ask-qcard-body .actions .feedback {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  margin-left: auto;
+  padding: 0 4px;
+  font-size: 13.5px;
+  color: #9a9b93;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.lz-home .lz-ask-qcard-body .actions .feedback:hover {
+  color: var(--lz-ink-2);
+}
+
+.lz-home .lz-ask-qcard-body .feedback-note {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: var(--lz-muted);
+}
+
 /* The like at the end of an opened answer: a button like its neighbours, green once liked. */
 .lz-home .lz-ask-qcard-body .actions .like {
   gap: 7px;

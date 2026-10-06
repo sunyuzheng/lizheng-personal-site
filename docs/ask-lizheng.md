@@ -57,6 +57,12 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 
 问问立正iPhone App（ask-lizheng-ios仓库）显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`。2026-10-03为上架App Store：App里的验证页只给邮箱验证码，不给「使用超线性学院账号登录」，因为学院登录页带注册入口，而苹果要求允许注册的App也能在App里删除账号；邮箱验证码不建账号。隐私政策在`/ask/privacy`，帮助与联系在`/ask/support`（`client/public/ask/`下的静态页，中英文），App Store的隐私政策与支持网址指向这两页。数据用途改变时，两页、ask页面的「说明」和App的隐私声明要一起改；输入框下那句、「说明」里的「这里是公开问答」、处境和分享的说明以及隐私政策开头那段，只在 ask-lizheng 的 `src/public-qa.js` 改（见下面「公开问答怎么说」）。
 
+## 安卓 App（2026-10-06）
+
+问问立正安卓App（ask-lizheng-android仓库）和iPhone App一样显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`，所以页面在App里同样不显示会员购买链接、第一次提问前单独征求AI同意、验证页只给邮箱验证码。立正定的分发方式：Google Play用学院的开发者账号上架；中国大陆直接下载，安装包放在本仓库`client/public/ask/android/`，下载页是`/ask/android`（版本、大小、签名证书指纹；在微信里打开时提示改用浏览器）。两边用同一把签名密钥，手机可以在两种安装方式之间直接覆盖更新。
+
+发新版：在安卓仓库跑`scripts/release.sh`，把新的`ask-lizheng-<版本>.apk`放进`client/public/ask/android/`，改下载页里的链接、版本、大小和日期，删掉旧的安装包。隐私政策和帮助页写明了安卓App：保存图片进相册、下载PDF进「下载」，不读其他文件。
+
 ## 回答排版（2026-10-03）
 
 主页问答区和 ask.lizheng.ai 用同一套段落标签：「AI综合」是默认，不标；只标「材料里的观点」和「AI推演」，提问带了处境时显示「结合你的处境」。正文已有角标的段落不再重复出处行；「边界」里提到的 S 编号显示成角标；摘要用衬线字体。导出长图（`client/src/lib/ask-share.js`）同步。回答写法的规则在 ask-lizheng 仓库的 `server/answers.py`。

@@ -61,7 +61,7 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 
 问问立正安卓App（ask-lizheng-android仓库）和iPhone App一样显示ask.lizheng.ai，User-Agent带`AskLizhengApp/<版本>`，所以页面在App里同样不显示会员购买链接、第一次提问前单独征求AI同意、验证页只给邮箱验证码。立正定的分发方式：Google Play用学院的开发者账号上架；中国大陆直接下载，安装包放在本仓库`client/public/ask/android/`，下载页是`/ask/android`（版本、大小、签名证书指纹；在微信里打开时提示改用浏览器）。两边用同一把签名密钥，手机可以在两种安装方式之间直接覆盖更新。
 
-发新版：在安卓仓库跑`scripts/release.sh`，把新的`ask-lizheng-<版本>.apk`放进`client/public/ask/android/`，改下载页里的链接、版本、大小和日期，删掉旧的安装包。隐私政策和帮助页写明了安卓App：保存图片进相册、下载PDF进「下载」，不读其他文件。
+发新版：在安卓仓库跑`scripts/release.sh`，把新的安装包改名成`ask-lizheng.apk`覆盖`client/public/ask/android/`里的那份（网址不带版本号，ask页和下载页都链它；旧的带版本号网址由`vercel.json`转到它），再改下载页里的版本、大小和日期。Google Play 2026-10-07上架：https://play.google.com/store/apps/details?id=ai.lizheng.ask 。隐私政策和帮助页写明了安卓App：保存图片进相册、下载PDF进「下载」，不读其他文件。
 
 ## 回答排版（2026-10-03）
 

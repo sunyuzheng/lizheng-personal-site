@@ -228,6 +228,14 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
 }
 
 function buildGuestNoscript(guest: GuestProfile, description: string) {
+  const communityResources = guest.community_resources?.length
+    ? `<section id="community-resources"><h2>社区文章与活动</h2><ul>${guest.community_resources
+        .map(
+          item =>
+            `<li><a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a>${item.author ? `（${escapeHtml(item.author)}）` : ""}<p>${escapeHtml(item.summary)}</p></li>`
+        )
+        .join("")}</ul></section>`
+    : "";
   const insights = getGuestEnglishInsights(guest.slug)
     .map(
       article => `
@@ -256,11 +264,13 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     ${guest.guest_bio ? `<p>${escapeHtml(guest.guest_bio)}</p>` : ""}
     ${guest.guest_bio_en ? `<p lang="en">${escapeHtml(guest.guest_bio_en)}</p>` : ""}
     ${guest.interview_date ? `<p>Recorded: ${escapeHtml(guest.interview_date)}</p>` : ""}
+    ${guest.youtube_playlist_url ? `<p><a href="${escapeHtml(guest.youtube_playlist_url)}">YouTube个人合集</a></p>` : ""}
     ${insights}
     <h2>全部访谈</h2>
     <ol>
         ${items}
     </ol>
+    ${communityResources}
   </main>`;
 }
 

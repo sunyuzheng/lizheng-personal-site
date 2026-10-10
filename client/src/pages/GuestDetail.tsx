@@ -1,5 +1,6 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
 import GuestInsightCard from "@/components/guests/GuestInsightCard";
+import GuestCommunityResources from "@/components/guests/GuestCommunityResources";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
@@ -302,6 +303,36 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
                   </a>
                 </Button>
               )}
+              {guest.youtube_playlist_url && (
+                <Button
+                  asChild
+                  variant="outline"
+                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                >
+                  <a
+                    href={guest.youtube_playlist_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {lang === "en" ? "YouTube playlist" : "YouTube个人合集"}
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              )}
+              {!!guest.community_resources?.length && (
+                <Button
+                  asChild
+                  variant="outline"
+                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
+                >
+                  <a href="#community-resources">
+                    {lang === "en"
+                      ? "Community posts and events"
+                      : "社区文章与活动"}
+                    （{guest.community_resources.length}）
+                  </a>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -476,6 +507,10 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             ))}
           </div>
         </section>
+        <GuestCommunityResources
+          resources={guest.community_resources || []}
+          lang={lang}
+        />
       </div>
     </GuestsLayout>
   );

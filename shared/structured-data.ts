@@ -761,6 +761,13 @@ export function buildGuestStructuredData(
         : {}),
     },
     hasPart: [
+      ...(guest.community_resources || []).map(resource => ({
+        "@type": "CreativeWork",
+        name: resource.title,
+        description: resource.summary,
+        url: resource.url,
+        inLanguage: "zh",
+      })),
       ...guest.episodes.map(episode => ({
         "@type": "CreativeWork",
         name: episode.title,

@@ -24,6 +24,14 @@ export interface RawGuestEpisode {
   url?: string;
 }
 
+export interface GuestCommunityResource {
+  kind: "guest_post" | "student_resource" | "event";
+  title: string;
+  url: string;
+  summary: string;
+  author?: string;
+}
+
 export interface RawGuest {
   guest_name: string;
   guest_en_name: string;
@@ -46,6 +54,8 @@ export interface RawGuest {
   all_urls: readonly string[];
   slug?: string;
   episodes?: readonly RawGuestEpisode[];
+  youtube_playlist_url?: string;
+  community_resources?: readonly GuestCommunityResource[];
 }
 
 export interface RawVideoMetadata {
@@ -95,6 +105,8 @@ export interface GuestProfile {
   share_url: string;
   episodes: GuestEpisode[];
   primary_episode: GuestEpisode;
+  youtube_playlist_url?: string;
+  community_resources?: readonly GuestCommunityResource[];
 }
 
 function compareGuestEpisodesByViews(a: GuestEpisode, b: GuestEpisode): number {

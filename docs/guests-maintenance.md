@@ -43,6 +43,8 @@ These are intentional product rules, not accidents:
 - the episode grid is sorted by `view_count` descending
 - episode dates are rendered in UTC so they do not shift by browser timezone
 - guest-page social links come from `xiaohongshu_url` and `linkedin_url`
+- guest playlist shortcuts use `youtube_playlist_url`; grouped Circle links use `community_resources`, both owned by upstream `guests.json`
+- community resources appear separately and do not change the interview count or featured video
 
 If you change one of these behaviors, update this document and `docs/guest-data.md`.
 

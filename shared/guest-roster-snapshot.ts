@@ -1,7 +1,7 @@
 // AUTO-GENERATED FILE. DO NOT EDIT BY HAND.
 //
 // Upstream source of truth:
-// - Guest roster and episode membership: /Users/sunyuzheng/Desktop/AI/_workspace/kedaibiao-orca-guest-20260915/guests.json
+// - Guest roster and episode membership: /Users/sunyuzheng/Desktop/AI/_workspace/yc-resource-completion/content/guests.json
 // - Canonical published source: https://raw.githubusercontent.com/sunyuzheng/kedaibiao-content-tools/main/guests.json
 //
 // Refresh command:
@@ -296,12 +296,22 @@ export const guestRosterSnapshot = [
       "9213uFD30VM",
       "-S1BZ_-hvlg",
       "4eYzTGxZazw",
-      "lhcQkrkTUhc"
+      "lhcQkrkTUhc",
+      "3YGv34WZhNI",
+      "EKXU0pWIt9g",
+      "CcfP2t0Iy54",
+      "5tvNRSNXeRU",
+      "EdZNyICyl0I",
+      "KYxw-9oWpVo",
+      "Qnqecz4Fw5g",
+      "DW24krQCXM4",
+      "TqC-zoGI9-A",
+      "wgr5z9VM1rs"
     ],
-    "max_views": 39664,
+    "max_views": 49642,
     "thumbnail_url": "https://img.youtube.com/vi/lhcQkrkTUhc/hqdefault.jpg",
     "primary_url": "https://www.youtube.com/watch?v=lhcQkrkTUhc",
-    "episode_count": 14,
+    "episode_count": 24,
     "all_urls": [
       "https://www.youtube.com/watch?v=hU1hr7KCyqk",
       "https://www.youtube.com/watch?v=yiZ_rs2Jbz0",
@@ -316,7 +326,17 @@ export const guestRosterSnapshot = [
       "https://www.youtube.com/watch?v=9213uFD30VM",
       "https://www.youtube.com/watch?v=-S1BZ_-hvlg",
       "https://www.youtube.com/watch?v=4eYzTGxZazw",
-      "https://www.youtube.com/watch?v=lhcQkrkTUhc"
+      "https://www.youtube.com/watch?v=lhcQkrkTUhc",
+      "https://www.youtube.com/watch?v=3YGv34WZhNI",
+      "https://www.youtube.com/watch?v=EKXU0pWIt9g",
+      "https://www.youtube.com/watch?v=CcfP2t0Iy54",
+      "https://www.youtube.com/watch?v=5tvNRSNXeRU",
+      "https://www.youtube.com/watch?v=EdZNyICyl0I",
+      "https://www.youtube.com/watch?v=KYxw-9oWpVo",
+      "https://www.youtube.com/watch?v=Qnqecz4Fw5g",
+      "https://www.youtube.com/watch?v=DW24krQCXM4",
+      "https://www.youtube.com/watch?v=TqC-zoGI9-A",
+      "https://www.youtube.com/watch?v=wgr5z9VM1rs"
     ]
   },
   {

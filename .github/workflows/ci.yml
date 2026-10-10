@@ -27,4 +27,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm test:ask-lizheng
+      - run: pnpm test:decks
       - run: pnpm build

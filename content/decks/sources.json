@@ -1,0 +1,180 @@
+{
+  "note": "Which decks get a web version at /decks/<slug>, and how scripts/decks/capture_decks.mjs reads each one. See README.md in this folder.",
+  "decks": [
+    {
+      "page": "/decks/fake-work-fake-learning",
+      "deck": "columbia-fake-work-fake-learning-2026",
+      "language": "en",
+      "capture": "https://columbia-fake-work-learning.vercel.app/",
+      "slides": "/decks/fake-work-fake-learning/slides",
+      "nav": "call:show",
+      "active": "section.slide:not([hidden])",
+      "notes": {
+        "from": "global",
+        "expr": "noteData[i].text"
+      },
+      "hide": [
+        "#controls",
+        ".controls",
+        "#progress",
+        "#announcement"
+      ]
+    },
+    {
+      "page": "/decks/fake-work-fake-learning/zh",
+      "deck": "columbia-fake-work-fake-learning-2026",
+      "language": "zh",
+      "capture": "https://columbia-fake-work-learning.vercel.app/zh",
+      "slides": "/decks/fake-work-fake-learning/zh/slides",
+      "nav": "call:show",
+      "active": "section.slide:not([hidden])",
+      "notes": {
+        "from": "global",
+        "expr": "noteData[i].text"
+      },
+      "hide": [
+        "#controls",
+        ".controls",
+        "#progress",
+        "#announcement"
+      ]
+    },
+    {
+      "page": "/decks/aie-shanghai-2026",
+      "deck": "aie-shanghai-2026",
+      "language": "zh",
+      "capture": "https://www.lizheng.ai/decks/aie-shanghai-2026",
+      "slides": "/decks/aie-shanghai-2026/slides",
+      "nav": "keys",
+      "count": 10,
+      "active": "main article",
+      "shot": "main article",
+      "viewport": [
+        2000,
+        1250
+      ]
+    },
+    {
+      "page": "/decks/tencent-game-strategy",
+      "deck": "tencent-game-strategy",
+      "language": "zh",
+      "capture": "https://tencent-game-strategy-ai-enablement.vercel.app/",
+      "nav": "keys",
+      "active": ".slide.active",
+      "notes": {
+        "from": "script-array",
+        "name": "speakerNotes"
+      },
+      "hide": [
+        "#prog",
+        "#counter",
+        "#hint",
+        "#speakerPanel"
+      ]
+    },
+    {
+      "page": "/decks/linkedin-engineering-ai",
+      "deck": "linkedin-engineering-ai",
+      "language": "en",
+      "capture": "https://linkedin-engineering-ai.vercel.app/",
+      "nav": "keys",
+      "active": ".slide.active",
+      "hide": [
+        "#prog",
+        "#counter",
+        "#hint"
+      ]
+    },
+    {
+      "page": "/decks/tencent-academy-engineering",
+      "deck": "tencent-academy-engineering",
+      "language": "zh",
+      "capture": "https://html-deck-beta.vercel.app/",
+      "nav": "keys",
+      "active": ".slide.active",
+      "hide": [
+        "#prog",
+        "#counter",
+        "#hint"
+      ]
+    },
+    {
+      "page": "/decks/amazon-stop-chatting",
+      "deck": "amazon-stop-chatting",
+      "language": "en",
+      "capture": "https://deck-pi-three.vercel.app/",
+      "nav": "reveal"
+    },
+    {
+      "page": "/decks/sisi-ai-value",
+      "deck": "sisi-ai-value",
+      "language": "zh",
+      "capture": "https://sisi-internal-training-deck.ai-builders.space/",
+      "nav": "reveal"
+    },
+    {
+      "page": "/decks/fake-work",
+      "deck": "fake-work-2026",
+      "language": "zh",
+      "capture": "https://fake-work-2026.vercel.app/decks/fake-work/",
+      "slides": "/decks/fake-work/slides",
+      "nav": "reveal"
+    },
+    {
+      "page": "/decks/ai-side-income-career-capital",
+      "deck": "ai-side-income-career-capital",
+      "language": "zh",
+      "capture": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital/",
+      "slides": "/decks/ai-side-income-career-capital/slides",
+      "nav": "reveal",
+      "notes": {
+        "from": "reveal"
+      }
+    },
+    {
+      "page": "/decks/ai-side-income-commercial-gates",
+      "deck": "ai-side-income-commercial-gates",
+      "language": "zh",
+      "capture": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/",
+      "slides": "/decks/ai-side-income-commercial-gates/slides",
+      "nav": "reveal",
+      "notes": {
+        "from": "reveal"
+      }
+    },
+    {
+      "page": "/decks/fde-enterprise-engineering",
+      "deck": "fde-enterprise-engineering",
+      "language": "zh",
+      "capture": "https://fde-enterprise-engineering-statsig.vercel.app/",
+      "nav": "keys",
+      "active": ".slide.active",
+      "hide": [
+        "#prog",
+        "#counter",
+        "#hint"
+      ]
+    },
+    {
+      "page": "/decks/opc-ai-leverage",
+      "deck": "opc-ai-leverage",
+      "language": "zh",
+      "capture": "https://opc-founder-alliance-ai-demo.vercel.app/deck/",
+      "nav": "reveal"
+    },
+    {
+      "page": "/decks/seattle-ai-startup-summit",
+      "deck": "seattle-ai-startup-summit",
+      "language": "en",
+      "capture": "https://workshop-cursor-deck.ai-builders.space/",
+      "nav": "reveal"
+    },
+    {
+      "page": "/decks/acemode-cursor",
+      "deck": "acemode-cursor",
+      "language": "zh",
+      "capture": "https://acemode-deck.ai-builders.space/",
+      "nav": "reveal"
+    }
+  ]
+}

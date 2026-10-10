@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts && tsx scripts/prerender-decks.ts",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
@@ -16,6 +16,7 @@
     "sync:guest-insights": "tsx scripts/sync-guest-insights.ts",
     "community:city": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-city.ts",
     "test:ask-lizheng": "vitest run --config vitest.ask-lizheng.config.ts",
+    "test:decks": "vitest run --root . tests/deck-pages.test.ts",
     "sync:ask-app": "node scripts/sync-ask-app.mjs"
   },
   "dependencies": {

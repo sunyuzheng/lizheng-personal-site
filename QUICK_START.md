@@ -50,6 +50,7 @@ docs/             ← 数据结构和嘉宾维护说明
 | `/book`              | 两本书总览                   |
 | `/zbs`               | 《真本事》单书页             |
 | `/decks`             | 企业培训与演讲资料索引       |
+| `/decks/<slug>`      | 每套deck的网页版（`content/decks/README.md`） |
 | `/collab`            | 演讲、企业项目与长期合作入口 |
 | `/collab/creators`   | 播客、视频与创作者邀请       |
 | `/collab/enterprise` | 企业AI培训                   |

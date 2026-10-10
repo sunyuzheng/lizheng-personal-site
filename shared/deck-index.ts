@@ -29,11 +29,18 @@ export interface DeckEntry {
   language: DeckLanguage;
   audience: LocalizedText;
   takeaway: LocalizedText;
+  /** The slides: where the deck itself plays. */
   href?: string;
+  /**
+   * The web version on this site (/decks/<slug>), written at build time by scripts/deck-pages.ts from
+   * content/decks/pages/. Cards open it first; the page links back to `href` to play the slides.
+   */
+  page?: string;
   alternateEdition?: {
     title: string;
     language: DeckLanguage;
     href: string;
+    page?: string;
   };
   linkKind: DeckLinkKind;
   secondaryHref?: string;
@@ -114,11 +121,13 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "What it means to learn when AI can do the work: why your feeling of learning is often backwards, why AI is most dangerous when it’s right, and how to use it as a spotter instead of a forklift.",
       zh: "当AI能替你完成任务，怎样才算真正学会？为什么学会的感觉常常是反的，为什么AI做对的时候最危险，以及怎样把AI当保护员，而不是叉车。",
     },
-    href: "https://www.lizheng.ai/decks/fake-work-fake-learning",
+    href: "https://www.lizheng.ai/decks/fake-work-fake-learning/slides",
+    page: "/decks/fake-work-fake-learning",
     alternateEdition: {
       title: "假学习的终结",
       language: "zh",
-      href: "https://www.lizheng.ai/decks/fake-work-fake-learning/zh",
+      href: "https://www.lizheng.ai/decks/fake-work-fake-learning/zh/slides",
+      page: "/decks/fake-work-fake-learning/zh",
     },
     linkKind: "deck",
     featured: true,
@@ -155,7 +164,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "Introduce the joint operating team, show how AIE creates a two-way bridge between Shanghai and the global AI engineering network, and define a focused first cooperation package with the association.",
       zh: "介绍共同运营团队，说明AIE如何让全球工程资源进入上海、也帮助中国AI企业连接国际市场，并与协会确认一个边界清楚的首轮合作包。",
     },
-    href: "https://www.lizheng.ai/decks/aie-shanghai-2026",
+    href: "https://www.lizheng.ai/decks/aie-shanghai-2026/slides",
+    page: "/decks/aie-shanghai-2026",
     linkKind: "deck",
     featured: true,
     accent: "#238343",
@@ -274,6 +284,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "战略研究不缺信息；真正稀缺的是把信息变成组织判断，并让每一轮研究留下可以继续复利的上下文。",
     },
     href: "https://tencent-game-strategy-ai-enablement.vercel.app",
+    page: "/decks/tencent-game-strategy",
     linkKind: "deck",
     accent: "#FB923C",
     keywords: [
@@ -308,6 +319,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "工具用起来，不等于组织完成了转型。真正要变的是团队构建、评估和学习的方式。",
     },
     href: "https://linkedin-engineering-ai.vercel.app",
+    page: "/decks/linkedin-engineering-ai",
     linkKind: "deck",
     featured: true,
     accent: "#76A7FF",
@@ -340,6 +352,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "把工具使用、工作流重做和组织能力放进同一张坐标系，才能知道团队到底走到了哪一步。",
     },
     href: "https://html-deck-beta.vercel.app",
+    page: "/decks/tencent-academy-engineering",
     linkKind: "deck",
     secondaryHref:
       "https://www.superlinear.academy/c/public/sections/900177/lessons/3964350",
@@ -378,6 +391,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "从一次性聊天走向有上下文、有评估、有标准，而且第二次还能继续工作的Agent系统。",
     },
     href: "https://deck-pi-three.vercel.app",
+    page: "/decks/amazon-stop-chatting",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/stop-chatting-start-scaling",
     accent: "#A7F3D0",
@@ -455,6 +469,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "会用AI和用AI创造价值之间，差的是一个更好的问题、一条完整工作流和一份可复用资产。",
     },
     href: "https://sisi-internal-training-deck.ai-builders.space",
+    page: "/decks/sisi-ai-value",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/sisi-internal-training-deck",
     accent: "#F9A8D4",
@@ -516,7 +531,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "AI first makes reports, plans, and other work evidence abundant. As those signals lose scarcity, value moves back toward problems, judgment, responsibility, and real-world results.",
       zh: "AI会先让报告、方案和其他工作证据泛滥；当这些信号失去稀缺性，真正值钱的会重新回到问题、判断、责任与现实结果。",
     },
-    href: "https://www.lizheng.ai/decks/fake-work",
+    href: "https://www.lizheng.ai/decks/fake-work/slides",
+    page: "/decks/fake-work",
     linkKind: "deck",
     featured: true,
     accent: "#72D893",
@@ -551,7 +567,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "A side project is not only an income bet; it allocates time, reputation, and career capital. Use three ledgers—cash, commercial evidence, and durable assets—to decide when to stop, pivot, or double down.",
       zh: "AI副业表面上是找项目，实质上是在配置时间、信誉与职业资本。用现金、商业证据和竞争力三本账，决定何时停止、转向或加码。",
     },
-    href: "https://www.lizheng.ai/decks/ai-side-income-career-capital",
+    href: "https://www.lizheng.ai/decks/ai-side-income-career-capital/slides",
+    page: "/decks/ai-side-income-career-capital",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/ai-side-income-2026",
     featured: true,
@@ -589,7 +606,8 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "AI makes building cheaper, but durable income still depends on demand, distribution, trust, retention, margin, and the willingness to keep taking responsibility.",
       zh: "AI降低了构建成本，却没有替你完成需求、分发、信任、留存、毛利和长期责任。",
     },
-    href: "https://www.lizheng.ai/decks/ai-side-income-commercial-gates",
+    href: "https://www.lizheng.ai/decks/ai-side-income-commercial-gates/slides",
+    page: "/decks/ai-side-income-commercial-gates",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/ai-side-income-2026",
     featured: true,
@@ -655,6 +673,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "FDE不只是驻场交付；做对了，它会把客户现场变成高速的产品学习回路。",
     },
     href: "https://fde-enterprise-engineering-statsig.vercel.app",
+    page: "/decks/fde-enterprise-engineering",
     linkKind: "deck",
     accent: "#C4B5FD",
     keywords: ["fde", "statsig", "enterprise engineering", "product", "大客户"],
@@ -677,6 +696,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "10倍提效很少来自一条更好的prompt，更多来自把工作背后的系统一起改掉。",
     },
     href: "https://opc-founder-alliance-ai-demo.vercel.app/deck/",
+    page: "/decks/opc-ai-leverage",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/xwz-opc-ai-demo-kit",
     accent: "#C4B5FD",
@@ -703,6 +723,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "当AI写掉大部分代码，初学者更该学会定义、检查、调试，并对结果负责。",
     },
     href: "https://workshop-cursor-deck.ai-builders.space",
+    page: "/decks/seattle-ai-startup-summit",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/workshop-cursor-deck",
     accent: "#C4B5FD",
@@ -729,6 +750,7 @@ export const DECK_LIBRARY: DeckEntry[] = [
       zh: "真正重要的不是从一个工具换到另一个工具，而是从要答案，走到做出能检查、能复用的东西。",
     },
     href: "https://acemode-deck.ai-builders.space",
+    page: "/decks/acemode-cursor",
     linkKind: "deck",
     sourceHref: "https://github.com/sunyuzheng/acemode-deck",
     accent: "#C4B5FD",
@@ -754,6 +776,7 @@ export function deckForLanguage(deck: DeckEntry, lang: SiteLang): DeckEntry {
       title: deck.title,
       language: deck.language,
       href: deck.href,
+      page: deck.page,
     },
   };
 }

@@ -1,7 +1,6 @@
 import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "./book-links";
 import {
   ABOUT_PAGE_META,
-  AIE_SHANGHAI_DECK_PAGE_META,
   BOOKS_PAGE_META,
   DECKS_PAGE_META,
   HOME_PAGE_META,
@@ -681,7 +680,11 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
           item: {
             "@type": "CreativeWork",
             name: deck.title,
-            ...(deck.href ? { url: deck.href } : {}),
+            ...(deck.page
+              ? { url: `${SITE_URL}${deck.page}` }
+              : deck.href
+                ? { url: deck.href }
+                : {}),
             datePublished: deck.date,
             inLanguage: deck.language === "en" ? "en" : "zh-CN",
             description: localized(deck.takeaway, lang),
@@ -696,58 +699,6 @@ export function buildDeckLibraryStructuredData(lang: SiteLang) {
         name,
         lang === "en" ? "Yuzheng Sun" : "课代表立正"
       ),
-    ],
-  };
-}
-
-export function buildAieShanghaiDeckStructuredData() {
-  const canonical = AIE_SHANGHAI_DECK_PAGE_META.canonical;
-  const documentId = `${canonical}#deck`;
-
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": `${canonical}#webpage`,
-        url: canonical,
-        name: AIE_SHANGHAI_DECK_PAGE_META.title,
-        description: AIE_SHANGHAI_DECK_PAGE_META.description,
-        isPartOf: { "@id": WEBSITE_ID },
-        mainEntity: { "@id": documentId },
-        inLanguage: "zh-CN",
-        dateModified: AIE_SHANGHAI_DECK_PAGE_META.lastModified,
-      },
-      {
-        "@type": "PresentationDigitalDocument",
-        "@id": documentId,
-        name: "把全球AI工程师网络与上海产业生态连接起来",
-        description: AIE_SHANGHAI_DECK_PAGE_META.description,
-        url: canonical,
-        image: AIE_SHANGHAI_DECK_PAGE_META.ogImage,
-        datePublished: "2026-08-24",
-        inLanguage: "zh-CN",
-        author: { "@id": PERSON_ID },
-        about: {
-          "@type": "Event",
-          name: "AI Engineer Shanghai 2026",
-          startDate: "2026-11-05",
-          endDate: "2026-11-06",
-          eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-          location: {
-            "@type": "Place",
-            name: "上海虹桥祥源希尔顿",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "上海",
-              addressCountry: "CN",
-            },
-          },
-        },
-      },
-      websiteNode(),
-      personNode("zh"),
-      breadcrumbNode(canonical, "AIE Shanghai 2026合作会谈", "课代表立正"),
     ],
   };
 }

@@ -1,0 +1,4881 @@
+{
+ "page": "/decks/linkedin-engineering-ai",
+ "deck": "linkedin-engineering-ai",
+ "language": "en",
+ "capturedFrom": "https://linkedin-engineering-ai.vercel.app/",
+ "capturedAt": "2026-10-10",
+ "slides": [
+  {
+   "n": 1,
+   "image": "01.webp",
+   "blocks": [
+    {
+     "text": "LinkedIn Engineering · AI Transformation Briefing",
+     "tag": "div",
+     "fs": 12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      425,
+      1448,
+      15
+     ]
+    },
+    {
+     "text": "Common Misconceptions\nin AI Transformation\nfor Engineering Teams",
+     "tag": "h1",
+     "fs": 98,
+     "fw": 920,
+     "li": false,
+     "box": [
+      76,
+      462,
+      1448,
+      282
+     ]
+    },
+    {
+     "text": "What is the logical starting point of AI-native engineering?",
+     "tag": "p",
+     "fs": 20,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      756,
+      900,
+      32
+     ]
+    },
+    {
+     "text": "by Lizheng · Superlinear Academy",
+     "tag": "div",
+     "fs": 13,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      812,
+      1448,
+      16
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 2,
+   "image": "02.webp",
+   "blocks": [
+    {
+     "text": "Opening Questions",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "The hard questions are rarely about which AI tool is better",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "What can AI actually do, and where does it break?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      359,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "Capability boundaries, responsibility boundaries, trust boundaries.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      424,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Why do concepts travel faster than adoption?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      359,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "Prompts, agents, MCP, workflows: useful words, incomplete answers.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      424,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "How do we judge real AI competence?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      359,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Tool usage is visible. System design is harder to see.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      395,
+      429,
+      31
+     ]
+    },
+    {
+     "text": "Why does individual productivity not become org productivity?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      542,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "Local speed hits coordination, review, context, and ownership.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      606,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Why does productivity not automatically become business value?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      542,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "More code does not create more valuable problems.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      606,
+      429,
+      31
+     ]
+    },
+    {
+     "text": "Will \"software engineering\" look the same three years from now?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      542,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "The center of gravity moves from writing code to directing systems.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      606,
+      429,
+      62
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 3,
+   "image": "03.webp",
+   "blocks": [
+    {
+     "text": "They Look Like Separate Questions",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "They are six cuts through the same underlying shift.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      324,
+      1448,
+      58
+     ]
+    },
+    {
+     "text": "When the base condition of technology changes,\nengineering, organization, and business need to be reinterpreted together.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      420,
+      1448,
+      175
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 4,
+   "image": "04.webp",
+   "blocks": [
+    {
+     "text": "Today's Frame",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "To understand AI transformation, we need to ask three layers of questions",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "01 · Nature of AI",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      376,
+      122,
+      19
+     ]
+    },
+    {
+     "text": "What changed at the interface layer?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      409,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Natural language became a new way to direct computation.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      445,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "02 · Nature of Engineering",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      376,
+      185,
+      19
+     ]
+    },
+    {
+     "text": "What changed in the cost structure?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      409,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Acceleration, democratization, and repricing.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      445,
+      429,
+      31
+     ]
+    },
+    {
+     "text": "03 · Nature of Business",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      376,
+      167,
+      19
+     ]
+    },
+    {
+     "text": "What remains scarce?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      409,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "New value does not come from faster execution alone.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      445,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "These three layers give engineering teams a more stable coordinate system.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      554,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 5,
+   "image": "05.webp",
+   "blocks": [
+    {
+     "text": "Common Misconceptions",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Many AI programs stall because the problem is framed too narrowly",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Misconception",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      77,
+      324,
+      185,
+      42
+     ]
+    },
+    {
+     "text": "Looks reasonable",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      263,
+      324,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "Deeper issue",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      894,
+      324,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "More AI usage is better",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      366,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Tool adoption, token usage, and demos go up",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      366,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "AI inside a broken workflow amplifies the breakage",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      366,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Faster code is the goal",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      434,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "More PRs, faster prototypes",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      434,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Code has to serve outcomes and maintainability",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      434,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Individual speed equals org speed",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      502,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Everyone feels faster",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      502,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Review, context, ownership, and interfaces still bottleneck",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      502,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Productivity creates profit",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      569,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Execution cost drops",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      569,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Valuable demand remains scarce",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      569,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Knowing the terms means knowing AI",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      637,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Prompt, agent, MCP sound familiar",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      637,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Without structure, terms are labels",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      637,
+      630,
+      67
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 6,
+   "image": "06.webp",
+   "blocks": [
+    {
+     "text": "Paradigm Shift",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "AI is a paradigm shift. Paradigm shifts require unlearning.",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Bill Gates wrote that he had seen two technology demos in his life that struck him as revolutionary.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      331,
+      744,
+      175
+     ]
+    },
+    {
+     "text": "Gates' question",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      554,
+      119,
+      19
+     ]
+    },
+    {
+     "text": "The second was AI. What was the first?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      587,
+      702,
+      28
+     ]
+    },
+    {
+     "text": "And why did that one matter?",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      623,
+      702,
+      31
+     ]
+    },
+    {
+     "text": "Source: Bill Gates, The Age of AI has begun",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      681,
+      744,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.gatesnotes.com/the-age-of-ai-has-begun",
+     "text": "Bill Gates, The Age of AI has begun"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 7,
+   "image": "07.webp",
+   "blocks": [
+    {
+     "text": "Layer 1 · Nature of AI",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "AI is the third major interface for directing computation",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "CLI",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      419,
+      41,
+      19
+     ]
+    },
+    {
+     "text": "Command line",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      452,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Humans express intent in machine-friendly commands.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      488,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "GUI",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      419,
+      43,
+      19
+     ]
+    },
+    {
+     "text": "Graphical interface",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      452,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Humans direct software through fixed buttons, menus, and flows.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      488,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Natural Language",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      419,
+      130,
+      19
+     ]
+    },
+    {
+     "text": "Intent interface",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      452,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Humans describe goals, context, and constraints. AI routes the work through tools, code, and files.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      488,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "The real change is at the interface layer between human intent and computational execution.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      597,
+      1427,
+      31
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 8,
+   "image": "08.webp",
+   "blocks": [
+    {
+     "text": "New Opportunity",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Natural language interfaces make User Generated Software economically plausible",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Traditional software",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      356,
+      147,
+      19
+     ]
+    },
+    {
+     "text": "Predict common needs, ship fixed products",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      389,
+      673,
+      28
+     ]
+    },
+    {
+     "text": "Demand has to be productized",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      97,
+      431,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "Workflows have to be standardized",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      97,
+      466,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "Long-tail use cases are often uneconomic",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      97,
+      501,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "AI-native software",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      830,
+      356,
+      137,
+      19
+     ]
+    },
+    {
+     "text": "Generate capability around a specific task",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      830,
+      389,
+      673,
+      28
+     ]
+    },
+    {
+     "text": "Scripts, pages, analyses, and tools can be made on demand",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      830,
+      431,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "Software becomes closer to the task itself",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      830,
+      466,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "The long tail becomes newly addressable",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      830,
+      501,
+      673,
+      26
+     ]
+    },
+    {
+     "text": "Software becomes something users can generate in order to finish work, not only something companies ship to users.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      575,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 9,
+   "image": "09.webp",
+   "blocks": [
+    {
+     "text": "New Challenge",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "In the AI era, building for others gets harder",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      54
+     ]
+    },
+    {
+     "text": "AI lowers the bar for producing a feature;\nit raises the bar for getting a feature adopted.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      274,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "For yourself",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      439,
+      96,
+      19
+     ]
+    },
+    {
+     "text": "Intent becomes function",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      472,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "The context, assumptions, failure modes, and fixes all live in the author's head.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      508,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "For others",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      439,
+      85,
+      19
+     ]
+    },
+    {
+     "text": "Function becomes trust",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      472,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Other people need to understand, adopt, verify, depend on, and escalate it.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      508,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Repricing",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      439,
+      80,
+      19
+     ]
+    },
+    {
+     "text": "Generation gets cheap. Adoption gets expensive.",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      472,
+      429,
+      56
+     ]
+    },
+    {
+     "text": "Context, trust, responsibility, integration, and maintenance become scarcer.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      536,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "When \"making it\" is no longer scarce, what others adopt is a lower-cost trust relationship.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      645,
+      1427,
+      31
+     ]
+    },
+    {
+     "text": "Source: AI 时代，给别人做东西反而更难了",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      684,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/posts/ai-7d06dc",
+     "text": "AI 时代，给别人做东西反而更难了"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 10,
+   "image": "10.webp",
+   "blocks": [
+    {
+     "text": "Reflection",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "From product to Generative Kernel",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      54
+     ]
+    },
+    {
+     "text": "Traditional software ships a product;\nAI-native software ships a kernel for generating products.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      288,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "Core Kit",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      453,
+      71,
+      19
+     ]
+    },
+    {
+     "text": "Core capabilities",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      486,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "APIs, data, models, protocols, and business assets that are hard to replicate.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      522,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Guidance",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      453,
+      78,
+      19
+     ]
+    },
+    {
+     "text": "AI-readable knowledge",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      486,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Rules, patterns, failure modes, examples, best practices, and retrieval entry points.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      522,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Leverage Tools",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      453,
+      113,
+      19
+     ]
+    },
+    {
+     "text": "Deterministic assists",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      486,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Tools that turn repetitive, error-prone generation steps into reliable operations.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      522,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "The metrics change: expressive range, intent fidelity, and generation efficiency.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      631,
+      1427,
+      31
+     ]
+    },
+    {
+     "text": "Source: Beyond DRY · Further reading: Thin Harness Fat Skills",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      670,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-software-engineering",
+     "text": "Beyond DRY"
+    },
+    {
+     "href": "https://github.com/garrytan/gbrain/blob/master/docs/ethos/THIN_HARNESS_FAT_SKILLS.md",
+     "text": "Thin Harness Fat Skills"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 11,
+   "image": "11.webp",
+   "blocks": [
+    {
+     "text": "Layer 2 · Engineering",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "AI changes three things in engineering: acceleration, democratization, and repricing",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "01 · Acceleration",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      390,
+      126,
+      19
+     ]
+    },
+    {
+     "text": "Building gets faster",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      423,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Code, docs, prototypes, tests, migrations, and small fixes move faster.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      459,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "02 · Democratization",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      390,
+      151,
+      19
+     ]
+    },
+    {
+     "text": "Skill boundaries blur",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      423,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Coding, design, slides, writing, and analysis become more generally accessible.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      459,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "03 · Repricing",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      390,
+      108,
+      19
+     ]
+    },
+    {
+     "text": "Engineering value shifts",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      423,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "When code gets cheap, problem definition, context, verification, maintenance, and responsibility get expensive.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      459,
+      429,
+      93
+     ]
+    },
+    {
+     "text": "The first two are visible. The third one reshapes engineering.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      599,
+      1448,
+      58
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 12,
+   "image": "12.webp",
+   "blocks": [
+    {
+     "text": "Engineering Cost Structure",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "When code gets cheap, the expensive parts of engineering move elsewhere",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "↓",
+     "tag": "div",
+     "fs": 58,
+     "fw": 930,
+     "li": false,
+     "box": [
+      97,
+      401,
+      310,
+      58
+     ]
+    },
+    {
+     "text": "Cost of code generation",
+     "tag": "div",
+     "fs": 12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      464,
+      310,
+      17
+     ]
+    },
+    {
+     "text": "↑",
+     "tag": "div",
+     "fs": 58,
+     "fw": 930,
+     "li": false,
+     "box": [
+      463,
+      401,
+      310,
+      58
+     ]
+    },
+    {
+     "text": "Cost of problem definition",
+     "tag": "div",
+     "fs": 12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      463,
+      464,
+      310,
+      17
+     ]
+    },
+    {
+     "text": "↑",
+     "tag": "div",
+     "fs": 58,
+     "fw": 930,
+     "li": false,
+     "box": [
+      828,
+      401,
+      310,
+      58
+     ]
+    },
+    {
+     "text": "Cost of validation and evaluation",
+     "tag": "div",
+     "fs": 12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      828,
+      464,
+      310,
+      17
+     ]
+    },
+    {
+     "text": "↑",
+     "tag": "div",
+     "fs": 58,
+     "fw": 930,
+     "li": false,
+     "box": [
+      1194,
+      401,
+      310,
+      58
+     ]
+    },
+    {
+     "text": "Cost of maintenance and accountability",
+     "tag": "div",
+     "fs": 12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1194,
+      464,
+      310,
+      17
+     ]
+    },
+    {
+     "text": "Many engineering principles were formed under the assumption that code, change, and engineers were expensive.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      528,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 13,
+   "image": "13.webp",
+   "blocks": [
+    {
+     "text": "Reinterpreting Engineering",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "AI Native changes the cost assumptions behind engineering principles",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Engineering instinct",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      77,
+      369,
+      185,
+      58
+     ]
+    },
+    {
+     "text": "Old premise",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      263,
+      369,
+      630,
+      58
+     ]
+    },
+    {
+     "text": "AI-era question",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      894,
+      369,
+      630,
+      58
+     ]
+    },
+    {
+     "text": "Reuse",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      427,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Code is expensive, so reuse code",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      427,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "What should become context, rules, evals, and reusable workflows?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      427,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Abstraction",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      475,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Design generic structures up front",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      475,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Which abstractions can generation replace, and which must remain stable?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      475,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Review",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      522,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Humans inspect code quality",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      522,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Which checks move into tests, static analysis, AI review, and product acceptance?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      522,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Speed",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      569,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Development throughput is the bottleneck",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      569,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "After development speeds up, do requirements, validation, release, and learning become the bottleneck?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      569,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Source: AI Native cost structure",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      645,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-native-cost-structure-4e4d27",
+     "text": "AI Native cost structure"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 14,
+   "image": "14.webp",
+   "blocks": [
+    {
+     "text": "AI Native Definition",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "AI Native starts from the nature of the task, then redesigns the way work gets done",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Do not start with \"where can we use AI?\"\nStart with the work: what is it trying to accomplish?",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      356,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "Step 1",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      521,
+      59,
+      19
+     ]
+    },
+    {
+     "text": "What must this task accomplish?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      554,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Clarify friction, quality, risk, and acceptance.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      590,
+      429,
+      31
+     ]
+    },
+    {
+     "text": "Step 2",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      521,
+      60,
+      19
+     ]
+    },
+    {
+     "text": "Which constraints changed?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      554,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Generation, search, execution, validation, and experimentation costs.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      590,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Step 3",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      521,
+      61,
+      19
+     ]
+    },
+    {
+     "text": "How should the workflow be redesigned?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      554,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Reallocate work across people, AI, code, tools, data, and evaluation.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      590,
+      429,
+      62
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 15,
+   "image": "15.webp",
+   "blocks": [
+    {
+     "text": "Concepts vs Work",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Move from nouns to verbs, then from verbs to outcomes",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Nouns",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      378,
+      59,
+      19
+     ]
+    },
+    {
+     "text": "prompt / agent / MCP",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      411,
+      310,
+      28
+     ]
+    },
+    {
+     "text": "Nouns change quickly and can become labels for adoption theater.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      447,
+      310,
+      62
+     ]
+    },
+    {
+     "text": "Verbs",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      463,
+      378,
+      56,
+      19
+     ]
+    },
+    {
+     "text": "retrieve, judge, generate, verify",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      463,
+      411,
+      310,
+      56
+     ]
+    },
+    {
+     "text": "Verbs map to real workflow steps.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      463,
+      476,
+      310,
+      31
+     ]
+    },
+    {
+     "text": "Outcomes",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      828,
+      378,
+      83,
+      19
+     ]
+    },
+    {
+     "text": "reduce friction, improve quality, control risk",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      828,
+      411,
+      310,
+      56
+     ]
+    },
+    {
+     "text": "A verb has value only when it serves an outcome.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      828,
+      476,
+      310,
+      62
+     ]
+    },
+    {
+     "text": "Task nature",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1194,
+      378,
+      93,
+      19
+     ]
+    },
+    {
+     "text": "What is this work actually for?",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1194,
+      411,
+      310,
+      56
+     ]
+    },
+    {
+     "text": "Then decide whether an agent, workflow, MCP, or ordinary tool is appropriate.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1194,
+      476,
+      310,
+      93
+     ]
+    },
+    {
+     "text": "A concept that does not change the verb, the outcome, or the nature of the task is still just a label.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      615,
+      1427,
+      31
+     ]
+    },
+    {
+     "text": "Source: From nouns to verbs",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      654,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/verb",
+     "text": "From nouns to verbs"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 16,
+   "image": "16.webp",
+   "blocks": [
+    {
+     "text": "Talent Standard",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "The gap between AI Users and AI Builders is a set of method-level gaps",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Gap",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      77,
+      363,
+      185,
+      42
+     ]
+    },
+    {
+     "text": "AI User",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      263,
+      363,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "AI Builder",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      894,
+      363,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "Usable output",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      406,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Prompt, retry, manually patch",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      406,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Document-first context and curated inputs",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      406,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Quality improvement",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      453,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Feels wrong, tries again",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      453,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Eval design and AI debugging: hallucination, saturation, ambiguity, capability boundary",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      453,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Delegation",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      501,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Step-by-step remote control",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      501,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Agentic loop: execute, inspect, diagnose, fix, verify",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      501,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Team compounding",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      548,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Experience stays in chat history",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      548,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Context architecture, AGENTS.md, MEMORY.md, shared system memory",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      548,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Thinking partner",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      595,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "AI speeds up existing work",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      595,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Dense context enables judgment to emerge",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      595,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Source: Five gaps between AI Users and AI Builders",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      650,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-mastery",
+     "text": "Five gaps between AI Users and AI Builders"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 17,
+   "image": "17.webp",
+   "blocks": [
+    {
+     "text": "Production Relations",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "When individuals get faster, the operating model has to change",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "AI accelerates individual execution;\norganization-level speed depends on whether the structure changes with it.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      286,
+      1448,
+      175
+     ]
+    },
+    {
+     "text": "Bottleneck 01",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      509,
+      106,
+      19
+     ]
+    },
+    {
+     "text": "Incentive mismatch",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      542,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "If people are evaluated by time and process, saved time rarely becomes organization-level output.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      578,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Bottleneck 02",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      509,
+      108,
+      19
+     ]
+    },
+    {
+     "text": "Coordination drag",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      542,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Meetings, approvals, and alignment rituals were designed for an era when execution was expensive.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      578,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Direction",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      509,
+      78,
+      19
+     ]
+    },
+    {
+     "text": "End-to-end accountable pods",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      542,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Small teams own product outcomes and assemble traits rather than rigid job-family lanes.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      578,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Data shows the same gap: AI is widely used and developers often feel faster, yet organization-level outcomes depend on workflow, context, validation, and incentive design.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      687,
+      1427,
+      31
+     ]
+    },
+    {
+     "text": "Source: AI Native organizations",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      726,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-native-orgs",
+     "text": "AI Native organizations"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 18,
+   "image": "18.webp",
+   "blocks": [
+    {
+     "text": "Context Infrastructure",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "When team AI performance is inconsistent, the problem is often context",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "The same model behaves like a different system\nwhen the context quality changes.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      315,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "01 · Context Org Chart",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      480,
+      161,
+      19
+     ]
+    },
+    {
+     "text": "Map where context lives",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      513,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Docs, meetings, chat, code, project systems, and human memory.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      549,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "02 · Context Architecture",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      586,
+      480,
+      180,
+      19
+     ]
+    },
+    {
+     "text": "Design flow and loading",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      513,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Working memory, project memory, organization memory, and progressive disclosure.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      549,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "03 · Context Toolchain",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      1074,
+      480,
+      161,
+      19
+     ]
+    },
+    {
+     "text": "Make it operational",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      513,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Git, knowledge bases, MCP, AGENTS.md, MEMORY.md, and portable team assets.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      549,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Team compounding happens when senior judgment becomes readable, executable, and updatable by AI.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      658,
+      1427,
+      31
+     ]
+    },
+    {
+     "text": "Source: The problem is not the model, it is context",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      76,
+      697,
+      1448,
+      15
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/share-your-insights/context-infra",
+     "text": "The problem is not the model, it is context"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 19,
+   "image": "19.webp",
+   "blocks": [
+    {
+     "text": "Layer 3 · Business",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Why does higher productivity not automatically become more revenue?",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Companies do not get paid for code in isolation;\nthey get paid for market-valued outcomes.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      373,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "Code is supply-side capability",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      537,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "AI makes supply cheaper and faster.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      573,
+      429,
+      31
+     ]
+    },
+    {
+     "text": "Demand is still constrained",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      537,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Valuable problems do not appear just because implementation gets cheaper.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      573,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Business is a matching problem",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      537,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "The hard part is finding needs worth solving, distributing, and charging for.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      573,
+      429,
+      62
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 20,
+   "image": "20.webp",
+   "blocks": [
+    {
+     "text": "Why Learn AI Anyway",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "When future opportunities are unclear, adapt to the new productivity first",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Common reaction",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      97,
+      419,
+      130,
+      19
+     ]
+    },
+    {
+     "text": "Wait until the business model is obvious",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      452,
+      673,
+      28
+     ]
+    },
+    {
+     "text": "It sounds prudent, but it delays the development of judgment and taste.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      488,
+      673,
+      31
+     ]
+    },
+    {
+     "text": "Better reaction",
+     "tag": "span",
+     "fs": 11,
+     "fw": 750,
+     "li": false,
+     "box": [
+      830,
+      419,
+      115,
+      19
+     ]
+    },
+    {
+     "text": "Build fluency, then explore faster",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      830,
+      452,
+      673,
+      28
+     ]
+    },
+    {
+     "text": "Many opportunities become visible only after you know how the new capability feels in real work.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      830,
+      488,
+      673,
+      62
+     ]
+    },
+    {
+     "text": "As Steve Jobs put it at Stanford, dots are much easier to connect in hindsight than in advance.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      597,
+      1427,
+      31
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 21,
+   "image": "21.webp",
+   "blocks": [
+    {
+     "text": "Exploration Logic",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Great opportunities are often discovered, not planned",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "The reminder from Why Greatness Cannot Be Planned",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      343,
+      671,
+      28
+     ]
+    },
+    {
+     "text": "In open-ended innovation, optimizing directly for a distant objective can mislead. Progress often comes through stepping stones, novelty, and exploration.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      385,
+      671,
+      62
+     ]
+    },
+    {
+     "text": "Kenneth O. Stanley & Joel Lehman, Why Greatness Cannot Be Planned",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      455,
+      671,
+      15
+     ]
+    },
+    {
+     "text": "Applied to AI transformation",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      832,
+      343,
+      671,
+      28
+     ]
+    },
+    {
+     "text": "Try new ways of completing real work",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      832,
+      385,
+      671,
+      26
+     ]
+    },
+    {
+     "text": "Use feedback to refine opportunity judgment",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      832,
+      420,
+      671,
+      26
+     ]
+    },
+    {
+     "text": "Use cheap experimentation to discover hidden demand",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      832,
+      456,
+      671,
+      26
+     ]
+    },
+    {
+     "text": "Turn exploration into organizational assets",
+     "tag": "li",
+     "fs": 17,
+     "fw": 400,
+     "li": true,
+     "box": [
+      832,
+      491,
+      671,
+      26
+     ]
+    },
+    {
+     "text": "Cases to mention: Google, Instagram, WeChat; ChatGPT, Claude Code, and others.",
+     "tag": "div",
+     "fs": 10,
+     "fw": 400,
+     "li": false,
+     "box": [
+      832,
+      525,
+      671,
+      15
+     ]
+    },
+    {
+     "text": "Slack is a management capability: it gives exploration space while preserving feedback and boundaries.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      587,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 22,
+   "image": "22.webp",
+   "blocks": [
+    {
+     "text": "Management Move",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "Engineering organizations need bounded exploration systems",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      89,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Real problem",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      89,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Start from business and engineering friction",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      89,
+      521,
+      172,
+      32
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      297,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Small bet",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      297,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Start with small scenarios",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      297,
+      521,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      506,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Acceptance",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      506,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Define what useful means",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      506,
+      521,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "04",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      714,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Fast feedback",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      714,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Real users, real workflows",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      714,
+      521,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "05",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      922,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Failure review",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      922,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Context, eval, or demand?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      922,
+      521,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "06",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      1130,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Asset capture",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1130,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Rules, workflows, cases",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1130,
+      521,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "07",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      1339,
+      474,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Spread",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1339,
+      495,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "From local success to team capability",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1339,
+      521,
+      172,
+      32
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 23,
+   "image": "23.webp",
+   "blocks": [
+    {
+     "text": "Back to the Opening",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "The opening questions can now be answered through one coordinate system",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Question",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      77,
+      310,
+      185,
+      42
+     ]
+    },
+    {
+     "text": "Short answer",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      263,
+      310,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "Structural explanation",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      894,
+      310,
+      630,
+      42
+     ]
+    },
+    {
+     "text": "What can AI do?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      353,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "Direct computation, tools, files, and context from intent",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      353,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "It is a new interface, not just a better tool",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      353,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "How do people transform?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      400,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "From executor to goal setter, context organizer, and verifier",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      400,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "When code gets cheap, judgment gets expensive",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      400,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "How do we judge talent?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      468,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "From tool usage to system design",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      468,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Look for context, eval, delegation, and memory design",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      468,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Why do concepts fail?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      535,
+      185,
+      46
+     ]
+    },
+    {
+     "text": "They are disconnected from verbs and outcomes",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      535,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Methods must serve workflow redesign",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      535,
+      630,
+      46
+     ]
+    },
+    {
+     "text": "Why does org speed lag?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      583,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Local speed hits system bottlenecks",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      583,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Organization productivity requires operating model change",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      583,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Why not more revenue?",
+     "tag": "div",
+     "fs": 14,
+     "fw": 760,
+     "li": false,
+     "box": [
+      77,
+      650,
+      185,
+      67
+     ]
+    },
+    {
+     "text": "Production capacity is not market demand",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      263,
+      650,
+      630,
+      67
+     ]
+    },
+    {
+     "text": "Business value comes from discovery and matching",
+     "tag": "div",
+     "fs": 14,
+     "fw": 400,
+     "li": false,
+     "box": [
+      894,
+      650,
+      630,
+      67
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 24,
+   "image": "24.webp",
+   "blocks": [
+    {
+     "text": "Knowledge Above Knowledge",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "To solve technical problems, we need to understand what sits above technology",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Technical problems",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      392,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Require understanding the cost structure behind the technology.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      428,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Individual performance",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      586,
+      392,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Moves from execution speed to goals, context, evaluation, and responsibility.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      586,
+      428,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Organizational performance",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1074,
+      392,
+      429,
+      28
+     ]
+    },
+    {
+     "text": "Depends on the relationship among engineering, workflow, incentives, and business outcomes.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1074,
+      428,
+      429,
+      62
+     ]
+    },
+    {
+     "text": "Knowledge above knowledge is the ability to see the structure behind the knowledge.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      537,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 25,
+   "image": "25.webp",
+   "blocks": [
+    {
+     "text": "Method Above Methods",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "The real method is a transferable structure for judgment",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      89,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Return to essence",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      89,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "What is the work for?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      89,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      297,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Identify change",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      297,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "What constraints did AI change?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      297,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      506,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Redesign workflow",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      506,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "How should people and AI divide work?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      506,
+      449,
+      172,
+      32
+     ]
+    },
+    {
+     "text": "04",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      714,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Design validation",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      714,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "How do we know it is right?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      714,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "05",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      922,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Connect business",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      922,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Does it create real value?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      922,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "06",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      1130,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Capture assets",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1130,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "Can this compound?",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1130,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "07",
+     "tag": "div",
+     "fs": 11,
+     "fw": 850,
+     "li": false,
+     "box": [
+      1339,
+      401,
+      172,
+      13
+     ]
+    },
+    {
+     "text": "Keep exploring",
+     "tag": "div",
+     "fs": 15,
+     "fw": 760,
+     "li": false,
+     "box": [
+      1339,
+      422,
+      172,
+      19
+     ]
+    },
+    {
+     "text": "From practice to flywheel",
+     "tag": "div",
+     "fs": 11,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1339,
+      449,
+      172,
+      16
+     ]
+    },
+    {
+     "text": "Method above methods is the ability to generate new methods from the same structure.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      525,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 26,
+   "image": "26.webp",
+   "blocks": [
+    {
+     "text": "Closing",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "This briefing is meant to give engineering teams a judgment structure.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      295,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "Several recurring misconceptions become easier to recalibrate:\ntechnology belongs inside business, code belongs inside outcomes, and productivity belongs inside organization design.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      449,
+      1448,
+      175
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 27,
+   "image": "27.webp",
+   "blocks": [
+    {
+     "text": "Final Thought",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "The core capability of an AI-native engineering team is judgment under changing conditions.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      324,
+      1448,
+      117
+     ]
+    },
+    {
+     "text": "Across technology, engineering, organization, and business,\nit builds a stable coordinate system for decisions.",
+     "tag": "div",
+     "fs": 47,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      478,
+      1448,
+      117
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 28,
+   "image": "28.webp",
+   "blocks": [
+    {
+     "text": "Where This Comes From",
+     "tag": "div",
+     "fs": 11,
+     "fw": 800,
+     "li": false,
+     "box": [
+      76,
+      52,
+      1448,
+      13
+     ]
+    },
+    {
+     "text": "This framework comes from teaching, enterprise training, and field cases",
+     "tag": "h2",
+     "fs": 50,
+     "fw": 880,
+     "li": false,
+     "box": [
+      76,
+      83,
+      1120,
+      108
+     ]
+    },
+    {
+     "text": "Superlinear Academy / AI Builders",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      388,
+      702,
+      28
+     ]
+    },
+    {
+     "text": "Training real builders across AI usage, AI coding, AI architecture, and context engineering.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      425,
+      702,
+      62
+     ]
+    },
+    {
+     "text": "Enterprise training observations",
+     "tag": "h3",
+     "fs": 22,
+     "fw": 760,
+     "li": false,
+     "box": [
+      97,
+      541,
+      702,
+      28
+     ]
+    },
+    {
+     "text": "The recurring bottlenecks are goals, context, evaluation, governance, and business connection.",
+     "tag": "p",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      97,
+      577,
+      702,
+      62
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  }
+ ]
+}

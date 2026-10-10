@@ -1,0 +1,996 @@
+{
+ "page": "/decks/aie-shanghai-2026",
+ "deck": "aie-shanghai-2026",
+ "language": "zh",
+ "capturedFrom": "https://www.lizheng.ai/decks/aie-shanghai-2026",
+ "capturedAt": "2026-10-10",
+ "slides": [
+  {
+   "n": 1,
+   "image": "01.webp",
+   "blocks": [
+    {
+     "text": "AIE Shanghai 2026 × 上海市人工智能行业协会",
+     "tag": "div",
+     "fs": 20,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      329,
+      934,
+      46
+     ]
+    },
+    {
+     "text": "把全球AI工程师网络\n与上海产业生态连接起来",
+     "tag": "div",
+     "fs": 55,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      409,
+      934,
+      273
+     ]
+    },
+    {
+     "text": "2026年11月5–6日 · 上海虹桥祥源希尔顿 · 800人",
+     "tag": "div",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      774,
+      934,
+      46
+     ]
+    },
+    {
+     "text": "OPEN SOURCE MODELS & AI INFRA / PHYSICAL AI",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      840,
+      934,
+      35
+     ]
+    },
+    {
+     "text": "项目团队 · AI Engineer · Standup Partners · Arogo Intelligence",
+     "tag": "div",
+     "fs": 14,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      970,
+      934,
+      32
+     ]
+    },
+    {
+     "text": "AIE SHANGHAI 2026 · 合作会谈",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      748,
+      26
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "把全球AI工程师网络与上海产业生态连接起来",
+   "notes": []
+  },
+  {
+   "n": 2,
+   "image": "02.webp",
+   "blocks": [
+    {
+     "text": "01 / TEAM & OPERATING MODEL",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "上海站由三组长期积累共同推进",
+     "tag": "div",
+     "fs": 47,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "美国团队负责全球品牌、内容与国际资源；中国团队负责国内市场、上海产业合作与项目落地。",
+     "tag": "div",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      184,
+      337,
+      1633,
+      78
+     ]
+    },
+    {
+     "text": "全球资源带进来，本地团队把它落进上海企业与产业生态。",
+     "tag": "div",
+     "fs": 27,
+     "fw": 700,
+     "li": false,
+     "box": [
+      224,
+      922,
+      1553,
+      63
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "上海站由三组长期积累共同推进",
+   "notes": []
+  },
+  {
+   "n": 3,
+   "image": "03.webp",
+   "blocks": [
+    {
+     "text": "02 / CORE TEAM",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "李孟颖、孙煜征博士和盛玥，各自负责一块不可替代的工作",
+     "tag": "div",
+     "fs": 43,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "李孟颖、孙煜征博士和盛玥各自负责一块不可替代的工作",
+   "notes": []
+  },
+  {
+   "n": 4,
+   "image": "04.webp",
+   "blocks": [
+    {
+     "text": "03 / ABOUT AI ENGINEER",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "AIE把工程师、研究者、创始人与CTO带到同一个技术现场",
+     "tag": "div",
+     "fs": 43,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "围绕模型、Agent、开发者工具、基础设施与生产部署，分享真正跑起来的系统、demo、trade-off与failure case。",
+     "tag": "div",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      184,
+      340,
+      978,
+      124
+     ]
+    },
+    {
+     "text": "准备充分的stage talk、workshop与live demo会被专业录制，并继续进入全球技术内容网络。",
+     "tag": "div",
+     "fs": 20,
+     "fw": 700,
+     "li": false,
+     "box": [
+      218,
+      527,
+      909,
+      66
+     ]
+    },
+    {
+     "text": "Greg Brockman · AI Engineer World’s Fair",
+     "tag": "div",
+     "fs": 14,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1259,
+      816,
+      529,
+      29
+     ]
+    },
+    {
+     "text": "Singapore 2026 · 1,000+ builders · 92 speakers · 新加坡外交部长与OpenAI、DeepMind等团队同场",
+     "tag": "div",
+     "fs": 18,
+     "fw": 700,
+     "li": false,
+     "box": [
+      218,
+      951,
+      1564,
+      37
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "04",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "AIE把工程师、研究者、创始人与CTO带到同一个技术现场",
+   "notes": []
+  },
+  {
+   "n": 5,
+   "image": "05.webp",
+   "blocks": [
+    {
+     "text": "04 / WHY SHANGHAI",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "上海站不是一场海外会议的平移",
+     "tag": "div",
+     "fs": 51,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      225,
+      1633,
+      109
+     ]
+    },
+    {
+     "text": "中国工程师带来的实践",
+     "tag": "div",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      212,
+      418,
+      661,
+      49
+     ]
+    },
+    {
+     "text": "产业条件与算力\n数据、评测与场景\n规模化部署经验\n快速演进的应用生态",
+     "tag": "div",
+     "fs": 34,
+     "fw": 700,
+     "li": false,
+     "box": [
+      212,
+      495,
+      661,
+      305
+     ]
+    },
+    {
+     "text": "国际工程师带来的实践",
+     "tag": "div",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1121,
+      418,
+      661,
+      49
+     ]
+    },
+    {
+     "text": "模型、推理与架构\n开发者工具与平台\n生产系统可靠性\n全球工程师同行网络",
+     "tag": "div",
+     "fs": 34,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1121,
+      495,
+      661,
+      305
+     ]
+    },
+    {
+     "text": "让中西方工程师围绕同一组工程问题，面对面展示、比较与追问。",
+     "tag": "div",
+     "fs": 29,
+     "fw": 700,
+     "li": false,
+     "box": [
+      230,
+      904,
+      1541,
+      75
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "05",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "上海站不是一场海外会议的平移",
+   "notes": []
+  },
+  {
+   "n": 6,
+   "image": "06.webp",
+   "blocks": [
+    {
+     "text": "05 / TWO-WAY VALUE",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "不只把全球资源带进来，也帮助中国AI企业走向全球",
+     "tag": "div",
+     "fs": 42,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "从一次现场交流开始，延伸到技术合作、商业拓展、全球市场理解与长期关系。",
+     "tag": "div",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      184,
+      337,
+      1633,
+      78
+     ]
+    },
+    {
+     "text": "“带进来”和“走出去”，在同一个工程师网络里发生。",
+     "tag": "div",
+     "fs": 28,
+     "fw": 700,
+     "li": false,
+     "box": [
+      224,
+      927,
+      1553,
+      58
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "06",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "不只把全球资源带进来，也帮助中国AI企业走向全球",
+   "notes": []
+  },
+  {
+   "n": 7,
+   "image": "07.webp",
+   "blocks": [
+    {
+     "text": "06 / COMPLEMENTARY POSITIONING",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "在协会已有平台上，再增加一层高密度工程实践交流",
+     "tag": "div",
+     "fs": 42,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "补充，不是替代；共同让上海的技术进展被更多同行看见。",
+     "tag": "div",
+     "fs": 24,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      976,
+      1633,
+      49
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "07",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "在协会已有平台上，再增加一层高密度工程实践交流",
+   "notes": []
+  },
+  {
+   "n": 8,
+   "image": "08.webp",
+   "blocks": [
+    {
+     "text": "07 / CURRENT PROGRESS",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "上海站已启动，并进入更深的本地协作阶段",
+     "tag": "div",
+     "fs": 44,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "EVENT",
+     "tag": "div",
+     "fs": 14,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      375,
+      138,
+      43
+     ]
+    },
+    {
+     "text": "11月5–6日 · 上海虹桥祥源希尔顿\n800人 · 中英双语现场",
+     "tag": "div",
+     "fs": 27,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      429,
+      733,
+      132
+     ]
+    },
+    {
+     "text": "20+",
+     "tag": "div",
+     "fs": 64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      639,
+      331,
+      104
+     ]
+    },
+    {
+     "text": "位已确认嘉宾",
+     "tag": "div",
+     "fs": 23,
+     "fw": 700,
+     "li": false,
+     "box": [
+      388,
+      687,
+      403,
+      49
+     ]
+    },
+    {
+     "text": "7",
+     "tag": "div",
+     "fs": 64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      780,
+      331,
+      104
+     ]
+    },
+    {
+     "text": "家已确认赞助合作方",
+     "tag": "div",
+     "fs": 23,
+     "fw": 700,
+     "li": false,
+     "box": [
+      336,
+      827,
+      460,
+      49
+     ]
+    },
+    {
+     "text": "已确认嘉宾来自World Labs、Cursor、Vercel、Kimi等团队；公开名单以最终官宣为准。",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      184,
+      912,
+      733,
+      78
+     ]
+    },
+    {
+     "text": "TRACK A\nOpen Source Models & AI Infra",
+     "tag": "div",
+     "fs": 18,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1020,
+      878,
+      334,
+      86
+     ]
+    },
+    {
+     "text": "TRACK B\nPhysical AI",
+     "tag": "div",
+     "fs": 18,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1451,
+      878,
+      334,
+      86
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "08",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "上海站已启动，并进入更深的本地协作阶段",
+   "notes": []
+  },
+  {
+   "n": 9,
+   "image": "09.webp",
+   "blocks": [
+    {
+     "text": "08 / LISTEN FIRST",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "合作方案应该从协会会员企业的真实需求出发",
+     "tag": "div",
+     "fs": 54,
+     "fw": 700,
+     "li": false,
+     "box": [
+      296,
+      461,
+      1409,
+      316
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "09",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "合作方案应该从协会会员企业的真实需求出发",
+   "notes": []
+  },
+  {
+   "n": 10,
+   "image": "10.webp",
+   "blocks": [
+    {
+     "text": "09 / FIRST COOPERATION PACKAGE",
+     "tag": "div",
+     "fs": 13,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      165,
+      891,
+      32
+     ]
+    },
+    {
+     "text": "双方先从一个边界清楚、能执行的合作包开始",
+     "tag": "div",
+     "fs": 43,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      219,
+      1633,
+      115
+     ]
+    },
+    {
+     "text": "协会可以提供",
+     "tag": "div",
+     "fs": 20,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      375,
+      748,
+      49
+     ]
+    },
+    {
+     "text": "AIE Shanghai可以提供",
+     "tag": "div",
+     "fs": 20,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1040,
+      375,
+      748,
+      49
+     ]
+    },
+    {
+     "text": "嘉宾推荐仍按统一内容标准评审；赞助合作与speaker program分别确认。",
+     "tag": "div",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      218,
+      953,
+      1564,
+      40
+     ]
+    },
+    {
+     "text": "AI ENGINEER · STANDUP PARTNERS · AROGO INTELLIGENCE",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      184,
+      1086,
+      1093,
+      26
+     ]
+    },
+    {
+     "text": "10",
+     "tag": "div",
+     "fs": 11,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1768,
+      1086,
+      69,
+      26
+     ]
+    }
+   ],
+   "links": [],
+   "title": "双方先从一个边界清楚、能执行的合作包开始",
+   "notes": []
+  }
+ ]
+}

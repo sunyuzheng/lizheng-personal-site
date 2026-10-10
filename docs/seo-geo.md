@@ -27,10 +27,13 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 | `/collab/creators`   | `/en/collab/creators`   | 播客与视频节目邀请                       |
 | `/collab/enterprise` | `/en/collab/enterprise` | 企业AI培训                               |
 | `/decks`             | `/en/decks`             | 企业AI培训、战略汇报、公开演讲与课件索引 |
+| `/decks/<slug>`      | （按deck原语言，一个地址） | 每套deck的网页版                         |
 
 `/book/growth-data-analytics-playbook` 是《Growth Data Analytics Playbook》中文版：目录页加每章一页（`/1`到`/10`、`/conclusion`），由 `scripts/book-pages.ts` 在构建时写成静态HTML，全文在初始HTML里，只有中文、没有英文对应页；`/book` 与首页代表作链接到这里。来源与重建方法见 `content/books/growth-data-analytics-playbook-zh/README.md`。
 
 `/writing/statsig` 是立正在Statsig博客写的19篇文章的中文版：列表页加每篇一页（`/writing/statsig/<原文slug>`），由 `scripts/writing-pages.ts` 在构建时写成静态HTML，全文在初始HTML里，只有中文；每页链接英文原文，JSON-LD用 `translationOfWork` 指向原文。入口在关于页「经历」和中文页脚，首页不放。来源与重建方法见 `content/writing/statsig-blog-zh/README.md`。
+
+`/decks/<slug>` 是每套已公开deck的网页版（15页，2026-10-09起）：每页一节，截图加这页的文字，deck自带讲稿时讲稿作正文，全部在初始HTML里；由 `scripts/deck-pages.ts` 在构建时写成静态HTML，内容来自 `content/decks/pages/`（从公开幻灯片读出，见 `content/decks/README.md`）。页面语言跟deck原语言走，不另做翻译；只有哥伦比亚《假学习的终结》有中英两版，互相hreflang。JSON-LD用 `PresentationDigitalDocument`，作者是 `#person`，`associatedMedia` 指向幻灯片。幻灯片页（`/slides` 或外部域名）不进sitemap；挂在本站的幻灯片canonical指向网页版。
 
 `/zbs` 与 `/guests` 是中文为主的内容页。问问立正公开的问答在 `/ask`（列表）和 `/ask/<public_id>`（每条一页），由函数在服务端渲染，另有 `/ask/sitemap.xml`；收录规则见 [ask-lizheng.md](ask-lizheng.md) 「公开问答页与搜索」。嘉宾目录和嘉宾页只有一个地址：直接打开是中文，从英文页面点进来保持英文，页头的语言按钮原地切换，不产生新地址。
 

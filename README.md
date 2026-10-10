@@ -17,7 +17,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 - **Superlinear Academy:** the open, free learning and builder community.
 - **Collaboration:** separate paths for organization work and podcast / creator invitations.
 - **Enterprise training:** a dedicated decision page at `/collab/enterprise` (Chinese) and `/en/collab/enterprise` (English) for team enrollment, organization sessions, private cohorts, course customization, and fully custom programs.
-- **Deck index:** a curated, searchable view of enterprise AI programs, briefings, and selected public workshops at `/decks` (Chinese) and `/en/decks` (English); each deck remains owned by its original delivery project.
+- **Deck index:** a curated, searchable view of enterprise AI programs, briefings, and selected public workshops at `/decks` (Chinese) and `/en/decks` (English). Each public deck also has a web version at `/decks/<slug>`: every slide as a picture with its text, and the talk track where the deck ships one, generated from the public slides ([`content/decks/README.md`](content/decks/README.md)). Each deck remains owned by its original delivery project.
 - **Guest archive:** the complete conversation directory; the homepage carries the smaller, selected network signal.
 
 See [`docs/content-system.md`](docs/content-system.md) for ownership, fact sources, and maintenance rules.
@@ -33,7 +33,7 @@ Current local review materials:
 ## Stack
 
 - **Frontend:** React 18 + TypeScript + Vite + Tailwind CSS v4 + Shadcn UI
-- **Routing:** Wouter (client-side SPA + build-time prerendering for books, guests, and collaboration pages)
+- **Routing:** Wouter (client-side SPA + build-time prerendering for books, guests, collaboration pages, and deck web versions)
 - **API:** Vercel Edge Function for the optional 《真本事》 AI advisor; same-origin Ask Lizheng proxy to Builder Space ([contract](docs/ask-lizheng.md))
 - **Deployment:** static Vite output on Vercel; the Express bundle is retained for non-Vercel Node hosting
 - **Verification:** GitHub Actions runs the type check and production build on pull requests and `main`

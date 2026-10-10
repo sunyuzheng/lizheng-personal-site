@@ -70,14 +70,11 @@
       },
       "continue": true
     },
-    {
-      "src": "/decks/fake-work-fake-learning",
-      "dest": "https://columbia-fake-work-learning.vercel.app/"
-    },
-    {
-      "src": "/decks/fake-work-fake-learning/(.+)",
-      "dest": "https://columbia-fake-work-learning.vercel.app/$1"
-    },
+    { "src": "/decks/fake-work-fake-learning/slides", "dest": "https://columbia-fake-work-learning.vercel.app/" },
+    { "src": "/decks/fake-work-fake-learning/slides/speaker", "dest": "https://columbia-fake-work-learning.vercel.app/speaker" },
+    { "src": "/decks/fake-work-fake-learning/zh/slides", "dest": "https://columbia-fake-work-learning.vercel.app/zh" },
+    { "src": "/decks/fake-work-fake-learning/zh/slides/speaker", "dest": "https://columbia-fake-work-learning.vercel.app/zh/speaker" },
+    { "src": "/decks/fake-work-fake-learning/(?!zh$)(.+)", "dest": "https://columbia-fake-work-learning.vercel.app/$1" },
     {
       "src": "/decks/superlinear-one-year",
       "dest": "https://superlinear-one-year-2026.vercel.app/decks/superlinear-one-year/"
@@ -86,30 +83,12 @@
       "src": "/decks/superlinear-one-year/(.+)",
       "dest": "https://superlinear-one-year-2026.vercel.app/decks/superlinear-one-year/$1"
     },
-    {
-      "src": "/decks/fake-work",
-      "dest": "https://fake-work-2026.vercel.app/decks/fake-work/"
-    },
-    {
-      "src": "/decks/fake-work/(.+)",
-      "dest": "https://fake-work-2026.vercel.app/decks/fake-work/$1"
-    },
-    {
-      "src": "/decks/ai-side-income-career-capital",
-      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital"
-    },
-    {
-      "src": "/decks/ai-side-income-career-capital/(.+)",
-      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital/$1"
-    },
-    {
-      "src": "/decks/ai-side-income-commercial-gates",
-      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates"
-    },
-    {
-      "src": "/decks/ai-side-income-commercial-gates/(.+)",
-      "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1"
-    },
+    { "src": "/decks/fake-work/slides", "dest": "https://fake-work-2026.vercel.app/decks/fake-work/" },
+    { "src": "/decks/fake-work/(.+)", "dest": "https://fake-work-2026.vercel.app/decks/fake-work/$1" },
+    { "src": "/decks/ai-side-income-career-capital/slides", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital" },
+    { "src": "/decks/ai-side-income-career-capital/(.+)", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital/$1" },
+    { "src": "/decks/ai-side-income-commercial-gates/slides", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates" },
+    { "src": "/decks/ai-side-income-commercial-gates/(.+)", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1" },
     {
       "src": "/zh",
       "status": 308,

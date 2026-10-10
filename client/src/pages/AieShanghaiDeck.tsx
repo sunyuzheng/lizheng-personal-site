@@ -1,6 +1,5 @@
 import { applyPageSeo } from "@/lib/seo";
 import { AIE_SHANGHAI_DECK_PAGE_META } from "@shared/page-meta";
-import { buildAieShanghaiDeckStructuredData } from "@shared/structured-data";
 import {
   ArrowLeft,
   ArrowRight,
@@ -76,7 +75,7 @@ export default function AieShanghaiDeck() {
       locale: "zh_CN",
       type: "article",
       imageAlt: "AIE Shanghai 2026合作会谈deck封面",
-      jsonLd: buildAieShanghaiDeckStructuredData(),
+      jsonLd: null,
     });
   }, []);
 

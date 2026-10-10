@@ -1,0 +1,3504 @@
+{
+ "page": "/decks/amazon-stop-chatting",
+ "deck": "amazon-stop-chatting",
+ "language": "en",
+ "capturedFrom": "https://deck-pi-three.vercel.app/",
+ "capturedAt": "2026-10-10",
+ "slides": [
+  {
+   "n": 1,
+   "image": "01.webp",
+   "blocks": [
+    {
+     "text": "Amazon · April 22, 2026",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      190,
+      749,
+      26
+     ]
+    },
+    {
+     "text": "Stop Chatting, Start Scaling:\nHow AI Agents Transform Work",
+     "tag": "h1",
+     "fs": 70.56,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      235,
+      749,
+      345
+     ]
+    },
+    {
+     "text": "The real shift is not better answers in a chat window.\nIt is a different way of organizing work.",
+     "tag": "p",
+     "fs": 23.52,
+     "fw": 400,
+     "li": false,
+     "box": [
+      90,
+      610,
+      749,
+      86
+     ]
+    },
+    {
+     "text": "Yuzheng Sun · Cornell PhD economist, founder of Superlinear Academy and AI Builders.",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      895,
+      409,
+      615,
+      66
+     ]
+    },
+    {
+     "text": "Amazon Economist in Perfect Order Experience from 2017 to 2019; later Meta, Tencent, and Statsig.",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      895,
+      475,
+      615,
+      66
+     ]
+    },
+    {
+     "text": "Amazon, 2017-2019",
+     "tag": "strong",
+     "fs": 17.64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      890,
+      571,
+      169,
+      51
+     ]
+    },
+    {
+     "text": "Perfect Order Experience; ML University",
+     "tag": "span",
+     "fs": 14.28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      890,
+      627,
+      169,
+      69
+     ]
+    },
+    {
+     "text": "AI Builders",
+     "tag": "strong",
+     "fs": 17.64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1107,
+      571,
+      169,
+      25
+     ]
+    },
+    {
+     "text": "3,000+ learners across real AI projects",
+     "tag": "span",
+     "fs": 14.28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1107,
+      602,
+      169,
+      69
+     ]
+    },
+    {
+     "text": "Today",
+     "tag": "strong",
+     "fs": 17.64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1323,
+      571,
+      169,
+      25
+     ]
+    },
+    {
+     "text": "mindset, habits, and operating loops",
+     "tag": "span",
+     "fs": 14.28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1323,
+      602,
+      169,
+      46
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 2,
+   "image": "02.webp",
+   "blocks": [
+    {
+     "text": "Relevant Context",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      80,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Why this talk starts with habits, not tools",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      212,
+      126,
+      1176,
+      62
+     ]
+    },
+    {
+     "text": "Outside this Amazon talk, I teach AI Builders. That is relevant because it gives me repeated exposure to where capable people get stuck in real projects.",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      272,
+      207,
+      1056,
+      74
+     ]
+    },
+    {
+     "text": "Observed Across 3,000+ Learners",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      722,
+      353,
+      372,
+      33
+     ]
+    },
+    {
+     "text": "The blocker is usually not model access, syntax, or the newest technical feature.",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      722,
+      401,
+      763,
+      66
+     ]
+    },
+    {
+     "text": "The Actual Blocker",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      722,
+      557,
+      226,
+      33
+     ]
+    },
+    {
+     "text": "The hard part is getting into the gym: changing the default habit from asking AI for answers to building a working loop around AI.",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      722,
+      606,
+      763,
+      66
+     ]
+    },
+    {
+     "text": "My intention today: no fancy technology tour. Just a simple mindset and habit change that can profoundly change how you work with AI.",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      722,
+      734,
+      763,
+      66
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 3,
+   "image": "03.webp",
+   "blocks": [
+    {
+     "text": "Agenda",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      229,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Three claims",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      274,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "div",
+     "fs": 60.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      380,
+      411,
+      73
+     ]
+    },
+    {
+     "text": "Chat and agents are different work methods.\nNot the same thing with different branding.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      477,
+      411,
+      159
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "div",
+     "fs": 60.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      595,
+      380,
+      411,
+      73
+     ]
+    },
+    {
+     "text": "Agents matter because they compound.\nContext, files, tests, and memory survive beyond a single session.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      595,
+      477,
+      411,
+      159
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "div",
+     "fs": 60.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      380,
+      411,
+      73
+     ]
+    },
+    {
+     "text": "The aspiration is identity change.\nFrom AI user to AI builder.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      477,
+      411,
+      119
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 4,
+   "image": "04.webp",
+   "blocks": [
+    {
+     "text": "The Gap",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      40,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Some people get 30%. Few get 10x. (It is actually 1000x, I just do not want to sound dramatic.)",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      85,
+      1421,
+      124
+     ]
+    },
+    {
+     "text": "What Actually Changes",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      281,
+      266,
+      33
+     ]
+    },
+    {
+     "text": "Same models. Very different outcomes.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      336,
+      594,
+      38
+     ]
+    },
+    {
+     "text": "The gap is not intelligence. It is the work method.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      379,
+      594,
+      76
+     ]
+    },
+    {
+     "text": "Closed loops, richer context, and accumulated assets are what move the ceiling.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      461,
+      594,
+      76
+     ]
+    },
+    {
+     "text": "Chat",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      633,
+      75,
+      33
+     ]
+    },
+    {
+     "text": "human closes the loop",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      687,
+      237,
+      76
+     ]
+    },
+    {
+     "text": "hard to supply enough context",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      769,
+      237,
+      76
+     ]
+    },
+    {
+     "text": "output disappears after the task",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      171,
+      850,
+      237,
+      76
+     ]
+    },
+    {
+     "text": "Agent",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      472,
+      633,
+      88,
+      33
+     ]
+    },
+    {
+     "text": "AI can run inside the loop",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      529,
+      687,
+      237,
+      76
+     ]
+    },
+    {
+     "text": "can pull in the real working context",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      529,
+      769,
+      237,
+      76
+     ]
+    },
+    {
+     "text": "leaves rules, files, and tests behind",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      529,
+      850,
+      237,
+      76
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 5,
+   "image": "05.webp",
+   "blocks": [
+    {
+     "text": "Analogy",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      176,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "AI is the electric motor story again",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      222,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Step 1",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      328,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "New tool",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      373,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "drop AI into the old workflow",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      432,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "keep everything else the same",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      515,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Step 2",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      595,
+      328,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "Expected result",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      595,
+      373,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "faster local tasks",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      432,
+      203,
+      38
+     ]
+    },
+    {
+     "text": "incremental gain",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      477,
+      203,
+      38
+     ]
+    },
+    {
+     "text": "Step 3",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      328,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "Real result",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1075,
+      373,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "redesign work around what AI can own",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      432,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "that is where step-change value comes from",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      515,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Chat = swap in a new tool.\nAgents = redesign the line.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      664,
+      1371,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 6,
+   "image": "06.webp",
+   "blocks": [
+    {
+     "text": "Core Contrast",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      328,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Chat gives advice.\nCursor and agents work inside the environment.",
+     "tag": "h2",
+     "fs": 62.16,
+     "fw": 750,
+     "li": false,
+     "box": [
+      284,
+      373,
+      1032,
+      246
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 7,
+   "image": "07.webp",
+   "blocks": [
+    {
+     "text": "Comparison",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      133,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Why the chat window is a ceiling",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      178,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "1. Feedback Loop",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      312,
+      193,
+      33
+     ]
+    },
+    {
+     "text": "Open loop vs. closed loop",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      361,
+      411,
+      79
+     ]
+    },
+    {
+     "text": "Chat: AI outputs, you run it, you carry errors back.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      458,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Agent: AI can run, inspect, retry, and self-correct.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      542,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Result: you stop being the human middleware.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      626,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "2. Context Supply",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      595,
+      312,
+      204,
+      33
+     ]
+    },
+    {
+     "text": "Blind prompting vs. real context",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      595,
+      361,
+      411,
+      79
+     ]
+    },
+    {
+     "text": "Chat: you must manually brief the entire situation.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      458,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Agent: it can read docs, files, notes, and project artifacts.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      542,
+      335,
+      114
+     ]
+    },
+    {
+     "text": "Result: quality is driven by context, not just model IQ.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      664,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "3. Asset Accumulation",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      312,
+      255,
+      33
+     ]
+    },
+    {
+     "text": "Disposable answers vs. compounding systems",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1075,
+      361,
+      411,
+      79
+     ]
+    },
+    {
+     "text": "Chat: each conversation starts close to zero.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      458,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "Agent: rules, tests, docs, and structure stay in the workflow.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      542,
+      335,
+      114
+     ]
+    },
+    {
+     "text": "Result: every round makes the next round cheaper.",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      664,
+      335,
+      76
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 8,
+   "image": "08.webp",
+   "blocks": [
+    {
+     "text": "Demo",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      110,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The demo is one policy change across a small but real system",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      156,
+      1421,
+      124
+     ]
+    },
+    {
+     "text": "Business Request",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      350,
+      206,
+      33
+     ]
+    },
+    {
+     "text": "change oversized shipping from 2-day to 3-5 business days",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      406,
+      575,
+      76
+     ]
+    },
+    {
+     "text": "keep a Prime exception for the top 20 metro areas",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      490,
+      575,
+      76
+     ]
+    },
+    {
+     "text": "update every customer-facing surface",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      574,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "make the next policy change cheaper",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      619,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "Why This Demo Works",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      350,
+      243,
+      33
+     ]
+    },
+    {
+     "text": "multiple files",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      406,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "copy plus implementation",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      452,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "tests and verification",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      497,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "a second request that exposes whether value compounds",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      543,
+      575,
+      76
+     ]
+    },
+    {
+     "text": "Demo repo: go.ai-builders.com/amazon",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      729,
+      1371,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 9,
+   "image": "09.webp",
+   "blocks": [
+    {
+     "text": "Starter Repo",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      84,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The hidden problem: one policy is scattered across the product",
+     "tag": "h2",
+     "fs": 43.68,
+     "fw": 750,
+     "li": false,
+     "box": [
+      176,
+      129,
+      1248,
+      115
+     ]
+    },
+    {
+     "text": "Problem",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      110,
+      283,
+      424,
+      28
+     ]
+    },
+    {
+     "text": "Duplicated business rule",
+     "tag": "h3",
+     "fs": 24.36,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      320,
+      424,
+      34
+     ]
+    },
+    {
+     "text": "The same oversized-shipping promise is hardcoded in checkout, order confirmation, and help center.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      110,
+      378,
+      424,
+      86
+     ]
+    },
+    {
+     "text": "Same rule. Three places to forget.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      110,
+      477,
+      424,
+      29
+     ]
+    },
+    {
+     "text": "Challenge",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      588,
+      283,
+      424,
+      28
+     ]
+    },
+    {
+     "text": "Change without drift",
+     "tag": "h3",
+     "fs": 24.36,
+     "fw": 700,
+     "li": false,
+     "box": [
+      588,
+      320,
+      424,
+      34
+     ]
+    },
+    {
+     "text": "Move to 3-5 business days while preserving the Prime metro exception.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      588,
+      378,
+      424,
+      58
+     ]
+    },
+    {
+     "text": "Copy, logic, and tests must agree.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      588,
+      448,
+      424,
+      29
+     ]
+    },
+    {
+     "text": "Goal",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1067,
+      283,
+      424,
+      28
+     ]
+    },
+    {
+     "text": "Make the next change cheaper",
+     "tag": "h3",
+     "fs": 24.36,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1067,
+      320,
+      424,
+      69
+     ]
+    },
+    {
+     "text": "Create one shared policy source so future exceptions are smaller changes, not another file hunt.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1067,
+      413,
+      424,
+      86
+     ]
+    },
+    {
+     "text": "Chat Approach",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      352,
+      590,
+      178,
+      33
+     ]
+    },
+    {
+     "text": "Suggest likely edits. You still copy changes, run tests, and catch missed surfaces.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      110,
+      630,
+      663,
+      96
+     ]
+    },
+    {
+     "text": "Advice, then manual coordination.",
+     "tag": "strong",
+     "fs": 17.64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      630,
+      663,
+      29
+     ]
+    },
+    {
+     "text": "Agent Approach",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1063,
+      590,
+      191,
+      33
+     ]
+    },
+    {
+     "text": "Read the repo, centralize the policy, update surfaces, run tests, and repair failures.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      827,
+      630,
+      663,
+      96
+     ]
+    },
+    {
+     "text": "Inspect, change, verify, and leave structure.",
+     "tag": "strong",
+     "fs": 17.64,
+     "fw": 700,
+     "li": false,
+     "box": [
+      827,
+      630,
+      663,
+      29
+     ]
+    },
+    {
+     "text": "The difference: chat helps patch instances; an agent can improve the system that produces those instances.",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      110,
+      773,
+      1380,
+      29
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 10,
+   "image": "10.webp",
+   "blocks": [
+    {
+     "text": "Follow Along",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      136,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Get the demo files on your laptop",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      181,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Non-technical path",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      315,
+      225,
+      33
+     ]
+    },
+    {
+     "text": "open go.ai-builders.com/amazon",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      372,
+      556,
+      38
+     ]
+    },
+    {
+     "text": "GitHub: Code -> Download ZIP",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      417,
+      556,
+      38
+     ]
+    },
+    {
+     "text": "unzip on Desktop",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      463,
+      556,
+      38
+     ]
+    },
+    {
+     "text": "open oversized-shipping-demo/starter",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      509,
+      556,
+      38
+     ]
+    },
+    {
+     "text": "read docs/change-request.md",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      554,
+      556,
+      38
+     ]
+    },
+    {
+     "text": "What You Are Opening",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      315,
+      246,
+      33
+     ]
+    },
+    {
+     "text": "checkout.html",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      372,
+      368,
+      38
+     ]
+    },
+    {
+     "text": "order-confirmation.html",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      417,
+      368,
+      38
+     ]
+    },
+    {
+     "text": "help-center.html",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      463,
+      368,
+      38
+     ]
+    },
+    {
+     "text": "docs/shipping-policy.md",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      509,
+      368,
+      38
+     ]
+    },
+    {
+     "text": "No setup pressure. You can follow the idea by just reading the files. The goal is to notice how many places the same policy appears.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      665,
+      1371,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 11,
+   "image": "11.webp",
+   "blocks": [
+    {
+     "text": "Explore",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      83,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Now think like ChatGPT",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      129,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Terminal path",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      263,
+      169,
+      33
+     ]
+    },
+    {
+     "text": "cd ~/Desktop",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      319,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "git clone https://github.com/sunyuzheng/stop-chatting-start-scaling.git",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      365,
+      575,
+      114
+     ]
+    },
+    {
+     "text": "cd stop-chatting-start-scaling/oversized-shipping-demo/starter",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      487,
+      575,
+      114
+     ]
+    },
+    {
+     "text": "npm test (optional baseline check)",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      609,
+      575,
+      38
+     ]
+    },
+    {
+     "text": "Think Like ChatGPT",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      263,
+      211,
+      33
+     ]
+    },
+    {
+     "text": "which files would you paste into chat?",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      319,
+      519,
+      38
+     ]
+    },
+    {
+     "text": "how would you find every duplicated policy?",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      365,
+      519,
+      38
+     ]
+    },
+    {
+     "text": "where should the shared policy source live?",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      411,
+      519,
+      38
+     ]
+    },
+    {
+     "text": "how would you verify the result?",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      457,
+      519,
+      38
+     ]
+    },
+    {
+     "text": "Explore for a few minutes. npm test is not required; it only confirms the starting repo still has the old duplicated 2-day delivery policy. Then we will compare ChatGPT advice vs. Cursor execution.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      716,
+      1371,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 12,
+   "image": "12.webp",
+   "blocks": [
+    {
+     "text": "Live Prompt",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      89,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The instruction I give the agent",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      135,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Implement the policy change across the repo.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      241,
+      1371,
+      41
+     ]
+    },
+    {
+     "text": "update the oversized shipping promise to 3-5 business days",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      302,
+      765,
+      38
+     ]
+    },
+    {
+     "text": "preserve the Prime exception for the top 20 metro areas",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      348,
+      765,
+      38
+     ]
+    },
+    {
+     "text": "remove scattered hardcoded copy",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      393,
+      765,
+      38
+     ]
+    },
+    {
+     "text": "create one shared policy source",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      439,
+      765,
+      38
+     ]
+    },
+    {
+     "text": "update tests, run them, and fix failures",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      485,
+      765,
+      38
+     ]
+    },
+    {
+     "text": "What Chat Can Do",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      623,
+      205,
+      33
+     ]
+    },
+    {
+     "text": "Give advice, sample code, and likely edit locations.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      696,
+      651,
+      40
+     ]
+    },
+    {
+     "text": "What The Agent Can Do",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      623,
+      256,
+      33
+     ]
+    },
+    {
+     "text": "Read the repo, apply the edits, run checks, and leave a cleaner architecture behind.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      835,
+      696,
+      651,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 13,
+   "image": "13.webp",
+   "blocks": [
+    {
+     "text": "What Just Happened",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      262,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The first run created assets",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      307,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Asset 1",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      414,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "Policy module",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      459,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "The business rule now lives in one place.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      522,
+      411,
+      80
+     ]
+    },
+    {
+     "text": "Asset 2",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      595,
+      414,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "Shared customer copy",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      595,
+      459,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "Checkout, email, and help center stay aligned.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      595,
+      522,
+      411,
+      80
+     ]
+    },
+    {
+     "text": "Asset 3",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      414,
+      411,
+      28
+     ]
+    },
+    {
+     "text": "Tests",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1075,
+      459,
+      411,
+      39
+     ]
+    },
+    {
+     "text": "The next change is now safer and cheaper.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      522,
+      411,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 14,
+   "image": "14.webp",
+   "blocks": [
+    {
+     "text": "Compounding",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      215,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The second request is the real demo",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      260,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "Follow-up Request",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      394,
+      222,
+      33
+     ]
+    },
+    {
+     "text": "expand the Prime metro exception from top 20 to top 40",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      451,
+      575,
+      76
+     ]
+    },
+    {
+     "text": "add a remote-state exception for Alaska and Hawaii",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      534,
+      575,
+      76
+     ]
+    },
+    {
+     "text": "The Point",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      394,
+      120,
+      33
+     ]
+    },
+    {
+     "text": "If the first run was only a patch, the second change is expensive again.\nIf the first run created structure, the second change is cheap.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      835,
+      467,
+      651,
+      119
+     ]
+    },
+    {
+     "text": "That is compounding.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      835,
+      610,
+      651,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 15,
+   "image": "15.webp",
+   "blocks": [
+    {
+     "text": "Maturity",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      203,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "From AI User to AI Builder",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      248,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "1",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      354,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Calibration",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      400,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Good judgment about what AI can and cannot do.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      463,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "2",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      402,
+      354,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Usable output",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      402,
+      400,
+      223,
+      79
+     ]
+    },
+    {
+     "text": "AI work can enter the workflow directly.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      402,
+      502,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "3",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      689,
+      354,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Delegation",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      689,
+      400,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Complete tasks move to agentic loops.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      689,
+      463,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "4",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      976,
+      354,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Memory",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      976,
+      400,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Experience accumulates into reusable system behavior.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      976,
+      463,
+      223,
+      159
+     ]
+    },
+    {
+     "text": "5",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1263,
+      354,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Thinking Partner",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1263,
+      400,
+      223,
+      79
+     ]
+    },
+    {
+     "text": "AI starts surfacing better options, tradeoffs, and blind spots.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1263,
+      502,
+      223,
+      159
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 16,
+   "image": "16.webp",
+   "blocks": [
+    {
+     "text": "Program",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      48,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "If you want the full upgrade path, this is the course",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      93,
+      1421,
+      124
+     ]
+    },
+    {
+     "text": "Course History",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      290,
+      184,
+      33
+     ]
+    },
+    {
+     "text": "2+ years of continuous iteration",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      346,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "12 live cohorts delivered",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      430,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "3,000+ learners validated",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      475,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "4.9/5 rating on Maven",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      521,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "Amazon Attendee Offer",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      290,
+      266,
+      33
+     ]
+    },
+    {
+     "text": "Amazon code: use coupon amazon for $100 off.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      362,
+      411,
+      80
+     ]
+    },
+    {
+     "text": "Applies to: the AI Builders bundle.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      466,
+      411,
+      80
+     ]
+    },
+    {
+     "text": "Register: ai-builders.com",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      570,
+      411,
+      40
+     ]
+    },
+    {
+     "text": "Format: practical, project-based, and built around durable methods, not prompt tricks.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      633,
+      411,
+      119
+     ]
+    },
+    {
+     "text": "Risk: 14-day refund.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      777,
+      411,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 17,
+   "image": "17.webp",
+   "blocks": [
+    {
+     "text": "Reviews",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      96,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "What learners consistently say",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      141,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "All reviews are public and attributable on Maven. The strongest signal is not “nice content.” It is lasting behavior change.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      245,
+      1371,
+      80
+     ]
+    },
+    {
+     "text": "Builder Mindset",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      417,
+      190,
+      33
+     ]
+    },
+    {
+     "text": "A learner from Yipi Tech said the course helped him build a tool from scratch in an unfamiliar language and earn back roughly 2x the tuition.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      490,
+      411,
+      199
+     ]
+    },
+    {
+     "text": "Marvin, Developer, Yipi Tech",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      704,
+      411,
+      40
+     ]
+    },
+    {
+     "text": "Deeper Practice",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      595,
+      417,
+      190,
+      33
+     ]
+    },
+    {
+     "text": "A Google UX leader said that even as a daily AI user, she still learned a deeper and more effective way to build with AI.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      595,
+      490,
+      411,
+      159
+     ]
+    },
+    {
+     "text": "Clairy Cheung, UX Manager, Google",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      595,
+      664,
+      411,
+      80
+     ]
+    },
+    {
+     "text": "Mindset Shift",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      417,
+      165,
+      33
+     ]
+    },
+    {
+     "text": "A Microsoft applied scientist said the biggest gain was a mindset shift: using AI to solve real problems became a habit, not an occasional experiment.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      490,
+      411,
+      199
+     ]
+    },
+    {
+     "text": "Tingting Wang, Applied Scientist, Microsoft",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1075,
+      704,
+      411,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 18,
+   "image": "18.webp",
+   "blocks": [
+    {
+     "text": "Curriculum",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      171,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "How the course teaches that progression",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      216,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "1",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      322,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Calibration",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      368,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Good judgment about what AI can and cannot do.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      431,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "2",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      402,
+      322,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Usable output",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      402,
+      368,
+      223,
+      79
+     ]
+    },
+    {
+     "text": "AI work can enter the workflow directly.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      402,
+      470,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "3",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      689,
+      322,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Delegation",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      689,
+      368,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Complete tasks move to agentic loops.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      689,
+      431,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "4",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      976,
+      322,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Memory",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      976,
+      368,
+      223,
+      39
+     ]
+    },
+    {
+     "text": "Experience becomes reusable system behavior.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      976,
+      431,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "5",
+     "tag": "div",
+     "fs": 18.06,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1263,
+      322,
+      223,
+      28
+     ]
+    },
+    {
+     "text": "Thinking Partner",
+     "tag": "h3",
+     "fs": 27.72,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1263,
+      368,
+      223,
+      79
+     ]
+    },
+    {
+     "text": "AI surfaces better options, tradeoffs, and blind spots.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1263,
+      470,
+      223,
+      119
+     ]
+    },
+    {
+     "text": "Same path, now taught as a five-stage progression.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      670,
+      1371,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 19,
+   "image": "19.webp",
+   "blocks": [
+    {
+     "text": "Methods",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      40,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "The methods behind each stage",
+     "tag": "h2",
+     "fs": 47.04,
+     "fw": 750,
+     "li": false,
+     "box": [
+      90,
+      85,
+      1421,
+      62
+     ]
+    },
+    {
+     "text": "1. Calibration",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      115,
+      219,
+      164,
+      33
+     ]
+    },
+    {
+     "text": "correct mental models",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      276,
+      330,
+      38
+     ]
+    },
+    {
+     "text": "signal / noise filtering",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      321,
+      330,
+      38
+     ]
+    },
+    {
+     "text": "real-work capability probing",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      191,
+      367,
+      330,
+      38
+     ]
+    },
+    {
+     "text": "2. Usable Output",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      595,
+      219,
+      194,
+      33
+     ]
+    },
+    {
+     "text": "document-first standards",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      276,
+      299,
+      38
+     ]
+    },
+    {
+     "text": "curated context",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      321,
+      299,
+      38
+     ]
+    },
+    {
+     "text": "outcome-oriented specs",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      671,
+      367,
+      299,
+      38
+     ]
+    },
+    {
+     "text": "3. Delegation",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      1075,
+      219,
+      160,
+      33
+     ]
+    },
+    {
+     "text": "task spectrum mapping",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      276,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "comparative advantage focus",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      321,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "agentic loops for full tasks",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1151,
+      405,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "4. Memory",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      355,
+      543,
+      128,
+      33
+     ]
+    },
+    {
+     "text": "personal context architecture",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      431,
+      600,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "template and skill library",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      431,
+      683,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "workflow migration, one at a time",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      431,
+      729,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "5. Thinking Partner",
+     "tag": "div",
+     "fs": 14.7,
+     "fw": 800,
+     "li": false,
+     "box": [
+      835,
+      543,
+      220,
+      33
+     ]
+    },
+    {
+     "text": "cross-domain leverage",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      600,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "AI-native business design",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      645,
+      335,
+      38
+     ]
+    },
+    {
+     "text": "build real projects to expand confidence",
+     "tag": "li",
+     "fs": 21.42,
+     "fw": 400,
+     "li": true,
+     "box": [
+      911,
+      691,
+      335,
+      76
+     ]
+    },
+    {
+     "text": "These are methods, not prompts. Free project support and examples: superlinear.academy/c/share-your-projects-en/",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      115,
+      877,
+      1371,
+      80
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 20,
+   "image": "20.webp",
+   "blocks": [
+    {
+     "text": "Closing",
+     "tag": "div",
+     "fs": 16.38,
+     "fw": 800,
+     "li": false,
+     "box": [
+      90,
+      209,
+      1421,
+      26
+     ]
+    },
+    {
+     "text": "Chat helps with tasks.\nAgents change the operating model.",
+     "tag": "h2",
+     "fs": 62.16,
+     "fw": 750,
+     "li": false,
+     "box": [
+      248,
+      255,
+      1104,
+      246
+     ]
+    },
+    {
+     "text": "That is why agents can capture compounding value and chat alone cannot.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      344,
+      540,
+      912,
+      40
+     ]
+    },
+    {
+     "text": "Deck and demo repo: go.ai-builders.com/amazon",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      90,
+      603,
+      1421,
+      40
+     ]
+    },
+    {
+     "text": "Course details: ai-builders.com. Coupon amazon: $100 off the AI Builders bundle.",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      90,
+      655,
+      1421,
+      40
+     ]
+    },
+    {
+     "text": "Free community support and project sharing: superlinear.academy/c/share-your-projects-en/",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      90,
+      707,
+      1421,
+      40
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  }
+ ]
+}

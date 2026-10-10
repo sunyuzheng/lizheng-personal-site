@@ -109,7 +109,7 @@ function Router() {
         <Route path={"/podcast"} component={Podcast} />
         <Route path={"/speaker"} component={GuestInvitation} />
         <Route
-          path={"/decks/aie-shanghai-2026"}
+          path={"/decks/aie-shanghai-2026/slides"}
           component={AieShanghaiDeckRoute}
         />
         <Route path={"/decks/0905"} component={FamilyPartyCueCardsRoute} />

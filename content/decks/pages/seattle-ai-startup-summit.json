@@ -1,0 +1,3504 @@
+{
+ "page": "/decks/seattle-ai-startup-summit",
+ "deck": "seattle-ai-startup-summit",
+ "language": "en",
+ "capturedFrom": "https://workshop-cursor-deck.ai-builders.space/",
+ "capturedAt": "2026-10-10",
+ "slides": [
+  {
+   "n": 1,
+   "image": "01.webp",
+   "blocks": [
+    {
+     "text": "FOLLOW ALONG ON YOUR DEVICE",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 500,
+     "li": false,
+     "box": [
+      133,
+      140,
+      1334,
+      29
+     ]
+    },
+    {
+     "text": "Scan to open the slides",
+     "tag": "h2",
+     "fs": 58.8,
+     "fw": 700,
+     "li": false,
+     "box": [
+      133,
+      193,
+      1334,
+      92
+     ]
+    },
+    {
+     "text": "workshop-cursor-deck.ai-builders.space",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      133,
+      707,
+      1334,
+      41
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 2,
+   "image": "02.webp",
+   "blocks": [
+    {
+     "text": "SEATTLE (AI) STARTUP SUMMIT",
+     "tag": "div",
+     "fs": 16.8,
+     "fw": 500,
+     "li": false,
+     "box": [
+      133,
+      188,
+      1334,
+      26
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 500,
+     "li": false,
+     "box": [
+      133,
+      226,
+      1334,
+      29
+     ]
+    },
+    {
+     "text": "Learning to Code\nWhen AI Does the\nHeavy Lifting",
+     "tag": "h1",
+     "fs": 69.3,
+     "fw": 900,
+     "li": false,
+     "box": [
+      133,
+      286,
+      1334,
+      319
+     ]
+    },
+    {
+     "text": "Yuzheng Sun · April 1, 2026 · Room Willow A",
+     "tag": "p",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      133,
+      675,
+      1334,
+      33
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 3,
+   "image": "03.webp",
+   "blocks": [
+    {
+     "text": "YOUR INSTRUCTOR",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      220,
+      695,
+      29
+     ]
+    },
+    {
+     "text": "Yuzheng Sun, PhD",
+     "tag": "h2",
+     "fs": 46.2,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      265,
+      695,
+      67
+     ]
+    },
+    {
+     "text": "Founder · Meta / Amazon / Statsig / Tencent",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      361,
+      695,
+      39
+     ]
+    },
+    {
+     "text": "Build with AI: Mindset, Habits & Tools\nfor the Next 20 Years",
+     "tag": "p",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      107,
+      438,
+      654,
+      71
+     ]
+    },
+    {
+     "text": "⭐ 4.9 (72 reviews)",
+     "tag": "span",
+     "fs": 18.9,
+     "fw": 400,
+     "li": false,
+     "box": [
+      107,
+      518,
+      194,
+      29
+     ]
+    },
+    {
+     "text": "·",
+     "tag": "span",
+     "fs": 18.9,
+     "fw": 400,
+     "li": false,
+     "box": [
+      315,
+      518,
+      7,
+      29
+     ]
+    },
+    {
+     "text": "Next cohort at the time: Apr 13–27, 2026",
+     "tag": "span",
+     "fs": 18.9,
+     "fw": 400,
+     "li": false,
+     "box": [
+      336,
+      518,
+      424,
+      29
+     ]
+    },
+    {
+     "text": "maven.com/superlinear/aibuilders →",
+     "tag": "a",
+     "fs": 20.16,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      584,
+      695,
+      53
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://maven.com/superlinear/aibuilders",
+     "text": "maven.com/superlinear/aibuilders →"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 4,
+   "image": "04.webp",
+   "blocks": [
+    {
+     "text": "TODAY'S AGENDA",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      176,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "PREAMBLE",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      404,
+      269,
+      126,
+      31
+     ]
+    },
+    {
+     "text": "The AI Paradigm Shift — why Cursor, not ChatGPT",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      554,
+      245,
+      642,
+      79
+     ]
+    },
+    {
+     "text": "PART 1",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      404,
+      355,
+      108,
+      31
+     ]
+    },
+    {
+     "text": "How to Use Cursor",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      536,
+      351,
+      266,
+      39
+     ]
+    },
+    {
+     "text": "◉ DEMO",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      421,
+      427,
+      110,
+      31
+     ]
+    },
+    {
+     "text": "Live Cursor Demo — open your machine",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      554,
+      422,
+      567,
+      39
+     ]
+    },
+    {
+     "text": "PART 2",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      404,
+      498,
+      108,
+      31
+     ]
+    },
+    {
+     "text": "How to Debug",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      536,
+      494,
+      207,
+      39
+     ]
+    },
+    {
+     "text": "PART 3",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      404,
+      584,
+      108,
+      31
+     ]
+    },
+    {
+     "text": "How to Write Effective Prompts — the 3C Framework",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      536,
+      560,
+      660,
+      79
+     ]
+    },
+    {
+     "text": "WRAP-UP",
+     "tag": "div",
+     "fs": 19.656,
+     "fw": 700,
+     "li": false,
+     "box": [
+      404,
+      671,
+      128,
+      31
+     ]
+    },
+    {
+     "text": "Your Next Step + Bonus",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 500,
+     "li": false,
+     "box": [
+      556,
+      666,
+      333,
+      39
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 5,
+   "image": "05.webp",
+   "blocks": [
+    {
+     "text": "Most people get 30% from AI. A few get 10×.",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      203,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "Sound familiar?",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      330,
+      814,
+      47
+     ]
+    },
+    {
+     "text": "\"I use ChatGPT every day but it doesn't feel like a real breakthrough\"",
+     "tag": "div",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      394,
+      814,
+      101
+     ]
+    },
+    {
+     "text": "\"AI gives me stuff I still have to rewrite — might as well just do it myself\"",
+     "tag": "div",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      506,
+      814,
+      101
+     ]
+    },
+    {
+     "text": "\"I've heard about Cursor, but I don't know where to start\"",
+     "tag": "div",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      617,
+      814,
+      64
+     ]
+    },
+    {
+     "text": "30%",
+     "tag": "div",
+     "fs": 100.8,
+     "fw": 900,
+     "li": false,
+     "box": [
+      961,
+      370,
+      231,
+      121
+     ]
+    },
+    {
+     "text": "most people",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      961,
+      496,
+      231,
+      30
+     ]
+    },
+    {
+     "text": "→",
+     "tag": "div",
+     "fs": 54.6,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1215,
+      405,
+      60,
+      85
+     ]
+    },
+    {
+     "text": "10×",
+     "tag": "div",
+     "fs": 100.8,
+     "fw": 900,
+     "li": false,
+     "box": [
+      1299,
+      370,
+      187,
+      121
+     ]
+    },
+    {
+     "text": "a few",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1299,
+      496,
+      187,
+      30
+     ]
+    },
+    {
+     "text": "The difference isn't the tool. It's the method.",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      961,
+      550,
+      526,
+      78
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 6,
+   "image": "06.webp",
+   "blocks": [
+    {
+     "text": "Bill Gates: AI is a paradigm shift on par with the GUI",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      94,
+      1430,
+      157
+     ]
+    },
+    {
+     "text": "\"In my lifetime, I have seen two demonstrations of technology that struck me as\nrevolutionary.\"",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      112,
+      295,
+      970,
+      95
+     ]
+    },
+    {
+     "text": "— Bill Gates, March 2023, after seeing GPT-4",
+     "tag": "p",
+     "fs": 18.06,
+     "fw": 400,
+     "li": false,
+     "box": [
+      112,
+      400,
+      970,
+      34
+     ]
+    },
+    {
+     "text": "The First: GUI",
+     "tag": "div",
+     "fs": 23.1,
+     "fw": 700,
+     "li": false,
+     "box": [
+      104,
+      492,
+      466,
+      36
+     ]
+    },
+    {
+     "text": "The graphical interface put computers in the hands of a billion people. PCs, software, the internet, smartphones — all built on this paradigm shift.",
+     "tag": "div",
+     "fs": 23.1,
+     "fw": 400,
+     "li": false,
+     "box": [
+      104,
+      535,
+      466,
+      222
+     ]
+    },
+    {
+     "text": "The Second: AI",
+     "tag": "div",
+     "fs": 23.1,
+     "fw": 700,
+     "li": false,
+     "box": [
+      625,
+      492,
+      466,
+      36
+     ]
+    },
+    {
+     "text": "\"The age of AI has begun.\" Not a new tool — a new era. Same magnitude as the GUI.",
+     "tag": "div",
+     "fs": 23.1,
+     "fw": 400,
+     "li": false,
+     "box": [
+      625,
+      535,
+      466,
+      133
+     ]
+    },
+    {
+     "text": "Why this matters:",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1166,
+      289,
+      331,
+      41
+     ]
+    },
+    {
+     "text": "Before GUI: only experts used computers",
+     "tag": "li",
+     "fs": 21,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1239,
+      348,
+      257,
+      110
+     ]
+    },
+    {
+     "text": "After GUI: anyone could",
+     "tag": "li",
+     "fs": 21,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1239,
+      467,
+      257,
+      73
+     ]
+    },
+    {
+     "text": "With AI: anyone can now harness compute",
+     "tag": "li",
+     "fs": 21,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1239,
+      549,
+      257,
+      110
+     ]
+    },
+    {
+     "text": "What changes: what ordinary people can do",
+     "tag": "li",
+     "fs": 21,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1239,
+      667,
+      257,
+      110
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 7,
+   "image": "07.webp",
+   "blocks": [
+    {
+     "text": "The electric motor: new technology ≠ swap the tool",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      60,
+      1430,
+      157
+     ]
+    },
+    {
+     "text": "When the electric motor was invented, factories simply replaced the steam engine with it — everything else stayed the same. Efficiency improved by 30%.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      265,
+      663,
+      187
+     ]
+    },
+    {
+     "text": "Decades later, someone realized: motors can be small. You don't need to design a factory around a central power source — you can design it around the\nproduction process itself.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      471,
+      663,
+      234
+     ]
+    },
+    {
+     "text": "The assembly line was born. Efficiency jumped tenfold.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      723,
+      663,
+      94
+     ]
+    },
+    {
+     "text": "Today's AI is the same story.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      823,
+      289,
+      663,
+      47
+     ]
+    },
+    {
+     "text": "What most people do: keep the same workflow, just \"ask AI\" at one step.\n— That's putting the electric motor where the steam engine was.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      823,
+      360,
+      663,
+      187
+     ]
+    },
+    {
+     "text": "The real transformation: redesign how you work around what AI can actually do.",
+     "tag": "p",
+     "fs": 25.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      823,
+      566,
+      663,
+      94
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 8,
+   "image": "08.webp",
+   "blocks": [
+    {
+     "text": "PART 1",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      318,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "How to Use Cursor",
+     "tag": "h2",
+     "fs": 63,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      371,
+      1430,
+      113
+     ]
+    },
+    {
+     "text": "ChatGPT is your advisor. Cursor is your engineering team.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      535,
+      1430,
+      42
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 9,
+   "image": "09.webp",
+   "blocks": [
+    {
+     "text": "Three fundamental limitations of chat-based AI",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      149,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "Dimension",
+     "tag": "th",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      247,
+      200,
+      62
+     ]
+    },
+    {
+     "text": "ChatGPT (chat mode)",
+     "tag": "th",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      285,
+      247,
+      572,
+      62
+     ]
+    },
+    {
+     "text": "Cursor (agentic mode)",
+     "tag": "th",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      857,
+      247,
+      658,
+      62
+     ]
+    },
+    {
+     "text": "Context",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      310,
+      200,
+      100
+     ]
+    },
+    {
+     "text": "Every conversation starts from zero — you re-explain everything each time",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      285,
+      310,
+      572,
+      100
+     ]
+    },
+    {
+     "text": "Reads your entire project: files, rules, history — understands your setup",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      857,
+      310,
+      658,
+      100
+     ]
+    },
+    {
+     "text": "Persistence",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      410,
+      200,
+      100
+     ]
+    },
+    {
+     "text": "Output lives in the chat window — disappears when you close it",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      285,
+      410,
+      572,
+      100
+     ]
+    },
+    {
+     "text": "Output goes into actual files — it accumulates, it's reusable next time",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      857,
+      410,
+      658,
+      100
+     ]
+    },
+    {
+     "text": "Self-correction",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      509,
+      200,
+      100
+     ]
+    },
+    {
+     "text": "Only updates when you say it's wrong — silent on errors you don't notice",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      285,
+      509,
+      572,
+      100
+     ]
+    },
+    {
+     "text": "Has a real execution environment — runs code, sees errors, fixes itself",
+     "tag": "td",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      857,
+      509,
+      658,
+      100
+     ]
+    },
+    {
+     "text": "This isn't a feature comparison. It's two fundamentally different ways of working —\none where you drive AI; one where AI drives, and you review outcomes.",
+     "tag": "div",
+     "fs": 23.52,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      634,
+      1430,
+      112
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 10,
+   "image": "10.webp",
+   "blocks": [
+    {
+     "text": "Controlling the process vs. controlling the outcome",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      134,
+      1430,
+      157
+     ]
+    },
+    {
+     "text": "Traditional: Process Certainty",
+     "tag": "h3",
+     "fs": 33.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      115,
+      338,
+      638,
+      48
+     ]
+    },
+    {
+     "text": "Prompt → check → edit manually → repeat",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      195,
+      410,
+      557,
+      39
+     ]
+    },
+    {
+     "text": "AI output capped by your review bandwidth",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      195,
+      459,
+      557,
+      39
+     ]
+    },
+    {
+     "text": "You're the bottleneck",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      195,
+      508,
+      557,
+      39
+     ]
+    },
+    {
+     "text": "AI-Native: Outcome Certainty",
+     "tag": "h3",
+     "fs": 33.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      847,
+      339,
+      638,
+      48
+     ]
+    },
+    {
+     "text": "Define \"what good looks like\"",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      927,
+      411,
+      498,
+      39
+     ]
+    },
+    {
+     "text": "Give AI rules + context",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      927,
+      460,
+      498,
+      39
+     ]
+    },
+    {
+     "text": "AI runs, checks, iterates → you review",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      927,
+      509,
+      498,
+      39
+     ]
+    },
+    {
+     "text": "Highest leverage: define the finish line",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      927,
+      558,
+      498,
+      39
+     ]
+    },
+    {
+     "text": "When AI can produce far more than you can review line-by-line, the bottleneck isn't attention — it's how clearly you defined \"done.\"",
+     "tag": "div",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      657,
+      1430,
+      104
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 11,
+   "image": "11.webp",
+   "blocks": [
+    {
+     "text": "HANDS-ON · LIVE DEMO",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      180,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "Let's open Cursor.\nFeel the difference.",
+     "tag": "h2",
+     "fs": 60.9,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      233,
+      1430,
+      219
+     ]
+    },
+    {
+     "text": "You don't need to\nAlready know how to code\nUnderstand every AI concept\nLearn everything today",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      402,
+      507,
+      383,
+      166
+     ]
+    },
+    {
+     "text": "You just need\nOne real task to work on\nTo tell Cursor your goal and context\nTo watch it run — then review",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      837,
+      507,
+      383,
+      208
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 12,
+   "image": "12.webp",
+   "blocks": [
+    {
+     "text": "PART 2",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      318,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "How to Debug",
+     "tag": "h2",
+     "fs": 63,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      371,
+      1430,
+      113
+     ]
+    },
+    {
+     "text": "Red errors are clues, not disasters.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      535,
+      1430,
+      42
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 13,
+   "image": "13.webp",
+   "blocks": [
+    {
+     "text": "Debugging with Cursor: a 3-step mindset",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      118,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "STEP 1",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      241,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Read the error — it's a clue",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      281,
+      414,
+      94
+     ]
+    },
+    {
+     "text": "Not a judgment — it's a message",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      399,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Tells you what broke and which line",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      487,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Read it before asking Cursor anything",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      576,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "STEP 2",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      241,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Give Cursor the full picture",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      281,
+      414,
+      94
+     ]
+    },
+    {
+     "text": "Don't just paste the error",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      399,
+      333,
+      39
+     ]
+    },
+    {
+     "text": "\"I expected X. Got this instead.\"",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      448,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Expected + actual = the right fix",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      536,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "STEP 3",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1076,
+      241,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Let Cursor run, check, and fix",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1076,
+      281,
+      414,
+      94
+     ]
+    },
+    {
+     "text": "Let it execute, see output, and iterate",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      399,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Ask: \"Why did this break?\"",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      487,
+      333,
+      39
+     ]
+    },
+    {
+     "text": "Not just: \"Does it work now?\"",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      536,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "The goal isn't to never break things. It's to recover confidently and learn faster when you do.",
+     "tag": "div",
+     "fs": 22.26,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      708,
+      1430,
+      68
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 14,
+   "image": "14.webp",
+   "blocks": [
+    {
+     "text": "PART 3",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      238,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "How to Write\nEffective Prompts",
+     "tag": "h2",
+     "fs": 63,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      290,
+      1430,
+      227
+     ]
+    },
+    {
+     "text": "A vague instruction can produce code with no errors — and still lose your data.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      428,
+      568,
+      744,
+      90
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 15,
+   "image": "15.webp",
+   "blocks": [
+    {
+     "text": "HANDS-ON EXERCISE",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 700,
+     "li": false,
+     "box": [
+      133,
+      143,
+      1334,
+      29
+     ]
+    },
+    {
+     "text": "Download the practice data",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      133,
+      194,
+      1334,
+      79
+     ]
+    },
+    {
+     "text": "Download link:",
+     "tag": "div",
+     "fs": 20.16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      466,
+      337,
+      667,
+      31
+     ]
+    },
+    {
+     "text": "ai-builders.com/resources/lesson4_data.zip",
+     "tag": "div",
+     "fs": 26.04,
+     "fw": 400,
+     "li": false,
+     "box": [
+      466,
+      383,
+      667,
+      110
+     ]
+    },
+    {
+     "text": "⬇ Download lesson4_data.zip",
+     "tag": "a",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      582,
+      515,
+      436,
+      57
+     ]
+    },
+    {
+     "text": "We'll use this dataset to practice turning vague instructions into\nprecise, AI-ready specs with the 3C Framework.",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      428,
+      627,
+      744,
+      125
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://ai-builders.com/resources/lesson4_data.zip",
+     "text": "⬇ Download lesson4_data.zip"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 16,
+   "image": "16.webp",
+   "blocks": [
+    {
+     "text": "What a vague instruction looks like in practice",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      153,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "You have a photo folder. Two files named sunset.jpg — one ocean, one mountain. You ask Cursor:",
+     "tag": "p",
+     "fs": 24.36,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      275,
+      939,
+      97
+     ]
+    },
+    {
+     "text": "\"Write a script to move all photos into one new folder, flatten the subdirectory structure.\"",
+     "tag": "p",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      106,
+      405,
+      896,
+      86
+     ]
+    },
+    {
+     "text": "What AI assumes",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      105,
+      539,
+      427,
+      34
+     ]
+    },
+    {
+     "text": "Same filename = same file. Overwriting is fine. You didn't say otherwise.",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      105,
+      578,
+      427,
+      126
+     ]
+    },
+    {
+     "text": "What actually happens",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      580,
+      539,
+      427,
+      34
+     ]
+    },
+    {
+     "text": "One sunset.jpg is silently deleted. No error. No warning. No trace.",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      580,
+      578,
+      427,
+      84
+     ]
+    },
+    {
+     "text": "THE TRAP",
+     "tag": "p",
+     "fs": 20.16,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1084,
+      299,
+      405,
+      37
+     ]
+    },
+    {
+     "text": "The code ran without errors. It did exactly what you asked.\nBut you lost data.\nVague requirements produce technically correct code that's a wrong product.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1084,
+      348,
+      405,
+      370
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 17,
+   "image": "17.webp",
+   "blocks": [
+    {
+     "text": "Why did this happen? The curse of knowledge",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      167,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "The problem isn't that AI is dumb. It's that you carry implicit assumptions that AI doesn't share.",
+     "tag": "p",
+     "fs": 23.94,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      289,
+      882,
+      89
+     ]
+    },
+    {
+     "text": "About identity — you assumed:",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      105,
+      413,
+      842,
+      34
+     ]
+    },
+    {
+     "text": "You: \"Photos with different content are different files.\"\nAI: \"Photos with the same filename are the same file.\"",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      105,
+      454,
+      842,
+      84
+     ]
+    },
+    {
+     "text": "About conflict — you assumed:",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      105,
+      585,
+      842,
+      34
+     ]
+    },
+    {
+     "text": "You: \"Overwriting would lose data — obviously bad.\"\nAI: \"If same filename = same file, then overwriting loses nothing.\"",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      105,
+      627,
+      842,
+      84
+     ]
+    },
+    {
+     "text": "The skill is not writing — it's excavating.",
+     "tag": "p",
+     "fs": 23.52,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1032,
+      352,
+      454,
+      87
+     ]
+    },
+    {
+     "text": "Surface hidden assumptions",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1112,
+      461,
+      375,
+      38
+     ]
+    },
+    {
+     "text": "Turn implicit decisions → explicit rules",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1112,
+      508,
+      375,
+      76
+     ]
+    },
+    {
+     "text": "That's what Criteria is for",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1112,
+      593,
+      375,
+      38
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 18,
+   "image": "18.webp",
+   "blocks": [
+    {
+     "text": "The 3C Framework: write specs, not requests",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      115,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "C1 · CONTEXT",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      111,
+      237,
+      409,
+      34
+     ]
+    },
+    {
+     "text": "What's the #1 priority?",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      111,
+      281,
+      409,
+      47
+     ]
+    },
+    {
+     "text": "Set the north star first",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      192,
+      352,
+      329,
+      39
+     ]
+    },
+    {
+     "text": "Data safety: better to do nothing than lose a file",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      192,
+      401,
+      329,
+      79
+     ]
+    },
+    {
+     "text": "This overrides all other decisions",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      192,
+      489,
+      329,
+      79
+     ]
+    },
+    {
+     "text": "C2 · COMPONENTS",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      238,
+      409,
+      34
+     ]
+    },
+    {
+     "text": "What are the steps?",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      282,
+      409,
+      47
+     ]
+    },
+    {
+     "text": "Scan source directory (recursive)",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      353,
+      329,
+      79
+     ]
+    },
+    {
+     "text": "Identify duplicate files",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      441,
+      329,
+      39
+     ]
+    },
+    {
+     "text": "Execute file operations",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      490,
+      329,
+      39
+     ]
+    },
+    {
+     "text": "Generate verification report",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      539,
+      329,
+      79
+     ]
+    },
+    {
+     "text": "C3 · CRITERIA",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1078,
+      239,
+      409,
+      34
+     ]
+    },
+    {
+     "text": "Make implicit rules explicit",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1078,
+      283,
+      409,
+      94
+     ]
+    },
+    {
+     "text": "Duplicate? → content hash, not filename",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1110,
+      401,
+      377,
+      79
+     ]
+    },
+    {
+     "text": "Name conflict? → auto-rename, never overwrite",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1110,
+      489,
+      377,
+      79
+     ]
+    },
+    {
+     "text": "Safety? → copy-only, originals stay",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1110,
+      578,
+      377,
+      79
+     ]
+    },
+    {
+     "text": "Which files? → .jpg / .png only",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1110,
+      666,
+      377,
+      79
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 19,
+   "image": "19.webp",
+   "blocks": [
+    {
+     "text": "Validation: trust the ledger, not your eyes",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      137,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "Data Consistency Check",
+     "tag": "h3",
+     "fs": 31.08,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      257,
+      803,
+      45
+     ]
+    },
+    {
+     "text": "Add to end of every script",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      323,
+      582,
+      38
+     ]
+    },
+    {
+     "text": "input = output + duplicates + skipped",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      370,
+      582,
+      40
+     ]
+    },
+    {
+     "text": "If unequal → print RED WARNING",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      419,
+      582,
+      38
+     ]
+    },
+    {
+     "text": "Visual Acceptance Report",
+     "tag": "h3",
+     "fs": 31.08,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      526,
+      803,
+      45
+     ]
+    },
+    {
+     "text": "Generate report.html",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      592,
+      526,
+      40
+     ]
+    },
+    {
+     "text": "Left: files kept · Right: duplicates removed",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      641,
+      526,
+      38
+     ]
+    },
+    {
+     "text": "One human scan > 100 automated checks",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      189,
+      688,
+      526,
+      38
+     ]
+    },
+    {
+     "text": "THE MINDSET SHIFT",
+     "tag": "p",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1000,
+      388,
+      486,
+      36
+     ]
+    },
+    {
+     "text": "\"No errors\" ≠ correct output",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1080,
+      448,
+      407,
+      38
+     ]
+    },
+    {
+     "text": "Look for data integrity, not just no red text",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1080,
+      496,
+      407,
+      76
+     ]
+    },
+    {
+     "text": "Define \"done\" before you run",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1080,
+      581,
+      407,
+      38
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 20,
+   "image": "20.webp",
+   "blocks": [
+    {
+     "text": "Where you are now — what to do next",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      120,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "LEVEL 1",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      245,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Only used ChatGPT",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      110,
+      285,
+      414,
+      47
+     ]
+    },
+    {
+     "text": "Open Cursor on one weekly task",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      356,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Let it read your actual files",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      444,
+      333,
+      39
+     ]
+    },
+    {
+     "text": "Notice the context difference\nNo coding required. Just feel it.",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      190,
+      493,
+      333,
+      158
+     ]
+    },
+    {
+     "text": "LEVEL 2",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      245,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Cursor but prompt one-by-one",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      593,
+      285,
+      414,
+      94
+     ]
+    },
+    {
+     "text": "Write your standards in a file",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      403,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "AI reads rules before acting",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      492,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Output quality jumps immediately",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      674,
+      580,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "LEVEL 3",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1076,
+      245,
+      414,
+      30
+     ]
+    },
+    {
+     "text": "Already building workflows",
+     "tag": "h3",
+     "fs": 32.76,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1076,
+      285,
+      414,
+      94
+     ]
+    },
+    {
+     "text": "Add automated acceptance checks",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      403,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Second agent reviews / script validates",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      492,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "\"It works\" → \"It's repeatable\"",
+     "tag": "li",
+     "fs": 22.68,
+     "fw": 400,
+     "li": true,
+     "box": [
+      1157,
+      580,
+      333,
+      79
+     ]
+    },
+    {
+     "text": "Shared starting point at every level: write down what \"good\" looks like before you ask AI to do anything.",
+     "tag": "div",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      713,
+      1430,
+      63
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 21,
+   "image": "21.webp",
+   "blocks": [
+    {
+     "text": "BONUS · META",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      265,
+      1430,
+      29
+     ]
+    },
+    {
+     "text": "This deck you just watched\nis itself a demo",
+     "tag": "h2",
+     "fs": 60.9,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      318,
+      1430,
+      219
+     ]
+    },
+    {
+     "text": "The process of making this deck practiced every principle we just covered.",
+     "tag": "p",
+     "fs": 22.68,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      588,
+      1430,
+      42
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 22,
+   "image": "22.webp",
+   "blocks": [
+    {
+     "text": "How this deck was made",
+     "tag": "h2",
+     "fs": 54.6,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      133,
+      1430,
+      79
+     ]
+    },
+    {
+     "text": "Step",
+     "tag": "th",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      235,
+      247,
+      57
+     ]
+    },
+    {
+     "text": "Human did",
+     "tag": "th",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      332,
+      235,
+      318,
+      57
+     ]
+    },
+    {
+     "text": "AI did",
+     "tag": "th",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      650,
+      235,
+      318,
+      57
+     ]
+    },
+    {
+     "text": "1 · Brief",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      292,
+      247,
+      157
+     ]
+    },
+    {
+     "text": "1 message: workshop info + agenda + lesson content to include",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      332,
+      292,
+      318,
+      157
+     ]
+    },
+    {
+     "text": "Read original 747-line deck + lesson 4 materials + workshop screenshot",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      650,
+      292,
+      318,
+      157
+     ]
+    },
+    {
+     "text": "2 · Content",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      449,
+      247,
+      156
+     ]
+    },
+    {
+     "text": "Zero lines of HTML written",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      332,
+      449,
+      318,
+      156
+     ]
+    },
+    {
+     "text": "Output 900+ lines of HTML: 20 slides, full design system retained",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      650,
+      449,
+      318,
+      156
+     ]
+    },
+    {
+     "text": "3 · Adaptation",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      605,
+      247,
+      156
+     ]
+    },
+    {
+     "text": "Specified: English, debug section, 3C framework, Tencent in EN",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      332,
+      605,
+      318,
+      156
+     ]
+    },
+    {
+     "text": "Restructured narrative arc, added 3 new sections, repurposed all assets",
+     "tag": "td",
+     "fs": 21.84,
+     "fw": 400,
+     "li": false,
+     "box": [
+      650,
+      605,
+      318,
+      156
+     ]
+    },
+    {
+     "text": "1",
+     "tag": "div",
+     "fs": 75.6,
+     "fw": 900,
+     "li": false,
+     "box": [
+      1045,
+      252,
+      93,
+      91
+     ]
+    },
+    {
+     "text": "message",
+     "tag": "div",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1045,
+      346,
+      93,
+      28
+     ]
+    },
+    {
+     "text": "→",
+     "tag": "div",
+     "fs": 46.2,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1205,
+      277,
+      51,
+      72
+     ]
+    },
+    {
+     "text": "912",
+     "tag": "div",
+     "fs": 75.6,
+     "fw": 900,
+     "li": false,
+     "box": [
+      1324,
+      252,
+      139,
+      91
+     ]
+    },
+    {
+     "text": "lines of HTML",
+     "tag": "div",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1324,
+      346,
+      139,
+      28
+     ]
+    },
+    {
+     "text": "~10 min",
+     "tag": "div",
+     "fs": 46.2,
+     "fw": 900,
+     "li": false,
+     "box": [
+      1011,
+      401,
+      213,
+      55
+     ]
+    },
+    {
+     "text": "human time",
+     "tag": "div",
+     "fs": 15.12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1011,
+      460,
+      213,
+      24
+     ]
+    },
+    {
+     "text": "vs",
+     "tag": "div",
+     "fs": 33.6,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1224,
+      416,
+      41,
+      52
+     ]
+    },
+    {
+     "text": "20 slides",
+     "tag": "div",
+     "fs": 46.2,
+     "fw": 900,
+     "li": false,
+     "box": [
+      1265,
+      401,
+      231,
+      55
+     ]
+    },
+    {
+     "text": "complete deck",
+     "tag": "div",
+     "fs": 15.12,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1265,
+      460,
+      231,
+      24
+     ]
+    },
+    {
+     "text": "This is \"outcome certainty\" in a real workflow: human defines the goal and constraints, AI handles all execution — including the sentence you're reading right now.",
+     "tag": "p",
+     "fs": 20.16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1011,
+      522,
+      487,
+      187
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 23,
+   "image": "23.webp",
+   "blocks": [
+    {
+     "text": "KEEP BUILDING AFTER TODAY",
+     "tag": "div",
+     "fs": 16.8,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      133,
+      1430,
+      26
+     ]
+    },
+    {
+     "text": "Join the Superlinear Academy community",
+     "tag": "h2",
+     "fs": 52.5,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      169,
+      1430,
+      88
+     ]
+    },
+    {
+     "text": "DOWNLOAD THE APP",
+     "tag": "div",
+     "fs": 15.96,
+     "fw": 700,
+     "li": false,
+     "box": [
+      286,
+      303,
+      475,
+      25
+     ]
+    },
+    {
+     "text": "Superlinear Academy",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 700,
+     "li": false,
+     "box": [
+      361,
+      344,
+      314,
+      39
+     ]
+    },
+    {
+     "text": "Build useful things with AI",
+     "tag": "div",
+     "fs": 20.16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      361,
+      386,
+      314,
+      31
+     ]
+    },
+    {
+     "text": "AI Builder courses & projects",
+     "tag": "li",
+     "fs": 20.16,
+     "fw": 400,
+     "li": true,
+     "box": [
+      359,
+      443,
+      394,
+      35
+     ]
+    },
+    {
+     "text": "Community feed + share your work",
+     "tag": "li",
+     "fs": 20.16,
+     "fw": 400,
+     "li": true,
+     "box": [
+      359,
+      486,
+      394,
+      35
+     ]
+    },
+    {
+     "text": "Lifetime Q&A with instructors",
+     "tag": "li",
+     "fs": 20.16,
+     "fw": 400,
+     "li": true,
+     "box": [
+      359,
+      530,
+      394,
+      35
+     ]
+    },
+    {
+     "text": "⬇ Download on App Store",
+     "tag": "a",
+     "fs": 20.16,
+     "fw": 700,
+     "li": false,
+     "box": [
+      286,
+      609,
+      346,
+      51
+     ]
+    },
+    {
+     "text": "COMMUNITY PROJECTS",
+     "tag": "div",
+     "fs": 15.96,
+     "fw": 700,
+     "li": false,
+     "box": [
+      838,
+      303,
+      475,
+      25
+     ]
+    },
+    {
+     "text": "What other builders have made:",
+     "tag": "div",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      838,
+      344,
+      475,
+      38
+     ]
+    },
+    {
+     "text": "🗺 EvoMap — collective AI memory for Agents",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      838,
+      397,
+      475,
+      79
+     ]
+    },
+    {
+     "text": "📊 Career Signaling — AI-powered job tracker",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      838,
+      485,
+      475,
+      79
+     ]
+    },
+    {
+     "text": "🤖 Personal AI assistant for daily workflows",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      838,
+      572,
+      475,
+      79
+     ]
+    },
+    {
+     "text": "Browse All Projects →",
+     "tag": "a",
+     "fs": 20.16,
+     "fw": 700,
+     "li": false,
+     "box": [
+      838,
+      687,
+      291,
+      51
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://apps.apple.com/us/app/superlinear-academy/id6760123187",
+     "text": "⬇ Download on App Store"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/share-your-projects-en/",
+     "text": "Browse All Projects →"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 24,
+   "image": "24.webp",
+   "blocks": [
+    {
+     "text": "KEEP GOING AFTER TODAY",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      43,
+      695,
+      29
+     ]
+    },
+    {
+     "text": "Build with AI: Mindset, Habits\n& Tools for the Next 20 Years",
+     "tag": "h2",
+     "fs": 42,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      89,
+      695,
+      204
+     ]
+    },
+    {
+     "text": "Learn AI for 20 years, not the next 20 days",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      164,
+      319,
+      616,
+      38
+     ]
+    },
+    {
+     "text": "Stop treating AI like a chatbot — design the context",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      164,
+      366,
+      616,
+      76
+     ]
+    },
+    {
+     "text": "Build a meta-learning system that compounds over time",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      164,
+      451,
+      616,
+      76
+     ]
+    },
+    {
+     "text": "Real projects, real code, real feedback from instructors",
+     "tag": "li",
+     "fs": 21.84,
+     "fw": 400,
+     "li": true,
+     "box": [
+      164,
+      536,
+      616,
+      76
+     ]
+    },
+    {
+     "text": "RATING",
+     "tag": "div",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      104,
+      655,
+      146,
+      28
+     ]
+    },
+    {
+     "text": "⭐ 4.9 / 5.0",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 700,
+     "li": false,
+     "box": [
+      104,
+      683,
+      146,
+      79
+     ]
+    },
+    {
+     "text": "NEXT COHORT AT THE TIME",
+     "tag": "div",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      307,
+      661,
+      242,
+      55
+     ]
+    },
+    {
+     "text": "Apr 13–27, 2026",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 700,
+     "li": false,
+     "box": [
+      307,
+      716,
+      242,
+      39
+     ]
+    },
+    {
+     "text": "REVIEWS",
+     "tag": "div",
+     "fs": 17.64,
+     "fw": 400,
+     "li": false,
+     "box": [
+      607,
+      655,
+      154,
+      28
+     ]
+    },
+    {
+     "text": "72 students",
+     "tag": "div",
+     "fs": 25.2,
+     "fw": 700,
+     "li": false,
+     "box": [
+      607,
+      683,
+      154,
+      79
+     ]
+    },
+    {
+     "text": "Enroll at maven.com/superlinear/aibuilders →",
+     "tag": "a",
+     "fs": 21,
+     "fw": 700,
+     "li": false,
+     "box": [
+      85,
+      795,
+      695,
+      57
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://maven.com/superlinear/aibuilders",
+     "text": "Enroll at maven.com/superlinear/aibuilders →"
+    }
+   ],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 25,
+   "image": "25.webp",
+   "blocks": [
+    {
+     "text": "OPEN SOURCE",
+     "tag": "div",
+     "fs": 18.48,
+     "fw": 500,
+     "li": false,
+     "box": [
+      133,
+      209,
+      1334,
+      29
+     ]
+    },
+    {
+     "text": "This deck is on GitHub",
+     "tag": "h2",
+     "fs": 56.7,
+     "fw": 700,
+     "li": false,
+     "box": [
+      133,
+      262,
+      1334,
+      88
+     ]
+    },
+    {
+     "text": "github.com/sunyuzheng/workshop-cursor-deck",
+     "tag": "div",
+     "fs": 26.04,
+     "fw": 400,
+     "li": false,
+     "box": [
+      495,
+      408,
+      610,
+      81
+     ]
+    },
+    {
+     "text": "Fork it · Adapt it · Build your own AI workshop",
+     "tag": "div",
+     "fs": 19.32,
+     "fw": 400,
+     "li": false,
+     "box": [
+      495,
+      498,
+      610,
+      37
+     ]
+    },
+    {
+     "text": "Every slide, every design decision, every prompt used to build this deck\nis documented in the README — a live demo of the process.",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      133,
+      588,
+      1334,
+      86
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  },
+  {
+   "n": 26,
+   "image": "26.webp",
+   "blocks": [
+    {
+     "text": "The gap between using AI\nand using AI well\nisn't 30%. It's 10×.",
+     "tag": "h2",
+     "fs": 58.8,
+     "fw": 700,
+     "li": false,
+     "box": [
+      308,
+      208,
+      984,
+      318
+     ]
+    },
+    {
+     "text": "Context · Components · Criteria.\nThe difference is method, not tools.",
+     "tag": "p",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      559,
+      1430,
+      91
+     ]
+    },
+    {
+     "text": "Yuzheng Sun · Superlinear Academy · Seattle (AI) Startup Summit · 2026",
+     "tag": "p",
+     "fs": 18.48,
+     "fw": 400,
+     "li": false,
+     "box": [
+      85,
+      693,
+      1430,
+      34
+     ]
+    }
+   ],
+   "links": [],
+   "title": "",
+   "notes": []
+  }
+ ]
+}

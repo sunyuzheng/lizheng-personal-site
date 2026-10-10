@@ -116,7 +116,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "Enterprise AI training, strategic briefings, and workshop decks by Yuzheng Sun, designed for teams across data, engineering, investment, and knowledge work.",
     canonical: "https://www.lizheng.ai/en/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-09-29",
+    lastModified: "2026-10-09",
   },
   zh: {
     title: "企业AI培训与课件｜课代表立正（孙煜征）",
@@ -124,7 +124,7 @@ export const DECKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "课代表立正（孙煜征）的企业AI培训与课件索引：为数据、研发、投资与知识工作团队定制的战略汇报、工作坊和公开分享。",
     canonical: "https://www.lizheng.ai/decks",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-09-29",
+    lastModified: "2026-10-09",
   },
 };
 
@@ -134,6 +134,8 @@ export const DECKS_LANGUAGE_ALTERNATES: LanguageAlternate[] = [
   { hrefLang: "x-default", href: DECKS_PAGE_META.zh.canonical },
 ];
 
+// The slides at /decks/aie-shanghai-2026/slides. Its canonical is the web version at
+// /decks/aie-shanghai-2026 (scripts/deck-pages.ts), which search engines should show instead.
 export const AIE_SHANGHAI_DECK_PAGE_META: PageMeta = {
   title: "AIE Shanghai 2026｜上海市人工智能行业协会合作会谈",
   description:

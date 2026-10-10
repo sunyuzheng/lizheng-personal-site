@@ -28,7 +28,6 @@ import {
 } from "../shared/page-meta.ts";
 import {
   buildAboutStructuredData,
-  buildAieShanghaiDeckStructuredData,
   buildBooksStructuredData,
   buildGuestStructuredData,
   buildGuestsListStructuredData,
@@ -43,6 +42,7 @@ import {
 import App from "../client/src/App.tsx";
 import { bookSitemapUrls } from "./book-pages.ts";
 import { writingSitemapUrls } from "./writing-pages.ts";
+import { deckSitemapUrls } from "./deck-pages.ts";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -292,18 +292,7 @@ function buildSitemapXml(guests: GuestProfile[]) {
       loc: DECKS_PAGE_META.en.canonical,
       lastmod: DECKS_PAGE_META.en.lastModified,
     },
-    {
-      loc: AIE_SHANGHAI_DECK_PAGE_META.canonical,
-      lastmod: AIE_SHANGHAI_DECK_PAGE_META.lastModified,
-    },
-    {
-      loc: `${SITE_URL}/decks/fake-work-fake-learning`,
-      lastmod: "2026-09-28",
-    },
-    {
-      loc: `${SITE_URL}/decks/fake-work-fake-learning/zh`,
-      lastmod: "2026-09-29",
-    },
+    ...deckSitemapUrls(),
     ...bookSitemapUrls(),
     ...writingSitemapUrls(),
     ...guests.map(guest => ({
@@ -594,10 +583,10 @@ const staticPages: StaticPage[] = [
     imageHeight: 720,
   },
   {
-    route: "/decks/aie-shanghai-2026",
+    route: "/decks/aie-shanghai-2026/slides",
     meta: AIE_SHANGHAI_DECK_PAGE_META,
     lang: "zh",
-    jsonLd: buildAieShanghaiDeckStructuredData(),
+    jsonLd: null,
     ogType: "article",
     imageAlt: "AIE Shanghai 2026合作会谈deck封面",
     imageWidth: 1280,

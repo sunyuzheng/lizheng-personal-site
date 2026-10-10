@@ -1,0 +1,3388 @@
+{
+ "page": "/decks/fake-work-fake-learning",
+ "deck": "columbia-fake-work-fake-learning-2026",
+ "language": "en",
+ "capturedFrom": "https://columbia-fake-work-learning.vercel.app/",
+ "capturedAt": "2026-10-10",
+ "slides": [
+  {
+   "n": 1,
+   "image": "01.webp",
+   "blocks": [
+    {
+     "text": "From done\nto learned",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA UNIVERSITY · COMS W4995 AGENTIC ENGINEERING",
+     "tag": "div",
+     "fs": 19,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      151,
+      1268,
+      27
+     ]
+    },
+    {
+     "text": "The End of\nFake Learning",
+     "tag": "h1",
+     "fs": 104,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      215,
+      1268,
+      214
+     ]
+    },
+    {
+     "text": "When finishing the work\nstopped proving you learned it",
+     "tag": "p",
+     "fs": 35,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      467,
+      1268,
+      92
+     ]
+    },
+    {
+     "text": "Yuzheng Sun",
+     "tag": "strong",
+     "fs": 29,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      618,
+      1268,
+      33
+     ]
+    },
+    {
+     "text": "Founder, Superlinear Academy",
+     "tag": "span",
+     "fs": 23,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      660,
+      1268,
+      27
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "The End of Fake Learning",
+   "chapter": "From done to learned",
+   "notes": [
+    "For your whole education, one assumption did a lot of quiet work: if you finished it, you learned it.",
+    "Teachers graded on it. Employers hired on it. And you judged yourself by it.",
+    "AI just broke that assumption. Anything you can finish, it can now finish for you. So today I want to answer a question most of us were never made to answer: what does it actually mean to have learned something? And why does learning so often feel backwards?"
+   ]
+  },
+  {
+   "n": 2,
+   "image": "02.webp",
+   "blocks": [
+    {
+     "text": "Result vs.\nprocess",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "The grade sees the result.\nLearning happens in the process.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "Doing\nthe homework",
+     "tag": "div",
+     "fs": 36,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      337,
+      300,
+      155
+     ]
+    },
+    {
+     "text": "THE RESULT",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      676,
+      303,
+      848,
+      105
+     ]
+    },
+    {
+     "text": "What the grade can see.",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      676,
+      350,
+      848,
+      48
+     ]
+    },
+    {
+     "text": "THE PROCESS",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      676,
+      421,
+      848,
+      105
+     ]
+    },
+    {
+     "text": "Where the learning happens. The grade can’t see it.",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      676,
+      468,
+      848,
+      48
+     ]
+    },
+    {
+     "text": "COPY THE HOMEWORK",
+     "tag": "span",
+     "fs": 18,
+     "fw": 700,
+     "li": false,
+     "box": [
+      288,
+      599,
+      300,
+      21
+     ]
+    },
+    {
+     "text": "Same result. Same grade. No process, no learning.",
+     "tag": "p",
+     "fs": 31,
+     "fw": 400,
+     "li": false,
+     "box": [
+      616,
+      588,
+      880,
+      43
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "The grade sees the result. Learning happens in the process.",
+   "chapter": "Result vs. process",
+   "notes": [
+    "Start with a thought experiment. Take any homework you have ever handed in. Now imagine you had copied it instead. Same answers. Same grade. Your transcript cannot tell the difference. But you learned nothing.",
+    "Why? Because the grade looks at the result, and learning happens in the process: being stuck on problem three for an hour, trying the wrong approach, figuring out why it failed. Copying keeps the result and deletes the process.",
+    "For most of your education the two came together, because the only practical way to get the result was to go through the process. So we never had to ask what learning actually is. Teachers and grades answered that for us.",
+    "Now AI can produce the result without you going through the process. So you have to answer it yourself."
+   ]
+  },
+  {
+   "n": 3,
+   "image": "03.webp",
+   "blocks": [
+    {
+     "text": "The\ndefinition",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "Real learning is what you can still do:\nwithout the help, later, on a new problem.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "01 · TAKE AWAY THE HELP",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      303,
+      403,
+      148
+     ]
+    },
+    {
+     "text": "No AI. No notes.\nNo tutorial.",
+     "tag": "strong",
+     "fs": 36,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      365,
+      403,
+      86
+     ]
+    },
+    {
+     "text": "02 · WAIT",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      688,
+      303,
+      403,
+      148
+     ]
+    },
+    {
+     "text": "A week later,\nnot right after.",
+     "tag": "strong",
+     "fs": 36,
+     "fw": 500,
+     "li": false,
+     "box": [
+      688,
+      365,
+      403,
+      86
+     ]
+    },
+    {
+     "text": "03 · CHANGE THE PROBLEM",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1121,
+      303,
+      403,
+      148
+     ]
+    },
+    {
+     "text": "New inputs.\nA new constraint.",
+     "tag": "strong",
+     "fs": 36,
+     "fw": 500,
+     "li": false,
+     "box": [
+      1121,
+      365,
+      403,
+      86
+     ]
+    },
+    {
+     "text": "Doing well with the help, right after, on the same problem is performance.\nFake learning is mistaking “I made it” for “I learned it.”",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      491,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "Learning vs. performance · Soderstrom & Bjork, Perspectives on Psychological Science, 2015 ↗",
+     "tag": "a",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      627,
+      729,
+      28
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/11/soderstorm_ra_learningvsperformance.pdf",
+     "text": "Learning vs. performance · Soderstrom & Bjork, Perspectives on Psychological Science, 2015 ↗"
+    }
+   ],
+   "title": "Real learning is what you can still do: without the help, later, on a new problem.",
+   "chapter": "The definition",
+   "notes": [
+    "Learning scientists have a classic distinction for this: performance versus learning.",
+    "Performance is how well you do right now, during practice or right after it, usually with help around you. Learning is what is left later, when the help is gone, time has passed, and the problem has changed.",
+    "So here is the definition I want you to leave with. You have really learned something if you can still do it without the help, a week later, on a problem you have not seen.",
+    "Everything else is performance. And fake learning is simply mistaking one for the other: treating “I made it” as “I learned it.”",
+    "Which raises a practical problem. If learning only shows up later, how do you know, while you are learning, whether it is happening?"
+   ]
+  },
+  {
+   "n": 4,
+   "image": "04.webp",
+   "blocks": [
+    {
+     "text": "Guess\nfirst",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "04",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "30 SECONDS · TYPE IN THE CHAT",
+     "tag": "div",
+     "fs": 19,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      27
+     ]
+    },
+    {
+     "text": "Same physics course.\nTwo ways to teach it.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      186,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "GROUP A",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      358,
+      606,
+      117
+     ]
+    },
+    {
+     "text": "A clear, polished lecture from a highly rated instructor.",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      402,
+      606,
+      73
+     ]
+    },
+    {
+     "text": "GROUP B",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      918,
+      358,
+      606,
+      117
+     ]
+    },
+    {
+     "text": "Work the problems in small groups. Get stuck. Then the explanation.",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      918,
+      402,
+      606,
+      73
+     ]
+    },
+    {
+     "text": "01Which group learned more?",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      502,
+      1268,
+      75
+     ]
+    },
+    {
+     "text": "02Which group felt it learned more?",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      577,
+      1268,
+      75
+     ]
+    },
+    {
+     "text": "Type A or B for each.",
+     "tag": "span",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      503,
+      695,
+      195,
+      24
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "Guess: which group learned more? Which group felt it did?",
+   "chapter": "Guess first",
+   "notes": [
+    "Mostly, by feeling. So let’s test your feeling.",
+    "Harvard ran a randomized experiment in an introductory physics course. Same content, same handouts. One group got a clear, polished lecture from a highly rated instructor. The other group worked through the problems in small groups, got stuck, and then got the explanation.",
+    "Two questions. Which group learned more, measured by a test? And which group felt it had learned more?",
+    "Type A or B for each in the chat. Thirty seconds.",
+    "[Start the timer. Read a few answers aloud.]"
+   ]
+  },
+  {
+   "n": 5,
+   "image": "05.webp",
+   "blocks": [
+    {
+     "text": "The\nreversal",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "05",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "Your feeling of learning\nis often backwards.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "A · POLISHED LECTURE",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      536,
+      319,
+      479,
+      20
+     ]
+    },
+    {
+     "text": "B · WORKED IT OUT",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1045,
+      319,
+      479,
+      20
+     ]
+    },
+    {
+     "text": "Learned",
+     "tag": "span",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      370,
+      250,
+      50
+     ]
+    },
+    {
+     "text": "test score",
+     "tag": "small",
+     "fs": 15,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      401,
+      250,
+      19
+     ]
+    },
+    {
+     "text": "Less",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      536,
+      375,
+      479,
+      39
+     ]
+    },
+    {
+     "text": "More · +0.46 SD",
+     "tag": "strong",
+     "fs": 38,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1045,
+      373,
+      479,
+      43
+     ]
+    },
+    {
+     "text": "Felt they learned",
+     "tag": "span",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      451,
+      250,
+      50
+     ]
+    },
+    {
+     "text": "self-rating",
+     "tag": "small",
+     "fs": 15,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      483,
+      250,
+      19
+     ]
+    },
+    {
+     "text": "More",
+     "tag": "strong",
+     "fs": 38,
+     "fw": 600,
+     "li": false,
+     "box": [
+      536,
+      455,
+      479,
+      43
+     ]
+    },
+    {
+     "text": "Less · −0.56 SD",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1045,
+      457,
+      479,
+      39
+     ]
+    },
+    {
+     "text": "Smooth made people think they had learned. Struggle made them think they hadn’t.\nOften it’s the reverse.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      547,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "Deslauriers et al. · PNAS, 2019 · randomized, Harvard introductory physics ↗",
+     "tag": "a",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      684,
+      587,
+      28
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6765278/",
+     "text": "Deslauriers et al. · PNAS, 2019 · randomized, Harvard introductory physics ↗"
+    }
+   ],
+   "title": "Your feeling of learning is often backwards.",
+   "chapter": "The reversal",
+   "notes": [
+    "Group B, the ones who worked it out, scored clearly higher on the test. And they felt they had learned less. Group A, the lecture, learned less, felt they had learned more, and said they wished every physics class were taught that way.",
+    "Smooth made people think they had learned. Struggle made them think they hadn’t. The truth was often the reverse. The researchers’ reading: the extra effort of working it out felt like not learning, when it was actually a sign that learning was happening.",
+    "We see the same thing in our own AI courses. We build in guided mistakes on purpose, and students get frustrated; some decide the course is bad. The smoothest sessions get the warmest reactions, and it is easy to walk out remembering the feeling and not the skill.",
+    "So why would struggle teach more?"
+   ]
+  },
+  {
+   "n": 6,
+   "image": "06.webp",
+   "blocks": [
+    {
+     "text": "Why errors\nteach",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "06",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "The more you get wrong,\nthe more you learn.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "01",
+     "tag": "span",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      325,
+      275,
+      21
+     ]
+    },
+    {
+     "text": "You guess.",
+     "tag": "strong",
+     "fs": 32,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      366,
+      275,
+      38
+     ]
+    },
+    {
+     "text": "02",
+     "tag": "span",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      587,
+      325,
+      275,
+      21
+     ]
+    },
+    {
+     "text": "Reality disagrees.",
+     "tag": "strong",
+     "fs": 32,
+     "fw": 500,
+     "li": false,
+     "box": [
+      587,
+      366,
+      275,
+      38
+     ]
+    },
+    {
+     "text": "03",
+     "tag": "span",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      918,
+      325,
+      275,
+      21
+     ]
+    },
+    {
+     "text": "You ask why.",
+     "tag": "strong",
+     "fs": 32,
+     "fw": 500,
+     "li": false,
+     "box": [
+      918,
+      366,
+      275,
+      38
+     ]
+    },
+    {
+     "text": "04",
+     "tag": "span",
+     "fs": 18,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1249,
+      325,
+      275,
+      21
+     ]
+    },
+    {
+     "text": "Your idea changes.",
+     "tag": "strong",
+     "fs": 32,
+     "fw": 500,
+     "li": false,
+     "box": [
+      1249,
+      366,
+      275,
+      38
+     ]
+    },
+    {
+     "text": "THE CATCH",
+     "tag": "div",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      288,
+      468,
+      1208,
+      24
+     ]
+    },
+    {
+     "text": "An error teaches only when something tells you what went wrong. So smooth learning, with nothing to get wrong, often teaches nothing.",
+     "tag": "p",
+     "fs": 31,
+     "fw": 400,
+     "li": false,
+     "box": [
+      288,
+      507,
+      1208,
+      79
+     ]
+    },
+    {
+     "text": "Trying first, even wrongly, beats just studying the answer · Kornell, Hays & Bjork, 2009 ↗",
+     "tag": "a",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      628,
+      670,
+      28
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://bjorklab.psych.ucla.edu/wp-content/uploads/sites/13/2016/07/Hays_Kornell_RBjork_inpress.pdf",
+     "text": "Trying first, even wrongly, beats just studying the answer · Kornell, Hays & Bjork, 2009 ↗"
+    }
+   ],
+   "title": "The more you get wrong, the more you learn.",
+   "chapter": "Why errors teach",
+   "notes": [
+    "Because learning happens where your idea and reality don’t match.",
+    "You guess. Reality disagrees. You ask why. And the idea in your head actually changes. If you never guessed, there is nothing to disagree with, and nothing changes.",
+    "Psychologists have shown this again and again. Try to answer first, even if you get it wrong, then see the right answer, and it sticks better than if you had simply studied the answer.",
+    "One condition: the error has to come with feedback. Something has to tell you what went wrong. Frustration alone is not learning.",
+    "And if your guess a minute ago was wrong, you will remember this result better than the people who got it right. That is the mechanism, working on you.",
+    "So: the more you get wrong, the more you learn. And smooth learning, with nothing to get wrong, often teaches nothing."
+   ]
+  },
+  {
+   "n": 7,
+   "image": "07.webp",
+   "blocks": [
+    {
+     "text": "The\ndanger",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "07",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "AI is most dangerous\nwhen it’s right.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "A POLISHED LECTURE",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      303,
+      403,
+      144
+     ]
+    },
+    {
+     "text": "You watch someone else think.",
+     "tag": "strong",
+     "fs": 34,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      365,
+      403,
+      82
+     ]
+    },
+    {
+     "text": "A TUTORIAL",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      688,
+      303,
+      403,
+      144
+     ]
+    },
+    {
+     "text": "Someone already made every mistake for you.",
+     "tag": "strong",
+     "fs": 34,
+     "fw": 500,
+     "li": false,
+     "box": [
+      688,
+      365,
+      403,
+      82
+     ]
+    },
+    {
+     "text": "AN AI ANSWER",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1121,
+      303,
+      403,
+      144
+     ]
+    },
+    {
+     "text": "It’s right before you’re even stuck.",
+     "tag": "strong",
+     "fs": 34,
+     "fw": 500,
+     "li": false,
+     "box": [
+      1121,
+      365,
+      403,
+      82
+     ]
+    },
+    {
+     "text": "Each is smoother than the last, and leaves you less chance to be wrong.\nWhen AI is right, you think you learned it too.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      486,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "AI is most dangerous when it’s right.",
+   "chapter": "The danger",
+   "notes": [
+    "Now look at tutorials and AI through this lens.",
+    "A tutorial is polished smoothness. Someone has already tried every step and filled every hole. You follow along, it works the first time, and it feels fast. But you never had a chance to be wrong. I once put it this way: what a tutorial teaches you keeps getting cheaper; what it lets you skip is the most valuable part.",
+    "AI is smoothness taken to the limit. The answer is on the screen before you have started to think. The code runs before you are stuck.",
+    "So the most dangerous moment is not when AI is wrong. It is when AI is right, and you think you have learned it too. That feeling of “I got it” makes you stop. You don’t try it again yourself. You don’t change the problem. The exact place where learning needed to happen gets skipped.",
+    "Here is what that looks like when someone measures it."
+   ]
+  },
+  {
+   "n": 8,
+   "image": "08.webp",
+   "blocks": [
+    {
+     "text": "Measured",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      30
+     ]
+    },
+    {
+     "text": "08",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "The practice got better.\nThe learning got worse.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "+48%",
+     "tag": "strong",
+     "fs": 180,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      331,
+      599,
+      171
+     ]
+    },
+    {
+     "text": "Practice scores\nwith GPT-4 on request",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      520,
+      599,
+      75
+     ]
+    },
+    {
+     "text": "−17%",
+     "tag": "strong",
+     "fs": 180,
+     "fw": 600,
+     "li": false,
+     "box": [
+      925,
+      331,
+      599,
+      171
+     ]
+    },
+    {
+     "text": "Exam scores\nonce GPT-4 was taken away",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      925,
+      520,
+      599,
+      75
+     ]
+    },
+    {
+     "text": "Ted Chiang: it’s like bringing a forklift into the weight room.\nThe weights moved. The muscle didn’t grow.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      625,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "Bastani et al. · PNAS, 2025 · randomized · ~1,000 high-school math students, Turkey · both vs. students without AI ↗",
+     "tag": "a",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      761,
+      886,
+      28
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://doi.org/10.1073/pnas.2422633122",
+     "text": "Bastani et al. · PNAS, 2025 · randomized · ~1,000 high-school math students, Turkey · both vs. students without AI ↗"
+    }
+   ],
+   "title": "The practice got better. The learning got worse.",
+   "chapter": "Measured",
+   "notes": [
+    "A randomized experiment with nearly a thousand high-school math students in Turkey. For several practice sessions, one group could ask GPT-4 anything.",
+    "Their practice scores went up 48 percent. Then came the exam, with no AI for anyone. The students who had practiced with GPT-4 scored 17 percent lower than students who never had it.",
+    "Better practice. Worse learning. In the same students, over the same weeks. And nobody could see it until the AI was taken away.",
+    "One caveat, because I am an economist: these are relative changes, in high-school math, in one country. Not a universal law about AI. And there was a third group in this study; I will come back to it.",
+    "The writer Ted Chiang has the best image for this. Using ChatGPT to write your essays is like bringing a forklift into the weight room. The weights move. The muscle doesn’t grow. And if you are learning AI, be careful: the tool you are learning with is exactly that forklift.",
+    "This is not only a school problem."
+   ]
+  },
+  {
+   "n": 9,
+   "image": "09.webp",
+   "blocks": [
+    {
+     "text": "Same at\nwork",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "09",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "FAKE LEARNING · FAKE WORK",
+     "tag": "div",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      130,
+      715,
+      24
+     ]
+    },
+    {
+     "text": "Both fool your\nsense of progress.",
+     "tag": "h2",
+     "fs": 58,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      174,
+      715,
+      123
+     ]
+    },
+    {
+     "text": "FAKE WORK",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      351,
+      140,
+      20
+     ]
+    },
+    {
+     "text": "Visible activity standing in for value that’s hard to measure.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      416,
+      341,
+      555,
+      66
+     ]
+    },
+    {
+     "text": "FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      448,
+      140,
+      40
+     ]
+    },
+    {
+     "text": "Visible results standing in for growth that’s hard to measure.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      416,
+      438,
+      555,
+      66
+     ]
+    },
+    {
+     "text": "TENCENT",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      545,
+      140,
+      20
+     ]
+    },
+    {
+     "text": "I relayed strategy down and results up. Good at it. Comfortable.\nThen: what progress am I actually making?",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      416,
+      535,
+      555,
+      99
+     ]
+    },
+    {
+     "text": "LESSON",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      675,
+      140,
+      20
+     ]
+    },
+    {
+     "text": "School trains you to satisfy the grader.\nFake learning trains you for fake work.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      416,
+      665,
+      555,
+      66
+     ]
+    },
+    {
+     "text": "Yuzheng Sun",
+     "tag": "strong",
+     "fs": 24,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1053,
+      618,
+      449,
+      28
+     ]
+    },
+    {
+     "text": "PhD in Economics, Cornell · Amazon · Meta · Tencent\nStatsig, later acquired by OpenAI\nFounder, Superlinear Academy",
+     "tag": "span",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1053,
+      654,
+      449,
+      74
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "Fake learning and fake work fool the same thing: your sense of progress.",
+   "chapter": "Same at work",
+   "notes": [
+    "I learned this at work, not in school.",
+    "At Tencent I led a team, and my main job was relaying: translating my boss’s strategy into actions for the team, then reporting the team’s results back up. I was good at it. My boss liked me, my team liked me, and I was comfortable. But I kept asking myself: what progress am I actually making? What value am I creating?",
+    "I call this fake work: visible activity standing in for value that is hard to measure. It is structural. When value is hard to measure, organizations watch progress reports, meetings and decks, so people start producing those. And the worst part is the feeling. A whole day of meetings, you are exhausted, and your brain tells you it was a productive day.",
+    "Fake learning and fake work fool the same thing: your sense of progress.",
+    "And that illusion is trained. In school, teachers and grades tell you what good is. At work, your boss and your KPIs do. After more than a decade of this, what we are best at is satisfying whoever is grading us. We were trained to be insensitive to value.",
+    "So people who come out of fake learning drift naturally into fake work. Not because they don’t try. It is the only kind of trying they were trained for."
+   ]
+  },
+  {
+   "n": 10,
+   "image": "10.webp",
+   "blocks": [
+    {
+     "text": "New grades:\ntools",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "10",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "A new tool feels like progress.\nIt expires in months.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "WHAT YOU COLLECT",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      303,
+      599,
+      250
+     ]
+    },
+    {
+     "text": "A new tool. An automation.\nA finished tutorial.",
+     "tag": "h3",
+     "fs": 42,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      369,
+      599,
+      92
+     ]
+    },
+    {
+     "text": "Visible: screenshot it, post it, put it on your résumé.",
+     "tag": "p",
+     "fs": 27,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      477,
+      599,
+      76
+     ]
+    },
+    {
+     "text": "WHAT STAYS",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      925,
+      303,
+      599,
+      250
+     ]
+    },
+    {
+     "text": "Habits, methods,\nways of thinking.",
+     "tag": "h3",
+     "fs": 42,
+     "fw": 600,
+     "li": false,
+     "box": [
+      925,
+      369,
+      599,
+      92
+     ]
+    },
+    {
+     "text": "Split a fuzzy task into checkable steps. When it fails, find the cause instead of switching tools.",
+     "tag": "p",
+     "fs": 27,
+     "fw": 400,
+     "li": false,
+     "box": [
+      925,
+      477,
+      599,
+      76
+     ]
+    },
+    {
+     "text": "The tool feels most like progress, and expires fastest.\nThe method feels like nothing, and stays with you. Backwards again.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      585,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "A new tool feels like progress. It expires in months.",
+   "chapter": "New grades: tools",
+   "notes": [
+    "In school, the scores were grades. For people learning AI, there are new scores: how many tools you have learned, and how many prototypes you have built.",
+    "Start with tools. Learn a new tool, set up an automation, finish a tutorial: the progress is visible. You can screenshot it, post it, put it on your résumé. But AI tools turn over every few months. Half a year later, many of the buttons and commands you learned are gone.",
+    "What stays is invisible: habits, methods, ways of thinking. You split a fuzzy task into steps you can check. When the result is wrong, you look for the cause instead of switching tools and trying again. You cannot screenshot that. But change the tool, wait a year, change the problem, and it is still there. It passes the test we started with.",
+    "I have trained thousands of people at tech companies, and the pattern is consistent. With the same model, some people decide AI is unreliable, and others turn it into a dependable work system. The difference is not the tool. It is the method.",
+    "So why does everyone collect tools? A tool has a moment when you have “learned it.” A method has no such moment; it grows while you work. The tool feels like the most progress and expires fastest. The method feels like no progress and stays with you. Backwards again."
+   ]
+  },
+  {
+   "n": 11,
+   "image": "11.webp",
+   "blocks": [
+    {
+     "text": "New grades:\nprototypes",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "11",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      71,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "A demo only has to be right at the demo.\nA product has to stay right.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "A PROTOTYPE · ONE AFTERNOON WITH AN AGENT",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      303,
+      562,
+      206
+     ]
+    },
+    {
+     "text": "Clear requirements.\nSimple data.\nOne user: you.",
+     "tag": "h3",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      365,
+      562,
+      144
+     ]
+    },
+    {
+     "text": "A PRODUCT · OTHER PEOPLE",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      878,
+      303,
+      646,
+      206
+     ]
+    },
+    {
+     "text": "Inputs you never imagined.\nData that breaks.\nAnd you’re not in the room.",
+     "tag": "h3",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      878,
+      365,
+      646,
+      144
+     ]
+    },
+    {
+     "text": "Every step from prototype to product is your idea hitting reality.\nMany right decisions don’t exist until you’ve seen the wrong version.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      539,
+      1268,
+      118
+     ]
+    },
+    {
+     "text": "Where real learning lives now: from a tool to a method, from a prototype to a product.",
+     "tag": "p",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      677,
+      1268,
+      31
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "A demo only has to be right at the demo. A product has to stay right.",
+   "chapter": "New grades: prototypes",
+   "notes": [
+    "Now prototypes. With a coding agent, you can build a convincing app in an afternoon. But a prototype is best at the smooth case: clear requirements, simple data, and one user, which is you.",
+    "A product faces other people. They type things you never imagined. The data breaks. The requirements change next month. And when they use it, you are not in the room. As I put it in an essay called “Don’t build”: a demo only has to be right at the moment you show it; a product has to stay right while reality keeps changing.",
+    "Every step from prototype to product is your idea hitting reality. You thought users would do this; they did that. Many of the right decisions simply do not exist until you have seen the wrong version. Every collision is a lesson.",
+    "That is why a prototype feels like such fast progress: it skips exactly the part where you would have learned.",
+    "So in the AI era, real learning lives on two roads: from a tool to a method, and from a prototype to a product."
+   ]
+  },
+  {
+   "n": 12,
+   "image": "12.webp",
+   "blocks": [
+    {
+     "text": "Spotter,\nnot forklift",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "12",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "Same AI. Different design.\nDifferent learning.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "GPT-4 AS FORKLIFT",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      536,
+      319,
+      479,
+      20
+     ]
+    },
+    {
+     "text": "GPT-4 AS SPOTTER",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1045,
+      319,
+      479,
+      20
+     ]
+    },
+    {
+     "text": "How it helped",
+     "tag": "span",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      376,
+      250,
+      28
+     ]
+    },
+    {
+     "text": "Answers on request",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      536,
+      370,
+      479,
+      39
+     ]
+    },
+    {
+     "text": "Hints, not answers",
+     "tag": "p",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1045,
+      370,
+      479,
+      39
+     ]
+    },
+    {
+     "text": "Practice",
+     "tag": "span",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      440,
+      250,
+      50
+     ]
+    },
+    {
+     "text": "with the help",
+     "tag": "small",
+     "fs": 15,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      471,
+      250,
+      19
+     ]
+    },
+    {
+     "text": "+48%",
+     "tag": "strong",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      536,
+      443,
+      479,
+      45
+     ]
+    },
+    {
+     "text": "+127%",
+     "tag": "strong",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1045,
+      443,
+      479,
+      45
+     ]
+    },
+    {
+     "text": "Exam, no AI",
+     "tag": "span",
+     "fs": 22,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      521,
+      250,
+      50
+     ]
+    },
+    {
+     "text": "without it",
+     "tag": "small",
+     "fs": 15,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      553,
+      250,
+      19
+     ]
+    },
+    {
+     "text": "−17%",
+     "tag": "strong",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      536,
+      524,
+      479,
+      45
+     ]
+    },
+    {
+     "text": "No significant loss",
+     "tag": "strong",
+     "fs": 40,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1045,
+      524,
+      479,
+      45
+     ]
+    },
+    {
+     "text": "The difference: a chance to think first, and to be wrong.",
+     "tag": "p",
+     "fs": 36,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      615,
+      1268,
+      50
+     ]
+    },
+    {
+     "text": "Bastani et al. · PNAS, 2025 · tutor version used teacher-supplied solutions and common mistakes ↗",
+     "tag": "a",
+     "fs": 17,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      684,
+      756,
+      28
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://doi.org/10.1073/pnas.2422633122",
+     "text": "Bastani et al. · PNAS, 2025 · tutor version used teacher-supplied solutions and common mistakes ↗"
+    }
+   ],
+   "title": "Same AI. Different design. Different learning.",
+   "chapter": "Spotter, not forklift",
+   "notes": [
+    "So should you use less AI? No. Remember the math study. There was a third group.",
+    "Before I show you, a quick prediction in the chat: same GPT-4, but it only gives hints, never answers. Does the exam loss stay, shrink, or disappear?",
+    "[Pause about ten seconds.]",
+    "Teachers gave that GPT-4 the solutions and the common mistakes, and told it to give hints, not answers. On practice, that group improved even more: 127 percent. And on the exam, the loss essentially disappeared.",
+    "Same AI. Different design. The difference is whether students still got a chance to think first, and to be wrong.",
+    "That is the difference between a forklift and a spotter. A forklift lifts for you. A spotter stands behind you, lets you do the lift, and grabs the bar only when you are about to fail."
+   ]
+  },
+  {
+   "n": 13,
+   "image": "13.webp",
+   "blocks": [
+    {
+     "text": "The hard\npath",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "13",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "Where it counts,\nchoose the hard path.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "FAKE DIFFICULTY · HAND IT TO AI",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      303,
+      606,
+      114
+     ]
+    },
+    {
+     "text": "Setting up environments, tokens, ports.\nBurns willpower. Grows nothing.",
+     "tag": "p",
+     "fs": 26,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      347,
+      606,
+      70
+     ]
+    },
+    {
+     "text": "REAL DIFFICULTY · KEEP IT",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      918,
+      303,
+      606,
+      114
+     ]
+    },
+    {
+     "text": "Is this worth doing? How should it be split?\nIs the result actually good?",
+     "tag": "p",
+     "fs": 26,
+     "fw": 400,
+     "li": false,
+     "box": [
+      918,
+      347,
+      606,
+      70
+     ]
+    },
+    {
+     "text": "01 · GUESS FIRST",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      447,
+      403,
+      116
+     ]
+    },
+    {
+     "text": "Write your plan and where it will break. Then let AI do it.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      498,
+      403,
+      65
+     ]
+    },
+    {
+     "text": "02 · TAKE THE HELP AWAY",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      689,
+      447,
+      403,
+      116
+     ]
+    },
+    {
+     "text": "A day later, redo it without AI, or explain it to someone.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      689,
+      498,
+      403,
+      65
+     ]
+    },
+    {
+     "text": "03 · CHANGE THE PROBLEM",
+     "tag": "div",
+     "fs": 16,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1121,
+      447,
+      403,
+      116
+     ]
+    },
+    {
+     "text": "New data, a new constraint, a different user.",
+     "tag": "p",
+     "fs": 25,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1121,
+      498,
+      403,
+      65
+     ]
+    },
+    {
+     "text": "Slower and harder? That isn’t falling behind. That’s learning happening.",
+     "tag": "p",
+     "fs": 29,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      591,
+      1268,
+      79
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "Where it counts, choose the hard path.",
+   "chapter": "The hard path",
+   "notes": [
+    "Using AI as a spotter means choosing the hard path, at the moments that count.",
+    "Not all difficulty is worth it. Yan, who is speaking with me today, calls things like configuring environments, requesting API tokens and debugging ports fake difficulty. They burn willpower, they give you the feeling of working hard, and they don’t make you any wiser. Hand those to AI without guilt. Keep the real difficulty: is this worth doing, how should it be broken down, and is the result actually good?",
+    "Then three moves.",
+    "One: guess first. Before the agent runs, write down how you would do it and where you expect it to break. Then look at what it did. Being wrong is where the learning is.",
+    "Two: take the help away. A day or two later, close the AI and do it again, or explain it to someone. Wherever you get stuck is what you haven’t learned yet.",
+    "Three: change the problem. New data, a new constraint, a different user. See if you can still do it.",
+    "The first move gives you the chance to be wrong. The other two test whether you learned: without the help, later, on a new problem.",
+    "It will feel slower and harder. That is not falling behind. That is what learning feels like from the inside."
+   ]
+  },
+  {
+   "n": 14,
+   "image": "14.webp",
+   "blocks": [
+    {
+     "text": "What still\nproves you",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "14",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "When anyone can make beautiful work,\nthe work stops proving anything.",
+     "tag": "h2",
+     "fs": 65,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      130,
+      1268,
+      138
+     ]
+    },
+    {
+     "text": "WHAT YOU CAN SHOW",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      316,
+      500,
+      20
+     ]
+    },
+    {
+     "text": "USED TO SIGNAL",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      780,
+      316,
+      400,
+      20
+     ]
+    },
+    {
+     "text": "NOW COSTS",
+     "tag": "span",
+     "fs": 17,
+     "fw": 700,
+     "li": false,
+     "box": [
+      1204,
+      316,
+      320,
+      20
+     ]
+    },
+    {
+     "text": "A polished essay",
+     "tag": "strong",
+     "fs": 31,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      366,
+      500,
+      36
+     ]
+    },
+    {
+     "text": "You can write.",
+     "tag": "span",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      780,
+      368,
+      400,
+      32
+     ]
+    },
+    {
+     "text": "A prompt.",
+     "tag": "b",
+     "fs": 31,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1204,
+      366,
+      320,
+      36
+     ]
+    },
+    {
+     "text": "Code that passes the tests",
+     "tag": "strong",
+     "fs": 31,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      437,
+      500,
+      36
+     ]
+    },
+    {
+     "text": "You can code.",
+     "tag": "span",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      780,
+      439,
+      400,
+      32
+     ]
+    },
+    {
+     "text": "An agent run.",
+     "tag": "b",
+     "fs": 31,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1204,
+      437,
+      320,
+      36
+     ]
+    },
+    {
+     "text": "A GitHub full of projects",
+     "tag": "strong",
+     "fs": 31,
+     "fw": 500,
+     "li": false,
+     "box": [
+      256,
+      508,
+      500,
+      36
+     ]
+    },
+    {
+     "text": "You can build.",
+     "tag": "span",
+     "fs": 28,
+     "fw": 400,
+     "li": false,
+     "box": [
+      780,
+      510,
+      400,
+      32
+     ]
+    },
+    {
+     "text": "A weekend.",
+     "tag": "b",
+     "fs": 31,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1204,
+      508,
+      320,
+      36
+     ]
+    },
+    {
+     "text": "MY PREDICTION",
+     "tag": "span",
+     "fs": 18,
+     "fw": 700,
+     "li": false,
+     "box": [
+      288,
+      627,
+      230,
+      21
+     ]
+    },
+    {
+     "text": "Fake learning booms first. Then it stops paying.",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      546,
+      616,
+      950,
+      43
+     ]
+    },
+    {
+     "text": "What still proves you: what you can do once the help is gone.",
+     "tag": "p",
+     "fs": 24,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      702,
+      1268,
+      34
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [],
+   "title": "When anyone can make beautiful work, the work stops proving anything.",
+   "chapter": "What still proves you",
+   "notes": [
+    "Now the economics. Michael Spence won a Nobel prize for an idea you already understand: a signal only works when it is hard to fake.",
+    "A polished essay used to show you could write. Code that passes the tests showed you could code. A GitHub full of projects showed you could build. Today each of those costs a prompt, an agent run, or a weekend.",
+    "So here is my prediction, and it is a prediction, not a measured fact. Fake learning booms first: it has never been cheaper to produce the result. Then it stops paying. When every applicant has ten polished AI projects, the projects stop telling anyone apart. The same will happen to fake work: first an explosion, then a collapse in its value.",
+    "What will still prove you is what you can do once the help is gone. Expect interviewers to stop asking what you built, and start asking why you built it that way, what broke, and what you would change."
+   ]
+  },
+  {
+   "n": 15,
+   "image": "15.webp",
+   "blocks": [
+    {
+     "text": "What\nends",
+     "tag": "div",
+     "fs": 24,
+     "fw": 500,
+     "li": false,
+     "box": [
+      28,
+      323,
+      138,
+      60
+     ]
+    },
+    {
+     "text": "15",
+     "tag": "div",
+     "fs": 82,
+     "fw": 400,
+     "li": false,
+     "box": [
+      30,
+      715,
+      77,
+      94
+     ]
+    },
+    {
+     "text": "THE END OF FAKE LEARNING",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      47,
+      287,
+      20
+     ]
+    },
+    {
+     "text": "COLUMBIA · OCT 02, 2026",
+     "tag": "span",
+     "fs": 17,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1272,
+      47,
+      252,
+      20
+     ]
+    },
+    {
+     "text": "NOT GRADES. NOT TUTORIALS.",
+     "tag": "div",
+     "fs": 19,
+     "fw": 700,
+     "li": false,
+     "box": [
+      256,
+      122,
+      1268,
+      27
+     ]
+    },
+    {
+     "text": "What ends is\na misunderstanding.",
+     "tag": "h2",
+     "fs": 71,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      169,
+      1268,
+      151
+     ]
+    },
+    {
+     "text": "Mistaking “I made it” for “I learned it.”",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      354,
+      1268,
+      81
+     ]
+    },
+    {
+     "text": "Mistaking smooth for progress.",
+     "tag": "p",
+     "fs": 34,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      435,
+      1268,
+      81
+     ]
+    },
+    {
+     "text": "Something you learned with AI this month:\nclose the AI, change the problem. Can you still do it?",
+     "tag": "p",
+     "fs": 40,
+     "fw": 400,
+     "li": false,
+     "box": [
+      256,
+      555,
+      1268,
+      98
+     ]
+    },
+    {
+     "text": "LEARN REAL SKILLS. MAKE REAL THINGS.",
+     "tag": "span",
+     "fs": 18,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      702,
+      430,
+      21
+     ]
+    },
+    {
+     "text": "lizheng.ai ↗",
+     "tag": "a",
+     "fs": 21,
+     "fw": 400,
+     "li": false,
+     "box": [
+      1408,
+      698,
+      116,
+      29
+     ]
+    },
+    {
+     "text": "YUZHENG SUN",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      256,
+      849,
+      125,
+      17
+     ]
+    },
+    {
+     "text": "SUPERLINEAR ACADEMY",
+     "tag": "span",
+     "fs": 15,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1310,
+      849,
+      214,
+      17
+     ]
+    }
+   ],
+   "links": [
+    {
+     "href": "https://www.lizheng.ai/",
+     "text": "lizheng.ai ↗"
+    }
+   ],
+   "title": "What ends is a misunderstanding.",
+   "chapter": "What ends",
+   "notes": [
+    "So what ends? Not grades, certificates or tutorials. They will stay, and they are still useful. What ends is a misunderstanding: mistaking “I made it” for “I learned it,” and mistaking smooth for progress.",
+    "For anyone who actually wants to learn, this is good news. A spotter who is always available, endlessly patient, and able to see where your thinking went wrong used to be almost impossible to find. Now it is on your laptop. The only question is whether you let it lift for you, or have it watch you lift.",
+    "You may have noticed that twice today, I asked you to guess before showing you the result. The guesses that were wrong are the ones you will remember.",
+    "So one question to take with you. Something you learned with AI this month: close the AI, change the problem. Can you still do it?",
+    "Learn real skills. Make real things. Thank you."
+   ]
+  }
+ ]
+}

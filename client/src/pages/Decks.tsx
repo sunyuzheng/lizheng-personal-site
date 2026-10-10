@@ -56,6 +56,8 @@ const copy = {
     noResults: "No deck matches that search.",
     clear: "Clear filters",
     openDeck: "Open deck",
+    readOnline: "Read online",
+    playSlides: "Play slides",
     watchReplay: "Watch replay",
     source: "Source",
     publicCutPending: "Public cut in progress",
@@ -88,6 +90,8 @@ const copy = {
     noResults: "没有找到符合条件的材料。",
     clear: "清除筛选",
     openDeck: "打开课件",
+    readOnline: "看网页版",
+    playSlides: "播放幻灯片",
     watchReplay: "看完整实录",
     source: "查看源码",
     publicCutPending: "公开版整理中",
@@ -208,7 +212,11 @@ function DeckCard({ deck: originalDeck }: { deck: DeckEntry }) {
 
   return (
     <article className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.035] p-3 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.055]">
-      {deck.href ? (
+      {deck.page ? (
+        <a href={deck.page} className="block">
+          <DeckCover deck={deck} />
+        </a>
+      ) : deck.href ? (
         <a
           href={deck.href}
           target="_blank"
@@ -248,7 +256,28 @@ function DeckCard({ deck: originalDeck }: { deck: DeckEntry }) {
         </p>
 
         <div className="mt-auto flex flex-wrap items-center gap-4 pt-6">
-          {deck.href ? (
+          {deck.page ? (
+            <>
+              <a
+                href={deck.page}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition hover:text-white"
+              >
+                {t.readOnline}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+              {deck.href ? (
+                <a
+                  href={deck.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-300 transition hover:text-white"
+                >
+                  {t.playSlides}
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              ) : null}
+            </>
+          ) : deck.href ? (
             <a
               href={deck.href}
               target="_blank"
@@ -264,7 +293,15 @@ function DeckCard({ deck: originalDeck }: { deck: DeckEntry }) {
               <FileClock className="h-3.5 w-3.5" />
             </span>
           )}
-          {deck.alternateEdition ? (
+          {deck.alternateEdition?.page ? (
+            <a
+              href={deck.alternateEdition.page}
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-300 transition hover:text-white"
+            >
+              {deck.alternateEdition.language === "zh" ? t.zhDeck : t.enDeck}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          ) : deck.alternateEdition ? (
             <a
               href={deck.alternateEdition.href}
               target="_blank"

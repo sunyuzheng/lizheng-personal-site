@@ -31,6 +31,10 @@
 - 腾讯IEG AI Intensive Bootcamp：是一份每页标着 Confidential 的培训方案PDF。
 - 只有回放或还在整理的几张卡（Pinterest、美团、小红书、腾讯IEG战略分析、TSVC×网易新闻）。
 
+## 精做版
+
+《假学习的终结》中英文两页（`/decks/fake-work-fake-learning`、`/zh`）不用自动版，用 `scripts/decks/fake-learning-feature.ts` 手写的版本：讲稿当正文，幻灯片上的表格和数字直接画在网页上，两处“先猜”可以点选，引用是编号注释。正文取自 deck 的讲稿和幻灯片，只改了“在聊天框里写A或B”这类现场用语；**这份文字在网站仓库里**，演讲改了要在这里同步改。`scripts/deck-pages.ts` 的 `FEATURES` 列出哪些地址用精做版；截图和 `pages/` 里的文件仍然照常读，用于分享图和检查。
+
 ## 重新读一套或全部
 
 ```

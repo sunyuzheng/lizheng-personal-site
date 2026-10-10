@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { deckSitemapUrls, writeDeckPages } from "../scripts/deck-pages.ts";
+import { FEATURES, deckSitemapUrls, writeDeckPages } from "../scripts/deck-pages.ts";
 import { DECK_LIBRARY } from "../shared/deck-index.ts";
 
 const ROOT = path.resolve(__dirname, "..");
@@ -28,7 +28,9 @@ describe("deck web versions", () => {
     const capture = JSON.parse(fs.readFileSync(path.join(ROOT, "content", "decks", "pages", `${fileOf(page)}.json`), "utf-8"));
     expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
     expect(html).toContain(`<link rel="canonical" href="https://www.lizheng.ai${page}">`);
-    expect(html.match(/<section class="slide /g)).toHaveLength(capture.slides.length);
+    // A hand-built page (scripts/decks/) opens with the first slide as its introduction.
+    const feature = FEATURES.has(page);
+    expect(html.match(/<section class="slide[ "]/g)).toHaveLength(feature ? capture.slides.length - 1 : capture.slides.length);
     for (const slide of capture.slides) {
       expect(fs.existsSync(path.join(ROOT, "client", "public", "deck-slides", fileOf(page), slide.image))).toBe(true);
     }
@@ -38,7 +40,7 @@ describe("deck web versions", () => {
     }
     // Speaker notes appear only for the decks listed with `notes` in sources.json.
     const withNotes = capture.slides.some((s: { notes: string[] }) => s.notes.length);
-    expect(html.includes('class="script-label"')).toBe(withNotes);
+    if (!feature) expect(html.includes('class="script-label"')).toBe(withNotes);
   });
 
   it("no route in vercel.json sends a web version away to a deck origin", () => {

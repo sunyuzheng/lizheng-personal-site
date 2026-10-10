@@ -13,6 +13,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SEAL } from "../shared/ask-seal.ts";
+import { fakeLearningCitations, renderFakeLearningFeature } from "./decks/fake-learning-feature.ts";
 import {
   DECK_LIBRARY,
   deckForLanguage,
@@ -514,6 +515,9 @@ function renderRelated(page: DeckPage, pages: DeckPage[]): string {
   return `<section class="related" aria-labelledby="related-title"><h2 id="related-title">${t.related}</h2><ul>${items.join("")}</ul></section>`;
 }
 
+/** Decks whose web version is written by hand (scripts/decks/) instead of generated from the slides. */
+export const FEATURES = new Set(["/decks/fake-work-fake-learning", "/decks/fake-work-fake-learning/zh"]);
+
 function jsonLd(page: DeckPage, pages: DeckPage[]) {
   const card = page.card;
   const url = `${SITE_URL}${page.path}`;
@@ -540,6 +544,13 @@ function jsonLd(page: DeckPage, pages: DeckPage[]) {
     isPartOf: { "@id": `${SITE_URL}${page.lang === "en" ? "/en/decks" : "/decks"}#webpage` },
     ...(card.href ? { associatedMedia: { "@type": "MediaObject", name: t.play, contentUrl: card.href, encodingFormat: "text/html" } } : {}),
   };
+  if (FEATURES.has(page.path)) {
+    // The hand-built page is an article written from the talk; the slides are what it is based on.
+    document["@type"] = "Article";
+    document.isBasedOn = { "@type": "PresentationDigitalDocument", name: card.title, url: card.href };
+    document.citation = fakeLearningCitations();
+    delete document.associatedMedia;
+  }
   if (alternate) {
     const originalLanguage = DECK_LIBRARY.find(d => d.id === card.id)?.language;
     if (originalLanguage === page.lang) document.workTranslation = { "@id": `${SITE_URL}${alternate.path}#deck` };
@@ -684,7 +695,18 @@ export function writeDeckPages(dist: string): number {
   for (const page of pages) {
     const directory = path.join(dist, ...page.path.split("/").filter(Boolean));
     fs.mkdirSync(directory, { recursive: true });
-    fs.writeFileSync(path.join(directory, "index.html"), renderPage(page, pages), "utf-8");
+    const html = FEATURES.has(page.path)
+      ? renderFakeLearningFeature({
+          lang: page.lang,
+          url: `${SITE_URL}${page.path}`,
+          alternatePath: page.alternate?.path ?? "/decks",
+          slides: slidesHref(page.card) ?? page.path,
+          description: localized(page.card.takeaway, page.lang),
+          jsonLd: jsonLd(page, pages),
+          image: `${SITE_URL}/deck-slides/${page.file}/og.jpg`,
+        })
+      : renderPage(page, pages);
+    fs.writeFileSync(path.join(directory, "index.html"), html, "utf-8");
   }
   return pages.length;
 }

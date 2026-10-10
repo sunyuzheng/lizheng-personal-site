@@ -100,6 +100,9 @@ function joinLines(text: string): string {
     }, "");
 }
 
+/** "结果 与过程" (a label's line break read as a space) → "结果与过程". */
+const tightenCjk = (text: string) => text.replace(new RegExp(`(?<=${CJK.source}) (?=${CJK.source})`, "g"), "");
+
 const norm = (text: string) => text.toLowerCase().replace(/[\s\p{P}\p{S}]+/gu, "");
 
 function nearlySame(a: string, b: string): boolean {
@@ -176,7 +179,7 @@ function readSlides(capture: Capture): Slide[] {
     const titleSize = titleAt >= 0 ? blocks[titleAt].fs : 40;
 
     // Small labels above the title: keep the nearest as the kicker, drop the numbering.
-    let kicker = slide.chapter ? joinLines(slide.chapter) : "";
+    let kicker = slide.chapter ? tightenCjk(joinLines(slide.chapter)) : "";
     if (titleAt > 0) {
       const before = blocks.slice(0, titleAt);
       const small = before.every(b => joinLines(b.text).length <= 36);
@@ -214,9 +217,10 @@ function readSlides(capture: Capture): Slide[] {
       image: slide.image,
       title: title || (capture.language === "zh" ? `第${slide.n}页` : `Slide ${slide.n}`),
       kicker,
-      chapter: slide.chapter ? joinLines(slide.chapter) : "",
+      chapter: slide.chapter ? tightenCjk(joinLines(slide.chapter)) : "",
       lines,
-      notes: slide.notes,
+      // A paragraph that is only a bracketed cue ("[Pause about ten seconds.]") is for the speaker.
+      notes: slide.notes.filter(p => !/^\s*[[［【][^\]］】]*[\]］】]\s*$/.test(p)),
       links: slide.links.filter(link => !/^https?:\/\/(www\.)?lizheng\.ai\/?$/.test(link.href)),
     };
   });

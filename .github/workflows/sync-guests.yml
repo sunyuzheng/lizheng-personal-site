@@ -68,6 +68,9 @@ jobs:
           git add shared/guest-catalog-snapshot.ts shared/guest-catalog-pin.json
           if git diff --cached --quiet; then exit 0; fi
           test -z "$(git status --porcelain --untracked-files=no -- . ':!shared/guest-catalog-snapshot.ts' ':!shared/guest-catalog-pin.json')"
-          git -c user.name="Yuzheng Sun" -c user.email="sunyuzheng@gmail.com" commit --quiet -m "Sync guest catalog to Open Context ${COMMIT:0:7}" -m "Automated by .github/workflows/sync-guests.yml."
+          # The owner authors and commits, also when the commit is replayed onto a newer main.
+          git config user.name "Yuzheng Sun"
+          git config user.email "sunyuzheng@gmail.com"
+          git commit --quiet -m "Sync guest catalog to Open Context ${COMMIT:0:7}" -m "Automated by .github/workflows/sync-guests.yml."
           git pull --quiet --rebase origin main
           git push --quiet origin HEAD:main

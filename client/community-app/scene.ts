@@ -1,10 +1,11 @@
 /**
  * What both community pages draw from the decoded data: every member's light
  * (size from connections, brightness from activity), every line's tie and
- * brightness, and a grid for finding the light under the pointer. Used by the
- * full page (main.ts) and the homepage window (embed.ts).
+ * brightness, which lights and lines brighten around one person, and a grid
+ * for finding the light under the pointer. Used by the full page (main.ts)
+ * and the homepage window (embed.ts).
  */
-import type { Community } from "./data";
+import { otherOf, type Community } from "./data";
 import type { Scene } from "./renderer";
 
 /** A small deterministic hash for per-member variety. */
@@ -73,6 +74,25 @@ export function buildScene(c: Community): Scene {
     edgeWeight,
     edgeFirst,
   };
+}
+
+/**
+ * The lights and lines to brighten around one person (-1 for none): the
+ * person at 2, the people they are linked with at 1, and their lines at
+ * `line` (2 while they are looked at, 1 while pointed at).
+ */
+export function highlightAround(c: Community, member: number, line: 1 | 2) {
+  const nodes = new Map<number, number>();
+  const edges = new Map<number, number>();
+  if (member < 0) return { nodes, edges };
+  nodes.set(member, 2);
+  for (let k = c.offsets[member]; k < c.offsets[member + 1]; k++) {
+    const pair = c.adjacency[k];
+    edges.set(pair, line);
+    const other = otherOf(c, pair, member);
+    if (!nodes.has(other)) nodes.set(other, 1);
+  }
+  return { nodes, edges };
 }
 
 /** A grid over world space for finding the light under the pointer. */

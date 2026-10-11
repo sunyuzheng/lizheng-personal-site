@@ -94,7 +94,7 @@ pnpm build        # 本地构建（Vite + 预渲染嘉宾页和合作页）
 ./deploy.sh       # 只检查、构建并推送已经审阅和提交的 main
 ```
 
-**Vercel 环境变量**：纯静态页面不需要。问问立正用的见 `docs/ask-lizheng.md`，社区地图用的见 `docs/community-city.md`。
+**Vercel 环境变量**：纯静态页面不需要。问问立正用的见 `docs/ask-lizheng.md`，社区地图用的见 `docs/community-graph.md`。
 
 ---
 

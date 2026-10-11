@@ -21,7 +21,9 @@ import { Phrases } from "./parts";
  * into view the lights come on from the centre outwards; after that a slow
  * wave and a wandering light keep the city alive without asking for attention.
  *
- * Data contract, produced by scripts/build-community-city.ts:
+ * It is the fallback where the window onto city.lizheng.ai (CityWindow)
+ * cannot be drawn. Data contract, produced with the city's data by
+ * scripts/build-community-graph.ts (scripts/community/city.ts):
  * - `heat[i]` is a digit 0–9 for member i (members sorted most active first);
  * - `linked[i]` is member i's public profile id ("" when unknown);
  * - `names[i]` is member i's display name ("" when unknown);
@@ -41,11 +43,10 @@ export interface CityData {
   joined?: number[];
   posts?: number[];
   comments?: number[];
-  demo?: boolean;
 }
 
-// Published once a month by .github/workflows/community-city.yml (see
-// docs/community-city.md). The dev server reads the local snapshot instead.
+// Published every day by .github/workflows/community-city.yml (see
+// docs/community-graph.md). The dev server reads the local file instead.
 const CITY_DATA_URL =
   "https://kwicxc1px65aokwa.public.blob.vercel-storage.com/community/city.json";
 // Vite sets import.meta.env; the prerender runs under tsx, where it is absent.
@@ -870,11 +871,7 @@ export default function CityField({
               </>
             )}
             {data && (
-              <small>
-                {data.demo
-                  ? copy.demo
-                  : copy.updated(formatDate(data.generatedAt, lang))}
-              </small>
+              <small>{copy.updated(formatDate(data.generatedAt, lang))}</small>
             )}
           </p>
         </div>

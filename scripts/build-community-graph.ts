@@ -1,11 +1,16 @@
 /**
- * Builds the data for city.lizheng.ai: every Superlinear Academy member,
- * and a line between two members wherever one has commented on, replied to or
- * liked the other's post or comment (docs/community-graph.md).
+ * Builds the community data, read from Circle once a day
+ * (docs/community-graph.md):
+ * - graph.json and a picture sheet for city.lizheng.ai and the homepage
+ *   window onto it: every Superlinear Academy member, and a line between two
+ *   members wherever one has commented on, replied to or liked the other's
+ *   post or comment;
+ * - city.json for the homepage's dot map, the fallback where the city cannot
+ *   be drawn: the same members, most active first.
  *
  *   pnpm community:graph --fetch-only        # refresh the local caches only
- *   pnpm community:graph                     # caches → graph, written locally
- *   pnpm community:graph --upload            # … then publish it to Vercel Blob
+ *   pnpm community:graph                     # caches → files, written locally
+ *   pnpm community:graph --upload            # … then publish them to Vercel Blob
  *
  * Caches live in --cache-dir (default tmp/community-graph, git-ignored):
  * members.json (read in full from the Admin API about once a week, topped up
@@ -15,30 +20,33 @@
  * circle-data-analytics exports first so a new cache need not reread
  * history), and avatars/ (one small square per profile picture).
  *
- * --min-age-days=N skips the run (no Circle requests) while the published
- * graph is younger than N days, as the homepage map's build does.
- *
  * Reads CIRCLE_ADMIN_API, CIRCLE_DATA_API and, for --upload,
  * BLOB_READ_WRITE_TOKEN from the environment, .env or .env.local. The Data
  * API is separate from the Admin API's monthly cap; it allows 600 requests a
  * minute and returns 2,000 events per request.
  */
-import { BlobNotFoundError, head, put } from "@vercel/blob";
 import fs from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
 import { buildAtlas } from "./community/avatars";
+import {
+  BLOB_DIR,
+  publishFile,
+  publishJson,
+  readPublished,
+  removeOthers,
+} from "./community/blob";
 import {
   fetchMembers,
   fetchNewMembers,
   InteractionCache,
   type MemberRecord,
 } from "./community/circle";
+import { toCityFile, type CityFile } from "./community/city";
 import { buildGraph, ringLayout, type Built } from "./community/graph";
 import { toGraphFile, type GraphFile } from "./community/output";
 
 const DAY = 24 * 60 * 60 * 1000;
-const BLOB_DIR = "community";
 
 const args = new Map(
   process.argv.slice(2).map(arg => {
@@ -154,108 +162,70 @@ function avatarCandidates(built: Built, joinOrder: number[]) {
     .map(({ i, member }) => ({ index: pageIndex[i], avatar: member.avatar }));
 }
 
-function write(file: GraphFile) {
-  const json = JSON.stringify(file);
+function write(name: string, data: unknown) {
+  const json = JSON.stringify(data);
   fs.mkdirSync(outDir, { recursive: true });
-  fs.writeFileSync(path.join(outDir, "graph.json"), json);
+  fs.writeFileSync(path.join(outDir, name), json);
   const compressed = zlib.brotliCompressSync(Buffer.from(json)).length;
   console.log(
-    `Wrote ${path.relative(process.cwd(), path.join(outDir, "graph.json"))} (${(Buffer.byteLength(json) / 1024).toFixed(0)} KB, ${(compressed / 1024).toFixed(0)} KB compressed)`
+    `Wrote ${path.relative(process.cwd(), path.join(outDir, name))} (${(Buffer.byteLength(json) / 1024).toFixed(0)} KB, ${(compressed / 1024).toFixed(0)} KB compressed)`
   );
   return json;
 }
 
-// Publishes the picture sheet first (under a new name each time, so a cached
-// page never pairs new data with an old sheet), then the graph, refusing a
-// graph much smaller than the one online, and reads the graph back.
-async function publish(json: string, file: GraphFile) {
+/**
+ * Publishes the picture sheet first (under a new name whenever it changes,
+ * so a cached page never pairs new data with an old sheet), then the graph
+ * and the dot map's file, refusing data much smaller than what is online.
+ * Sheets older than the one just replaced are deleted.
+ */
+async function publish(
+  graph: { json: string; file: GraphFile },
+  city: { json: string; file: CityFile }
+) {
   const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
   if (!token) throw new Error("Set BLOB_READ_WRITE_TOKEN to upload.");
   const graphPath = `${BLOB_DIR}/graph.json`;
-  try {
-    const current = await head(graphPath, { token });
-    const online = (await (
-      await fetch(`${current.url}?check=${Date.now()}`)
-    ).json()) as GraphFile;
-    const shrank =
-      file.count < online.count * 0.9 ||
-      file.pairs.b.length < online.pairs.b.length * 0.9;
-    if (shrank && !args.has("force")) {
-      throw new Error(
-        `New data has ${file.count} members and ${file.pairs.b.length} pairs; online has ${online.count} and ${online.pairs.b.length}. Use --force if this is right.`
-      );
-    }
-  } catch (error) {
-    if (!(error instanceof BlobNotFoundError)) throw error;
-  }
-  if (file.avatars) {
-    await put(
-      `${BLOB_DIR}/${file.avatars.file}`,
-      fs.readFileSync(path.join(outDir, file.avatars.file)),
-      {
-        access: "public",
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        contentType: "image/webp",
-        cacheControlMaxAge: 31536000,
-        token,
-      }
+  const cityPath = `${BLOB_DIR}/city.json`;
+  const online = await readPublished<GraphFile>(graphPath, token);
+  const { file } = graph;
+  if (
+    online &&
+    !args.has("force") &&
+    (file.count < online.count * 0.9 ||
+      file.pairs.b.length < online.pairs.b.length * 0.9)
+  ) {
+    throw new Error(
+      `New data has ${file.count} members and ${file.pairs.b.length} pairs; online has ${online.count} and ${online.pairs.b.length}. Use --force if this is right.`
     );
   }
-  const blob = await put(graphPath, json, {
-    access: "public",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: "application/json",
-    cacheControlMaxAge: 3600,
-    token,
-  });
-  // An overwrite can take up to a minute to reach the CDN.
-  for (let attempt = 0; attempt < 8; attempt++) {
-    if (attempt) await new Promise(resolve => setTimeout(resolve, 15000));
-    const published = (await (
-      await fetch(`${blob.url}?check=${Date.now()}`)
-    ).json()) as GraphFile;
-    if (
-      published.count === file.count &&
-      published.generatedAt === file.generatedAt
-    ) {
-      console.log(`Published ${blob.url}`);
-      return;
-    }
+  if (file.avatars) {
+    await publishFile(
+      `${BLOB_DIR}/${file.avatars.file}`,
+      fs.readFileSync(path.join(outDir, file.avatars.file)),
+      "image/webp",
+      token
+    );
   }
-  throw new Error(
-    `Uploaded, but ${blob.url} still shows the old data after two minutes.`
-  );
-}
-
-// Days since the published graph was generated (Infinity if none yet).
-async function publishedAgeDays() {
-  const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
-  if (!token) throw new Error("Set BLOB_READ_WRITE_TOKEN to check the age.");
-  try {
-    const current = await head(`${BLOB_DIR}/graph.json`, { token });
-    const online = (await (
-      await fetch(`${current.url}?check=${Date.now()}`)
-    ).json()) as GraphFile;
-    return (Date.now() - Date.parse(`${online.generatedAt}T00:00:00Z`)) / DAY;
-  } catch (error) {
-    if (error instanceof BlobNotFoundError) return Infinity;
-    throw error;
+  const sameAs =
+    (made: { count: number; generatedAt: string }) =>
+    (published: { count: number; generatedAt: string }) =>
+      published.count === made.count &&
+      published.generatedAt === made.generatedAt;
+  await publishJson(graphPath, graph.json, token, sameAs(file));
+  await publishJson(cityPath, city.json, token, sameAs(city.file));
+  // Pages that loaded the previous graph within the hour may still ask for
+  // its sheet, so that one stays until the next run.
+  const keep = [file.avatars?.file, online?.avatars?.file]
+    .filter(Boolean)
+    .map(name => `${BLOB_DIR}/${name}`);
+  if (keep.length) {
+    const removed = await removeOthers(`${BLOB_DIR}/avatars-`, keep, token);
+    if (removed) console.log(`Removed ${removed} older picture sheets`);
   }
 }
 
 async function main() {
-  const minAgeDays = Number(args.get("min-age-days") ?? 0);
-  if (minAgeDays > 0) {
-    const age = await publishedAgeDays();
-    if (age < minAgeDays) {
-      console.log(
-        `Published graph is ${age.toFixed(1)} days old (< ${minAgeDays}). Skipping.`
-      );
-      return;
-    }
-  }
   const members = await loadMembers();
   const interactions = await loadInteractions();
   if (args.has("fetch-only")) return;
@@ -278,8 +248,13 @@ async function main() {
     });
     if (atlas) file.avatars = atlas;
   }
-  const json = write(file);
-  if (args.has("upload")) await publish(json, file);
+  const city = toCityFile(members, now);
+  // The two files describe the same members on the same day.
+  city.generatedAt = file.generatedAt;
+  const graphJson = write("graph.json", file);
+  const cityJson = write("city.json", city);
+  if (args.has("upload"))
+    await publish({ json: graphJson, file }, { json: cityJson, file: city });
 }
 
 main().catch(error => {

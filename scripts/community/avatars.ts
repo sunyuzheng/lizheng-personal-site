@@ -2,7 +2,7 @@
  * Profile pictures for the connection map, packed into one image (an atlas):
  * the page draws faces from it once you zoom in, and the person panel uses the
  * same image, so the page never fetches pictures one by one from Circle.
- * Pictures are cached by URL between runs, so a monthly build only downloads
+ * Pictures are cached by URL between runs, so a daily build only downloads
  * the new ones.
  */
 import crypto from "node:crypto";

@@ -591,10 +591,6 @@ export class Renderer {
     this.atlasGrid = { columns, rows };
   }
 
-  get hasAtlas() {
-    return this.atlas !== null;
-  }
-
   private ensureTarget(width: number, height: number) {
     if (
       this.target.width === width &&

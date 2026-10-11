@@ -1,10 +1,10 @@
 name: Community map data
 
-# Refreshes both community maps every day, published to Vercel Blob; the
-# pages read the files at runtime, so no deploy is needed.
-# - city.lizheng.ai (docs/community-graph.md): members from the Circle Admin
-#   API, likes and comments from the Circle Data API.
-# - The homepage map (docs/community-city.md): reuses the same member list.
+# Refreshes the community data every day (docs/community-graph.md): members
+# from the Circle Admin API, likes and comments from the Circle Data API,
+# written as graph.json (city.lizheng.ai and the homepage window) and
+# city.json (the homepage's fallback dot map) on Vercel Blob. The pages read
+# the files at runtime, so no deploy is needed.
 on:
   schedule:
     # 02:00 UTC every day (10:00 in Beijing).
@@ -49,19 +49,9 @@ jobs:
       # Admin API: usually 1 request, about 255 once a week (stops before
       # starting if more than 300 are needed). Data API: about 850 requests,
       # a separate allowance of 600 a minute.
-      - name: Connection map (city.lizheng.ai)
+      - name: Build and publish
         run: pnpm community:graph --upload --max-admin-requests=300
         env:
           CIRCLE_ADMIN_API: ${{ secrets.CIRCLE_ADMIN_API }}
           CIRCLE_DATA_API: ${{ secrets.CIRCLE_DATA_API }}
-          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
-
-      # Reuses the member list above; reads Circle itself (about 250
-      # requests) only if that list is missing or old.
-      - name: Homepage map
-        run: >-
-          pnpm community:city --upload --max-requests=300
-          --members-file=tmp/community-graph/members.json
-        env:
-          CIRCLE_ADMIN_API: ${{ secrets.CIRCLE_ADMIN_API }}
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}

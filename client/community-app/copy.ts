@@ -31,8 +31,10 @@ export interface Copy {
   hint: string;
   /** On touch screens, where a first tap zooms in. */
   hintTouch: string;
-  rotateHint: string;
   zoom: { label: string; in: string; out: string; all: string };
+  /** Names for the time slider and the legend, for screen readers. */
+  timeline: string;
+  legend: string;
   sheet: { collapse: string; expand: string };
   month: (year: number, month: number) => string;
   ringLabel: (year: number, month: number) => string;
@@ -40,7 +42,6 @@ export interface Copy {
   play: string;
   pause: string;
   replay: string;
-  skip: string;
   find: {
     label: string;
     placeholder: string;
@@ -89,8 +90,9 @@ const zh: Copy = {
   rings: "越靠中间，来得越早",
   hint: "点一盏灯，看TA和谁连着",
   hintTouch: "点一下放大，再点一盏灯，看TA和谁连着",
-  rotateHint: "按住右键或Shift拖动，可以转动这座城",
   zoom: { label: "缩放", in: "放大", out: "缩小", all: "全城" },
+  timeline: "时间",
+  legend: "图例",
   sheet: { collapse: "收起", expand: "展开" },
   month: (year, month) => `${year}年${month}月`,
   ringLabel: (year, month) =>
@@ -99,7 +101,6 @@ const zh: Copy = {
   play: "播放",
   pause: "暂停",
   replay: "重播",
-  skip: "跳过",
   find: {
     label: "按名字找一位成员",
     placeholder: "找一个人",
@@ -161,8 +162,9 @@ const en: Copy = {
   rings: "Earlier members sit nearer the middle",
   hint: "Click a light to see who they're connected to",
   hintTouch: "Tap to zoom in, then tap a light to see who they're connected to",
-  rotateHint: "Right-drag or Shift-drag to turn the city",
   zoom: { label: "Zoom", in: "Zoom in", out: "Zoom out", all: "Whole city" },
+  timeline: "Time",
+  legend: "Legend",
   sheet: { collapse: "Collapse", expand: "Expand" },
   month: (year, month) => `${MONTHS_EN[month - 1]} ${year}`,
   ringLabel: (year, month) =>
@@ -172,7 +174,6 @@ const en: Copy = {
   play: "Play",
   pause: "Pause",
   replay: "Replay",
-  skip: "Skip",
   find: {
     label: "Find a member by name",
     placeholder: "Find someone",

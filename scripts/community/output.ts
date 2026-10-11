@@ -3,6 +3,7 @@
  * (so a member's index is also their place on the rings), and every pair of
  * members who have interacted.
  */
+import { memberHeat } from "./city";
 import type { Built } from "./graph";
 import { monthIndex, START_MONTH, START_YEAR } from "./graph";
 
@@ -20,7 +21,7 @@ export interface GraphFile {
   joined: number[];
   /** Direction on the rings, 0–9999 of a full turn. */
   angle: number[];
-  /** 0–9 per member, as on the homepage map. */
+  /** 0–9 per member, as on the homepage's dot map (memberHeat). */
   heat: string;
   /** Members with posts or comments: [index gap, posts, comments, …]. */
   activity: number[];
@@ -43,16 +44,6 @@ export interface GraphFile {
     /** [index gap, atlas cell, …] for members with a picture. */
     cells: number[];
   };
-}
-
-function heatFor(posts: number, comments: number, seen: number, now: number) {
-  const score = posts * 3 + comments;
-  if (score > 0) {
-    const steps = [3, 10, 30, 100, 300, 1000];
-    return 3 + steps.filter(step => score >= step).length;
-  }
-  const day = 24 * 60 * 60 * 1000;
-  return now - seen < 30 * day ? 2 : now - seen < 180 * day ? 1 : 0;
 }
 
 export function toGraphFile(
@@ -86,9 +77,7 @@ export function toGraphFile(
     angle.push(
       Math.round((rings.angle[joinOrder[k]] / (Math.PI * 2)) * 10000) % 10000
     );
-    heat += String(
-      heatFor(member.posts, member.comments, member.seen, now.getTime())
-    );
+    heat += String(memberHeat(member, now.getTime()));
     if (member.posts || member.comments) {
       activity.push(k - lastActive, member.posts, member.comments);
       lastActive = k;

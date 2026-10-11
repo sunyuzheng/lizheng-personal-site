@@ -151,7 +151,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 10-05 看服务用量时发现两件事，立正说「要处理的处理掉」「会员核验我们自己想办法」「/zbs可以下线了，这个可以完全取代」。
 
-- 会员核验：以前每次登录都向 Circle 管理接口查一次，登录后每15分钟再查一次，没有上限；这个接口按月有额度，和学院其他工具共用（规则见 `docs/community-city.md` 引的 circle-data-analytics 文档）。现在 `foundingStatus`（`shared/ask-access.ts`）先看上次查到的结果：用邮箱的加密摘要记30天（键 `ask:member:v1:<摘要>`，值只有是否 Founding 和时间），是 Founding 的一周内不再查，不是的一天内不再查（登录时一小时，刚加入的人再登录一次就能认出来）；登录后的会话每小时看一次这个结果。每个自然月（UTC）最多真正查 `CIRCLE_MONTHLY_LIMIT` = 1,000 次（计数键 `ask:member:v1:circle:<YYYY-MM>`），用完或 Circle 查不了时沿用上次结果；从没查过的人超额时按普通身份，Circle 出错时登录照旧报错。每天的数据库检查（`api/ask-lizheng-db-watch.ts`）在用到八成时给立正发一封邮件，每月最多一封。隐私政策「保存多久」加了「Founding身份的核验结果最多保存30天」。测试：`tests/ask-access.test.ts`「asking Circle rarely」、`tests/ask-db-watch.test.ts`「the member-check count」。
+- 会员核验：以前每次登录都向 Circle 管理接口查一次，登录后每15分钟再查一次，没有上限；这个接口按月有额度，和学院其他工具共用（规则见 `docs/community-graph.md` 引的 circle-data-analytics 文档）。现在 `foundingStatus`（`shared/ask-access.ts`）先看上次查到的结果：用邮箱的加密摘要记30天（键 `ask:member:v1:<摘要>`，值只有是否 Founding 和时间），是 Founding 的一周内不再查，不是的一天内不再查（登录时一小时，刚加入的人再登录一次就能认出来）；登录后的会话每小时看一次这个结果。每个自然月（UTC）最多真正查 `CIRCLE_MONTHLY_LIMIT` = 1,000 次（计数键 `ask:member:v1:circle:<YYYY-MM>`），用完或 Circle 查不了时沿用上次结果；从没查过的人超额时按普通身份，Circle 出错时登录照旧报错。每天的数据库检查（`api/ask-lizheng-db-watch.ts`）在用到八成时给立正发一封邮件，每月最多一封。隐私政策「保存多久」加了「Founding身份的核验结果最多保存30天」。测试：`tests/ask-access.test.ts`「asking Circle rarely」、`tests/ask-db-watch.test.ts`「the member-check count」。
 - `/zbs`：书页保留（购买入口、目录、推荐语都在），原来调用 Anthropic 的聊天（`api/chat.ts`）删除，那一块换成问问立正的入口，用 ask.lizheng.ai 和主页已有的话；开源的《真本事》Skill 那块留着。`ANTHROPIC_API_KEY` 不再需要。
 
 ## 公开问答原样公开（2026-10-05）

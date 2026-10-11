@@ -69,7 +69,6 @@ export interface Community {
   ranked: Uint32Array;
   /** Running totals at the end of each month. */
   membersByMonth: Uint32Array;
-  connectedByMonth: Uint32Array;
   pairsByMonth: Uint32Array;
   avatarCell: Int32Array;
   avatars?: GraphFile["avatars"];
@@ -195,18 +194,13 @@ export function decode(file: GraphFile): Community {
 
   const months = file.months;
   const membersByMonth = new Uint32Array(months);
-  const connectedByMonth = new Uint32Array(months);
   const pairsByMonth = new Uint32Array(months);
   for (let i = 0; i < n; i++)
     membersByMonth[Math.min(months - 1, Math.max(0, joined[i]))]++;
-  for (let i = 0; i < n; i++)
-    if (Number.isFinite(firstLink[i]))
-      connectedByMonth[Math.min(months - 1, firstLink[i])]++;
   for (let k = 0; k < m; k++)
     pairsByMonth[Math.min(months - 1, pairFirst[k])]++;
   for (let t = 1; t < months; t++) {
     membersByMonth[t] += membersByMonth[t - 1];
-    connectedByMonth[t] += connectedByMonth[t - 1];
     pairsByMonth[t] += pairsByMonth[t - 1];
   }
 
@@ -248,7 +242,6 @@ export function decode(file: GraphFile): Community {
     firstLink,
     ranked: Uint32Array.from(connected),
     membersByMonth,
-    connectedByMonth,
     pairsByMonth,
     avatarCell,
     avatars: file.avatars,
@@ -266,6 +259,35 @@ export const otherOf = (community: Community, pair: number, member: number) =>
   community.pairA[pair] === member
     ? community.pairB[pair]
     : community.pairA[pair];
+
+export interface Neighbour {
+  member: number;
+  pair: number;
+}
+
+/**
+ * The people someone is linked with, closest first: by kind of tie (常来常往
+ * first), then by how many comments and likes passed between them.
+ */
+export function neighboursOf(community: Community, member: number) {
+  const list: (Neighbour & { weight: number })[] = [];
+  for (
+    let k = community.offsets[member];
+    k < community.offsets[member + 1];
+    k++
+  ) {
+    const pair = community.adjacency[k];
+    list.push({
+      member: otherOf(community, pair, member),
+      pair,
+      weight:
+        community.tie[pair] * 1000 +
+        community.likes[pair] +
+        3 * community.pairComments[pair],
+    });
+  }
+  return list.sort((p, q) => q.weight - p.weight) as Neighbour[];
+}
 
 /** Radius on the rings where the members who joined in a month begin. */
 export function ringRadius(community: Community, month: number) {

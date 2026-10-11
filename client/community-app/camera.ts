@@ -50,6 +50,8 @@ export class Camera implements Pose {
   cityRadius = Infinity;
   /** Extra room, e.g. while framing a person near the edge beside a panel. */
   slack = 0;
+  private flight: Flight | null = null;
+  private spin = 0;
 
   /** How far from the middle the view's centre may be at a zoom. */
   private bounds(zoom = this.zoom) {
@@ -78,8 +80,6 @@ export class Camera implements Pose {
     }
     return { cx, cy, zoom, angle: this.angle };
   }
-  private flight: Flight | null = null;
-  private spin = 0;
 
   toScreen(x: number, y: number): [number, number] {
     const dx = (x - this.cx) * this.zoom;
@@ -212,11 +212,7 @@ export class Camera implements Pose {
     return this.flight !== null;
   }
 
-  stop() {
-    this.flight = null;
-  }
-
-  /** Advances any flight or spin; returns true while the view is changing. */
+  /** Advances any flight, or the slow turn. */
   update(now: number, dt: number) {
     if (this.flight) {
       const { from, to, start, duration, lift } = this.flight;
@@ -229,13 +225,9 @@ export class Camera implements Pose {
       this.zoom = Math.exp(logZoom - lift * Math.sin(Math.PI * e));
       this.angle = from.angle + (to.angle - from.angle) * e;
       if (t >= 1) this.flight = null;
-      return true;
-    }
-    if (this.spin) {
+    } else {
       this.angle += this.spin * dt;
-      return true;
     }
-    return false;
   }
 }
 
@@ -365,7 +357,11 @@ export function attachGestures(
       rest.startX = rest.x;
       rest.startY = rest.y;
     }
-    if (event.type === "pointercancel") return;
+    // The browser took the gesture over: just bring the view back in bounds.
+    if (event.type === "pointercancel") {
+      if (!pointers.size) handlers.settled();
+      return;
+    }
     const [x, y] = local(event);
     if (!dragged && pointers.size === 0) {
       const now = performance.now();
@@ -428,6 +424,4 @@ export function attachGestures(
     },
     { passive: false }
   );
-
-  return { stopInertia };
 }

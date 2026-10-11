@@ -249,7 +249,6 @@ export interface CityCopy {
   caption: (count: string) => [string, string];
   fallbackCaption: [string, string];
   updated: (date: string) => string;
-  demo: string;
   open: string;
   openNamed: (name: string) => string;
   joined: (year: number, month: number) => string;
@@ -653,7 +652,6 @@ const zh = {
       ],
       fallbackCaption: ["20,000+位成员在这里学习、分享和讨论。", ""],
       updated: (date: string) => `成员数据更新于${date}`,
-      demo: "当前为演示数据，链接均指向立正的主页",
       open: "打开TA的主页",
       openNamed: (name: string) => `打开${name}的主页`,
       joined: (year: number, month: number) => `${year}年${month}月加入`,
@@ -1089,7 +1087,6 @@ const en: HomeCopy = {
       ],
       fallbackCaption: ["20,000+ members learn, share, and discuss here.", ""],
       updated: date => `Member data updated ${date}`,
-      demo: "Demo data: every link opens Yuzheng’s own profile",
       open: "Open this member’s profile",
       openNamed: name => `Open ${name}’s profile`,
       joined: (year, month) => `Joined ${MONTHS[month - 1]} ${year}`,

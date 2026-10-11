@@ -12,7 +12,6 @@
     "verify:domain": "tsx scripts/verify-domain.ts",
     "refresh:guests": "pnpm sync:guests --apply && pnpm check && pnpm build",
     "format": "prettier --write .",
-    "community:city": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-city.ts",
     "community:graph": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-graph.ts",
     "test:ask-lizheng": "vitest run --config vitest.ask-lizheng.config.ts",
     "test:decks": "vitest run --root . tests/deck-pages.test.ts",

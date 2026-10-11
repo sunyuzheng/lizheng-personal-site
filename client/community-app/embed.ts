@@ -8,8 +8,9 @@
  */
 import { Camera } from "./camera";
 import type { Community } from "./data";
-import { CURVE, Renderer, type Pulse } from "./renderer";
-import { buildScene, Grid } from "./scene";
+import { busyPairs, Pulses } from "./pulses";
+import { Renderer } from "./renderer";
+import { buildScene, Grid, highlightAround } from "./scene";
 
 export interface CityWindowOptions {
   canvas: HTMLCanvasElement;
@@ -44,11 +45,14 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   const { canvas, data: c, reducedMotion, coarse } = options;
   // A little dimmer than the full page: seen at an angle, the same light
   // gathers into less space.
-  const renderer = new Renderer(canvas, buildScene(c), {
-    segments: coarse ? 6 : 9,
-    transparent: true,
-    exposure: 0.8,
-  });
+  const scene = buildScene(c);
+  const makeRenderer = () =>
+    new Renderer(canvas, scene, {
+      segments: coarse ? 6 : 9,
+      transparent: true,
+      exposure: 0.8,
+    });
+  let renderer = makeRenderer();
   const grid = new Grid(c);
   const camera = new Camera();
   let fitZoom = 300;
@@ -81,19 +85,26 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   const setHovered = (member: number) => {
     if (member === hovered) return;
     hovered = member;
-    const nodes = new Map<number, number>();
-    const edges = new Map<number, number>();
-    if (member >= 0) {
-      nodes.set(member, 2);
-      for (let k = c.offsets[member]; k < c.offsets[member + 1]; k++) {
-        const pair = c.adjacency[k];
-        edges.set(pair, 1);
-        const other = c.pairA[pair] === member ? c.pairB[pair] : c.pairA[pair];
-        if (!nodes.has(other)) nodes.set(other, 1);
-      }
-    }
+    const { nodes, edges } = highlightAround(c, member, 1);
     renderer.setHighlight(nodes, edges);
   };
+
+  // Phones may take the GPU away from a page in the background; draw again
+  // once it is given back.
+  let contextLost = false;
+  const onContextLost = (event: Event) => {
+    event.preventDefault();
+    contextLost = true;
+  };
+  const onContextRestored = () => {
+    renderer = makeRenderer();
+    const { nodes, edges } = highlightAround(c, hovered, 1);
+    renderer.setHighlight(nodes, edges);
+    contextLost = false;
+    run();
+  };
+  canvas.addEventListener("webglcontextlost", onContextLost);
+  canvas.addEventListener("webglcontextrestored", onContextRestored);
 
   // ---------- Time ----------
   let month = -1; // nothing lit until the window is first seen
@@ -109,58 +120,17 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   };
 
   // ---------- Pulses on lines busy in the last two months ----------
-  const recent: number[] = [];
-  for (let k = 0; k < c.pairCount; k++) {
-    if (c.pairLast[k] >= c.months - 2 && c.tie[k] >= 2) recent.push(k);
-  }
-  const pulses: { pair: number; start: number; duration: number }[] = [];
-  let lastPulse = 0;
-  const point = (pair: number, s: number) => {
-    const x0 = c.x[c.pairA[pair]];
-    const y0 = c.y[c.pairA[pair]];
-    const x2 = c.x[c.pairB[pair]];
-    const y2 = c.y[c.pairB[pair]];
-    const x1 = (x0 + x2) / 2 - (y2 - y0) * CURVE;
-    const y1 = (y0 + y2) / 2 + (x2 - x0) * CURVE;
-    const u = 1 - s;
-    return [
-      u * u * x0 + 2 * u * s * x1 + s * s * x2,
-      u * u * y0 + 2 * u * s * y1 + s * s * y2,
-    ];
-  };
-  const pulseLights = (now: number): Pulse[] => {
-    const out: Pulse[] = [];
-    if (reducedMotion || month < c.months || !recent.length) return out;
-    if (now - lastPulse > 700 && pulses.length < 8) {
-      lastPulse = now;
-      pulses.push({
-        pair: recent[Math.floor(Math.random() * recent.length)],
-        start: now,
-        duration: 1800 + Math.random() * 1200,
-      });
-    }
-    for (let i = pulses.length - 1; i >= 0; i--) {
-      const progress = (now - pulses[i].start) / pulses[i].duration;
-      if (progress >= 1) {
-        pulses.splice(i, 1);
-        continue;
-      }
-      const fade = Math.sin(Math.PI * progress);
-      for (let k = 0; k < 5; k++) {
-        const s = progress - k * 0.02;
-        if (s < 0) break;
-        const [x, y] = point(pulses[i].pair, s);
-        out.push({
-          x,
-          y,
-          size: 1.3 - k * 0.18,
-          glow: (1 - k * 0.18) * fade,
-          mint: c.tie[pulses[i].pair] === 3 ? 1 : 0.35,
-        });
-      }
-    }
-    return out;
-  };
+  const busy = busyPairs(c);
+  const pulses = new Pulses(c, {
+    max: 8,
+    trail: 5,
+    spacing: 0.02,
+    size: 1.3,
+    glow: 1,
+    duration: 1800,
+  });
+  const pulseLights = (now: number) =>
+    reducedMotion || month < c.months ? [] : pulses.lights(now, busy, 700);
 
   // ---------- Pointer ----------
   const memberAt = (sx: number, sy: number) => {
@@ -228,7 +198,7 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   let skip = false;
   const loop = (now: number) => {
     frame = 0;
-    if (!visible || document.hidden) return;
+    if (!visible || document.hidden || contextLost) return;
     frame = requestAnimationFrame(loop);
     // Settled and untouched, the window runs at half the frame rate.
     const settled = month >= c.months && hovered < 0;
@@ -304,6 +274,8 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
       seen.disconnect();
       resize.disconnect();
       document.removeEventListener("visibilitychange", run);
+      canvas.removeEventListener("webglcontextlost", onContextLost);
+      canvas.removeEventListener("webglcontextrestored", onContextRestored);
       canvas.removeEventListener("pointermove", onMove);
       canvas.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("pointerdown", onDown);

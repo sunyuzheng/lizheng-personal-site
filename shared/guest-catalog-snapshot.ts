@@ -1,8 +1,8 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: f4db3fb65c446359b1201bf11454108c85eee3939cdd26cee52d269bff6bf650
-// guests.json SHA256: 7e93f4f457a3e2cf2675f63b1b8742dc1b30cc4f292e951ac3d86c84fafd96a9
+// Manifest SHA256: 5687d7451228f846fba2b22b35240b680e5a762a236aa98fc91548ad79e65fd1
+// guests.json SHA256: b8229cc70a6d5cf8c5f08dae753376265d8353bf666a543c2a703c23883d222e
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: 312a478fba63484176ccf1987796bfcd336cd403cde90ca58b5b74ab9add4862
+// guest-names.json SHA256: 0db58810e0998f72a1f7cb88fe5b2f09cfe24635dfca238adadd33392e79423d
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
 export const guestCatalog: GuestCatalog = {
@@ -915,7 +915,15 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/77nmgqFMCME/hqdefault.jpg",
       "guest_en_name": "Koji & Monica",
       "guest_company": "CrossRoad Podcast / Onboard",
-      "guest_title": "Cofounders / Investors"
+      "guest_title": "Cofounders / Investors",
+      "members": [
+        {
+          "name": "Koji"
+        },
+        {
+          "name": "Monica"
+        }
+      ]
     },
     {
       "entity_id": "guest:ryo-lu",
@@ -1026,7 +1034,25 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/PucrhAhOu74/hqdefault.jpg",
       "guest_en_name": "Mark Chen / Li Ming / Shen Xinyang / Zhong Yuan",
       "guest_company": "Amazon",
-      "guest_title": "Science Managers @ Amazon"
+      "guest_title": "Science Managers @ Amazon",
+      "members": [
+        {
+          "name": "陈茂茂",
+          "en_name": "Mark Chen"
+        },
+        {
+          "name": "李明",
+          "en_name": "Li Ming"
+        },
+        {
+          "name": "沈心洋",
+          "en_name": "Shen Xinyang"
+        },
+        {
+          "name": "钟远",
+          "en_name": "Zhong Yuan"
+        }
+      ]
     },
     {
       "entity_id": "guest:jiakan-wang",
@@ -1922,7 +1948,8 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/DP3N1YyGmG8/hqdefault.jpg",
       "guest_en_name": "SVTC",
       "guest_company": "",
-      "guest_title": "Data Scientist"
+      "guest_title": "Data Scientist",
+      "members": []
     },
     {
       "entity_id": "guest:su",
@@ -1979,7 +2006,16 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/osZDEDx8fyE/hqdefault.jpg",
       "guest_en_name": "Wang Zhen & Nick",
       "guest_company": "花生经济 (Huasheng Economy)",
-      "guest_title": "创始人 & 股东"
+      "guest_title": "创始人 & 股东",
+      "members": [
+        {
+          "name": "王臻",
+          "en_name": "Wang Zhen"
+        },
+        {
+          "name": "Nick"
+        }
+      ]
     },
     {
       "entity_id": "guest:chen-hao",
@@ -2185,7 +2221,17 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/tX-Zq4VquLI/hqdefault.jpg",
       "guest_en_name": "Leo & Mandy",
       "guest_company": "",
-      "guest_title": ""
+      "guest_title": "",
+      "members": [
+        {
+          "name": "Leo",
+          "entity_id": "guest:leo-charisma"
+        },
+        {
+          "name": "Mandy",
+          "entity_id": "guest:mandy"
+        }
+      ]
     },
     {
       "entity_id": "guest:lou-yang",
@@ -2520,7 +2566,18 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/XoyE0eQZYh0/hqdefault.jpg",
       "guest_en_name": "Tech Roast Show",
       "guest_company": "The Tech Roast Show",
-      "guest_title": "Comedians and co-creators"
+      "guest_title": "Comedians and co-creators",
+      "members": [
+        {
+          "name": "Austin"
+        },
+        {
+          "name": "Jesse"
+        },
+        {
+          "name": "Nikita"
+        }
+      ]
     },
     {
       "entity_id": "guest:zero-liu",
@@ -2614,7 +2671,16 @@ export const guestCatalog: GuestCatalog = {
       "thumbnail_url": "https://img.youtube.com/vi/ll-X6xP-t8Y/hqdefault.jpg",
       "guest_en_name": "Vera & Lili",
       "guest_company": "Lumitails（光尾物语）",
-      "guest_title": "Pet community creators"
+      "guest_title": "Pet community creators",
+      "members": [
+        {
+          "name": "Vera"
+        },
+        {
+          "name": "粒粒",
+          "en_name": "Lili"
+        }
+      ]
     },
     {
       "entity_id": "guest:changmaotu",
@@ -10746,11 +10812,9 @@ export const guestNameTable: GuestNameTable = {
       "key": "leo",
       "entity_ids": [
         "guest:leo-charisma",
-        "guest:leo-mandy",
         "guest:leo-union-trading-company"
       ],
       "kinds": [
-        "member",
         "alias",
         "base"
       ]
@@ -10952,11 +11016,9 @@ export const guestNameTable: GuestNameTable = {
       "name": "Mandy",
       "key": "mandy",
       "entity_ids": [
-        "guest:leo-mandy",
         "guest:mandy"
       ],
       "kinds": [
-        "member",
         "display"
       ]
     },

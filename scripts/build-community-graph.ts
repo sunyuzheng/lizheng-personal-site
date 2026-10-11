@@ -8,8 +8,9 @@
  *   pnpm community:graph --upload            # … then publish it to Vercel Blob
  *
  * Caches live in --cache-dir (default tmp/community-graph, git-ignored):
- * members.json (one Admin API read, reused for a week unless
- * --refresh-members), interactions.ndjson with a read cursor (Data API, read
+ * members.json (read in full from the Admin API about once a week, topped up
+ * with new members on every run; --refresh-members reads it in full now),
+ * interactions.ndjson with a read cursor (Data API, read
  * incrementally; --seed=a.ndjson,b.ndjson imports minimized
  * circle-data-analytics exports first so a new cache need not reread
  * history), and avatars/ (one small square per profile picture).
@@ -29,6 +30,7 @@ import zlib from "node:zlib";
 import { buildAtlas } from "./community/avatars";
 import {
   fetchMembers,
+  fetchNewMembers,
   InteractionCache,
   type MemberRecord,
 } from "./community/circle";
@@ -47,21 +49,53 @@ const args = new Map(
 const cacheDir = path.resolve(args.get("cache-dir") ?? "tmp/community-graph");
 const outDir = path.resolve(args.get("out-dir") ?? "client/public/community");
 
+interface MembersCache {
+  /** When the list was last brought up to date, and last read in full. */
+  fetchedAt: number;
+  fullAt?: number;
+  members: MemberRecord[];
+}
+
+/**
+ * The member list, read in full from the Admin API about once a week
+ * (ceil(members / 100) requests) and topped up daily with whoever joined
+ * since (usually one request). A list that has drifted from Circle's count
+ * (people leaving) is read in full again. Without a token the cache is used
+ * as it is.
+ */
 async function loadMembers(): Promise<MemberRecord[]> {
   const file = path.join(cacheDir, "members.json");
+  const token = process.env.CIRCLE_ADMIN_API?.trim();
+  const save = (cache: MembersCache) => {
+    fs.mkdirSync(cacheDir, { recursive: true });
+    fs.writeFileSync(file, JSON.stringify(cache));
+  };
   if (fs.existsSync(file) && !args.has("refresh-members")) {
-    const cached = JSON.parse(fs.readFileSync(file, "utf8")) as {
-      fetchedAt: number;
-      members: MemberRecord[];
-    };
-    if (Date.now() - cached.fetchedAt < 7 * DAY) {
+    const cached = JSON.parse(fs.readFileSync(file, "utf8")) as MembersCache;
+    const fullAt = cached.fullAt ?? cached.fetchedAt;
+    const day = (time: number) => new Date(time).toISOString().slice(0, 10);
+    if (!token) {
       console.log(
-        `Members: ${cached.members.length} from cache (${new Date(cached.fetchedAt).toISOString().slice(0, 10)})`
+        `Members: ${cached.members.length} from cache (${day(cached.fetchedAt)})`
       );
       return cached.members;
     }
+    if (Date.now() - fullAt < 7 * DAY) {
+      const known = new Set(cached.members.map(member => member.id));
+      const { added, count } = await fetchNewMembers(token, known);
+      const members = [...added, ...cached.members];
+      if (Math.abs(members.length - count) <= Math.max(20, count * 0.002)) {
+        console.log(
+          `Members: ${members.length} (${added.length} new since ${day(cached.fetchedAt)}; full read ${day(fullAt)}; Circle counts ${count})`
+        );
+        save({ fetchedAt: Date.now(), fullAt, members });
+        return members;
+      }
+      console.log(
+        `Members: the list has ${members.length}, Circle counts ${count}; reading in full.`
+      );
+    }
   }
-  const token = process.env.CIRCLE_ADMIN_API?.trim();
   if (!token)
     throw new Error("Set CIRCLE_ADMIN_API (Circle Admin API v2 token) first.");
   fs.mkdirSync(cacheDir, { recursive: true });
@@ -70,7 +104,7 @@ async function loadMembers(): Promise<MemberRecord[]> {
     Number(args.get("max-admin-requests") ?? 300),
     path.join(cacheDir, "members.progress.json")
   );
-  fs.writeFileSync(file, JSON.stringify({ fetchedAt: Date.now(), members }));
+  save({ fetchedAt: Date.now(), fullAt: Date.now(), members });
   return members;
 }
 

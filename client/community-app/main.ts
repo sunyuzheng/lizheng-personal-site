@@ -121,14 +121,9 @@ function start(c: Community) {
   const guideContext = guides.getContext("2d")!;
 
   // ---------- Stats and note ----------
-  let peerPairs = 0;
-  for (let k = 0; k < c.pairCount; k++) {
-    if (!c.staff.has(c.pairA[k]) && !c.staff.has(c.pairB[k])) peerPairs++;
-  }
   const statValues: Record<string, string> = {
     members: formatNumber(c.count),
     pairs: formatNumber(c.pairCount),
-    peers: `${Math.round((peerPairs / Math.max(1, c.pairCount)) * 100)}%`,
   };
   for (const element of document.querySelectorAll<HTMLElement>("[data-stat]")) {
     element.textContent = statValues[element.dataset.stat!] ?? "";
@@ -173,9 +168,25 @@ function start(c: Community) {
     guides.width = sky.width;
     guides.height = sky.height;
     const mobile = camera.width < 760;
-    // Leave room for the words above and below the city.
-    const top = mobile ? 190 : 40;
-    const bottom = mobile ? 250 : 130;
+    // Leave room for the words above and below the city. On phones the
+    // search sits just under the intro, and the city between it and the bar.
+    let top = 40;
+    let bottom = 130;
+    if (mobile && !city.classList.contains("focused")) {
+      const intro = document.querySelector(".intro")!.getBoundingClientRect();
+      city.style.setProperty(
+        "--find-top",
+        `${Math.round(intro.bottom + 14)}px`
+      );
+      top = $("find").getBoundingClientRect().bottom + 10;
+      bottom =
+        camera.height -
+        document.querySelector(".bar")!.getBoundingClientRect().top +
+        10;
+    } else if (mobile) {
+      top = 190;
+      bottom = 250;
+    }
     const usableH = camera.height - top - bottom;
     const usableW = mobile ? camera.width - 24 : camera.width - 80;
     fitZoom = Math.max(40, Math.min(usableW, usableH) / 2 / 1.04);
@@ -1202,6 +1213,8 @@ function start(c: Community) {
   const resize = new ResizeObserver(() => layoutView());
   resize.observe(city);
   layoutView();
+  // The serif title can change height once its font arrives.
+  document.fonts?.ready.then(() => layoutView());
 
   let last = performance.now();
   let skip = false;

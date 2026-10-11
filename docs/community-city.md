@@ -12,13 +12,13 @@
 
 - 数据来自Circle Admin API的成员列表（`community_members`），一次快照需要「成员数÷100」次请求，2026年9月底约246次。
 - Data API不能替代它：Data API给的是行为事件，没有成员的名字和公开主页id。而加入时间、帖子数、评论数本来就在成员列表里，显示它们不增加任何请求。
-- GitHub Actions每月1日北京时间10:00自动跑一次（`.github/workflows/community-city.yml`），生成数据、上传到Vercel Blob、再把线上文件读回来核对。也可以在GitHub的Actions页面手动运行。定时运行时如果线上数据还不到20天（例如月底刚手动跑过），就直接跳过，不调用Circle API。
+- GitHub Actions每天北京时间10:00自动跑一次（`.github/workflows/community-city.yml`；2026-10-11之前是每月1日），生成数据、上传到Vercel Blob、再把线上文件读回来核对。也可以在GitHub的Actions页面手动运行。`--min-age-days`仍可手动使用，定时任务不再用它。
 - 同一个工作流先生成 city.lizheng.ai 的关系图（`docs/community-graph.md`），它会读一遍成员列表；首页地图用 `--members-file=tmp/community-graph/members.json` 直接复用这份名单，不再读第二遍。名单不存在或超过两天时，首页地图照旧自己读。
-- 网站在浏览器里读取Blob上的文件，所以每月更新数据不需要重新部署。
+- 网站在浏览器里读取Blob上的文件，所以每天更新数据不需要重新部署。
 
 ## Circle Admin API预算
 
-- Admin API的月度额度和其他超线性工具共用。规则在`superlinear/1-会员社区/circle-data-analytics`的`docs/data-refresh-and-measurement.md`：先预留最坏请求数，默认2,400次硬停止，并保留至少600次应急空间。本任务每月预留300次。
+- Admin API的月度额度和其他超线性工具共用。规则在`superlinear/1-会员社区/circle-data-analytics`的`docs/data-refresh-and-measurement.md`：先预留最坏请求数，默认2,400次硬停止，并保留至少600次应急空间。成员名单和 city.lizheng.ai 共用：每天通常1次请求补新成员，大约每周全量约255次，一个月约1,100次。
 - `--max-requests`（默认300）是硬上限：成员超过30,000人时脚本不会开始，需要先调高预算。
 - `--dry-run`只用1次请求，报出成员数和所需请求数；如果Circle返回额度相关的响应头，也会打印出来。
 - 中途失败不会覆盖线上数据：返回的成员少于总数的98%时不写文件；新快照比线上少10%以上时不上传（确认无误可以加`--force`）。

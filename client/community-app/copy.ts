@@ -25,7 +25,7 @@ export interface Copy {
   eyebrow: string;
   heading: string;
   lede: string;
-  stats: { members: string; pairs: string; peers: string };
+  stats: { members: string; pairs: string };
   ties: [string, string, string];
   rings: string;
   hint: string;
@@ -79,7 +79,7 @@ const zh: Copy = {
   eyebrow: "超线性学院 · Superlinear Academy",
   heading: "我们在建一座城",
   lede: "每一盏灯是一位成员。谁给谁留过言、点过赞，两盏灯之间就亮起一条线。",
-  stats: { members: "位成员", pairs: "条连接", peers: "是成员之间自发的" },
+  stats: { members: "位成员", pairs: "条连接" },
   ties: ["点赞之交", "聊过几句", "常来常往"],
   rings: "越靠中间，来得越早",
   hint: "点一盏灯，看TA和谁连着",
@@ -150,7 +150,6 @@ const en: Copy = {
   stats: {
     members: "members",
     pairs: "connections",
-    peers: "between members themselves",
   },
   ties: ["Likes", "Conversations", "Regulars"],
   rings: "Earlier members sit nearer the middle",

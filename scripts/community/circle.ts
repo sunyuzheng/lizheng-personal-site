@@ -108,6 +108,55 @@ interface RawMember {
 
 const toTime = (value?: string | null) => (value ? Date.parse(value) || 0 : 0);
 
+const pageUrl = (page: number) =>
+  `${ADMIN_API}/community_members?per_page=${MEMBERS_PER_PAGE}&page=${page}&status=active`;
+
+function toRecord(member: RawMember): MemberRecord | null {
+  if (!member.public_uid || !member.id) return null;
+  return {
+    id: member.id,
+    uid: member.public_uid,
+    name: displayName(member),
+    avatar: member.avatar_url || "",
+    posts: member.posts_count ?? 0,
+    comments: member.comments_count ?? 0,
+    created: toTime(member.created_at),
+    seen: toTime(member.last_seen_at),
+  };
+}
+
+/**
+ * Members who joined since a snapshot: Circle lists members newest first, so
+ * pages are read until one holds someone already known (usually one request
+ * a day). Also returns the current number of active members.
+ */
+export async function fetchNewMembers(
+  token: string,
+  known: Set<number>,
+  maxRequests = 10
+) {
+  const added: MemberRecord[] = [];
+  let count = 0;
+  for (let page = 1; page <= maxRequests; page++) {
+    const result = (await getJson(
+      pageUrl(page),
+      token,
+      `members page ${page}`
+    )) as { count: number; records: RawMember[] };
+    count = result.count;
+    let reachedKnown = false;
+    for (const member of result.records) {
+      const record = toRecord(member);
+      if (!record) continue;
+      if (known.has(record.id)) reachedKnown = true;
+      else added.push(record);
+    }
+    if (reachedKnown || result.records.length < MEMBERS_PER_PAGE) break;
+    await sleep(250);
+  }
+  return { added, count };
+}
+
 interface MemberProgress {
   startedAt: number;
   count: number;
@@ -127,8 +176,6 @@ export async function fetchMembers(
   maxRequests: number,
   progressFile?: string
 ) {
-  const pageUrl = (page: number) =>
-    `${ADMIN_API}/community_members?per_page=${MEMBERS_PER_PAGE}&page=${page}&status=active`;
   let progress: MemberProgress | null = null;
   if (progressFile && fs.existsSync(progressFile)) {
     const saved = JSON.parse(
@@ -139,17 +186,8 @@ export async function fetchMembers(
   const byId = new Map<number, MemberRecord>();
   const add = (records: RawMember[]) => {
     for (const member of records) {
-      if (!member.public_uid || !member.id) continue;
-      byId.set(member.id, {
-        id: member.id,
-        uid: member.public_uid,
-        name: displayName(member),
-        avatar: member.avatar_url || "",
-        posts: member.posts_count ?? 0,
-        comments: member.comments_count ?? 0,
-        created: toTime(member.created_at),
-        seen: toTime(member.last_seen_at),
-      });
+      const record = toRecord(member);
+      if (record) byId.set(record.id, record);
     }
   };
   let count: number;

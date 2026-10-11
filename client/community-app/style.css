@@ -310,18 +310,34 @@ html[lang="en"] h1 {
   position: relative;
 }
 
+/* A real search field (an outline and a magnifier), so it reads as the way
+   to find someone at a glance. */
 .find input {
-  width: 220px;
-  padding: 9px 2px 8px;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-  background: transparent;
+  width: 260px;
+  height: 44px;
+  padding: 0 14px 0 40px;
+  border: 1px solid rgb(248 241 228 / 0.2);
+  border-radius: 10px;
+  background: rgb(5 18 10 / 0.55);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   font-size: 15px;
   outline: none;
-  transition: border-color 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
   -webkit-appearance: none;
   appearance: none;
+}
+
+/* Above the field, whose frosted background paints over earlier siblings. */
+.find-icon {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  z-index: 1;
+  color: var(--ink-3);
+  pointer-events: none;
 }
 
 .find input::placeholder {
@@ -329,7 +345,8 @@ html[lang="en"] h1 {
 }
 
 .find input:focus {
-  border-bottom-color: var(--mint-2);
+  border-color: var(--mint-2);
+  background: rgb(5 18 10 / 0.8);
 }
 
 .find input::-webkit-search-cancel-button {
@@ -339,8 +356,8 @@ html[lang="en"] h1 {
 .find-list {
   position: absolute;
   top: calc(100% + 8px);
-  left: -12px;
-  right: -12px;
+  left: 0;
+  right: 0;
   margin: 0;
   padding: 6px 0;
   list-style: none;
@@ -1071,11 +1088,17 @@ html[lang="en"] .date {
   }
 
   .bar > .find {
-    position: relative;
-    top: auto;
-    right: auto;
-    z-index: 3;
+    position: fixed;
+    top: var(--find-top, 200px);
+    left: var(--gut);
+    right: var(--gut);
+    z-index: 4;
+    gap: 16px;
     justify-content: space-between;
+  }
+
+  .city.focused .bar > .find {
+    display: none;
   }
 
   .find-box {
@@ -1087,8 +1110,8 @@ html[lang="en"] .date {
   }
 
   .find-list {
-    top: auto;
-    bottom: calc(100% + 8px);
+    top: calc(100% + 8px);
+    bottom: auto;
   }
 
   .bar {

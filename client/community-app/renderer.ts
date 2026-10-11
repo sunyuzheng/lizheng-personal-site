@@ -49,6 +49,8 @@ export interface Frame {
   focusBoost: number;
   /** 0–1, the hovered person's lines (lighter than a focus). */
   hover: number;
+  /** How much a hovered person's lines brighten (2.4 if not given). */
+  hoverBoost?: number;
   pulses: Pulse[];
   avatars: AvatarSprite[];
 }
@@ -90,6 +92,7 @@ uniform float u_zoomWidth;
 uniform float u_focus;
 uniform float u_focusBoost;
 uniform float u_hover;
+uniform float u_hoverBoost;
 uniform vec4 u_tieAlpha;
 uniform vec4 u_tieWidth;
 out float v_side;
@@ -136,7 +139,7 @@ void main() {
   float lit = highlight > 1.5 ? 1.0 : 0.0;   // focused person's line
   float hov = highlight > 0.5 && highlight < 1.5 ? 1.0 : 0.0; // hovered person's line
   alpha *= mix(1.0, mix(0.12, u_focusBoost, lit), u_focus);
-  alpha *= mix(1.0, mix(0.45, 2.4, hov), u_hover * (1.0 - u_focus));
+  alpha *= mix(1.0, mix(0.45, u_hoverBoost, hov), u_hover * (1.0 - u_focus));
   width *= 1.0 + lit * u_focus * 0.6;
   // Very thin lines are drawn one pixel wide and dimmer, so they do not shimmer.
   float drawn = max(width, u_dpr * 1.25);
@@ -398,6 +401,7 @@ export class Renderer {
   private scene: Scene;
   private segments: number;
   private transparent: boolean;
+  private exposure: number;
   private emptyVao: WebGLVertexArrayObject;
 
   /**
@@ -407,7 +411,7 @@ export class Renderer {
   constructor(
     canvas: HTMLCanvasElement,
     scene: Scene,
-    options: { segments: number; transparent?: boolean }
+    options: { segments: number; transparent?: boolean; exposure?: number }
   ) {
     const transparent = !!options.transparent;
     const gl = canvas.getContext("webgl2", {
@@ -422,6 +426,7 @@ export class Renderer {
     this.scene = scene;
     this.segments = options.segments;
     this.transparent = transparent;
+    this.exposure = options.exposure ?? 1;
     this.float =
       !!gl.getExtension("EXT_color_buffer_float") ||
       !!gl.getExtension("EXT_color_buffer_half_float");
@@ -681,6 +686,7 @@ export class Renderer {
     gl.uniform1f(edge.u("u_focus"), frame.focus);
     gl.uniform1f(edge.u("u_focusBoost"), frame.focusBoost);
     gl.uniform1f(edge.u("u_hover"), frame.hover);
+    gl.uniform1f(edge.u("u_hoverBoost"), frame.hoverBoost ?? 2.4);
     gl.uniform4f(
       edge.u("u_tieAlpha"),
       TIE_ALPHA[0],
@@ -755,7 +761,7 @@ export class Renderer {
     gl.bindTexture(gl.TEXTURE_2D, this.lightTexture);
     gl.uniform1i(composite.u("u_light"), 0);
     gl.uniform2f(composite.u("u_viewport"), view.width, view.height);
-    gl.uniform1f(composite.u("u_exposure"), 1.0);
+    gl.uniform1f(composite.u("u_exposure"), this.exposure);
     gl.uniform1f(composite.u("u_transparent"), this.transparent ? 1 : 0);
     gl.bindVertexArray(this.emptyVao);
     gl.drawArrays(gl.TRIANGLES, 0, 3);

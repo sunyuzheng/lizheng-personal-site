@@ -18,6 +18,9 @@ export const LINKS = {
   growthBookZh: GROWTH_BOOK_ZH_PATH,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
   askLizheng: "https://ask.lizheng.ai/",
+  // The community as a city of connections (client/community-app).
+  connections: "https://city.lizheng.ai/",
+  connectionsEn: "https://city.lizheng.ai/en",
   // Feedback and reports on 问问立正: comments under the community post that introduced it.
   askFeedback: "https://www.superlinear.academy/c/tools/ask-lizheng",
 };
@@ -259,6 +262,19 @@ export interface CityCopy {
     empty: (query: string) => string;
   };
   join: string;
+}
+
+/** The homepage window onto city.lizheng.ai (CityWindow.tsx). */
+export interface WindowCopy {
+  caption: (count: string) => [string, string];
+  label: (count: string, pairs: string) => string;
+  /** The way in: the frame's corner on hover, and beside the join button. */
+  enter: string;
+  /** Under a person's name: what a click does (mouse) or what the card does (touch). */
+  hint: string;
+  tapHint: string;
+  connected: (count: string) => string;
+  updated: (date: string) => string;
 }
 
 export interface Stat {
@@ -639,6 +655,19 @@ const zh = {
       },
       join: "免费加入，一起建这座城",
     } as CityCopy,
+    window: {
+      caption: (count: string) => [
+        `这里有${count}盏灯，每一盏是一位真实成员。`,
+        "两盏灯之间的线，是他们给对方的留言和点赞。",
+      ],
+      label: (count: string, pairs: string) =>
+        `社区关系图：${count}位成员，${pairs}条连接。点一盏灯，进入这座城。`,
+      enter: "进入这座城",
+      hint: "点一下，进城看看TA和谁连着",
+      tapHint: "进城看看TA和谁连着",
+      connected: (count: string) => `和${count}人有来往`,
+      updated: (date: string) => `数据更新于${date}`,
+    } as WindowCopy,
   },
   join: {
     eyebrow: "加入超线性学院",
@@ -1058,6 +1087,19 @@ const en: HomeCopy = {
         empty: query => `No member named “${query}”.`,
       },
       join: "Join free and help build it",
+    },
+    window: {
+      caption: count => [
+        `${count} lights, one for each real member.`,
+        "The lines between them are the comments and likes they have left each other.",
+      ],
+      label: (count, pairs) =>
+        `Community map: ${count} members and ${pairs} connections. Click a light to enter the city.`,
+      enter: "Enter the city",
+      hint: "Click to see who they’re connected to",
+      tapHint: "See who they’re connected to",
+      connected: count => `Connected with ${count} people`,
+      updated: date => `Updated ${date}`,
     },
   },
   join: {

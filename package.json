@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts && tsx scripts/prerender-decks.ts",
+    "build": "tsx scripts/verify-guest-release.ts && vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts && tsx scripts/prerender-decks.ts",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
@@ -16,7 +16,8 @@
     "test:ask-lizheng": "vitest run --config vitest.ask-lizheng.config.ts",
     "test:decks": "vitest run --root . tests/deck-pages.test.ts",
     "sync:ask-app": "node scripts/sync-ask-app.mjs",
-    "sync:guests": "tsx scripts/sync-guests.ts"
+    "sync:guests": "tsx scripts/sync-guests.ts",
+    "test:guests": "vitest run --root . tests/guest-catalog.test.ts tests/guest-identity.test.ts"
   },
   "dependencies": {
     "@fontsource-variable/geist": "5.3.0",

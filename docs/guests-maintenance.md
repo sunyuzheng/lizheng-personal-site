@@ -11,7 +11,7 @@ The featured programme is an explicit editorial choice. Episode grids sort by st
 ## Update and verify
 
 1. Update and validate Open Context's catalog and release manifest.
-2. Pin that release and review `pnpm sync:guests`, then apply it with `--apply`.
+2. Prepare that committed release with the explicit local checkout and manifest hash described in `guest-data.md`; review the dry-run, then apply the snapshot and pin together.
 3. Run typecheck, guest tests and build.
 4. Review the generated diff and deploy the website.
 5. Verify the changed canonical pages, old links, featured programme, episode order, reading links and structured data on the live site.

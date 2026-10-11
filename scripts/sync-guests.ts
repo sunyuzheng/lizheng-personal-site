@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { execFileSync } from "node:child_process";
 import { validateGuestCatalog } from "../shared/guest-catalog";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -10,6 +11,36 @@ const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 const REPOSITORY = "sunyuzheng/lizheng-open-context";
 export const digest = (data: Uint8Array | string): string => createHash("sha256").update(data).digest("hex");
+export type GuestReleasePin = { schema_version: 2; repository: string; commit: string; manifest_sha256: string; snapshot_sha256: string };
+
+export function verifyGuestRelease(snapshot: string, pin: GuestReleasePin): void {
+  requireValue(pin.schema_version === 2 && pin.repository === REPOSITORY && COMMIT.test(pin.commit)
+    && SHA.test(pin.manifest_sha256) && SHA.test(pin.snapshot_sha256), "guest_release_pin_invalid");
+  requireValue(digest(snapshot) === pin.snapshot_sha256, "guest_snapshot_hash_drift");
+  requireValue(snapshot.split("\n")[1] === `// Manifest SHA256: ${pin.manifest_sha256}`, "guest_snapshot_manifest_drift");
+}
+
+export function writeGuestRelease(directory: string, snapshot: string, pin: GuestReleasePin): void {
+  verifyGuestRelease(snapshot, pin);
+  noSymlinks(directory);
+  const outputs = ["guest-catalog-snapshot.ts", "guest-catalog-pin.json"].map(name => path.join(directory, name));
+  const previous = outputs.map(file => { if (!fs.existsSync(file)) return null; noSymlinks(file); return fs.readFileSync(file); });
+  const temporary = outputs.map(file => `${file}.tmp-${process.pid}`);
+  const values = [snapshot, JSON.stringify(pin, null, 2) + "\n"];
+  let installed = 0;
+  const created: string[] = [];
+  try {
+    temporary.forEach((file, i) => { fs.writeFileSync(file, values[i], { flag: "wx" }); created.push(file); });
+    outputs.forEach((file, i) => { fs.renameSync(temporary[i], file); installed++; });
+  } catch (error) {
+    outputs.slice(0, installed).forEach((file, i) => {
+      if (previous[i] === null) fs.rmSync(file); else fs.writeFileSync(file, previous[i]!);
+    });
+    throw error;
+  } finally {
+    created.forEach(file => fs.rmSync(file, { force: true }));
+  }
+}
 
 function requireValue(value: unknown, code: string): asserts value { if (!value) throw new Error(code); }
 function noSymlinks(file: string): void {
@@ -72,22 +103,27 @@ async function main(): Promise<void> {
     else throw new Error("unknown_option");
   }
   let commit: string | undefined;
-  if (contextDir) requireValue(manifestSha256, "local_manifest_pin_required");
+  if (contextDir) {
+    requireValue(manifestSha256, "local_manifest_pin_required");
+    commit = execFileSync("git", ["-C", contextDir, "rev-parse", "HEAD"], { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+    const committed = execFileSync("git", ["-C", contextDir, "show", `${commit}:release-manifest.json`], { stdio: ["ignore", "pipe", "ignore"] });
+    requireValue(COMMIT.test(commit) && digest(committed) === manifestSha256, "local_release_not_committed");
+  }
   else {
     requireValue(!manifestSha256, "remote_pin_file_required");
     const file = path.join(ROOT, "shared/guest-catalog-pin.json"); noSymlinks(file);
     const pin = JSON.parse(fs.readFileSync(file, "utf8"));
-    requireValue(pin.schema_version === 1 && pin.repository === REPOSITORY && COMMIT.test(pin.commit) && SHA.test(pin.manifest_sha256), "reviewed_remote_pin_required");
+    verifyGuestRelease(fs.readFileSync(path.join(ROOT, "shared/guest-catalog-snapshot.ts"), "utf8"), pin);
     commit = pin.commit; manifestSha256 = pin.manifest_sha256;
   }
-  const result = await loadGuestSnapshot({ contextDir, commit, manifestSha256: manifestSha256! });
+  const result = await loadGuestSnapshot({ contextDir, commit: contextDir ? undefined : commit, manifestSha256: manifestSha256! });
+  const pin: GuestReleasePin = { schema_version: 2, repository: REPOSITORY, commit: commit!, manifest_sha256: manifestSha256!, snapshot_sha256: digest(result.snapshot) };
   const output = path.join(ROOT, "shared/guest-catalog-snapshot.ts"); noSymlinks(path.dirname(output));
   if (fs.existsSync(output)) noSymlinks(output);
   if (apply) {
-    const temp = output + `.tmp-${process.pid}`;
-    fs.writeFileSync(temp, result.snapshot, { flag: "wx" }); fs.renameSync(temp, output);
+    writeGuestRelease(path.dirname(output), result.snapshot, pin);
   }
-  console.log(JSON.stringify({ applied: apply, output: "shared/guest-catalog-snapshot.ts", counts: result.counts, input_hashes: result.hashes, output_sha256: digest(result.snapshot) }));
+  console.log(JSON.stringify({ applied: apply, output: "shared/guest-catalog-snapshot.ts", pin, counts: result.counts, input_hashes: result.hashes, output_sha256: digest(result.snapshot) }));
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main().catch((error: unknown) => { const code = error instanceof Error && /^[a-z_]+$/.test(error.message) ? error.message : "unknown_failure"; console.error(`guest_catalog_sync_failed:${code}`); process.exitCode = 1; });

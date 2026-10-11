@@ -5,7 +5,7 @@
  * builds that repository at its current commit for the path /ask-app/ and puts index.html and
  * its scripts and styles in client/public/ask-app/. The title fonts are this site's own
  * (identical files, same @fontsource version), served by vercel.json. The previous release's
- * files stay one more release, for pages opened just before an update. It also copies the words
+ * files used by the current production page stay for pages opened before an update. It also copies the words
  * about public Q&A (src/public-qa.js) to shared/ask-public-qa.js, which the homepage section uses
  * and the privacy policy is tested against, so the three never say different things.
  *
@@ -46,9 +46,20 @@ const files = fs.readdirSync(path.join(build, "assets")).filter(name => !FONT.te
 const previous = (() => {
   try { return JSON.parse(fs.readFileSync(path.join(OUT, "version.json"), "utf8")).files || []; } catch { return []; }
 })();
+// Repeated local preparations are not published releases. Keep the assets of
+// the production page as well; if it cannot be read, defer cleanup.
+const published = await (async () => {
+  try {
+    const response = await fetch("https://www.lizheng.ai/ask-app/version.json", { redirect: "error", signal: AbortSignal.timeout(15_000) });
+    if (!response.ok) throw new Error("production version unavailable");
+    const names = (await response.json()).files;
+    if (!Array.isArray(names) || names.some(name => typeof name !== "string" || !/^[a-zA-Z0-9_.-]+$/.test(name))) throw new Error("invalid published assets");
+    return names;
+  } catch { return null; }
+})();
 fs.mkdirSync(path.join(OUT, "assets"), { recursive: true });
 for (const name of fs.readdirSync(path.join(OUT, "assets")))
-  if (!files.includes(name) && !previous.includes(name)) fs.rmSync(path.join(OUT, "assets", name));
+  if (published && !files.includes(name) && !previous.includes(name) && !published.includes(name)) fs.rmSync(path.join(OUT, "assets", name));
 for (const name of files) fs.copyFileSync(path.join(build, "assets", name), path.join(OUT, "assets", name));
 fs.copyFileSync(path.join(build, "index.html"), path.join(OUT, "index.html"));
 const publicQa = `// Copied from ask-lizheng src/public-qa.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "public-qa.js"), "utf8")}`;

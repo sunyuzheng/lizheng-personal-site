@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import { catalogGuestDirectory, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
 import { getGuestsPageMeta } from "../shared/guest-data";
-import { loadGuestSnapshot, digest } from "../scripts/sync-guests";
+import { loadGuestSnapshot, digest, verifyGuestRelease, writeGuestRelease, type GuestReleasePin } from "../scripts/sync-guests";
 
 function fixture(): { catalog: GuestCatalog; articles: GuestArticleCatalog } {
   return { catalog: { schema_version: 1, entities: [{ entity_id: "guest:alpha", entity_type: "person", display_name: "Synthetic Alpha", aliases: ["Alpha"], slug: "alpha", alias_slugs: ["alpha", "old-alpha"], primary_source_id: "youtube-abcdefghijk", thumbnail_url: "https://example.org/image.jpg", guest_title: "Historical title", guest_company: "Historical company", guest_bio: "Synthetic biography", community_resources: [{ kind: "event", title: "Synthetic resource", url: "https://example.org/resource", summary: "Synthetic metadata" }] }],
@@ -25,6 +25,31 @@ function localInput(): { root: string; hash: string } {
   return { root, hash: digest(blob) };
 }
 describe("single canonical guest catalog", () => {
+  it("rejects a snapshot from a different release and manual data edits before build", async () => {
+    const { root, hash } = localInput(); const { snapshot } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
+    const pin: GuestReleasePin = { schema_version: 2, repository: "sunyuzheng/lizheng-open-context", commit: "a".repeat(40), manifest_sha256: hash, snapshot_sha256: digest(snapshot) };
+    verifyGuestRelease(snapshot, pin);
+    expect(() => verifyGuestRelease(snapshot, { ...pin, manifest_sha256: "b".repeat(64) })).toThrow("guest_snapshot_manifest_drift");
+    expect(() => verifyGuestRelease(snapshot.replace("Synthetic Alpha", "Different Alpha"), pin)).toThrow("guest_snapshot_hash_drift");
+    const changed = snapshot.replace(hash, "b".repeat(64));
+    expect(() => verifyGuestRelease(changed, { ...pin, snapshot_sha256: digest(changed) })).toThrow("guest_snapshot_manifest_drift");
+  });
+  it("restores the previous release if installing its pin fails", async () => {
+    const { root, hash } = localInput(); const { snapshot } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
+    const pin: GuestReleasePin = { schema_version: 2, repository: "sunyuzheng/lizheng-open-context", commit: "a".repeat(40), manifest_sha256: hash, snapshot_sha256: digest(snapshot) };
+    const folder = path.join(root, "consumer"); fs.mkdirSync(folder);
+    fs.writeFileSync(path.join(folder, "guest-catalog-snapshot.ts"), "old snapshot"); fs.writeFileSync(path.join(folder, "guest-catalog-pin.json"), "old pin");
+    const rename = fs.renameSync; const spy = vi.spyOn(fs, "renameSync").mockImplementation((from, to) => {
+      if (String(to).endsWith("guest-catalog-pin.json")) throw new Error("synthetic write failure");
+      rename(from, to);
+    });
+    try { expect(() => writeGuestRelease(folder, snapshot, pin)).toThrow("synthetic write failure"); } finally { spy.mockRestore(); }
+    expect(fs.readFileSync(path.join(folder, "guest-catalog-snapshot.ts"), "utf8")).toBe("old snapshot");
+    expect(fs.readFileSync(path.join(folder, "guest-catalog-pin.json"), "utf8")).toBe("old pin");
+    expect(fs.readdirSync(folder).sort()).toEqual(["guest-catalog-pin.json", "guest-catalog-snapshot.ts"]);
+    writeGuestRelease(folder, snapshot, pin);
+    verifyGuestRelease(fs.readFileSync(path.join(folder, "guest-catalog-snapshot.ts"), "utf8"), JSON.parse(fs.readFileSync(path.join(folder, "guest-catalog-pin.json"), "utf8")));
+  });
   it("preserves profile fields and derives links without certifying jobs or speech", () => {
     const { catalog, articles } = fixture(); const before = JSON.stringify(catalog);
     const p = catalogGuestDirectory(catalog, articles)[0];

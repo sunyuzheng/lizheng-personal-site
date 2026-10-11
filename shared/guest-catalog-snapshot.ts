@@ -1,5 +1,5 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 3b3a0de774eb526b71057bd27c0b4b0a1ddb1c51ba2173aece2e7b1c6d983c7e
+// Manifest SHA256: 58a97b29de78b7012807d14426404fe46a2539bb0e945c5abde64a39bc9fb9b8
 // guests.json SHA256: 41264c04eba2749c6e5f5e24ba3f0ace657ef828d3de78cbe26e0527457f16ce
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
 import type { GuestCatalog, GuestArticleCatalog } from "./guest-catalog";

@@ -8,19 +8,27 @@
 | `catalog/guest-articles.json` | Published companion article metadata and source links | Reading links and Article structured data |
 | `release-manifest.json` | Exact public file hashes and licenses | Sync integrity |
 
-`shared/guest-catalog-snapshot.ts` is generated. The source configuration pins the Open Context commit and manifest hash; normal builds use the checked-in snapshot. Updating upstream does not introduce a runtime dependency on GitHub availability.
+`shared/guest-catalog-snapshot.ts` is generated. The pin records the Open Context commit, manifest hash and generated snapshot hash; normal builds verify all three against the checked-in snapshot. Updating upstream does not introduce a runtime dependency on GitHub availability.
 
 ## Refresh
 
 Update the catalog in Open Context, validate the release, then synchronize its exact version here:
 
 ```sh
-pnpm sync:guests       # review changes
+pnpm sync:guests       # reproduce the currently pinned release
 pnpm sync:guests --apply
 pnpm check
 pnpm build
 ```
 
-For a local review, provide the explicit Open Context checkout and manifest hash to the sync command. The generator checks references, source IDs, metadata and file hashes before writing the snapshot. Production uses the reviewed commit pin.
+To prepare a new release, provide a committed Open Context checkout and its exact manifest hash:
+
+```sh
+pnpm sync:guests --context-dir /absolute/open-context --manifest-sha256 SHA256
+pnpm sync:guests --context-dir /absolute/open-context --manifest-sha256 SHA256 --apply
+pnpm test:guests
+```
+
+The generator validates references, source IDs and file hashes, binds the manifest to the source Git commit, and prepares the snapshot and pin together. A caught installation error restores the previous files. The website build rejects mismatched snapshots or pins; CI also runs the guest contract tests. Git commits and immutable deployments provide the release boundary. Production reads the checked-in snapshot without fetching upstream.
 
 `shared/guest-data.ts` adapts the generated catalog to page models; `scripts/prerender-guests.ts` generates crawlable pages and metadata. Old slugs resolve to the canonical profile and retain its canonical URL. The same selectors provide browser content and prerendered content.

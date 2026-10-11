@@ -256,8 +256,9 @@ export class Labels {
       if (used >= RING_POOL || mark.month > month) break;
       const r = mark.radius * camera.zoom;
       if (r < 90) continue;
+      // The ring shows as an ellipse when the city is seen at an angle.
       const lx = cx + Math.cos(angle) * r + 6;
-      const ly = cy + Math.sin(angle) * r - 6;
+      const ly = cy + Math.sin(angle) * r * camera.squash - 6;
       if (lx < 0 || ly < 0 || lx > w - 60 || ly > h) continue;
       const lw = textWidth(mark.label, 11.5) + 8;
       if (!area(lx, ly - 2, lx + lw, ly + 14, false)) continue;

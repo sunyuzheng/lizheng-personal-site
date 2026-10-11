@@ -39,6 +39,8 @@ void import("./fonts.css");
 const INTRO_SECONDS = 13;
 const IDLE_SPIN = 0.018; // radians per second, about one turn in six minutes
 const IDLE_AFTER = 5000;
+// A drag at the overview turns the city this far per pixel (radians).
+const TURN_PER_PIXEL = 0.006;
 // The layouts for phones and for short screens (style.css uses the same sizes).
 const PHONE_WIDTH = 760;
 const SHORT_HEIGHT = 560;
@@ -207,7 +209,17 @@ function start(c: Community) {
     const { top, bottom } = overviewRoom;
     const usableH = camera.height - top - bottom;
     const usableW = phone ? camera.width - 24 : camera.width - 80;
-    fitZoom = Math.max(40, Math.min(usableW, usableH) / 2 / 1.04);
+    // The city is flat, seen at an angle like a city from a plane, so it never
+    // looks like a ball: more steeply on tall screens, which have the room.
+    camera.squash = Math.min(0.72, Math.max(0.58, (usableH / usableW) * 0.95));
+    fitZoom = Math.max(
+      40,
+      Math.min(
+        usableW / 2,
+        usableH / 2 / camera.squash,
+        phone ? Infinity : camera.width * 0.37
+      ) / 1.04
+    );
     // The city can shrink a little below the overview, never to a dot, and
     // can never be pushed off screen.
     camera.minZoom = fitZoom * (phone ? 0.85 : 0.6);
@@ -322,7 +334,7 @@ function start(c: Community) {
     g.setTransform(1, 0, 0, 1, 0, 0);
     g.clearRect(0, 0, guides.width, guides.height);
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    // Faint dotted rings at each half year.
+    // Faint dotted rings at each half year, like a city's ring roads.
     const [cx, cy] = camera.toScreen(0, 0);
     g.lineWidth = 1;
     g.setLineDash([2, 5]);
@@ -332,7 +344,7 @@ function start(c: Community) {
       if (r < 70) continue;
       g.strokeStyle = `rgba(248, 241, 228, ${0.09 * (1 - focusLevel * 0.6)})`;
       g.beginPath();
-      g.arc(cx, cy, r, 0, Math.PI * 2);
+      g.ellipse(cx, cy, r, r * camera.squash, 0, 0, Math.PI * 2);
       g.stroke();
     }
     g.setLineDash([]);
@@ -448,7 +460,8 @@ function start(c: Community) {
     const freeW = free.right - free.left - 80;
     const freeH = free.bottom - free.top - 60;
     const spanX = Math.max(0.04, maxX - minX);
-    const spanY = Math.max(0.04, maxY - minY);
+    // Seen at an angle, the city's depth shows shorter on screen.
+    const spanY = Math.max(0.04, maxY - minY) * camera.squash;
     const zoom = Math.min(
       fitZoom * 14,
       Math.max(fitZoom * 0.6, Math.min(freeW / spanX, freeH / spanY))
@@ -494,14 +507,19 @@ function start(c: Community) {
   /** The light under a screen point, preferring lit, connected people. */
   const memberAt = (sx: number, sy: number) => {
     const [wx, wy] = camera.toWorld(sx, sy);
-    const radius = (coarse ? 22 : 14) / camera.zoom;
+    const reach = coarse ? 22 : 14;
+    // Seen at an angle, world distances look shorter vertically: search
+    // generously, then measure on screen.
+    const radius = reach / camera.zoom / camera.squash;
     let best = -1;
     let bestScore = Infinity;
-    for (const { member, d } of grid.near(wx, wy, radius)) {
+    for (const { member } of grid.near(wx, wy, radius)) {
       if (c.joined[member] > month) continue;
+      const [mx, my] = camera.toScreen(c.x[member], c.y[member]);
+      const d = Math.hypot(mx - sx, my - sy);
+      if (d > reach) continue;
       const lit = c.degree[member] && month >= c.firstLink[member];
-      const score =
-        d * camera.zoom - (lit ? 6 + Math.log2(1 + c.degree[member]) : 0);
+      const score = d - (lit ? 6 + Math.log2(1 + c.degree[member]) : 0);
       if (score < bestScore) {
         bestScore = score;
         best = member;
@@ -667,14 +685,26 @@ function start(c: Community) {
       }
       tip.hidden = true;
     },
-    moved() {
+    moved(turned) {
       noteInteraction();
-      userMoved = true;
+      if (!turned) userMoved = true;
       if (introRunning) finishIntro();
       tip.hidden = true;
     },
     settled() {
       camera.springBack();
+    },
+    // At the overview a drag turns the city, as you would turn a map on a
+    // table; closer in, or looking at someone, it moves the map.
+    turn(dx) {
+      if (current() >= 0 || camera.zoom > fitZoom * 1.25) return false;
+      // The near side of the city follows the finger.
+      camera.angle -= dx * TURN_PER_PIXEL;
+      return true;
+    },
+    flick(vx) {
+      const rate = -vx * 1000 * TURN_PER_PIXEL;
+      camera.fling(Math.max(-4, Math.min(4, rate)));
     },
     doubleTap(x, y) {
       noteInteraction();

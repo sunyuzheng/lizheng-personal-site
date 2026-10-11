@@ -1,10 +1,11 @@
 /**
  * The homepage's window onto city.lizheng.ai: the same city, seen at an
- * angle so its disc fills a wide frame, turning slowly. The first time it
- * comes into view its lights come on from the middle outwards (the earliest
+ * angle like a city from a plane, turning slowly. The first time it comes
+ * into view its lights come on from the middle outwards (the earliest
  * members first) and its lines draw themselves. Pointing at a light lights up
  * that person's lines; the page around it decides what a click does (open
- * their card). It draws only while on screen.
+ * their card). A sideways drag turns the city, and a flick keeps it turning
+ * for a moment. It draws only while on screen.
  */
 import { Camera } from "./camera";
 import type { Community } from "./data";
@@ -22,6 +23,8 @@ export interface CityWindowOptions {
   onHover(member: number, x: number, y: number): void;
   /** A click or tap that did not drag: the light under it, or -1. */
   onPick(member: number): void;
+  /** A drag started turning the city. */
+  onTurn?(): void;
   /** The canvas changed size, so the lights moved. */
   onResize?(): void;
 }
@@ -40,6 +43,7 @@ export interface CityWindow {
 
 const INTRO_SECONDS = 6;
 const SPIN = 0.045; // radians per second
+const TURN_PER_PIXEL = 0.006; // radians, for a drag
 
 export function mountCityWindow(options: CityWindowOptions): CityWindow {
   const { canvas, data: c, reducedMotion, coarse } = options;
@@ -65,9 +69,10 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
     camera.dpr = Math.min(2, window.devicePixelRatio || 1);
     canvas.width = Math.round(rect.width * camera.dpr);
     canvas.height = Math.round(rect.height * camera.dpr);
-    // Look at the disc from an angle just steep enough to fill the frame.
+    // Look at the disc from an angle just steep enough to fill the frame,
+    // and never straight down, where it would look like a ball.
     camera.squash = Math.min(
-      1,
+      0.72,
       Math.max(0.38, (rect.height / rect.width) * 1.12)
     );
     fitZoom = Math.min(
@@ -157,12 +162,47 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
     const rect = canvas.getBoundingClientRect();
     return [event.clientX - rect.left, event.clientY - rect.top] as const;
   };
-  let down: { x: number; y: number } | null = null;
+  // A press that moves sideways turns the city; one that does not is a pick.
+  // On touch screens vertical swipes scroll the page (the canvas allows only
+  // those), so the browser cancels the press.
+  let down: {
+    id: number;
+    x: number;
+    y: number;
+    lastX: number;
+    lastTime: number;
+    speed: number;
+    turning: boolean;
+  } | null = null;
   const onMove = (event: PointerEvent) => {
-    if (event.pointerType !== "mouse") return;
     const [x, y] = local(event);
+    if (down && event.pointerId === down.id) {
+      const dx = x - down.x;
+      if (
+        !down.turning &&
+        Math.abs(dx) > 8 &&
+        Math.abs(dx) > Math.abs(y - down.y)
+      ) {
+        down.turning = true;
+        canvas.setPointerCapture(event.pointerId);
+        canvas.style.cursor = "grabbing";
+        options.onTurn?.();
+      }
+      if (down.turning) {
+        const step = x - down.lastX;
+        // The near side of the city follows the pointer.
+        camera.angle -= step * TURN_PER_PIXEL;
+        const dt = Math.max(1, event.timeStamp - down.lastTime);
+        down.speed = 0.8 * (step / dt) + 0.2 * down.speed;
+        down.lastX = x;
+        down.lastTime = event.timeStamp;
+        run();
+        return;
+      }
+    }
+    if (event.pointerType !== "mouse") return;
     const member = memberAt(x, y);
-    canvas.style.cursor = member >= 0 ? "pointer" : "default";
+    canvas.style.cursor = member >= 0 ? "pointer" : "grab";
     if (held) return;
     setHovered(member);
     if (member >= 0) {
@@ -177,19 +217,43 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   };
   const onDown = (event: PointerEvent) => {
     const [x, y] = local(event);
-    down = { x, y };
+    down = {
+      id: event.pointerId,
+      x,
+      y,
+      lastX: x,
+      lastTime: event.timeStamp,
+      speed: 0,
+      turning: false,
+    };
+    // A finger on a turning city stops it.
+    camera.fling(0);
   };
   const onUp = (event: PointerEvent) => {
-    if (!down) return;
+    if (!down || event.pointerId !== down.id) return;
     const [x, y] = local(event);
-    const moved = Math.hypot(x - down.x, y - down.y) > 6;
+    const press = down;
     down = null;
-    if (!moved) options.onPick(memberAt(x, y));
+    if (press.turning) {
+      canvas.style.cursor = "grab";
+      // A flick keeps it turning for a moment.
+      if (event.timeStamp - press.lastTime < 80)
+        camera.fling(
+          Math.max(-4, Math.min(4, -press.speed * 1000 * TURN_PER_PIXEL))
+        );
+      return;
+    }
+    if (Math.hypot(x - press.x, y - press.y) <= 6)
+      options.onPick(memberAt(x, y));
+  };
+  const onCancel = () => {
+    down = null;
   };
   canvas.addEventListener("pointermove", onMove);
   canvas.addEventListener("pointerleave", onLeave);
   canvas.addEventListener("pointerdown", onDown);
   canvas.addEventListener("pointerup", onUp);
+  canvas.addEventListener("pointercancel", onCancel);
 
   // ---------- Frames, only while on screen ----------
   let visible = false;
@@ -201,7 +265,8 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
     if (!visible || document.hidden || contextLost) return;
     frame = requestAnimationFrame(loop);
     // Settled and untouched, the window runs at half the frame rate.
-    const settled = month >= c.months && hovered < 0;
+    const settled =
+      month >= c.months && hovered < 0 && !down?.turning && !camera.flinging;
     skip = settled && !skip;
     if (skip) return;
     const dt = Math.min(0.05, (now - last) / 1000);
@@ -212,7 +277,8 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
       month = -0.3 + eased * (c.months + 0.3);
       if (p >= 1) month = c.months;
     }
-    if (!reducedMotion && hovered < 0) camera.angle += SPIN * dt;
+    camera.setSpin(!reducedMotion && hovered < 0 && !down?.turning ? SPIN : 0);
+    camera.update(now, dt);
     const want = hovered >= 0 ? 1 : 0;
     hoverLevel += (want - hoverLevel) * Math.min(1, dt * 8);
     renderer.draw({
@@ -280,6 +346,7 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
       canvas.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointerup", onUp);
+      canvas.removeEventListener("pointercancel", onCancel);
       if (frame) cancelAnimationFrame(frame);
     },
   };

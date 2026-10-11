@@ -1,7 +1,9 @@
 /**
- * The view over the city: where it is centred, how close, and how far it has
- * been turned. Handles drag, wheel, pinch and two-finger twist, and flies
- * smoothly from one place to another.
+ * The view over the city: where it is centred, how close, how far it has
+ * been turned, and how steeply it is seen (the city is flat, seen at an
+ * angle like a city from a plane). Handles drag, wheel, pinch and two-finger
+ * twist, keeps turning for a moment after a flick, and flies smoothly from
+ * one place to another.
  */
 import type { View } from "./renderer";
 
@@ -52,6 +54,7 @@ export class Camera implements Pose {
   slack = 0;
   private flight: Flight | null = null;
   private spin = 0;
+  private flingRate = 0;
 
   /** How far from the middle the view's centre may be at a zoom. */
   private bounds(zoom = this.zoom) {
@@ -184,7 +187,22 @@ export class Camera implements Pose {
     this.spin = radiansPerSecond;
   }
 
+  /**
+   * Keeps turning after a flick, slowing to a stop (radians per second); 0
+   * stops it, as a finger on a spinning record does.
+   */
+  fling(radiansPerSecond: number) {
+    if (radiansPerSecond) this.flight = null;
+    this.flingRate = radiansPerSecond;
+  }
+
+  /** Whether a flick is still turning the view. */
+  get flinging() {
+    return this.flingRate !== 0;
+  }
+
   flyTo(to: Partial<Pose>, duration = 1100) {
+    this.flingRate = 0;
     const target: Pose = {
       cx: to.cx ?? this.cx,
       cy: to.cy ?? this.cy,
@@ -212,7 +230,7 @@ export class Camera implements Pose {
     return this.flight !== null;
   }
 
-  /** Advances any flight, or the slow turn. */
+  /** Advances any flight, flick or slow turn. */
   update(now: number, dt: number) {
     if (this.flight) {
       const { from, to, start, duration, lift } = this.flight;
@@ -225,6 +243,10 @@ export class Camera implements Pose {
       this.zoom = Math.exp(logZoom - lift * Math.sin(Math.PI * e));
       this.angle = from.angle + (to.angle - from.angle) * e;
       if (t >= 1) this.flight = null;
+    } else if (this.flingRate) {
+      this.angle += this.flingRate * dt;
+      this.flingRate *= Math.exp(-dt * 2.4);
+      if (Math.abs(this.flingRate) < 0.03) this.flingRate = 0;
     } else {
       this.angle += this.spin * dt;
     }
@@ -236,11 +258,21 @@ export interface GestureHandlers {
   tap(x: number, y: number, pointerType: string): void;
   hover(x: number, y: number): void;
   leave(): void;
-  /** The user moved the map (any drag, wheel, pinch or twist). */
-  moved(): void;
+  /**
+   * The user moved the map (any drag, wheel, pinch or twist); `turned` when
+   * a drag only turned it (see `turn`).
+   */
+  moved(turned: boolean): void;
   /** A drag, pinch, glide or wheel turn has finished. */
   settled(): void;
   doubleTap(x: number, y: number): void;
+  /**
+   * A one-finger drag, as screen pixels: return true to have it turn the
+   * city (the page decides when, e.g. at the overview) rather than move it.
+   */
+  turn?(dx: number, dy: number): boolean;
+  /** A turning drag was let go at this speed (pixels per millisecond). */
+  flick?(vx: number): void;
 }
 
 /** Wires pointer and wheel input on the element to the camera. */
@@ -255,6 +287,7 @@ export function attachGestures(
   >();
   let dragged = false;
   let rotating = false;
+  let turning = false;
   let lastTap = 0;
   let velocity = { x: 0, y: 0, t: 0 };
   let inertia = 0;
@@ -298,6 +331,8 @@ export function attachGestures(
     const [x, y] = local(event);
     pointers.set(event.pointerId, { x, y, startX: x, startY: y });
     dragged = false;
+    turning = false;
+    camera.fling(0);
     rotating =
       event.pointerType === "mouse" &&
       (event.button === 2 || event.shiftKey || event.altKey);
@@ -334,7 +369,8 @@ export function attachGestures(
         dx * 0.006
       );
     } else {
-      camera.panBy(dx, dy);
+      turning = pointers.size === 1 && !!handlers.turn?.(dx, dy);
+      if (!turning) camera.panBy(dx, dy);
       const now = performance.now();
       const dt = Math.max(1, now - velocity.t);
       velocity = {
@@ -343,7 +379,7 @@ export function attachGestures(
         t: now,
       };
     }
-    handlers.moved();
+    handlers.moved(turning);
   });
 
   const end = (event: PointerEvent) => {
@@ -374,8 +410,11 @@ export function attachGestures(
       }
       return;
     }
-    // A flick keeps the map gliding for a moment.
-    if (
+    // A flick keeps the city turning, or the map gliding, for a moment.
+    if (pointers.size === 0 && turning) {
+      if (performance.now() - velocity.t < 80) handlers.flick?.(velocity.x);
+      handlers.settled();
+    } else if (
       pointers.size === 0 &&
       !rotating &&
       performance.now() - velocity.t < 80
@@ -391,7 +430,7 @@ export function attachGestures(
           return;
         }
         camera.panBy(vx, vy);
-        handlers.moved();
+        handlers.moved(false);
         inertia = requestAnimationFrame(glide);
       };
       inertia = requestAnimationFrame(glide);
@@ -418,7 +457,7 @@ export function attachGestures(
       const delta = event.deltaY * scale;
       const strength = event.ctrlKey ? 0.012 : 0.0018;
       camera.zoomAt(x, y, Math.exp(-delta * strength));
-      handlers.moved();
+      handlers.moved(false);
       clearTimeout(wheelEnd);
       wheelEnd = window.setTimeout(() => handlers.settled(), 220);
     },

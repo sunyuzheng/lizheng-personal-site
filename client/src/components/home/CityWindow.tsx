@@ -25,7 +25,8 @@ import { Phrases } from "./parts";
  * lights up that person's lines and shows their card: when they joined, their
  * posts and comments, and how many people they are in touch with. A click or
  * tap keeps the card open, with their profile and the way into the full page,
- * focused on them; search and "meet someone" open cards the same way. Where
+ * focused on them; search and "meet someone" open cards the same way. A
+ * sideways drag turns the city (embed.ts). Where
  * the browser cannot draw it (no WebGL2) or the data does not load, the
  * section falls back to the dot map (CityField).
  *
@@ -172,6 +173,8 @@ export default function CityWindow({
             if (member >= 0) showCard(member, true);
             else closeCard();
           },
+          // Turning the city moves the lights out from under an open card.
+          onTurn: closeCard,
           onResize() {
             setCard(current => {
               const at = current && handleRef.current?.locate(current.member);

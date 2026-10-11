@@ -1,5 +1,5 @@
 /**
- * community.lizheng.ai: Superlinear Academy as a city at night. Every member
+ * city.lizheng.ai: Superlinear Academy as a city at night. Every member
  * is a light on rings set by when they joined; a line lights up between two
  * members wherever one has commented on or liked the other's post or comment.
  *
@@ -10,37 +10,21 @@
  */
 import { attachGestures, Camera } from "./camera";
 import { COPY, formatNumber, type Copy, type Lang } from "./copy";
-import {
-  calendar,
-  decode,
-  isGraphFile,
-  otherOf,
-  ringRadius,
-  type Community,
-} from "./data";
-import {
-  CURVE,
-  Renderer,
-  type AvatarSprite,
-  type Pulse,
-  type Scene,
-} from "./renderer";
+import { calendar, otherOf, ringRadius, type Community } from "./data";
+import { CURVE, Renderer, type AvatarSprite, type Pulse } from "./renderer";
+import { buildScene, Grid } from "./scene";
+import { DATA_URL, loadCommunity } from "./source";
 import "./style.css";
 
 // Serif fonts load after first paint (see fonts.css).
 void import("./fonts.css");
 
-// Published by the monthly workflow (docs/community-graph.md); the dev server
-// reads the local file written by `pnpm community:graph`.
-const GRAPH_URL =
-  "https://kwicxc1px65aokwa.public.blob.vercel-storage.com/community/graph.json";
-const DATA_URL = import.meta.env.DEV ? "/community/graph.json" : GRAPH_URL;
 const PROFILE_BASE = "https://www.superlinear.academy/u/";
 const INTRO_SECONDS = 13;
 const IDLE_SPIN = 0.018; // radians per second, about one turn in six minutes
 const IDLE_AFTER = 5000;
 
-// English at community.lizheng.ai/en (?lang=en also works, for local checks).
+// English at city.lizheng.ai/en (?lang=en also works, for local checks).
 const lang: Lang =
   /^\/en(\/|$)/.test(location.pathname) ||
   new URLSearchParams(location.search).get("lang") === "en"
@@ -65,6 +49,9 @@ const monthInput = $<HTMLInputElement>("month");
 const playButton = $<HTMLButtonElement>("play");
 const dateLabel = $("date");
 const growthLabel = $("growth");
+const zoomControls = $("zoom");
+const zoomAll =
+  zoomControls.querySelector<HTMLButtonElement>('[data-zoom="all"]')!;
 
 const reducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
@@ -84,6 +71,14 @@ function applyCopy() {
     if (typeof value === "string") element.textContent = value;
   }
   findInput.placeholder = t.find.placeholder;
+  zoomControls.setAttribute("aria-label", t.zoom.label);
+  zoomControls
+    .querySelector('[data-zoom="in"]')!
+    .setAttribute("aria-label", t.zoom.in);
+  zoomControls
+    .querySelector('[data-zoom="out"]')!
+    .setAttribute("aria-label", t.zoom.out);
+  zoomAll.textContent = t.zoom.all;
   if (lang === "en") {
     $<HTMLAnchorElement>("home").href = "https://www.lizheng.ai/en";
   }
@@ -98,124 +93,9 @@ function fail(message: string) {
 }
 
 async function load() {
-  try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) throw new Error(String(response.status));
-    const json = await response.json();
-    if (!isGraphFile(json)) throw new Error("bad data");
-    return decode(json);
-  } catch {
-    fail(t.failed);
-    return null;
-  }
-}
-
-/** A small deterministic hash for per-member variety. */
-function hash(i: number) {
-  const n = Math.sin(i * 12.9898 + 78.233) * 43758.5453;
-  return n - Math.floor(n);
-}
-
-function buildScene(c: Community): Scene {
-  const n = c.count;
-  const size = new Float32Array(n);
-  const glow = new Float32Array(n);
-  const tint = new Float32Array(n);
-  const joined = new Float32Array(n);
-  const first = new Float32Array(n);
-  const pos = new Float32Array(n * 2);
-  let maxStrength = 1;
-  for (let i = 0; i < n; i++)
-    if (c.strength[i] > maxStrength) maxStrength = c.strength[i];
-  for (let i = 0; i < n; i++) {
-    pos[i * 2] = c.x[i];
-    pos[i * 2 + 1] = c.y[i];
-    joined[i] = c.joined[i];
-    first[i] = Number.isFinite(c.firstLink[i]) ? c.firstLink[i] : 1e6;
-    // At the overview, lights sit about four pixels apart, so most stay
-    // small; only people with many connections grow into bright stars.
-    if (c.degree[i]) {
-      size[i] = 0.7 + 0.3 * Math.log2(1 + c.degree[i]);
-      glow[i] =
-        0.32 +
-        0.6 *
-          Math.min(1, Math.log(1 + c.strength[i]) / Math.log(1 + maxStrength));
-    } else {
-      size[i] = 0.6;
-      glow[i] = 0.14 + 0.05 * Math.min(2, c.heat[i]) + 0.04 * hash(i);
-    }
-    tint[i] = c.heat[i] >= 7 ? 1 : 0;
-  }
-  const m = c.pairCount;
-  const edgeWeight = new Float32Array(m);
-  const edgeFirst = new Float32Array(m);
-  for (let k = 0; k < m; k++) {
-    const w = c.likes[k] + 3 * c.pairComments[k];
-    const brightness =
-      0.55 + 0.45 * Math.min(1, Math.log(1 + w) / Math.log(61));
-    // Staff lines are marked negative: the shader shows them only around a
-    // person being looked at.
-    edgeWeight[k] =
-      c.staff.has(c.pairA[k]) || c.staff.has(c.pairB[k])
-        ? -brightness
-        : brightness;
-    edgeFirst[k] = c.pairFirst[k];
-  }
-  return {
-    count: n,
-    pos,
-    size,
-    glow,
-    tint,
-    joined,
-    first,
-    edges: m,
-    edgeA: c.pairA,
-    edgeB: c.pairB,
-    edgeTie: c.tie,
-    edgeWeight,
-    edgeFirst,
-  };
-}
-
-/** A grid over world space for finding the light under the pointer. */
-class Grid {
-  private cells = new Map<number, number[]>();
-  constructor(
-    private c: Community,
-    private size = 0.025
-  ) {
-    for (let i = 0; i < c.count; i++) {
-      const key = this.key(
-        Math.floor(c.x[i] / size),
-        Math.floor(c.y[i] / size)
-      );
-      let cell = this.cells.get(key);
-      if (!cell) this.cells.set(key, (cell = []));
-      cell.push(i);
-    }
-  }
-  private key(gx: number, gy: number) {
-    return (gx + 1000) * 4000 + (gy + 1000);
-  }
-  /** Members within radius (world units) of (x, y), nearest first. */
-  near(x: number, y: number, radius: number) {
-    const found: { member: number; d: number }[] = [];
-    const reach = Math.ceil(radius / this.size);
-    const gx = Math.floor(x / this.size);
-    const gy = Math.floor(y / this.size);
-    for (let dy = -reach; dy <= reach; dy++) {
-      for (let dx = -reach; dx <= reach; dx++) {
-        const cell = this.cells.get(this.key(gx + dx, gy + dy));
-        if (!cell) continue;
-        for (const member of cell) {
-          const d = Math.hypot(this.c.x[member] - x, this.c.y[member] - y);
-          if (d <= radius) found.push({ member, d });
-        }
-      }
-    }
-    return found.sort((p, q) => p.d - q.d);
-  }
+  const community = await loadCommunity();
+  if (!community) fail(t.failed);
+  return community;
 }
 
 const normalize = (value: string) =>
@@ -299,8 +179,11 @@ function start(c: Community) {
     const usableH = camera.height - top - bottom;
     const usableW = mobile ? camera.width - 24 : camera.width - 80;
     fitZoom = Math.max(40, Math.min(usableW, usableH) / 2 / 1.04);
-    camera.minZoom = fitZoom * 0.45;
+    // The city can shrink a little below the overview, never to a dot, and
+    // can never be pushed off screen.
+    camera.minZoom = fitZoom * (mobile ? 0.85 : 0.6);
     camera.maxZoom = fitZoom * 60;
+    camera.cityRadius = 1;
     baseOffset = {
       x: mobile
         ? 0
@@ -424,6 +307,28 @@ function start(c: Community) {
     return width;
   };
 
+  // Where each shown name (with its face or light) sits this frame.
+  const nameSpots: {
+    member: number;
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+  }[] = [];
+  const nameAt = (x: number, y: number) => {
+    const pad = coarse ? 8 : 2;
+    for (const spot of nameSpots) {
+      if (
+        x >= spot.left - pad &&
+        x <= spot.right + pad &&
+        y >= spot.top - pad &&
+        y <= spot.bottom + pad
+      )
+        return spot.member;
+    }
+    return -1;
+  };
+
   /**
    * Faces and names for this frame, placed together person by person, most
    * important first: the focused person, then the people they know best (or,
@@ -491,6 +396,7 @@ function start(c: Community) {
     }
 
     const sprites: AvatarSprite[] = [];
+    nameSpots.length = 0;
     const seen = new Set<number>();
     let names = 0;
     for (const { member, level } of candidates) {
@@ -557,6 +463,7 @@ function start(c: Community) {
         element.className = `name on ${level === "plain" ? "" : level}`;
         // The element's own padding adds 9px before the text.
         element.style.transform = `translate3d(${(sx + gap - 9).toFixed(1)}px, ${(sy - size * 0.55).toFixed(1)}px, 0)`;
+        nameSpots.push({ member, left, top, right, bottom });
         names++;
       }
     }
@@ -703,6 +610,7 @@ function start(c: Community) {
       ? `<a href="${PROFILE_BASE}${c.linked[member]}" target="_blank" rel="noopener">${t.profile} ↗</a>`
       : "<span></span>";
     panel.innerHTML = `
+      <button type="button" class="sheet-handle" data-collapse aria-label="${t.sheet.collapse}"></button>
       <div class="panel-head">
         <button type="button" class="text-button panel-close" data-close>${t.close}</button>
         <div class="person">
@@ -729,6 +637,18 @@ function start(c: Community) {
     const button = target.closest<HTMLElement>("[data-member]");
     if (button) {
       focusOn(Number(button.dataset.member), { push: true });
+      return;
+    }
+    const handle = target.closest<HTMLButtonElement>("[data-collapse]");
+    if (handle) {
+      // Fold the sheet to its first lines to see more of the city, or back.
+      const collapsed = panel.classList.toggle("collapsed");
+      handle.setAttribute(
+        "aria-label",
+        collapsed ? t.sheet.expand : t.sheet.collapse
+      );
+      refreshUiRects();
+      if (current() >= 0) frameFocus(current(), 500);
       return;
     }
     if (target.closest("[data-close]")) {
@@ -766,6 +686,7 @@ function start(c: Community) {
     showAll = false;
     hovered = -1;
     tip.hidden = true;
+    panel.classList.remove("collapsed");
     renderPanel(member);
     applyHighlight();
     // Each person gets their own address, so back and forward walk between them.
@@ -775,10 +696,17 @@ function start(c: Community) {
     if (location.hash !== (c.linked[member] ? `#${c.linked[member]}` : ""))
       history.pushState(null, "", address);
     city.classList.add("focused");
+    camera.slack = 0.4;
     refreshUiRects();
     if (options.fly === false) return;
-    // Frame the person and the people they know best in the space the panel
-    // and the title leave free.
+    frameFocus(member, 1200);
+  };
+
+  /**
+   * Frames a person and the people they know best in the space the panel and
+   * the title leave free.
+   */
+  const frameFocus = (member: number, duration: number) => {
     const mobile = camera.width < 760;
     // The person and their nearer connections (the farthest 15% of a busy
     // person's lines may run off screen), measured as the screen is turned.
@@ -839,7 +767,7 @@ function start(c: Community) {
     const target = { cx: qx * cos + qy * sin, cy: -qx * sin + qy * cos };
     camera.offsetX = (free.left + free.right) / 2 - camera.width / 2;
     camera.offsetY = (free.top + free.bottom) / 2 - camera.height / 2;
-    camera.flyTo({ ...target, zoom }, 1200);
+    camera.flyTo({ ...target, zoom }, duration);
     userMoved = true;
   };
 
@@ -847,6 +775,7 @@ function start(c: Community) {
     selected = [];
     panel.hidden = true;
     city.classList.remove("focused");
+    camera.slack = 0;
     refreshUiRects();
     applyHighlight();
     if (location.hash)
@@ -1009,6 +938,53 @@ function start(c: Community) {
     image.src = atlasUrl;
   }
 
+  // ---------- Hint and zoom buttons ----------
+  const showHint = () => {
+    if (coarse) {
+      hint.textContent = t.hintTouch;
+      const bar = document.querySelector(".bar")!.getBoundingClientRect();
+      hint.style.top = `${Math.max(0, bar.top - 44)}px`;
+    }
+    hint.classList.add("on");
+    setTimeout(() => hint.classList.remove("on"), coarse ? 7000 : 6000);
+  };
+
+  zoomControls.addEventListener("click", event => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>(
+      "[data-zoom]"
+    );
+    if (!button) return;
+    noteInteraction();
+    if (introRunning) finishIntro();
+    const kind = button.dataset.zoom;
+    if (kind === "all") {
+      camera.flyTo({ cx: 0, cy: 0, zoom: fitZoom }, 800);
+      userMoved = false;
+      return;
+    }
+    // Zoom around the middle of the screen, staying inside the city.
+    camera.flyTo(
+      camera.zoomTarget(
+        camera.width / 2 + camera.offsetX,
+        camera.height / 2 + camera.offsetY,
+        kind === "in" ? 2 : 0.5
+      ),
+      420
+    );
+    userMoved = true;
+  });
+
+  // "全城" shows once the view has left the overview.
+  let awayShown = false;
+  const updateZoomControls = () => {
+    const away =
+      camera.zoom > fitZoom * 1.15 || Math.hypot(camera.cx, camera.cy) > 0.08;
+    if (away !== awayShown) {
+      awayShown = away;
+      zoomAll.hidden = !away;
+    }
+  };
+
   // ---------- Input ----------
   const noteInteraction = () => {
     lastInteraction = performance.now();
@@ -1019,8 +995,24 @@ function start(c: Community) {
   attachGestures(sky, camera, {
     tap(x, y) {
       noteInteraction();
-      const member = memberAt(x, y);
       if (introRunning) finishIntro();
+      const named = nameAt(x, y);
+      if (named >= 0) {
+        focusOn(named, { push: current() >= 0 });
+        return;
+      }
+      // Lights at the overview sit a few pixels apart, too close for a
+      // finger: a tap there zooms in around it, until each light can be told
+      // apart. A tap outside the city does nothing.
+      if (coarse && current() < 0 && camera.zoom < fitZoom * 3) {
+        const [wx, wy] = camera.toWorld(x, y);
+        if (Math.hypot(wx, wy) > 1.02) return;
+        const factor = Math.min(fitZoom * 3.4, camera.zoom * 2.6) / camera.zoom;
+        camera.flyTo(camera.zoomTarget(x, y, factor), 650);
+        userMoved = true;
+        return;
+      }
+      const member = memberAt(x, y);
       if (member >= 0) focusOn(member, { push: current() >= 0 });
       else if (current() >= 0) clearFocus();
     },
@@ -1047,15 +1039,12 @@ function start(c: Community) {
       if (introRunning) finishIntro();
       tip.hidden = true;
     },
+    settled() {
+      camera.springBack();
+    },
     doubleTap(x, y) {
       noteInteraction();
-      camera.flyTo(
-        (() => {
-          const [wx, wy] = camera.toWorld(x, y);
-          return { cx: wx, cy: wy, zoom: camera.zoom * 2.2 };
-        })(),
-        600
-      );
+      camera.flyTo(camera.zoomTarget(x, y, 2.2), 600);
       userMoved = true;
     },
   });
@@ -1251,8 +1240,7 @@ function start(c: Community) {
         introRunning = false;
         month = c.months;
         setPlayLabel();
-        if (!coarse) hint.classList.add("on");
-        setTimeout(() => hint.classList.remove("on"), 6000);
+        showHint();
       }
       updateTimeLabels();
     } else if (playing) {
@@ -1322,6 +1310,7 @@ function start(c: Community) {
       avatars: faces,
     });
     drawGuides(now);
+    updateZoomControls();
     requestAnimationFrame(frame);
   };
 

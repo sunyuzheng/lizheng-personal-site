@@ -266,6 +266,7 @@ in vec2 v_uv;
 uniform sampler2D u_light;
 uniform vec2 u_viewport;
 uniform float u_exposure;
+uniform float u_transparent;
 out vec4 o;
 float noise(vec2 p) {
   return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
@@ -279,6 +280,11 @@ void main() {
   vec3 forest = vec3(0.045, 0.165, 0.095);
   vec3 bg = mix(forest, deep, smoothstep(0.0, 0.95, d));
   vec3 mapped = vec3(1.0) - exp(-light * u_exposure);
+  if (u_transparent > 0.5) {
+    // Light only, premultiplied, so the page behind shows through.
+    o = vec4(mapped, max(mapped.r, max(mapped.g, mapped.b)));
+    return;
+  }
   vec3 c = 1.0 - (1.0 - bg) * (1.0 - mapped);
   c += (noise(gl_FragCoord.xy) - 0.5) / 255.0 * 1.5;
   o = vec4(c, 1.0);
@@ -391,17 +397,23 @@ export class Renderer {
   private float: boolean;
   private scene: Scene;
   private segments: number;
+  private transparent: boolean;
   private emptyVao: WebGLVertexArrayObject;
 
+  /**
+   * `transparent` draws the light alone, so the element behind the canvas
+   * (its CSS background) is the night sky — as on the homepage.
+   */
   constructor(
     canvas: HTMLCanvasElement,
     scene: Scene,
-    options: { segments: number }
+    options: { segments: number; transparent?: boolean }
   ) {
+    const transparent = !!options.transparent;
     const gl = canvas.getContext("webgl2", {
       antialias: false,
-      alpha: false,
-      premultipliedAlpha: false,
+      alpha: transparent,
+      premultipliedAlpha: transparent,
       preserveDrawingBuffer: false,
       powerPreference: "high-performance",
     });
@@ -409,6 +421,7 @@ export class Renderer {
     this.gl = gl;
     this.scene = scene;
     this.segments = options.segments;
+    this.transparent = transparent;
     this.float =
       !!gl.getExtension("EXT_color_buffer_float") ||
       !!gl.getExtension("EXT_color_buffer_half_float");
@@ -743,6 +756,7 @@ export class Renderer {
     gl.uniform1i(composite.u("u_light"), 0);
     gl.uniform2f(composite.u("u_viewport"), view.width, view.height);
     gl.uniform1f(composite.u("u_exposure"), 1.0);
+    gl.uniform1f(composite.u("u_transparent"), this.transparent ? 1 : 0);
     gl.bindVertexArray(this.emptyVao);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 

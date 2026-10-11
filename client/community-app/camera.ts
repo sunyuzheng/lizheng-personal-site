@@ -37,6 +37,47 @@ export class Camera implements Pose {
   /** Screen offset of the point the camera centres on (e.g. beside a panel). */
   offsetX = 0;
   offsetY = 0;
+  /**
+   * Vertical squash after turning: 1 looks straight down; less looks at the
+   * city from an angle, so its disc becomes a turning ellipse.
+   */
+  squash = 1;
+  /**
+   * The city's radius (world units). The view may move only as far as keeps
+   * the city filling the screen: barely at the overview, freely once zoomed
+   * in. Past that the city resists like elastic and springs back when let go.
+   */
+  cityRadius = Infinity;
+  /** Extra room, e.g. while framing a person near the edge beside a panel. */
+  slack = 0;
+
+  /** How far from the middle the view's centre may be at a zoom. */
+  private bounds(zoom = this.zoom) {
+    const visible = Math.min(this.width, this.height) / 2 / zoom;
+    return Math.max(0.1, this.cityRadius - visible * 0.85) + this.slack;
+  }
+
+  /**
+   * Where the view would be after zooming by a factor while keeping the
+   * world point under (sx, sy) in place, kept inside the bounds.
+   */
+  zoomTarget(sx: number, sy: number, factor: number): Pose {
+    const zoom = this.clampZoom(this.zoom * factor);
+    const [wx, wy] = this.toWorld(sx, sy);
+    const dx = (sx - this.width / 2 - this.offsetX) / zoom;
+    const dy = (sy - this.height / 2 - this.offsetY) / zoom / this.squash;
+    const cos = Math.cos(this.angle);
+    const sin = Math.sin(this.angle);
+    let cx = wx - (dx * cos + dy * sin);
+    let cy = wy - (-dx * sin + dy * cos);
+    const d = Math.hypot(cx, cy);
+    const bounds = this.bounds(zoom);
+    if (d > bounds) {
+      cx *= bounds / d;
+      cy *= bounds / d;
+    }
+    return { cx, cy, zoom, angle: this.angle };
+  }
   private flight: Flight | null = null;
   private spin = 0;
 
@@ -47,13 +88,13 @@ export class Camera implements Pose {
     const sin = Math.sin(this.angle);
     return [
       this.width / 2 + this.offsetX + dx * cos - dy * sin,
-      this.height / 2 + this.offsetY + dx * sin + dy * cos,
+      this.height / 2 + this.offsetY + (dx * sin + dy * cos) * this.squash,
     ];
   }
 
   toWorld(sx: number, sy: number): [number, number] {
     const dx = (sx - this.width / 2 - this.offsetX) / this.zoom;
-    const dy = (sy - this.height / 2 - this.offsetY) / this.zoom;
+    const dy = (sy - this.height / 2 - this.offsetY) / this.zoom / this.squash;
     const cos = Math.cos(this.angle);
     const sin = Math.sin(this.angle);
     return [this.cx + dx * cos + dy * sin, this.cy - dx * sin + dy * cos];
@@ -64,9 +105,9 @@ export class Camera implements Pose {
     const cos = Math.cos(this.angle);
     const sin = Math.sin(this.angle);
     const a = s * cos;
-    const b = s * sin;
+    const b = s * sin * this.squash;
     const c = -s * sin;
-    const d = s * cos;
+    const d = s * cos * this.squash;
     const ox = (this.width / 2 + this.offsetX) * this.dpr;
     const oy = (this.height / 2 + this.offsetY) * this.dpr;
     return {
@@ -113,8 +154,29 @@ export class Camera implements Pose {
     this.flight = null;
     const cos = Math.cos(this.angle);
     const sin = Math.sin(this.angle);
-    this.cx -= (dx * cos + dy * sin) / this.zoom;
-    this.cy -= (-dx * sin + dy * cos) / this.zoom;
+    const sy = dy / this.squash;
+    let wx = -(dx * cos + sy * sin) / this.zoom;
+    let wy = -(-dx * sin + sy * cos) / this.zoom;
+    const before = Math.hypot(this.cx, this.cy);
+    const after = Math.hypot(this.cx + wx, this.cy + wy);
+    const bounds = this.bounds();
+    if (after > bounds && after > before) {
+      // Stiffer the further past the edge (measured on screen).
+      const k = 1 / (1 + ((after - bounds) * this.zoom) / 15);
+      wx *= k;
+      wy *= k;
+    }
+    this.cx += wx;
+    this.cy += wy;
+  }
+
+  /** Brings the view back inside the bounds, if a gesture left it outside. */
+  springBack() {
+    const d = Math.hypot(this.cx, this.cy);
+    const bounds = this.bounds();
+    if (d <= bounds || this.flight) return;
+    const k = bounds / d;
+    this.flyTo({ cx: this.cx * k, cy: this.cy * k }, 380);
   }
 
   /** A slow turn while nobody is touching the map (radians per second). */
@@ -184,6 +246,8 @@ export interface GestureHandlers {
   leave(): void;
   /** The user moved the map (any drag, wheel, pinch or twist). */
   moved(): void;
+  /** A drag, pinch, glide or wheel turn has finished. */
+  settled(): void;
   doubleTap(x: number, y: number): void;
 }
 
@@ -208,6 +272,7 @@ export function attachGestures(
     cx: number;
     cy: number;
   } | null = null;
+  let wheelEnd = 0;
 
   const local = (event: PointerEvent | WheelEvent | MouseEvent) => {
     const rect = element.getBoundingClientRect();
@@ -326,6 +391,7 @@ export function attachGestures(
         vy *= 0.92;
         if (Math.hypot(vx, vy) < 0.3) {
           inertia = 0;
+          handlers.settled();
           return;
         }
         camera.panBy(vx, vy);
@@ -333,6 +399,8 @@ export function attachGestures(
         inertia = requestAnimationFrame(glide);
       };
       inertia = requestAnimationFrame(glide);
+    } else if (pointers.size === 0) {
+      handlers.settled();
     }
   };
   element.addEventListener("pointerup", end);
@@ -355,6 +423,8 @@ export function attachGestures(
       const strength = event.ctrlKey ? 0.012 : 0.0018;
       camera.zoomAt(x, y, Math.exp(-delta * strength));
       handlers.moved();
+      clearTimeout(wheelEnd);
+      wheelEnd = window.setTimeout(() => handlers.settled(), 220);
     },
     { passive: false }
   );

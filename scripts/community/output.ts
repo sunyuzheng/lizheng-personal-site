@@ -1,5 +1,5 @@
 /**
- * The file community.lizheng.ai reads: every member in the order they joined
+ * The file city.lizheng.ai reads: every member in the order they joined
  * (so a member's index is also their place on the rings), and every pair of
  * members who have interacted.
  */

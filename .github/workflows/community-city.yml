@@ -2,7 +2,7 @@ name: Community map data
 
 # Refreshes both community maps once a month, published to Vercel Blob; the
 # pages read the files at runtime, so no deploy is needed.
-# - community.lizheng.ai (docs/community-graph.md): members from the Circle
+# - city.lizheng.ai (docs/community-graph.md): members from the Circle
 #   Admin API, likes and comments from the Circle Data API.
 # - The homepage map (docs/community-city.md): reuses the same member list.
 on:
@@ -39,7 +39,7 @@ jobs:
       # are needed) and about 1,300 Data API requests (a separate allowance,
       # 600 a minute). Scheduled runs skip while the published graph is under
       # 20 days old.
-      - name: Connection map (community.lizheng.ai)
+      - name: Connection map (city.lizheng.ai)
         run: >-
           pnpm community:graph --upload --max-admin-requests=300
           ${{ github.event_name == 'schedule' && '--min-age-days=20' || '' }}

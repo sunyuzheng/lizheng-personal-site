@@ -63,9 +63,10 @@
       "respectOriginCacheControl": false,
       "headers": { "Cache-Control": "no-store" }
     },
-    { "src": "^/$", "has": [{ "type": "host", "value": "community\\.lizheng\\.ai" }], "dest": "/community-app" },
-    { "src": "^/en/?$", "has": [{ "type": "host", "value": "community\\.lizheng\\.ai" }], "dest": "/community-app/en" },
-    { "src": "^/community-app(?:/.*)?$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://community.lizheng.ai/" } },
+    { "src": "^/$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app" },
+    { "src": "^/en/?$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app/en" },
+    { "src": "^/(.*)$", "has": [{ "type": "host", "value": "community\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://city.lizheng.ai/$1" } },
+    { "src": "^/community-app(?:/.*)?$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://city.lizheng.ai/" } },
     {
       "src": "/assets/(.*)",
       "headers": {

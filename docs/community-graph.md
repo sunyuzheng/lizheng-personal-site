@@ -1,4 +1,4 @@
-# 社区关系图：community.lizheng.ai
+# 社区关系图：city.lizheng.ai
 
 超线性学院社区的单独页面。每一盏灯是一位成员；两个人之间只要有人给对方的帖子或评论留过言、点过赞，就连上一条线。首页的「我们在建一座城」只画成员（`docs/community-city.md`），这个页面把成员之间的来往也画出来。
 
@@ -56,8 +56,10 @@ pnpm community:graph --upload
 
 `ringLayout`（`scripts/community/graph.ts`）：每个人的半径由加入顺序决定；方向先按向日葵螺旋均匀撒开，再迭代40轮：每个人朝自己来往对象的方向靠（常来常往拉得最重，团队的线不参与），然后每120个同期加入的人重新均匀摊开一整圈，只保留谁挨着谁。只靠拉的话所有有来往的人会挤到同一边；每轮重新摊开，保持密度均匀。力导向布局（ForceAtlas2）试过：这个社区连得太密，又有几个人和几千人有来往，画出来是一团没有结构的白球，所以没有用。
 
-## 页面怎么放在 community.lizheng.ai
+## 页面怎么放在 city.lizheng.ai
 
-和 ask.lizheng.ai 一样由主站托管：`client/community-app/` 是 Vite 的第二个入口，构建到 `dist/public/community-app/`；`scripts/prerender-community.ts` 写出英文页 `/community-app/en/`。`vercel.json` 里 `community.lizheng.ai` 的 `/` 和 `/en` 指向这两页，`www.lizheng.ai/community-app` 跳到 community.lizheng.ai。域名要在 Vercel 项目 `lizheng-personal-site_codex` 里加上 `community.lizheng.ai`（lizheng.ai 的解析在 Vercel，加域名时会自动加记录）。
+2026-10-11 上线时叫 community.lizheng.ai，当天改成 city.lizheng.ai（community 很多人拼不对）；旧地址整站308跳到新地址，已经发出去的链接（包括 `#某人`）照常能用。
+
+和 ask.lizheng.ai 一样由主站托管：`client/community-app/` 是 Vite 的第二个入口，构建到 `dist/public/community-app/`；`scripts/prerender-community.ts` 写出英文页 `/community-app/en/`。`vercel.json` 里 `city.lizheng.ai` 的 `/` 和 `/en` 指向这两页，`community.lizheng.ai` 和 `www.lizheng.ai/community-app` 都跳到 city.lizheng.ai。两个子域名都加在 Vercel 项目 `lizheng-personal-site_codex` 里（lizheng.ai 的解析在 Vercel，加域名时会自动加记录）。仓库里的目录、脚本和数据路径仍叫 community（`client/community-app/`、`pnpm community:graph`、Blob 的 `community/graph.json`），只有对外的地址改了。
 
 需要立刻把某个人从图上拿掉时，把线上 `graph.json` 里对应的 `linked` 和 `names` 改成空字符串、从 `avatars.cells` 去掉TA，再用 `vercel blob put` 覆盖同一路径；TA的灯和线还在，但不再显示名字、头像和主页链接。

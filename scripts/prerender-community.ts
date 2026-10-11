@@ -1,5 +1,5 @@
 /**
- * Writes the English page of community.lizheng.ai (/en) from the built Chinese
+ * Writes the English page of city.lizheng.ai (/en) from the built Chinese
  * one, so the English address has its own title, description, canonical link
  * and visible words before any script runs. The page script still picks the
  * language from the address and applies the same words.
@@ -36,12 +36,12 @@ swap('<html lang="zh-CN">', '<html lang="en">');
 swap(`<title>${zh.title}</title>`, `<title>${escape(en.title)}</title>`);
 swap(`content="${zh.description}"`, `content="${escape(en.description)}"`);
 swap(
-  '<link rel="canonical" href="https://community.lizheng.ai/" />',
-  '<link rel="canonical" href="https://community.lizheng.ai/en" />'
+  '<link rel="canonical" href="https://city.lizheng.ai/" />',
+  '<link rel="canonical" href="https://city.lizheng.ai/en" />'
 );
 swap(
-  '<meta property="og:url" content="https://community.lizheng.ai/" />',
-  '<meta property="og:url" content="https://community.lizheng.ai/en" />'
+  '<meta property="og:url" content="https://city.lizheng.ai/" />',
+  '<meta property="og:url" content="https://city.lizheng.ai/en" />'
 );
 swap(
   `<meta property="og:title" content="${zh.heading}" />`,
@@ -70,4 +70,4 @@ html = html.replace(
 
 fs.mkdirSync(path.join(dist, "en"), { recursive: true });
 fs.writeFileSync(path.join(dist, "en", "index.html"), html);
-console.log("✅ community.lizheng.ai: English page written");
+console.log("✅ city.lizheng.ai: English page written");

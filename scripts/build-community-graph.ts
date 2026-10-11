@@ -1,5 +1,5 @@
 /**
- * Builds the data for community.lizheng.ai: every Superlinear Academy member,
+ * Builds the data for city.lizheng.ai: every Superlinear Academy member,
  * and a line between two members wherever one has commented on, replied to or
  * liked the other's post or comment (docs/community-graph.md).
  *

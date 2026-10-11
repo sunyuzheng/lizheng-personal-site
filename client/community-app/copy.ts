@@ -25,6 +25,7 @@ export interface Copy {
   eyebrow: string;
   heading: string;
   lede: string;
+  /** After the members and connections numbers under the timeline. */
   stats: { members: string; pairs: string };
   ties: [string, string, string];
   rings: string;
@@ -38,7 +39,6 @@ export interface Copy {
   sheet: { collapse: string; expand: string };
   month: (year: number, month: number) => string;
   ringLabel: (year: number, month: number) => string;
-  growth: (members: number, pairs: number) => string;
   play: string;
   pause: string;
   replay: string;
@@ -97,7 +97,6 @@ const zh: Copy = {
   month: (year, month) => `${year}年${month}月`,
   ringLabel: (year, month) =>
     month === 1 ? `${year}年` : `${year}年${month}月`,
-  growth: (members, pairs) => `${fmt(members)}位成员 · ${fmt(pairs)}条连接`,
   play: "播放",
   pause: "暂停",
   replay: "重播",
@@ -169,8 +168,6 @@ const en: Copy = {
   month: (year, month) => `${MONTHS_EN[month - 1]} ${year}`,
   ringLabel: (year, month) =>
     month === 1 ? `${year}` : `${MONTHS_EN[month - 1]} ${year}`,
-  growth: (members, pairs) =>
-    `${fmt(members)} members · ${fmt(pairs)} connections`,
   play: "Play",
   pause: "Pause",
   replay: "Replay",

@@ -130,15 +130,6 @@ function start(c: Community) {
   // Phones held sideways (style.css uses the same height).
   const isShort = () => !isPhone() && camera.height <= SHORT_HEIGHT;
 
-  // ---------- Stats and note ----------
-  const statValues: Record<string, string> = {
-    members: formatNumber(c.count),
-    pairs: formatNumber(c.pairCount),
-  };
-  for (const element of document.querySelectorAll<HTMLElement>("[data-stat]")) {
-    element.textContent = statValues[element.dataset.stat!] ?? "";
-  }
-  $("stats").classList.add("ready");
   $("note").textContent = t.note(t.date(c.generatedAt));
 
   // ---------- The page's words, which names and faces keep clear of ----------
@@ -206,6 +197,14 @@ function start(c: Community) {
           10,
       };
     }
+    // The zoom buttons sit at the bottom right, just above the bar.
+    if (!city.classList.contains("focused")) {
+      const bar = document.querySelector(".bar")!.getBoundingClientRect();
+      city.style.setProperty(
+        "--zoom-bottom",
+        `${Math.round(camera.height - bar.top + 12)}px`
+      );
+    }
     const { top, bottom } = overviewRoom;
     const usableH = camera.height - top - bottom;
     const usableW = phone ? camera.width - 24 : camera.width - 80;
@@ -217,7 +216,13 @@ function start(c: Community) {
       Math.min(
         usableW / 2,
         usableH / 2 / camera.squash,
-        phone ? Infinity : camera.width * 0.37
+        // On wide screens the city stays clear of the title and search.
+        phone
+          ? Infinity
+          : Math.max(
+              camera.width * 0.37,
+              Math.min(camera.width, camera.height) * 0.45
+            )
       ) / 1.04
     );
     // The city can shrink a little below the overview, never to a dot, and
@@ -247,16 +252,27 @@ function start(c: Community) {
   };
 
   // ---------- Months ----------
+  // Under the timeline: the month shown, and how many members and
+  // connections the city had by then (counting up during the opening).
   const dateLabel = $("date");
   const growthLabel = $("growth");
+  let shownMonth = -1;
   const updateTimeLabels = () => {
     const index = Math.max(0, Math.min(c.months - 1, Math.floor(month)));
-    const { year, month: m } = calendar(c, index);
-    dateLabel.textContent = t.month(year, m);
-    growthLabel.textContent = t.growth(
-      c.membersByMonth[index],
-      c.pairsByMonth[index]
-    );
+    if (index !== shownMonth) {
+      shownMonth = index;
+      const { year, month: m } = calendar(c, index);
+      dateLabel.textContent = t.month(year, m);
+      growthLabel.innerHTML = [
+        [c.membersByMonth[index], t.stats.members],
+        [c.pairsByMonth[index], t.stats.pairs],
+      ]
+        .map(
+          ([value, label]) =>
+            `<span><b>${formatNumber(value as number)}</b>${label}</span>`
+        )
+        .join("");
+    }
     monthInput.value = String(month);
     monthInput.style.setProperty("--progress", `${(month / c.months) * 100}%`);
   };
@@ -376,7 +392,13 @@ function start(c: Community) {
   const sheet = attachSheet(panelElement, {
     active: isPhone,
     onDismiss: () => clearFocus(),
-    onSettle: refreshKeepClear,
+    onSettle: () => {
+      city.style.setProperty(
+        "--sheet-peek",
+        `${Math.round(sheet.peekHeight())}px`
+      );
+      refreshKeepClear();
+    },
     labels: t.sheet,
   });
 
@@ -400,6 +422,10 @@ function start(c: Community) {
       history.pushState(null, "", hash || location.pathname + location.search);
     city.classList.add("focused");
     sheet.open(wasHidden);
+    city.style.setProperty(
+      "--sheet-peek",
+      `${Math.round(sheet.peekHeight())}px`
+    );
     camera.slack = 0.4;
     refreshKeepClear();
     if (options.fly !== false) frameFocus(member, 1200);
@@ -441,14 +467,16 @@ function start(c: Community) {
       maxY = Math.max(maxY, y);
     }
     const intro = document.querySelector(".intro")!.getBoundingClientRect();
-    // On touch screens the zoom buttons sit at the right edge.
+    // On touch screens the zoom buttons sit just above the sheet.
     const buttons = zoomControls.getBoundingClientRect();
+    const sheetTop = camera.height - sheet.peekHeight();
     const free = isPhone()
       ? {
           left: 0,
-          right: buttons.width ? buttons.left - 8 : camera.width,
+          right: camera.width,
           top: intro.bottom + 8,
-          bottom: camera.height - sheet.peekHeight() - 8,
+          bottom:
+            (buttons.height ? Math.min(sheetTop, buttons.top) : sheetTop) - 8,
         }
       : {
           left: 0,
@@ -586,9 +614,12 @@ function start(c: Community) {
   // ---------- Hint and zoom buttons ----------
   const showHint = () => {
     if (coarse) {
+      // Above the zoom buttons, which sit just above the bar.
       hint.textContent = t.hintTouch;
       const bar = document.querySelector(".bar")!.getBoundingClientRect();
-      hint.style.top = `${Math.max(0, bar.top - 44)}px`;
+      const buttons = zoomControls.getBoundingClientRect();
+      const floor = buttons.height ? buttons.top : bar.top;
+      hint.style.top = `${Math.max(0, floor - 10 - hint.offsetHeight)}px`;
     }
     hint.classList.add("on");
     setTimeout(() => hint.classList.remove("on"), coarse ? 7000 : 6000);

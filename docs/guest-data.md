@@ -2,6 +2,8 @@
 
 [Open Context](https://github.com/sunyuzheng/lizheng-open-context) owns the public guest catalog. The website generates one deployment snapshot from a fixed release; page layout, styling, and routes live here.
 
+Published programme introductions, articles and media provide the primary evidence. Open Context maintains their traceable records, including source links and programme dates. Profile facts are calibrated there, then regenerated here. The website is a consumer of these records.
+
 | Source | Contents | Website use |
 |---|---|---|
 | `catalog/guests.json` | Stable entities, names and aliases, programmes, participation, profile presentation and legacy slugs | Directory, profile pages, featured programme and episode lists |

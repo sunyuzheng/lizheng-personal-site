@@ -13,6 +13,8 @@ export interface GraphFile {
   linked: string[];
   names: string[];
   joined: number[];
+  /** Likes, comments and replies between two members, per month. */
+  links?: number[];
   angle: number[];
   heat: string;
   activity: number[];
@@ -67,9 +69,15 @@ export interface Community {
   firstLink: Float32Array;
   /** Connected members, most connected first. */
   ranked: Uint32Array;
-  /** Running totals at the end of each month. */
+  /**
+   * Running totals at the end of each month: members, and connections. Every
+   * like, comment and reply between two members is a connection, so two
+   * people can share many and the count is far above the number of lines.
+   */
   membersByMonth: Uint32Array;
-  pairsByMonth: Uint32Array;
+  linksByMonth: Uint32Array;
+  /** Connections in all, as of today. */
+  linkCount: number;
   avatarCell: Int32Array;
   avatars?: GraphFile["avatars"];
 }
@@ -99,6 +107,7 @@ export function isGraphFile(value: unknown): value is GraphFile {
     data.names.length === count &&
     data.names.every(name => typeof name === "string" && name.length <= 80) &&
     isInts(data.joined, count) &&
+    (data.links === undefined || isInts(data.links, data.months ?? -1)) &&
     isInts(data.angle, count) &&
     typeof data.heat === "string" &&
     data.heat.length === count &&
@@ -194,14 +203,19 @@ export function decode(file: GraphFile): Community {
 
   const months = file.months;
   const membersByMonth = new Uint32Array(months);
-  const pairsByMonth = new Uint32Array(months);
+  const linksByMonth = new Uint32Array(months);
   for (let i = 0; i < n; i++)
     membersByMonth[Math.min(months - 1, Math.max(0, joined[i]))]++;
-  for (let k = 0; k < m; k++)
-    pairsByMonth[Math.min(months - 1, pairFirst[k])]++;
+  if (file.links) linksByMonth.set(file.links);
+  // Files made before the monthly counts existed: a pair's likes and
+  // comments all fall in its first month (the total is still right).
+  else
+    for (let k = 0; k < m; k++)
+      linksByMonth[Math.min(months - 1, pairFirst[k])] +=
+        likes[k] + pairComments[k];
   for (let t = 1; t < months; t++) {
     membersByMonth[t] += membersByMonth[t - 1];
-    pairsByMonth[t] += pairsByMonth[t - 1];
+    linksByMonth[t] += linksByMonth[t - 1];
   }
 
   const avatarCell = new Int32Array(n).fill(-1);
@@ -242,7 +256,8 @@ export function decode(file: GraphFile): Community {
     firstLink,
     ranked: Uint32Array.from(connected),
     membersByMonth,
-    pairsByMonth,
+    linksByMonth,
+    linkCount: months ? linksByMonth[months - 1] : 0,
     avatarCell,
     avatars: file.avatars,
   };

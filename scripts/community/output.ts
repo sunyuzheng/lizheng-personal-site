@@ -1,7 +1,8 @@
 /**
  * The file city.lizheng.ai reads: every member in the order they joined
- * (so a member's index is also their place on the rings), and every pair of
- * members who have interacted.
+ * (so a member's index is also their place on the rings), every pair of
+ * members who have interacted, and how many likes, comments and replies
+ * passed between members each month.
  */
 import { memberHeat } from "./city";
 import type { Built } from "./graph";
@@ -19,6 +20,11 @@ export interface GraphFile {
   names: string[];
   /** Month index the member joined. */
   joined: number[];
+  /**
+   * Likes, comments and replies between two members, per month. Each one is
+   * a connection, so the connection count is their running total.
+   */
+  links: number[];
   /** Direction on the rings, 0–9999 of a full turn. */
   angle: number[];
   /** 0–9 per member, as on the homepage's dot map (memberHeat). */
@@ -123,6 +129,7 @@ export function toGraphFile(
       linked,
       names,
       joined,
+      links: built.links,
       angle,
       heat,
       activity,

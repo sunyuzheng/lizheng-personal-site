@@ -51,6 +51,12 @@ export interface Built {
   staff: Set<number>;
   first: number[];
   months: number;
+  /**
+   * Likes, comments and replies between two members in each month. Every
+   * one counts as a connection (two people can have many), so the page's
+   * connection count is their sum, not the number of pairs.
+   */
+  links: number[];
   dropped: Record<string, number>;
 }
 
@@ -110,6 +116,7 @@ export function buildGraph(
   }
   const pairs = new Map<string, Acc>();
   const months = monthIndex(now.toISOString()) + 1;
+  const links = new Array<number>(months).fill(0);
 
   for (const item of interactions) {
     let target: number | undefined;
@@ -135,6 +142,7 @@ export function buildGraph(
       drop("outside the time range");
       continue;
     }
+    links[month]++;
     const a = Math.min(item.actor, target);
     const b = Math.max(item.actor, target);
     const key = `${a}:${b}`;
@@ -237,6 +245,7 @@ export function buildGraph(
     staff,
     first,
     months,
+    links,
     dropped,
   };
 }

@@ -275,7 +275,7 @@ export interface CityCopy {
  */
 export interface WindowCopy {
   caption: (count: string) => [string, string];
-  label: (count: string, pairs: string) => string;
+  label: (count: string, links: string) => string;
   /** The way in: the frame's corner on hover, and beside the join button. */
   enter: string;
   /** The label under the number of people someone is in touch with. */
@@ -674,8 +674,8 @@ const zh = {
         `这里有${count}盏灯，每一盏是一位真实成员。`,
         "两盏灯之间的线，是他们给对方的留言和点赞。",
       ],
-      label: (count: string, pairs: string) =>
-        `社区关系图：${count}位成员，${pairs}条连接。点一盏灯，看看是谁。`,
+      label: (count: string, links: string) =>
+        `社区关系图：${count}位成员，${links}条连接。点一盏灯，看看是谁。`,
       enter: "进入这座城",
       linked: () => "人有来往",
       hint: "点一下，看TA的主页和来往",
@@ -1110,10 +1110,10 @@ const en: HomeCopy = {
         `${count} lights, one for each real member.`,
         "The lines between them are the comments and likes they have left each other.",
       ],
-      label: (count, pairs) =>
-        `Community map: ${count} members and ${pairs} connections. Click a light to see who it is.`,
+      label: (count, links) =>
+        `Community map: ${count} members and ${links} connections. Click a light to see who it is.`,
       enter: "Enter the city",
-      linked: count => (count === 1 ? "connection" : "connections"),
+      linked: count => (count === 1 ? "person in touch" : "people in touch"),
       hint: "Click for their profile and connections",
       profile: "Open their profile",
       explore: "See who they’re connected to",

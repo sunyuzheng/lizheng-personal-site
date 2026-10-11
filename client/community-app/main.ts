@@ -123,7 +123,7 @@ function start(c: Community) {
     return;
   }
   statusLine.classList.add("off");
-  sky.setAttribute("aria-label", t.canvasLabel(c.count, c.pairCount));
+  sky.setAttribute("aria-label", t.canvasLabel(c.count, c.linkCount));
   const grid = new Grid(c);
   const camera = new Camera();
   const guideContext = guides.getContext("2d")!;
@@ -266,7 +266,7 @@ function start(c: Community) {
       dateLabel.textContent = t.month(year, m);
       growthLabel.innerHTML = [
         [c.membersByMonth[index], t.stats.members],
-        [c.pairsByMonth[index], t.stats.pairs],
+        [c.linksByMonth[index], t.stats.links],
       ]
         .map(
           ([value, label]) =>

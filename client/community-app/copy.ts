@@ -25,8 +25,11 @@ export interface Copy {
   eyebrow: string;
   heading: string;
   lede: string;
-  /** After the members and connections numbers under the timeline. */
-  stats: { members: string; pairs: string };
+  /**
+   * After the members and connections numbers under the timeline. Every like,
+   * comment and reply is a connection, so there are more than lines.
+   */
+  stats: { members: string; links: string };
   ties: [string, string, string];
   rings: string;
   hint: string;
@@ -73,7 +76,7 @@ export interface Copy {
   copied: string;
   staff: string;
   noName: string;
-  canvasLabel: (members: number, pairs: number) => string;
+  canvasLabel: (members: number, links: number) => string;
   fallback: string;
   loading: string;
   failed: string;
@@ -87,7 +90,7 @@ const zh: Copy = {
   eyebrow: "超线性学院 · Superlinear Academy",
   heading: "我们在建一座城",
   lede: "每一盏灯是一位成员。谁给谁留过言、点过赞，两盏灯之间就亮起一条线。",
-  stats: { members: "位成员", pairs: "条连接" },
+  stats: { members: "位成员", links: "条连接" },
   ties: ["点赞之交", "聊过几句", "常来常往"],
   rings: "越靠中间，来得越早",
   hint: "点一盏灯，看TA和谁连着",
@@ -140,8 +143,8 @@ const zh: Copy = {
   copied: "链接已复制",
   staff: "团队",
   noName: "一位成员",
-  canvasLabel: (members, pairs) =>
-    `超线性学院社区地图：${fmt(members)}位成员，${fmt(pairs)}条连接。越靠中间的人加入得越早。`,
+  canvasLabel: (members, links) =>
+    `超线性学院社区地图：${fmt(members)}位成员，${fmt(links)}条连接。越靠中间的人加入得越早。`,
   fallback:
     "这个浏览器画不出这座城（需要WebGL2）。换一个浏览器，或者去立正的主页看看社区地图。",
   loading: "城里的灯正在亮起",
@@ -158,7 +161,7 @@ const en: Copy = {
   lede: "Every light is a member. When one comments on or likes another's post, a line lights up between them.",
   stats: {
     members: "members",
-    pairs: "connections",
+    links: "connections",
   },
   ties: ["Likes", "Conversations", "Regulars"],
   rings: "Earlier members sit nearer the middle",
@@ -198,7 +201,7 @@ const en: Copy = {
   figures: {
     posts: count => (count === 1 ? "post" : "posts"),
     comments: count => (count === 1 ? "comment" : "comments"),
-    connections: count => (count === 1 ? "connection" : "connections"),
+    connections: count => (count === 1 ? "person in touch" : "people in touch"),
   },
   pairDetail: (comments, likes) =>
     [
@@ -216,8 +219,8 @@ const en: Copy = {
   copied: "Link copied",
   staff: "Team",
   noName: "A member",
-  canvasLabel: (members, pairs) =>
-    `Superlinear Academy community map: ${fmt(members)} members and ${fmt(pairs)} connections. Earlier members sit nearer the middle.`,
+  canvasLabel: (members, links) =>
+    `Superlinear Academy community map: ${fmt(members)} members and ${fmt(links)} connections. Earlier members sit nearer the middle.`,
   fallback:
     "This browser can't draw the city (it needs WebGL2). Try another browser, or see the map on Yuzheng's homepage.",
   loading: "The city's lights are coming on",

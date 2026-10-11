@@ -297,7 +297,7 @@ export default function CityWindow({
   }
 
   const count = data ? data.count.toLocaleString("en-US") : "";
-  const pairs = data ? data.pairCount.toLocaleString("en-US") : "";
+  const connections = data ? data.linkCount.toLocaleString("en-US") : "";
   const caption = data ? view.caption(count) : copy.fallbackCaption;
   // While the data loads, the caption keeps the height of its longest
   // version (drawn invisibly by CSS), so the sections below never move.
@@ -393,7 +393,9 @@ export default function CityWindow({
           ref={canvasRef}
           className="dots"
           role="img"
-          aria-label={data ? view.label(count, pairs) : copy.fallbackLabel}
+          aria-label={
+            data ? view.label(count, connections) : copy.fallbackLabel
+          }
         />
         {card && data && links && (
           <>

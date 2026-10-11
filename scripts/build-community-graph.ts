@@ -4,7 +4,7 @@
  * - graph.json and a picture sheet for city.lizheng.ai and the homepage
  *   window onto it: every Superlinear Academy member, and a line between two
  *   members wherever one has commented on, replied to or liked the other's
- *   post or comment;
+ *   post or comment (every like, comment and reply counts as a connection);
  * - city.json for the homepage's dot map, the fallback where the city cannot
  *   be drawn: the same members, most active first.
  *
@@ -137,8 +137,9 @@ function report(built: Built) {
     ties[pair.tie]++;
     if (built.staff.has(pair.a) || built.staff.has(pair.b)) staffPairs++;
   }
+  const links = built.links.reduce((sum, count) => sum + count, 0);
   console.log(
-    `${built.order.length} members · ${built.active} connected · ${built.pairs.length} pairs (点赞之交 ${ties[1]}, 聊过几句 ${ties[2]}, 常来常往 ${ties[3]}) · ${built.staff.size} staff · ${((1 - staffPairs / Math.max(1, built.pairs.length)) * 100).toFixed(1)}% between members`
+    `${built.order.length} members · ${built.active} connected · ${links} connections (likes, comments, replies) · ${built.pairs.length} pairs (点赞之交 ${ties[1]}, 聊过几句 ${ties[2]}, 常来常往 ${ties[3]}) · ${built.staff.size} staff · ${((1 - staffPairs / Math.max(1, built.pairs.length)) * 100).toFixed(1)}% between members`
   );
   console.log("Not counted:", built.dropped);
 }

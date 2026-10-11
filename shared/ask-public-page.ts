@@ -11,6 +11,7 @@
  */
 import { sameQuestion } from "./ask-question-shape.js";
 import { SEAL } from "./ask-seal.js";
+import { sourceAttributionLabel } from "./ask-source-attribution.js";
 
 // The site's ids in structured-data.ts, written out here: that module imports without file
 // extensions, which a Vercel function cannot load.
@@ -30,7 +31,22 @@ export type PublicCard = {
 };
 export type PublicSource = {
   id: string; title: string; url: string; date?: string; source_type?: string; reason?: string; source_visibility?: string;
-};
+} & Partial<Record<
+  "excerpt" | "author" | "attribution_note" | "public_copy_url" | "evidence_role" | "timecode" |
+  "text_access" | "membership_platform" | "membership_url" | "membership_verified_at" |
+  "transcript_source_kind" | "transcript_quality" | "speaker_classification" |
+  "data_layer" | "speaker_id" | "speaker_name" | "speaker_status" | "fragment_id" |
+  "source_snapshot_sha256" | "participant_names" | "participant_entity_ids" | "participant_aliases" |
+  "participant_metadata_basis" | "speech_act" | "content_origin" | "generation_method", string
+>>;
+const SOURCE_METADATA = [
+  "excerpt", "author", "attribution_note", "public_copy_url", "evidence_role", "timecode",
+  "text_access", "membership_platform", "membership_url", "membership_verified_at",
+  "transcript_source_kind", "transcript_quality", "speaker_classification",
+  "data_layer", "speaker_id", "speaker_name", "speaker_status", "fragment_id",
+  "source_snapshot_sha256", "participant_names", "participant_entity_ids", "participant_aliases",
+  "participant_metadata_basis", "speech_act", "content_origin", "generation_method",
+] as const;
 export type PublicSection = { heading: string; body: string; kind: string; source_ids: string[] };
 export type PublicAnswer = {
   status: string; summary: string; sections: PublicSection[]; sources: PublicSource[]; followups: string[]; limitations: string;
@@ -80,7 +96,8 @@ export function publicDetail(value: unknown): PublicDetail | null {
     if (!s || typeof s.id !== "string" || !/^S\d{1,2}$/.test(s.id) || !text(s.title, 1000) || !https(s.url)) continue;
     const pick = (key: string) => (typeof s[key] === "string" && (s[key] as string).trim() ? { [key]: (s[key] as string).trim() } : {});
     sources.push({ id: s.id, title: (s.title as string).trim(), url: s.url as string, ...pick("date"), ...pick("source_type"),
-      ...pick("reason"), ...pick("source_visibility") });
+      ...pick("reason"), ...pick("source_visibility"),
+      ...Object.fromEntries(SOURCE_METADATA.filter(key => typeof s[key] === "string").map(key => [key, s[key]])) });
   }
   const sections: PublicSection[] = (a.sections as Record<string, unknown>[])
     .filter(s => s && typeof s.heading === "string" && typeof s.body === "string" && s.body.trim())
@@ -353,7 +370,8 @@ export function renderQuestionPage(detail: PublicDetail, context: {
     ? `<div class="limits">${paragraphs(answer.limitations.replace(/\[?\b(S\d{1,2})\b\]?/g, "[$1]"), ids)}</div>` : "";
   const sources = answer.sources.map(source => {
     const kind = sourceKind(source);
-    const meta = [`<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join("");
+    const attribution = sourceAttributionLabel(source);
+    const meta = [`<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, attribution ? `<span>${escapeHtml(attribution)}</span>` : "", source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join("");
     return `<li class="source" id="source-${source.id.slice(1)}"><span class="num">${source.id.slice(1)}</span><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener" data-to="source">${escapeHtml(source.title)}<span class="ext" aria-hidden="true">↗</span></a><p class="source-meta">${meta}</p>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</li>`;
   }).join("\n");
   const followups = answer.followups.length
@@ -389,7 +407,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 ${sections}
 ${limits}
 ${sources ? `<section class="block" aria-labelledby="sources"><h2 id="sources">出处</h2><ol class="sources">\n${sources}\n</ol></section>` : ""}
-<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：回答只从立正讲过、写过的东西里来，每一段都能点回原文。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
+<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：回答附有出处，可以点回原文核对。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
 ${related}
 </article>`,
   });

@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -15,7 +15,9 @@ function bareImports(file: string, seen = new Set<string>()): string[] {
   for (const match of readFileSync(file, "utf8").matchAll(RELATIVE)) {
     const spec = match[1] ?? match[2];
     if (!spec.endsWith(".js")) { problems.push(`${path.relative(ROOT, file)} → ${spec}`); continue; }
-    problems.push(...bareImports(path.resolve(path.dirname(file), spec.replace(/\.js$/, ".ts")), seen));
+    const javascript = path.resolve(path.dirname(file), spec);
+    const typescript = javascript.replace(/\.js$/, ".ts");
+    problems.push(...bareImports(existsSync(typescript) ? typescript : javascript, seen));
   }
   return problems;
 }

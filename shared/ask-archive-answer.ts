@@ -47,6 +47,19 @@ const SOURCE_LIMITS: Record<string, number> = {
   transcript_source_kind: 100,
   transcript_quality: 64,
   speaker_classification: 100,
+  data_layer: 32,
+  speaker_id: 200,
+  speaker_name: 400,
+  speaker_status: 100,
+  fragment_id: 1000,
+  source_snapshot_sha256: 64,
+  participant_names: 4096,
+  participant_entity_ids: 4096,
+  participant_aliases: 4096,
+  participant_metadata_basis: 256,
+  speech_act: 100,
+  content_origin: 200,
+  generation_method: 200,
 };
 function invalid(): never {
   throw new AccessError("invalid_request", 400);

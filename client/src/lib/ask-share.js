@@ -6,6 +6,7 @@
 import qrcode from 'qrcode-generator';
 import {MARK_PATHS} from '@/components/site/LizhengMark';
 import {isMemberVideo} from './ask-lizheng';
+import {sourceAttributionLabel} from '../../../shared/ask-source-attribution.js';
 
 const MARK_VIEWBOX = [1219.044577, 649.234004];
 const MARK_TRANSFORM = {translate: [-17.980429, 953.72375], scale: [0.1, -0.1]};
@@ -259,7 +260,7 @@ function sourceRow(ctx, source, number) {
   const all = wrap(ctx, units([{text: source.title || ''}], style), INNER - 70);
   const titleLines = all.slice(0, 2);
   const type = isMemberVideo(source) ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
-  const meta = [type, source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
+  const meta = [type, sourceAttributionLabel(source), source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
   // An image cannot be clicked, so the address must be readable in full: when it does not fit
   // after the details (a video with a start time, say), it gets lines of its own.
   const url = plainUrl(source.url);

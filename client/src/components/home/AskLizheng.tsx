@@ -24,6 +24,7 @@ import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
+import { sourceAttributionLabel } from "@shared/ask-source-attribution.js";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
 const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
@@ -333,12 +334,14 @@ function Source({
   const copy = publicSourceUrl(source.public_copy_url);
   const member = isMemberVideo(source);
   const course = isMemberCourse(source);
+  const attribution = sourceAttributionLabel(source);
   return (
     <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
       <div>
         <span className="num">{source.id.slice(1)}</span>
         {member && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
         {course && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员课程" : "Members course"}</strong>}
+        {attribution && <strong className="lz-ask-member-badge">{attribution}</strong>}
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (

@@ -50,7 +50,8 @@ const row = ({ public_id, revision, question, published_at, asked_at, likes }: S
 // The answer renders with the conversation's own components, so only the fields they read, as strings.
 const SOURCE_FIELDS = ["id", "title", "url", "date", "excerpt", "author", "attribution_note", "public_copy_url", "reason", "source_type",
   "source_visibility", "text_access", "membership_platform", "membership_url", "membership_verified_at",
-  "transcript_source_kind", "transcript_quality", "speaker_classification"] as const;
+  "transcript_source_kind", "transcript_quality", "speaker_classification", "evidence_role", "timecode",
+  "data_layer", "speaker_id", "speaker_name", "speaker_status", "fragment_id", "source_snapshot_sha256", "participant_names", "participant_entity_ids", "participant_aliases", "participant_metadata_basis", "speech_act", "content_origin", "generation_method"] as const;
 const KINDS = ["source", "synthesis", "application"];
 function source(value: unknown): AskSource | null {
   const v = value as Record<string, unknown>;

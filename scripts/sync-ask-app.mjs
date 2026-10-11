@@ -25,6 +25,7 @@ const ASK = path.resolve(process.argv[2] || process.env.ASK_APP_REPO || "/Users/
 const OUT = path.join(ROOT, "client", "public", "ask-app");
 const FONT = /^noto-serif-sc-.+\.woff2$/;
 const PUBLIC_QA = path.join(ROOT, "shared", "ask-public-qa.js");
+const SOURCE_ATTRIBUTION = path.join(ROOT, "shared", "ask-source-attribution.js");
 const git = (...args) => execFileSync("git", ["-C", ASK, ...args], { encoding: "utf8" }).trim();
 const fail = message => { console.error(`✗ ${message}`); process.exit(1); };
 
@@ -52,7 +53,10 @@ for (const name of files) fs.copyFileSync(path.join(build, "assets", name), path
 fs.copyFileSync(path.join(build, "index.html"), path.join(OUT, "index.html"));
 const publicQa = `// Copied from ask-lizheng src/public-qa.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "public-qa.js"), "utf8")}`;
 fs.writeFileSync(PUBLIC_QA, publicQa);
+const sourceAttribution = `// Copied from ask-lizheng src/source-attribution.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "source-attribution.js"), "utf8")}`;
+fs.writeFileSync(SOURCE_ATTRIBUTION, sourceAttribution);
 const public_qa_sha256 = createHash("sha256").update(publicQa).digest("hex");
-fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256 }, null, 2)}\n`);
+const source_attribution_sha256 = createHash("sha256").update(sourceAttribution).digest("hex");
+fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256 }, null, 2)}\n`);
 fs.rmSync(build, { recursive: true, force: true });
 console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, and shared/ask-public-qa.js`);

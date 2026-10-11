@@ -28,6 +28,20 @@ export type AskSource = {
   transcript_source_kind?: string;
   transcript_quality?: string;
   speaker_classification?: string;
+  evidence_role?: string;
+  data_layer?: string;
+  speaker_id?: string;
+  speaker_name?: string;
+  speaker_status?: string;
+  fragment_id?: string;
+  source_snapshot_sha256?: string;
+  participant_names?: string;
+  participant_entity_ids?: string;
+  participant_aliases?: string;
+  participant_metadata_basis?: string;
+  speech_act?: string;
+  content_origin?: string;
+  generation_method?: string;
 };
 export type AskResult = {
   status: "answered" | "clarify" | "unsupported" | "sources-only";

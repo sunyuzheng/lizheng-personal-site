@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { resolveGuestProfile } from "../shared/guest-identity";
+import { guestMatchesQuery } from "../shared/guest-search";
 import { getGuestPageMeta, type GuestProfile } from "../shared/guest-data";
 import { unionGuestInsights } from "../shared/guest-insights";
 import { buildGuestStructuredData, buildGuestsListStructuredData } from "../shared/structured-data";
@@ -16,6 +17,12 @@ function profile(name: string, slug: string, videoId: string): GuestProfile {
       url: `https://example.org/resource/${slug}`, summary: "Synthetic metadata" }] };
 }
 describe("canonical identity presentation", () => {
+  it("keeps a Latin name separate from its longer names and accepts shared aliases", () => {
+    expect(guestMatchesQuery(profile("Jo", "jo", "abcdefghijk"), "Jo")).toBe(true);
+    expect(guestMatchesQuery(profile("John", "john", "abcdefghijk"), "Jo")).toBe(false);
+    expect(guestMatchesQuery(profile("Jo", "jo", "abcdefghijk"), "enjoy")).toBe(false);
+    expect(guestMatchesQuery({ ...profile("Synthetic team", "team", "abcdefghijk"), entity_type: "group", aliases: ["Jo"] }, "Jo")).toBe(true);
+  });
   it("uses exact alias slugs without guessing a route", () => {
     const p = { ...profile("Alpha", "alpha", "abcdefghijk"), alias_slugs: ["alpha", "old-alpha"] };
     expect(resolveGuestProfile([p], "old-alpha")).toBe(p);

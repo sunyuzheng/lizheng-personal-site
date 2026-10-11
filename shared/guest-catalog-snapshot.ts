@@ -1,6 +1,6 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: dc802eae6c7cdf75e4bf553ce5da72668d04d1309abf0d2dba9b4f2a7ae6e934
-// guests.json SHA256: ed5f90c9aa51f1c9ebd3b8b966477ab95ee2ee8381a795dfe42e36f89e9b84ce
+// Manifest SHA256: 3b3a0de774eb526b71057bd27c0b4b0a1ddb1c51ba2173aece2e7b1c6d983c7e
+// guests.json SHA256: 41264c04eba2749c6e5f5e24ba3f0ace657ef828d3de78cbe26e0527457f16ce
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
 import type { GuestCatalog, GuestArticleCatalog } from "./guest-catalog";
 
@@ -802,9 +802,11 @@ export const guestCatalog: GuestCatalog = {
     {
       "entity_id": "guest:lulu",
       "entity_type": "person",
-      "display_name": "Lulu",
+      "display_name": "Lulu（Multi-FIRE）",
       "aliases": [
-        "Lulu"
+        "Lulu",
+        "露露",
+        "Lulu（Multi-FIRE）"
       ],
       "slug": "lulu",
       "alias_slugs": [
@@ -814,8 +816,8 @@ export const guestCatalog: GuestCatalog = {
       "community_resources": [],
       "thumbnail_url": "https://img.youtube.com/vi/qDRJDK64gJk/hqdefault.jpg",
       "guest_en_name": "Lulu",
-      "guest_company": "水贝珠宝世家",
-      "guest_title": "珠宝商"
+      "guest_company": "Multi-FIRE",
+      "guest_title": ""
     },
     {
       "entity_id": "guest:rod",
@@ -896,7 +898,12 @@ export const guestCatalog: GuestCatalog = {
       "entity_type": "group",
       "display_name": "Koji & Monica",
       "aliases": [
-        "Koji & Monica"
+        "Koji & Monica",
+        "Koji、Monica",
+        "Koji",
+        "Monica",
+        "Onboard Monica",
+        "十字路口Koji"
       ],
       "slug": "koji-and-monica",
       "alias_slugs": [
@@ -2162,10 +2169,11 @@ export const guestCatalog: GuestCatalog = {
     },
     {
       "entity_id": "guest:leo-mandy",
-      "entity_type": "person",
-      "display_name": "Leo Mandy",
+      "entity_type": "group",
+      "display_name": "Leo & Mandy",
       "aliases": [
-        "Leo Mandy"
+        "Leo Mandy",
+        "Leo & Mandy"
       ],
       "slug": "leo-mandy",
       "alias_slugs": [
@@ -2174,9 +2182,9 @@ export const guestCatalog: GuestCatalog = {
       "primary_source_id": "youtube-tX-Zq4VquLI",
       "community_resources": [],
       "thumbnail_url": "https://img.youtube.com/vi/tX-Zq4VquLI/hqdefault.jpg",
-      "guest_en_name": "Leo Mandy",
-      "guest_company": "Charisma",
-      "guest_title": "约会教练"
+      "guest_en_name": "Leo & Mandy",
+      "guest_company": "",
+      "guest_title": ""
     },
     {
       "entity_id": "guest:lou-yang",
@@ -2797,6 +2805,7 @@ export const guestCatalog: GuestCatalog = {
       "entity_type": "person",
       "display_name": "Leo（The Union Trading Company）",
       "aliases": [
+        "Leo",
         "Leo（The Union Trading Company）"
       ],
       "slug": "leo-union-trading-company",
@@ -2883,6 +2892,65 @@ export const guestCatalog: GuestCatalog = {
       "guest_en_name": "",
       "guest_company": "",
       "guest_title": ""
+    },
+    {
+      "entity_id": "guest:leo-charisma",
+      "entity_type": "person",
+      "display_name": "Leo（Charisma）",
+      "aliases": [
+        "Leo",
+        "Leo（Charisma）",
+        "charisma-Leo"
+      ],
+      "slug": "leo-charisma",
+      "alias_slugs": [
+        "leo-charisma"
+      ],
+      "primary_source_id": "youtube-bcWYOkDa66k",
+      "thumbnail_url": "https://img.youtube.com/vi/bcWYOkDa66k/mqdefault.jpg",
+      "guest_en_name": "Leo",
+      "guest_company": "",
+      "guest_title": "",
+      "community_resources": []
+    },
+    {
+      "entity_id": "guest:mandy",
+      "entity_type": "person",
+      "display_name": "Mandy",
+      "aliases": [
+        "Mandy",
+        "曼迪"
+      ],
+      "slug": "mandy",
+      "alias_slugs": [
+        "mandy"
+      ],
+      "primary_source_id": "youtube-x5KCgpWHxsc",
+      "thumbnail_url": "https://img.youtube.com/vi/x5KCgpWHxsc/mqdefault.jpg",
+      "guest_en_name": "Mandy",
+      "guest_company": "",
+      "guest_title": "",
+      "community_resources": []
+    },
+    {
+      "entity_id": "guest:lulu-shuibei",
+      "entity_type": "person",
+      "display_name": "Lulu（水贝珠宝）",
+      "aliases": [
+        "Lulu",
+        "露露",
+        "Lulu（水贝珠宝）"
+      ],
+      "slug": "lulu-shuibei",
+      "alias_slugs": [
+        "lulu-shuibei"
+      ],
+      "primary_source_id": "youtube-Q6c06h2Y4e8",
+      "thumbnail_url": "https://img.youtube.com/vi/Q6c06h2Y4e8/mqdefault.jpg",
+      "guest_en_name": "Lulu",
+      "guest_company": "水贝珠宝世家",
+      "guest_title": "珠宝商",
+      "community_resources": []
     }
   ],
   "sources": [
@@ -7019,13 +7087,13 @@ export const guestCatalog: GuestCatalog = {
       "is_primary": false
     },
     {
-      "entity_id": "guest:leon",
+      "entity_id": "guest:leo-charisma",
       "source_id": "youtube-bcWYOkDa66k",
       "index": 7,
-      "is_primary": false
+      "is_primary": true
     },
     {
-      "entity_id": "guest:leon",
+      "entity_id": "guest:leo-charisma",
       "source_id": "youtube-FBodpxppwfc",
       "index": 11,
       "is_primary": false
@@ -7037,13 +7105,13 @@ export const guestCatalog: GuestCatalog = {
       "is_primary": true
     },
     {
-      "entity_id": "guest:leon",
+      "entity_id": "guest:leo-charisma",
       "source_id": "youtube-PHIhRTl2HHs",
       "index": 12,
       "is_primary": false
     },
     {
-      "entity_id": "guest:leon",
+      "entity_id": "guest:leo-charisma",
       "source_id": "youtube-UsMKU7qcywY",
       "index": 4,
       "is_primary": false
@@ -8003,10 +8071,10 @@ export const guestCatalog: GuestCatalog = {
       "is_primary": false
     },
     {
-      "entity_id": "guest:lulu",
+      "entity_id": "guest:lulu-shuibei",
       "source_id": "youtube-Q6c06h2Y4e8",
       "index": 0,
-      "is_primary": false
+      "is_primary": true
     },
     {
       "entity_id": "guest:lulu",
@@ -8015,7 +8083,7 @@ export const guestCatalog: GuestCatalog = {
       "is_primary": false
     },
     {
-      "entity_id": "guest:lulu",
+      "entity_id": "guest:lulu-shuibei",
       "source_id": "youtube-y3UuCqmLJYk",
       "index": 1,
       "is_primary": false
@@ -9423,6 +9491,54 @@ export const guestCatalog: GuestCatalog = {
       "source_id": "youtube-Lt-lVe957hc",
       "index": 0,
       "is_primary": true
+    },
+    {
+      "entity_id": "guest:leo-charisma",
+      "source_id": "youtube-tX-Zq4VquLI",
+      "index": 0,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:leo-charisma",
+      "source_id": "youtube-x5KCgpWHxsc",
+      "index": 0,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:leo-charisma",
+      "source_id": "youtube-yQHaRpBbymw",
+      "index": 0,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:leo-charisma",
+      "source_id": "youtube-nTTj3z3QiyU",
+      "index": 0,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:mandy",
+      "source_id": "youtube-tX-Zq4VquLI",
+      "index": 1,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:mandy",
+      "source_id": "youtube-x5KCgpWHxsc",
+      "index": 1,
+      "is_primary": true
+    },
+    {
+      "entity_id": "guest:mandy",
+      "source_id": "youtube-yQHaRpBbymw",
+      "index": 1,
+      "is_primary": false
+    },
+    {
+      "entity_id": "guest:mandy",
+      "source_id": "youtube-nTTj3z3QiyU",
+      "index": 1,
+      "is_primary": false
     }
   ],
   "redirects": [

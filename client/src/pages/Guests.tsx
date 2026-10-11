@@ -4,6 +4,7 @@ import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestsPageMeta } from "@shared/guest-data";
+import { guestMatchesQuery } from "@shared/guest-search";
 import { buildGuestsListStructuredData } from "@shared/structured-data";
 import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -51,16 +52,7 @@ export default function Guests() {
   }, [guests, lang]);
 
   const q = query.trim().toLowerCase();
-  const filtered = guests.filter(
-    guest =>
-      q === "" ||
-      guest.guest_name.toLowerCase().includes(q) ||
-      guest.guest_en_name.toLowerCase().includes(q) ||
-      guest.aliases?.some(alias => alias.toLowerCase().includes(q)) ||
-      guest.guest_company.toLowerCase().includes(q) ||
-      guest.guest_title.toLowerCase().includes(q) ||
-      guest.episodes.some(episode => episode.title.toLowerCase().includes(q))
-  );
+  const filtered = guests.filter(guest => guestMatchesQuery(guest, q));
 
   const programmeCount = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
 

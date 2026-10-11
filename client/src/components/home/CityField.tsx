@@ -685,10 +685,10 @@ export default function CityField({
       const step = event.key === "ArrowDown" ? 1 : -1;
       setActive(index => (index + step + matches.length) % matches.length);
     } else if (event.key === "Enter") {
-      const member = matches[active];
-      if (member === undefined || !linked) return;
       event.preventDefault();
-      openProfile(linked[member]);
+      if (!query.trim()) meetRandom();
+      else if (matches[active] !== undefined && linked)
+        openProfile(linked[matches[active]]);
     } else if (event.key === "Escape") {
       if (showList) setListOpen(false);
       else setQuery("");
@@ -771,6 +771,16 @@ export default function CityField({
             onBlur={() => setListOpen(false)}
             onKeyDown={onFindKey}
           />
+          {!query && (
+            <button
+              type="button"
+              className="city-random"
+              onClick={meetRandom}
+              aria-label={copy.randomLabel}
+            >
+              {copy.random}
+            </button>
+          )}
           {showList && (
             <ul id={listId} role="listbox" className="city-find-list">
               {matches.map((member, index) => (
@@ -795,24 +805,6 @@ export default function CityField({
             </ul>
           )}
         </div>
-        <button
-          type="button"
-          className="city-random"
-          onClick={meetRandom}
-          aria-label={copy.random}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M4 7h3.5c2.6 0 3.9 1.6 5 3.6l1 1.8c1.1 2 2.4 3.6 5 3.6H20M4 17h3.5c1.4 0 2.4-.5 3.2-1.3M16.8 8.3c.7-.8 1.7-1.3 2.9-1.3H20M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="label">{copy.random}</span>
-        </button>
       </div>
       <div ref={wrapRef} className="field">
         <canvas

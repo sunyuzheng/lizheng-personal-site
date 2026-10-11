@@ -1,8 +1,9 @@
 /**
- * The search box on city.lizheng.ai. Matches show as you type (find.ts
- * decides their order), each with how many people they are in touch with;
- * the arrow keys move through them and light each one up, and Enter or a
- * click looks at that person.
+ * The search box on city.lizheng.ai, which also meets someone at random.
+ * Empty, it offers 「随机遇见一位」 at its right end (Enter does the same).
+ * Typing hides that and shows matches (find.ts decides their order), each
+ * with how many people they are in touch with; the arrow keys move through
+ * them and light each one up, and Enter or a click looks at that person.
  */
 import type { Copy } from "./copy";
 import { calendar, type Community } from "./data";
@@ -19,9 +20,14 @@ export function attachSearch(
     /** The highlighted match, to light up. */
     preview(member: number): void;
     choose(member: number): void;
+    /** Enter in the empty box. */
+    random(): void;
   }
 ) {
   const names = c.names.map(normalizeName);
+  const box = input.closest<HTMLElement>(".find-box");
+  // The random action shows only while the box is empty.
+  const showTyping = () => box?.classList.toggle("typing", input.value !== "");
   let matches: number[] = [];
   let active = 0;
 
@@ -68,12 +74,14 @@ export function attachSearch(
   const choose = (member: number) => {
     close();
     input.value = "";
+    showTyping();
     input.blur();
     on.choose(member);
   };
 
   input.addEventListener("input", () => {
     on.typing();
+    showTyping();
     show(input.value.trim());
   });
   input.addEventListener("keydown", event => {
@@ -88,6 +96,10 @@ export function attachSearch(
     } else if (event.key === "Enter" && matches[active] !== undefined) {
       event.preventDefault();
       choose(matches[active]);
+    } else if (event.key === "Enter" && !input.value.trim()) {
+      event.preventDefault();
+      input.blur();
+      on.random();
     }
   });
   list.addEventListener("pointerdown", event => {

@@ -275,7 +275,6 @@ html[lang="en"] h1 {
   z-index: 4;
   display: flex;
   align-items: center;
-  gap: 22px;
 }
 
 .find-box {
@@ -284,10 +283,12 @@ html[lang="en"] h1 {
 
 /* A real search field (an outline and a magnifier), so it reads as the way
    to find someone at a glance. */
+/* One box finds someone by name or, while empty, meets someone at random
+   (the action at its right end). */
 .find input {
-  width: 260px;
+  width: 320px;
   height: 44px;
-  padding: 0 14px 0 40px;
+  padding: 0 128px 0 40px;
   border: 1px solid rgb(248 241 228 / 0.2);
   border-radius: 10px;
   background: rgb(5 18 10 / 0.55);
@@ -323,6 +324,38 @@ html[lang="en"] h1 {
 
 .find input::-webkit-search-cancel-button {
   display: none;
+}
+
+.find-random {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  bottom: 6px;
+  z-index: 1;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--mint);
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.find-random:hover,
+.find-random:focus-visible {
+  background: rgb(143 212 164 / 0.12);
+  outline: none;
+}
+
+/* Typing: the box is for names only. */
+.find-box.typing .find-random {
+  display: none;
+}
+
+.find-box.typing input {
+  padding-right: 14px;
 }
 
 .find-list {
@@ -1156,8 +1189,6 @@ html[lang="en"] .date {
     left: var(--gut);
     right: var(--gut);
     z-index: 4;
-    gap: 16px;
-    justify-content: space-between;
   }
 
   .city.focused .bar > .find {

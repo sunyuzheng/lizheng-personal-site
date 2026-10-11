@@ -257,7 +257,9 @@ export interface CityCopy {
   comments: (count: number) => string;
   /** Between the parts of the member card, for screen readers. */
   separator: string;
+  /** Inside the search box while it is empty (shorter in English). */
   random: string;
+  randomLabel: string;
   find: {
     label: string;
     placeholder: string;
@@ -658,7 +660,8 @@ const zh = {
       posts: () => "帖子",
       comments: () => "评论",
       separator: "，",
-      random: "随机遇见一位成员",
+      random: "随机遇见一位",
+      randomLabel: "随机遇见一位成员",
       find: {
         label: "按名字找一位成员",
         placeholder: "按名字找成员",
@@ -1093,7 +1096,8 @@ const en: HomeCopy = {
       posts: count => (count === 1 ? "post" : "posts"),
       comments: count => (count === 1 ? "comment" : "comments"),
       separator: ". ",
-      random: "Meet a random member",
+      random: "At random",
+      randomLabel: "Meet a random member",
       find: {
         label: "Find a member by name",
         placeholder: "Find a member by name",

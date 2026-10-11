@@ -87,6 +87,7 @@ function applyCopy() {
     if (typeof value === "string") element.textContent = value;
   }
   findInput.placeholder = t.find.placeholder;
+  $("random").setAttribute("aria-label", t.randomLabel);
   monthInput.setAttribute("aria-label", t.timeline);
   document.querySelector(".legend")?.setAttribute("aria-label", t.legend);
   zoomControls.setAttribute("aria-label", t.zoom.label);
@@ -793,16 +794,8 @@ function start(c: Community) {
     setPlayLabel();
   });
 
-  // ---------- Search and chance ----------
-  const search = attachSearch(findInput, $("find-list"), c, t, {
-    typing: noteInteraction,
-    preview(member) {
-      hovered = member;
-      if (current() < 0) applyHighlight();
-    },
-    choose: member => focusOn(member),
-  });
-  $("random").addEventListener("click", () => {
+  // ---------- Search, and meeting someone at random ----------
+  const meetRandom = () => {
     noteInteraction();
     // Someone with a name and at least one connection.
     for (let attempt = 0; attempt < 50; attempt++) {
@@ -812,7 +805,17 @@ function start(c: Community) {
         return;
       }
     }
+  };
+  const search = attachSearch(findInput, $("find-list"), c, t, {
+    typing: noteInteraction,
+    preview(member) {
+      hovered = member;
+      if (current() < 0) applyHighlight();
+    },
+    choose: member => focusOn(member),
+    random: meetRandom,
   });
+  $("random").addEventListener("click", meetRandom);
 
   // ---------- Frames ----------
   const resize = new ResizeObserver(() => layoutView());

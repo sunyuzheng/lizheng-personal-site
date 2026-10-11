@@ -47,7 +47,9 @@ export interface Copy {
     placeholder: string;
     empty: (query: string) => string;
   };
+  /** Inside the search box: meet someone at random (shorter in English). */
   random: string;
+  randomLabel: string;
   join: string;
   note: (date: string) => string;
   home: string;
@@ -106,6 +108,7 @@ const zh: Copy = {
     empty: query => `没有找到“${query}”`,
   },
   random: "随机遇见一位",
+  randomLabel: "随机遇见一位成员",
   join: "免费加入，一起建这座城",
   note: date => `数据更新于${date}。连接来自帖子里的评论和点赞，不含私信。`,
   home: "立正的主页",
@@ -176,7 +179,8 @@ const en: Copy = {
     placeholder: "Find someone",
     empty: query => `No one called “${query}”`,
   },
-  random: "Meet someone at random",
+  random: "At random",
+  randomLabel: "Meet someone at random",
   join: "Join free and help build it",
   note: date =>
     `Updated ${date}. Lines come from comments and likes on posts, never private messages.`,

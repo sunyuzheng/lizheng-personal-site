@@ -1,0 +1,8 @@
+/*
+ * Serif fonts for titles and numerals, loaded by main.ts after first paint so
+ * the page never waits for them. Noto Serif SC is split by unicode-range, so
+ * browsers fetch only the slices for characters actually shown.
+ */
+@import "@fontsource/noto-serif-sc/700.css";
+@import "@fontsource/noto-serif-sc/900.css";
+@import "@fontsource-variable/source-serif-4/opsz.css";

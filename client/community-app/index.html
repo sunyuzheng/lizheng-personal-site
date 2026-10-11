@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>我们在建一座城｜超线性学院社区地图</title>
+    <meta
+      name="description"
+      content="超线性学院的每一位成员是一盏灯；谁给谁留过言、点过赞，两盏灯之间就亮起一条线。看看这座城是怎么一圈一圈长起来的。"
+    />
+    <link rel="canonical" href="https://community.lizheng.ai/" />
+    <link
+      rel="alternate"
+      hreflang="zh-CN"
+      href="https://community.lizheng.ai/"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://community.lizheng.ai/en"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://community.lizheng.ai/" />
+    <meta property="og:title" content="我们在建一座城" />
+    <meta
+      property="og:description"
+      content="超线性学院的每一位成员是一盏灯；谁给谁留过言、点过赞，两盏灯之间就亮起一条线。看看这座城是怎么一圈一圈长起来的。"
+    />
+    <meta
+      property="og:image"
+      content="https://community.lizheng.ai/community-app/og.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://community.lizheng.ai/community-app/og.jpg"
+    />
+    <meta name="theme-color" content="#061209" />
+    <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.jpg" />
+  </head>
+  <body>
+    <main class="city" id="city">
+      <canvas
+        class="sky"
+        id="sky"
+        role="img"
+        aria-label="超线性学院社区地图"
+      ></canvas>
+      <canvas class="guides" id="guides" aria-hidden="true"></canvas>
+      <div class="names" id="names" aria-hidden="true"></div>
+      <div class="sky-veil" aria-hidden="true"></div>
+
+      <header class="intro">
+        <p class="eyebrow" data-copy="eyebrow">
+          超线性学院 · Superlinear Academy
+        </p>
+        <h1 data-copy="heading">我们在建一座城</h1>
+        <p class="lede" data-copy="lede">
+          每一盏灯是一位成员。谁给谁留过言、点过赞，两盏灯之间就亮起一条线。
+        </p>
+        <dl class="stats" id="stats">
+          <div>
+            <dd data-stat="members"></dd>
+            <dt data-copy="stats.members">位成员</dt>
+          </div>
+          <div>
+            <dd data-stat="pairs"></dd>
+            <dt data-copy="stats.pairs">条连接</dt>
+          </div>
+          <div>
+            <dd data-stat="peers"></dd>
+            <dt data-copy="stats.peers">是成员之间自发的</dt>
+          </div>
+        </dl>
+      </header>
+
+      <aside class="panel" id="panel" hidden></aside>
+      <div class="tip" id="tip" hidden></div>
+      <p class="hint" id="hint" data-copy="hint">点一盏灯，看TA和谁连着</p>
+      <p class="status" id="status" data-copy="loading">城里的灯正在亮起</p>
+
+      <footer class="bar">
+        <div class="find" id="find" role="search">
+          <div class="find-box">
+            <label class="sr-only" for="find-input" data-copy="find.label"
+              >按名字找一位成员</label
+            >
+            <input
+              id="find-input"
+              type="search"
+              placeholder="找一个人"
+              autocomplete="off"
+              spellcheck="false"
+              role="combobox"
+              aria-expanded="false"
+              aria-controls="find-list"
+              aria-autocomplete="list"
+            />
+            <ul class="find-list" id="find-list" role="listbox" hidden></ul>
+          </div>
+          <button
+            type="button"
+            class="text-button"
+            id="random"
+            data-copy="random"
+          >
+            随机遇见一位
+          </button>
+        </div>
+        <div class="time" id="time">
+          <div class="when">
+            <span class="date" id="date"></span>
+            <span class="growth" id="growth"></span>
+          </div>
+          <div class="track">
+            <input
+              id="month"
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="1"
+              aria-label="时间"
+            />
+            <button
+              type="button"
+              class="text-button"
+              id="play"
+              data-copy="replay"
+            >
+              重播
+            </button>
+          </div>
+        </div>
+        <ul class="legend" aria-label="图例">
+          <li>
+            <svg viewBox="0 0 28 10" aria-hidden="true">
+              <path d="M1 8 Q14 0 27 8" class="tie tie-1" />
+            </svg>
+            <span data-copy="ties.0">点赞之交</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 28 10" aria-hidden="true">
+              <path d="M1 8 Q14 0 27 8" class="tie tie-2" />
+            </svg>
+            <span data-copy="ties.1">聊过几句</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 28 10" aria-hidden="true">
+              <path d="M1 8 Q14 0 27 8" class="tie tie-3" />
+            </svg>
+            <span data-copy="ties.2">常来常往</span>
+          </li>
+          <li class="legend-rings">
+            <svg viewBox="0 0 12 12" aria-hidden="true">
+              <circle cx="6" cy="6" r="2" />
+              <circle cx="6" cy="6" r="5" />
+            </svg>
+            <span data-copy="rings">越靠中间，来得越早</span>
+          </li>
+        </ul>
+        <div class="end">
+          <a
+            class="join"
+            id="join"
+            href="https://www.superlinear.academy/"
+            target="_blank"
+            rel="noopener"
+          >
+            <span data-copy="join">免费加入，一起建这座城</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <p class="note">
+            <span id="note"></span>
+            <a href="https://www.lizheng.ai/" id="home" data-copy="home"
+              >立正的主页</a
+            >
+          </p>
+        </div>
+      </footer>
+    </main>
+    <noscript>
+      <p class="noscript">
+        超线性学院社区地图需要JavaScript。也可以去
+        <a href="https://www.lizheng.ai/#superlinear">立正的主页</a
+        >看社区地图，或者
+        <a href="https://www.superlinear.academy/">免费加入超线性学院</a>。
+      </p>
+    </noscript>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

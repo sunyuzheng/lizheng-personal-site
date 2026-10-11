@@ -11,6 +11,10 @@
  * snapshot is younger than N days; the monthly schedule uses it so a manual
  * run near the end of a month does not repeat on the 1st.
  *
+ * --members-file=PATH reuses the member list the connection map build
+ * (scripts/build-community-graph.ts) has just read, instead of reading it
+ * from Circle a second time; without the file it reads Circle as usual.
+ *
  * Reads CIRCLE_ADMIN_API (Circle Admin API v2 token) and, for --upload,
  * BLOB_READ_WRITE_TOKEN from the environment, .env or .env.local. A monthly
  * GitHub workflow (.github/workflows/community-city.yml) runs --upload.
@@ -304,6 +308,51 @@ async function main() {
       );
       return;
     }
+  }
+
+  const membersFile = args.get("members-file");
+  if (membersFile && fs.existsSync(membersFile) && !args.has("dry-run")) {
+    const cached = JSON.parse(fs.readFileSync(membersFile, "utf8")) as {
+      fetchedAt: number;
+      members: {
+        uid: string;
+        name: string;
+        posts: number;
+        comments: number;
+        created: number;
+        seen: number;
+      }[];
+    };
+    if (now - cached.fetchedAt < 2 * DAY) {
+      console.log(`Using ${cached.members.length} members from ${membersFile}`);
+      const entries: Entry[] = cached.members
+        .filter(member => member.uid)
+        .map(member => {
+          const { score, heat } = heatFor({
+            posts_count: member.posts,
+            comments_count: member.comments,
+            last_seen_at: member.seen
+              ? new Date(member.seen).toISOString()
+              : null,
+          });
+          return {
+            uid: member.uid,
+            name: displayName({ name: member.name }),
+            posts: member.posts,
+            comments: member.comments,
+            score,
+            heat,
+            created: member.created,
+          };
+        });
+      const data = build(entries);
+      const json = write(data);
+      if (args.has("upload")) await publish(json, data);
+      return;
+    }
+    console.log(
+      `${membersFile} is older than two days; reading Circle instead.`
+    );
   }
 
   const token = process.env.CIRCLE_ADMIN_API?.trim();

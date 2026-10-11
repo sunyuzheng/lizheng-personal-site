@@ -2,6 +2,7 @@
   "include": [
     "api/**/*",
     "client/src/**/*",
+    "client/community-app/**/*",
     "scripts/**/*",
     "shared/**/*",
     "server/**/*"

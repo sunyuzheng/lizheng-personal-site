@@ -43,6 +43,13 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        index: path.resolve(import.meta.dirname, "client", "index.html"),
+        // community.lizheng.ai (vercel.json serves it on that host).
+        community: path.resolve(import.meta.dirname, "client", "community-app", "index.html"),
+      },
+    },
   },
   server: {
     port: 3000,

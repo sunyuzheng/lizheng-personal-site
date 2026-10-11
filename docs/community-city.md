@@ -13,6 +13,7 @@
 - 数据来自Circle Admin API的成员列表（`community_members`），一次快照需要「成员数÷100」次请求，2026年9月底约246次。
 - Data API不能替代它：Data API给的是行为事件，没有成员的名字和公开主页id。而加入时间、帖子数、评论数本来就在成员列表里，显示它们不增加任何请求。
 - GitHub Actions每月1日北京时间10:00自动跑一次（`.github/workflows/community-city.yml`），生成数据、上传到Vercel Blob、再把线上文件读回来核对。也可以在GitHub的Actions页面手动运行。定时运行时如果线上数据还不到20天（例如月底刚手动跑过），就直接跳过，不调用Circle API。
+- 同一个工作流先生成 community.lizheng.ai 的关系图（`docs/community-graph.md`），它会读一遍成员列表；首页地图用 `--members-file=tmp/community-graph/members.json` 直接复用这份名单，不再读第二遍。名单不存在或超过两天时，首页地图照旧自己读。
 - 网站在浏览器里读取Blob上的文件，所以每月更新数据不需要重新部署。
 
 ## Circle Admin API预算

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+/* community.lizheng.ai has its own stylesheet; its words are not classes here. */
+@source not "../community-app";
 @import "./components/site/site.css";
 @import "./components/home/home.css";
 

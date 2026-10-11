@@ -62,7 +62,7 @@ export default function Guests() {
       guest.episodes.some(episode => episode.title.toLowerCase().includes(q))
   );
 
-  const multiEp = guests.filter(guest => guest.episode_count > 1).length;
+  const programmeCount = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
 
   return (
     <GuestsLayout>
@@ -76,10 +76,10 @@ export default function Guests() {
               {lang === "en" ? (
                 <>
                   <span className="whitespace-nowrap">
-                    {guests.length} guests
+                    {guests.length} guest profiles
                   </span>
                   <span className="whitespace-nowrap">
-                    {multiEp} featured in multiple interviews
+                    {programmeCount} programmes
                   </span>
                   <span className="whitespace-nowrap">
                     Search guests or interview topics
@@ -88,9 +88,9 @@ export default function Guests() {
               ) : (
                 <>
                   <span className="whitespace-nowrap">
-                    {guests.length}位嘉宾
+                    {guests.length}个嘉宾档案
                   </span>
-                  <span className="whitespace-nowrap">{multiEp}位多期深访</span>
+                  <span className="whitespace-nowrap">{programmeCount}期节目</span>
                   <span className="whitespace-nowrap">按嘉宾或话题查找</span>
                 </>
               )}
@@ -131,7 +131,7 @@ export default function Guests() {
                 <span className="text-superlinear-on-dark">
                   {filtered.length}
                 </span>{" "}
-                guest{filtered.length === 1 ? "" : "s"}
+                guest profile{filtered.length === 1 ? "" : "s"}
               </>
             ) : (
               <>
@@ -139,7 +139,7 @@ export default function Guests() {
                 <span className="text-superlinear-on-dark">
                   {filtered.length}
                 </span>{" "}
-                位嘉宾
+                个嘉宾档案
               </>
             )}
           </p>
@@ -214,7 +214,6 @@ export default function Guests() {
                       </h2>
                       {guest.guest_company && (
                         <p className="mt-1 line-clamp-1 text-sm font-medium text-superlinear-on-dark">
-                          {guest.current_job_certified === false && <span className="text-zinc-500">{lang === "en" ? "Programme record: " : "节目介绍："}</span>}
                           {guest.guest_company}
                         </p>
                       )}
@@ -256,7 +255,7 @@ export default function Guests() {
                     rel="noopener noreferrer"
                     className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-white/10"
                   >
-                    YouTube
+                    {guest.primary_source_type === "circle" ? (lang === "en" ? "Watch recording" : "观看回放") : "YouTube"}
                     <ExternalLink className="h-3 w-3" />
                   </a>
                 </div>

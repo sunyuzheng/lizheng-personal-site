@@ -1,31 +1,10 @@
-import { guestVideoMetadata } from "./guest-video-metadata";
-import { guestRosterSnapshot } from "./guest-roster-snapshot";
+import { guestCatalog, guestArticleCatalog } from "./guest-catalog-snapshot";
+import { catalogGuestDirectory } from "./guest-catalog";
 import type { PageMeta } from "./page-meta";
-import { applyGuestIdentityOverlay, type GuestEntityType } from "./guest-identity";
-import { guestIdentityOverlay } from "./guest-identity-overlay";
-import { compareGuestEpisodesByViews } from "./guest-episode-order";
+import type { GuestEntityType } from "./guest-identity";
 
 export const SITE_URL = "https://www.lizheng.ai";
-// Guest roster source of truth:
-// - kedaibiao-content-tools/guests.json
-//
-// Guest page video metadata source of truth:
-// - local kedaibiao-channel/guest_video_metadata.json
-// - generation input: local kedaibiao-channel/tools/youtube/all_videos_full.json
-// - fallback: YouTube oEmbed for IDs missing from local metadata
-//
-// Deployed snapshots used by this repo:
-// - shared/guest-roster-snapshot.ts
-// - shared/guest-video-metadata.ts
-//
-// See docs/guest-data.md for the full update workflow.
-
-export interface RawGuestEpisode {
-  video_id?: string;
-  videoId?: string;
-  title?: string;
-  url?: string;
-}
+// Public guest metadata is derived only from the pinned Open Context catalog.
 
 export interface GuestCommunityResource {
   kind: "guest_post" | "student_resource" | "event";
@@ -33,45 +12,6 @@ export interface GuestCommunityResource {
   url: string;
   summary: string;
   author?: string;
-}
-
-export interface RawGuest {
-  guest_name: string;
-  guest_en_name: string;
-  guest_title: string;
-  guest_company: string;
-  xiaohongshu_url?: string;
-  linkedin_url?: string;
-  primary_video_id: string | null;
-  primary_source_type?: "youtube" | "circle";
-  primary_source_title?: string;
-  primary_source_published_at?: string;
-  interview_date?: string;
-  guest_bio?: string;
-  guest_bio_en?: string;
-  all_video_ids: readonly string[];
-  max_views: number | null;
-  thumbnail_url: string;
-  primary_url: string;
-  episode_count: number;
-  all_urls: readonly string[];
-  slug?: string;
-  episodes?: readonly RawGuestEpisode[];
-  youtube_playlist_url?: string;
-  community_resources?: readonly GuestCommunityResource[];
-}
-
-export interface RawVideoMetadata {
-  video_id: string;
-  title?: string;
-  published_at?: string;
-  view_count?: number | string;
-}
-
-interface GuestEpisodeSeed {
-  videoId: string;
-  url?: string;
-  index: number;
 }
 
 export interface GuestEpisode {
@@ -87,13 +27,10 @@ export interface GuestEpisode {
 }
 
 export interface GuestProfile {
-  entity_id?: string;
-  entity_type?: GuestEntityType;
-  aliases?: readonly string[];
-  alias_slugs?: readonly string[];
-  source_profiles?: readonly GuestProfile[];
-  historical_source_labels?: readonly { source_slug: string; title: string; company: string }[];
-  current_job_certified?: false;
+  entity_id: string;
+  entity_type: GuestEntityType;
+  aliases: readonly string[];
+  alias_slugs: readonly string[];
   guest_name: string;
   guest_en_name: string;
   guest_title: string;
@@ -101,7 +38,7 @@ export interface GuestProfile {
   xiaohongshu_url?: string;
   linkedin_url?: string;
   primary_video_id: string | null;
-  primary_source_type?: "youtube" | "circle";
+  primary_source_type: "youtube" | "circle";
   interview_date?: string;
   guest_bio?: string;
   guest_bio_en?: string;
@@ -119,226 +56,16 @@ export interface GuestProfile {
   community_resources?: readonly GuestCommunityResource[];
 }
 
-function toNumber(value?: number | string): number | undefined {
-  if (typeof value === "number")
-    return Number.isFinite(value) ? value : undefined;
-  if (typeof value === "string" && value.trim() !== "") {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) ? parsed : undefined;
-  }
-  return undefined;
-}
-
-function fallbackEpisodeTitle(index: number): string {
-  return `第${index + 1}期`;
-}
-
-function buildVideoLookup(
-  videos: readonly RawVideoMetadata[]
-): Map<string, RawVideoMetadata> {
-  return new Map(videos.map(video => [video.video_id, video]));
-}
-
-function extractYouTubeVideoId(url: string): string | undefined {
-  try {
-    const parsed = new URL(url);
-
-    if (parsed.hostname === "youtu.be") {
-      return parsed.pathname.split("/").filter(Boolean)[0];
-    }
-
-    if (
-      parsed.hostname === "youtube.com" ||
-      parsed.hostname === "www.youtube.com" ||
-      parsed.hostname === "m.youtube.com"
-    ) {
-      if (parsed.pathname === "/watch") {
-        return parsed.searchParams.get("v") || undefined;
-      }
-
-      if (
-        parsed.pathname.startsWith("/shorts/") ||
-        parsed.pathname.startsWith("/embed/")
-      ) {
-        return parsed.pathname.split("/").filter(Boolean)[1];
-      }
-    }
-  } catch {
-    return undefined;
-  }
-
-  return undefined;
-}
-
-function slugifyText(value: string): string {
-  return value
-    .normalize("NFKD")
-    .toLowerCase()
-    .replace(/&/g, " and ")
-    .replace(/[^\p{Letter}\p{Number}]+/gu, "-")
-    .replace(/^-+|-+$/g, "")
-    .replace(/-{2,}/g, "-");
-}
-
-function buildGuestSlug(rawGuest: RawGuest, usedSlugs: Set<string>): string {
-  const preferredBase =
-    rawGuest.slug?.trim() ||
-    slugifyText(rawGuest.guest_en_name || "") ||
-    slugifyText(rawGuest.guest_name || "") ||
-    `guest-${rawGuest.primary_video_id?.toLowerCase() || "interview"}`;
-
-  let candidate = preferredBase;
-  if (usedSlugs.has(candidate)) {
-    candidate = `${preferredBase}-${rawGuest.primary_video_id?.toLowerCase() || "interview"}`;
-  }
-
-  let suffix = 2;
-  while (usedSlugs.has(candidate)) {
-    candidate = `${preferredBase}-${suffix}`;
-    suffix += 1;
-  }
-
-  usedSlugs.add(candidate);
-  return candidate;
-}
-
-function buildGuestEpisode(
-  rawGuest: RawGuest,
-  seed: GuestEpisodeSeed,
-  videoLookup: Map<string, RawVideoMetadata>
-): GuestEpisode {
-  const { videoId, index, url: seedUrl } = seed;
-  const explicitEpisode = rawGuest.episodes?.find(
-    episode => (episode.video_id || episode.videoId) === videoId
-  );
-  const videoMeta = videoLookup.get(videoId);
-  const title =
-    explicitEpisode?.title?.trim() ||
-    videoMeta?.title?.trim() ||
-    fallbackEpisodeTitle(index);
-  const url =
-    explicitEpisode?.url?.trim() ||
-    seedUrl ||
-    `https://www.youtube.com/watch?v=${videoId}`;
-
-  return {
-    videoId,
-    sourceType: "youtube",
-    url,
-    title,
-    thumbnailUrl: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
-    publishedAt: videoMeta?.published_at,
-    viewCount: toNumber(videoMeta?.view_count),
-    isPrimary: videoId === rawGuest.primary_video_id,
-    index,
-  };
-}
-
-function buildGuestEpisodeSeeds(rawGuest: RawGuest): GuestEpisodeSeed[] {
-  const seeds: GuestEpisodeSeed[] = [];
-  const seen = new Set<string>();
-
-  for (const url of rawGuest.all_urls || []) {
-    const videoId = extractYouTubeVideoId(url);
-    if (!videoId || seen.has(videoId)) continue;
-    seen.add(videoId);
-    seeds.push({ videoId, url, index: seeds.length });
-  }
-
-  for (const videoId of rawGuest.all_video_ids || []) {
-    if (!videoId || seen.has(videoId)) continue;
-    seen.add(videoId);
-    seeds.push({ videoId, index: seeds.length });
-  }
-
-  return seeds;
-}
-
-export function buildGuestDirectory(
-  rawGuests: RawGuest[],
-  videos: RawVideoMetadata[]
-): GuestProfile[] {
-  const videoLookup = buildVideoLookup(videos);
-  const usedSlugs = new Set<string>();
-
-  return rawGuests.map(rawGuest => {
-    const slug = buildGuestSlug(rawGuest, usedSlugs);
-    if (rawGuest.primary_source_type === "circle") {
-      const episode: GuestEpisode = {
-        videoId: null,
-        sourceType: "circle",
-        url: rawGuest.primary_url,
-        title: rawGuest.primary_source_title || rawGuest.guest_name,
-        thumbnailUrl: rawGuest.thumbnail_url,
-        publishedAt: rawGuest.primary_source_published_at,
-        isPrimary: true,
-        index: 0,
-      };
-      return {
-        ...rawGuest,
-        slug,
-        share_url: `${SITE_URL}/guests/${slug}`,
-        episode_count: 1,
-        all_video_ids: [],
-        all_urls: [...new Set([...rawGuest.all_urls, rawGuest.primary_url])],
-        episodes: [episode],
-        primary_episode: episode,
-      };
-    }
-    const episodeSeeds = buildGuestEpisodeSeeds(rawGuest);
-    const baseEpisodes = episodeSeeds.map(seed =>
-      buildGuestEpisode(rawGuest, seed, videoLookup)
-    );
-    const primaryEpisode = baseEpisodes.find(episode => episode.isPrimary) ||
-      baseEpisodes[0] || {
-        videoId: rawGuest.primary_video_id,
-        sourceType: "youtube" as const,
-        url: rawGuest.primary_url,
-        title: rawGuest.guest_name,
-        thumbnailUrl:
-          rawGuest.thumbnail_url ||
-          `https://img.youtube.com/vi/${rawGuest.primary_video_id}/mqdefault.jpg`,
-        isPrimary: true,
-        index: 0,
-      };
-    const episodes = [...baseEpisodes].sort(compareGuestEpisodesByViews);
-
-    return {
-      ...rawGuest,
-      episode_count: episodes.length,
-      all_video_ids: episodes.flatMap(episode =>
-        episode.videoId ? [episode.videoId] : []
-      ),
-      all_urls: [...new Set([...rawGuest.all_urls, ...episodes.map(episode => episode.url)])],
-      slug,
-      share_url: `${SITE_URL}/guests/${slug}`,
-      episodes,
-      primary_episode: primaryEpisode,
-    };
-  });
-}
-
-export async function fetchGuestDirectory(
-  _fetchImpl: typeof fetch = fetch
-): Promise<GuestProfile[]> {
-  const rawGuests = guestRosterSnapshot.map(guest => ({
-    ...guest,
-    all_video_ids: [...guest.all_video_ids],
-    all_urls: [...guest.all_urls],
-  })) as RawGuest[];
-
-  return applyGuestIdentityOverlay(buildGuestDirectory(rawGuests, [...guestVideoMetadata]), guestIdentityOverlay);
+export async function fetchGuestDirectory(): Promise<GuestProfile[]> {
+  return catalogGuestDirectory(guestCatalog, guestArticleCatalog);
 }
 
 export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
   const totalGuests = guests.length;
-  const totalEpisodes = guests.reduce(
-    (sum, guest) => sum + guest.episode_count,
-    0
-  );
+  const uniqueProgrammes = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
   return {
-    title: `全部嘉宾 · 课代表立正 — ${totalGuests}位嘉宾，${totalEpisodes}期对话`,
-    description: `课代表立正的完整访谈嘉宾库：${totalGuests}位研究者、创业者、管理者、投资人与各领域实践者，共${totalEpisodes}期对话。`,
+    title: `嘉宾与对谈 · 课代表立正 — ${totalGuests}个嘉宾档案，${uniqueProgrammes}期节目`,
+    description: `课代表立正的嘉宾与对谈资料库：${totalGuests}个嘉宾档案，${uniqueProgrammes}期节目，可按嘉宾、人物别名或话题查找。`,
     canonical: `${SITE_URL}/guests`,
     ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };
@@ -353,7 +80,7 @@ export function getGuestPageMeta(guest: GuestProfile): PageMeta {
     ? truncateMetaText(guest.primary_episode.title, 56)
     : "";
   const identity = `${guest.guest_name}${companyAndTitle ? `，${companyAndTitle}` : ""}`;
-  const description = `${guest.current_job_certified === false && companyAndTitle ? "节目资料中的介绍：" : ""}${identity}。在「课代表立正」的${guest.episode_count}期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
+  const description = `${identity}。在「课代表立正」的${guest.episode_count}期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

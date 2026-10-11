@@ -119,7 +119,7 @@ Hero以后立刻放Koji与屠龙，而不是先让读者穿过履历和话题卡
 - 身份、履历、数字与表达边界回到`yuzheng-profile/facts.json`、`EVIDENCE.md`与`BIOS.md`；
 - 页面文案与案例叙述由`CreatorCollab.tsx`维护；
 - title、description、canonical与Open Graph由`shared/collab-meta.ts`维护；
-- 做客名单和单集归属回到`kedaibiao-content-tools/guests.json`，网站只保留部署快照；
+- 做客名单和单集归属回到Open Context的`catalog/guests.json`，网站只保留部署快照；
 - 中文PDF由`scripts/generate-podcast-collab-pdf.py`生成。案例、事实或链接变化后，网页和PDF需要一起检查，但不要求逐字相同。生成器同时更新`0-常用素材/播客与视频访谈资料.pdf`，避免商务负责人转发旧副本。
 
 ### 搜索与分享

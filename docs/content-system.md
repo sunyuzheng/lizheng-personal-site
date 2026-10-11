@@ -167,7 +167,7 @@ Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心�
 | 个人母题、实践原则与项目关系         | 同仓库`THESIS.md`、`CONTEXT.md`与`ECOSYSTEM.md`                                                              |
 | 会变化的公开判断                     | 同仓库`DATED_VIEWS.md`及原始公开内容                                                                         |
 | 内部核心竞争力与source map           | 私有`kedaibiao/yuzheng-context-private/`；不得复制到公开页面                                                 |
-| 嘉宾名单与单集归属                   | [`sunyuzheng/kedaibiao-content-tools`](https://github.com/sunyuzheng/kedaibiao-content-tools)的`guests.json` |
+| 嘉宾名单与单集归属                   | [`sunyuzheng/lizheng-open-context`](https://github.com/sunyuzheng/lizheng-open-context)的`catalog/guests.json` |
 | Superlinear品牌平台与AI Builders定位 | `course-marketing-system/00_strategy/`中的品牌与课程owner                                                    |
 | 会员权益、价格与状态                 | 会员产品事实与`stay.superlinear.academy`                                                                     |
 | 网站页面取舍与信息层级               | 本仓库及本文档                                                                                               |

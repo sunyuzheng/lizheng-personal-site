@@ -219,7 +219,7 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
 
   return `
   <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
-    <h1>课代表立正 · 全部嘉宾（${guests.length}位）</h1>
+    <h1>课代表立正 · 嘉宾与对谈（${guests.length}个嘉宾档案）</h1>
     <p>${escapeHtml(description)}</p>
     <ul>
         ${items}
@@ -795,7 +795,7 @@ for (const guest of guests) {
   });
 
   // Literal historical slugs retain a local page with the canonical profile URL.
-  for (const slug of guest.alias_slugs || [guest.slug]) {
+  for (const slug of guest.alias_slugs) {
     const guestDir = path.join(guestsDir, slug);
     fs.mkdirSync(guestDir, { recursive: true });
     fs.writeFileSync(path.join(guestDir, "index.html"), guestHtml, "utf-8");

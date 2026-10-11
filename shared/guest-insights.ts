@@ -1,5 +1,4 @@
-import { guestInsightSnapshot } from "./guest-insights-snapshot";
-import { guestIdentityOverlay } from "./guest-identity-overlay";
+import { guestCatalog, guestArticleCatalog } from "./guest-catalog-snapshot";
 
 /** Article resources only. Guest identity and video membership stay upstream. */
 export interface GuestInsight {
@@ -16,10 +15,15 @@ export interface GuestInsight {
 }
 
 export function getGuestEnglishInsights(slug: string): readonly GuestInsight[] {
-  const links = [...guestIdentityOverlay.redirects, ...guestIdentityOverlay.profile_aliases];
-  const canonical = links.find(row => row.from_slug === slug)?.canonical_slug || slug;
-  const slugs = new Set([canonical, ...links.filter(row => row.canonical_slug === canonical).map(row => row.from_slug)]);
-  return unionGuestInsights(guestInsightSnapshot, slugs);
+  const entity = guestCatalog.entities.find(e => e.slug === slug || e.alias_slugs.includes(slug));
+  if (!entity) return [];
+  return guestArticleCatalog.articles.filter(a => a.entity_id === entity.entity_id).map(a => ({
+    id: a.id, guestSlug: a.original_guest_slug, status: "published" as const, title: a.title, summary: a.summary,
+    url: a.url, sourceVideoIds: a.source_ids.filter(id => id.startsWith("youtube-")).map(id => id.slice("youtube-".length)),
+    ...(a.source_urls === undefined ? {} : { sourceUrls: a.source_urls }),
+    ...(a.takeaways === undefined ? {} : { takeaways: a.takeaways }),
+    ...(a.read_time_minutes === undefined ? {} : { readTimeMinutes: a.read_time_minutes }),
+  }));
 }
 
 /** Preserve old-slug article references while displaying each exact article URL once. */

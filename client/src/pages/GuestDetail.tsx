@@ -203,11 +203,6 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">
               {displayName}
             </h1>
-            {guest.current_job_certified === false && (guest.guest_company || guest.guest_title) && (
-              <p className="mt-4 text-xs text-zinc-500">
-                {lang === "en" ? "Introduction from programme records" : "节目资料中的介绍"}
-              </p>
-            )}
             {guest.guest_company && (
               <p className="mt-4 text-lg font-semibold text-superlinear-on-dark">
                 {guest.guest_company}

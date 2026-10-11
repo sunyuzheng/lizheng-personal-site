@@ -26,6 +26,8 @@ export interface GuestEpisode {
   index: number;
 }
 
+export interface GuestPersonLink { name: string; en_name?: string; slug?: string }
+
 export interface GuestProfile {
   entity_id: string;
   entity_type: GuestEntityType;
@@ -56,6 +58,10 @@ export interface GuestProfile {
   community_resources?: readonly GuestCommunityResource[];
   /** Further names that find this profile (from Open Context's name table). */
   search_names: string[];
+  /** A group's members; slug when the member has their own page. */
+  members?: GuestPersonLink[];
+  /** Groups this person appeared in. */
+  member_of?: GuestPersonLink[];
   first_year?: number;
   last_year?: number;
 }

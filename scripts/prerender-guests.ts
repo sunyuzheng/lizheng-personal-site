@@ -6,6 +6,7 @@ import {
   guestIntro,
   guestYears,
   getGuestsPageMeta,
+  type GuestPersonLink,
   type GuestProfile,
 } from "../shared/guest-data.ts";
 import { getGuestEnglishInsights } from "../shared/guest-insights.ts";
@@ -228,6 +229,12 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
   </main>`;
 }
 
+function personLinks(people: GuestPersonLink[]) {
+  return people
+    .map(person => (person.slug ? `<a href="${SITE_URL}/guests/${escapeHtml(person.slug)}">${escapeHtml(person.name)}</a>` : escapeHtml(person.name)))
+    .join("、");
+}
+
 function buildGuestNoscript(guest: GuestProfile, description: string) {
   const communityResources = guest.community_resources?.length
     ? `<section id="community-resources"><h2>社区文章与活动</h2><ul>${guest.community_resources
@@ -259,6 +266,8 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     <p><a href="${SITE_URL}/guests">返回全部嘉宾</a></p>
     <h1>${escapeHtml(guest.guest_name)}</h1>
     <p>${escapeHtml(description)}</p>
+    ${guest.members?.length ? `<p>成员：${personLinks(guest.members)}</p>` : ""}
+    ${guest.member_of?.length ? `<p>所属组合：${personLinks(guest.member_of)}</p>` : ""}
     ${intro ? `<p>节目中的介绍：${escapeHtml(intro)}</p>` : ""}
     <p><a href="${escapeHtml(guestAskLink(guest))}">在问问立正里查这位嘉宾聊过什么</a></p>
     ${guest.guest_bio ? `<p>${escapeHtml(guest.guest_bio)}</p>` : ""}

@@ -53,6 +53,22 @@ describe("single canonical guest catalog", () => {
     writeGuestRelease(folder, snapshot, pin);
     verifyGuestRelease(fs.readFileSync(path.join(folder, "guest-catalog-snapshot.ts"), "utf8"), JSON.parse(fs.readFileSync(path.join(folder, "guest-catalog-pin.json"), "utf8")));
   });
+  it("links a group and the members who have their own page, both ways", () => {
+    const { catalog, articles } = fixture();
+    const group = { ...catalog.entities[0], entity_id: "guest:duo", entity_type: "group" as const, display_name: "Alpha & Beta", aliases: ["Alpha & Beta"], slug: "duo", alias_slugs: ["duo"],
+      members: [{ name: "Alpha", entity_id: "guest:alpha" }, { name: "贝塔", en_name: "Beta" }] };
+    const withGroup: GuestCatalog = { ...catalog, entities: [...catalog.entities, group], appearances: [...catalog.appearances, { entity_id: "guest:duo", source_id: "youtube-abcdefghijk", index: 0, is_primary: true }] };
+    const [alpha, duo] = catalogGuestDirectory(withGroup, articles);
+    expect(duo.members).toEqual([{ name: "Alpha", slug: "alpha" }, { name: "贝塔", en_name: "Beta" }]);
+    expect(alpha.member_of).toEqual([{ name: "Alpha & Beta", slug: "duo" }]);
+    expect(alpha).not.toHaveProperty("members");
+    expect(() => validateGuestCatalog({ ...withGroup, entities: [{ ...catalog.entities[0], members: [] }, group] }, articles)).toThrow("entity_members_only_for_groups");
+    expect(() => validateGuestCatalog({ ...withGroup, entities: [catalog.entities[0], { ...group, members: [{ name: "Ghost", entity_id: "guest:ghost" }] }] }, articles)).toThrow("entity_member_reference_invalid");
+    expect(() => validateGuestCatalog({ ...withGroup, entities: [catalog.entities[0], { ...group, members: [{ name: "Alpha", role: "host" }] }] }, articles)).toThrow("metadata_fields_invalid");
+    // A linked member must list every programme of the group.
+    const extra = { ...catalog.sources[0], source_id: "youtube-bbbbbbbbbbb", video_id: "bbbbbbbbbbb", url: "https://www.youtube.com/watch?v=bbbbbbbbbbb" };
+    expect(() => validateGuestCatalog({ ...withGroup, sources: [...withGroup.sources, extra], appearances: [...withGroup.appearances, { entity_id: "guest:duo", source_id: extra.source_id, index: 1, is_primary: false }] }, articles)).toThrow("entity_member_appearance_missing");
+  });
   it("preserves profile fields and derives links without certifying jobs or speech", () => {
     const { catalog, articles } = fixture(); const before = JSON.stringify(catalog);
     const p = catalogGuestDirectory(catalog, articles)[0];

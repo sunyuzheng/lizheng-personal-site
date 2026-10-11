@@ -10,7 +10,10 @@ export interface GuestEntity {
   guest_bio?: string; guest_bio_en?: string; interview_date?: string;
   xiaohongshu_url?: string; linkedin_url?: string; youtube_playlist_url?: string;
   community_resources?: readonly GuestCommunityResource[];
+  /** A group's members; a member with their own page links to it by entity_id. */
+  members?: readonly GuestMember[];
 }
+export interface GuestMember { name: string; en_name?: string; entity_id?: string }
 export interface GuestSource {
   source_id: string; video_id: string | null; source_type: "youtube" | "circle";
   url: string; title: string; thumbnail_url: string;
@@ -91,7 +94,7 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
   const entities = new Map<string, GuestEntity>(), sources = new Map<string, GuestSource>(), slugs = new Map<string, string>();
   for (const e of value.entities) {
     record(e); keys(e, ["entity_id", "entity_type", "display_name", "aliases", "slug", "alias_slugs", "primary_source_id", "thumbnail_url"],
-      ["guest_en_name", "guest_title", "guest_company", "guest_bio", "guest_bio_en", "interview_date", "xiaohongshu_url", "linkedin_url", "youtube_playlist_url", "community_resources"]);
+      ["guest_en_name", "guest_title", "guest_company", "guest_bio", "guest_bio_en", "interview_date", "xiaohongshu_url", "linkedin_url", "youtube_playlist_url", "community_resources", "members"]);
     requireValue(typeof e.entity_id === "string" && ENTITY.test(e.entity_id) && !entities.has(e.entity_id) && TYPES.has(e.entity_type) && typeof e.display_name === "string" && e.display_name.length > 0 && typeof e.primary_source_id === "string", "entity_identity_invalid");
     stringList(e.aliases); stringList(e.alias_slugs);
     requireValue(typeof e.slug === "string" && SLUG.test(e.slug) && e.alias_slugs.includes(e.slug), "entity_slug_invalid");
@@ -103,6 +106,18 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
     for (const r of e.community_resources || []) { record(r); keys(r, ["kind", "title", "url", "summary"], ["author"]);
       requireValue(["guest_post", "student_resource", "event"].includes(r.kind) && Object.values(r).every(v => typeof v === "string"), "resource_invalid"); safeUrl(r.url); }
     entities.set(e.entity_id, e as unknown as GuestEntity);
+  }
+  for (const e of entities.values()) {
+    if (e.entity_type !== "group") { requireValue(e.members === undefined, "entity_members_only_for_groups"); continue; }
+    // Open Context requires members on every group; a snapshot from before it declared them has none.
+    requireValue(e.members === undefined || Array.isArray(e.members), "entity_group_members_invalid");
+    const names = new Set<string>();
+    for (const m of (e.members || []) as unknown[]) {
+      record(m); keys(m, ["name"], ["en_name", "entity_id"]);
+      requireValue(Object.values(m).every(v => typeof v === "string" && v.length > 0 && v.trim() === v) && !names.has(m.name), "entity_member_invalid");
+      names.add(m.name);
+      if (m.entity_id !== undefined) requireValue(entities.get(m.entity_id)?.entity_type === "person", "entity_member_reference_invalid");
+    }
   }
   for (const s of value.sources) {
     record(s); keys(s, ["source_id", "video_id", "source_type", "url", "title", "thumbnail_url"], ["published_at", "view_count", "metadata_verified_at"]);
@@ -121,6 +136,10 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
     pairs.add(pair); covered.add(r.source_id);
   }
   requireValue(primaries.size === entities.size && covered.size === sources.size, "catalog_coverage_incomplete");
+  for (const e of entities.values()) for (const m of e.members || []) {
+    if (m.entity_id === undefined) continue;
+    for (const pair of pairs) if (pair.startsWith(`${e.entity_id}\n`)) requireValue(pairs.has(`${m.entity_id}\n${pair.slice(e.entity_id.length + 1)}`), "entity_member_appearance_missing");
+  }
   const redirects = new Set<string>();
   for (const r of value.redirects) { record(r); keys(r, ["from_entity_id", "canonical_entity_id"]);
     requireValue(typeof r.from_entity_id === "string" && ENTITY.test(r.from_entity_id) && !entities.has(r.from_entity_id) && entities.has(r.canonical_entity_id) && !redirects.has(r.from_entity_id), "catalog_redirect_invalid"); redirects.add(r.from_entity_id); }
@@ -145,6 +164,12 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
   const searchNames = new Map<string, string[]>();
   for (const row of names?.names || []) for (const id of row.entity_ids) searchNames.set(id, [...(searchNames.get(id) || []), row.name]);
   const sources = new Map(catalog.sources.map(s => [s.source_id, s]));
+  const byId = new Map(catalog.entities.map(e => [e.entity_id, e]));
+  // Groups each person belongs to, so a member's page can point back to the group.
+  const memberOf = new Map<string, GuestEntity[]>();
+  for (const group of catalog.entities) for (const m of group.members || []) {
+    if (m.entity_id) memberOf.set(m.entity_id, [...(memberOf.get(m.entity_id) || []), group]);
+  }
   return catalog.entities.map(entity => {
     const rows = catalog.appearances.filter(r => r.entity_id === entity.entity_id);
     const episodes: GuestEpisode[] = rows.map(r => { const s = sources.get(r.source_id)!; return {
@@ -155,7 +180,12 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
     const primary = episodes.find(e => e.isPrimary)!;
     const years = episodes.flatMap(e => e.publishedAt ? [new Date(e.publishedAt).getUTCFullYear()] : []).filter(Number.isFinite);
     const views = [...episodes.flatMap(e => e.viewCount === undefined ? [] : [e.viewCount])];
-    const { display_name, primary_source_id: _primary, ...profile } = entity;
+    const { display_name, primary_source_id: _primary, members: declared, ...profile } = entity;
+    const members = (declared || []).map(m => {
+      const person = m.entity_id ? byId.get(m.entity_id) : undefined;
+      return { name: m.name, ...(m.en_name ? { en_name: m.en_name } : {}), ...(person ? { slug: person.slug } : {}) };
+    });
+    const groups = (memberOf.get(entity.entity_id) || []).map(g => ({ name: g.display_name, ...(g.guest_en_name ? { en_name: g.guest_en_name } : {}), slug: g.slug }));
     return { ...profile, guest_name: display_name, guest_en_name: entity.guest_en_name || "", guest_title: entity.guest_title || "", guest_company: entity.guest_company || "",
       primary_video_id: primary.videoId, primary_source_type: primary.sourceType,
       ...(primary.sourceType === "circle" ? { primary_source_title: primary.title, primary_source_published_at: primary.publishedAt } : {}),
@@ -163,6 +193,8 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
       all_video_ids: episodes.flatMap(e => e.videoId ? [e.videoId] : []), all_urls: episodes.map(e => e.url),
       share_url: `https://www.lizheng.ai/guests/${entity.slug}`, episodes, primary_episode: primary,
       search_names: [...new Set(searchNames.get(entity.entity_id) || [])],
+      ...(entity.entity_type === "group" ? { members } : {}),
+      ...(groups.length ? { member_of: groups } : {}),
       ...(years.length ? { first_year: Math.min(...years), last_year: Math.max(...years) } : {}),
     };
   });

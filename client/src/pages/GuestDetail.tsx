@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { getGuestPageMeta, guestAskLink, guestIntro, guestYears, type GuestEpisode } from "@shared/guest-data";
+import { getGuestPageMeta, guestAskLink, guestIntro, guestYears, type GuestEpisode, type GuestPersonLink } from "@shared/guest-data";
 import { resolveGuestProfile } from "@shared/guest-identity";
 import { getGuestEnglishInsights, type GuestInsight } from "@shared/guest-insights";
 import { buildGuestStructuredData } from "@shared/structured-data";
@@ -21,9 +21,13 @@ const COPY = {
     back: "← 全部嘉宾",
     episodes: (n: number) => `${n}期对谈`,
     introduced: "节目中的介绍：",
+    members: "成员：",
+    memberOf: "所属组合：",
+    separator: "、",
     watch: "观看精选的一期 ↗",
     watchCircle: "在超线性学院观看 ↗",
-    ask: "在问问立正里查他聊过什么 ↗",
+    ask: "在问问立正里查这位嘉宾聊过什么 ↗",
+    askGroup: "在问问立正里查他们聊过什么 ↗",
     xiaohongshu: "小红书 ↗",
     playlist: "YouTube合集 ↗",
     community: (n: number) => `社区文章与活动（${n}）`,
@@ -38,9 +42,13 @@ const COPY = {
     back: "← All guests",
     episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
     introduced: "Introduced in the programmes as: ",
+    members: "Members: ",
+    memberOf: "Also appears with: ",
+    separator: ", ",
     watch: "Watch the featured episode ↗",
     watchCircle: "Watch on Superlinear ↗",
     ask: "Ask Lizheng what they talked about ↗",
+    askGroup: "Ask Lizheng what they talked about ↗",
     xiaohongshu: "Xiaohongshu ↗",
     playlist: "YouTube playlist ↗",
     community: (n: number) => `Community posts and events (${n})`,
@@ -65,6 +73,22 @@ function formatDate(value: string | undefined, lang: "en" | "zh"): string | null
   return new Intl.DateTimeFormat(lang === "en" ? "en-US" : "zh-CN", {
     year: "numeric", month: lang === "en" ? "short" : "long", day: "numeric", timeZone: "UTC",
   }).format(date);
+}
+
+function PersonLinks({ people, lang }: { people: GuestPersonLink[]; lang: "en" | "zh" }) {
+  return (
+    <>
+      {people.map((person, index) => {
+        const label = lang === "en" && person.en_name ? person.en_name : person.name;
+        return (
+          <span key={`${person.name}-${index}`}>
+            {index > 0 && COPY[lang].separator}
+            {person.slug ? <Link href={withLanguage(`/guests/${person.slug}`, lang)}>{label}</Link> : label}
+          </span>
+        );
+      })}
+    </>
+  );
 }
 
 function episodeMeta(episode: GuestEpisode, lang: "en" | "zh"): string {
@@ -136,13 +160,15 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <div>
               <h1>{name}</h1>
               <p className="lz-guest-facts">{copy.episodes(guest.episode_count)}{years ? ` · ${years}` : ""}</p>
+              {!!guest.members?.length && <p className="lz-guest-members"><span>{copy.members}</span><PersonLinks people={guest.members} lang={lang} /></p>}
+              {!!guest.member_of?.length && <p className="lz-guest-members"><span>{copy.memberOf}</span><PersonLinks people={guest.member_of} lang={lang} /></p>}
               {intro && <p className="lz-guest-introduction"><span>{copy.introduced}</span>{intro}</p>}
               {bio && <p className="lz-guest-bio">{bio}</p>}
               <div className="lz-guest-actions">
                 <a className="lz-guest-watch" href={featured.url} target="_blank" rel="noopener noreferrer">
                   {isCircle ? copy.watchCircle : copy.watch}
                 </a>
-                <a className="lz-guest-ask" href={guestAskLink(guest)} target="_blank" rel="noopener noreferrer">{copy.ask}</a>
+                <a className="lz-guest-ask" href={guestAskLink(guest)} target="_blank" rel="noopener noreferrer">{guest.entity_type === "group" ? copy.askGroup : copy.ask}</a>
               </div>
               {!!(guest.xiaohongshu_url || guest.linkedin_url || guest.youtube_playlist_url || guest.community_resources?.length) && (
                 <p className="lz-guest-links">

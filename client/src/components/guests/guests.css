@@ -287,6 +287,25 @@
   font-variant-numeric: tabular-nums;
 }
 
+.lz-guest-members {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.lz-guest-members > span:first-child {
+  color: var(--lz-on-forest-3);
+}
+
+.lz-guest-members a {
+  color: var(--lz-mint);
+  font-weight: 600;
+}
+
+.lz-guest-members a:hover {
+  color: var(--lz-on-forest);
+}
+
 .lz-guest-introduction {
   max-width: 36em;
   margin-top: 16px;

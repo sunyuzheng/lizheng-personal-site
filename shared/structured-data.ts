@@ -8,6 +8,7 @@ import {
 } from "./page-meta.ts";
 import { ENTERPRISE_TRAINING_PAGE_META } from "./collab-meta.ts";
 import type { GuestProfile } from "./guest-data.ts";
+import { guestSchemaType } from "./guest-identity.ts";
 import { getGuestEnglishInsights } from "./guest-insights.ts";
 import { DECK_LIBRARY, deckForLanguage, localized } from "./deck-index.ts";
 
@@ -718,18 +719,9 @@ export function buildGuestsListStructuredData(
       "@type": "ListItem",
       position: index + 1,
       item: {
-        "@type": "Person",
+        "@type": guestSchemaType(guest),
         name: guest.guest_name,
         ...(guest.guest_en_name ? { alternateName: guest.guest_en_name } : {}),
-        ...(guest.guest_title ? { jobTitle: guest.guest_title } : {}),
-        ...(guest.guest_company
-          ? {
-              worksFor: {
-                "@type": "Organization",
-                name: guest.guest_company,
-              },
-            }
-          : {}),
         url: guest.share_url,
       },
     })),
@@ -747,18 +739,9 @@ export function buildGuestStructuredData(
     description,
     url: guest.share_url,
     mainEntity: {
-      "@type": "Person",
+      "@type": guestSchemaType(guest),
       name: guest.guest_name,
       ...(guest.guest_en_name ? { alternateName: guest.guest_en_name } : {}),
-      ...(guest.guest_title ? { jobTitle: guest.guest_title } : {}),
-      ...(guest.guest_company
-        ? {
-            worksFor: {
-              "@type": "Organization",
-              name: guest.guest_company,
-            },
-          }
-        : {}),
     },
     hasPart: [
       ...(guest.community_resources || []).map(resource => ({
@@ -782,7 +765,7 @@ export function buildGuestStructuredData(
         url: article.url,
         inLanguage: "en",
         about: {
-          "@type": "Person",
+          "@type": guestSchemaType(guest),
           name: guest.guest_en_name || guest.guest_name,
         },
         isPartOf: {

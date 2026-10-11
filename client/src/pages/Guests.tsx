@@ -56,6 +56,7 @@ export default function Guests() {
       q === "" ||
       guest.guest_name.toLowerCase().includes(q) ||
       guest.guest_en_name.toLowerCase().includes(q) ||
+      guest.aliases?.some(alias => alias.toLowerCase().includes(q)) ||
       guest.guest_company.toLowerCase().includes(q) ||
       guest.guest_title.toLowerCase().includes(q) ||
       guest.episodes.some(episode => episode.title.toLowerCase().includes(q))
@@ -213,6 +214,7 @@ export default function Guests() {
                       </h2>
                       {guest.guest_company && (
                         <p className="mt-1 line-clamp-1 text-sm font-medium text-superlinear-on-dark">
+                          {guest.current_job_certified === false && <span className="text-zinc-500">{lang === "en" ? "Programme record: " : "节目介绍："}</span>}
                           {guest.guest_company}
                         </p>
                       )}

@@ -1,6 +1,9 @@
 import { guestVideoMetadata } from "./guest-video-metadata";
 import { guestRosterSnapshot } from "./guest-roster-snapshot";
 import type { PageMeta } from "./page-meta";
+import { applyGuestIdentityOverlay, type GuestEntityType } from "./guest-identity";
+import { guestIdentityOverlay } from "./guest-identity-overlay";
+import { compareGuestEpisodesByViews } from "./guest-episode-order";
 
 export const SITE_URL = "https://www.lizheng.ai";
 // Guest roster source of truth:
@@ -84,6 +87,13 @@ export interface GuestEpisode {
 }
 
 export interface GuestProfile {
+  entity_id?: string;
+  entity_type?: GuestEntityType;
+  aliases?: readonly string[];
+  alias_slugs?: readonly string[];
+  source_profiles?: readonly GuestProfile[];
+  historical_source_labels?: readonly { source_slug: string; title: string; company: string }[];
+  current_job_certified?: false;
   guest_name: string;
   guest_en_name: string;
   guest_title: string;
@@ -107,18 +117,6 @@ export interface GuestProfile {
   primary_episode: GuestEpisode;
   youtube_playlist_url?: string;
   community_resources?: readonly GuestCommunityResource[];
-}
-
-function compareGuestEpisodesByViews(a: GuestEpisode, b: GuestEpisode): number {
-  const viewsA = a.viewCount ?? -1;
-  const viewsB = b.viewCount ?? -1;
-  if (viewsA !== viewsB) return viewsB - viewsA;
-
-  const dateA = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
-  const dateB = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
-  if (dateA !== dateB) return dateB - dateA;
-
-  return a.index - b.index;
 }
 
 function toNumber(value?: number | string): number | undefined {
@@ -282,7 +280,7 @@ export function buildGuestDirectory(
         share_url: `${SITE_URL}/guests/${slug}`,
         episode_count: 1,
         all_video_ids: [],
-        all_urls: [rawGuest.primary_url],
+        all_urls: [...new Set([...rawGuest.all_urls, rawGuest.primary_url])],
         episodes: [episode],
         primary_episode: episode,
       };
@@ -311,7 +309,7 @@ export function buildGuestDirectory(
       all_video_ids: episodes.flatMap(episode =>
         episode.videoId ? [episode.videoId] : []
       ),
-      all_urls: episodes.map(episode => episode.url),
+      all_urls: [...new Set([...rawGuest.all_urls, ...episodes.map(episode => episode.url)])],
       slug,
       share_url: `${SITE_URL}/guests/${slug}`,
       episodes,
@@ -329,7 +327,7 @@ export async function fetchGuestDirectory(
     all_urls: [...guest.all_urls],
   })) as RawGuest[];
 
-  return buildGuestDirectory(rawGuests, [...guestVideoMetadata]);
+  return applyGuestIdentityOverlay(buildGuestDirectory(rawGuests, [...guestVideoMetadata]), guestIdentityOverlay);
 }
 
 export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
@@ -355,7 +353,7 @@ export function getGuestPageMeta(guest: GuestProfile): PageMeta {
     ? truncateMetaText(guest.primary_episode.title, 56)
     : "";
   const identity = `${guest.guest_name}${companyAndTitle ? `，${companyAndTitle}` : ""}`;
-  const description = `${identity}。在「课代表立正」的${guest.episode_count}期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
+  const description = `${guest.current_job_certified === false && companyAndTitle ? "节目资料中的介绍：" : ""}${identity}。在「课代表立正」的${guest.episode_count}期对谈中，包括《${leadTitle || guest.primary_episode.title}》。`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

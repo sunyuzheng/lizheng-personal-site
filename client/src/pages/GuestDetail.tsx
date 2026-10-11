@@ -7,6 +7,7 @@ import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
 import { getGuestPageMeta } from "@shared/guest-data";
+import { resolveGuestProfile } from "@shared/guest-identity";
 import {
   getGuestEnglishInsights,
   type GuestInsight,
@@ -66,12 +67,12 @@ function XiaohongshuIcon() {
 export default function GuestDetail({ slug }: GuestDetailProps) {
   const { lang } = useLanguage();
   const { guests, loading, error } = useGuestDirectory();
-  const guest = guests.find(item => item.slug === slug);
+  const guest = resolveGuestProfile(guests, slug);
   const [reviewInsights, setReviewInsights] = useState<GuestInsight[]>([]);
   const publishedInsights = getGuestEnglishInsights(slug);
   const insights = [
     ...publishedInsights,
-    ...reviewInsights.filter(article => article.guestSlug === slug),
+    ...reviewInsights.filter(article => guest?.alias_slugs?.includes(article.guestSlug) || article.guestSlug === slug),
   ];
 
   useEffect(() => {
@@ -202,6 +203,11 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
             <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">
               {displayName}
             </h1>
+            {guest.current_job_certified === false && (guest.guest_company || guest.guest_title) && (
+              <p className="mt-4 text-xs text-zinc-500">
+                {lang === "en" ? "Introduction from programme records" : "节目资料中的介绍"}
+              </p>
+            )}
             {guest.guest_company && (
               <p className="mt-4 text-lg font-semibold text-superlinear-on-dark">
                 {guest.guest_company}

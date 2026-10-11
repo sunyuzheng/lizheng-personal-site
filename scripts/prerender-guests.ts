@@ -794,9 +794,12 @@ for (const guest of guests) {
     lang: "zh-CN",
   });
 
-  const guestDir = path.join(guestsDir, guest.slug);
-  fs.mkdirSync(guestDir, { recursive: true });
-  fs.writeFileSync(path.join(guestDir, "index.html"), guestHtml, "utf-8");
+  // Literal historical slugs retain a local page with the canonical profile URL.
+  for (const slug of guest.alias_slugs || [guest.slug]) {
+    const guestDir = path.join(guestsDir, slug);
+    fs.mkdirSync(guestDir, { recursive: true });
+    fs.writeFileSync(path.join(guestDir, "index.html"), guestHtml, "utf-8");
+  }
 }
 
 const sitemapXml = buildSitemapXml(guests);

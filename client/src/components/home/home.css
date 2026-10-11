@@ -2397,7 +2397,7 @@
   }
 }
 
-/* How many questions arrived in the last day: the one live thing beside the title. */
+/* How many questions and answers are public: a total, so it carries no live dot. */
 .lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
   display: inline-flex;
   align-items: center;
@@ -2409,7 +2409,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-.lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
+.lz-home .lz-ask-qcard-head time.fresh::before {
   content: "";
   width: 6px;
   height: 6px;
@@ -2428,7 +2428,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lz-home :is(.lz-ask-qcard-head time.fresh, .lz-ask-discovery-live)::before {
+  .lz-home .lz-ask-qcard-head time.fresh::before {
     animation: none;
   }
 }

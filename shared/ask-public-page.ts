@@ -429,7 +429,8 @@ export function relatedCards(detail: Pick<PublicDetail, "public_id" | "topic_key
 /** /ask: every published question, one per question, newest asked first. */
 export function renderIndexPage(cards: PublicCard[]): string {
   const reps = representatives(cards);
-  const listed = listedCards(cards).slice(0, 500).map(card => ({ ...card, similar: similarAskings(card, cards, reps) }));
+  const all = listedCards(cards);
+  const listed = all.slice(0, 500).map(card => ({ ...card, similar: similarAskings(card, cards, reps) }));
   const description = "别人问问立正的真实问题，由AI挑选后原样展示。回答来自立正公开的文章和视频，附出处。";
   return frame({
     title: "别人在问什么 · 问问立正", description, canonical: ASK_INDEX, type: "website", robots: "index, follow",
@@ -440,7 +441,7 @@ export function renderIndexPage(cards: PublicCard[]): string {
       mainEntity: { "@type": "ItemList", numberOfItems: listed.length,
         itemListElement: listed.slice(0, 100).map((card, i) => ({ "@type": "ListItem", position: i + 1, url: pageUrl(card.public_id), name: card.question })) },
     },
-    head: `<div class="head"><p class="kicker"><span>问问立正</span>${listed.length ? `<span>${listed.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，由AI挑选后原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
+    head: `<div class="head"><p class="kicker"><span>问问立正</span>${all.length ? `<span>${all.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，由AI挑选后原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
     body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">还没有公开的问题。</p>`}</div>`,
   });
 }

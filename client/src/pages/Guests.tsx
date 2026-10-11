@@ -3,27 +3,55 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { getGuestsPageMeta } from "@shared/guest-data";
+import { getGuestsPageMeta, guestIntro, guestYears, type GuestProfile } from "@shared/guest-data";
 import { guestMatchesQuery } from "@shared/guest-search";
 import { buildGuestsListStructuredData } from "@shared/structured-data";
-import { ArrowRight, ExternalLink, Play, Search, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
-function formatViews(views: number | null, lang: "en" | "zh"): string | null {
-  if (!views) return null;
-  if (lang === "en") {
-    if (views >= 1_000_000) return `${(views / 1_000_000).toFixed(1)}M`;
-    if (views >= 1000) return `${(views / 1000).toFixed(1)}K`;
-    return String(views);
-  }
-  if (views >= 10000) return `${(views / 10000).toFixed(1)}万`;
-  if (views >= 1000) return `${(views / 1000).toFixed(1)}k`;
-  return String(views);
+const COPY = {
+  zh: {
+    title: "嘉宾与对谈",
+    lede: (people: number, programmes: number) => `${people}位嘉宾，${programmes}期对谈。按名字、公司或话题找。`,
+    search: "搜名字、公司或话题",
+    clear: "清空",
+    found: (n: number) => `找到${n}位`,
+    none: (q: string) => `没有找到「${q}」。换个名字或话题试试。`,
+    episodes: (n: number) => `${n}期对谈`,
+    cover: (name: string) => `${name}的访谈封面`,
+  },
+  en: {
+    title: "Guests & conversations",
+    lede: (people: number, programmes: number) => `${people} guests, ${programmes} conversations. Search by name, company or topic.`,
+    search: "Search a name, company or topic",
+    clear: "Clear",
+    found: (n: number) => `${n} found`,
+    none: (q: string) => `Nothing found for “${q}”. Try another name or topic.`,
+    episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
+    cover: (name: string) => `Interview cover — ${name}`,
+  },
+} as const;
+
+function GuestItem({ guest, lang }: { guest: GuestProfile; lang: "en" | "zh" }) {
+  const copy = COPY[lang];
+  const name = lang === "en" && guest.guest_en_name ? guest.guest_en_name : guest.guest_name;
+  const years = guestYears(guest);
+  const intro = guestIntro(guest);
+  return (
+    <Link href={withLanguage(`/guests/${guest.slug}`, lang)} className="lz-guest">
+      <span className="lz-guest-thumb">
+        <img src={guest.primary_episode.thumbnailUrl} alt={copy.cover(name)} loading="lazy" width={320} height={180} />
+      </span>
+      <span className="lz-guest-name">{name}</span>
+      {intro && <span className="lz-guest-intro">{intro}</span>}
+      <span className="lz-guest-meta">{copy.episodes(guest.episode_count)}{years ? ` · ${years}` : ""}</span>
+    </Link>
+  );
 }
 
 export default function Guests() {
   const { lang } = useLanguage();
+  const copy = COPY[lang];
   const { guests, loading, error } = useGuestDirectory();
   const [query, setQuery] = useState("");
 
@@ -31,238 +59,51 @@ export default function Guests() {
     const meta = guests.length
       ? getGuestsPageMeta(guests)
       : {
-          title:
-            lang === "en"
-              ? "All Guests · Yuzheng Sun"
-              : "全部嘉宾 · 课代表立正",
-          description:
-            lang === "en"
-              ? "Overview of interview guests on the Yuzheng Sun / 课代表立正 channel."
-              : "课代表立正访谈嘉宾总览。",
+          title: lang === "en" ? "Guests & conversations · Yuzheng Sun" : "嘉宾与对谈 · 课代表立正",
+          description: lang === "en" ? "Guests and conversations on the Yuzheng Sun / 课代表立正 channel." : "课代表立正的嘉宾与对谈。",
           canonical: "https://www.lizheng.ai/guests",
           ogImage: "https://www.lizheng.ai/yuzheng-sun-headshot.jpg",
         };
-
-    return applyPageSeo({
-      ...meta,
-      jsonLd: guests.length
-        ? buildGuestsListStructuredData(guests, meta.description)
-        : null,
-    });
+    return applyPageSeo({ ...meta, jsonLd: guests.length ? buildGuestsListStructuredData(guests, meta.description) : null });
   }, [guests, lang]);
 
-  const q = query.trim().toLowerCase();
-  const filtered = guests.filter(guest => guestMatchesQuery(guest, q));
-
-  const programmeCount = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
+  const filtered = guests.filter(guest => guestMatchesQuery(guest, query));
+  const programmes = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
 
   return (
     <GuestsLayout>
-      <div className="container py-12 md:py-16">
-        <div className="mb-10 text-center">
-          <h1 className="text-4xl font-black text-white md:text-[3.4rem] md:leading-tight">
-            {lang === "en" ? "People & conversations" : "全部访谈"}
-          </h1>
-          {!loading && !error && (
-            <p className="mt-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-zinc-400">
-              {lang === "en" ? (
-                <>
-                  <span className="whitespace-nowrap">
-                    {guests.length} guest profiles
-                  </span>
-                  <span className="whitespace-nowrap">
-                    {programmeCount} programmes
-                  </span>
-                  <span className="whitespace-nowrap">
-                    Search guests or interview topics
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className="whitespace-nowrap">
-                    {guests.length}个嘉宾档案
-                  </span>
-                  <span className="whitespace-nowrap">{programmeCount}期节目</span>
-                  <span className="whitespace-nowrap">按嘉宾或话题查找</span>
-                </>
-              )}
-            </p>
-          )}
+      <section className="lz-guests-stage">
+        <div className="wrap">
+          <h1 className="lz-guests-title">{copy.title}</h1>
+          {!loading && !error && <p className="lz-guests-lede">{copy.lede(guests.length, programmes)}</p>}
+          <div className="lz-guests-search">
+            <input
+              type="text"
+              enterKeyHint="search"
+              aria-label={copy.search}
+              value={query}
+              onChange={event => setQuery(event.target.value)}
+              placeholder={copy.search}
+            />
+            {query && <button type="button" onClick={() => setQuery("")}>{copy.clear}</button>}
+          </div>
         </div>
+      </section>
 
-        <div className="relative mx-auto mb-10 max-w-md">
-          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-          <input
-            type="text"
-            aria-label={lang === "en" ? "Search interviews" : "搜索访谈"}
-            value={query}
-            onChange={event => setQuery(event.target.value)}
-            placeholder={
-              lang === "en"
-                ? "Search a guest, company, or topic…"
-                : "搜索嘉宾、公司或访谈话题…"
-            }
-            className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-10 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-superlinear-on-dark/50 focus:bg-white/8"
-          />
-          {query && (
-            <button
-              onClick={() => setQuery("")}
-              className="absolute right-1 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center text-zinc-500 transition hover:text-zinc-300"
-              aria-label={lang === "en" ? "Clear search" : "清空搜索"}
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
-
-        {query && !loading && !error && (
-          <p className="mb-6 text-center text-sm text-zinc-500">
-            {lang === "en" ? (
-              <>
-                Found{" "}
-                <span className="text-superlinear-on-dark">
-                  {filtered.length}
-                </span>{" "}
-                guest profile{filtered.length === 1 ? "" : "s"}
-              </>
-            ) : (
-              <>
-                找到{" "}
-                <span className="text-superlinear-on-dark">
-                  {filtered.length}
-                </span>{" "}
-                个嘉宾档案
-              </>
-            )}
-          </p>
-        )}
-
+      <div className="lz-guests-body wrap">
+        {query.trim() && !loading && !error && filtered.length > 0 && <p className="lz-guests-found">{copy.found(filtered.length)}</p>}
         {loading && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {Array.from({ length: 12 }).map((_, index) => (
-              <div
-                key={index}
-                className="overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2"
-              >
-                <div className="aspect-video animate-pulse bg-white/10" />
-                <div className="space-y-3 p-4">
-                  <div className="h-4 w-2/3 animate-pulse rounded bg-white/10" />
-                  <div className="h-3 w-1/2 animate-pulse rounded bg-white/10" />
-                  <div className="h-3 w-full animate-pulse rounded bg-white/10" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <ul className="lz-guests-grid" aria-busy="true">
+            {Array.from({ length: 8 }).map((_, index) => <li key={index}><div className="lz-guests-skeleton" /></li>)}
+          </ul>
         )}
-
-        {!loading && error && (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-12 text-center">
-            <p className="text-sm text-red-100">{error}</p>
-          </div>
-        )}
-
+        {!loading && error && <p className="lz-guests-empty">{error}</p>}
         {!loading && !error && filtered.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {filtered.map(guest => (
-              <article
-                key={guest.slug}
-                className="group flex flex-col overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2 transition duration-300 hover:-translate-y-1 hover:border-superlinear-on-dark/40"
-              >
-                <Link
-                  href={withLanguage(`/guests/${guest.slug}`, lang)}
-                  className="flex flex-1 flex-col"
-                >
-                  <div className="relative aspect-video overflow-hidden">
-                    <img
-                      src={guest.primary_episode.thumbnailUrl}
-                      alt={
-                        lang === "en"
-                          ? `Interview cover — ${guest.guest_en_name || guest.guest_name}`
-                          : `${guest.guest_name}访谈封面`
-                      }
-                      className="h-full w-full object-cover [filter:saturate(0.82)_contrast(1.02)] transition duration-300 group-hover:scale-105 group-hover:[filter:none]"
-                      loading="lazy"
-                      width={320}
-                      height={180}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition duration-300 group-hover:opacity-100">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-superlinear/90 text-white">
-                        <Play className="h-4 w-4 fill-current" />
-                      </div>
-                    </div>
-                    {formatViews(guest.max_views, lang) && (
-                      <div className="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white/90 backdrop-blur-sm">
-                        {formatViews(guest.max_views, lang)}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex flex-1 flex-col p-4">
-                    <div>
-                      <h2 className="line-clamp-1 text-[17px] font-bold tracking-[0.02em] text-white">
-                        {lang === "en" && guest.guest_en_name
-                          ? guest.guest_en_name
-                          : guest.guest_name}
-                      </h2>
-                      {guest.guest_company && (
-                        <p className="mt-1 line-clamp-1 text-sm font-medium text-superlinear-on-dark">
-                          {guest.guest_company}
-                        </p>
-                      )}
-                      {guest.guest_title && (
-                        <p className="mt-1 line-clamp-2 text-sm leading-5 text-zinc-400">
-                          {guest.guest_title}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between text-xs text-zinc-500">
-                      <span>
-                        {lang === "en"
-                          ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
-                          : `${guest.episode_count}期访谈`}
-                      </span>
-                      <span className="rounded-full border border-white/10 px-2 py-0.5">
-                        {lang === "en" ? "Dedicated page" : "独立页"}
-                      </span>
-                    </div>
-
-                    <p className="mt-3 line-clamp-2 text-sm leading-5 text-zinc-300">
-                      {guest.primary_episode.title}
-                    </p>
-                  </div>
-                </Link>
-
-                <div className="grid grid-cols-2 gap-2 border-t border-white/10 p-3">
-                  <Link
-                    href={withLanguage(`/guests/${guest.slug}`, lang)}
-                    className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg border border-superlinear-on-dark/30 bg-superlinear/10 px-3 text-xs font-semibold text-superlinear-on-dark transition hover:bg-superlinear/20"
-                  >
-                    {lang === "en" ? "View page" : "查看子页"}
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                  <a
-                    href={guest.primary_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-semibold text-zinc-200 transition hover:bg-white/10"
-                  >
-                    {guest.primary_source_type === "circle" ? (lang === "en" ? "Watch recording" : "观看回放") : "YouTube"}
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+          <ul className="lz-guests-grid">
+            {filtered.map(guest => <li key={guest.slug}><GuestItem guest={guest} lang={lang} /></li>)}
+          </ul>
         )}
-
-        {!loading && !error && filtered.length === 0 && query && (
-          <div className="py-24 text-center text-zinc-500">
-            {lang === "en"
-              ? `No guests found for "${query}"`
-              : `没有找到「${query}」相关的嘉宾`}
-          </div>
-        )}
+        {!loading && !error && filtered.length === 0 && query.trim() && <p className="lz-guests-empty">{copy.none(query.trim())}</p>}
       </div>
     </GuestsLayout>
   );

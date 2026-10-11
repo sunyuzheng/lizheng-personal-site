@@ -18,7 +18,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { EXTERNAL, Phrases } from "./parts";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, DISCOVERY_LIST_SIZE, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
+import { askedAgo, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
@@ -549,7 +549,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   // past eight seconds, and only then the examples show in its place.
   const [discoveryState, setDiscoveryState] = useState<"loading" | "ready" | "none">(lang === "zh" ? "loading" : "none");
   // Questions asked in the last day among those this visit read, shown beside the note.
-  const [askedRecently, setAskedRecently] = useState(0);
+  const [publicTotal, setPublicTotal] = useState<number | null>(null);
   const discoveryList = useRef<HTMLDivElement>(null);
   const hasDiscovery = discoveryCards.length > 0;
   // Anonymous usage of this page view for the owner's dashboard (lib/ask-usage): reading time,
@@ -661,7 +661,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       if (!lists || (!lists.recent.length && !lists.frequent.length)) { setDiscoveryState("none"); return; }
       // Until someone has asked, the common questions written fresh are all there is.
       if (!discoveryView(lists, "recent").length) setDiscoveryTab("frequent");
-      setAskedRecently(askedLastDay(lists.recent));
+      setPublicTotal(lists.total);
       setQuestionLists(lists);
       setDiscoveryState("ready");
     });
@@ -1275,7 +1275,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <div className="lz-ask-discovery-head">
                 <h3>{c.discoveryTitle}</h3>
                 <p>{c.discoveryNote}</p>
-                {askedRecently >= 3 && <p className="lz-ask-discovery-live">最近24小时 {askedRecently >= DISCOVERY_LIST_SIZE ? `${DISCOVERY_LIST_SIZE}+` : askedRecently} 个新问题</p>}
+                {publicTotal && <p className="lz-ask-discovery-live">已有{publicTotal}个公开问答</p>}
                 {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
                 <div className="lz-ask-discovery-views" role="group" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
                   {(["recent", "frequent"] as const).map((view, i) => (

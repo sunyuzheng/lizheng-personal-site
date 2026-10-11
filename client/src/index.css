@@ -4,6 +4,7 @@
 @source not "../community-app";
 @import "./components/site/site.css";
 @import "./components/home/home.css";
+@import "./components/guests/guests.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,6 +1,6 @@
 import type { GuestEpisode, GuestProfile, GuestCommunityResource } from "./guest-data";
 import type { GuestEntityType } from "./guest-identity";
-import { compareGuestEpisodesByViews } from "./guest-episode-order";
+import { compareGuestEpisodesByDate } from "./guest-episode-order";
 
 export interface GuestEntity {
   entity_id: string; entity_type: GuestEntityType; display_name: string;
@@ -28,6 +28,33 @@ export interface GuestArticle {
   takeaways?: readonly string[]; read_time_minutes?: number;
 }
 export interface GuestArticleCatalog { schema_version: 1; articles: readonly GuestArticle[] }
+/** Open Context's generated name table (catalog/guest-names.json): every name that finds a person. */
+export interface GuestNameTable {
+  schema_version: 1; generated_from: readonly string[]; key_rule: string; key_drop: string;
+  key_examples: readonly (readonly string[])[];
+  speakers: readonly { speaker_id: string; role: string; names: readonly { name: string; key: string }[] }[];
+  names: readonly { name: string; key: string; entity_ids: readonly string[]; kinds: readonly string[] }[];
+  qualifiers: Readonly<Record<string, readonly { name: string; key: string }[]>>;
+}
+/** A name's key, by the table's rule: NFKC, lower case, then without whitespace and the listed marks. */
+export function nameKey(text: string, drop: string): string {
+  return [...text.normalize("NFKC").toLowerCase()].filter(char => !/\s/u.test(char) && !drop.includes(char)).join("");
+}
+export function validateGuestNameTable(value: unknown, catalog: GuestCatalog): asserts value is GuestNameTable {
+  record(value); keys(value, ["schema_version", "generated_from", "key_rule", "key_drop", "key_examples", "speakers", "names", "qualifiers"]);
+  requireValue(value.schema_version === 1 && typeof value.key_drop === "string" && Array.isArray(value.names) && Array.isArray(value.key_examples), "name_table_invalid");
+  for (const example of value.key_examples) requireValue(Array.isArray(example) && nameKey(example[0], value.key_drop) === example[1], "name_table_key_rule_mismatch");
+  const entities = new Set(catalog.entities.map(e => e.entity_id));
+  const seen = new Set<string>();
+  for (const row of value.names) {
+    record(row);
+    requireValue(typeof row.name === "string" && typeof row.key === "string" && row.key === nameKey(row.name, value.key_drop) && !seen.has(row.key)
+      && Array.isArray(row.entity_ids) && row.entity_ids.length > 0 && row.entity_ids.every((id: unknown) => typeof id === "string" && entities.has(id)), "name_table_entry_invalid");
+    seen.add(row.key);
+  }
+  record(value.qualifiers);
+  for (const id of Object.keys(value.qualifiers)) requireValue(entities.has(id), "name_table_qualifier_invalid");
+}
 const TYPES = new Set(["person", "group", "virtual-character", "anonymous-label", "unresolved"]);
 const ENTITY = /^guest:[a-z0-9][a-z0-9-]*$/;
 const SLUG = /^[a-z0-9][a-z0-9-]*$/;
@@ -111,8 +138,12 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
 }
 
 /** Programme relationships aid discovery; they never assign any transcript turn. */
-export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArticleCatalog): GuestProfile[] {
+export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArticleCatalog, names?: GuestNameTable): GuestProfile[] {
   validateGuestCatalog(catalog, articles);
+  if (names) validateGuestNameTable(names, catalog);
+  // The extra names a reader may search by: the name before a parenthetical, nicknames, group members.
+  const searchNames = new Map<string, string[]>();
+  for (const row of names?.names || []) for (const id of row.entity_ids) searchNames.set(id, [...(searchNames.get(id) || []), row.name]);
   const sources = new Map(catalog.sources.map(s => [s.source_id, s]));
   return catalog.entities.map(entity => {
     const rows = catalog.appearances.filter(r => r.entity_id === entity.entity_id);
@@ -120,8 +151,9 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
       videoId: s.video_id, sourceType: s.source_type, url: s.url, title: s.title, thumbnailUrl: s.thumbnail_url,
       ...(s.published_at === undefined ? {} : { publishedAt: s.published_at }),
       ...(s.view_count === undefined ? {} : { viewCount: s.view_count }), isPrimary: r.is_primary, index: r.index,
-    }; }).sort(compareGuestEpisodesByViews);
+    }; }).sort(compareGuestEpisodesByDate);
     const primary = episodes.find(e => e.isPrimary)!;
+    const years = episodes.flatMap(e => e.publishedAt ? [new Date(e.publishedAt).getUTCFullYear()] : []).filter(Number.isFinite);
     const views = [...episodes.flatMap(e => e.viewCount === undefined ? [] : [e.viewCount])];
     const { display_name, primary_source_id: _primary, ...profile } = entity;
     return { ...profile, guest_name: display_name, guest_en_name: entity.guest_en_name || "", guest_title: entity.guest_title || "", guest_company: entity.guest_company || "",
@@ -130,6 +162,8 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
       max_views: views.length ? Math.max(...views) : null, primary_url: primary.url, episode_count: episodes.length,
       all_video_ids: episodes.flatMap(e => e.videoId ? [e.videoId] : []), all_urls: episodes.map(e => e.url),
       share_url: `https://www.lizheng.ai/guests/${entity.slug}`, episodes, primary_episode: primary,
+      search_names: [...new Set(searchNames.get(entity.entity_id) || [])],
+      ...(years.length ? { first_year: Math.min(...years), last_year: Math.max(...years) } : {}),
     };
   });
 }

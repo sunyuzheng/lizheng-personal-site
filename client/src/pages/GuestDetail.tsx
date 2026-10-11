@@ -1,19 +1,14 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
 import GuestInsightCard from "@/components/guests/GuestInsightCard";
 import GuestCommunityResources from "@/components/guests/GuestCommunityResources";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { getGuestPageMeta } from "@shared/guest-data";
+import { getGuestPageMeta, guestAskLink, guestIntro, guestYears, type GuestEpisode } from "@shared/guest-data";
 import { resolveGuestProfile } from "@shared/guest-identity";
-import {
-  getGuestEnglishInsights,
-  type GuestInsight,
-} from "@shared/guest-insights";
+import { getGuestEnglishInsights, type GuestInsight } from "@shared/guest-insights";
 import { buildGuestStructuredData } from "@shared/structured-data";
-import { ArrowLeft, ExternalLink, Linkedin, Play } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 
@@ -21,73 +16,78 @@ interface GuestDetailProps {
   slug: string;
 }
 
-function formatViews(views?: number | null): string | null {
+const COPY = {
+  zh: {
+    back: "← 全部嘉宾",
+    episodes: (n: number) => `${n}期对谈`,
+    introduced: "节目中的介绍：",
+    watch: "观看精选的一期 ↗",
+    watchCircle: "在超线性学院观看 ↗",
+    ask: "在问问立正里查他聊过什么 ↗",
+    xiaohongshu: "小红书 ↗",
+    playlist: "YouTube合集 ↗",
+    community: (n: number) => `社区文章与活动（${n}）`,
+    all: "全部对谈",
+    allNote: "按时间从新到旧",
+    views: (n: string) => `${n}次观看`,
+    missingTitle: "这个嘉宾页不存在",
+    missingBody: "链接可能已经变了，可以到全部嘉宾里搜一下。",
+    missingBack: "看全部嘉宾",
+  },
+  en: {
+    back: "← All guests",
+    episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
+    introduced: "Introduced in the programmes as: ",
+    watch: "Watch the featured episode ↗",
+    watchCircle: "Watch on Superlinear ↗",
+    ask: "Ask Lizheng what they talked about ↗",
+    xiaohongshu: "Xiaohongshu ↗",
+    playlist: "YouTube playlist ↗",
+    community: (n: number) => `Community posts and events (${n})`,
+    all: "All conversations",
+    allNote: "Newest first",
+    views: (n: string) => `${n} views`,
+    missingTitle: "This guest page doesn't exist",
+    missingBody: "The link may have changed. Search the guest list instead.",
+    missingBack: "See all guests",
+  },
+} as const;
+
+function formatViews(views: number | undefined | null, lang: "en" | "zh"): string | null {
   if (!views) return null;
-  return views.toLocaleString("en-US");
+  return views.toLocaleString(lang === "en" ? "en-US" : "zh-CN");
 }
 
-function formatPublishedAt(
-  value: string | undefined,
-  lang: "en" | "zh"
-): string | null {
+function formatDate(value: string | undefined, lang: "en" | "zh"): string | null {
   if (!value) return null;
-
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
-
   return new Intl.DateTimeFormat(lang === "en" ? "en-US" : "zh-CN", {
-    year: "numeric",
-    month: lang === "en" ? "short" : "numeric",
-    day: "numeric",
-    timeZone: "UTC",
+    year: "numeric", month: lang === "en" ? "short" : "long", day: "numeric", timeZone: "UTC",
   }).format(date);
 }
 
-function XiaohongshuIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      className="mr-2 h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.9"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3.5" y="4.5" width="17" height="15" rx="4" />
-      <path d="M8 9.25h3.25L8 14.75h3.6" />
-      <path d="M14 9.25h2.75" />
-      <path d="M14 12h2.2" />
-      <path d="M14 14.75h3" />
-    </svg>
-  );
+function episodeMeta(episode: GuestEpisode, lang: "en" | "zh"): string {
+  const views = formatViews(episode.viewCount, lang);
+  return [formatDate(episode.publishedAt, lang), views && COPY[lang].views(views)].filter(Boolean).join(" · ");
 }
 
 export default function GuestDetail({ slug }: GuestDetailProps) {
   const { lang } = useLanguage();
+  const copy = COPY[lang];
   const { guests, loading, error } = useGuestDirectory();
   const guest = resolveGuestProfile(guests, slug);
   const [reviewInsights, setReviewInsights] = useState<GuestInsight[]>([]);
-  const publishedInsights = getGuestEnglishInsights(slug);
   const insights = [
-    ...publishedInsights,
+    ...getGuestEnglishInsights(slug),
     ...reviewInsights.filter(article => guest?.alias_slugs?.includes(article.guestSlug) || article.guestSlug === slug),
   ];
 
   useEffect(() => {
-    if (
-      !import.meta.env.DEV ||
-      !new URLSearchParams(window.location.search).has("insightReview")
-    )
-      return;
+    if (!import.meta.env.DEV || !new URLSearchParams(window.location.search).has("insightReview")) return;
     const controller = new AbortController();
     fetch("/__review/guest-insights.json", { signal: controller.signal })
-      .then(response =>
-        response.ok
-          ? response.json()
-          : Promise.reject(new Error("Review unavailable"))
-      )
+      .then(response => (response.ok ? response.json() : Promise.reject(new Error("Review unavailable"))))
       .then(data => setReviewInsights(data.articles || []))
       .catch(() => {});
     return () => controller.abort();
@@ -96,422 +96,94 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
   useEffect(() => {
     if (!guest) return;
     const meta = getGuestPageMeta(guest);
-    return applyPageSeo({
-      ...meta,
-      type: "profile",
-      jsonLd: buildGuestStructuredData(guest, meta.description),
-    });
+    return applyPageSeo({ ...meta, type: "profile", jsonLd: buildGuestStructuredData(guest, meta.description) });
   }, [guest]);
 
-  if (loading) {
+  if (loading || error || !guest) {
     return (
       <GuestsLayout>
-        <div className="container py-12 md:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="space-y-4">
-              <div className="h-4 w-24 animate-pulse rounded bg-white/10" />
-              <div className="h-12 w-2/3 animate-pulse rounded bg-white/10" />
-              <div className="h-4 w-1/2 animate-pulse rounded bg-white/10" />
-              <div className="h-24 w-full animate-pulse rounded-2xl bg-white/10" />
-            </div>
-            <div className="aspect-video animate-pulse rounded-3xl bg-white/10" />
+        <section className="lz-guests-stage">
+          <div className="wrap">
+            <Link href={withLanguage("/guests", lang)} className="lz-guest-back">{copy.back}</Link>
+            {!loading && (
+              <>
+                <h1 className="lz-guests-title" style={{ marginTop: 18 }}>{error ? error : copy.missingTitle}</h1>
+                {!error && <p className="lz-guests-lede">{copy.missingBody}</p>}
+              </>
+            )}
           </div>
+        </section>
+        <div className="lz-guests-body wrap">
+          {!loading && !error && <Link href={withLanguage("/guests", lang)} className="lz-guest-link">{copy.missingBack}</Link>}
         </div>
       </GuestsLayout>
     );
   }
 
-  if (error) {
-    return (
-      <GuestsLayout>
-        <div className="container py-16">
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-6 py-12 text-center">
-            <p className="text-sm text-red-100">{error}</p>
-          </div>
-        </div>
-      </GuestsLayout>
-    );
-  }
-
-  if (!guest) {
-    return (
-      <GuestsLayout>
-        <div className="container py-16">
-          <div className="mx-auto max-w-2xl rounded-3xl border border-white/10 bg-white/5 p-10 text-center">
-            <p className="text-sm uppercase tracking-[0.2em] text-zinc-500">
-              Guest Not Found
-            </p>
-            <h1 className="mt-4 text-3xl font-bold text-white">
-              {lang === "en"
-                ? "This guest page doesn't exist"
-                : "这个嘉宾页不存在"}
-            </h1>
-            <p className="mt-3 text-sm leading-6 text-zinc-400">
-              {lang === "en"
-                ? "The link may have changed. Search the interview archive to find the guest."
-                : "链接可能已变更，可以到访谈列表搜索这位嘉宾。"}
-            </p>
-            <Button
-              asChild
-              className="mt-8 bg-superlinear text-white hover:bg-superlinear-deep"
-            >
-              <Link href={withLanguage("/guests", lang)}>
-                {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </GuestsLayout>
-    );
-  }
-
-  const displayName =
-    lang === "en" && guest.guest_en_name
-      ? guest.guest_en_name
-      : guest.guest_name;
-  const isCircle = guest.primary_episode.sourceType === "circle";
+  const name = lang === "en" && guest.guest_en_name ? guest.guest_en_name : guest.guest_name;
+  const featured = guest.primary_episode;
+  const isCircle = featured.sourceType === "circle";
   const bio = lang === "en" ? guest.guest_bio_en : guest.guest_bio;
+  const intro = guestIntro(guest);
+  const years = guestYears(guest);
 
   return (
     <GuestsLayout>
-      <div className="container py-12 md:py-16">
-        <Link
-          href={withLanguage("/guests", lang)}
-          className="mb-3 inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-superlinear-on-dark md:mb-6 md:min-h-0"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {lang === "en" ? "Back to all guests" : "返回全部嘉宾"}
-        </Link>
-
-        <section className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <div className="flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-zinc-500">
-              <span className="rounded-full border border-white/10 px-2.5 py-1">
-                {lang === "en"
-                  ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}`
-                  : `${guest.episode_count}期访谈`}
-              </span>
-              {formatViews(guest.max_views) && (
-                <span className="rounded-full border border-white/10 px-2.5 py-1">
-                  {lang === "en"
-                    ? `Top view count ${formatViews(guest.max_views)}`
-                    : `最高播放${formatViews(guest.max_views)}`}
-                </span>
-              )}
-            </div>
-
-            <h1 className="mt-5 text-4xl font-black text-white md:text-5xl">
-              {displayName}
-            </h1>
-            {guest.guest_company && (
-              <p className="mt-4 text-lg font-semibold text-superlinear-on-dark">
-                {guest.guest_company}
-              </p>
-            )}
-            {guest.guest_title && (
-              <p className="mt-2 max-w-2xl text-base leading-7 text-zinc-300">
-                {guest.guest_title}
-              </p>
-            )}
-            {bio && (
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
-                {bio}
-              </p>
-            )}
-            {guest.interview_date && (
-              <p className="mt-3 text-xs text-zinc-500">
-                {lang === "en" ? "Recorded " : "访谈录制于"}
-                {formatPublishedAt(guest.interview_date, lang)}
-              </p>
-            )}
-
-            {(guest.xiaohongshu_url || guest.linkedin_url) && (
-              <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="text-sm font-semibold text-white">
-                  {lang === "en" ? "External profiles" : "外部主页"}
-                </div>
-                <div className="mt-3 flex flex-wrap gap-3">
-                  {guest.xiaohongshu_url && (
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                    >
-                      <a
-                        href={guest.xiaohongshu_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <XiaohongshuIcon />
-                        {lang === "en" ? "Xiaohongshu" : "小红书"}
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
-                  )}
-                  {guest.linkedin_url && (
-                    <Button
-                      asChild
-                      variant="outline"
-                      className="border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                    >
-                      <a
-                        href={guest.linkedin_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Linkedin className="mr-2 h-4 w-4" />
-                        LinkedIn
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button
-                asChild
-                className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
-              >
-                <a
-                  href={guest.primary_episode.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Play className="mr-2 h-4 w-4 fill-current" />
-                  {isCircle
-                    ? lang === "en"
-                      ? "Watch on Superlinear"
-                      : "在超线性学院观看"
-                    : lang === "en"
-                      ? "Watch featured interview"
-                      : "观看精选访谈"}
-                </a>
-              </Button>
-              {!isCircle && (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                >
-                  <a
-                    href={guest.primary_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {lang === "en" ? "Open on YouTube" : "打开YouTube"}
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-              {guest.youtube_playlist_url && (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                >
-                  <a
-                    href={guest.youtube_playlist_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {lang === "en" ? "YouTube playlist" : "YouTube个人合集"}
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-              )}
-              {!!guest.community_resources?.length && (
-                <Button
-                  asChild
-                  variant="outline"
-                  className="min-h-11 border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-                >
-                  <a href="#community-resources">
-                    {lang === "en"
-                      ? "Community posts and events"
-                      : "社区文章与活动"}
-                    （{guest.community_resources.length}）
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
-
-          <a
-            href={guest.primary_episode.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={
-              lang === "en"
-                ? `Watch featured interview: ${guest.primary_episode.title}`
-                : `观看精选访谈：${guest.primary_episode.title}`
-            }
-            className="group relative overflow-hidden rounded-[18px] border border-white/10 bg-lz-forest-2"
-          >
-            <img
-              src={guest.primary_episode.thumbnailUrl}
-              alt={guest.primary_episode.title}
-              className={`aspect-video ${isCircle ? "" : "h-full"} w-full object-cover transition duration-300 group-hover:scale-105`}
-            />
-            {!isCircle && (
-              <div className="absolute inset-0 bg-black/10 sm:bg-gradient-to-t sm:from-black/75 sm:via-black/10 sm:to-transparent" />
-            )}
-            <div
-              className={`absolute left-4 top-4 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white ${isCircle ? "" : "sm:hidden"}`}
-            >
-              {isCircle
-                ? "Superlinear"
-                : lang === "en"
-                  ? "Featured"
-                  : "精选视频"}
-            </div>
-            <div
-              className={`absolute inset-0 flex items-center justify-center sm:hidden ${isCircle ? "hidden" : ""}`}
-            >
-              <span className="flex size-12 items-center justify-center rounded-full bg-superlinear/95 text-white shadow-lg">
-                <Play className="h-5 w-5 fill-current" />
-              </span>
-            </div>
-            <div
-              className={
-                isCircle
-                  ? "p-5"
-                  : "absolute inset-x-0 bottom-0 hidden p-6 sm:block"
-              }
-            >
-              {!isCircle && (
-                <div className="mb-3 inline-flex items-center rounded-full bg-superlinear px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white">
-                  {isCircle
-                    ? "Superlinear"
-                    : lang === "en"
-                      ? "Featured"
-                      : "精选视频"}
-                </div>
-              )}
-              <h2
-                className={`${isCircle ? "text-lg" : "text-2xl"} font-semibold leading-tight text-white`}
-              >
-                {guest.primary_episode.title}
-              </h2>
-              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-200">
-                {formatViews(guest.primary_episode.viewCount) && (
-                  <span>
-                    {lang === "en"
-                      ? `${formatViews(guest.primary_episode.viewCount)} views`
-                      : `${formatViews(guest.primary_episode.viewCount)}次观看`}
-                  </span>
-                )}
-                {formatPublishedAt(guest.primary_episode.publishedAt, lang) && (
-                  <span>
-                    {isCircle && (lang === "en" ? "Published " : "发布于")}
-                    {formatPublishedAt(guest.primary_episode.publishedAt, lang)}
-                  </span>
-                )}
-              </div>
-              <p className="mt-2 text-sm text-zinc-200">
-                {isCircle
-                  ? lang === "en"
-                    ? "Recording and companion notes on Superlinear"
-                    : "在超线性学院观看回放与伴读"
-                  : lang === "en"
-                    ? "Click through to watch on YouTube"
-                    : "点开后直接跳转到YouTube播放页"}
-              </p>
-            </div>
-          </a>
-        </section>
-
-        {insights.map(article => (
-          <GuestInsightCard key={article.id} article={article} />
-        ))}
-
-        <section className="mt-14">
-          <div className="mb-6 flex items-end justify-between gap-4">
+      <section className="lz-guests-stage">
+        <div className="wrap">
+          <Link href={withLanguage("/guests", lang)} className="lz-guest-back">{copy.back}</Link>
+          <div className="lz-guest-head">
             <div>
-              <p className="text-sm uppercase tracking-[0.18em] text-zinc-500">
-                Episodes
-              </p>
-              <h2 className="mt-2 text-2xl font-bold text-white">
-                {lang === "en" ? "All interviews" : "全部访谈"}
-              </h2>
+              <h1>{name}</h1>
+              <p className="lz-guest-facts">{copy.episodes(guest.episode_count)}{years ? ` · ${years}` : ""}</p>
+              {intro && <p className="lz-guest-introduction"><span>{copy.introduced}</span>{intro}</p>}
+              {bio && <p className="lz-guest-bio">{bio}</p>}
+              <div className="lz-guest-actions">
+                <a className="lz-guest-watch" href={featured.url} target="_blank" rel="noopener noreferrer">
+                  {isCircle ? copy.watchCircle : copy.watch}
+                </a>
+                <a className="lz-guest-ask" href={guestAskLink(guest)} target="_blank" rel="noopener noreferrer">{copy.ask}</a>
+              </div>
+              {!!(guest.xiaohongshu_url || guest.linkedin_url || guest.youtube_playlist_url || guest.community_resources?.length) && (
+                <p className="lz-guest-links">
+                  {guest.xiaohongshu_url && <a href={guest.xiaohongshu_url} target="_blank" rel="noopener noreferrer">{copy.xiaohongshu}</a>}
+                  {guest.linkedin_url && <a href={guest.linkedin_url} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>}
+                  {guest.youtube_playlist_url && <a href={guest.youtube_playlist_url} target="_blank" rel="noopener noreferrer">{copy.playlist}</a>}
+                  {!!guest.community_resources?.length && <a href="#community-resources">{copy.community(guest.community_resources.length)}</a>}
+                </p>
+              )}
             </div>
-            <p className="text-sm text-zinc-500">
-              {isCircle
-                ? "Superlinear"
-                : lang === "en"
-                  ? `${guest.episode_count} episode${guest.episode_count === 1 ? "" : "s"}, sorted by views`
-                  : `${guest.episode_count}期内容，按观看量排序`}
-            </p>
+            <a className="lz-guest-featured" href={featured.url} target="_blank" rel="noopener noreferrer">
+              <img src={featured.thumbnailUrl} alt={featured.title} width={640} height={360} />
+              <span className="lz-guest-featured-title">{featured.title}</span>
+              {episodeMeta(featured, lang) && <span className="lz-guest-featured-meta">{episodeMeta(featured, lang)}</span>}
+            </a>
           </div>
+        </div>
+      </section>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {guest.episodes.map((episode, rank) => (
-              <a
-                key={episode.url}
-                href={episode.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group overflow-hidden rounded-[14px] border border-white/10 bg-lz-forest-2 transition hover:-translate-y-1 hover:border-superlinear-on-dark/40"
-              >
-                <div className="relative aspect-video overflow-hidden">
-                  <img
-                    src={episode.thumbnailUrl}
-                    alt={episode.title}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition group-hover:opacity-100">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-superlinear/90 text-white">
-                      <Play className="h-4 w-4 fill-current" />
-                    </div>
-                  </div>
-                  {episode.isPrimary && (
-                    <div className="absolute left-3 top-3 rounded-full bg-superlinear px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
-                      {lang === "en" ? "Featured" : "精选"}
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-3 p-4">
-                  <div className="flex flex-wrap gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-zinc-500">
-                    <span>
-                      {episode.sourceType === "circle"
-                        ? "Superlinear"
-                        : `Top ${rank + 1}`}
-                    </span>
-                    {formatPublishedAt(episode.publishedAt, lang) && (
-                      <span>
-                        {formatPublishedAt(episode.publishedAt, lang)}
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="line-clamp-3 text-base font-semibold leading-6 text-white">
-                    {episode.title}
-                  </h3>
-                  <div className="flex items-center justify-between text-sm text-zinc-400">
-                    <span>
-                      {episode.sourceType === "circle"
-                        ? lang === "en"
-                          ? "Recording and notes"
-                          : "回放与伴读"
-                        : episode.videoId}
-                    </span>
-                    {formatViews(episode.viewCount) && (
-                      <span>
-                        {lang === "en"
-                          ? `${formatViews(episode.viewCount)} views`
-                          : `${formatViews(episode.viewCount)}次观看`}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </a>
+      <div className="lz-guests-body wrap">
+        {insights.map(article => (
+          <section key={article.id} className="lz-guest-section"><GuestInsightCard article={article} /></section>
+        ))}
+        <section className="lz-guest-section">
+          <h2>{copy.all}</h2>
+          {guest.episodes.length > 1 && <p className="lz-guest-section-note">{copy.allNote}</p>}
+          <ol className="lz-episodes">
+            {guest.episodes.map(episode => (
+              <li key={episode.url}>
+                <a className="lz-episode" href={episode.url} target="_blank" rel="noopener noreferrer">
+                  <img src={episode.thumbnailUrl} alt="" loading="lazy" width={352} height={198} />
+                  <span>
+                    <span className="lz-episode-meta">{episodeMeta(episode, lang)}</span>
+                    <span className="lz-episode-title">{episode.title}</span>
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
-        <GuestCommunityResources
-          resources={guest.community_resources || []}
-          lang={lang}
-        />
+        <GuestCommunityResources resources={guest.community_resources || []} lang={lang} />
       </div>
     </GuestsLayout>
   );

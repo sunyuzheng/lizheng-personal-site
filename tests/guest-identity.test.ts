@@ -13,15 +13,19 @@ function profile(name: string, slug: string, videoId: string): GuestProfile {
     guest_bio: `Original fixture biography ${slug}`, primary_video_id: videoId, max_views: null,
     thumbnail_url: episode.thumbnailUrl, primary_url: episode.url, episode_count: 1, all_video_ids: [videoId],
     all_urls: [episode.url, `https://example.org/resource/${slug}`], slug, share_url: `https://www.lizheng.ai/guests/${slug}`,
-    episodes: [episode], primary_episode: episode, community_resources: [{ kind: "event", title: "Fixture resource",
+    episodes: [episode], primary_episode: episode, search_names: [], community_resources: [{ kind: "event", title: "Fixture resource",
       url: `https://example.org/resource/${slug}`, summary: "Synthetic metadata" }] };
 }
 describe("canonical identity presentation", () => {
-  it("keeps a Latin name separate from its longer names and accepts shared aliases", () => {
+  it("filters as people type: word prefixes, members and nicknames, never inside a word", () => {
     expect(guestMatchesQuery(profile("Jo", "jo", "abcdefghijk"), "Jo")).toBe(true);
-    expect(guestMatchesQuery(profile("John", "john", "abcdefghijk"), "Jo")).toBe(false);
+    expect(guestMatchesQuery(profile("Richard Liu", "richard", "abcdefghijk"), "Rich")).toBe(true);
     expect(guestMatchesQuery(profile("Jo", "jo", "abcdefghijk"), "enjoy")).toBe(false);
     expect(guestMatchesQuery({ ...profile("Synthetic team", "team", "abcdefghijk"), entity_type: "group", aliases: ["Jo"] }, "Jo")).toBe(true);
+    const pair = { ...profile("王臻 & Nick", "pair", "abcdefghijk"), entity_type: "group" as const, search_names: ["王臻", "Nick"] };
+    expect(guestMatchesQuery(pair, "王臻")).toBe(true);
+    expect(guestMatchesQuery(pair, "nick")).toBe(true);
+    expect(guestMatchesQuery(profile("硅谷徐老师（Howie Xu）", "howie", "abcdefghijk"), "硅谷 howie")).toBe(true);
   });
   it("uses exact alias slugs without guessing a route", () => {
     const p = { ...profile("Alpha", "alpha", "abcdefghijk"), alias_slugs: ["alpha", "old-alpha"] };
@@ -45,5 +49,17 @@ describe("canonical identity presentation", () => {
       expect(JSON.stringify(value)).not.toContain('"jobTitle"'); expect(JSON.stringify(value)).not.toContain('"worksFor"');
     }
     expect(p.guest_title).toBe("Historical title"); expect(p.guest_company).toBe("Historical company");
+  });
+});
+
+describe("introductions stay the programmes' own", () => {
+  it("labels the introduction in search results and links to Ask Lizheng's 从哪读起", async () => {
+    const { getGuestPageMeta, guestAskLink } = await import("../shared/guest-data");
+    const p = { ...profile("卢蔚（Cooper）", "lu-wei", "abcdefghijk"), first_year: 2020, last_year: 2025, episode_count: 7 };
+    const meta = getGuestPageMeta(p);
+    expect(meta.description).toContain("（2020–2025）");
+    expect(meta.description).toContain("节目中的介绍：Historical company · Historical title");
+    expect(meta.description.startsWith("卢蔚（Cooper）在「课代表立正」")).toBe(true);
+    expect(guestAskLink(p)).toBe("https://ask.lizheng.ai/?q=%E5%8D%A2%E8%94%9A%EF%BC%88Cooper%EF%BC%89&mode=find");
   });
 });

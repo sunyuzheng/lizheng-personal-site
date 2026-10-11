@@ -17,7 +17,10 @@ afterEach(() => { for (const dir of dirs.splice(0)) fs.rmSync(dir, { recursive: 
 function localInput(): { root: string; hash: string } {
   const root = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), "guest-catalog-test-")); dirs.push(root); fs.mkdirSync(path.join(root, "catalog"));
   const { catalog, articles } = fixture();
-  const files = [["catalog/guests.json", catalog], ["catalog/guest-articles.json", articles]].map(([file, value]) => {
+  const names = { schema_version: 1, generated_from: ["catalog/guests.json"], key_rule: "NFKC, casefold, then drop marks", key_drop: "&()-./_",
+    key_examples: [["Leo (Charisma)", "leocharisma"]], speakers: [{ speaker_id: "yuzheng", role: "host", names: [{ name: "立正", key: "立正" }] }],
+    names: [{ name: "Alpha", key: "alpha", entity_ids: ["guest:alpha"], kinds: ["alias"] }], qualifiers: {} };
+  const files = [["catalog/guests.json", catalog], ["catalog/guest-articles.json", articles], ["catalog/guest-names.json", names]].map(([file, value]) => {
     const blob = JSON.stringify(value); fs.writeFileSync(path.join(root, file as string), blob);
     return { path: file, bytes: Buffer.byteLength(blob), sha256: digest(blob) };
   });
@@ -57,17 +60,26 @@ describe("single canonical guest catalog", () => {
     expect(p.alias_slugs).toEqual(["alpha", "old-alpha"]); expect(p).not.toHaveProperty("current_job_certified");
     expect(p.primary_episode).toBe(p.episodes[0]); expect(p.max_views).toBe(100); expect(p).not.toHaveProperty("source_profiles"); expect(JSON.stringify(catalog)).toBe(before);
   });
-  it("sorts shared sources by existing views/date/index and keeps exact featured choice", () => {
+  it("lists a guest's programmes newest first and keeps the exact featured choice", () => {
     const { catalog, articles } = fixture();
-    (catalog.sources as any[]).push({ ...catalog.sources[0], source_id: "youtube-lmnopqrstuv", video_id: "lmnopqrstuv", url: "https://www.youtube.com/watch?v=lmnopqrstuv", view_count: 200 });
+    (catalog.sources as any[]).push({ ...catalog.sources[0], source_id: "youtube-lmnopqrstuv", video_id: "lmnopqrstuv", url: "https://www.youtube.com/watch?v=lmnopqrstuv", view_count: 50, published_at: "2026-01-01" });
     (catalog.appearances as any[]).push({ ...catalog.appearances[0], source_id: "youtube-lmnopqrstuv", index: 1, is_primary: false });
-    const p = catalogGuestDirectory(catalog, articles)[0]; expect(p.episodes.map(e => e.viewCount)).toEqual([200, 100]); expect(p.primary_video_id).toBe("abcdefghijk"); expect(p.max_views).toBe(200);
+    const p = catalogGuestDirectory(catalog, articles)[0]; expect(p.episodes.map(e => e.viewCount)).toEqual([50, 100]); expect(p.primary_video_id).toBe("abcdefghijk"); expect(p.max_views).toBe(100);
+    expect([p.first_year, p.last_year]).toEqual([2025, 2026]);
+  });
+  it("adds the name table's further names for search and rejects a table with a different key rule", () => {
+    const { catalog, articles } = fixture();
+    const names = { schema_version: 1 as const, generated_from: [], key_rule: "", key_drop: "&()-./_", key_examples: [["Leo (Charisma)", "leocharisma"]],
+      speakers: [], names: [{ name: "Alpha Nickname", key: "alphanickname", entity_ids: ["guest:alpha"], kinds: ["qualifier"] }], qualifiers: {} };
+    expect(catalogGuestDirectory(catalog, articles, names)[0].search_names).toEqual(["Alpha Nickname"]);
+    expect(() => catalogGuestDirectory(catalog, articles, { ...names, key_drop: "" })).toThrow("name_table_key_rule_mismatch");
+    expect(() => catalogGuestDirectory(catalog, articles, { ...names, names: [{ ...names.names[0], entity_ids: ["guest:missing"] }] })).toThrow("name_table_entry_invalid");
   });
 
   it("allows multiple people to reference one programme without duplicate source copies", () => {
     const f = fixture(); (f.catalog.entities as any[]).push({ ...f.catalog.entities[0], entity_id: "guest:beta", display_name: "Beta", slug: "beta", alias_slugs: ["beta"] });
     (f.catalog.appearances as any[]).push({ ...f.catalog.appearances[0], entity_id: "guest:beta" }); const profiles = catalogGuestDirectory(f.catalog, f.articles); expect(profiles).toHaveLength(2);
-    expect(getGuestsPageMeta(profiles).title).toContain("2个嘉宾档案，1期节目");
+    expect(getGuestsPageMeta(profiles).title).toContain("2位嘉宾，1期对谈");
   });
   it.each(["entities", "sources", "appearances"] as const)("rejects duplicated %s", key => { const f = fixture(); (f.catalog[key] as any[]).push(f.catalog[key][0]); expect(() => validateGuestCatalog(f.catalog, f.articles)).toThrow(); });
   it("rejects incomplete references, wrong URL-ID, unknown resource and private payload fields", () => {
@@ -91,7 +103,7 @@ describe("single canonical guest catalog", () => {
       return new Response(fs.readFileSync(path.join(root, input.slice(prefix.length))));
     });
     const result = await loadGuestSnapshot({ commit, manifestSha256: hash });
-    expect(result.counts.entities).toBe(1); expect(requests).toHaveLength(6);
+    expect(result.counts.entities).toBe(1); expect(requests).toHaveLength(8);
   });
   it("rejects manifest/hash drift and missing complete catalog", async () => {
     const { root, hash } = localInput(); await expect(loadGuestSnapshot({ contextDir: root, manifestSha256: "a".repeat(64) })).rejects.toThrow("manifest_hash_drift");

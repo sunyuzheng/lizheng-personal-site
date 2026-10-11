@@ -2,6 +2,9 @@ import {
   SITE_URL,
   fetchGuestDirectory,
   getGuestPageMeta,
+  guestAskLink,
+  guestIntro,
+  guestYears,
   getGuestsPageMeta,
   type GuestProfile,
 } from "../shared/guest-data.ts";
@@ -209,17 +212,15 @@ function buildHead(meta: {
 
 function buildGuestsNoscript(guests: GuestProfile[], description: string) {
   const items = guests
-    .map(
-      guest =>
-        `<li><a href="${escapeHtml(guest.share_url)}">${escapeHtml(guest.guest_name)}${
-          guest.guest_company ? ` — ${escapeHtml(guest.guest_company)}` : ""
-        }${guest.guest_title ? `，${escapeHtml(guest.guest_title)}` : ""}</a></li>`
-    )
+    .map(guest => {
+      const years = guestYears(guest);
+      return `<li><a href="${escapeHtml(guest.share_url)}">${escapeHtml(guest.guest_name)}</a>（${guest.episode_count}期对谈${years ? `，${years}` : ""}）</li>`;
+    })
     .join("\n        ");
 
   return `
   <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
-    <h1>课代表立正 · 嘉宾与对谈（${guests.length}个嘉宾档案）</h1>
+    <h1>课代表立正 · 嘉宾与对谈（${guests.length}位嘉宾）</h1>
     <p>${escapeHtml(description)}</p>
     <ul>
         ${items}
@@ -247,26 +248,25 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     </section>`
     )
     .join("\n");
+  // Newest first, each with its date: the order is time, not a numbering of episodes.
   const items = guest.episodes
-    .map(
-      (episode, index) =>
-        `<li><a href="${escapeHtml(episode.url)}">${escapeHtml(episode.title)}</a>（第${
-          index + 1
-        }期${episode.isPrimary ? "，精选" : ""}）</li>`
-    )
+    .map(episode => `<li><a href="${escapeHtml(episode.url)}">${escapeHtml(episode.title)}</a>${episode.publishedAt ? `（${escapeHtml(episode.publishedAt.slice(0, 10))}）` : ""}</li>`)
     .join("\n        ");
+  const intro = guestIntro(guest);
 
   return `
   <main style="font-family:sans-serif;max-width:900px;margin:2rem auto;padding:1rem">
     <p><a href="${SITE_URL}/guests">返回全部嘉宾</a></p>
     <h1>${escapeHtml(guest.guest_name)}</h1>
     <p>${escapeHtml(description)}</p>
+    ${intro ? `<p>节目中的介绍：${escapeHtml(intro)}</p>` : ""}
+    <p><a href="${escapeHtml(guestAskLink(guest))}">在问问立正里查这位嘉宾聊过什么</a></p>
     ${guest.guest_bio ? `<p>${escapeHtml(guest.guest_bio)}</p>` : ""}
     ${guest.guest_bio_en ? `<p lang="en">${escapeHtml(guest.guest_bio_en)}</p>` : ""}
     ${guest.interview_date ? `<p>Recorded: ${escapeHtml(guest.interview_date)}</p>` : ""}
     ${guest.youtube_playlist_url ? `<p><a href="${escapeHtml(guest.youtube_playlist_url)}">YouTube个人合集</a></p>` : ""}
     ${insights}
-    <h2>全部访谈</h2>
+    <h2>全部对谈（按时间从新到旧）</h2>
     <ol>
         ${items}
     </ol>

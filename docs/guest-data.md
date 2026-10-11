@@ -8,11 +8,16 @@ Published programme introductions, articles and media provide the primary eviden
 |---|---|---|
 | `catalog/guests.json` | Stable entities, names and aliases, programmes, participation, profile presentation and legacy slugs | Directory, profile pages, featured programme and episode lists |
 | `catalog/guest-articles.json` | Published companion article metadata and source links | Reading links and Article structured data |
+| `catalog/guest-names.json` | Generated name table: names before a parenthetical, nicknames, group members, qualifiers | Directory search (`search_names`) |
 | `release-manifest.json` | Exact public file hashes and licenses | Sync integrity |
 
 `shared/guest-catalog-snapshot.ts` is generated. The pin records the Open Context commit, manifest hash and generated snapshot hash; normal builds verify all three against the checked-in snapshot. Updating upstream does not introduce a runtime dependency on GitHub availability.
 
-## Refresh
+## Automatic refresh
+
+`.github/workflows/sync-guests.yml` keeps the snapshot on Open Context's latest release without a manual step. Every half hour (or on demand) it compares Open Context main's release manifest with `shared/guest-catalog-pin.json`; on a new release it regenerates the snapshot from that exact commit, runs `pnpm check`, the guest tests and the build, and commits only the snapshot and pin to main as the owner, which Vercel deploys. A failed step commits nothing; the next run tries again. 问问立正 follows the same release through its own `update-context` workflow, so both consumers converge on one version.
+
+## Manual refresh
 
 Update the catalog in Open Context, validate the release, then synchronize its exact version here:
 
@@ -32,5 +37,7 @@ pnpm test:guests
 ```
 
 The generator validates references, source IDs and file hashes, binds the manifest to the source Git commit, and prepares the snapshot and pin together. A caught installation error restores the previous files. The website build rejects mismatched snapshots or pins; CI also runs the guest contract tests. Git commits and immutable deployments provide the release boundary. Production reads the checked-in snapshot without fetching upstream.
+
+Pages present a guest's introduction as the programmes' own (`guestIntro`, labelled 节目中的介绍 with the years of their programmes), never as a current title, and list programmes newest first. A guest page links to 问问立正 with the name filled in and 从哪读起 selected (`guestAskLink`).
 
 `shared/guest-data.ts` adapts the generated catalog to page models; `scripts/prerender-guests.ts` generates crawlable pages and metadata. Old slugs resolve to the canonical profile and retain its canonical URL. The same selectors provide browser content and prerendered content.

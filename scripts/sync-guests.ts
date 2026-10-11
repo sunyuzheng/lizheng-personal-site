@@ -3,10 +3,10 @@ import path from "node:path";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
-import { validateGuestCatalog } from "../shared/guest-catalog";
+import { validateGuestCatalog, validateGuestNameTable } from "../shared/guest-catalog";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const FILES = ["catalog/guests.json", "catalog/guest-articles.json"] as const;
+const FILES = ["catalog/guests.json", "catalog/guest-articles.json", "catalog/guest-names.json"] as const;
 const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 const REPOSITORY = "sunyuzheng/lizheng-open-context";
@@ -86,10 +86,12 @@ export async function loadGuestSnapshot(options: { contextDir?: string; manifest
     blobs.push(blob); hashes[relative] = entry.sha256;
   }
   const catalog = JSON.parse(blobs[0].toString("utf8")), articles = JSON.parse(blobs[1].toString("utf8"));
+  const names = JSON.parse(blobs[2].toString("utf8"));
   validateGuestCatalog(catalog, articles);
+  validateGuestNameTable(names, catalog);
   for (const [relative, hash] of Object.entries(hashes)) requireValue(digest(await read(relative)) === hash, "catalog_input_changed_during_read");
-  const header = `// Generated from the pinned Open Context release. Do not edit by hand.\n// Manifest SHA256: ${options.manifestSha256}\n// guests.json SHA256: ${hashes[FILES[0]]}\n// guest-articles.json SHA256: ${hashes[FILES[1]]}\n`;
-  return { snapshot: `${header}import type { GuestCatalog, GuestArticleCatalog } from "./guest-catalog";\n\nexport const guestCatalog: GuestCatalog = ${JSON.stringify(catalog, null, 2)};\n\nexport const guestArticleCatalog: GuestArticleCatalog = ${JSON.stringify(articles, null, 2)};\n`, hashes,
+  const header = `// Generated from the pinned Open Context release. Do not edit by hand.\n// Manifest SHA256: ${options.manifestSha256}\n// guests.json SHA256: ${hashes[FILES[0]]}\n// guest-articles.json SHA256: ${hashes[FILES[1]]}\n// guest-names.json SHA256: ${hashes[FILES[2]]}\n`;
+  return { snapshot: `${header}import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";\n\nexport const guestCatalog: GuestCatalog = ${JSON.stringify(catalog, null, 2)};\n\nexport const guestArticleCatalog: GuestArticleCatalog = ${JSON.stringify(articles, null, 2)};\n\nexport const guestNameTable: GuestNameTable = ${JSON.stringify(names, null, 2)};\n`, hashes,
     counts: { entities: catalog.entities.length, sources: catalog.sources.length, appearances: catalog.appearances.length, articles: articles.articles.length } };
 }
 

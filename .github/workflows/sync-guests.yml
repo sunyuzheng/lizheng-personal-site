@@ -1,0 +1,73 @@
+name: Sync guest catalog
+# Keeps the guest directory on Open Context's latest release, as 问问立正 already is: every half
+# hour, or on demand, it compares Open Context main's release manifest with
+# shared/guest-catalog-pin.json. On a new release it regenerates the snapshot from that exact commit,
+# runs the checks, the guest tests and the build, and commits only the snapshot and pin to main as
+# the owner, so Vercel deploys it. Nothing is committed when a step fails; the next run tries again.
+on:
+  schedule:
+    - cron: '23,53 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: sync-guests
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare the pinned release with Open Context main
+        id: release
+        run: |
+          commit="$(git ls-remote https://github.com/sunyuzheng/lizheng-open-context refs/heads/main | cut -f1)"
+          [[ "$commit" =~ ^[0-9a-f]{40}$ ]]
+          manifest="$(curl -fsSL "https://raw.githubusercontent.com/sunyuzheng/lizheng-open-context/$commit/release-manifest.json" | sha256sum | cut -d' ' -f1)"
+          pinned="$(node -p "require('./shared/guest-catalog-pin.json').manifest_sha256")"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
+          if [ "$manifest" = "$pinned" ]; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+
+      - if: steps.release.outputs.changed == 'true'
+        uses: pnpm/action-setup@v4
+
+      - if: steps.release.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - if: steps.release.outputs.changed == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate the snapshot from the exact release
+        if: steps.release.outputs.changed == 'true'
+        env:
+          COMMIT: ${{ steps.release.outputs.commit }}
+          MANIFEST: ${{ steps.release.outputs.manifest }}
+        run: |
+          git clone --quiet --depth 1 https://github.com/sunyuzheng/lizheng-open-context "$RUNNER_TEMP/open-context"
+          test "$(git -C "$RUNNER_TEMP/open-context" rev-parse HEAD)" = "$COMMIT"
+          pnpm sync:guests --context-dir "$RUNNER_TEMP/open-context" --manifest-sha256 "$MANIFEST" --apply
+          pnpm check
+          pnpm test:guests
+          pnpm build
+
+      - name: Commit the snapshot and pin as the owner
+        if: steps.release.outputs.changed == 'true'
+        env:
+          COMMIT: ${{ steps.release.outputs.commit }}
+        run: |
+          git add shared/guest-catalog-snapshot.ts shared/guest-catalog-pin.json
+          if git diff --cached --quiet; then exit 0; fi
+          test -z "$(git status --porcelain --untracked-files=no -- . ':!shared/guest-catalog-snapshot.ts' ':!shared/guest-catalog-pin.json')"
+          git -c user.name="Yuzheng Sun" -c user.email="sunyuzheng@gmail.com" commit --quiet -m "Sync guest catalog to Open Context ${COMMIT:0:7}" -m "Automated by .github/workflows/sync-guests.yml."
+          git pull --quiet --rebase origin main
+          git push --quiet origin HEAD:main

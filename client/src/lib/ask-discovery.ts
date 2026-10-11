@@ -23,7 +23,7 @@ export type DiscoveryAnswer = {
 export type DiscoveryDetail = { public_id: string; revision: number; question: string; answer: DiscoveryAnswer };
 
 /** 最近问 and 最常问: two short lists, the same for every reader, so the CDN can serve them. */
-export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[] };
+export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[]; total: number | null };
 export type DiscoveryView = "recent" | "frequent";
 /** How many questions each list holds (Ops' DISCOVERY_LIST_SIZE). */
 export const DISCOVERY_LIST_SIZE = 30;
@@ -76,7 +76,9 @@ export async function discoveryLists(signal?: AbortSignal): Promise<DiscoveryLis
     const value = await response.json();
     if (!Array.isArray(value?.recent) || !Array.isArray(value?.frequent)) return null;
     return { recent: value.recent.filter(card), frequent: value.frequent.filter(card).map((item: DiscoveryCard) =>
-      ({ ...item, similar: Array.isArray(item.similar) ? item.similar.filter(similarRow).map(row) : [] })) };
+      ({ ...item, similar: Array.isArray(item.similar) ? item.similar.filter(similarRow).map(row) : [] })),
+      // How many questions and answers are public in all (the public index, counted by the lists endpoint).
+      total: Number.isInteger(value.total) && value.total > 0 ? value.total : null };
   } catch { return null; }
 }
 

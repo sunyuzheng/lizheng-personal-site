@@ -3939,7 +3939,10 @@
   box-shadow: inset 0 0 0 1px rgb(143 212 164 / 0.32);
 }
 
+/* Tall enough on phones that an open card always fits above or below the
+   light it belongs to. */
 .lz-home .city-window .field canvas {
+  height: clamp(360px, 34vw, 460px);
   cursor: pointer;
 }
 
@@ -3990,6 +3993,79 @@
   margin-top: 8px;
   color: var(--lz-mint);
   font-size: 12px;
+}
+
+/* A person's card in the window. CityWindow places it (left and top), so it
+   needs no transform; open, it takes clicks and offers the ways on. */
+.lz-home .city-card {
+  min-width: 168px;
+  max-width: 300px;
+  padding: 11px 14px 12px;
+  border-radius: 12px;
+  transform: none;
+}
+
+.lz-home .city-card .who {
+  font-size: 14px;
+}
+
+.lz-home .city-card.open {
+  pointer-events: auto;
+}
+
+.lz-home .city-card.open .who {
+  padding-right: 26px;
+}
+
+.lz-home .city-card .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--lz-on-forest-2);
+  cursor: pointer;
+}
+
+.lz-home .city-card .close:hover,
+.lz-home .city-card .close:focus-visible {
+  background: rgb(248 241 228 / 0.08);
+  color: var(--lz-on-forest);
+  outline: none;
+}
+
+.lz-home .city-card .ways {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
+  margin-top: 10px;
+}
+
+.lz-home .city-card .ways a {
+  padding: 4px 0;
+  color: var(--lz-mint);
+  font-size: 13px;
+  text-decoration: underline;
+  text-decoration-color: rgb(143 212 164 / 0.4);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s;
+}
+
+.lz-home .city-card .ways a:hover,
+.lz-home .city-card .ways a:focus-visible {
+  text-decoration-color: var(--lz-mint);
+  outline: none;
+}
+
+@media (pointer: coarse) {
+  .lz-home .city-card .ways a {
+    padding: 8px 0;
+  }
 }
 
 /* The way into city.lizheng.ai sits beside the join button: a quiet

@@ -3,8 +3,8 @@
  * angle so its disc fills a wide frame, turning slowly. The first time it
  * comes into view its lights come on from the middle outwards (the earliest
  * members first) and its lines draw themselves. Pointing at a light lights up
- * that person's lines; the page around it decides what a click does (enter
- * the full page). It draws only while on screen.
+ * that person's lines; the page around it decides what a click does (open
+ * their card). It draws only while on screen.
  */
 import { Camera } from "./camera";
 import type { Community } from "./data";
@@ -20,12 +20,18 @@ export interface CityWindowOptions {
   /** The light under the pointer (-1 for none), in canvas pixels. */
   onHover(member: number, x: number, y: number): void;
   /** A click or tap that did not drag: the light under it, or -1. */
-  onPick(member: number, pointerType: string): void;
+  onPick(member: number): void;
+  /** The canvas changed size, so the lights moved. */
+  onResize?(): void;
 }
 
 export interface CityWindow {
-  /** Lights up one member's lines (or none, with -1), as hovering does. */
-  highlight(member: number): void;
+  /**
+   * Lights up one member's lines (-1 for none), as pointing does. Held, they
+   * stay lit whatever the pointer does and the city stops turning, while
+   * that person's card is open.
+   */
+  highlight(member: number, hold?: boolean): void;
   /** Where a member's light is on the canvas (CSS pixels), if visible. */
   locate(member: number): [number, number] | null;
   destroy(): void;
@@ -70,6 +76,7 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
 
   // ---------- Highlight ----------
   let hovered = -1;
+  let held = false;
   let hoverLevel = 0;
   const setHovered = (member: number) => {
     if (member === hovered) return;
@@ -180,40 +187,34 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
     const rect = canvas.getBoundingClientRect();
     return [event.clientX - rect.left, event.clientY - rect.top] as const;
   };
-  let down: { x: number; y: number; type: string } | null = null;
+  let down: { x: number; y: number } | null = null;
   const onMove = (event: PointerEvent) => {
     if (event.pointerType !== "mouse") return;
     const [x, y] = local(event);
     const member = memberAt(x, y);
+    canvas.style.cursor = member >= 0 ? "pointer" : "default";
+    if (held) return;
     setHovered(member);
-    canvas.style.cursor = "pointer";
     if (member >= 0) {
       const [mx, my] = camera.toScreen(c.x[member], c.y[member]);
       options.onHover(member, mx, my);
     } else options.onHover(-1, x, y);
   };
   const onLeave = () => {
+    if (held) return;
     setHovered(-1);
     options.onHover(-1, 0, 0);
   };
   const onDown = (event: PointerEvent) => {
     const [x, y] = local(event);
-    down = { x, y, type: event.pointerType || "mouse" };
+    down = { x, y };
   };
   const onUp = (event: PointerEvent) => {
     if (!down) return;
     const [x, y] = local(event);
     const moved = Math.hypot(x - down.x, y - down.y) > 6;
-    const type = down.type;
     down = null;
-    if (moved) return;
-    const member = memberAt(x, y);
-    if (type !== "mouse" && member >= 0) {
-      setHovered(member);
-      const [mx, my] = camera.toScreen(c.x[member], c.y[member]);
-      options.onHover(member, mx, my);
-    }
-    options.onPick(member, type);
+    if (!moved) options.onPick(memberAt(x, y));
   };
   canvas.addEventListener("pointermove", onMove);
   canvas.addEventListener("pointerleave", onLeave);
@@ -282,13 +283,15 @@ export function mountCityWindow(options: CityWindowOptions): CityWindow {
   const resize = new ResizeObserver(() => {
     layout();
     run();
+    options.onResize?.();
   });
   resize.observe(canvas);
   layout();
 
   return {
-    highlight(member: number) {
+    highlight(member: number, hold = false) {
       setHovered(member);
+      held = hold && member >= 0;
     },
     locate(member: number) {
       if (member < 0 || member >= c.count) return null;

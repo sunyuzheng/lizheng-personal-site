@@ -1,15 +1,19 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import {
+  useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
   type KeyboardEvent,
   type ReactNode,
+  type Ref,
 } from "react";
 import type { Community } from "../../../community-app/data";
 import type { CityWindow as WindowHandle } from "../../../community-app/embed";
+import { findMembers, normalizeName } from "../../../community-app/find";
 import CityField from "./CityField";
 import { LINKS, type CityCopy, type WindowCopy } from "./content";
 import { Phrases } from "./parts";
@@ -18,25 +22,37 @@ import { Phrases } from "./parts";
  * The community section's window onto city.lizheng.ai: the city of
  * connections itself, seen at an angle and turning slowly, so the homepage
  * shows what is behind the door instead of describing it. Pointing at a light
- * lights up that person's lines; a click takes you into the full page,
- * focused on them. Search and "meet someone" lead in the same way. Where the
- * browser cannot draw it (no WebGL2) or the data does not load, the section
- * falls back to the dot map (CityField).
+ * lights up that person's lines and shows their card: when they joined, their
+ * posts and comments, and how many people they are in touch with. A click or
+ * tap keeps the card open, with their profile and the way into the full page,
+ * focused on them; search and "meet someone" open cards the same way. Where
+ * the browser cannot draw it (no WebGL2) or the data does not load, the
+ * section falls back to the dot map (CityField).
  *
  * The drawing code and data load only when the section nears the screen.
  */
 
-interface Tip {
+interface Card {
   member: number;
+  /** Where the member's light is on the canvas, in CSS pixels. */
   x: number;
   y: number;
-  /** Pinned by a tap; tapping the card then goes in. */
-  sticky: boolean;
+  /** Kept open by a click, a tap, search or "meet someone"; otherwise it follows the pointer. */
+  open: boolean;
 }
 
-const MAX_MATCHES = 8;
-const normalize = (value: string) =>
-  value.normalize("NFKC").toLowerCase().replace(/\s+/g, "");
+interface Links {
+  page: (lang: Lang, uid?: string) => string;
+  profile: (uid: string) => string;
+}
+
+// The card keeps this far from its light and from the frame's edges.
+const GAP = 14;
+const EDGE = 8;
+
+// The prerender has no layout; measuring only makes sense in the browser.
+const useBrowserLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 function formatDate(value: string, lang: Lang) {
   const date = new Date(`${value}T00:00:00Z`);
@@ -64,7 +80,7 @@ export default function CityWindow({
   action,
 }: {
   lang: Lang;
-  /** The dot map's words, for the fallback. */
+  /** The dot map's words: its fallback, search, and the card's figures. */
   copy: CityCopy;
   view: WindowCopy;
   /** The section's calls to action, shown beside the caption. */
@@ -72,27 +88,32 @@ export default function CityWindow({
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<WindowHandle | null>(null);
   const [mode, setMode] = useState<"window" | "fallback">("window");
   const [data, setData] = useState<Community | null>(null);
-  const [pageUrl, setPageUrl] = useState<
-    ((lang: Lang, uid?: string) => string) | null
-  >(null);
-  const [tip, setTip] = useState<Tip | null>(null);
+  const [links, setLinks] = useState<Links | null>(null);
+  const [card, setCard] = useState<Card | null>(null);
   const [query, setQuery] = useState("");
   const [listOpen, setListOpen] = useState(false);
   const [active, setActive] = useState(0);
   const listId = useId();
-  const tipRef = useRef(tip);
-  tipRef.current = tip;
+  const openRef = useRef(false);
+  openRef.current = Boolean(card?.open);
 
-  const go = (member?: number) => {
-    if (!data || !pageUrl) return;
-    const uid = member !== undefined && member >= 0 ? data.linked[member] : "";
-    window.location.href = pageUrl(lang, uid || undefined);
-  };
-  const goRef = useRef(go);
-  goRef.current = go;
+  // Shows a member's card at their light: open, or following the pointer.
+  // Only refs and state setters inside, so the window's callbacks can keep it.
+  const showCard = useCallback((member: number, open: boolean) => {
+    const handle = handleRef.current;
+    if (!handle) return;
+    handle.highlight(member, open);
+    const at = member >= 0 ? handle.locate(member) : null;
+    setCard(at ? { member, x: at[0], y: at[1], open } : null);
+  }, []);
+  const closeCard = useCallback(() => {
+    handleRef.current?.highlight(-1);
+    setCard(null);
+  }, []);
 
   // Load the drawing code and the data shortly before the section is seen.
   useEffect(() => {
@@ -111,7 +132,7 @@ export default function CityWindow({
         setMode("fallback");
         return;
       }
-      setPageUrl(() => source.pageUrl);
+      setLinks({ page: source.pageUrl, profile: source.profileUrl });
       setData(community);
     };
     const observer = new IntersectionObserver(
@@ -143,30 +164,19 @@ export default function CityWindow({
           reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)")
             .matches,
           coarse: window.matchMedia("(pointer: coarse)").matches,
+          // The window stops reporting the pointer while a card is open.
           onHover(member, x, y) {
-            if (member < 0) {
-              setTip(current => (current?.sticky ? current : null));
-            } else {
-              setTip(current =>
-                current?.sticky && current.member === member
-                  ? current
-                  : { member, x, y, sticky: false }
-              );
-            }
+            setCard(member >= 0 ? { member, x, y, open: false } : null);
           },
-          onPick(member, pointerType) {
-            if (pointerType === "mouse") {
-              goRef.current(member);
-              return;
-            }
-            // On touch screens the first tap shows who it is; the card goes in.
-            if (member < 0) {
-              setTip(null);
-              return;
-            }
-            const located = handleRef.current?.locate(member);
-            if (located)
-              setTip({ member, x: located[0], y: located[1], sticky: true });
+          onPick(member) {
+            if (member >= 0) showCard(member, true);
+            else closeCard();
+          },
+          onResize() {
+            setCard(current => {
+              const at = current && handleRef.current?.locate(current.member);
+              return current && at ? { ...current, x: at[0], y: at[1] } : null;
+            });
           },
         });
       })
@@ -176,48 +186,72 @@ export default function CityWindow({
       handleRef.current?.destroy();
       handleRef.current = null;
     };
-  }, [data]);
+  }, [data, showCard, closeCard]);
 
-  // Search by name: names that start with the query first, then the most
-  // connected.
-  const searchIndex = useMemo(() => data?.names.map(normalize) ?? [], [data]);
-  const matches = useMemo(() => {
-    const term = normalize(query);
-    if (!term || !data) return [];
-    const starts: number[] = [];
-    const contains: number[] = [];
-    for (let member = 0; member < searchIndex.length; member++) {
-      if (!data.linked[member]) continue;
-      const at = searchIndex[member].indexOf(term);
-      if (at === 0) starts.push(member);
-      else if (at > 0) contains.push(member);
-    }
-    const byStrength = (a: number, b: number) =>
-      data.strength[b] - data.strength[a];
-    return [...starts.sort(byStrength), ...contains.sort(byStrength)].slice(
-      0,
-      MAX_MATCHES
+  // Keep the card inside the frame: above its light, else below, else
+  // against the edge farther from it.
+  useBrowserLayoutEffect(() => {
+    const element = cardRef.current;
+    const wrap = wrapRef.current;
+    if (!card || !element || !wrap) return;
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+    const room = wrap.clientHeight;
+    const left = Math.max(
+      EDGE,
+      Math.min(card.x - width / 2, wrap.clientWidth - width - EDGE)
     );
-  }, [query, searchIndex, data]);
+    let top = card.y - GAP - height;
+    if (top < EDGE) {
+      top = card.y + GAP;
+      if (top + height > room - EDGE)
+        top = card.y > room / 2 ? EDGE : room - EDGE - height;
+    }
+    element.style.left = `${left}px`;
+    element.style.top = `${top}px`;
+  }, [card]);
+
+  // Escape closes an open card.
+  useEffect(() => {
+    if (!card?.open) return;
+    const onKey = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape" && !event.defaultPrevented) closeCard();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [card?.open, closeCard]);
+
+  // Search by name, among members whose card can link to them.
+  const searchIndex = useMemo(
+    () => data?.names.map(normalizeName) ?? [],
+    [data]
+  );
+  const matches = useMemo(
+    () =>
+      data
+        ? findMembers(data, searchIndex, query, {
+            accept: member => !!data.linked[member],
+          })
+        : [],
+    [query, searchIndex, data]
+  );
   const showList = listOpen && query.trim() !== "";
 
   useEffect(() => setActive(0), [query]);
 
-  // The highlighted search result lights up its lines and shows its card.
+  // The highlighted search result shows its card; leaving the list without
+  // choosing puts the preview away.
   useEffect(() => {
-    const handle = handleRef.current;
-    if (!handle) return;
-    if (!showList || matches[active] === undefined) {
-      if (!tipRef.current?.sticky) handle.highlight(-1);
-      return;
-    }
-    const member = matches[active];
-    handle.highlight(member);
-    const located = handle.locate(member);
-    setTip(
-      located ? { member, x: located[0], y: located[1], sticky: false } : null
-    );
-  }, [showList, matches, active]);
+    if (!handleRef.current) return;
+    const member = showList ? matches[active] : undefined;
+    if (member !== undefined) showCard(member, false);
+    else if (!openRef.current) closeCard();
+  }, [showList, matches, active, showCard, closeCard]);
+
+  const choose = (member: number) => {
+    setListOpen(false);
+    showCard(member, true);
+  };
 
   const onFindKey = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
@@ -228,12 +262,14 @@ export default function CityWindow({
       setActive(index => (index + step + matches.length) % matches.length);
     } else if (event.key === "Enter") {
       const member = matches[active];
-      if (member === undefined) return;
+      if (member === undefined || !showList) return;
       event.preventDefault();
-      go(member);
+      choose(member);
     } else if (event.key === "Escape") {
       if (showList) setListOpen(false);
-      else setQuery("");
+      else if (query) setQuery("");
+      else return;
+      event.preventDefault();
     }
   };
 
@@ -243,7 +279,7 @@ export default function CityWindow({
       const member =
         data.ranked[Math.floor(Math.random() * data.ranked.length)];
       if (data.names[member] && data.linked[member]) {
-        go(member);
+        showCard(member, true);
         return;
       }
     }
@@ -256,11 +292,6 @@ export default function CityWindow({
   const count = data ? data.count.toLocaleString("en-US") : "";
   const pairs = data ? data.pairCount.toLocaleString("en-US") : "";
   const caption = data ? view.caption(count) : copy.fallbackCaption;
-  const tipName = tip && data ? data.names[tip.member] : "";
-  const tipSummary =
-    tip && data
-      ? view.connected(data.degree[tip.member].toLocaleString("en-US"))
-      : "";
   // While the data loads, the caption keeps the height of its longest
   // version (drawn invisibly by CSS), so the sections below never move.
   const reserve = {
@@ -326,10 +357,9 @@ export default function CityWindow({
                   aria-selected={index === active}
                   onMouseEnter={() => setActive(index)}
                   onMouseDown={event => event.preventDefault()}
-                  onClick={() => go(member)}
+                  onClick={() => choose(member)}
                 >
                   <span>{data?.names[member]}</span>
-                  <span aria-hidden="true">→</span>
                 </li>
               ))}
               {!matches.length && (
@@ -366,42 +396,24 @@ export default function CityWindow({
           role="img"
           aria-label={data ? view.label(count, pairs) : copy.fallbackLabel}
         />
-        {tip && data && (
-          <span
-            className="city-ring"
-            aria-hidden="true"
-            style={{ left: tip.x, top: tip.y }}
-          />
-        )}
-        {tip && data && (
-          <a
-            className={[
-              "city-tip",
-              "full",
-              tip.sticky ? "sticky" : "",
-              tip.y < 96 ? "below" : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-            href={pageUrl?.(lang, data.linked[tip.member] || undefined)}
-            style={{
-              left: Math.min(
-                Math.max(tip.x, 120),
-                (wrapRef.current?.clientWidth ?? 0) - 120
-              ),
-              top: tip.y,
-            }}
-            tabIndex={tip.sticky ? 0 : -1}
-          >
-            <span className="line">
-              <span className="who">{tipName}</span>
-            </span>
-            <span className="since">{tipSummary}</span>
-            <span className="enter-hint">
-              {tip.sticky ? view.tapHint : view.hint}{" "}
-              <span aria-hidden="true">→</span>
-            </span>
-          </a>
+        {card && data && links && (
+          <>
+            <span
+              className="city-ring"
+              aria-hidden="true"
+              style={{ left: card.x, top: card.y }}
+            />
+            <MemberCard
+              element={cardRef}
+              lang={lang}
+              data={data}
+              links={links}
+              card={card}
+              copy={copy}
+              view={view}
+              onClose={closeCard}
+            />
+          </>
         )}
         <a
           className="city-enter"
@@ -427,6 +439,105 @@ export default function CityWindow({
         </div>
         {action}
       </div>
+    </div>
+  );
+}
+
+/**
+ * A person's card: their name, when they joined, and their posts, comments
+ * and connections (counts of zero left out). Open, it also leads to their
+ * profile and into the city, focused on them.
+ */
+function MemberCard({
+  element,
+  lang,
+  data,
+  links,
+  card,
+  copy,
+  view,
+  onClose,
+}: {
+  element: Ref<HTMLDivElement>;
+  lang: Lang;
+  data: Community;
+  links: Links;
+  card: Card;
+  copy: CityCopy;
+  view: WindowCopy;
+  onClose: () => void;
+}) {
+  const { member, open } = card;
+  const name = data.names[member] || view.someone;
+  const uid = data.linked[member];
+  const month =
+    data.startYear * 12 +
+    data.startMonth -
+    1 +
+    Math.max(0, data.joined[member]);
+  const figures = (
+    [
+      [data.posts[member], copy.posts],
+      [data.comments[member], copy.comments],
+      [data.degree[member], view.linked],
+    ] as const
+  ).filter(([value]) => value > 0);
+
+  return (
+    <div
+      ref={element}
+      className={open ? "city-tip city-card open" : "city-tip city-card"}
+      role={open ? "dialog" : undefined}
+      aria-label={open ? name : undefined}
+      aria-hidden={open ? undefined : true}
+    >
+      <span className="who">{name}</span>
+      <span className="since">
+        {copy.joined(Math.floor(month / 12), (month % 12) + 1)}
+      </span>
+      {figures.length > 0 && (
+        <span className="metrics">
+          {figures.map(([value, label]) => (
+            <span key={label(value)} className="metric">
+              <b>{value.toLocaleString("en-US")}</b>
+              <small>{label(value)}</small>
+            </span>
+          ))}
+        </span>
+      )}
+      {open && uid ? (
+        <span className="ways">
+          <a
+            href={links.profile(uid)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {view.profile} <span aria-hidden="true">↗</span>
+          </a>
+          <a href={links.page(lang, uid)}>
+            {view.explore} <span aria-hidden="true">→</span>
+          </a>
+        </span>
+      ) : (
+        !open && <span className="enter-hint">{view.hint}</span>
+      )}
+      {open && (
+        <button
+          type="button"
+          className="close"
+          aria-label={view.close}
+          onClick={onClose}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path
+              d="M2 2l8 8M10 2l-8 8"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

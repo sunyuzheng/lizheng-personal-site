@@ -1,6 +1,6 @@
 /**
  * Where the community data lives, shared by city.lizheng.ai and the
- * homepage window onto it. Published by the monthly workflow
+ * homepage window onto it. Published by the daily workflow
  * (docs/community-graph.md); the dev server reads the local file written by
  * `pnpm community:graph`.
  */
@@ -21,6 +21,10 @@ export const PAGE_URL = {
 export function pageUrl(lang: "zh" | "en", uid?: string) {
   return uid ? `${PAGE_URL[lang]}#${uid}` : PAGE_URL[lang];
 }
+
+/** A member's profile in the community. */
+export const profileUrl = (uid: string) =>
+  `https://www.superlinear.academy/u/${uid}`;
 
 export async function loadCommunity(): Promise<Community | null> {
   try {

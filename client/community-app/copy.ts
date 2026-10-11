@@ -55,8 +55,13 @@ export interface Copy {
   joined: (year: number, month: number) => string;
   connected: (count: number) => string;
   alone: string;
-  activity: (posts: number, comments: number) => string;
   closest: string;
+  /** Labels under a person's figures, for the number shown. */
+  figures: {
+    posts: (count: number) => string;
+    comments: (count: number) => string;
+    connections: (count: number) => string;
+  };
   pairDetail: (comments: number, likes: number) => string;
   since: (year: number, month: number) => string;
   more: (count: number) => string;
@@ -112,11 +117,12 @@ const zh: Copy = {
   joined: (year, month) => `${year}年${month}月加入`,
   connected: count => `和${fmt(count)}人有来往`,
   alone: "还没有和人来往",
-  activity: (posts, comments) =>
-    [posts ? `发帖${fmt(posts)}` : "", comments ? `评论${fmt(comments)}` : ""]
-      .filter(Boolean)
-      .join(" · "),
   closest: "来往最多的人",
+  figures: {
+    posts: () => "帖子",
+    comments: () => "评论",
+    connections: () => "人有来往",
+  },
   pairDetail: (comments, likes) =>
     [
       comments ? `评论${fmt(comments)}次` : "",
@@ -186,16 +192,12 @@ const en: Copy = {
   connected: count =>
     `Connected with ${fmt(count)} ${count === 1 ? "person" : "people"}`,
   alone: "No connections yet",
-  activity: (posts, comments) =>
-    [
-      posts ? `${fmt(posts)} ${posts === 1 ? "post" : "posts"}` : "",
-      comments
-        ? `${fmt(comments)} ${comments === 1 ? "comment" : "comments"}`
-        : "",
-    ]
-      .filter(Boolean)
-      .join(" · "),
   closest: "Most in touch with",
+  figures: {
+    posts: count => (count === 1 ? "post" : "posts"),
+    comments: count => (count === 1 ? "comment" : "comments"),
+    connections: count => (count === 1 ? "connection" : "connections"),
+  },
   pairDetail: (comments, likes) =>
     [
       comments

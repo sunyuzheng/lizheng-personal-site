@@ -1,5 +1,8 @@
 import type { Lang } from "@/contexts/LanguageContext";
-import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "@shared/book-links";
+import {
+  GROWTH_BOOK_AMAZON_URL,
+  GROWTH_BOOK_ZH_PATH,
+} from "@shared/book-links";
 
 // Homepage copy and curation for / (English) and /zh. Facts and wording follow
 // the reviewed homepage handoff of 2026-09-30; see
@@ -264,16 +267,26 @@ export interface CityCopy {
   join: string;
 }
 
-/** The homepage window onto city.lizheng.ai (CityWindow.tsx). */
+/**
+ * The homepage window onto city.lizheng.ai (CityWindow.tsx). Its member card
+ * borrows the dot map's words for when someone joined and their posts and
+ * comments (CityCopy).
+ */
 export interface WindowCopy {
   caption: (count: string) => [string, string];
   label: (count: string, pairs: string) => string;
   /** The way in: the frame's corner on hover, and beside the join button. */
   enter: string;
-  /** Under a person's name: what a click does (mouse) or what the card does (touch). */
+  /** The label under the number of people someone is in touch with. */
+  linked: (count: number) => string;
+  /** On a person's card while pointing: what a click does. */
   hint: string;
-  tapHint: string;
-  connected: (count: string) => string;
+  /** The ways on from an open card, and closing it. */
+  profile: string;
+  explore: string;
+  close: string;
+  /** For a member who has asked not to be named. */
+  someone: string;
   updated: (date: string) => string;
 }
 
@@ -661,11 +674,14 @@ const zh = {
         "两盏灯之间的线，是他们给对方的留言和点赞。",
       ],
       label: (count: string, pairs: string) =>
-        `社区关系图：${count}位成员，${pairs}条连接。点一盏灯，进入这座城。`,
+        `社区关系图：${count}位成员，${pairs}条连接。点一盏灯，看看是谁。`,
       enter: "进入这座城",
-      hint: "点一下，进城看看TA和谁连着",
-      tapHint: "进城看看TA和谁连着",
-      connected: (count: string) => `和${count}人有来往`,
+      linked: () => "人有来往",
+      hint: "点一下，看TA的主页和来往",
+      profile: "打开TA的主页",
+      explore: "看TA和谁连着",
+      close: "关闭",
+      someone: "一位成员",
       updated: (date: string) => `数据更新于${date}`,
     } as WindowCopy,
   },
@@ -1094,11 +1110,14 @@ const en: HomeCopy = {
         "The lines between them are the comments and likes they have left each other.",
       ],
       label: (count, pairs) =>
-        `Community map: ${count} members and ${pairs} connections. Click a light to enter the city.`,
+        `Community map: ${count} members and ${pairs} connections. Click a light to see who it is.`,
       enter: "Enter the city",
-      hint: "Click to see who they’re connected to",
-      tapHint: "See who they’re connected to",
-      connected: count => `Connected with ${count} people`,
+      linked: count => (count === 1 ? "connection" : "connections"),
+      hint: "Click for their profile and connections",
+      profile: "Open their profile",
+      explore: "See who they’re connected to",
+      close: "Close",
+      someone: "A member",
       updated: date => `Updated ${date}`,
     },
   },

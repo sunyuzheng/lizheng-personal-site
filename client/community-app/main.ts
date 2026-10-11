@@ -11,15 +11,16 @@
 import { attachGestures, Camera } from "./camera";
 import { COPY, formatNumber, type Copy, type Lang } from "./copy";
 import { calendar, otherOf, ringRadius, type Community } from "./data";
+import { findMembers, normalizeName } from "./find";
 import { CURVE, Renderer, type AvatarSprite, type Pulse } from "./renderer";
 import { buildScene, Grid } from "./scene";
-import { DATA_URL, loadCommunity } from "./source";
+import { attachSheet } from "./sheet";
+import { DATA_URL, loadCommunity, profileUrl } from "./source";
 import "./style.css";
 
 // Serif fonts load after first paint (see fonts.css).
 void import("./fonts.css");
 
-const PROFILE_BASE = "https://www.superlinear.academy/u/";
 const INTRO_SECONDS = 13;
 const IDLE_SPIN = 0.018; // radians per second, about one turn in six minutes
 const IDLE_AFTER = 5000;
@@ -98,9 +99,6 @@ async function load() {
   return community;
 }
 
-const normalize = (value: string) =>
-  value.normalize("NFKC").toLowerCase().replace(/\s+/g, "");
-
 function displayName(c: Community, member: number) {
   return c.names[member] || t.noName;
 }
@@ -170,23 +168,24 @@ function start(c: Community) {
     const mobile = camera.width < 760;
     // Leave room for the words above and below the city. On phones the
     // search sits just under the intro, and the city between it and the bar.
-    let top = 40;
-    let bottom = 130;
-    if (mobile && !city.classList.contains("focused")) {
+    // Looking at someone hides those words, so the room is measured only at
+    // the overview and kept.
+    if (!mobile) overviewRoom = { top: 40, bottom: 130 };
+    else if (!city.classList.contains("focused")) {
       const intro = document.querySelector(".intro")!.getBoundingClientRect();
       city.style.setProperty(
         "--find-top",
         `${Math.round(intro.bottom + 14)}px`
       );
-      top = $("find").getBoundingClientRect().bottom + 10;
-      bottom =
-        camera.height -
-        document.querySelector(".bar")!.getBoundingClientRect().top +
-        10;
-    } else if (mobile) {
-      top = 190;
-      bottom = 250;
+      overviewRoom = {
+        top: $("find").getBoundingClientRect().bottom + 10,
+        bottom:
+          camera.height -
+          document.querySelector(".bar")!.getBoundingClientRect().top +
+          10,
+      };
     }
+    const { top, bottom } = overviewRoom;
     const usableH = camera.height - top - bottom;
     const usableW = mobile ? camera.width - 24 : camera.width - 80;
     fitZoom = Math.max(40, Math.min(usableW, usableH) / 2 / 1.04);
@@ -216,6 +215,7 @@ function start(c: Community) {
     refreshUiRects();
   };
   let baseOffset = { x: 0, y: 0 };
+  let overviewRoom = { top: 40, bottom: 130 };
 
   // ---------- State ----------
   let month = c.months; // fractional month index being shown
@@ -581,6 +581,26 @@ function start(c: Community) {
   };
 
   let showAll = false;
+  /**
+   * A person's figures: posts, comments and the people they are in touch
+   * with, as large numerals with small labels; a zero is left out.
+   */
+  const figuresHtml = (member: number) => {
+    const items = [
+      [c.posts[member], t.figures.posts],
+      [c.comments[member], t.figures.comments],
+      [c.degree[member], t.figures.connections],
+    ] as const;
+    const shown = items.filter(([value]) => value > 0);
+    if (!shown.length) return "";
+    return `<span class="figures">${shown
+      .map(
+        ([value, label]) =>
+          `<span class="figure"><b>${formatNumber(value)}</b><small>${escapeHtml(label(value))}</small></span>`
+      )
+      .join("")}</span>`;
+  };
+
   const renderPanel = (member: number) => {
     const name = displayName(c, member);
     const { year, month: m } = calendar(c, Math.max(0, c.joined[member]));
@@ -588,7 +608,6 @@ function start(c: Community) {
     const counts = [0, 0, 0, 0];
     for (const { pair } of neighbours) counts[c.tie[pair]]++;
     const total = neighbours.length;
-    const activity = t.activity(c.posts[member], c.comments[member]);
     const shown = showAll ? neighbours : neighbours.slice(0, 40);
     const rows = shown
       .map(({ member: other, pair }) => {
@@ -618,48 +637,44 @@ function start(c: Community) {
           .join("")}</div>`
       : "";
     const link = c.linked[member]
-      ? `<a href="${PROFILE_BASE}${c.linked[member]}" target="_blank" rel="noopener">${t.profile} ↗</a>`
+      ? `<a href="${profileUrl(c.linked[member])}" target="_blank" rel="noopener">${t.profile} ↗</a>`
       : "<span></span>";
     panel.innerHTML = `
-      <button type="button" class="sheet-handle" data-collapse aria-label="${t.sheet.collapse}"></button>
+      <button type="button" class="sheet-handle" aria-expanded="false" aria-label="${t.sheet.expand}"></button>
       <div class="panel-head">
         <button type="button" class="text-button panel-close" data-close>${t.close}</button>
         <div class="person">
           ${faceHtml(member, 52)}
           <div>
             <h2>${escapeHtml(name)}${c.staff.has(member) ? `<span class="badge">${t.staff}</span>` : ""}</h2>
-            <p>${escapeHtml(t.joined(year, m))}${activity ? ` · ${escapeHtml(activity)}` : ""}</p>
+            <p>${escapeHtml(t.joined(year, m))}</p>
           </div>
         </div>
-        <div class="summary"><strong>${total ? escapeHtml(t.connected(total)) : t.alone}</strong></div>
+        ${figuresHtml(member) || `<p class="alone">${t.alone}</p>`}
+        <div class="panel-actions">${link}<button type="button" class="text-button" data-share>${t.share}</button></div>
         ${mix}
       </div>
       <div class="panel-body">
         ${total ? `<h3>${t.closest}</h3><ul class="people">${rows}</ul>` : ""}
         ${!showAll && total > shown.length ? `<button type="button" class="text-button more" data-more>${t.more(total - shown.length)}</button>` : ""}
-      </div>
-      <div class="panel-foot">${link}<button type="button" class="text-button" data-share>${t.share}</button></div>`;
+      </div>`;
     panel.hidden = false;
     refreshUiRects();
   };
+
+  // On phones the panel is a bottom sheet resting at a peek.
+  const sheet = attachSheet(panel, {
+    active: () => camera.width < 760,
+    onDismiss: () => clearFocus(),
+    onSettle: refreshUiRects,
+    labels: t.sheet,
+  });
 
   panel.addEventListener("click", event => {
     const target = event.target as HTMLElement;
     const button = target.closest<HTMLElement>("[data-member]");
     if (button) {
       focusOn(Number(button.dataset.member), { push: true });
-      return;
-    }
-    const handle = target.closest<HTMLButtonElement>("[data-collapse]");
-    if (handle) {
-      // Fold the sheet to its first lines to see more of the city, or back.
-      const collapsed = panel.classList.toggle("collapsed");
-      handle.setAttribute(
-        "aria-label",
-        collapsed ? t.sheet.expand : t.sheet.collapse
-      );
-      refreshUiRects();
-      if (current() >= 0) frameFocus(current(), 500);
       return;
     }
     if (target.closest("[data-close]")) {
@@ -669,6 +684,7 @@ function start(c: Community) {
     if (target.closest("[data-more]")) {
       showAll = true;
       renderPanel(current());
+      sheet.refresh();
       return;
     }
     const share = target.closest<HTMLButtonElement>("[data-share]");
@@ -697,7 +713,7 @@ function start(c: Community) {
     showAll = false;
     hovered = -1;
     tip.hidden = true;
-    panel.classList.remove("collapsed");
+    const wasHidden = panel.hidden;
     renderPanel(member);
     applyHighlight();
     // Each person gets their own address, so back and forward walk between them.
@@ -707,6 +723,7 @@ function start(c: Community) {
     if (location.hash !== (c.linked[member] ? `#${c.linked[member]}` : ""))
       history.pushState(null, "", address);
     city.classList.add("focused");
+    sheet.open(wasHidden);
     camera.slack = 0.4;
     refreshUiRects();
     if (options.fly === false) return;
@@ -715,7 +732,7 @@ function start(c: Community) {
 
   /**
    * Frames a person and the people they know best in the space the panel and
-   * the title leave free.
+   * the title leave free (on phones, above the sheet at its peek).
    */
   const frameFocus = (member: number, duration: number) => {
     const mobile = camera.width < 760;
@@ -756,7 +773,7 @@ function start(c: Community) {
           left: 0,
           right: camera.width,
           top: introRect.bottom + 8,
-          bottom: panelRect.top - 8,
+          bottom: camera.height - sheet.peekHeight() - 8,
         }
       : {
           left: 0,
@@ -797,7 +814,8 @@ function start(c: Community) {
 
   // ---------- Hover card ----------
   const showTip = (member: number, sx: number, sy: number) => {
-    tip.innerHTML = `<b>${escapeHtml(displayName(c, member))}</b><span>${escapeHtml(summaryOf(member))}</span>`;
+    const { year, month: m } = calendar(c, Math.max(0, c.joined[member]));
+    tip.innerHTML = `<b>${escapeHtml(displayName(c, member))}</b><span>${escapeHtml(t.joined(year, m))}</span>${figuresHtml(member)}`;
     tip.hidden = false;
     const width = tip.offsetWidth;
     const height = tip.offsetHeight;
@@ -1113,7 +1131,7 @@ function start(c: Community) {
     const { year, month: m } = calendar(c, Math.max(0, c.joined[member]));
     return t.joined(year, m);
   };
-  const searchIndex = c.names.map(name => normalize(name));
+  const searchIndex = c.names.map(normalizeName);
   let matches: number[] = [];
   let active = 0;
   const closeList = () => {
@@ -1126,21 +1144,7 @@ function start(c: Community) {
       closeList();
       return;
     }
-    const q = normalize(query);
-    const prefix: number[] = [];
-    const inside: number[] = [];
-    for (let i = 0; i < c.count; i++) {
-      const name = searchIndex[i];
-      if (!name) continue;
-      if (name.startsWith(q)) prefix.push(i);
-      else if (name.includes(q)) inside.push(i);
-    }
-    const byStrength = (p: number, q2: number) =>
-      c.strength[q2] - c.strength[p];
-    matches = [...prefix.sort(byStrength), ...inside.sort(byStrength)].slice(
-      0,
-      8
-    );
+    matches = findMembers(c, searchIndex, query);
     active = 0;
     findList.innerHTML = matches.length
       ? matches

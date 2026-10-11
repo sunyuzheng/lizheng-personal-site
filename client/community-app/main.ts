@@ -39,8 +39,9 @@ void import("./fonts.css");
 const INTRO_SECONDS = 13;
 const IDLE_SPIN = 0.018; // radians per second, about one turn in six minutes
 const IDLE_AFTER = 5000;
-// The layout for phones (style.css uses the same width).
+// The layouts for phones and for short screens (style.css uses the same sizes).
 const PHONE_WIDTH = 760;
+const SHORT_HEIGHT = 560;
 
 // English at city.lizheng.ai/en (?lang=en also works, for local checks).
 const lang: Lang =
@@ -124,6 +125,8 @@ function start(c: Community) {
   const camera = new Camera();
   const guideContext = guides.getContext("2d")!;
   const isPhone = () => camera.width <= PHONE_WIDTH;
+  // Phones held sideways (style.css uses the same height).
+  const isShort = () => !isPhone() && camera.height <= SHORT_HEIGHT;
 
   // ---------- Stats and note ----------
   const statValues: Record<string, string> = {
@@ -144,9 +147,11 @@ function start(c: Community) {
       document.querySelector<HTMLElement>(".bar"),
       panelElement,
       $("find"),
+      zoomControls,
     ]
       .filter((element): element is HTMLElement => !!element && !element.hidden)
-      .map(element => element.getBoundingClientRect());
+      .map(element => element.getBoundingClientRect())
+      .filter(rect => rect.width > 0 && rect.height > 0);
   };
 
   // ---------- State ----------
@@ -179,16 +184,18 @@ function start(c: Community) {
     guides.height = sky.height;
     const phone = isPhone();
     // Leave room for the words above and below the city. On phones the
-    // search sits just under the intro, and the city between it and the bar.
+    // search sits just under the intro, and the city between it and the bar;
+    // on short screens the city sits between the search and the bar.
     // Looking at someone hides those words, so the room is measured only at
     // the overview and kept.
-    if (!phone) overviewRoom = { top: 40, bottom: 130 };
+    if (!phone && !isShort()) overviewRoom = { top: 40, bottom: 130 };
     else if (!city.classList.contains("focused")) {
       const intro = document.querySelector(".intro")!.getBoundingClientRect();
-      city.style.setProperty(
-        "--find-top",
-        `${Math.round(intro.bottom + 14)}px`
-      );
+      if (phone)
+        city.style.setProperty(
+          "--find-top",
+          `${Math.round(intro.bottom + 14)}px`
+        );
       overviewRoom = {
         top: $("find").getBoundingClientRect().bottom + 10,
         bottom:
@@ -422,17 +429,20 @@ function start(c: Community) {
       maxY = Math.max(maxY, y);
     }
     const intro = document.querySelector(".intro")!.getBoundingClientRect();
+    // On touch screens the zoom buttons sit at the right edge.
+    const buttons = zoomControls.getBoundingClientRect();
     const free = isPhone()
       ? {
           left: 0,
-          right: camera.width,
+          right: buttons.width ? buttons.left - 8 : camera.width,
           top: intro.bottom + 8,
           bottom: camera.height - sheet.peekHeight() - 8,
         }
       : {
           left: 0,
           right: panelElement.getBoundingClientRect().left - 20,
-          top: 0,
+          // On short screens the intro has shrunk to its first line.
+          top: isShort() ? intro.bottom + 8 : 0,
           bottom: camera.height - 120,
         };
     const freeW = free.right - free.left - 80;
@@ -585,15 +595,22 @@ function start(c: Community) {
       userMoved = false;
       return;
     }
-    // Zoom around the middle of the screen, staying inside the city.
-    camera.flyTo(
-      camera.zoomTarget(
-        camera.width / 2 + camera.offsetX,
-        camera.height / 2 + camera.offsetY,
-        kind === "in" ? 2 : 0.5
-      ),
-      420
-    );
+    // Zoom around the person looked at, if they are on screen, so they stay
+    // where they are; otherwise around the middle of the free space.
+    let [x, y] = [
+      camera.width / 2 + camera.offsetX,
+      camera.height / 2 + camera.offsetY,
+    ];
+    const focus = current();
+    if (focus >= 0) {
+      const [fx, fy] = camera.toScreen(c.x[focus], c.y[focus]);
+      const bottom = isPhone()
+        ? camera.height - sheet.peekHeight()
+        : camera.height;
+      if (fx > 0 && fx < camera.width && fy > 0 && fy < bottom)
+        [x, y] = [fx, fy];
+    }
+    camera.flyTo(camera.zoomTarget(x, y, kind === "in" ? 2 : 0.5), 420);
     userMoved = true;
   });
 
@@ -667,6 +684,9 @@ function start(c: Community) {
   });
   sky.addEventListener("pointerdown", () => sky.classList.add("dragging"));
   window.addEventListener("pointerup", () => sky.classList.remove("dragging"));
+  // Pinching zooms the city, never the page around it: Safari on iPhone
+  // ignores the viewport tag's maximum-scale.
+  document.addEventListener("gesturestart", event => event.preventDefault());
 
   window.addEventListener("keydown", event => {
     if (event.key === "Escape") {

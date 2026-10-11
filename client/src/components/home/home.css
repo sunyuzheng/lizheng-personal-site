@@ -3830,6 +3830,19 @@
   font-size: 14px;
 }
 
+/* On touch screens: a quick second tap on a button presses it again
+   instead of zooming the page, and the search box is large enough (16px)
+   that Safari does not zoom the page into it. */
+.lz-home .city-map {
+  touch-action: manipulation;
+}
+
+@media (pointer: coarse) {
+  .lz-home .city-find input {
+    font-size: 16px;
+  }
+}
+
 .lz-home .city-find input {
   width: 100%;
   padding: 0 16px 0 40px;

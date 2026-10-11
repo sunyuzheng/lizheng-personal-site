@@ -23,6 +23,7 @@
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui,
     -apple-system, "Segoe UI", Roboto, sans-serif;
   --gut: clamp(18px, 3vw, 40px);
+  --panel-w: 380px;
   --safe-b: env(safe-area-inset-bottom, 0px);
   color-scheme: dark;
 }
@@ -31,6 +32,10 @@
   box-sizing: border-box;
 }
 
+/* The page is the map, so the browser never zooms the page itself: no
+   double-tap zoom (a quick second tap on + must zoom the city again), no
+   pinch zoom (main.ts, the viewport tag), and no zoom into the search box
+   (16px on touch screens, below). */
 html,
 body {
   margin: 0;
@@ -40,8 +45,10 @@ body {
   font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
   overflow: hidden;
   overscroll-behavior: none;
+  touch-action: manipulation;
 }
 
 html[lang="en"] {
@@ -728,8 +735,14 @@ html[lang="en"] .date {
     display: flex;
   }
 
+  /* Beside the person panel rather than under it (on phones the sheet
+     leaves them clear). */
   .city.focused .zoom {
-    display: none;
+    right: calc(var(--gut) + var(--panel-w) + 12px);
+  }
+
+  .find input {
+    font-size: 16px;
   }
 }
 
@@ -776,7 +789,7 @@ html[lang="en"] .date {
   z-index: 3;
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: var(--panel-w);
   border: 1px solid rgb(248 241 228 / 0.14);
   border-radius: 14px;
   background: var(--glass);
@@ -1069,6 +1082,65 @@ html[lang="en"] .date {
   color: var(--ink-2);
 }
 
+/* ---------- Short screens (phones held sideways) ----------
+   The wide layout with less to read: no lede, legend or note; the panel
+   runs the full height of the right side; looking at someone shrinks the
+   intro to its first line and puts the search away. */
+
+@media (min-width: 761px) and (max-height: 560px) {
+  :root {
+    --gut: 18px;
+    --panel-w: 330px;
+  }
+
+  h1,
+  html[lang="en"] h1 {
+    font-size: 30px;
+  }
+
+  .eyebrow {
+    margin-bottom: 8px;
+  }
+
+  .lede,
+  .legend,
+  .note {
+    display: none;
+  }
+
+  .stats {
+    margin-top: 12px;
+  }
+
+  .stats dd {
+    font-size: 22px;
+  }
+
+  .panel {
+    top: var(--gut);
+    bottom: calc(var(--gut) + var(--safe-b));
+  }
+
+  .city.focused h1,
+  .city.focused .stats,
+  .city.focused .bar > .find {
+    display: none;
+  }
+
+  .city.focused .eyebrow {
+    margin: 0;
+  }
+
+  /* Lighter veils: the city fills most of a short screen. */
+  .city::after {
+    height: 130px;
+  }
+
+  .city.focused::before {
+    height: 110px;
+  }
+}
+
 /* ---------- Phones ---------- */
 
 @media (max-width: 760px) {
@@ -1128,6 +1200,11 @@ html[lang="en"] .date {
     display: none;
   }
 
+  /* The sheet is at the bottom, so the zoom buttons keep their place. */
+  .city.focused .zoom {
+    right: 12px;
+  }
+
   .find-box {
     flex: 1;
   }
@@ -1163,6 +1240,10 @@ html[lang="en"] .date {
 
   .city.focused .eyebrow {
     margin: 0;
+  }
+
+  .city.focused::before {
+    height: 110px;
   }
 
   .legend-rings {

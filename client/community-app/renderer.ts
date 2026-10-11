@@ -132,7 +132,7 @@ void main() {
   if (a_style.y < 0.0) alpha *= highlight > 0.5 ? 1.0 : 0.0;
   // Short lines pile their light into small areas (the busy old town in the
   // middle), so they are dimmer; they brighten as you zoom in and they lengthen.
-  alpha *= clamp(len / (70.0 * u_dpr), 0.22, 1.0);
+  alpha *= clamp(len / (70.0 * u_dpr), 0.13, 1.0);
   // A brief flare as the line is born.
   alpha *= 1.0 + 1.4 * (1.0 - clamp(age / 1.2, 0.0, 1.0));
   // Focus: this person's lines brighten, everyone else's step back.

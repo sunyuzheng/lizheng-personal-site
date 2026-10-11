@@ -113,7 +113,7 @@ function fail(message: string) {
 function start(c: Community) {
   const scene = buildScene(c);
   const makeRenderer = () =>
-    new Renderer(sky, scene, { segments: coarse ? 7 : 12 });
+    new Renderer(sky, scene, { segments: coarse ? 7 : 12, exposure: 0.88 });
   let renderer: Renderer;
   try {
     renderer = makeRenderer();

@@ -14,6 +14,8 @@ import type { AvatarSprite } from "./renderer";
 
 export interface RingMark {
   month: number;
+  /** The start of a year (rather than of July). */
+  year: boolean;
   label: string;
   /** World radius where the members who joined that month begin. */
   radius: number;
@@ -27,6 +29,7 @@ export function ringMarks(c: Community, t: Copy) {
     if (month === 1 || month === 7)
       marks.push({
         month: index,
+        year: month === 1,
         label: t.ringLabel(year, month),
         radius: ringRadius(c, index),
       });
@@ -254,6 +257,8 @@ export class Labels {
     const angle = -Math.PI * 0.3;
     for (const mark of this.marks) {
       if (used >= RING_POOL || mark.month > month) break;
+      // The outer rings sit close together: half years only once zoomed in.
+      if (!mark.year && zoomRatio < 1.8) continue;
       const r = mark.radius * camera.zoom;
       if (r < 90) continue;
       // The ring shows as an ellipse when the city is seen at an angle.

@@ -37,7 +37,7 @@ jobs:
 
       # The member list (names, profile ids and pictures; no e-mail
       # addresses) carries over between days, so most days only the newest
-      # members are read; the whole list is read again about once a week.
+      # members are read; the whole list is read again about once a month.
       - uses: actions/cache@v4
         with:
           path: |
@@ -46,7 +46,7 @@ jobs:
           key: community-members-${{ github.run_id }}
           restore-keys: community-members-
 
-      # Admin API: usually 1 request, about 255 once a week (stops before
+      # Admin API: usually 1 request, about 255 once a month (stops before
       # starting if more than 300 are needed). Data API: about 850 requests,
       # a separate allowance of 600 a minute.
       - name: Build and publish

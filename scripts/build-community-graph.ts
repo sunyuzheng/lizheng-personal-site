@@ -13,7 +13,7 @@
  *   pnpm community:graph --upload            # … then publish them to Vercel Blob
  *
  * Caches live in --cache-dir (default tmp/community-graph, git-ignored):
- * members.json (read in full from the Admin API about once a week, topped up
+ * members.json (read in full from the Admin API about once a month, topped up
  * with new members on every run; --refresh-members reads it in full now),
  * interactions.ndjson with a read cursor (Data API, read
  * incrementally; --seed=a.ndjson,b.ndjson imports minimized
@@ -65,12 +65,17 @@ interface MembersCache {
 }
 
 /**
- * The member list, read in full from the Admin API about once a week
- * (ceil(members / 100) requests) and topped up daily with whoever joined
- * since (usually one request). A list that has drifted from Circle's count
- * (people leaving) is read in full again. Without a token the cache is used
- * as it is.
+ * The member list, read in full from the Admin API about once a month
+ * (ceil(members / 100) requests, about 255) and topped up daily with whoever
+ * joined since (usually one request). Admin API requests count against the
+ * community's monthly allowance, shared with every other tool and billed
+ * beyond it, so the full read is rare: posts and comments counts on the
+ * cards may lag by up to a month (who someone is in touch with comes from the
+ * Data API and is fresh every day). A list that has drifted well away from
+ * Circle's count (many people leaving) is read in full early. Without a token
+ * the cache is used as it is.
  */
+const FULL_READ_DAYS = 30;
 async function loadMembers(): Promise<MemberRecord[]> {
   const file = path.join(cacheDir, "members.json");
   const token = process.env.CIRCLE_ADMIN_API?.trim();
@@ -88,11 +93,11 @@ async function loadMembers(): Promise<MemberRecord[]> {
       );
       return cached.members;
     }
-    if (Date.now() - fullAt < 7 * DAY) {
+    if (Date.now() - fullAt < FULL_READ_DAYS * DAY) {
       const known = new Set(cached.members.map(member => member.id));
       const { added, count } = await fetchNewMembers(token, known);
       const members = [...added, ...cached.members];
-      if (Math.abs(members.length - count) <= Math.max(20, count * 0.002)) {
+      if (Math.abs(members.length - count) <= Math.max(50, count * 0.005)) {
         console.log(
           `Members: ${members.length} (${added.length} new since ${day(cached.fetchedAt)}; full read ${day(fullAt)}; Circle counts ${count})`
         );

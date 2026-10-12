@@ -614,7 +614,7 @@ const zh = {
     // What the academy is, in plain words, for someone who has never heard of it; the city is
     // explained by the essay it comes from.
     intro: [
-      "超线性学院是一个免费的AI社区。两万多位工程师、产品经理、研究者、创业者和各行各业的人在这里学AI、用AI做东西，把做出来的拿给彼此看，互相给真实的反馈。",
+      "超线性学院是一个免费的AI社区。工程师、产品经理、研究者、创业者和各行各业的人，把自己用AI做的东西拿到这里，互相给真实的反馈。",
       { link: "为什么说是一座城？", href: LINKS.florence },
     ] as Inline[],
     insideLabel: "超线性学院里有什么",
@@ -1066,7 +1066,7 @@ const en: HomeCopy = {
     eyebrow: "Superlinear Academy",
     title: ["We’re building a city."],
     intro: [
-      "Superlinear Academy is a free AI community. More than 20,000 engineers, product managers, researchers, founders, and people from every field learn AI and build with it here, show each other what they make, and give each other real feedback. ",
+      "Superlinear Academy is a free AI community. Engineers, product managers, researchers, founders, and people from every field bring what they build with AI here and give each other real feedback. ",
       { link: "Why a city? (essay in Chinese)", href: LINKS.florence },
     ],
     insideLabel: "What’s inside Superlinear Academy",

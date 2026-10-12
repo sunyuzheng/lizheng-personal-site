@@ -1191,6 +1191,11 @@
     gap: 22px 12px;
   }
 
+  /* Six faces are enough on a phone; the button below opens all 200+ conversations. */
+  .lz-home .guests > li:nth-child(n + 7) {
+    display: none;
+  }
+
   .lz-home .guest b {
     font-size: 15px;
   }
@@ -1737,8 +1742,8 @@
 }
 
 .lz-home .lz-ask-native-head h2 {
-  font-size: clamp(40px, 5.6vw, 76px);
-  line-height: 1.08;
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 1.2;
   letter-spacing: 0.02em;
 }
 
@@ -2023,6 +2028,17 @@
 }
 
 /* What happens to a question, and today's count: quiet lines under the box. */
+/* While the answer service wakes or its saving settings load: a quiet line under the box, set
+   like the line that follows it rather than as body text against the card. */
+.lz-home .lz-ask-wait {
+  max-width: 760px;
+  margin-top: 12px;
+  padding: 0 4px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--lz-muted);
+}
+
 .lz-home .lz-ask-meta {
   display: flex;
   flex-wrap: wrap;
@@ -4293,7 +4309,7 @@
 }
 
 .lz-home .invite h2 {
-  font-size: clamp(23px, 5.2vw, 66px);
+  font-size: clamp(34px, 5.2vw, 66px);
   line-height: 1.35;
   letter-spacing: 0.03em;
 }

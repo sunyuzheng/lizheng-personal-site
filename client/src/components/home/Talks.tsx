@@ -75,7 +75,9 @@ export default function Talks({ lang }: { lang: Lang }) {
               <Lines lines={t.title} />
             </h2>
           </div>
-          <p>{t.intro}</p>
+          <p>
+            <Phrases text={t.intro} />
+          </p>
         </div>
 
         <ul className="guests">

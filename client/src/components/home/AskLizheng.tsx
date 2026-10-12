@@ -1180,7 +1180,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               )}
             </div>
           </form>
-          {!loggingReady && <p role="status">{loggingFailed
+          {!loggingReady && <p className="lz-ask-wait" role="status">{loggingFailed
             ? <>{lang === "zh" ? "未能确认提问保存设置。" : "Could not confirm question storage."} <button type="button" onClick={() => void loadLogging()}>{lang === "zh" ? "重试" : "Retry"}</button></>
             : loggingWaking
               ? (lang === "zh" ? "问答服务正在唤醒，通常十几秒，可以先写问题。" : "Waking the answer service, usually 10 to 20 seconds. You can start typing.")

@@ -51,7 +51,7 @@ export default function Hero({ lang }: { lang: Lang }) {
             <Lines lines={t.title} />
           </h1>
           <p className="lede rise d3">
-            <RichText value={t.lede} />
+            <RichText value={t.lede} phrases />
           </p>
           <div className="cta-row rise d4">
             <a className="btn btn-ivory" href={LINKS.community} {...EXTERNAL}>

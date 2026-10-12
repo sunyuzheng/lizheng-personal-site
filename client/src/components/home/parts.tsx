@@ -25,17 +25,22 @@ export function Lines({ lines }: { lines: readonly string[] }) {
  * Chinese titles break anywhere by default, which can split a word across
  * lines. Phrases keeps each phrase together: it breaks after Chinese
  * punctuation or at an explicit "|" in the copy. A phrase longer than the line
- * still wraps inside itself, so this never causes overflow.
+ * still wraps inside itself, so this never causes overflow. Punctuation that
+ * opens the text stays outside the phrases, so it keeps to whatever precedes
+ * it (an emphasis or a link) and never starts a line.
  */
 export function Phrases({ text }: { text: string }) {
+  const lead = text.match(/^[，：；、？！。]+/)?.[0] ?? "";
   const parts = text
+    .slice(lead.length)
     .split("|")
     .flatMap(
       part => part.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [part]
     );
-  if (parts.length < 2) return <>{text}</>;
+  if (parts.length < 2) return <>{text.split("|").join("")}</>;
   return (
     <>
+      {lead}
       {parts.map((part, index) => (
         <span key={index} className="phrase">
           {part}

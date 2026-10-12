@@ -20,7 +20,9 @@ export default function Calls({ lang }: { lang: Lang }) {
               <Lines lines={t.title} />
             </h2>
           </div>
-          <p>{t.intro}</p>
+          <p>
+            <Phrases text={t.intro} />
+          </p>
         </div>
 
         <ol className="calls-list" aria-label={t.listLabel}>
@@ -47,7 +49,9 @@ export default function Calls({ lang }: { lang: Lang }) {
                   {item.feature && (
                     <blockquote>{item.feature.quote}</blockquote>
                   )}
-                  <p className="claim">{item.claim}</p>
+                  <p className="claim">
+                    <Phrases text={item.claim} />
+                  </p>
                 </div>
                 <div className="side">
                   {image && (

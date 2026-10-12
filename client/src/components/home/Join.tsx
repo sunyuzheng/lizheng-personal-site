@@ -18,7 +18,9 @@ export default function Join({ lang }: { lang: Lang }) {
               <Lines lines={t.title} />
             </h2>
           </div>
-          <p>{t.intro}</p>
+          <p>
+            <Phrases text={t.intro} />
+          </p>
         </div>
 
         <div className="paths">

@@ -14,7 +14,9 @@ export default function Writing({ lang }: { lang: Lang }) {
               <Lines lines={t.title} />
             </h2>
           </div>
-          <p>{t.intro}</p>
+          <p>
+            <Phrases text={t.intro} />
+          </p>
         </div>
         <ul className="essays">
           {t.essays.map(essay => (
@@ -24,7 +26,9 @@ export default function Writing({ lang }: { lang: Lang }) {
                 <h3>
                   <Phrases text={essay.title} />
                 </h3>
-                <p>{essay.line}</p>
+                <p>
+                  <Phrases text={essay.line} />
+                </p>
                 <span className="go" aria-hidden="true">↗</span>
               </a>
             </li>

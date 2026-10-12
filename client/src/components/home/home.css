@@ -1613,6 +1613,29 @@
   .lz-home .call .badge {
     margin-top: 0;
   }
+
+  /* A long claim in a phone's narrow column reads better as running text than one phrase a
+     line; wider columns keep phrases whole. */
+  .lz-home .call .claim .phrase {
+    display: inline;
+  }
+
+  /* Phones open with the key calls; the ones marked fold wait behind the button. */
+  .lz-home .calls-list:not(.open) > .call.fold {
+    display: none;
+  }
+
+  .lz-home .calls-more {
+    display: inline-flex;
+    margin: 20px 0 0 24px;
+  }
+}
+
+/* The fold button only exists for phones; wider screens show every call. */
+@media (min-width: 641px) {
+  .lz-home .calls-more {
+    display: none;
+  }
 }
 
 /* ---------- Writing + search ---------- */

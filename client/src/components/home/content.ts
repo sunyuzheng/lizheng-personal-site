@@ -222,6 +222,8 @@ export interface PublicCall {
   title: string;
   claim: string;
   sources: Array<[label: string, href: string]>;
+  /** On phones, wait behind 「再看另外N条判断」 so the chapter opens with the key calls. */
+  fold?: boolean;
   /** Featured calls stay open, with their key line and sometimes an image. */
   feature?: {
     badge: string;
@@ -471,9 +473,13 @@ const zh = {
     intro: "说对的，说错的，都留在原处，每一条都附上当时的原始记录。",
     listLabel: "公开判断时间线",
     sources: "原始记录",
+    // Phones fold the calls marked fold until asked; the key ones stay open.
+    more: (count: number) => `再看另外${count}条判断`,
+    less: "收起",
     items: [
       {
         date: "2021.04",
+        fold: true,
         title: "上一代AI的|天花板在哪里",
         claim:
           "主流的机器学习从标注数据里学“对应关系”，能把窄场景自动化得很好，但不会因此获得对世界的通用理解。选AI应用，要看机制和任务结构，而不是benchmark上的表演。",
@@ -518,6 +524,7 @@ const zh = {
       },
       {
         date: "2025.03",
+        fold: true,
         title: "MCP有结构性缺陷",
         claim:
           "MCP的热度超过了它能可靠交付的东西，协议本身有重大的结构性问题。",
@@ -525,6 +532,7 @@ const zh = {
       },
       {
         date: "2026.03",
+        fold: true,
         title: "为什么OpenClaw一定会凉，但仍然值得一试",
         claim: "这个产品品类不会持久；但亲手试一试，能帮你理解这一轮能力变化。",
         sources: [["视频", "https://youtu.be/h_yCYBRzbVw"]],
@@ -910,9 +918,12 @@ const en: HomeCopy = {
       "Right or wrong, every call stays where I made it, with the original record attached.",
     listLabel: "Timeline of public calls",
     sources: "Original record",
+    more: (count: number) => `Show the other ${count} calls`,
+    less: "Show fewer",
     items: [
       {
         date: "2021.04",
+        fold: true,
         title: "Where the last generation of AI hit its ceiling",
         claim:
           "Systems that learn mappings from labeled data can automate narrow settings well without gaining a general understanding of the world. Useful AI applications should be chosen from the mechanism and the task, not from benchmark spectacle.",
@@ -961,6 +972,7 @@ const en: HomeCopy = {
       },
       {
         date: "2025.03",
+        fold: true,
         title: "MCP has structural flaws",
         claim:
           "The hype around MCP exceeds what the protocol can reliably deliver; it has major structural problems.",
@@ -968,6 +980,7 @@ const en: HomeCopy = {
       },
       {
         date: "2026.03",
+        fold: true,
         title:
           "Why OpenClaw is bound to fail, and why I still recommend trying it",
         claim:

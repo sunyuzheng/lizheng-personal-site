@@ -27,6 +27,8 @@ export interface GuestEpisode {
 }
 
 export interface GuestPersonLink { name: string; en_name?: string; slug?: string }
+/** An introduction a programme gave, with the programme it comes from. */
+export interface GuestQuotedIntroduction { text: string; quote: string; title: string; url: string; year?: number }
 
 export interface GuestProfile {
   entity_id: string;
@@ -62,6 +64,8 @@ export interface GuestProfile {
   members?: GuestPersonLink[];
   /** Groups this person appeared in. */
   member_of?: GuestPersonLink[];
+  /** Introductions quoted from the programmes' transcripts, newest first. */
+  introductions?: GuestQuotedIntroduction[];
   first_year?: number;
   last_year?: number;
 }
@@ -81,11 +85,6 @@ export function guestIntro(guest: Pick<GuestProfile, "guest_company" | "guest_ti
   return [guest.guest_company, guest.guest_title].filter(Boolean).join(" · ");
 }
 
-export function guestIntroLabel(guest: Pick<GuestProfile, "first_year" | "last_year">, lang: "en" | "zh"): string {
-  const years = guestYears(guest);
-  return lang === "en" ? `As introduced in the programmes${years ? `, ${years}` : ""}` : `${years ? `${years}年` : ""}节目中的介绍`;
-}
-
 /** Ask Lizheng opened on 从哪读起 with this guest's name in the box (not sent). */
 export function guestAskLink(guest: Pick<GuestProfile, "guest_name">): string {
   return `https://ask.lizheng.ai/?${new URLSearchParams({ q: guest.guest_name, mode: "find" })}`;
@@ -102,14 +101,22 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
   };
 }
 
+/** "2024年《标题》" — which programme an introduction comes from. */
+export function introductionSource(intro: Pick<GuestQuotedIntroduction, "title" | "year">, lang: "en" | "zh" = "zh"): string {
+  const title = intro.title.length > 28 ? `${intro.title.slice(0, 27).trimEnd()}…` : intro.title;
+  return lang === "en" ? `${intro.year ? `${intro.year}, ` : ""}“${title}”` : `${intro.year ? `${intro.year}年` : ""}《${title}》`;
+}
+
 export function getGuestPageMeta(guest: GuestProfile): PageMeta {
-  const intro = truncateMetaText(guestIntro(guest), 52);
+  const latest = guest.introductions?.[0];
+  const intro = truncateMetaText(latest ? latest.text : guestIntro(guest), 52);
   const leadTitle = guest.primary_episode?.title
     ? truncateMetaText(guest.primary_episode.title, 56)
     : "";
   const years = guestYears(guest);
   // The introduction is labelled as the programmes' own, so a search result never presents it as a current job.
-  const description = `${guest.guest_name}在「课代表立正」的${guest.episode_count}期对谈${years ? `（${years}）` : ""}，包括《${leadTitle || guest.primary_episode.title}》。${intro ? `节目中的介绍：${intro}。` : ""}`;
+  const label = latest ? `${latest.year ? `${latest.year}年` : ""}节目中的介绍` : "简介";
+  const description = `${guest.guest_name}在「课代表立正」的${guest.episode_count}期对谈${years ? `（${years}）` : ""}，包括《${leadTitle || guest.primary_episode.title}》。${intro ? `${label}：${intro}。` : ""}`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

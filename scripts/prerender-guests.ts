@@ -5,6 +5,7 @@ import {
   guestAskLink,
   guestIntro,
   guestYears,
+  introductionSource,
   getGuestsPageMeta,
   type GuestPersonLink,
   type GuestProfile,
@@ -268,7 +269,9 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     <p>${escapeHtml(description)}</p>
     ${guest.members?.length ? `<p>成员：${personLinks(guest.members)}</p>` : ""}
     ${guest.member_of?.length ? `<p>所属组合：${personLinks(guest.member_of)}</p>` : ""}
-    ${intro ? `<p>节目中的介绍：${escapeHtml(intro)}</p>` : ""}
+    ${guest.introductions?.length
+      ? `<p>节目中的介绍：</p><ul>${guest.introductions.slice(0, 4).map(item => `<li>${escapeHtml(item.text)}（<a href="${escapeHtml(item.url)}">${escapeHtml(introductionSource(item))}</a>）</li>`).join("")}</ul>`
+      : intro ? `<p>简介：${escapeHtml(intro)}</p>` : ""}
     <p><a href="${escapeHtml(guestAskLink(guest))}">在问问立正里查这位嘉宾聊过什么</a></p>
     ${guest.guest_bio ? `<p>${escapeHtml(guest.guest_bio)}</p>` : ""}
     ${guest.guest_bio_en ? `<p lang="en">${escapeHtml(guest.guest_bio_en)}</p>` : ""}

@@ -313,6 +313,40 @@
   line-height: 1.75;
 }
 
+.lz-guest-introductions {
+  max-width: 38em;
+  margin-top: 16px;
+}
+
+.lz-guest-introductions-label {
+  font-size: 14px;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-guest-introductions ul {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-guest-introductions li {
+  font-size: clamp(16px, 1.5vw, 18px);
+  line-height: 1.6;
+}
+
+.lz-guest-introductions a {
+  margin-left: 10px;
+  font-size: 13px;
+  color: var(--lz-mint);
+  white-space: nowrap;
+}
+
+.lz-guest-introductions a:hover {
+  color: var(--lz-on-forest);
+}
+
 .lz-guest-introduction span {
   color: var(--lz-on-forest-3);
 }

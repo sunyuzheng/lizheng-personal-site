@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { getGuestPageMeta, guestAskLink, guestIntro, guestYears, type GuestEpisode, type GuestPersonLink } from "@shared/guest-data";
+import { getGuestPageMeta, guestAskLink, guestIntro, guestYears, introductionSource, type GuestEpisode, type GuestPersonLink } from "@shared/guest-data";
 import { resolveGuestProfile } from "@shared/guest-identity";
 import { getGuestEnglishInsights, type GuestInsight } from "@shared/guest-insights";
 import { buildGuestStructuredData } from "@shared/structured-data";
@@ -20,7 +20,9 @@ const COPY = {
   zh: {
     back: "← 全部嘉宾",
     episodes: (n: number) => `${n}期对谈`,
-    introduced: "节目中的介绍：",
+    introduced: "节目中的介绍",
+    about: "简介：",
+    quote: (q: string) => `原话：${q}`,
     members: "成员：",
     memberOf: "所属组合：",
     separator: "、",
@@ -41,7 +43,9 @@ const COPY = {
   en: {
     back: "← All guests",
     episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
-    introduced: "Introduced in the programmes as: ",
+    introduced: "As introduced in the programmes",
+    about: "About: ",
+    quote: (q: string) => `Their words: ${q}`,
     members: "Members: ",
     memberOf: "Also appears with: ",
     separator: ", ",
@@ -162,7 +166,19 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
               <p className="lz-guest-facts">{copy.episodes(guest.episode_count)}{years ? ` · ${years}` : ""}</p>
               {!!guest.members?.length && <p className="lz-guest-members"><span>{copy.members}</span><PersonLinks people={guest.members} lang={lang} /></p>}
               {!!guest.member_of?.length && <p className="lz-guest-members"><span>{copy.memberOf}</span><PersonLinks people={guest.member_of} lang={lang} /></p>}
-              {intro && <p className="lz-guest-introduction"><span>{copy.introduced}</span>{intro}</p>}
+              {guest.introductions?.length ? (
+                <div className="lz-guest-introductions">
+                  <p className="lz-guest-introductions-label">{copy.introduced}</p>
+                  <ul>
+                    {guest.introductions.slice(0, 4).map(item => (
+                      <li key={item.url}>
+                        {item.text}
+                        <a href={item.url} target="_blank" rel="noopener noreferrer" title={copy.quote(item.quote)}>{introductionSource(item, lang)} ↗</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : intro && <p className="lz-guest-introduction"><span>{copy.about}</span>{intro}</p>}
               {bio && <p className="lz-guest-bio">{bio}</p>}
               <div className="lz-guest-actions">
                 <a className="lz-guest-watch" href={featured.url} target="_blank" rel="noopener noreferrer">

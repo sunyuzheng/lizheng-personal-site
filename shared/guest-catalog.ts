@@ -12,7 +12,10 @@ export interface GuestEntity {
   community_resources?: readonly GuestCommunityResource[];
   /** A group's members; a member with their own page links to it by entity_id. */
   members?: readonly GuestMember[];
+  /** Where a programme says who they are: the exact transcript words and their time. */
+  introductions?: readonly GuestIntroduction[];
 }
+export interface GuestIntroduction { source_id: string; text: string; quote: string; locator: readonly string[]; start_seconds: number }
 export interface GuestMember { name: string; en_name?: string; entity_id?: string }
 export interface GuestSource {
   source_id: string; video_id: string | null; source_type: "youtube" | "circle";
@@ -94,7 +97,7 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
   const entities = new Map<string, GuestEntity>(), sources = new Map<string, GuestSource>(), slugs = new Map<string, string>();
   for (const e of value.entities) {
     record(e); keys(e, ["entity_id", "entity_type", "display_name", "aliases", "slug", "alias_slugs", "primary_source_id", "thumbnail_url"],
-      ["guest_en_name", "guest_title", "guest_company", "guest_bio", "guest_bio_en", "interview_date", "xiaohongshu_url", "linkedin_url", "youtube_playlist_url", "community_resources", "members"]);
+      ["guest_en_name", "guest_title", "guest_company", "guest_bio", "guest_bio_en", "interview_date", "xiaohongshu_url", "linkedin_url", "youtube_playlist_url", "community_resources", "members", "introductions"]);
     requireValue(typeof e.entity_id === "string" && ENTITY.test(e.entity_id) && !entities.has(e.entity_id) && TYPES.has(e.entity_type) && typeof e.display_name === "string" && e.display_name.length > 0 && typeof e.primary_source_id === "string", "entity_identity_invalid");
     stringList(e.aliases); stringList(e.alias_slugs);
     requireValue(typeof e.slug === "string" && SLUG.test(e.slug) && e.alias_slugs.includes(e.slug), "entity_slug_invalid");
@@ -136,6 +139,16 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
     pairs.add(pair); covered.add(r.source_id);
   }
   requireValue(primaries.size === entities.size && covered.size === sources.size, "catalog_coverage_incomplete");
+  for (const e of entities.values()) {
+    const seen = new Set<string>();
+    for (const intro of (e.introductions || []) as unknown[]) {
+      record(intro); keys(intro, ["source_id", "text", "quote", "locator", "start_seconds"]);
+      requireValue(typeof intro.text === "string" && intro.text.trim().length > 0 && intro.text.length <= 60 && typeof intro.quote === "string" && intro.quote.trim().length > 0
+        && Array.isArray(intro.locator) && intro.locator.length > 0 && Number.isSafeInteger(intro.start_seconds) && intro.start_seconds >= 0
+        && pairs.has(`${e.entity_id}\n${intro.source_id}`) && !seen.has(intro.source_id), "entity_introduction_invalid");
+      seen.add(intro.source_id);
+    }
+  }
   for (const e of entities.values()) for (const m of e.members || []) {
     if (m.entity_id === undefined) continue;
     for (const pair of pairs) if (pair.startsWith(`${e.entity_id}\n`)) requireValue(pairs.has(`${m.entity_id}\n${pair.slice(e.entity_id.length + 1)}`), "entity_member_appearance_missing");
@@ -180,7 +193,15 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
     const primary = episodes.find(e => e.isPrimary)!;
     const years = episodes.flatMap(e => e.publishedAt ? [new Date(e.publishedAt).getUTCFullYear()] : []).filter(Number.isFinite);
     const views = [...episodes.flatMap(e => e.viewCount === undefined ? [] : [e.viewCount])];
-    const { display_name, primary_source_id: _primary, members: declared, ...profile } = entity;
+    const { display_name, primary_source_id: _primary, members: declared, introductions: quoted, ...profile } = entity;
+    // Newest programme first; the link opens the programme where the introduction is said.
+    const introductions = (quoted || []).flatMap(intro => {
+      const s = sources.get(intro.source_id);
+      if (!s) return [];
+      const url = s.source_type === "youtube" ? `${s.url}&t=${intro.start_seconds}s` : s.url;
+      const year = s.published_at ? new Date(s.published_at).getUTCFullYear() : undefined;
+      return [{ text: intro.text, quote: intro.quote, title: s.title, url, ...(year && Number.isFinite(year) ? { year } : {}), publishedAt: s.published_at || "" }];
+    }).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt)).map(({ publishedAt: _date, ...rest }) => rest);
     const members = (declared || []).map(m => {
       const person = m.entity_id ? byId.get(m.entity_id) : undefined;
       return { name: m.name, ...(m.en_name ? { en_name: m.en_name } : {}), ...(person ? { slug: person.slug } : {}) };
@@ -194,6 +215,7 @@ export function catalogGuestDirectory(catalog: GuestCatalog, articles: GuestArti
       share_url: `https://www.lizheng.ai/guests/${entity.slug}`, episodes, primary_episode: primary,
       search_names: [...new Set(searchNames.get(entity.entity_id) || [])],
       ...(entity.entity_type === "group" ? { members } : {}),
+      ...(introductions.length ? { introductions } : {}),
       ...(groups.length ? { member_of: groups } : {}),
       ...(years.length ? { first_year: Math.min(...years), last_year: Math.max(...years) } : {}),
     };

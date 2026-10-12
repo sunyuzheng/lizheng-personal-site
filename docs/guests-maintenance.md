@@ -6,7 +6,7 @@ Guest facts and published reading links are maintained in [Open Context](https:/
 
 `/guests` lists canonical profiles. `/guests/:slug` displays the selected featured programme, all associated programmes, social links and companion reading. Old slugs open the canonical profile.
 
-The featured programme is an explicit editorial choice. Programmes are listed newest first, with their date and stored view count; dates use UTC. Introductions are labelled as the programmes' own (节目中的介绍) with the years of the guest's programmes, in the page, its description and its crawler HTML. Community resources are separate from programme counts. Historical programme introductions retain their context. Structured data uses Person for people and Thing for groups or virtual characters.
+The featured programme is an explicit editorial choice. Programmes are listed newest first, with their date and stored view count; dates use UTC. Introductions quoted from a programme are labelled 节目中的介绍 with that programme and year, in the page, its description and its crawler HTML; the catalog line without a source is labelled 简介. Community resources are separate from programme counts. Historical programme introductions retain their context. Structured data uses Person for people and Thing for groups or virtual characters.
 
 ## Update and verify
 

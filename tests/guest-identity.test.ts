@@ -58,8 +58,30 @@ describe("introductions stay the programmes' own", () => {
     const p = { ...profile("卢蔚（Cooper）", "lu-wei", "abcdefghijk"), first_year: 2020, last_year: 2025, episode_count: 7 };
     const meta = getGuestPageMeta(p);
     expect(meta.description).toContain("（2020–2025）");
-    expect(meta.description).toContain("节目中的介绍：Historical company · Historical title");
+    // Without a quoted introduction the catalog's line is only an "about", never the programmes' words.
+    expect(meta.description).toContain("简介：Historical company · Historical title");
+    expect(meta.description).not.toContain("节目中的介绍");
     expect(meta.description.startsWith("卢蔚（Cooper）在「课代表立正」")).toBe(true);
     expect(guestAskLink(p)).toBe("https://ask.lizheng.ai/?q=%E5%8D%A2%E8%94%9A%EF%BC%88Cooper%EF%BC%89&mode=find");
+    const quoted = getGuestPageMeta({ ...p, introductions: [
+      { text: "清华本科，Meta机器学习工程师", quote: "我是清华的本科", title: "Web3是一场白日梦吗？", url: "https://www.youtube.com/watch?v=abcdefghijk&t=30s", year: 2023 }] });
+    expect(quoted.description).toContain("2023年节目中的介绍：清华本科，Meta机器学习工程师");
+  });
+  it("resolves quoted introductions to their programme and time, newest first", async () => {
+    const { catalogGuestDirectory } = await import("../shared/guest-catalog");
+    const source = (id: string, date: string) => ({ source_id: `youtube-${id}`, video_id: id, source_type: "youtube" as const, url: `https://www.youtube.com/watch?v=${id}`,
+      title: `Programme ${id}`, thumbnail_url: "https://example.org/t.jpg", published_at: date });
+    const catalog = { schema_version: 1 as const, sources: [source("aaaaaaaaaaa", "2021-01-01"), source("bbbbbbbbbbb", "2024-01-01")],
+      entities: [{ entity_id: "guest:alpha", entity_type: "person" as const, display_name: "Alpha", aliases: ["Alpha"], slug: "alpha", alias_slugs: ["alpha"],
+        primary_source_id: "youtube-aaaaaaaaaaa", thumbnail_url: "https://example.org/t.jpg",
+        introductions: [{ source_id: "youtube-aaaaaaaaaaa", text: "Early role", quote: "early words", locator: ["youtube-aaaaaaaaaaa#cue-2"], start_seconds: 12 },
+                        { source_id: "youtube-bbbbbbbbbbb", text: "Later role", quote: "later words", locator: ["youtube-bbbbbbbbbbb#cue-5"], start_seconds: 40 }] }],
+      appearances: [{ entity_id: "guest:alpha", source_id: "youtube-aaaaaaaaaaa", index: 0, is_primary: true },
+                    { entity_id: "guest:alpha", source_id: "youtube-bbbbbbbbbbb", index: 1, is_primary: false }], redirects: [] };
+    const [alpha] = catalogGuestDirectory(catalog, { schema_version: 1, articles: [] });
+    expect(alpha.introductions?.map(i => [i.text, i.url, i.year])).toEqual([
+      ["Later role", "https://www.youtube.com/watch?v=bbbbbbbbbbb&t=40s", 2024], ["Early role", "https://www.youtube.com/watch?v=aaaaaaaaaaa&t=12s", 2021]]);
+    const bad = { ...catalog, entities: [{ ...catalog.entities[0], introductions: [{ ...catalog.entities[0].introductions[0], source_id: "youtube-ccccccccccc" }] }] };
+    expect(() => catalogGuestDirectory(bad, { schema_version: 1, articles: [] })).toThrow("entity_introduction_invalid");
   });
 });

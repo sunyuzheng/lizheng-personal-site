@@ -1,12 +1,14 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import CityWindow from "./CityWindow";
 import { HOME_COPY, LINKS, SECTION } from "./content";
-import { EXTERNAL, Lines, RichText } from "./parts";
+import { EXTERNAL, Lines, Phrases, RichText } from "./parts";
 
 /**
- * Superlinear Academy as a city: a window onto city.lizheng.ai, where
- * every member is a light and their comments and likes are the lines between
- * them (the dot map where that cannot be drawn).
+ * Superlinear Academy, introduced for someone who has never heard of it: what
+ * it is and who is there, then what the free community holds (each opening
+ * the space itself), then the city: a window onto city.lizheng.ai, where every
+ * member is a light and their comments and likes are the lines between them
+ * (the dot map where that cannot be drawn).
  */
 export default function City({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].city;
@@ -22,9 +24,23 @@ export default function City({ lang }: { lang: Lang }) {
             </h2>
           </div>
           <p>
-            <RichText value={t.intro} />
+            <RichText value={t.intro} phrases />
           </p>
         </div>
+        <ul className="city-inside" aria-label={t.insideLabel}>
+          {t.inside.map(place => (
+            <li key={place.title} className="rv">
+              <a href={place.href} {...EXTERNAL}>
+                <b>
+                  {place.title} <span aria-hidden="true">↗</span>
+                </b>
+                <span>
+                  <Phrases text={place.body} />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
         <CityWindow
           lang={lang}
           copy={t.field}

@@ -24,6 +24,13 @@ export const LINKS = {
   // The community as a city of connections (client/community-app).
   connections: "https://city.lizheng.ai/",
   connectionsEn: "https://city.lizheng.ai/en",
+  // What is inside the free community, as the academy chapter lists it: the Knowledge Bank (in
+  // Chinese and in English), member projects, open trainings, and collaboration and hiring posts.
+  knowledgeBank: "https://www.superlinear.academy/c/ai-resources/",
+  knowledgeBankEn: "https://www.superlinear.academy/c/ai-resources-en/",
+  projects: "https://www.superlinear.academy/c/share-your-projects/",
+  openTrainings: "https://www.superlinear.academy/c/public/",
+  collaborate: "https://www.superlinear.academy/c/collaborate/",
   // Feedback and reports on 问问立正: comments under the community post that introduced it.
   askFeedback: "https://www.superlinear.academy/c/tools/ask-lizheng",
 };
@@ -237,10 +244,11 @@ export interface Essay {
   href: string;
 }
 
-export interface Video {
-  id: string;
+/** One thing the free community holds, as the academy chapter lists them under its head. */
+export interface CityPlace {
   title: string;
-  year: string;
+  body: string;
+  href: string;
 }
 
 export interface CityCopy {
@@ -381,34 +389,21 @@ const zh = {
       "Pinterest数据科学团队分享：Augmenting Data Science in the AI Era",
     ],
   ]),
+  // The books chapter (the stable id stays "works"). The show is the conversations chapter and
+  // the academy is the city, so this chapter is only the two books.
   works: {
-    eyebrow: "代表作",
-    title: ["这几件作品，", "我引以为傲。"],
-    intro:
-      "一档做了六年的节目，两本书，还有下面这座正在建的城。每一件都把我的判断交给真实的读者、学员和市场去检验。",
-    show: {
-      meta: "节目 · 2020年至今",
-      title: "课代表立正 · 200+场对话",
-      body: "",
-      go: "看对话",
-      photo: {
-        src: "/english-network/acquired.webp",
-        alt: "在Significance Summit的舞台上与Acquired的Ben Gilbert、David Rosenthal对谈",
-        caption:
-          "与Acquired的Ben Gilbert、David Rosenthal对谈 · Significance Summit",
-        href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
-        label: "看这场对谈",
-      },
-    },
+    eyebrow: "书",
+    title: ["想清楚的事，", "写成了书。"],
+    intro: "一本写给想靠能力、而不是靠头衔立足的人，一本写给做产品和增长的人。",
     zbs: {
-      meta: "书 · 著 · 人民邮电出版社",
+      meta: "著 · 人民邮电出版社 · 2026",
       title: "真本事：从会工作到会赚钱",
       body: "拿掉证书、职位和公司名以后，你还真正会什么？一本讲能力、主动性和收入的书。",
       go: "了解这本书",
       alt: "《真本事：从会工作到会赚钱》封面",
     },
     growth: {
-      meta: "书 · 合著 · 入选2025年WSJ CIO Journal书单",
+      meta: "合著 · 入选2025年WSJ CIO Journal书单",
       title: "Growth Data Analytics Playbook",
       body: "讲产品市场匹配、增长与实验的实战书。与Mengying Li、Joe Kumar合著。中文版可以免费读。",
       go: "免费读中文版",
@@ -457,39 +452,16 @@ const zh = {
       also("董有超", "devin-dong"),
       also("Vivian Wang", "vivian-wang"),
     ],
-    popularTitle: "从这几期开始",
-    popular: [
-      {
-        id: "GIv0I-34aaI",
-        title: "十年估值三千亿，创始人首次揭秘｜Databricks联合创始人Reynold",
-        year: "2024",
-      },
-      {
-        id: "-Et3GJRSI_0",
-        title: "清华教授：应试教育在AI面前全军覆没，我们应该如何重新学习？",
-        year: "2026",
-      },
-      {
-        id: "vd_oYgwQSBM",
-        title: "一红16年，干啥啥赚钱？｜屠龙博士创业的秘密！",
-        year: "2026",
-      },
-      {
-        id: "CTcMvIZFQcw",
-        title: "Influence Without Authority｜人生元能力",
-        year: "2021",
-      },
-      {
-        id: "8omGQSetKMA",
-        title: "华人在硅谷怎么做（不）到VP？",
-        year: "2021",
-      },
-      {
-        id: "oGDlQ1n1ZcE",
-        title: "Vibe Coding红利即将结束，未来什么样的AI人才最稀缺？",
-        year: "2025",
-      },
-    ] as Video[],
+    // One conversation, on stage, in place of a list of episodes.
+    feature: {
+      meta: "现场对谈 · Significance Summit",
+      title: "与Acquired|两位主持人同台",
+      body: "Ben Gilbert、David Rosenthal",
+      go: "看这场对谈",
+      href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
+      // The card's words say who is on stage, so the photograph is decorative.
+      image: "/english-network/acquired.webp",
+    },
     all: "浏览全部200+场对话",
     subscribe: "在YouTube订阅",
   },
@@ -639,11 +611,35 @@ const zh = {
   city: {
     eyebrow: "超线性学院 · Superlinear Academy",
     title: ["我们在建一座城。"],
+    // What the academy is, in plain words, for someone who has never heard of it; the city is
+    // explained by the essay it comes from.
     intro: [
-      "AI像一场大洪水，人要学会游泳、造船；它也会带来第二次文艺复兴，需要一座",
-      { link: "佛罗伦萨", href: LINKS.florence },
-      "。超线性学院想把这两件事一起做成。",
+      "超线性学院是一个免费的AI社区。两万多位工程师、产品经理、研究者、创业者和各行各业的人在这里学AI、用AI做东西，把做出来的拿给彼此看，互相给真实的反馈。",
+      { link: "为什么说是一座城？", href: LINKS.florence },
     ] as Inline[],
+    insideLabel: "超线性学院里有什么",
+    inside: [
+      {
+        title: "读深度文章",
+        body: "我和鸭哥写AI的原理、工程和产品，从热点讲到背后的机制。",
+        href: LINKS.knowledgeBank,
+      },
+      {
+        title: "分享你做的东西",
+        body: "700多个成员项目发在这里，评论里有试用、追问和建议。",
+        href: LINKS.projects,
+      },
+      {
+        title: "看公开培训",
+        body: "给腾讯、小红书、美团等团队讲的AI课，录像公开。",
+        href: LINKS.openTrainings,
+      },
+      {
+        title: "找人合作",
+        body: "成员在这里发合作和招聘，也有公司专门来招AI人才。",
+        href: LINKS.collaborate,
+      },
+    ] as CityPlace[],
     field: {
       label: (count: string) =>
         `社区地图：${count}个点，每个点是一位成员，越亮，发帖和评论越多`,
@@ -695,7 +691,8 @@ const zh = {
       {
         kind: "免费社区",
         title: "从这里开始",
-        body: "读深度文章，看公开培训，分享你正在做的项目，问技术问题，看别人怎么解决。",
+        // The academy chapter already lists what is inside; this card points back to it.
+        body: "就是上面那座城。先进来看看，再决定要不要往深里走。",
         stats: [
           ["20,000+", "成员"],
           ["700+", "项目分享"],
@@ -736,8 +733,9 @@ const zh = {
     },
   },
   invite: {
-    title: ["你的代表作，", "不会一开始就是代表作。"],
-    body: "先做一件自己能负责到底、也愿意接受别人拒绝的小事。",
+    // Echoes the hero (学点真本事，做点真东西), as the English closing echoes MAKE WHAT LASTS.
+    title: ["做点真东西，", "从一件小事开始。"],
+    body: "选一件你能负责到底、也愿意被别人拒绝的事，做出来，拿给真实的人看。",
     primary: "免费加入超线性学院",
     secondary: "合作与邀约",
     shop: "逛逛周边店",
@@ -837,33 +835,19 @@ const en: HomeCopy = {
     ],
   ]),
   works: {
-    eyebrow: "Selected work",
-    title: ["Work I’ll keep", "standing behind."],
+    eyebrow: "Books",
+    title: ["What I’ve worked out,", "written down."],
     intro:
-      "A show six years in the making, two books, and the city below, still being built. Each one is a judgment that left my head and met real readers, learners, and markets.",
-    show: {
-      meta: "Show · 2020 to now",
-      title: "200+ conversations",
-      body: "",
-      go: "See the conversations",
-      photo: {
-        src: "/english-network/acquired.webp",
-        alt: "On stage with Ben Gilbert and David Rosenthal of Acquired at Significance Summit",
-        caption:
-          "With Ben Gilbert and David Rosenthal of Acquired · Significance Summit",
-        href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
-        label: "Watch this conversation",
-      },
-    },
+      "One for people who build products and growth, and one, in Chinese, for people who want to stand on what they can do rather than on a title.",
     zbs: {
-      meta: "Book · author · in Chinese",
+      meta: "Author · in Chinese · 2026",
       title: "真本事",
       body: "A Chinese book on capability, agency, and income: what you can still do once the credential, title, and company name are taken away.",
       go: "About the book",
       alt: "Cover of 真本事",
     },
     growth: {
-      meta: "Book · co-author · 2025 WSJ CIO Journal reading list",
+      meta: "Co-author · 2025 WSJ CIO Journal reading list",
       title: "Growth Data Analytics Playbook",
       body: "A practical guide to product-market fit, growth, and experimentation. With Mengying Li and Joe Kumar.",
       go: "View on Amazon",
@@ -908,8 +892,14 @@ const en: HomeCopy = {
       also("Eugene Wang", "eugene-wang"),
       also("Leon", "leon"),
     ],
-    popularTitle: "",
-    popular: [],
+    feature: {
+      meta: "On stage · Significance Summit",
+      title: "With the hosts of Acquired",
+      body: "Ben Gilbert and David Rosenthal",
+      go: "Watch this conversation",
+      href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
+      image: "/english-network/acquired.webp",
+    },
     all: "Browse all 200+ conversations",
     subscribe: "Subscribe on YouTube",
   },
@@ -1076,9 +1066,31 @@ const en: HomeCopy = {
     eyebrow: "Superlinear Academy",
     title: ["We’re building a city."],
     intro: [
-      "AI is a flood, and people need to learn to swim and build boats. It is also a second Renaissance, and a Renaissance needs its ",
-      { link: "Florence", href: LINKS.florence },
-      ". Superlinear Academy is trying to do both.",
+      "Superlinear Academy is a free AI community. More than 20,000 engineers, product managers, researchers, founders, and people from every field learn AI and build with it here, show each other what they make, and give each other real feedback. ",
+      { link: "Why a city? (essay in Chinese)", href: LINKS.florence },
+    ],
+    insideLabel: "What’s inside Superlinear Academy",
+    inside: [
+      {
+        title: "Read in-depth essays",
+        body: "Yage and I write on how AI works, how to build with it, and what it changes, past the news to the mechanism.",
+        href: LINKS.knowledgeBankEn,
+      },
+      {
+        title: "Share what you build",
+        body: "700+ member projects, with tryouts, questions, and suggestions in the comments.",
+        href: LINKS.projects,
+      },
+      {
+        title: "Watch open trainings",
+        body: "AI sessions for teams at Tencent, Xiaohongshu, Meituan, and others, open to watch (in Chinese).",
+        href: LINKS.openTrainings,
+      },
+      {
+        title: "Find collaborators",
+        body: "Members post collaborations and roles, and companies come here to hire AI talent.",
+        href: LINKS.collaborate,
+      },
     ],
     field: {
       label: count =>
@@ -1131,7 +1143,7 @@ const en: HomeCopy = {
       {
         kind: "Free community",
         title: "Start here",
-        body: "Read in-depth essays, watch public training sessions, share what you’re building, and ask technical questions.",
+        body: "The city above. Come in and look around, then decide how far you want to go.",
         stats: [
           ["20,000+", "members"],
           ["700+", "project posts"],
@@ -1172,8 +1184,8 @@ const en: HomeCopy = {
     },
   },
   invite: {
-    title: ["Your defining work", "will not arrive finished."],
-    body: "Start with one small thing you can own from judgment to consequence, and that someone else is free to reject.",
+    title: ["What lasts", "starts small."],
+    body: "Pick one thing you can own from judgment to consequence, and that someone else is free to reject. Make it, then show it to real people.",
     primary: "Join the free community",
     secondary: "Work with me",
     shop: "Visit the shop",

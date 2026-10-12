@@ -2,7 +2,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
 import { HOME_COPY, SECTION } from "./content";
-import { EXTERNAL, Lines } from "./parts";
+import { EXTERNAL, Lines, Phrases } from "./parts";
 
 /** The three ways into Superlinear Academy, plus the enterprise line. */
 export default function Join({ lang }: { lang: Lang }) {
@@ -29,7 +29,9 @@ export default function Join({ lang }: { lang: Lang }) {
             >
               <div className="t">{path.kind}</div>
               <h3>{path.title}</h3>
-              <p>{path.body}</p>
+              <p>
+                <Phrases text={path.body} />
+              </p>
               <div className="s">
                 {path.stats.map(([value, label]) => (
                   <span key={label}>

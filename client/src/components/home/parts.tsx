@@ -30,7 +30,9 @@ export function Lines({ lines }: { lines: readonly string[] }) {
 export function Phrases({ text }: { text: string }) {
   const parts = text
     .split("|")
-    .flatMap(part => part.match(/[^，：；、？！]+[，：；、？！]*/g) ?? [part]);
+    .flatMap(
+      part => part.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [part]
+    );
   if (parts.length < 2) return <>{text}</>;
   return (
     <>
@@ -43,12 +45,23 @@ export function Phrases({ text }: { text: string }) {
   );
 }
 
-export function RichText({ value }: { value: readonly Inline[] }) {
+/** Inline copy; with `phrases`, its plain text keeps phrases together as Phrases does. */
+export function RichText({
+  value,
+  phrases = false,
+}: {
+  value: readonly Inline[];
+  phrases?: boolean;
+}) {
   return (
     <>
       {value.map((part, index) => {
         if (typeof part === "string") {
-          return <Fragment key={index}>{part}</Fragment>;
+          return (
+            <Fragment key={index}>
+              {phrases ? <Phrases text={part} /> : part}
+            </Fragment>
+          );
         }
         if ("strong" in part) return <b key={index}>{part.strong}</b>;
         return (

@@ -989,11 +989,9 @@
   }
 }
 
-/* ---------- Works (bento) ---------- */
+/* ---------- Books (the "works" chapter) ---------- */
 
-/* Selected work follows the photo strip closely, so it needs less air above. */
 .lz-home .works {
-  padding-top: clamp(56px, 6vw, 84px);
   background: var(--lz-ivory);
 }
 
@@ -1057,102 +1055,6 @@
   transform: translateX(4px);
 }
 
-/* The show: a photograph from the stage, then what the show is. */
-.lz-home .c-show {
-  grid-column: span 12;
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  background: var(--lz-forest);
-  box-shadow: none;
-  color: var(--lz-on-forest);
-}
-
-.lz-home .c-show .photo {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-
-.lz-home .c-show .photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.lz-home .c-show .photo:hover img {
-  transform: scale(1.02);
-}
-
-.lz-home .c-show .photo .caption {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 48px 24px 16px;
-  background: linear-gradient(to top, rgb(8 35 19 / 0.88), transparent);
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--lz-on-forest-2);
-}
-
-/* The photograph plays the conversation it shows. */
-.lz-home .c-show .play {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: rgb(18 22 19 / 0.62)
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 7l9 5-9 5z' fill='%23f8f1e4'/></svg>")
-    center / 26px no-repeat;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  transition: transform 0.3s;
-}
-
-.lz-home .c-show .photo:hover .play {
-  transform: scale(1.08);
-}
-
-.lz-home .c-show h3 a {
-  color: inherit;
-}
-
-.lz-home .c-show .body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(28px, 3.4vw, 52px);
-}
-
-.lz-home .c-show .meta {
-  color: var(--lz-on-forest-2);
-}
-
-.lz-home .c-show h3 {
-  margin-top: 12px;
-  font-size: clamp(28px, 2.8vw, 38px);
-  line-height: 1.3;
-}
-
-.lz-home .c-show p {
-  margin-top: 14px;
-  font-size: 16.5px;
-  line-height: 1.75;
-  color: var(--lz-on-forest-2);
-}
-
-.lz-home .c-show .go {
-  margin-top: 0;
-  padding-top: 28px;
-  color: var(--lz-on-forest);
-}
-
 .lz-home .c-book {
   grid-column: span 6;
   display: grid;
@@ -1201,12 +1103,6 @@
   }
 }
 
-@media (max-width: 860px) {
-  .lz-home .c-show {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 520px) {
   .lz-home .c-book {
     grid-template-columns: 96px minmax(0, 1fr);
@@ -1216,15 +1112,6 @@
 
   .lz-home .c-book .cover {
     width: 96px;
-  }
-
-  .lz-home .c-show .body {
-    padding: 26px;
-  }
-
-  .lz-home .c-show .photo .caption {
-    padding: 36px 16px 12px;
-    font-size: 12.5px;
   }
 }
 
@@ -1364,88 +1251,102 @@
   color: var(--lz-muted);
 }
 
-.lz-home .popular {
+/* One conversation from the stage, in place of a list of episodes: the photograph, then what it
+   was. The whole card opens the recording. */
+.lz-home .talk-feature {
   margin-top: 56px;
 }
 
-.lz-home .popular h3 {
-  margin-bottom: 20px;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.lz-home .vids {
+.lz-home .c-show {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px 20px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  background: var(--lz-forest);
+  box-shadow: none;
+  color: var(--lz-on-forest);
 }
 
-.lz-home .vid {
-  display: block;
-}
-
-.lz-home .vid .th {
+.lz-home .c-show .photo {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
-  background: var(--lz-sand);
 }
 
-.lz-home .vid .th img {
+.lz-home .c-show .photo img {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.lz-home .vid:hover .th img {
-  transform: scale(1.04);
+.lz-home .c-show:hover .photo img {
+  transform: scale(1.02);
 }
 
-.lz-home .vid .th::after {
-  content: "";
+/* The photograph plays the conversation it shows. */
+.lz-home .c-show .play {
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 40px;
-  height: 40px;
+  top: 18px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
-  background: rgb(18 22 19 / 0.72)
+  background: rgb(18 22 19 / 0.62)
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 7l9 5-9 5z' fill='%23f8f1e4'/></svg>")
-    center / 22px no-repeat;
+    center / 26px no-repeat;
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
+  transition: transform 0.3s;
 }
 
-.lz-home .vid b {
-  display: block;
+.lz-home .c-show:hover .play {
+  transform: scale(1.08);
+}
+
+.lz-home .c-show .body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(28px, 3.4vw, 52px);
+}
+
+.lz-home .c-show .meta {
+  color: var(--lz-on-forest-2);
+}
+
+.lz-home .c-show h3 {
   margin-top: 12px;
-  font-size: 15.5px;
-  font-weight: 500;
-  line-height: 1.6;
+  font-size: clamp(26px, 2.5vw, 34px);
+  line-height: 1.35;
 }
 
-.lz-home .vid span {
-  display: block;
-  margin-top: 2px;
-  font-size: 13.5px;
-  font-variant-numeric: tabular-nums;
-  color: var(--lz-muted);
+.lz-home .c-show p {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-home .c-show .go {
+  margin-top: 0;
+  padding-top: 28px;
+  color: var(--lz-on-forest);
 }
 
 @media (max-width: 860px) {
-  .lz-home .vids {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .lz-home .c-show {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 520px) {
-  .lz-home .vids {
-    grid-template-columns: 1fr;
+  .lz-home .talk-feature {
+    margin-top: 44px;
+  }
+
+  .lz-home .c-show .body {
+    padding: 26px;
   }
 }
 
@@ -1816,7 +1717,7 @@
 
 /* ---------- Ask Lizheng ---------- */
 
-/* Its own chapter, after the writing it draws on. The head reads like every other chapter's,
+/* Its own chapter, right after the academy. The head reads like every other chapter's,
    left-aligned. Below it, as on ask.lizheng.ai: a cream question box whose 提问 is the one solid
    green thing, then type, space and hairlines instead of cards and icons. */
 .lz-home .ask {
@@ -3599,6 +3500,89 @@
   color: var(--lz-mint);
 }
 
+/* What the free community holds, under the head: four ways in, each opening its space. Hairlines,
+   not cards, so the city below stays the picture. */
+.lz-home .city-inside {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: -6px 0 48px;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-home .city-inside a {
+  display: block;
+  height: 100%;
+  padding-top: 18px;
+  border-top: 1px solid var(--lz-forest-line);
+  color: var(--lz-on-forest-2);
+  transition: border-color 0.2s;
+}
+
+.lz-home .city-inside b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--lz-on-forest);
+}
+
+.lz-home.l-en .city-inside b {
+  font-family: var(--num);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.lz-home .city-inside b span {
+  font-family: var(--sans);
+  font-weight: 400;
+  color: var(--lz-mint);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.lz-home .city-inside a > span {
+  display: block;
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.lz-home .city-inside a:hover,
+.lz-home .city-inside a:focus-visible {
+  border-top-color: var(--lz-mint);
+}
+
+.lz-home .city-inside a:hover b span,
+.lz-home .city-inside a:focus-visible b span {
+  opacity: 1;
+}
+
+@media (max-width: 980px) {
+  .lz-home .city-inside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 28px;
+  }
+}
+
+@media (max-width: 520px) {
+  .lz-home .city-inside {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin-bottom: 36px;
+  }
+
+  .lz-home .city-inside a {
+    padding-block: 16px;
+  }
+
+  .lz-home .city-inside li:last-child a {
+    padding-bottom: 0;
+  }
+}
+
 /* The community map: one dot per member, brightest at the centre. */
 .lz-home .field {
   position: relative;
@@ -4363,18 +4347,19 @@
 
 /* Items that arrive together rise one after another, left to right. */
 @media (min-width: 861px) {
-  .lz-home .vids > li.rv:nth-child(3n + 2),
+  .lz-home .city-inside > li.rv:nth-child(2),
   .lz-home .paths > .rv:nth-child(2),
   .lz-home .guests > li.rv:nth-child(6n + 2) {
     transition-delay: 0.08s;
   }
 
-  .lz-home .vids > li.rv:nth-child(3n),
+  .lz-home .city-inside > li.rv:nth-child(3),
   .lz-home .paths > .rv:nth-child(3),
   .lz-home .guests > li.rv:nth-child(6n + 3) {
     transition-delay: 0.16s;
   }
 
+  .lz-home .city-inside > li.rv:nth-child(4),
   .lz-home .guests > li.rv:nth-child(6n + 4) {
     transition-delay: 0.24s;
   }

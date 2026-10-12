@@ -2,12 +2,12 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
 import { HOME_COPY, LINKS, SECTION } from "./content";
-import { Arrow, EXTERNAL, Lines, Phrases, SectionLink } from "./parts";
+import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 
 /**
- * Selected work: the show and the two books. Superlinear Academy, the largest
- * work, follows as its own section (the community map), and dated essays sit
- * with the public calls, so nothing here repeats another section.
+ * The books chapter (its id stays "works" for older links). The show has its
+ * own chapter (the conversations) and Superlinear Academy is the city, so this
+ * chapter holds only the two books.
  */
 export default function Works({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].works;
@@ -82,42 +82,11 @@ export default function Works({ lang }: { lang: Lang }) {
               <Lines lines={t.title} />
             </h2>
           </div>
-          <p>{t.intro}</p>
+          <p>
+            <Phrases text={t.intro} />
+          </p>
         </div>
-        <div className="bento">
-          <div className="card c-show rv">
-            <a
-              className="photo"
-              href={t.show.photo.href}
-              aria-label={`${t.show.photo.label}${lang === "en" ? ": " : "："}${t.show.photo.caption}`}
-              {...EXTERNAL}
-            >
-              <img
-                src={t.show.photo.src}
-                alt={t.show.photo.alt}
-                width={1280}
-                height={720}
-                loading="lazy"
-                decoding="async"
-              />
-              <span className="play" aria-hidden="true" />
-              <span className="caption">{t.show.photo.caption}</span>
-            </a>
-            <div className="body">
-              <div className="meta">{t.show.meta}</div>
-              <h3>
-                <SectionLink to={SECTION.talks}>
-                  <Phrases text={t.show.title} />
-                </SectionLink>
-              </h3>
-              {t.show.body && <p>{t.show.body}</p>}
-              <SectionLink className="go" to={SECTION.talks}>
-                {t.show.go} <Arrow />
-              </SectionLink>
-            </div>
-          </div>
-          {books}
-        </div>
+        <div className="bento">{books}</div>
       </div>
     </section>
   );

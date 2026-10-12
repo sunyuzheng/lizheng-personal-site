@@ -59,9 +59,9 @@ function useReveal(rootRef: RefObject<HTMLElement | null>, lang: Lang) {
 }
 
 // The chapters whose arrival on screen the owner's usage stats count (lib/ask-usage), in page
-// order; the Ask section counts itself (h_seen).
+// order; the Ask section counts itself (h_seen). c_works keeps its name for the books chapter.
 const CHAPTERS: [string, UsageMark][] = [
-  [SECTION.works, "c_works"], [SECTION.academy, "c_city"], [SECTION.talks, "c_talks"],
+  [SECTION.academy, "c_city"], [SECTION.talks, "c_talks"], [SECTION.works, "c_works"],
   [SECTION.calls, "c_calls"], [SECTION.writing, "c_writing"], [SECTION.join, "c_join"],
 ];
 
@@ -126,12 +126,12 @@ export default function Home() {
         <CareerPath lang={lang} />
         <Proof lang={lang} />
         <Scenes lang={lang} />
-        <Works lang={lang} />
         <City lang={lang} />
+        <Ask lang={lang} />
         <Talks lang={lang} />
+        <Works lang={lang} />
         <Calls lang={lang} />
         <Writing lang={lang} />
-        <Ask lang={lang} />
         <Join lang={lang} />
         <Invite lang={lang} />
       </main>

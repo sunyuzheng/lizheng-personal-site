@@ -5,10 +5,11 @@ import { HOME_COPY, SECTION } from "./content";
 import { EXTERNAL } from "./parts";
 
 /**
- * Ask Lizheng as its own chapter, after the writing it draws on. The
- * component's head doubles as the section head (see .ask in home.css). The
- * open corpus it answers from closes the chapter, for anyone who wants to
- * build their own.
+ * Ask Lizheng as its own chapter, right after the academy: the one thing on
+ * the page a visitor can use at once, before the conversations and writing it
+ * answers from. The component's head doubles as the section head (see .ask in
+ * home.css). The open corpus it answers from closes the chapter, for anyone
+ * who wants to build their own.
  */
 export default function Ask({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].ask;

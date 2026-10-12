@@ -9,7 +9,7 @@ import {
   type Guest,
 } from "./content";
 import Marquee from "./Marquee";
-import { EXTERNAL, Lines } from "./parts";
+import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 
 function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
   const body = (
@@ -102,35 +102,33 @@ export default function Talks({ lang }: { lang: Lang }) {
           )}
         </Marquee>
 
-        {t.popular.length > 0 && (
-          <div className="popular">
-            <h3>{t.popularTitle}</h3>
-            <ul className="vids">
-              {t.popular.map(video => (
-                <li key={video.id} className="rv">
-                  <a
-                    className="vid"
-                    href={`https://www.youtube.com/watch?v=${video.id}`}
-                    {...EXTERNAL}
-                  >
-                    <div className="th">
-                      <img
-                        src={`/home/videos/${video.id}.webp`}
-                        alt=""
-                        width={480}
-                        height={270}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <b>{video.title}</b>
-                    <span>{video.year}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <a
+          className="card c-show talk-feature rv"
+          href={t.feature.href}
+          {...EXTERNAL}
+        >
+          <div className="photo">
+            <img
+              src={t.feature.image}
+              alt=""
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="play" aria-hidden="true" />
           </div>
-        )}
+          <div className="body">
+            <div className="meta">{t.feature.meta}</div>
+            <h3>
+              <Phrases text={t.feature.title} />
+            </h3>
+            <p>{t.feature.body}</p>
+            <span className="go">
+              {t.feature.go} <Arrow />
+            </span>
+          </div>
+        </a>
 
         <div className="more">
           <Link className="btn btn-green" href={withLanguage("/guests", lang)}>

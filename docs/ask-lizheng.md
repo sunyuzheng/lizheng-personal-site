@@ -6,7 +6,7 @@
 
 当前AI转发对象由Builder负责人核实为DeepSeek（生成）和OpenAI（向量匹配）；网关只记用量元数据、不留问答正文。本仓库中英文隐私政策按具体请求数据分别披露，不使用未经核实的训练或同等保护保证。2026-10-04正式[Builder数据说明](https://space.ai-builders.com/privacy)已上线，政策据此披露DeepSeek可能保存输入及改进模型、无训练退出机制和未启用零保留，以及传输、访问限制与删除协调。App本机v4同意包含模型、已核实接收方和记录模式；未知回答服务商无法在App确认发送。部署问答后端后，再从其干净提交执行sync:ask-app更新这里实际提供的App页面。
 
-- 主页：文章之后独立的问问立正章节（AskLizheng组件）；两种问法（想明白，可打开「结合我的处境」；从哪读起）、可修改预填、真实阶段、候选资料片段、核验后的回答和出处、停止与追问，完整回答可保存为长图或PDF。英文界面明确资料与回答主要使用中文。
+- 主页：超线性学院（这座城）之后独立的问问立正章节（AskLizheng组件；2026-10-12起，此前在文章之后）；两种问法（想明白，可打开「结合我的处境」；从哪读起）、可修改预填、真实阶段、候选资料片段、核验后的回答和出处、停止与追问，完整回答可保存为长图或PDF。英文界面明确资料与回答主要使用中文。
 - 主页API：POST /api/ask-lizheng/ask、GET /api/ask-lizheng/meta，POST通过固定目标Edge流式转发到Builder的/api/ask，GET反代到/api/meta。无客户端模型凭证；问答请求不发送浏览器凭证、不缓存。访客提问在转发前另按网络入口计数（每个北京日300次，见ask-lizheng仓库ACCOUNT_QUOTAS.md），防止不保存Cookie的客户端绕过每天3次。超限时同样返回quota_exhausted，另带scope: network，页面据此说明是这个网络的免费次数用完了。
 - Founding说明：次数行「如何成为」展开谁是Founding Member、会员得到什么，并链接Stay会员页；额度用完的卡片同样给出会员页链接。名额（前3,000位新年费会员）与价格（$149/¥999）取自会员页与会员事实表，Founding窗口结束或价格变化时同步改`AskLizheng.tsx`（foundingWho、foundingGet）和ask仓库`src/main.jsx`的`FoundingInfo`。
 - 独立页面：ask.lizheng.ai的host路由反代现有ask-lizheng.ai-builders.space应用，包括资产和API；/api/ask同样经过流式转发，Vercel托管域名与TLS，Builder托管模型调用、检索与Docker应用。cleanUrls/trailingSlash的现有规范化可能先产生308。
@@ -75,7 +75,7 @@ Builder等待与Edge转发每5秒发送约2KB的标准SSE注释；它用于保�
 - 服务端：`POST /api/ask-lizheng/usage`（两个域名各自同源，`api/ask-lizheng-usage.ts` → `shared/ask-usage.ts`），只收这五个字段，记号有白名单；爬虫、预览和无头浏览器不算；同一网络每天最多600次；`ASK_USAGE_ENABLED=false` 可以关掉。浏览器用主站已有的匿名 Cookie（`__Secure-ask-guest`，30天），存进统计的是另一种用途的加密摘要；`__Secure-ask-first` 记第一次来的日期（400天），用来算回访。
 - 存储：Upstash 里 `ask-ops:{v3}:usage:` 下按天的计数（`day:<日>`，每个入口和合计）、HyperLogLog 去重的浏览器数（每天、每个入口、几个漏斗记号、按第一次来那天分组的回访），按天的键400天后过期；`total` 和全部时间的去重数不过期。Ops 的 `shared/usage-store.ts` 读这些键。
 - 隐私政策的「访问统计」写明了这些（停留、滚动、看到和点开「别人在问什么」、回访，按天合计，不含提问内容）。
-- 主页（2026-10-04）：每一章出现在屏幕上时记一次（`c_works` 代表作、`c_city` 这座城、`c_talks` 对话、`c_calls` 公开判断、`c_writing` 文章、`c_join` 加入；问问立正还是 `h_seen`），Ops 面板的「主页读到哪一章」按主页打开次数算比例。主页上点了哪个链接记成 Vercel Analytics 事件「Home Link」：`section` 是链接所在章节的 id（没有 id 的数字与评价、现场照片、结尾邀请用类名 proof、scenes、invite；页头页脚是 header/footer），`to` 是去向（本站页面去掉语言前缀如 `/guests`，页内锚点如 `#join`，外站是域名加第一段路径，如 `superlinear.academy/` 是免费加入、`superlinear.academy/c` 是帖子）。问问立正区里的链接不重复记，它有自己的「Ask …」事件。代码在 `client/src/pages/Home.tsx`（`useHomeCounts`）和 `client/src/lib/link-target.ts`。
+- 主页（2026-10-04）：每一章出现在屏幕上时记一次（2026-10-12起页面顺序是 `c_city` 这座城、问问立正 `h_seen`、`c_talks` 对话、`c_works` 书（键名沿用，此前是代表作）、`c_calls` 公开判断、`c_writing` 文章、`c_join` 加入；比较2026-10-12前后时注意：章节前移，到达率会自然上升），Ops 面板的「主页读到哪一章」按主页打开次数算比例。主页上点了哪个链接记成 Vercel Analytics 事件「Home Link」：`section` 是链接所在章节的 id（没有 id 的数字与评价、现场照片、结尾邀请用类名 proof、scenes、invite；页头页脚是 header/footer），`to` 是去向（本站页面去掉语言前缀如 `/guests`，页内锚点如 `#join`，外站是域名加第一段路径，如 `superlinear.academy/` 是免费加入、`superlinear.academy/c` 是帖子）。问问立正区里的链接不重复记，它有自己的「Ask …」事件。代码在 `client/src/pages/Home.tsx`（`useHomeCounts`）和 `client/src/lib/link-target.ts`。
 
 ## 设计（2026-10-03）
 

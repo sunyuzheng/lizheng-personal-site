@@ -3,7 +3,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
 import { HOME_COPY, LINKS } from "./content";
-import { EXTERNAL, Lines } from "./parts";
+import { EXTERNAL, Lines, Phrases } from "./parts";
 
 export default function Invite({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].invite;
@@ -13,7 +13,9 @@ export default function Invite({ lang }: { lang: Lang }) {
         <h2>
           <Lines lines={t.title} />
         </h2>
-        <p>{t.body}</p>
+        <p>
+          <Phrases text={t.body} />
+        </p>
         <div className="cta-row">
           <a className="btn btn-green" href={LINKS.community} {...EXTERNAL}>
             {t.primary}

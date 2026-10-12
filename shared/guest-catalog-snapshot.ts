@@ -1,8 +1,8 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 58a3eb92c7c7bd602259eee90fd0a1da625ae8dad0b66395efdfa3266a29395b
-// guests.json SHA256: a29bc570e411194a08a30325acf12cbcfb34b8edfcefee5dacdf92a9a4d780fe
+// Manifest SHA256: f21906c531ee088590fdd2a8ef55520e7e8c0be65bdf86349e6e29e24f12121c
+// guests.json SHA256: c1e6d8bc1dad22985e3dffa55bb6bda0955df2ea6b6f731d8008dbe6bd40591b
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: 0db58810e0998f72a1f7cb88fe5b2f09cfe24635dfca238adadd33392e79423d
+// guest-names.json SHA256: 5677eaf552496fa8ad5f982834c57847a4c48642999cea39d0bee73bec4199eb
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
 export const guestCatalog: GuestCatalog = {
@@ -1822,7 +1822,8 @@ export const guestCatalog: GuestCatalog = {
       "entity_type": "person",
       "display_name": "Ryo Lu",
       "aliases": [
-        "Ryo Lu"
+        "Ryo Lu",
+        "Ryo"
       ],
       "slug": "ryo-lu",
       "alias_slugs": [
@@ -13617,6 +13618,16 @@ export const guestNameTable: GuestNameTable = {
       ],
       "kinds": [
         "display"
+      ]
+    },
+    {
+      "name": "Ryo",
+      "key": "ryo",
+      "entity_ids": [
+        "guest:ryo-lu"
+      ],
+      "kinds": [
+        "alias"
       ]
     },
     {

@@ -62,7 +62,8 @@ const COPY = {
     discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
     discoverySimilar: "问个类似的",
     discoveryMore: "看更多问题",
-    discoveryViews: ["最近问", "最常问"],
+    discoveryExpand: (n: number) => `再看${n}个问题`,
+    discoveryViews: ["最常问", "最近问"],
     discoveryShare: "分享",
     discoveryHelpful: "有帮助",
     discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
@@ -187,7 +188,8 @@ const COPY = {
     discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
     discoverySimilar: "Ask something similar",
     discoveryMore: "See more questions",
-    discoveryViews: ["Newest", "Most asked"],
+    discoveryExpand: (n: number) => `Show ${n} more`,
+    discoveryViews: ["Most asked", "Newest"],
     discoveryShare: "Share",
     discoveryHelpful: "Helpful",
     discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
@@ -303,6 +305,9 @@ type Turn = AskAnswerState & {
 // 想明白 explains (understand) or, with the situation switched on, applies the
 // material to the reader (apply). 从哪读起 picks what to read first (find).
 const MODES = ["ask", "find"] as const;
+// 别人在问什么 on the homepage: three questions until opened, then up to eight before the link.
+const DISCOVERY_FOLDED = 3;
+const DISCOVERY_OPEN = 8;
 type Mode = (typeof MODES)[number];
 const STAGE: Record<string, number> = {
   retrieving: 0,
@@ -539,12 +544,16 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
   // What a Founding Member is and how to become one, opened from the count line.
   const [foundingOpen, setFoundingOpen] = useState(false);
-  // Real questions others asked, published from Ops: 最近问 and 最常问, the same lists for everyone;
-  // shown on the Chinese page in place of the examples, four at a time.
+  // Real questions others asked, published from Ops: 最常问 and 最近问, the same lists for everyone;
+  // shown on the Chinese page in place of the examples. 最常问 comes first and the list stays folded
+  // to three (2026-10-12, the user: fold it, and show the most common questions); 再看N个 opens up
+  // to eight here, and only then 看更多问题 leads to the whole list on ask.lizheng.ai.
   const [questionLists, setQuestionLists] = useState<DiscoveryLists | null>(null);
-  const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("recent");
+  const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("frequent");
+  const [discoveryOpen, setDiscoveryOpen] = useState(false);
   const discoveryShown = useMemo(() => (questionLists ? discoveryView(questionLists, discoveryTab) : []), [questionLists, discoveryTab]);
-  const discoveryCards = discoveryShown.slice(0, 4);
+  const discoveryCards = discoveryShown.slice(0, discoveryOpen ? DISCOVERY_OPEN : DISCOVERY_FOLDED);
+  const discoveryHidden = discoveryOpen ? 0 : Math.min(discoveryShown.length, DISCOVERY_OPEN) - discoveryCards.length;
   // Chinese page: loading until the list arrives, then ready; none when it cannot be read or takes
   // past eight seconds, and only then the examples show in its place.
   const [discoveryState, setDiscoveryState] = useState<"loading" | "ready" | "none">(lang === "zh" ? "loading" : "none");
@@ -564,8 +573,8 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     markUsage("d_shown");
     watchUsage(discoveryList.current, "d_seen");
   }, [hasDiscovery]);
-  // More than four in the list: link to the whole list on ask.lizheng.ai.
-  const discoveryMore = discoveryShown.length > discoveryCards.length;
+  // Opened and still more in the list: link to the whole list on ask.lizheng.ai.
+  const discoveryMore = discoveryHidden === 0 && discoveryShown.length > discoveryCards.length;
   // Each card's share: the link to its public page, and whether it was copied.
   const [cardShares, setCardShares] = useState<Record<string, ShareState>>({});
   const [openCard, setOpenCard] = useState("");
@@ -659,8 +668,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       clearTimeout(late);
       if (controller.signal.aborted) return;
       if (!lists || (!lists.recent.length && !lists.frequent.length)) { setDiscoveryState("none"); return; }
-      // Until someone has asked, the common questions written fresh are all there is.
-      if (!discoveryView(lists, "recent").length) setDiscoveryTab("frequent");
+      // 最常问 draws on both lists, so it has questions whenever either does: no fallback to 最近问.
       setPublicTotal(lists.total);
       setQuestionLists(lists);
       setDiscoveryState("ready");
@@ -688,6 +696,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
   const showTab = (view: DiscoveryView) => {
     if (view === discoveryTab) return;
     setDiscoveryTab(view);
+    setDiscoveryOpen(false);
     setOpenCard(""); setOpenNested(""); setOpenSimilar(new Set());
     track("Ask Discovery Sort", { surface: "home", sort: view });
   };
@@ -1278,15 +1287,28 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
                 {publicTotal && <p className="lz-ask-discovery-live">已有{publicTotal}个公开问答</p>}
                 {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
                 <div className="lz-ask-discovery-views" role="group" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
-                  {(["recent", "frequent"] as const).map((view, i) => (
+                  {(["frequent", "recent"] as const).map((view, i) => (
                     <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
                   ))}
                 </div>
               </div>
               <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
               {/* While the questions load, the rows they will fill; never the examples first. */}
-              {!discoveryCards.length && [0, 1, 2, 3].map(i => <div key={i} className="lz-ask-qcard-placeholder" aria-hidden="true"><i /><b /></div>)}
+              {!discoveryCards.length && [0, 1, 2].map(i => <div key={i} className="lz-ask-qcard-placeholder" aria-hidden="true"><i /><b /></div>)}
               {discoveryCards.map((card, index) => renderCard(card, -(index + 1)))}
+              {discoveryHidden > 0 && (
+                <button type="button" className="lz-ask-discovery-more lz-ask-discovery-expand"
+                  onClick={() => {
+                    setDiscoveryOpen(true);
+                    // The button goes away; focus moves to the first question it opened.
+                    requestAnimationFrame(() => discoveryList.current
+                      ?.querySelectorAll<HTMLElement>(".lz-ask-discovery-list > .lz-ask-qcard > .lz-ask-qcard-row > .lz-ask-qcard-head")[DISCOVERY_FOLDED]
+                      ?.focus());
+                    track("Ask Discovery Expand", { surface: "home", view: discoveryTab });
+                  }}>
+                  {c.discoveryExpand(discoveryHidden)}
+                </button>
+              )}
               {discoveryMore && (
                 <a className="lz-ask-discovery-more" href={`https://ask.lizheng.ai/#${discoveryTab}`} {...EXTERNAL}
                   onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} ↗</a>

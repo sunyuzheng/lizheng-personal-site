@@ -2616,11 +2616,13 @@
   color: var(--lz-ink);
 }
 
+/* No lone 做？ on a question's last line. */
 .lz-home .lz-ask-qcard-head b {
   font-size: 18px;
   font-weight: 600;
   line-height: 1.55;
   color: var(--lz-ink);
+  text-wrap: pretty;
   transition: color 0.2s;
 }
 
@@ -2754,6 +2756,27 @@
 
 .lz-home .lz-ask-discovery-more:hover {
   text-decoration: underline;
+}
+
+/* 再看N个 opens the folded questions in place: the green of the link after it, with the
+   chevron of 另外N个类似提问 rather than the link's ↗. */
+.lz-home .lz-ask-discovery-expand {
+  align-items: center;
+  padding-inline: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.lz-home .lz-ask-discovery-expand::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin: 0 2px 3px 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
 }
 
 @media (max-width: 720px) {

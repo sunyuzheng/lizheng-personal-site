@@ -110,7 +110,7 @@ function stripImagePreloads(baseHtml: string) {
   );
 }
 
-const HOME_IMAGE_PRELOADS = ["/home/portrait.webp"];
+const HOME_IMAGE_PRELOADS = ["/home/portrait-hero.webp"];
 const ACQUIRED_IMAGE_PRELOADS = ["/hero/acquired-behind-scenes-desktop.webp"];
 
 function imagePreloadTags(images: string[] = []) {

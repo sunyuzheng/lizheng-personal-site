@@ -84,10 +84,10 @@ export default function Hero({ lang }: { lang: Lang }) {
           <img
             ref={portraitRef}
             className="portrait rise"
-            src="/home/portrait.webp"
+            src="/home/portrait-hero.webp"
             alt=""
-            width={815}
-            height={900}
+            width={1222}
+            height={1350}
             decoding="async"
             {...HIGH_PRIORITY}
           />

@@ -350,7 +350,9 @@
   height: 92%;
   max-width: none;
   transform: translateX(-50%);
-  filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.28));
+  /* A close shadow that keeps the white shirt apart from the cream seal; a wide one used to lay a
+     grey haze over the seal around his hair. */
+  filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.22));
 }
 
 .lz-home .hero .mark-in {
@@ -485,24 +487,34 @@
   transform: translate(-50%, 0);
 }
 
-/* Wide screens: the portrait takes the height of the words beside it and its head starts beside the
-   headline's first line, at every width. It used to rise about 57px above the headline on laptops,
-   close under the header; the first screen is now only as tall as its words. */
+/* Wide screens: the words and the portrait are centred on each other. The portrait sets the first
+   screen's height, its head at the top of its box and its hands at the bottom edge; the words sit in
+   its middle, so the head rises as far above them as the hands reach below (2026-10-12, Yuzheng: the
+   words had started above his head and ended with a gap under them while his hands ran to the edge). */
 @media (min-width: 861px) {
   .lz-home .hero .wrap {
-    align-items: stretch;
-    padding-top: calc(128px + env(safe-area-inset-top, 0px));
+    align-items: center;
+    padding-top: calc(clamp(120px, 10vw, 148px) + env(safe-area-inset-top, 0px));
+  }
+
+  .lz-home .hero-copy {
+    padding-bottom: 0;
+  }
+
+  .lz-home .hero-copy > :first-child {
+    margin-top: 0;
   }
 
   .lz-home .hero-art {
-    height: auto;
-    align-self: stretch;
+    height: clamp(460px, 40vw, 580px);
   }
 
   .lz-home .hero-art .portrait {
-    top: 64px;
-    bottom: auto;
-    height: calc(100% - 64px);
+    height: 100%;
+  }
+
+  .lz-home .hero-art .mark {
+    top: 7%;
   }
 }
 
@@ -1043,7 +1055,7 @@
 }
 
 .lz-home .head h2 {
-  font-size: clamp(34px, 3.7vw, 52px);
+  font-size: clamp(32px, 3.3vw, 46px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -1402,7 +1414,7 @@
 .lz-home .call {
   position: relative;
   display: grid;
-  grid-template-columns: 132px minmax(0, 1fr) minmax(0, 250px);
+  grid-template-columns: 128px minmax(0, 1fr) minmax(0, 240px);
   gap: 10px 40px;
   padding: 24px clamp(24px, 2.6vw, 36px);
   border-top: 1px solid var(--lz-line);
@@ -1414,10 +1426,11 @@
   border-top: 0;
 }
 
+/* Each dot sits level with its date. */
 .lz-home .call::before {
   content: "";
   position: absolute;
-  top: 36px;
+  top: 31px;
   left: -34px;
   width: 11px;
   height: 11px;
@@ -1426,18 +1439,19 @@
   box-shadow: inset 0 0 0 2px var(--lz-line-2);
 }
 
+/* The date in small figures, like the essays' dates; the title carries the row. */
 .lz-home .call .when b {
   display: block;
-  font-family: var(--num);
-  font-size: 22px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
-  color: var(--lz-ink);
+  color: var(--lz-ink-2);
 }
 
 .lz-home .call .badge {
   display: inline-block;
+  white-space: nowrap;
   margin-top: 10px;
   padding: 4px 10px;
   border-radius: 4px;
@@ -1449,7 +1463,7 @@
 }
 
 .lz-home .call h3 {
-  font-size: 21px;
+  font-size: 19px;
   line-height: 1.45;
 }
 
@@ -1459,13 +1473,13 @@
 
 .lz-home .call .claim {
   margin-top: 8px;
-  font-size: 15.5px;
+  font-size: 14.5px;
   line-height: 1.8;
-  color: var(--lz-ink-2);
+  color: var(--lz-muted);
 }
 
 .lz-home .call .side {
-  font-size: 14.5px;
+  font-size: 14px;
   color: var(--lz-ink-2);
 }
 
@@ -1501,24 +1515,25 @@
 }
 
 .lz-home .call.featured::before {
-  top: clamp(34px, 3.4vw, 48px);
+  top: calc(clamp(24px, 2.6vw, 36px) + 7px);
   background: var(--lz-green);
   box-shadow: 0 0 0 5px rgb(35 131 67 / 0.16);
 }
 
 .lz-home .call.featured h3 {
-  font-size: clamp(24px, 2.4vw, 30px);
-  line-height: 1.38;
+  font-size: 21px;
+  line-height: 1.4;
 }
 
+/* The key line: the title's typeface at reading size, not a second headline. */
 .lz-home .call blockquote {
-  margin: 16px 0 0;
-  padding-left: 16px;
-  border-left: 3px solid var(--lz-green);
+  margin: 12px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--lz-green);
   font-family: var(--serif);
-  font-size: clamp(18px, 1.8vw, 22px);
-  font-weight: 700;
-  line-height: 1.65;
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.75;
   color: var(--lz-ink);
 }
 
@@ -1528,7 +1543,7 @@
 }
 
 .lz-home .call.featured .claim {
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .lz-home .call .media {
@@ -1569,15 +1584,16 @@
 
 @media (max-width: 1040px) {
   .lz-home .call {
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: 128px minmax(0, 1fr);
   }
 
   .lz-home .call .side {
     grid-column: 2;
   }
 
+  /* Under the words, the video's cover stays small: a way to watch, not the row's picture. */
   .lz-home .call .media {
-    max-width: 420px;
+    max-width: 280px;
   }
 }
 
@@ -1597,7 +1613,7 @@
 
   .lz-home .call::before {
     left: -24px;
-    top: 34px;
+    top: 32px;
     width: 9px;
     height: 9px;
   }
@@ -1777,7 +1793,7 @@
 }
 
 .lz-home .lz-ask-native-head h2 {
-  font-size: clamp(34px, 3.7vw, 52px);
+  font-size: clamp(32px, 3.3vw, 46px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }

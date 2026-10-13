@@ -72,15 +72,18 @@ export default function Proof({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-        <p className="orgs">
-          <span className="lab">{t.orgsLabel}</span>
-          {t.orgs.map(([name, script]) => (
-            <span key={name} className={script === "zh" ? "o zh" : "o"}>
-              {name}
-            </span>
-          ))}
-          <span className="etc">{t.orgsMore}</span>
-        </p>
+        {/* Rows with a label column: who invited him, then what peers say. */}
+        <div className="proof-row orgs">
+          <div className="lab">{t.orgsLabel}</div>
+          <p>
+            {t.orgs.map(([name, script]) => (
+              <span key={name} className={script === "zh" ? "o zh" : "o"}>
+                {name}
+              </span>
+            ))}
+            <span className="etc">{t.orgsMore}</span>
+          </p>
+        </div>
         <Peers lang={lang} />
       </div>
     </section>

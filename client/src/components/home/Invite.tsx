@@ -3,7 +3,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
 import { HOME_COPY, LINKS } from "./content";
-import { EXTERNAL, Lines, Phrases } from "./parts";
+import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 
 export default function Invite({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].invite;
@@ -24,8 +24,8 @@ export default function Invite({ lang }: { lang: Lang }) {
             {t.secondary}
           </Link>
         </div>
-        <a className="shop-link" href={SHOP_URL} {...EXTERNAL}>
-          {t.shop} <span aria-hidden="true">↗</span>
+        <a className="lz-link shop-link" href={SHOP_URL} {...EXTERNAL}>
+          {t.shop} <Arrow />
         </a>
       </div>
     </section>

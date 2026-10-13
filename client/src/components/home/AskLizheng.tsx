@@ -16,7 +16,7 @@ import {
   type AskSource,
 } from "@/lib/ask-lizheng";
 import { HOME_COPY, LINKS } from "./content";
-import { EXTERNAL, Phrases } from "./parts";
+import { Arrow, EXTERNAL, Phrases } from "./parts";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
 import { askedAgo, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
@@ -745,8 +745,10 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
     askLoginHere({ question, context: situation, intent });
   };
   // One question others asked: its like beside it, its answer opening in place; in 最常问, the topic's
-  // other questions open under it, each with its own like and answer. `anchor` keeps its sources'
-  // anchors apart from the conversation's.
+  // other questions open under it, each with its own like and answer. On the homepage a closed row
+  // is the question alone (no answer summary, no 另外N个类似提问), so the list fits beside the box;
+  // opening it shows the answer and the similar questions. `anchor` keeps its sources' anchors apart
+  // from the conversation's.
   const renderCard = (card: DiscoveryCard | SimilarQuestion, anchor: number, nested = false): ReactNode => {
     const open = (nested ? openNested : openCard) === card.public_id;
     const detail = cardDetails[card.public_id];
@@ -772,7 +774,6 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               <small>常被问到</small>
             )}
             <b>{card.question}</b>
-            {!open && !nested && full?.summary && <span className="summary">{full.summary}</span>}
             {!often && similar >= 2 && <span className="meta">{c.discoveryCount(similar)}</span>}
           </button>
           {/* A like, as Product Hunt and Reddit show one: an arrow over the count. */}
@@ -829,7 +830,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
             )}
           </div>
         )}
-        {others.length > 0 && full && (
+        {open && others.length > 0 && full && (
           <div className="lz-ask-qcard-similar">
             <button type="button" className="toggle" aria-expanded={openSimilar.has(card.public_id)} onClick={() => toggleSimilar(full)}>
               {c.discoveryOthers(others.length)}
@@ -1070,17 +1071,22 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
       <div className="lz-ask-native rv" id="ask-lizheng">
         <div className="lz-ask-native-head grain">
           <div>
+            <div className="eyebrow">{t.eyebrow}</div>
             <h2>{t.title}</h2>
+          </div>
+          <div>
             <p>
               <Phrases text={t.body} />
             </p>
-            <small>{t.note}</small>
+            <a className="lz-link" href={LINKS.askLizheng} {...EXTERNAL}>
+              {c.full} <Arrow />
+            </a>
           </div>
-          <a href={LINKS.askLizheng} {...EXTERNAL}>
-            {c.full} ↗
-          </a>
         </div>
-        <div className="lz-ask-native-body">
+        {/* Before a question, the box and 别人在问什么 sit side by side on wide screens; once there is
+            a conversation, it takes the full width under the box. */}
+        <div className={turns.length ? "lz-ask-native-body asking" : "lz-ask-native-body"}>
+          <div className="lz-ask-compose">
           <form onSubmit={submit} className="lz-ask-form">
             <div
               className="lz-ask-modes"
@@ -1279,6 +1285,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </div>
             )}
           </div>
+          </div>
           {!turns.length && (lang === "zh" && discoveryState !== "none" ? (
             <div className="lz-ask-discovery" ref={discoveryList}>
               <div className="lz-ask-discovery-head">
@@ -1311,7 +1318,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               )}
               {discoveryMore && (
                 <a className="lz-ask-discovery-more" href={`https://ask.lizheng.ai/#${discoveryTab}`} {...EXTERNAL}
-                  onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} ↗</a>
+                  onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} <Arrow /></a>
               )}
               </div>
             </div>

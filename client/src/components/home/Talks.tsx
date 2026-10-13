@@ -9,7 +9,7 @@ import {
   type Guest,
 } from "./content";
 import Marquee from "./Marquee";
-import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
+import { EXTERNAL, Lines, Phrases } from "./parts";
 
 function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
   const body = (
@@ -68,16 +68,29 @@ export default function Talks({ lang }: { lang: Lang }) {
   return (
     <section className="sec talks" id={SECTION.talks}>
       <div className="wrap">
-        <div className="head rv">
+        {/* The head's picture is the show's setting, not an episode: Acquired's hosts on stage with
+            him, for those who know them. No link, no play button; the event's name below. */}
+        <div className="head talks-head rv">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
               <Lines lines={t.title} />
             </h2>
+            <p>
+              <Phrases text={t.intro} />
+            </p>
           </div>
-          <p>
-            <Phrases text={t.intro} />
-          </p>
+          <figure className="talks-stage">
+            <img
+              src={t.stage.image}
+              alt={t.stage.alt}
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>{t.stage.caption}</figcaption>
+          </figure>
         </div>
 
         <ul className="guests">
@@ -103,34 +116,6 @@ export default function Talks({ lang }: { lang: Lang }) {
             </>
           )}
         </Marquee>
-
-        <a
-          className="card c-show talk-feature rv"
-          href={t.feature.href}
-          {...EXTERNAL}
-        >
-          <div className="photo">
-            <img
-              src={t.feature.image}
-              alt=""
-              width={1280}
-              height={720}
-              loading="lazy"
-              decoding="async"
-            />
-            <span className="play" aria-hidden="true" />
-          </div>
-          <div className="body">
-            <div className="meta">{t.feature.meta}</div>
-            <h3>
-              <Phrases text={t.feature.title} />
-            </h3>
-            <p>{t.feature.body}</p>
-            <span className="go">
-              {t.feature.go} <Arrow />
-            </span>
-          </div>
-        </a>
 
         <div className="more">
           <Link className="btn btn-green" href={withLanguage("/guests", lang)}>

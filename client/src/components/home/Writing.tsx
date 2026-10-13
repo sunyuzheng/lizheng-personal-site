@@ -29,7 +29,7 @@ export default function Writing({ lang }: { lang: Lang }) {
                 <p>
                   <Phrases text={essay.line} />
                 </p>
-                <span className="go" aria-hidden="true">↗</span>
+                <span className="go" aria-hidden="true">→</span>
               </a>
             </li>
           ))}

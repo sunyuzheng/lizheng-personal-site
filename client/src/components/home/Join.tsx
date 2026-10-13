@@ -2,7 +2,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
 import { HOME_COPY, SECTION } from "./content";
-import { EXTERNAL, Lines, Phrases } from "./parts";
+import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 
 /** The three ways into Superlinear Academy, plus the enterprise line. */
 export default function Join({ lang }: { lang: Lang }) {
@@ -48,8 +48,8 @@ export default function Join({ lang }: { lang: Lang }) {
                     {path.cta}
                   </a>
                 ) : (
-                  <a className="lnk" href={path.href} {...EXTERNAL}>
-                    {path.cta} <span aria-hidden="true">→</span>
+                  <a className="lz-link" href={path.href} {...EXTERNAL}>
+                    {path.cta} <Arrow />
                   </a>
                 )}
               </div>
@@ -79,8 +79,8 @@ export default function Join({ lang }: { lang: Lang }) {
             </p>
             <p className="note">{t.enterprise.photo.caption}</p>
           </div>
-          <Link href={withLanguage("/collab/enterprise", lang)}>
-            {t.enterprise.cta} <span aria-hidden="true">→</span>
+          <Link className="lz-link" href={withLanguage("/collab/enterprise", lang)}>
+            {t.enterprise.cta} <Arrow />
           </Link>
         </div>
       </div>

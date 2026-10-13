@@ -222,7 +222,7 @@ export interface PublicCall {
   title: string;
   claim: string;
   sources: Array<[label: string, href: string]>;
-  /** On phones, wait behind 「再看另外N条判断」 so the chapter opens with the key calls. */
+  /** Wait behind 「再看另外N条判断」 so the chapter opens with the key calls. */
   fold?: boolean;
   /** Featured calls stay open, with their key line and sometimes an image. */
   feature?: {
@@ -351,7 +351,9 @@ const zh = {
       { value: 20000, format: "comma", label: "超线性学院社区成员" },
       { value: 3000, format: "comma", label: "付费学员" },
     ] as Stat[],
-    orgsLabel: "受邀为这些团队和机构分享与培训",
+    // One row on a laptop: the names a reader knows at a glance, then 等. Binance, Safeway, Monzo,
+    // FlowGPT, 华盛顿大学 and 美国统计协会 were also listed until 2026-10-12; 等 stands for them.
+    orgsLabel: "受邀分享与培训",
     orgs: [
       ["Amazon"],
       ["Netflix"],
@@ -362,13 +364,7 @@ const zh = {
       ["腾讯", "zh"],
       ["美团", "zh"],
       ["小红书", "zh"],
-      ["Binance"],
-      ["Safeway"],
-      ["Monzo"],
-      ["FlowGPT"],
       ["哥伦比亚大学", "zh"],
-      ["华盛顿大学", "zh"],
-      ["美国统计协会", "zh"],
     ] as Array<[string, "zh"?]>,
     orgsMore: "等",
   },
@@ -412,28 +408,23 @@ const zh = {
       alt: "《Growth Data Analytics Playbook》封面",
     },
   },
+  // The show: the eyebrow says what kind of thing it is and the title names it, as Ask does.
   talks: {
-    eyebrow: "课代表立正",
-    title: ["真正把事做成的人，", "到底做对了什么？"],
+    eyebrow: "访谈节目",
+    title: ["课代表立正"],
     intro:
       "从2020年开始，我和研究者、创业者、投资人做了200多场长谈。聊他们看见了什么，为什么敢下注，现实又怎样改写了答案。",
-    guests: guestsFor("zh", [
-      "tian",
-      "bi",
-      "xin",
-      "raji",
-      "liu",
-      "xu",
-      "yang",
-      "wei",
-      "vernal",
-      "evans",
-      "orosz",
-      "zhou",
-    ]),
+    // Six faces, one row (Yuzheng's choice, 2026-10-12); everyone else is a name in the strip below.
+    guests: guestsFor("zh", ["tian", "vernal", "evans", "xu", "wei", "yang"]),
     alsoLabel: "还聊过",
     alsoAria: "更多对话嘉宾",
     also: [
+      also("毕树超", "shuchao-bi"),
+      also("Reynold Xin", "reynold-xin"),
+      also("Vijaye Raji", "vijaye-raji"),
+      also("刘嘉", "liu-jia"),
+      also("Gergely Orosz", "https://www.youtube.com/watch?v=-WvvJBd3hDI"),
+      also("周楠", "zhou-nan"),
       also("樊登", "fan-deng"),
       also("Leon", "leon"),
       also("尚书", "https://www.youtube.com/watch?v=vCzj0Fth_8A"),
@@ -454,15 +445,13 @@ const zh = {
       also("董有超", "devin-dong"),
       also("Vivian Wang", "vivian-wang"),
     ],
-    // One conversation, on stage, in place of a list of episodes.
-    feature: {
-      meta: "现场对谈 · Significance Summit",
-      title: "与Acquired|两位主持人同台",
-      body: "Ben Gilbert、David Rosenthal",
-      go: "看这场对谈",
-      href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
-      // The card's words say who is on stage, so the photograph is decorative.
+    // The chapter's picture: Yuzheng on the Significance Summit stage with Acquired's hosts. It sets the
+    // scale of the show for those who know them; it is not an episode to watch, so it has no link,
+    // play button or title, only the event's name.
+    stage: {
       image: "/english-network/acquired.webp",
+      alt: "在Significance Summit的舞台上，与Acquired主持人Ben Gilbert、David Rosenthal对谈",
+      caption: "Significance Summit × Acquired",
     },
     all: "浏览全部200+场对话",
     subscribe: "在YouTube订阅",
@@ -473,7 +462,7 @@ const zh = {
     intro: "说对的，说错的，都留在原处，每一条都附上当时的原始记录。",
     listLabel: "公开判断时间线",
     sources: "原始记录",
-    // Phones fold the calls marked fold until asked; the key ones stay open.
+    // The calls marked fold wait until asked (on every screen since 2026-10-12); the key ones stay open.
     more: (count: number) => `再看另外${count}条判断`,
     less: "收起",
     items: [
@@ -601,9 +590,10 @@ const zh = {
     eyebrow: "AI问答",
     title: "问问立正",
     // Same two points as ask.lizheng.ai's first screen (2026-10-04): what sets it apart, not a list of material.
-    body: "卡住的时候，先来这里问。回答主要依据我写的文章和讲过的内容，每一段都能点回原文。这里的问答是公开的：别人刚问了什么，你都能看到。",
+    // The homepage keeps the two things to know before asking; that answers are public is said under
+    // the box, and 别人在问什么 shows it.
+    body: "卡住的时候，先来这里问。AI主要依据我写过、讲过的内容回答，每一段都能点回原文。",
     cta: "去问问立正",
-    note: "这是AI回答，不是我本人实时回复。",
     examplesLabel: "比如，你可以问",
     examples: [
       "用AI做出了一个项目，怎样知道自己真的学会了？",
@@ -611,7 +601,7 @@ const zh = {
     ],
     openContext: {
       title: "想自己做一个？",
-      body: "问问立正用的材料库Open Context已经在GitHub开源。文章全文和视频字幕都带出处和日期，可以直接拿去做你自己的问答或Agent。",
+      body: "问问立正的材料库Open Context已在GitHub开源，可以拿去做你自己的问答或Agent。",
       cta: "在GitHub查看",
       href: LINKS.openContext,
     },
@@ -671,7 +661,8 @@ const zh = {
         placeholder: "按名字找成员",
         empty: (query: string) => `没有找到“${query}”。`,
       },
-      join: "免费加入，一起建这座城",
+      // The same words as every other join button on the page.
+      join: "免费加入超线性学院",
     } as CityCopy,
     window: {
       caption: (count: string) => [
@@ -680,7 +671,8 @@ const zh = {
       ],
       label: (count: string, links: string) =>
         `社区关系图：${count}位成员，${links}条连接。点一盏灯，看看是谁。`,
-      enter: "进入这座城",
+      // Opens city.lizheng.ai; 「进入这座城」 read like joining.
+      enter: "打开完整地图",
       linked: () => "人有来往",
       hint: "点一下，看TA的主页和来往",
       profile: "打开TA的主页",
@@ -803,6 +795,8 @@ const en: HomeCopy = {
       { value: 3000, format: "comma", label: "paying learners" },
     ],
     orgsLabel: "Invited to speak and train at",
+    // As in Chinese, one row on a laptop; English names run longer, so Meituan and Xiaohongshu
+    // wait too.
     orgs: [
       ["Amazon"],
       ["Netflix"],
@@ -811,15 +805,7 @@ const en: HomeCopy = {
       ["Pinterest"],
       ["DoorDash"],
       ["Tencent"],
-      ["Meituan"],
-      ["Xiaohongshu"],
-      ["Binance"],
-      ["Safeway"],
-      ["Monzo"],
-      ["FlowGPT"],
       ["Columbia University"],
-      ["University of Washington"],
-      ["American Statistical Association"],
     ],
     orgsMore: "and more",
   },
@@ -863,28 +849,21 @@ const en: HomeCopy = {
     },
   },
   talks: {
-    eyebrow: "Conversations",
-    title: ["What did the people who built it actually get right?"],
+    eyebrow: "My interview show",
+    title: ["200+ long conversations"],
     intro:
-      "Since 2020 I’ve hosted 200+ long conversations with researchers, founders, and investors: what they saw, why they were willing to bet, and how reality rewrote the answer.",
-    guests: guestsFor("en", [
-      "tian",
-      "bi",
-      "xin",
-      "raji",
-      "orosz",
-      "vernal",
-      "evans",
-      "wei",
-      "liu",
-      "kevin",
-      "yang",
-      "zhou",
-    ]),
+      "Since 2020, with researchers, founders, and investors: what they saw, why they were willing to bet, and how reality rewrote the answer. Mostly in Chinese, some in English.",
+    guests: guestsFor("en", ["tian", "vernal", "evans", "xu", "wei", "yang"]),
     alsoLabel: "Also with",
     alsoAria: "More guests",
     also: [
-      also("Howie Xu", "howie-xu"),
+      also("Shuchao Bi", "shuchao-bi"),
+      also("Reynold Xin", "reynold-xin"),
+      also("Vijaye Raji", "vijaye-raji"),
+      also("Gergely Orosz", "https://www.youtube.com/watch?v=-WvvJBd3hDI"),
+      also("Liu Jia", "liu-jia"),
+      also("Kevin Chen", "kevin-chen"),
+      also("Nan Zhou", "zhou-nan"),
       also("Ryo Lu", "ryo-lu"),
       also(
         "Chang She",
@@ -900,13 +879,10 @@ const en: HomeCopy = {
       also("Eugene Wang", "eugene-wang"),
       also("Leon", "leon"),
     ],
-    feature: {
-      meta: "On stage · Significance Summit",
-      title: "With the hosts of Acquired",
-      body: "Ben Gilbert and David Rosenthal",
-      go: "Watch this conversation",
-      href: "https://www.youtube.com/watch?v=sP9jqW41uoU",
+    stage: {
       image: "/english-network/acquired.webp",
+      alt: "On the Significance Summit stage with Ben Gilbert and David Rosenthal of Acquired",
+      caption: "Significance Summit × Acquired",
     },
     all: "Browse all 200+ conversations",
     subscribe: "Subscribe on YouTube",
@@ -1060,9 +1036,8 @@ const en: HomeCopy = {
   ask: {
     eyebrow: "AI Q&A",
     title: "Ask Lizheng",
-    body: "Stuck on something? Ask here first. Answers draw mainly on what I have written and said, and every paragraph links back to its source.",
+    body: "Stuck on something? Ask here first. An AI answers mainly from what I have written and said (mostly in Chinese), and every paragraph links back to its source.",
     cta: "Open Ask Lizheng",
-    note: "AI answers, not a live reply from me. The material and answers are mostly in Chinese.",
     examplesLabel: "Questions you could bring",
     examples: [
       "I built a project with AI. How do I know I actually learned something?",
@@ -1070,7 +1045,7 @@ const en: HomeCopy = {
     ],
     openContext: {
       title: "Want to build your own?",
-      body: "The material behind Ask Lizheng is open source on GitHub as Open Context. Essays and video transcripts, with English translations, each carry their source and date, so you can build your own Q&A tool or agent on them.",
+      body: "The material behind Ask Lizheng is open source on GitHub as Open Context, ready for your own Q&A tool or agent.",
       cta: "View on GitHub",
       href: LINKS.openContext,
     },
@@ -1128,7 +1103,7 @@ const en: HomeCopy = {
         placeholder: "Find a member by name",
         empty: query => `No member named “${query}”.`,
       },
-      join: "Join free and help build it",
+      join: "Join the free community",
     },
     window: {
       caption: count => [
@@ -1137,7 +1112,7 @@ const en: HomeCopy = {
       ],
       label: (count, links) =>
         `Community map: ${count} members and ${links} connections. Click a light to see who it is.`,
-      enter: "Enter the city",
+      enter: "Open the full map",
       linked: count => (count === 1 ? "person in touch" : "people in touch"),
       hint: "Click for their profile and connections",
       profile: "Open their profile",

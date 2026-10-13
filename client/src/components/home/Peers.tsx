@@ -2,26 +2,27 @@ import { endorsements } from "@/components/PeerEndorsements";
 import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
-import { Arrow } from "./parts";
+import { Arrow, Phrases } from "./parts";
 
 const COPY = {
   zh: { label: "来自同行的评价", more: "读完整评价" },
-  en: { label: "What peers say", more: "Read the full endorsements" },
+  en: { label: "What peers say", more: "Read in full" },
 } as const;
 
 /**
  * Third-party authority: people with standing vouching for specific work.
- * Being a guest shows access; an endorsement shows judgment, so each quote
- * names what it is about. Wording comes from PeerEndorsements (the approved
- * source); About keeps the full quotations.
+ * The homepage gives each the shortest faithful cut of their words (punch),
+ * which already says what it is about; About keeps the full quotations. The
+ * label and the way to the full text sit in the row's label column, as the
+ * organizations' label does above.
  */
 export default function Peers({ lang }: { lang: Lang }) {
   const copy = COPY[lang];
   return (
-    <div className="peers">
-      <div className="peers-head">
-        <span className="lab">{copy.label}</span>
-        <Link href={`${withLanguage("/about", lang)}#endorsements`}>
+    <div className="proof-row peers">
+      <div className="lab">
+        <span>{copy.label}</span>
+        <Link className="lz-link" href={`${withLanguage("/about", lang)}#endorsements`}>
           {copy.more} <Arrow />
         </Link>
       </div>
@@ -31,20 +32,21 @@ export default function Peers({ lang }: { lang: Lang }) {
           return (
             <li key={item.id}>
               <figure>
-                <p className="subj">{text.subject}</p>
-                <blockquote>“{text.excerpt}”</blockquote>
+                <blockquote>
+                  <Phrases text={`“${text.punch}”`} />
+                </blockquote>
                 <figcaption>
                   <img
                     src={item.avatar}
                     alt=""
-                    width={44}
-                    height={44}
+                    width={32}
+                    height={32}
                     loading="lazy"
                     decoding="async"
                   />
                   <span>
                     <b>{text.name}</b>
-                    <small>{text.role}</small>
+                    <small>{text.shortRole}</small>
                   </span>
                 </figcaption>
               </figure>

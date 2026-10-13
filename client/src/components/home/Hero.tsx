@@ -55,17 +55,9 @@ export default function Hero({ lang }: { lang: Lang }) {
           </p>
           <div className="cta-row rise d4">
             <a className="btn btn-ivory" href={LINKS.community} {...EXTERNAL}>
-              {t.primary} <span aria-hidden="true">→</span>
+              {t.primary}
             </a>
             <SectionLink className="btn btn-line" to={SECTION.talks}>
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path d="M7 4l13 8-13 8z" fill="currentColor" />
-              </svg>
               {t.secondary}
             </SectionLink>
           </div>

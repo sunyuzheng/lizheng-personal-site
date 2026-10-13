@@ -100,15 +100,20 @@
   border: 0;
 }
 
-/* ---------- Buttons ---------- */
+/* ---------- Buttons and links ----------
+   Three kinds of thing to click, the same everywhere on the page:
+   - a solid button, the one main action of a chapter (green on paper, ivory on the forest);
+   - an outlined button, a second action beside it;
+   - a text link with an arrow (.lz-link), to go and see more.
+   Buttons carry words only, no arrows or icons. Every text link is 15px with →; ⌄ opens in place. */
 
 .lz-home .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 46px;
-  padding: 0 22px;
+  min-height: 44px;
+  padding: 0 20px;
   border: 0;
   border-radius: 10px;
   font: inherit;
@@ -157,6 +162,65 @@
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 34px;
+}
+
+.lz-home .lz-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--lz-green-text);
+  white-space: nowrap;
+}
+
+.lz-home .lz-link i {
+  font-style: normal;
+  transition: transform 0.25s;
+}
+
+.lz-home .lz-link:hover i,
+.lz-home a:hover > .lz-link i,
+.lz-home a:focus-visible > .lz-link i {
+  transform: translateX(4px);
+}
+
+/* Opening more in place: a text link with a chevron, as 再看N个问题 under 别人在问什么. */
+.lz-home .lz-expand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--lz-green-text);
+  cursor: pointer;
+}
+
+.lz-home .lz-expand::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin: 0 2px 3px 0;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.lz-home .lz-expand[aria-expanded="true"]::after {
+  margin-bottom: 0;
+  transform: rotate(-135deg);
+}
+
+/* On the forest chapters. */
+.lz-home .city .lz-link {
+  color: var(--lz-on-forest);
 }
 
 /* ---------- Grain ---------- */
@@ -462,7 +526,7 @@
 
 .lz-career {
   position: relative;
-  padding-block: 34px 40px;
+  padding-block: 30px 34px;
   background: var(--lz-forest-3);
   color: var(--lz-on-forest);
 }
@@ -587,7 +651,7 @@
 .lz-home .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding-block: 56px 44px;
+  padding-block: 44px 34px;
 }
 
 .lz-home .stat {
@@ -602,7 +666,7 @@
 
 .lz-home .stat .n {
   font-family: var(--num);
-  font-size: clamp(38px, 4.6vw, 60px);
+  font-size: clamp(36px, 3.8vw, 54px);
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -618,213 +682,181 @@
 }
 
 .lz-home .stat .l {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 14.5px;
   color: var(--lz-muted);
 }
 
-.lz-home .orgs {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 10px 34px;
-  padding-block: 22px 36px;
+/* Who invited him and what peers say: rows under a hairline, each with a label column on the left,
+   so both lists start at the same edge and the organizations fit on one line. */
+.lz-home .proof-row {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  column-gap: 28px;
+  padding-block: 20px;
   border-top: 1px solid var(--lz-line);
 }
 
-.lz-home .orgs .lab {
-  width: 100%;
-  margin-bottom: -2px;
+.lz-home .proof-row > .lab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   font-size: 13.5px;
+  line-height: 1.6;
   color: var(--lz-muted);
+}
+
+.lz-home .orgs {
+  align-items: baseline;
+}
+
+/* Spread across the row where it fits (a laptop); from the left, smaller, where it may not. */
+.lz-home .orgs p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+
+@media (max-width: 1180px) {
+  .lz-home .orgs p {
+    justify-content: flex-start;
+    gap: 6px 18px;
+  }
+
+  .lz-home .orgs .o {
+    font-size: 15.5px;
+  }
+
+  .lz-home .orgs .o.zh {
+    font-size: 14.5px;
+  }
 }
 
 .lz-home .orgs .o {
   font-family: var(--num);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #474b45;
+  white-space: nowrap;
 }
 
 .lz-home .orgs .o.zh {
   font-family: var(--lz-serif-zh);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
 }
 
 .lz-home .orgs .etc {
-  font-size: 15px;
-  color: var(--lz-muted);
-}
-
-/* Peer endorsements: named third-party authority, early on the page. */
-.lz-home .peers {
-  padding-block: 22px 48px;
-  border-top: 1px solid var(--lz-line);
-}
-
-.lz-home .peers-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px 24px;
-  margin-bottom: 22px;
-}
-
-.lz-home .peers-head .lab {
-  font-size: 13.5px;
-  color: var(--lz-muted);
-}
-
-.lz-home .peers-head a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 32px;
   font-size: 14px;
-  font-weight: 500;
-  color: var(--lz-green);
+  color: var(--lz-muted);
 }
 
-.lz-home .peers-head a i {
-  font-style: normal;
-  transition: transform 0.25s;
-}
-
-.lz-home .peers-head a:hover i {
-  transform: translateX(4px);
+/* Peer endorsements: four short quotes in large serif, each signed in one line. */
+.lz-home .peers {
+  padding-block: 22px 34px;
 }
 
 .lz-home .peer-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Each card spans three shared rows (subject, quote, signature) via subgrid,
-   so quotes and names line up across the row whatever their length. */
+/* Two shared rows (quote, signature) via subgrid, so the names line up across the row. */
 .lz-home .peer-list li {
   display: grid;
-  grid-row: span 3;
+  grid-row: span 2;
   grid-template-rows: subgrid;
-  padding: 2px 28px;
-  border-left: 1px solid var(--lz-line);
-}
-
-.lz-home .peer-list li:first-child {
-  padding-left: 0;
-  border-left: 0;
 }
 
 .lz-home .peer-list figure {
   display: grid;
-  grid-row: span 3;
+  grid-row: span 2;
   grid-template-rows: subgrid;
   margin: 0;
 }
 
-.lz-home .peer-list .subj {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--lz-green);
-}
-
+/* Sized so each phrase (up to 12 characters) fits its column on one line. */
 .lz-home .peer-list blockquote {
-  margin: 10px 0 0;
-  font-size: 15.5px;
-  line-height: 1.8;
-  color: var(--lz-ink-2);
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(15.5px, 1.2vw, 17px);
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--lz-ink);
 }
 
 .lz-home.l-en .peer-list blockquote {
   font-family: var(--num);
-  font-size: 16.5px;
-  line-height: 1.65;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .lz-home .peer-list figcaption {
   display: flex;
   align-items: center;
   align-self: start;
-  gap: 12px;
-  padding-top: 20px;
+  gap: 10px;
+  padding-top: 14px;
 }
 
 .lz-home .peer-list figcaption img {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
   background: var(--lz-sand);
 }
 
-.lz-home .peer-list figcaption b {
-  display: block;
-  font-family: var(--serif);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--lz-ink);
+.lz-home .peer-list figcaption span {
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--lz-muted);
 }
 
-.lz-home.l-en .peer-list figcaption b {
-  font-family: var(--num);
+.lz-home .peer-list figcaption b {
+  display: block;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0;
+  color: var(--lz-ink);
 }
 
 .lz-home .peer-list figcaption small {
   display: block;
-  margin-top: 2px;
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: var(--lz-muted);
+  font-size: inherit;
 }
 
-@media (max-width: 1100px) {
+/* A subgrid shares the list's row gap, which would also open between a quote and its name, so
+   narrower layouts space rows of quotes by the signature's own bottom padding instead. */
+@media (min-width: 641px) and (max-width: 1100px) {
   .lz-home .peer-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .lz-home .peer-list li:nth-child(-n + 2) {
-    padding-bottom: 32px;
+  .lz-home .peer-list figcaption {
+    padding-bottom: 24px;
   }
 
-  .lz-home .peer-list li:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .lz-home .peer-list {
-    grid-template-columns: 1fr;
-    row-gap: 0;
-  }
-
-  .lz-home .peer-list li {
-    padding: 22px 0;
-    border-left: 0;
-    border-top: 1px solid var(--lz-line);
-  }
-
-  .lz-home .peer-list li:first-child {
-    padding-top: 4px;
-    border-top: 0;
+  .lz-home .peer-list li:nth-last-child(-n + 2) figcaption {
+    padding-bottom: 0;
   }
 }
 
 @media (max-width: 860px) {
   .lz-home .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 32px;
-    padding-block: 44px 36px;
+    row-gap: 28px;
+    padding-block: 36px 30px;
   }
 
   .lz-home .stat:nth-child(3) {
@@ -832,8 +864,38 @@
     border-left: 0;
   }
 
-  .lz-home .orgs {
-    gap: 8px 20px;
+  /* The label goes above the row. */
+  .lz-home .proof-row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 12px;
+  }
+
+  .lz-home .proof-row.peers > .lab {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .lz-home .orgs p {
+    gap: 6px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lz-home .peer-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-home .peer-list blockquote {
+    font-size: 17px;
+  }
+
+  .lz-home .peer-list figcaption {
+    padding-block: 10px 20px;
+  }
+
+  .lz-home .peer-list li:last-child figcaption {
+    padding-bottom: 0;
   }
 }
 
@@ -847,7 +909,7 @@
 
 .lz-home .scenes {
   overflow: hidden;
-  padding-block: 44px 48px;
+  padding-block: 32px 40px;
   background: var(--lz-paper);
 }
 
@@ -945,20 +1007,22 @@
 
 /* ---------- Section heads ---------- */
 
+/* One chapter, one screen where it can be: the same air above and below every chapter, and a head
+   (eyebrow, title, a line or two) that takes no more room than it needs. */
 .lz-home .sec {
-  padding-block: clamp(72px, 9vw, 120px);
+  padding-block: clamp(56px, 5.6vw, 80px);
 }
 
 .lz-home .head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-  gap: 24px 64px;
+  gap: 20px 64px;
   align-items: end;
-  margin-bottom: 48px;
+  margin-bottom: 36px;
 }
 
 .lz-home .head h2 {
-  font-size: clamp(34px, 4.4vw, 58px);
+  font-size: clamp(34px, 3.7vw, 52px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -969,13 +1033,13 @@
 
 .lz-home .head p {
   max-width: 30em;
-  font-size: 17px;
+  font-size: 16.5px;
   line-height: 1.8;
   color: var(--lz-muted);
 }
 
 .lz-home .eyebrow {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -985,7 +1049,7 @@
 @media (max-width: 860px) {
   .lz-home .head {
     grid-template-columns: 1fr;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
 }
 
@@ -1036,23 +1100,8 @@
 }
 
 .lz-home .card .go {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   margin-top: auto;
   padding-top: 22px;
-  font-size: 14.5px;
-  font-weight: 500;
-  color: var(--lz-green);
-}
-
-.lz-home .card .go i {
-  font-style: normal;
-  transition: transform 0.25s;
-}
-
-.lz-home .card:hover .go i {
-  transform: translateX(4px);
 }
 
 .lz-home .c-book {
@@ -1179,9 +1228,10 @@
   color: var(--lz-muted);
 }
 
+/* Six faces: one row of six, or two rows of three. */
 @media (max-width: 980px) {
   .lz-home .guests {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -1189,11 +1239,6 @@
   .lz-home .guests {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px 12px;
-  }
-
-  /* Six faces are enough on a phone; the button below opens all 200+ conversations. */
-  .lz-home .guests > li:nth-child(n + 7) {
-    display: none;
   }
 
   .lz-home .guest b {
@@ -1207,8 +1252,8 @@
 
 .lz-home .names {
   --gap: 34px;
-  margin-top: 44px;
-  padding-block: 18px;
+  margin-top: 32px;
+  padding-block: 14px;
   border-block: 1px solid var(--lz-line);
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -1256,102 +1301,45 @@
   color: var(--lz-muted);
 }
 
-/* One conversation from the stage, in place of a list of episodes: the photograph, then what it
-   was. The whole card opens the recording. */
-.lz-home .talk-feature {
-  margin-top: 56px;
+/* The show's head: the eyebrow, title and a line on the left; on the right its picture, Yuzheng on the
+   Significance Summit stage with Acquired's hosts. Unframed and unlinked: it sets the scale for those
+   who know them, with only the event's name beneath. */
+.lz-home .talks-head {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
 }
 
-.lz-home .c-show {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  background: var(--lz-forest);
-  box-shadow: none;
-  color: var(--lz-on-forest);
+.lz-home .talks-head p {
+  margin-top: 16px;
 }
 
-.lz-home .c-show .photo {
-  position: relative;
-  overflow: hidden;
+.lz-home .talks-stage {
+  margin: 0;
 }
 
-.lz-home .c-show .photo img {
-  display: block;
+.lz-home .talks-stage img {
   width: 100%;
-  height: 100%;
-  min-height: 100%;
+  height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  border-radius: 10px;
+  background: var(--lz-sand);
 }
 
-.lz-home .c-show:hover .photo img {
-  transform: scale(1.02);
+.lz-home .talks-stage figcaption {
+  margin-top: 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--lz-muted);
 }
 
-/* The photograph plays the conversation it shows. */
-.lz-home .c-show .play {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: rgb(18 22 19 / 0.62)
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 7l9 5-9 5z' fill='%23f8f1e4'/></svg>")
-    center / 26px no-repeat;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  transition: transform 0.3s;
-}
-
-.lz-home .c-show:hover .play {
-  transform: scale(1.08);
-}
-
-.lz-home .c-show .body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(28px, 3.4vw, 52px);
-}
-
-.lz-home .c-show .meta {
-  color: var(--lz-on-forest-2);
-}
-
-.lz-home .c-show h3 {
-  margin-top: 12px;
-  font-size: clamp(26px, 2.5vw, 34px);
-  line-height: 1.35;
-}
-
-.lz-home .c-show p {
-  margin-top: 10px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--lz-on-forest-2);
-}
-
-.lz-home .c-show .go {
-  margin-top: 0;
-  padding-top: 28px;
-  color: var(--lz-on-forest);
-}
-
+/* Narrow screens: the words, then the picture under them. */
 @media (max-width: 860px) {
-  .lz-home .c-show {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 520px) {
-  .lz-home .talk-feature {
-    margin-top: 44px;
+  .lz-home .talks-head {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .lz-home .c-show .body {
-    padding: 26px;
+  .lz-home .talks-head p {
+    margin-top: 12px;
   }
 }
 
@@ -1359,7 +1347,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 40px;
+  margin-top: 28px;
 }
 
 /* ---------- Public calls (dated record) ---------- */
@@ -1391,7 +1379,7 @@
   display: grid;
   grid-template-columns: 132px minmax(0, 1fr) minmax(0, 250px);
   gap: 10px 40px;
-  padding: 28px clamp(26px, 3vw, 40px);
+  padding: 24px clamp(24px, 2.6vw, 36px);
   border-top: 1px solid var(--lz-line);
 }
 
@@ -1478,8 +1466,8 @@
 }
 
 .lz-home .call.featured {
-  margin: 12px 0;
-  padding: clamp(26px, 3vw, 40px);
+  margin: 8px 0;
+  padding: clamp(24px, 2.6vw, 36px);
   border-radius: 16px;
   background: var(--lz-paper);
   box-shadow:
@@ -1620,22 +1608,19 @@
     display: inline;
   }
 
-  /* Phones open with the key calls; the ones marked fold wait behind the button. */
-  .lz-home .calls-list:not(.open) > .call.fold {
-    display: none;
-  }
-
   .lz-home .calls-more {
-    display: inline-flex;
-    margin: 20px 0 0 24px;
+    margin-left: 24px;
   }
 }
 
-/* The fold button only exists for phones; wider screens show every call. */
-@media (min-width: 641px) {
-  .lz-home .calls-more {
-    display: none;
-  }
+/* The chapter opens with the key calls, so it fits one screen; the ones marked fold wait behind the
+   button and open in their place in time. */
+.lz-home .calls-list:not(.open) > .call.fold {
+  display: none;
+}
+
+.lz-home .calls-more {
+  margin: 12px 0 0 34px;
 }
 
 /* ---------- Writing + search ---------- */
@@ -1662,7 +1647,7 @@
   grid-template-columns: 8rem minmax(0, 1fr) auto;
   column-gap: 28px;
   align-items: baseline;
-  padding: 26px 0;
+  padding: 22px 0;
 }
 
 .lz-home .essay .meta {
@@ -1752,11 +1737,13 @@
   background: var(--lz-sand);
 }
 
+/* The head reads like every other chapter's: the title on the left; on the right, two sentences and
+   the way to the full page. */
 .lz-home .lz-ask-native-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   align-items: end;
-  gap: 16px 48px;
+  gap: 16px 64px;
   margin: 0 0 36px;
 }
 
@@ -1765,7 +1752,7 @@
 }
 
 .lz-home .lz-ask-native-head h2 {
-  font-size: clamp(34px, 4.4vw, 58px);
+  font-size: clamp(34px, 3.7vw, 52px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -1776,43 +1763,35 @@
 }
 
 .lz-home .lz-ask-native-head p {
-  max-width: 34em;
-  margin: 18px 0 0;
-  font-size: 17px;
+  max-width: 30em;
+  margin: 0;
+  font-size: 16.5px;
   line-height: 1.8;
-  color: var(--lz-ink-2);
-}
-
-.lz-home .lz-ask-native-head small {
-  display: block;
-  margin-top: 8px;
-  font-size: 13.5px;
-  line-height: 1.7;
   color: var(--lz-muted);
 }
 
-.lz-home .lz-ask-native-head > a {
-  padding-bottom: 2px;
-  border-bottom: 1px solid rgb(28 107 55 / 0.35);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--lz-green-text);
-  white-space: nowrap;
-  transition: border-color 0.2s;
+.lz-home .lz-ask-native-head .lz-link {
+  margin-top: 8px;
 }
 
-.lz-home .lz-ask-native-head > a:hover {
-  border-color: currentColor;
-}
-
-@media (max-width: 720px) {
+@media (max-width: 860px) {
   .lz-home .lz-ask-native-head {
     grid-template-columns: minmax(0, 1fr);
     margin-bottom: 28px;
   }
+}
 
-  .lz-home .lz-ask-native-head > a {
-    justify-self: start;
+/* Before a question: the box (with its notes) on the left, 别人在问什么 on the right. */
+@media (min-width: 1040px) {
+  .lz-home .lz-ask-native-body:not(.asking) {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .lz-home .lz-ask-native-body:not(.asking) > :is(.lz-ask-discovery, .lz-ask-starters) {
+    margin-top: 0;
   }
 }
 
@@ -2300,53 +2279,55 @@
   color: var(--lz-green-text);
 }
 
-/* 别人在问什么: the title and its links on the left, rows under hairlines on the right. */
+/* 别人在问什么: beside the box on wide screens, under it on narrow ones. The head is two lines: the
+   title with the two lists' tabs, then what these questions are with how many are public. */
 .lz-home .lz-ask-discovery {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  margin-top: clamp(56px, 7vw, 88px);
+  gap: 12px;
+  margin-top: clamp(40px, 5vw, 56px);
 }
 
-@media (min-width: 960px) {
-  .lz-home .lz-ask-discovery {
-    grid-template-columns: 240px minmax(0, 1fr);
-    column-gap: 64px;
-  }
+.lz-home .lz-ask-discovery-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 4px 20px;
 }
 
 .lz-home .lz-ask-discovery-head h3 {
+  grid-column: 1;
+  grid-row: 1;
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(24px, 2.4vw, 30px);
+  font-size: clamp(22px, 2vw, 26px);
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0.02em;
 }
 
 .lz-home .lz-ask-discovery-head p {
-  margin: 8px 0 0;
-  font-size: 14px;
-  line-height: 1.75;
+  grid-column: 1;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.7;
   color: var(--lz-muted);
-}
-
-@media (min-width: 960px) {
-  .lz-home .lz-ask-discovery-head {
-    padding-top: 20px;
-  }
 }
 
 /* How many questions and answers are public: a total, so it carries no live dot. */
 .lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 14px;
+  margin: 0;
   font-size: 13.5px;
   font-weight: 600;
   color: var(--lz-green-text);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .lz-home .lz-ask-qcard-head time.fresh::before {
@@ -2375,10 +2356,22 @@
 
 /* 最近问 · 最常问 open every question on ask.lizheng.ai, in one order or the other. */
 .lz-home .lz-ask-discovery-views {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 22px;
-  margin-top: 18px;
+  gap: 4px 20px;
+}
+
+@media (max-width: 600px) {
+  .lz-home .lz-ask-discovery-head p {
+    grid-column: 1 / -1;
+  }
+
+  .lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
+    grid-row: auto;
+    justify-self: start;
+  }
 }
 
 .lz-home .lz-ask-discovery-views button {
@@ -2460,8 +2453,8 @@
   justify-items: center;
   align-content: center;
   gap: 4px;
-  width: 46px;
-  min-height: 52px;
+  width: 44px;
+  min-height: 48px;
   margin-top: 14px;
   border-radius: 8px;
   box-shadow: inset 0 0 0 1px var(--lz-line-2);
@@ -2587,9 +2580,9 @@
 
 .lz-home .lz-ask-qcard-head {
   display: grid;
-  gap: 6px;
+  gap: 4px;
   width: 100%;
-  padding: 20px 0;
+  padding: 16px 0;
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -2618,7 +2611,7 @@
 
 /* No lone 做？ on a question's last line. */
 .lz-home .lz-ask-qcard-head b {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.55;
   color: var(--lz-ink);
@@ -2638,16 +2631,6 @@
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-}
-
-.lz-home .lz-ask-qcard-head .summary {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--lz-muted);
 }
 
 .lz-home .lz-ask-qcard-head .meta {
@@ -2745,17 +2728,22 @@
 .lz-home .lz-ask-discovery-more {
   justify-self: start;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  gap: 8px;
   min-height: 44px;
-  padding-top: 12px;
+  padding-top: 8px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--lz-green-text);
-  text-underline-offset: 4px;
 }
 
-.lz-home .lz-ask-discovery-more:hover {
-  text-decoration: underline;
+.lz-home .lz-ask-discovery-more i {
+  font-style: normal;
+  transition: transform 0.25s;
+}
+
+.lz-home .lz-ask-discovery-more:hover i {
+  transform: translateX(4px);
 }
 
 /* 再看N个 opens the folded questions in place: the green of the link after it, with the
@@ -2781,15 +2769,11 @@
 
 @media (max-width: 720px) {
   .lz-home .lz-ask-qcard-head {
-    padding: 18px 0;
+    padding: 14px 0;
   }
 
   .lz-home .lz-ask-qcard-head b {
-    font-size: 17px;
-  }
-
-  .lz-home .lz-ask-qcard-head .summary {
-    font-size: 14.5px;
+    font-size: 16.5px;
   }
 }
 
@@ -3486,22 +3470,30 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px 20px;
-  margin-top: clamp(56px, 7vw, 88px);
-  padding-top: 24px;
+  gap: 8px 16px;
+  margin-top: clamp(36px, 4vw, 48px);
+  padding-top: 20px;
   border-top: 1px solid var(--lz-line-2);
   color: var(--lz-ink-2);
 }
 
 .lz-home .open-context .gh {
-  width: 26px;
-  height: 26px;
+  width: 22px;
+  height: 22px;
   color: var(--lz-ink);
+}
+
+/* The question and the sentence run as one line. */
+.lz-home .open-context > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
 }
 
 .lz-home .open-context b {
   font-family: var(--num);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--lz-ink);
   transition: color 0.2s;
@@ -3512,17 +3504,9 @@
 }
 
 .lz-home .open-context p {
-  margin-top: 2px;
   font-size: 14.5px;
   line-height: 1.7;
   color: var(--lz-muted);
-}
-
-.lz-home .open-context .go {
-  font-size: 14.5px;
-  font-weight: 600;
-  color: var(--lz-green-text);
-  white-space: nowrap;
 }
 
 @media (max-width: 720px) {
@@ -3568,7 +3552,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0 28px;
-  margin: -6px 0 48px;
+  margin: -6px 0 36px;
   padding: 0;
   list-style: none;
 }
@@ -3597,12 +3581,17 @@
   letter-spacing: 0;
 }
 
-.lz-home .city-inside b span {
+.lz-home .city-inside b i {
+  display: inline-block;
+  margin-left: 4px;
   font-family: var(--sans);
+  font-style: normal;
   font-weight: 400;
   color: var(--lz-mint);
   opacity: 0.6;
-  transition: opacity 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.25s;
 }
 
 .lz-home .city-inside a > span {
@@ -3617,9 +3606,10 @@
   border-top-color: var(--lz-mint);
 }
 
-.lz-home .city-inside a:hover b span,
-.lz-home .city-inside a:focus-visible b span {
+.lz-home .city-inside a:hover b i,
+.lz-home .city-inside a:focus-visible b i {
   opacity: 1;
+  transform: translateX(4px);
 }
 
 @media (max-width: 980px) {
@@ -4007,7 +3997,7 @@
 /* Tall enough on phones that an open card always fits above or below the
    light it belongs to. */
 .lz-home .city-window .field canvas {
-  height: clamp(360px, 34vw, 460px);
+  height: clamp(360px, 29vw, 420px);
   cursor: pointer;
 }
 
@@ -4133,31 +4123,15 @@
   }
 }
 
-/* The way into city.lizheng.ai sits beside the join button: a quiet
-   mint link, so the ivory button stays the one clear action. */
+/* The way into city.lizheng.ai sits beside the join button as a text link, so the ivory button
+   stays the one clear action. */
 .lz-home .city-actions {
   display: flex;
   flex: 0 1 auto;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px 26px;
+  gap: 16px 28px;
   max-width: 100%;
-}
-
-.lz-home .city-explore {
-  padding-bottom: 2px;
-  border-bottom: 1px solid rgb(143 212 164 / 0.4);
-  color: var(--lz-mint);
-  font-size: 15px;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: border-color 0.2s;
-}
-
-.lz-home .city-explore:hover,
-.lz-home .city-explore:focus-visible {
-  border-bottom-color: var(--lz-mint);
-  outline: none;
 }
 
 .lz-home .paths {
@@ -4245,14 +4219,6 @@
   padding-top: 24px;
 }
 
-.lz-home .path .lnk {
-  display: inline-flex;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--lz-on-forest);
-}
-
 .lz-home .path.main .btn {
   width: 100%;
 }
@@ -4315,11 +4281,7 @@
   font-weight: 600;
 }
 
-.lz-home .ent a {
-  font-weight: 500;
-  color: var(--lz-on-forest);
-  white-space: nowrap;
-}
+
 
 @media (max-width: 900px) {
   .lz-home .paths {
@@ -4380,21 +4342,7 @@
 }
 
 .lz-home .invite .shop-link {
-  display: inline-flex;
-  gap: 6px;
-  margin-top: 30px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid var(--lz-line-2);
-  font-size: 14.5px;
-  color: var(--lz-muted);
-  transition:
-    color 0.2s,
-    border-color 0.2s;
-}
-
-.lz-home .invite .shop-link:hover {
-  border-color: currentColor;
-  color: var(--lz-green-text);
+  margin-top: 26px;
 }
 
 /* ---------- Reveal on scroll (content always stays visible) ---------- */

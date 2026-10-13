@@ -33,7 +33,7 @@ export default function Works({ lang }: { lang: Lang }) {
           <Phrases text={t.zbs.title} />
         </h3>
         <p>{t.zbs.body}</p>
-        <span className="go">
+        <span className="go lz-link">
           {t.zbs.go} <Arrow />
         </span>
       </div>
@@ -61,7 +61,7 @@ export default function Works({ lang }: { lang: Lang }) {
         <div className="meta">{t.growth.meta}</div>
         <h3>{t.growth.title}</h3>
         <p>{t.growth.body}</p>
-        <span className="go">
+        <span className="go lz-link">
           {t.growth.go} <Arrow />
         </span>
       </div>

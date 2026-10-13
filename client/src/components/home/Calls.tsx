@@ -6,8 +6,8 @@ import { EXTERNAL, Lines, Phrases } from "./parts";
 /**
  * Dated public calls, oldest first, each with its original record. The calls
  * that matter most stay open: the key line in large type, and the newest one
- * with its video or cover. On phones the calls marked fold wait behind a
- * button, so the chapter starts with the ones that matter most.
+ * with its video or cover. The calls marked fold wait behind a button, so the
+ * chapter starts with the ones that matter most and fits one screen.
  */
 export default function Calls({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].calls;
@@ -104,7 +104,7 @@ export default function Calls({ lang }: { lang: Lang }) {
         {folded > 0 && (
           <button
             type="button"
-            className="btn btn-line calls-more"
+            className="lz-expand calls-more"
             aria-controls="calls-list"
             aria-expanded={open}
             onClick={() => setOpen(value => !value)}

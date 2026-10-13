@@ -420,7 +420,7 @@ export default function CityWindow({
           className="city-enter"
           href={lang === "en" ? LINKS.connectionsEn : LINKS.connections}
         >
-          {view.enter} <span aria-hidden="true">↗</span>
+          {view.enter} <span aria-hidden="true">→</span>
         </a>
       </div>
       <div className="city-caption">

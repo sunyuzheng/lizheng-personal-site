@@ -6,7 +6,9 @@ import { Link } from "wouter";
 
 // Full wording and existing translations follow yuzheng-profile/EVIDENCE.md
 // and the previously published site. Ellipses explicitly mark shortened clauses.
-// The homepage shows the excerpts; About shows the full quotations.
+// The homepage shows `punch`, the shortest faithful cut, where "|" marks where a
+// narrow column may break a Chinese line (see Phrases); About shows the full
+// quotations (and `excerpt` where a page wants a longer cut).
 export const endorsements = [
   {
     id: "liu-jia",
@@ -20,6 +22,7 @@ export const endorsements = [
         "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era. Even as a scientist, I found his course deeply illuminating.",
       excerpt:
         "Yuzheng shares more than tools. He teaches a philosophy of thinking—the rarest and most valuable thing in the AI era.",
+      punch: "Yuzheng shares more than tools. He teaches a philosophy of thinking…",
     },
     zh: {
       name: "刘嘉",
@@ -30,6 +33,7 @@ export const endorsements = [
         "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。他的课程让我这个科学家也深受启发。",
       excerpt:
         "立正分享的不只是工具，而是思维哲学——这才是AI时代最稀缺、最有价值的东西。",
+      punch: "立正分享的不只是工具，而是思维哲学……",
     },
   },
   {
@@ -44,6 +48,7 @@ export const endorsements = [
         "Yuzheng has built an AI education community that is carefully curated, practical, and unusually useful for people doing real work.",
       excerpt:
         "Yuzheng has built an AI education community that is carefully curated, practical, and unusually useful for people doing real work.",
+      punch: "Yuzheng has built an AI education community that is carefully curated, practical…",
     },
     zh: {
       name: "Wei Manfredi",
@@ -54,6 +59,7 @@ export const endorsements = [
         "立正做的AI教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
       excerpt:
         "立正做的AI教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",
+      punch: "立正做的AI教育社群|很少见：内容筛选认真，实战密度高……",
     },
   },
   {
@@ -68,6 +74,7 @@ export const endorsements = [
         "Yuzheng distills years of product growth wisdom into actionable insight—helping data scientists surface decisive signals, PMs turn numbers into strategy, and founders find a repeatable path to compounding PMF.",
       excerpt:
         "Yuzheng distills years of product growth wisdom into actionable insight—helping data scientists surface decisive signals, PMs turn numbers into strategy…",
+      punch: "Yuzheng distills years of product growth wisdom into actionable insight…",
     },
     zh: {
       name: "Vijaye Raji",
@@ -78,6 +85,7 @@ export const endorsements = [
         "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略，也帮助创始人找到能够持续复利的PMF路径。",
       excerpt:
         "立正把多年产品增长经验提炼成可执行的洞察：帮助数据科学家找到决定性信号、产品经理把数字变成策略……",
+      punch: "立正把多年产品增长经验|提炼成可执行的洞察……",
     },
   },
   {
@@ -91,6 +99,7 @@ export const endorsements = [
       quote:
         "Yuzheng is a true AI-native pioneer. With his distinctive way of thinking, he helps more people achieve superlinear growth in the AI era.",
       excerpt: "Yuzheng is a true AI-native pioneer.",
+      punch: "Yuzheng is a true AI-native pioneer.",
     },
     zh: {
       name: "戴雨森",
@@ -100,6 +109,7 @@ export const endorsements = [
       quote:
         "立正是真正的AI Native Pioneer——他用独特的思维框架，带领更多人在AI时代实现超线性成长。",
       excerpt: "立正是真正的AI Native Pioneer……",
+      punch: "立正是真正的|AI Native Pioneer……",
     },
   },
 ];

@@ -2369,6 +2369,7 @@
   }
 
   .lz-home .lz-ask-discovery-head .lz-ask-discovery-live {
+    grid-column: 1 / -1;
     grid-row: auto;
     justify-self: start;
   }

@@ -485,6 +485,27 @@
   transform: translate(-50%, 0);
 }
 
+/* Wide screens: the portrait takes the height of the words beside it and its head starts beside the
+   headline's first line, at every width. It used to rise about 57px above the headline on laptops,
+   close under the header; the first screen is now only as tall as its words. */
+@media (min-width: 861px) {
+  .lz-home .hero .wrap {
+    align-items: stretch;
+    padding-top: calc(128px + env(safe-area-inset-top, 0px));
+  }
+
+  .lz-home .hero-art {
+    height: auto;
+    align-self: stretch;
+  }
+
+  .lz-home .hero-art .portrait {
+    top: 64px;
+    bottom: auto;
+    height: calc(100% - 64px);
+  }
+}
+
 @media (max-width: 860px) {
   .lz-home .hero .wrap {
     grid-template-columns: 1fr;
@@ -1312,6 +1333,10 @@
   margin-top: 16px;
 }
 
+.lz-home .talks-head .more {
+  margin-top: 26px;
+}
+
 .lz-home .talks-stage {
   margin: 0;
 }
@@ -1781,17 +1806,42 @@
   }
 }
 
-/* Before a question: the box (with its notes) on the left, 别人在问什么 on the right. */
+/* Before a question: the box (with its notes) on the left, 别人在问什么 on the right, and the Open
+   Context line in the space the taller list leaves under the box, so it needs no row of its own. In
+   English there is no list, only two short examples, so the line closes the chapter across both. */
 @media (min-width: 1040px) {
   .lz-home .lz-ask-native-body:not(.asking) {
     display: grid;
     grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
     column-gap: 56px;
     align-items: start;
   }
 
+  .lz-home .lz-ask-native-body:not(.asking) > .lz-ask-compose {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
   .lz-home .lz-ask-native-body:not(.asking) > :is(.lz-ask-discovery, .lz-ask-starters) {
+    grid-column: 2;
+    grid-row: 1 / span 2;
     margin-top: 0;
+  }
+
+  .lz-home .lz-ask-native-body:not(.asking) > .open-context {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+  }
+
+  .lz-home .lz-ask-native-body:not(.asking):has(> .lz-ask-starters) > .lz-ask-starters {
+    grid-row: 1;
+  }
+
+  .lz-home .lz-ask-native-body:not(.asking):has(> .lz-ask-starters) > .open-context {
+    grid-column: 1 / -1;
+    align-self: start;
   }
 }
 

@@ -510,7 +510,8 @@ function AnswerSections({
   ));
 }
 
-export default function AskLizheng({ lang }: { lang: Lang }) {
+/** `children` close the body: placed under the question box on wide screens (see .lz-ask-native-body). */
+export default function AskLizheng({ lang, children }: { lang: Lang; children?: ReactNode }) {
   const t = HOME_COPY[lang].ask;
   const c = COPY[lang];
   const [question, setQuestion] = useState("");
@@ -1623,6 +1624,7 @@ export default function AskLizheng({ lang }: { lang: Lang }) {
               </button>
             </div>
           )}
+          {children}
         </div>
       </div>
     </>

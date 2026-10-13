@@ -69,7 +69,8 @@ export default function Talks({ lang }: { lang: Lang }) {
     <section className="sec talks" id={SECTION.talks}>
       <div className="wrap">
         {/* The head's picture is the show's setting, not an episode: Acquired's hosts on stage with
-            him, for those who know them. No link, no play button; the event's name below. */}
+            him, for those who know them. No link, no play button; the event's name below. The two
+            ways on sit under the title, beside the picture, rather than in a row of their own. */}
         <div className="head talks-head rv">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
@@ -79,6 +80,14 @@ export default function Talks({ lang }: { lang: Lang }) {
             <p>
               <Phrases text={t.intro} />
             </p>
+            <div className="more">
+              <Link className="btn btn-green" href={withLanguage("/guests", lang)}>
+                {t.all}
+              </Link>
+              <a className="btn btn-line" href={LINKS.youtube} {...EXTERNAL}>
+                {t.subscribe}
+              </a>
+            </div>
           </div>
           <figure className="talks-stage">
             <img
@@ -116,15 +125,6 @@ export default function Talks({ lang }: { lang: Lang }) {
             </>
           )}
         </Marquee>
-
-        <div className="more">
-          <Link className="btn btn-green" href={withLanguage("/guests", lang)}>
-            {t.all}
-          </Link>
-          <a className="btn btn-line" href={LINKS.youtube} {...EXTERNAL}>
-            {t.subscribe}
-          </a>
-        </div>
       </div>
     </section>
   );

@@ -23,7 +23,7 @@ import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount,
 import { askedAgo, discoveryDetail, discoveryLink, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
-import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
+import { answerPage, copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
 import AnswerMapPanel from "./AnswerMap";
 import type { ExportData } from "@/lib/ask-share";
 import type { MapSource } from "@shared/ask-answer-map.js";
@@ -769,18 +769,23 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // answer here, under its map (2026-10-14, the owner: once opened, it should be shareable): the
   // page's link to copy, send or scan, and the answer as an image or a PDF.
   const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
-  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: discoveryLink(card.public_id), ...cardShares[card.public_id] });
+  // Its own page, as its answer (or, before that is read, its card) gives it.
+  const cardLink = (card: DiscoveryCard | SimilarQuestion) => {
+    const detail = cardDetails[card.public_id];
+    return discoveryLink(card.public_id, (typeof detail === "object" && detail.share_url) || card.share_url);
+  };
+  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: cardLink(card), ...cardShares[card.public_id] });
   const sharedCard = (action: string) => {
     markUsage("d_share");
     track("Ask Discovery Share", { surface: "home", view: discoveryTab, action });
   };
   const copyCard = async (card: DiscoveryCard | SimilarQuestion) => {
     sharedCard("copy");
-    setCardShare(card.public_id, { copied: await copyWhenReady(discoveryLink(card.public_id)) });
+    setCardShare(card.public_id, { copied: await copyWhenReady(cardLink(card)) });
   };
   const sendCard = async (card: DiscoveryCard | SimilarQuestion) => {
     sharedCard("send");
-    try { await navigator.share({ title: card.question, url: discoveryLink(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
+    try { await navigator.share({ title: card.question, url: cardLink(card) }); } catch { /* Closed, or not allowed here. */ }
   };
   const qrCard = (card: DiscoveryCard | SimilarQuestion) => {
     const open = !cardShares[card.public_id]?.qr;
@@ -791,7 +796,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     sharedCard(kind);
     void deliver(kind, `q-${card.public_id}`, {
       question: card.question, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult,
-      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: discoveryLink(card.public_id),
+      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: cardLink(card),
     }, () => setCardExportError(card.public_id));
   };
   const likeOf = (card: DiscoveryCard | SimilarQuestion) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);
@@ -1002,12 +1007,20 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     if (value.bonus === "granted" || value.bonus === "claimed")
       setAccount(prev => (prev ? { ...prev, share_bonus: false, ...(Number.isFinite(value.remaining) ? { remaining: value.remaining } : {}) } : prev));
   };
-  // Every finished answer gets its page at once (`auto`, not counted as a share), except one to a
-  // question with the situation: its page waits until the asker makes it.
+  // Every answered question has its page from the moment it was archived, and Builder sends its address
+  // with the answer (2026-10-14). From an older Builder the page asks for it (`auto`, not counted as a
+  // share). An answer about the asker's own situation gets a page only when its asker makes one.
   const autoShared = useRef(new Set<number>());
   useEffect(() => {
     for (const turn of turns) {
-      if (turn.result?.status !== "answered" || !turn.result.share || turn.request.context || autoShared.current.has(turn.id)) continue;
+      if (turn.result?.status !== "answered" || !turn.result.share || autoShared.current.has(turn.id)) continue;
+      const page = answerPage(turn.result.share);
+      if (page) {
+        autoShared.current.add(turn.id);
+        setShare(turn.id, { phase: "ready", url: page });
+        continue;
+      }
+      if (turn.request.context || turn.request.intent === "apply") continue;
       autoShared.current.add(turn.id);
       setShare(turn.id, { phase: "working", error: "" });
       createShareLink(turn.result.share, { bonus: false, auto: true })

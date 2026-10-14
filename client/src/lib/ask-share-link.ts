@@ -1,8 +1,10 @@
 /**
- * 分享这条回答 on the homepage's Ask section: an answered question gets its own public page at
- * ask.lizheng.ai/s/<date>/<word> (shared/ask-share-link.ts); the page stays. Each answered result carries `share`:
- * the record, its address word and Builder's proof, which only this page holds. A share may give
- * back one of today's questions; that offer never shows inside WeChat, which forbids rewarding shares.
+ * 分享这条回答 on the homepage's Ask section. An answered question has its own public page at
+ * ask.lizheng.ai/s/<date>/<word> (shared/ask-share-link.ts), made when the answer is archived and sent
+ * with it (`share.url`, since 2026-10-14); the page stays. Each answered result also carries the
+ * record, its address word and Builder's proof, which only this page holds: with them it makes the page
+ * of an answer about the asker's own situation when asked to, and reports the share, which may give
+ * back one of today's questions (never inside WeChat, which forbids rewarding shares).
  * ask.lizheng.ai has the same module (ask-lizheng's src/share-link.js).
  */
 import type { AskShare } from "./ask-lizheng";
@@ -18,12 +20,18 @@ async function post(path: string, body: unknown) {
   return value;
 }
 
+const PAGE = /^https:\/\/ask\.lizheng\.ai\/s\/\d{4}-\d{2}-\d{2}\/[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
+/** Whether an address is an answer's own page. */
+export const isAnswerPage = (url: unknown): url is string => typeof url === "string" && PAGE.test(url);
+/** The answer's page as Builder sent it with the answer, or "" (from Builder before 2026-10-14, or one not made). */
+export const answerPage = (share: AskShare) => (isAnswerPage(share.url) ? share.url : "");
+
 /** Makes (or finds) the answer's page; `bonus` asks for today's question back. `auto` is the page made
  * as the answer arrives, before anyone shares it: not counted as a share (shared/ask-share-link.ts). */
 export async function createShareLink(share: AskShare, options: { bonus: boolean; auto?: boolean }): Promise<ShareResult> {
   const value = await post("/api/ask-lizheng/share", { record_id: share.record_id, word: share.word, proof: share.proof, surface: "home",
     bonus: options.bonus, auto: options.auto === true });
-  if (typeof value.url !== "string" || !value.url.startsWith("https://ask.lizheng.ai/s/")) throw new Error("share_failed");
+  if (!isAnswerPage(value.url)) throw new Error("share_failed");
   return value as ShareResult;
 }
 

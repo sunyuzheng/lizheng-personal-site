@@ -263,6 +263,45 @@ describe("public durable-storage failure", () => {
     }
   );
 });
+describe("an answer's page, made as it is archived (2026-10-14)", () => {
+  const finish = () => ({
+    v: 3, event: "finish", record_id: ID, status: "answered", duration_ms: 1200, answer: answer(), error_code: null,
+    share_word: "career-choice",
+  });
+  it("sends the word and tells a Builder that sent it where the page is", async () => {
+    const body = Buffer.from(JSON.stringify(finish()));
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: [1, "career-choice-2", "2026-10-14"] }));
+    expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true, share: "2026-10-14/career-choice-2" });
+    const command = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
+    expect(command.slice(10, 12)).toEqual(["career-choice", ID]);
+    expect(Number.isFinite(Date.parse(command[12])) && Number.isSafeInteger(command[13])).toBe(true);
+  });
+  it("answers { ok: true } alone when no page was made, or to a Builder that sent no word", async () => {
+    let body = Buffer.from(JSON.stringify(finish()));
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: [1, "", "2026-10-14"] }));
+    expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
+    const { share_word: _word, ...older } = finish();
+    body = Buffer.from(JSON.stringify(older));
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: [0, "career-choice", "2026-10-14"] }));
+    expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
+  });
+  it("takes a word only with an answer, and only one of up to four lowercase words", () => {
+    expect(opsEvent(Buffer.from(JSON.stringify(finish())))).toEqual(finish());
+    for (const change of [
+      { status: "error", answer: null },
+      { share_word: "Career Choice" },
+      { share_word: "a-b-c-d-e" },
+      { share_word: "" },
+      { share_word: 7 },
+    ])
+      expect(() => opsEvent(Buffer.from(JSON.stringify({ ...finish(), ...change })))).toThrow("invalid_request");
+  });
+  it("fails closed on a reply that is not the finish script's", async () => {
+    const body = Buffer.from(JSON.stringify(finish()));
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: 1 }));
+    await expect(storeOpsEvent(body, proof(body))).rejects.toMatchObject({ code: "ops_storage_unavailable" });
+  });
+});
 describe("trusted v3 intake boundary", () => {
   it("archives the complete displayed answer and source snapshot with the same final status", async () => {
     const finish = {
@@ -276,9 +315,12 @@ describe("trusted v3 intake boundary", () => {
     };
     const body = Buffer.from(JSON.stringify(finish));
     expect(opsEvent(body)).toEqual(finish);
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: [1, "", "2026-10-14"] }));
     expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
     const command = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
-    expect(JSON.parse(command.at(-2))).toEqual(finish.answer);
+    expect(JSON.parse(command[8])).toEqual(finish.answer);
+    // Without a word, no page is asked for.
+    expect(command.slice(10, 12)).toEqual(["", ID]);
     expect(command[1]).not.toMatch(/EXPIRE/);
     expect(() =>
       opsEvent(Buffer.from(JSON.stringify({ ...finish, answer: null })))

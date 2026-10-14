@@ -2,6 +2,8 @@ import { OPS_BODY_LIMIT, storeOpsEvent } from "../shared/ask-ops-storage.js";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { ACCESS_HEADERS, AccessError, officialOrigin } from "../shared/ask-access.js";
 import { storeQueryRecord } from "../shared/ask-query-storage.js";
+import { waitUntil } from "@vercel/functions";
+import { copySharedAnswer } from "../shared/ask-public-files.js";
 
 async function input(req: IncomingMessage): Promise<Buffer> {
   if (String(req.headers["content-type"] || "").split(";")[0] !== "application/octet-stream")
@@ -47,6 +49,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const result = typeof proof === "string" && proof.startsWith("v3.") ? await storeOpsEvent(body, proof) : await storeQueryRecord(body, proof);
     res.statusCode = 200;
     res.end(JSON.stringify(result));
+    // An answer's page was just made: its copy for when the database is down, written after the reply,
+    // since Builder holds the answer back until this reply comes.
+    if ("share" in result && typeof result.share === "string") {
+      const [day, slug] = result.share.split("/");
+      waitUntil(copySharedAnswer(day, slug));
+    }
   } catch (error) {
     const failure = error instanceof AccessError ? error : new AccessError("query_storage_unavailable");
     res.statusCode = failure.status;

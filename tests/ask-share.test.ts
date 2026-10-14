@@ -252,6 +252,31 @@ describe("the endpoint", () => {
     return fetcher;
   }
 
+  // 2026-10-14: a public question has its own page; links shared from its card before then go there.
+  it("sends a public question's old link to its own page, and shows the answer while it has none", async () => {
+    vi.stubEnv("ASK_OPS_GATEWAY_SECRET", "s".repeat(64));
+    const id = "2e195aff-2690-47b1-aaa6-5d39e6a8d821";
+    const detail = (extra: Record<string, unknown> = {}) => ({
+      v: 1, public_id: id, revision: 2, topic_key: "c".repeat(32), topic_label: "合成主题", question: "合成的公开问题？",
+      published_at: "2026-10-14T01:00:00.000Z", updated_at: "2026-10-14T01:00:00.000Z", attribution: "AI整理，不是立正本人回复",
+      answer: answer(), ...extra,
+    });
+    const serve = (value: unknown) => vi.stubGlobal("fetch", vi.fn(async (url: string) => {
+      expect(String(url)).toContain(`/api/discovery?action=detail&public_id=${id}`);
+      return new Response(JSON.stringify(value), { headers: { "content-type": "application/json" } });
+    }));
+    serve(detail({ share_url: "https://ask.lizheng.ai/s/2026-10-14/career-choice" }));
+    let reply = await call(`/api/ask-lizheng-share?__route=public&id=${id}`);
+    expect(reply.statusCode).toBe(308);
+    expect(reply.headers.get("location")).toBe("https://ask.lizheng.ai/s/2026-10-14/career-choice");
+    expect(reply.headers.get("cache-control")).toBe("no-store");
+    // Only its own page's address is followed.
+    serve(detail({ share_url: "https://example.test/s/2026-10-14/career-choice" }));
+    reply = await call(`/api/ask-lizheng-share?__route=public&id=${id}`, { agent: "HeadlessChrome" });
+    expect(reply.statusCode).toBe(200);
+    expect(reply.body).toContain("合成的公开问题？");
+  });
+
   it("answers an address that is no public question's with the page that says it is gone", async () => {
     const reply = await call("/api/ask-lizheng-share?__route=public&id=not-a-question");
     expect(reply.statusCode).toBe(404);

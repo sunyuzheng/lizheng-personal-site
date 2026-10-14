@@ -1,21 +1,26 @@
 /**
- * 分享这条回答: the person who asked may give one answered question its own public page at
- * ask.lizheng.ai/s/<date>/<word>: the day it was asked (Beijing time, the record's own day) and an
- * English word for its topic, which the model gave the answer (word-2, word-3… when a day repeats
- * one). The page shows the question and the answer, never the situation (which is not kept). The
- * owner's rules (2026-10-04): what can be shared goes to search engines, every shared page; sharing
- * is a feature, not consent (asking already is), so a link stays and is never withdrawn by its asker.
+ * Each answer's own page, ask.lizheng.ai/s/<date>/<word>: the day it was asked (Beijing time, the
+ * record's own day) and an English word for its topic, which the model gave the answer (word-2,
+ * word-3… when a day repeats one). The page shows the question and the answer, never the situation
+ * (which is not kept). The owner's rules (2026-10-04): what can be shared goes to search engines,
+ * every page; sharing is a feature, not consent (asking already is), so a link stays and is never
+ * withdrawn by its asker.
  *
- * Builder hands the asking page, with each answered v4 result, the record id, the word and a proof
- * (HMAC-SHA256 of "ask-share:v1:<record_id>:<word>" under the quota-store key, which this site holds
- * as ASK_QUOTA_STORE_SECRET). Only that page can share the record, only under that word. A word, once
- * taken on a day, stays with its record: a deleted record never hands its address to another
- * question. The page reads the live record each time, so a record deleted in Ops is gone at once.
+ * Since 2026-10-14 (the owner: 问完这个页面就生成了，url就固定了，不需要点分享才能分享；提问人只是贡献
+ * 了一个问题，剩下都是我们的) the page is made when the answer is archived (ask-ops-storage.ts,
+ * OPS_FINISH_SCRIPT), under the word Builder sends with it, for every answered v4 question except one
+ * asked about the asker's own situation (apply), and Builder puts its address in the result. A question
+ * shown in 别人在问什么 links to this same page.
  *
- * Since 2026-10-13 (the owner's request) the page makes an answer's address as soon as the answer
- * arrives (`auto`), so the asker sees it at once; an answer asked with the situation still waits for
- * the asker. Making it is not a share: the share is the asker copying, sending or showing its QR
- * code, which the page reports once (auto false). That is what Ops counts as a share.
+ * This endpoint remains for two things. An answer about the asker's situation gets a page only when
+ * its asker makes one: Builder hands the asking page, with each answered v4 result, the record id, the
+ * word and a proof (HMAC-SHA256 of "ask-share:v1:<record_id>:<word>" under the quota-store key, which
+ * this site holds as ASK_QUOTA_STORE_SECRET), so only that page can, and only under that word. And the
+ * share itself: the asker copying, sending or showing the QR code, which the page reports once (auto
+ * false); that is what Ops counts as a share. Pages from before 2026-10-14 also ask here for an
+ * answer's address as it arrives (`auto`), and find the one already made. A word, once taken on a day,
+ * stays with its record: a deleted record never hands its address to another question. The page reads
+ * the live record each time, so a record deleted in Ops is gone at once.
  *
  * A share may also give back one of today's questions: once a day per quota subject, only when one
  * was used, never for Founding Members (unlimited) and never inside WeChat or the iPhone app, where
@@ -25,15 +30,15 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { AccessError, redis, type AskIdentity } from "./ask-access.js";
 import { archivedAnswer, type ArchivedAnswer } from "./ask-archive-answer.js";
-import { OPS_PREFIX } from "./ask-ops-storage.js";
+import { OPS_PREFIX, PAGE_ADDRESS_LUA, PAGE_SLUG, PAGE_WORD } from "./ask-ops-storage.js";
 import { USAGE_PREFIX, USAGE_TTL_SECONDS, usageDay } from "./ask-usage.js";
 
 export const SHARE_ORIGIN = "https://ask.lizheng.ai";
 export const SHARE_DAY = /^\d{4}-\d{2}-\d{2}$/;
 /** The model's word: one to four lowercase English words. */
-export const SHARE_WORD = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,3}$/;
+export const SHARE_WORD = PAGE_WORD;
 /** An address: the word, with -2, -3… when the day already had it. */
-export const SHARE_SLUG = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
+export const SHARE_SLUG = PAGE_SLUG;
 export const SHARE_BODY_LIMIT = 2048;
 export const SHARE_SURFACES = ["home", "ask", "app"] as const;
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
@@ -83,20 +88,13 @@ export function verifyShareProof(request: ShareProof) {
 // word, time, count (0|1), surface, usage day key, usage total key, ttl, time (ms). Only an answered
 // v4 record, still there, can be shared. A shared record keeps its address; otherwise it takes the
 // first free word of its day (word, word-2…). Counts each record's share once.
-export const SHARE_SCRIPT = `
+export const SHARE_SCRIPT = `${PAGE_ADDRESS_LUA}
 if redis.call('EXISTS',KEYS[2])==1 or redis.call('EXISTS',KEYS[1])==0 then return {'GONE','',''} end
 local row=redis.call('HMGET',KEYS[1],'status','notice_version','answer','day','share_slug')
 local day=row[4]
 if row[1]~='answered' or row[2]~='v4' or not row[3] or row[3]=='' or not day or day=='' then return {'UNSHAREABLE','',''} end
 if row[5] and row[5]~='' then return {'SHARED',row[5],day} end
-local slug=''
-for n=1,500 do
- local candidate=ARGV[3]
- if n>1 then candidate=candidate..'-'..n end
- local key=ARGV[1]..'share:'..day..':'..candidate
- local owner=redis.call('GET',key)
- if not owner or owner==ARGV[2] then redis.call('SET',key,ARGV[2]) slug=candidate break end
-end
+local slug=take_address(ARGV[1],day,ARGV[3],ARGV[2])
 if slug=='' then return {'FULL','',''} end
 redis.call('HSET',KEYS[1],'share_slug',slug,'shared_at',ARGV[4])
 redis.call('ZADD',KEYS[3],tonumber(ARGV[10]),ARGV[2])

@@ -56,7 +56,7 @@ describe("new source attribution archive contract", () => {
     expect(sender).not.toHaveBeenCalled();
   });
   it("signed intake writes full unchanged source snapshot only to mocked storage", async () => {
-    const sender=vi.fn(async (_command: (string | number)[]) => 1);
+    const sender=vi.fn(async (_command: (string | number)[]) => [1,"","2026-10-14"]);
     await expect(storeOpsEvent(raw,proof(raw),sender)).resolves.toEqual({ok:true});
     expect(sender).toHaveBeenCalledOnce();
     const args=sender.mock.calls[0][0];

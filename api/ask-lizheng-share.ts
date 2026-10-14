@@ -3,14 +3,15 @@ import { AccessError, accessEnabled, resolveIdentity } from "../shared/ask-acces
 import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 import { claimShareBonus, countShare, countShareView, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
-import { fileWriter, publicJson, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
+import { copySharedAnswer, publicJson, readShareCopy } from "../shared/ask-public-files.js";
 import { publicDetail, PUBLIC_ID } from "../shared/ask-public-page.js";
 import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
 //   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap);
-//   GET ask.lizheng.ai/q/<id> (public): a question from 别人在问什么, shared from its card.
+//   GET ask.lizheng.ai/q/<id> (public): a question from 别人在问什么, as its card shared it before
+//   2026-10-14: it goes to the question's own page (share_url), or shows the answer if it has none.
 // The page is ask.lizheng.ai's own (shared/ask-share-page.ts): its scripts, its API on this origin,
 // and the small title-font slices its stylesheet carries inline (data:).
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https://www.lizheng.ai data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
@@ -77,6 +78,11 @@ async function publicAnswer(req: IncomingMessage, res: ServerResponse, url: URL)
       throw error;
     }
     if (!detail) throw new AccessError("ops_gateway_unavailable");
+    // Its own page counts its readers.
+    if (detail.share_url) {
+      send(res, 308, "text/plain; charset=utf-8", detail.share_url, { ...own, "Cache-Control": "no-store", Location: detail.share_url });
+      return;
+    }
     if (req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot"))) {
       try { await countShareView(); } catch { /* A missed count never fails the page. */ }
     }
@@ -125,13 +131,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       try { await countShare(request.surface); } catch { /* A missed count never fails the share. */ }
     }
     // A copy for when the database is down (shared/ask-public-files.ts); the link stands without it.
-    const write = fileWriter();
-    if (write) {
-      try {
-        const share = await readShare(shared.day, shared.slug, { reader: false });
-        if (share) await saveShareCopy(share, write);
-      } catch { /* the page reads the live record */ }
-    }
+    await copySharedAnswer(shared.day, shared.slug);
     let bonus: ShareBonus = "off", remaining: number | undefined;
     if (request.bonus && accessEnabled() && !NO_BONUS.test(String(req.headers["user-agent"] || ""))) {
       try {

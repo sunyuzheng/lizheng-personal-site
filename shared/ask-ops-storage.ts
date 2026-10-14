@@ -41,7 +41,30 @@ export type OpsFinish = {
   duration_ms: number;
   answer: ArchivedAnswer | null;
   error_code: string | null;
+  // The English word the model gave an answered question, for its page's address (2026-10-14).
+  share_word?: string;
 };
+/** One to four lowercase English words: the word of a page's address (ask.lizheng.ai/s/<day>/<word>). */
+export const PAGE_WORD = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,3}$/;
+/** An address: the word, with -2, -3… when its day already had it. */
+export const PAGE_SLUG = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
+/**
+ * Lua: the first free address of a day for one record (word, word-2…, up to 500), taken for it and
+ * returned, or '' when all are taken. An address another record holds stays its; one this record
+ * holds is its own. The finish script below and the share script (ask-share-link.ts) both take
+ * addresses with it, so a record gets the same address whichever comes first.
+ */
+export const PAGE_ADDRESS_LUA = `
+local function take_address(prefix,day,word,id)
+ for n=1,500 do
+  local candidate=word
+  if n>1 then candidate=candidate..'-'..n end
+  local key=prefix..'share:'..day..':'..candidate
+  local owner=redis.call('GET',key)
+  if not owner or owner==id then redis.call('SET',key,id) return candidate end
+ end
+ return ''
+end`;
 export type Sender = (command: (string | number)[]) => Promise<unknown>;
 function fail(): never {
   throw new AccessError("invalid_request", 400);
@@ -74,20 +97,23 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
     "intent",
     "entrypoint",
   ];
+  const finish = [
+    "v",
+    "event",
+    "record_id",
+    "status",
+    "duration_ms",
+    "answer",
+    "error_code",
+  ];
   const keys =
     r.event === "start"
       ? "notice_version" in r
         ? [...start, "notice_version", "has_background", "context"]
         : start
-      : [
-          "v",
-          "event",
-          "record_id",
-          "status",
-          "duration_ms",
-          "answer",
-          "error_code",
-        ];
+      : "share_word" in r
+        ? [...finish, "share_word"]
+        : finish;
   if (
     JSON.stringify(Object.keys(r).sort()) !== JSON.stringify(keys.sort()) ||
     r.v !== 3 ||
@@ -112,6 +138,14 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
       archivedAnswer(r.answer);
       if (r.answer.status !== r.status) fail();
     } else if (!["error", "cancelled"].includes(r.status)) fail();
+    // Only an answered question has a page.
+    if (
+      "share_word" in r &&
+      (r.status !== "answered" ||
+        typeof r.share_word !== "string" ||
+        !PAGE_WORD.test(r.share_word))
+    )
+      fail();
     return r;
   }
   if (
@@ -194,19 +228,34 @@ end
 for i=8,9 do redis.call('HINCRBY',KEYS[i],ARGV[6],1) end
 for i=10,11 do redis.call('HINCRBY',KEYS[i],ARGV[7],1) end
 return 1`;
-export const OPS_FINISH_SCRIPT = `
-if redis.call('EXISTS',KEYS[1]) == 0 then return 0 end
-local status=redis.call('HGET',KEYS[1],'status')
-if status ~= 'generating' then return 0 end
-local day=redis.call('HGET',KEYS[1],'day')
-redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
-for _,key in ipairs({KEYS[2],ARGV[3]..'day:'..day}) do
- redis.call('HINCRBY',key,'generating',-1)
- redis.call('HINCRBY',key,ARGV[1],1)
- redis.call('HINCRBY',key,'completed',1)
- redis.call('HINCRBY',key,'duration_ms',ARGV[2])
+// KEYS: the record, the totals. ARGV: status, duration, prefix, answer, error code, then the page's
+// word ('' for none), record id, time (ISO) and time (ms). Finishes a generating record once; then an
+// answered v4 question, unless asked about the asker's own situation (apply), gets its page
+// (2026-10-14, the owner: the page exists once the question is answered, without anyone sharing it).
+// A retry finds the record finished and its page made. Returns {finished now (1|0), slug, day}.
+export const OPS_FINISH_SCRIPT = `${PAGE_ADDRESS_LUA}
+if redis.call('EXISTS',KEYS[1]) == 0 then return {0,'',''} end
+local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','intent','share_slug')
+local status,day,done=row[1],row[2] or '',0
+if status == 'generating' then
+ redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
+ for _,key in ipairs({KEYS[2],ARGV[3]..'day:'..day}) do
+  redis.call('HINCRBY',key,'generating',-1)
+  redis.call('HINCRBY',key,ARGV[1],1)
+  redis.call('HINCRBY',key,'completed',1)
+  redis.call('HINCRBY',key,'duration_ms',ARGV[2])
+ end
+ status,done=ARGV[1],1
 end
-return 1`;
+local slug=row[5] or ''
+if slug == '' and (ARGV[6] or '') ~= '' and status == 'answered' and row[3] == 'v4' and row[4] ~= 'apply' and day ~= '' then
+ slug=take_address(ARGV[3],day,ARGV[6],ARGV[7])
+ if slug ~= '' then
+  redis.call('HSET',KEYS[1],'share_slug',slug,'shared_at',ARGV[8])
+  redis.call('ZADD',ARGV[3]..'shares',tonumber(ARGV[9]),ARGV[7])
+ end
+end
+return {done,slug,day}`;
 // Tombstones prevent a timed-out intake retry from resurrecting a manually deleted question.
 function beijingDay(created: number) {
   return new Date(created + 8 * 3600_000).toISOString().slice(0, 10);
@@ -215,7 +264,7 @@ export async function storeOpsEvent(
   body: Buffer,
   proof: unknown,
   send: Sender = redis
-) {
+): Promise<{ ok: true; share?: string }> {
   if (!opsEnabled()) throw new AccessError("ops_storage_disabled");
   if (body.length > OPS_BODY_LIMIT)
     throw new AccessError("input_too_large", 413);
@@ -258,7 +307,8 @@ export async function storeOpsEvent(
       r.has_background ?? "",
       r.context ?? "",
     ]);
-  } else
+  } else {
+    const now = Date.now();
     result = await send([
       "EVAL",
       OPS_FINISH_SCRIPT,
@@ -270,8 +320,26 @@ export async function storeOpsEvent(
       p,
       r.answer === null ? "" : JSON.stringify(r.answer),
       r.error_code || "",
+      r.share_word ?? "",
+      r.record_id,
+      new Date(now).toISOString(),
+      now,
     ]);
+    if (
+      !Array.isArray(result) ||
+      result.length !== 3 ||
+      ![0, 1].includes(result[0]) ||
+      typeof result[1] !== "string" ||
+      typeof result[2] !== "string"
+    )
+      throw new AccessError("ops_storage_unavailable");
+    const [, slug, day] = result as [number, string, string];
+    // A Builder that sends the word is told the page; an older one accepts { ok: true } only.
+    return r.share_word !== undefined && PAGE_SLUG.test(slug) && /^\d{4}-\d{2}-\d{2}$/.test(day)
+      ? { ok: true as const, share: `${day}/${slug}` }
+      : { ok: true as const };
+  }
   if (![0, 1, 2].includes(Number(result)) || typeof result !== "number")
     throw new AccessError("ops_storage_unavailable");
-  return { ok: true };
+  return { ok: true as const };
 }

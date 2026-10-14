@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { askedLastDay, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { askedLastDay, discoveryDetail, discoveryLink, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
+import { answerPage } from "../client/src/lib/ask-share-link";
 import { isMemberVideo, memberJoinUrl } from "../client/src/lib/ask-lizheng";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -51,6 +52,30 @@ describe("public answer source metadata", () => {
     expect(detail?.answer.sources).toEqual([old]);
     expect(isMemberVideo(detail!.answer.sources[0])).toBe(false);
     expect(memberJoinUrl(detail!.answer.sources[0])).toBeUndefined();
+  });
+});
+
+// 2026-10-14: a question shown here links to its own page, the one its asker got.
+describe("a question's own page", () => {
+  const page = "https://ask.lizheng.ai/s/2026-10-14/career-choice-2";
+  it("shares the page Ops gives, or /q/<id> while it gives none, never another address", () => {
+    expect(discoveryLink(id(1), page)).toBe(page);
+    expect(discoveryLink(id(1))).toBe(`https://ask.lizheng.ai/q/${id(1)}`);
+    for (const other of ["https://example.test/s/2026-10-14/career-choice", "https://ask.lizheng.ai/s/2026-10-14/Career", "https://ask.lizheng.ai/q/x"])
+      expect(discoveryLink(id(1), other)).toBe(`https://ask.lizheng.ai/q/${id(1)}`);
+    expect(answerPage({ record_id: id(1), word: "career-choice", proof: "f".repeat(64), url: page })).toBe(page);
+    expect(answerPage({ record_id: id(1), word: "career-choice", proof: "f".repeat(64) })).toBe("");
+  });
+  it("keeps the page an answer and the lists give", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ question: "合成的问题？", revision: 2, share_url: page,
+      answer: { summary: "合成摘要", sections: [], sources: [] } })));
+    expect((await discoveryDetail(id(1)))?.share_url).toBe(page);
+    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ recent: [{ ...card(1, 1), share_url: page }],
+      frequent: [{ ...card(2, 1), similar: [{ public_id: id(3), revision: 1, question: "合成？", published_at: "2026-10-01T00:00:00Z", likes: 0,
+        share_url: page }, { public_id: id(4), revision: 1, question: "合成二？", published_at: "2026-10-01T00:00:00Z", likes: 0, share_url: "https://example.test/" }] }] })));
+    const lists = await discoveryLists();
+    expect(lists?.recent[0].share_url).toBe(page);
+    expect(lists?.frequent[0].similar?.map(item => item.share_url)).toEqual([page, undefined]);
   });
 });
 

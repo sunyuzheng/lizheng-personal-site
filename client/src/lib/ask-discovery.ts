@@ -1,14 +1,19 @@
 import { sameQuestion } from "../../../shared/ask-question-shape";
 import type { AskResult, AskSource } from "./ask-lizheng";
+import { isAnswerPage } from "./ask-share-link";
 
 /** Another question under a card of 最常问: what its row shows, and what a like needs. */
 export type SimilarQuestion = {
   public_id: string; revision: number; question: string; published_at: string; asked_at?: string; likes: number;
+  /** Its own page, ask.lizheng.ai/s/<day>/<word> (since 2026-10-14). */
+  share_url?: string;
 };
 /** Questions people asked, published as asked, curated in the separate Ops service. */
 export type DiscoveryCard = {
   public_id: string; revision: number; topic_key?: string; topic_label: string; question: string; summary: string;
   published_at: string; asked_at?: string; topic_question_count: number; likes: number;
+  /** Its own page, ask.lizheng.ai/s/<day>/<word>: the page its asker got (since 2026-10-14). */
+  share_url?: string;
   /** Set on a pick: whether it was picked as the most recently asked or the most often asked. */
   role?: "fresh" | "common";
   /** Set on a pick: how many similar askings it stands for (see similarCount). */
@@ -20,7 +25,7 @@ export type DiscoveryCard = {
 export type DiscoveryAnswer = {
   summary: string; sections: AskResult["sections"]; sources: AskSource[]; limitations?: string;
 };
-export type DiscoveryDetail = { public_id: string; revision: number; question: string; answer: DiscoveryAnswer };
+export type DiscoveryDetail = { public_id: string; revision: number; question: string; answer: DiscoveryAnswer; share_url?: string };
 
 /** 最近问 and 最常问: two short lists, the same for every reader, so the CDN can serve them. */
 export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[]; total: number | null };
@@ -29,9 +34,9 @@ export type DiscoveryView = "recent" | "frequent";
 export const DISCOVERY_LIST_SIZE = 30;
 /** Every published question has its own public page on www.lizheng.ai, the one search engines read. */
 export const discoveryPage = (id: string) => `https://www.lizheng.ai/ask/${id}`;
-// The link that shares it: ask.lizheng.ai's page with the answer in it, as the asker's own shared
-// answers open (api/ask-lizheng-share.ts, route "public"; its canonical is the www page above).
-export const discoveryLink = (id: string) => `https://ask.lizheng.ai/q/${id}`;
+// The link that shares it: its own page, ask.lizheng.ai/s/<day>/<word>, the same page its asker got
+// (2026-10-14). /q/<id> is for one Ops has not given its page yet: it opens the page, or the answer.
+export const discoveryLink = (id: string, page?: string) => (isAnswerPage(page) ? page : `https://ask.lizheng.ai/q/${id}`);
 const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const text = (value: unknown) => typeof value === "string" && value.trim().length > 0;
 const count = (value: unknown) => Number.isInteger(value) && (value as number) >= 0;
@@ -47,8 +52,8 @@ function similarRow(value: unknown): value is SimilarQuestion {
   return !!v && typeof v === "object" && typeof v.public_id === "string" && ID.test(v.public_id) && count(v.revision) &&
     text(v.question) && typeof v.published_at === "string" && (v.asked_at === undefined || typeof v.asked_at === "string") && count(v.likes);
 }
-const row = ({ public_id, revision, question, published_at, asked_at, likes }: SimilarQuestion): SimilarQuestion =>
-  ({ public_id, revision, question, published_at, likes, ...(asked_at ? { asked_at } : {}) });
+const row = ({ public_id, revision, question, published_at, asked_at, likes, share_url }: SimilarQuestion): SimilarQuestion =>
+  ({ public_id, revision, question, published_at, likes, ...(asked_at ? { asked_at } : {}), ...(isAnswerPage(share_url) ? { share_url } : {}) });
 
 // The answer renders with the conversation's own components, so only the fields they read, as strings.
 const SOURCE_FIELDS = ["id", "title", "url", "date", "excerpt", "author", "attribution_note", "public_copy_url", "reason", "source_type",
@@ -193,6 +198,7 @@ export async function discoveryDetail(id: string, signal?: AbortSignal): Promise
         !Array.isArray(answer.sources)) return null;
     return {
       public_id: id, revision: count(value.revision) ? value.revision : 0, question: value.question,
+      ...(isAnswerPage(value.share_url) ? { share_url: value.share_url } : {}),
       answer: {
         summary: answer.summary,
         sections: answer.sections.map(section).filter((item: unknown): item is AskResult["sections"][number] => !!item),

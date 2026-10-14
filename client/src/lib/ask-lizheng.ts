@@ -58,10 +58,11 @@ export type AskResult = {
   limitations: string;
   retryable?: boolean;
   failure_code?: string;
-  /** Only on an answer its asker may share (ask-share-link.ts): the record, its address word, Builder's proof. */
+  /** On an answered question (ask-share-link.ts): the record, its address word, Builder's proof, and its own
+   * page's address once it has one (made when the answer was archived, since 2026-10-14). */
   share?: AskShare;
 };
-export type AskShare = { record_id: string; word: string; proof: string };
+export type AskShare = { record_id: string; word: string; proof: string; url?: string };
 export type AskEvent =
   | { type: "progress"; value: { stage: string; message: string } }
   | { type: "approach"; value: AskApproach }

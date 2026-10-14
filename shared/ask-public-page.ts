@@ -2,8 +2,9 @@
  * Public answer pages for search: every question published on 「别人在问什么」 gets its own page at
  * www.lizheng.ai/ask/<public_id>, rendered on the server so the question, answer and sources are in
  * the first HTML a crawler reads. /ask lists them and /ask/sitemap.xml names them for search
- * engines. The questions were published from Ops with the asker's consent and personal details
- * removed (see docs/ask-lizheng.md); a withdrawn one stops existing here as well.
+ * engines. The questions were published from Ops as they were asked (see docs/ask-lizheng.md); a
+ * withdrawn one stops existing here as well. Each also has its own page in 问问立正,
+ * ask.lizheng.ai/s/<day>/<word> (share_url, since 2026-10-14), the page its asker got.
  *
  * Only the first wording of a question is indexed: the same question asked in other words (see
  * ask-question-shape.ts) keeps its page for links but asks search engines not to index it, and an
@@ -27,7 +28,7 @@ export const PUBLIC_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a
 
 export type PublicCard = {
   public_id: string; revision: number; topic_key: string; topic_label: string; question: string; summary: string;
-  published_at: string; updated_at: string; asked_at?: string; topic_question_count: number;
+  published_at: string; updated_at: string; asked_at?: string; topic_question_count: number; share_url?: string;
 };
 export type PublicSource = {
   id: string; title: string; url: string; date?: string; source_type?: string; reason?: string; source_visibility?: string;
@@ -53,8 +54,11 @@ export type PublicAnswer = {
 };
 export type PublicDetail = {
   public_id: string; revision: number; topic_key: string; topic_label: string; question: string;
-  answer: PublicAnswer; published_at: string; updated_at: string;
+  answer: PublicAnswer; published_at: string; updated_at: string; share_url?: string;
 };
+/** A question's own page in 问问立正: ask.lizheng.ai/s/<day>/<word>. */
+export const ANSWER_PAGE = /^https:\/\/ask\.lizheng\.ai\/s\/\d{4}-\d{2}-\d{2}\/[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
+const page = (value: unknown) => (typeof value === "string" && ANSWER_PAGE.test(value) ? { share_url: value } : {});
 
 const text = (value: unknown, max: number): value is string =>
   typeof value === "string" && !!value.trim() && Array.from(value).length <= max;
@@ -79,7 +83,7 @@ export function publicCard(value: unknown): PublicCard | null {
     public_id: r.public_id, revision: r.revision as number, topic_key: r.topic_key, topic_label: r.topic_label as string,
     question: (r.question as string).trim(), summary: r.summary.trim(), published_at: r.published_at as string,
     updated_at: r.updated_at as string, topic_question_count: r.topic_question_count as number,
-    ...(r.asked_at ? { asked_at: r.asked_at as string } : {}),
+    ...(r.asked_at ? { asked_at: r.asked_at as string } : {}), ...page(r.share_url),
   };
 }
 
@@ -110,6 +114,7 @@ export function publicDetail(value: unknown): PublicDetail | null {
   return {
     public_id: r.public_id, revision: r.revision as number, topic_key: r.topic_key, topic_label: r.topic_label as string,
     question: (r.question as string).trim(), published_at: r.published_at as string, updated_at: r.updated_at as string,
+    ...page(r.share_url),
     answer: {
       status: a.status, summary: a.summary.trim(), sections, sources, followups: strings(a.followups, 3),
       limitations: typeof a.limitations === "string" ? a.limitations.trim() : "",

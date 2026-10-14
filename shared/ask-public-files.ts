@@ -10,15 +10,16 @@
  *   heartbeat is a few minutes old the files are the answer, and a question they do not have is
  *   gone; otherwise Ops is asked, and only when Ops cannot answer either do the last files stand in.
  *   So a broken export can never keep a withdrawn question up.
- * - share/<day>/<slug>.json: this site writes a shared answer's copy when it is shared. The share
- *   page still reads the live record (a deleted record is gone at once, and the view is counted) and
- *   uses the copy only when the database cannot answer. Ops deletes the copy before the record.
+ * - share/<day>/<slug>.json: this site writes an answer's copy when its page is made (since
+ *   2026-10-14 as the answer is archived, just after replying to Builder) and again when it is shared.
+ *   The page still reads the live record (a deleted record is gone at once, and the view is counted)
+ *   and uses the copy only when the database cannot answer. Ops deletes the copy before the record.
  */
 import { get, put } from "@vercel/blob";
 import { AccessError } from "./ask-access.js";
 import { archivedAnswer } from "./ask-archive-answer.js";
 import { fetchOpsJson, OPS_GATEWAY_MAX_RESPONSE_BYTES, OPS_UUID } from "./ask-ops-gateway.js";
-import { SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./ask-share-link.js";
+import { readShare, SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./ask-share-link.js";
 
 export const PUBLIC_FILES = {
   state: "public/state.json",
@@ -131,6 +132,15 @@ export async function saveShareCopy(share: SharedAnswer, write: FileWriter | nul
   try {
     await write(shareFile(share.day, share.slug), JSON.stringify({ v: 1, ...share }));
     return true;
+  } catch { return false; }
+}
+
+/** Writes one page's copy as its live record reads now; false when it could not (the page stands without it). */
+export async function copySharedAnswer(day: string, slug: string, write: FileWriter | null = fileWriter()) {
+  if (!write) return false;
+  try {
+    const share = await readShare(day, slug, { reader: false });
+    return share ? await saveShareCopy(share, write) : false;
   } catch { return false; }
 }
 

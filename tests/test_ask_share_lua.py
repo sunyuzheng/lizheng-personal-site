@@ -13,9 +13,12 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 # Template literals: \\ in the TypeScript source is one backslash in the script Redis runs.
+# Scripts that take a page's address include its Lua helper (ask-ops-storage.ts), as ${PAGE_ADDRESS_LUA}.
+HELPERS = dict(re.findall(r'export const (\w+_LUA) = `(.*?)`;', (ROOT / 'shared/ask-ops-storage.ts').read_text(), re.S))
 def scripts(name):
     text = (ROOT / 'shared' / name).read_text()
-    return {key: body.replace('\\\\', '\\') for key, body in re.findall(r'export const ([A-Z_]+_SCRIPT) = (?:String\.raw)?`(.*?)`;', text, re.S)}
+    return {key: re.sub(r'\$\{(\w+)\}', lambda m: HELPERS[m.group(1)], body.replace('\\\\', '\\'))
+            for key, body in re.findall(r'export const ([A-Z_]+_SCRIPT) = (?:String\.raw)?`(.*?)`;', text, re.S)}
 SHARE = scripts('ask-share-link.ts')
 OPS = scripts('ask-ops-storage.ts')
 QUOTA = re.search(r'QUOTA_SCRIPT = String\.raw`(.*?)`;', (ROOT / 'shared/ask-quota-script.ts').read_text(), re.S).group(1)
@@ -44,7 +47,7 @@ def record(r, n=1, day=D, notice=('v4', '0', ''), status='answered', intent='und
     answer = {'status': status, 'summary': '合成摘要[S1]。', 'sections': [{'heading': '合成小标题', 'body': body, 'source_ids': ['S1'], 'kind': 'synthesis'}],
               'sources': [{'id': 'S1', 'title': '合成出处', 'url': 'https://example.test/a'}], 'followups': [], 'clarifying_questions': [], 'limitations': ''}
     if status != 'generating':
-        assert r.eval(OPS['OPS_FINISH_SCRIPT'], 2, P+'record:'+i, P+'total', status, 1200, P, json.dumps(answer, ensure_ascii=False), '') == 1
+        assert r.eval(OPS['OPS_FINISH_SCRIPT'], 2, P+'record:'+i, P+'total', status, 1200, P, json.dumps(answer, ensure_ascii=False), '')[0] == 1
     return i
 
 
@@ -185,3 +188,18 @@ def test_counts_add_one_to_each_field(r):
     assert r.eval(SHARE['SHARE_COUNT_SCRIPT'], 2, U+'day:20730', U+'total', 400*86400, 'home:share_bonus', 'all:share_bonus') == 1
     assert r.hgetall(U+'total') == {'home:share_bonus': '1', 'all:share_bonus': '1'}
     assert r.ttl(U+'day:20730') == 400*86400 and r.ttl(U+'total') == -1
+
+
+def test_a_page_made_when_the_answer_was_archived_is_the_one_its_asker_finds(r):
+    i = record(r, status='generating')
+    answer = {'status': 'answered', 'summary': '合成摘要[S1]。', 'sections': [{'heading': '合成小标题', 'body': BODY, 'source_ids': ['S1'], 'kind': 'synthesis'}],
+              'sources': [{'id': 'S1', 'title': '合成出处', 'url': 'https://example.test/a'}], 'followups': [], 'clarifying_questions': [], 'limitations': ''}
+    assert r.eval(OPS['OPS_FINISH_SCRIPT'], 2, P+'record:'+i, P+'total', 'answered', 1200, P, json.dumps(answer, ensure_ascii=False), '',
+                  'career-choice', i, '2026-10-04T02:01:00.000Z', 900) == [1, 'career-choice', D]
+    # Pages from before 2026-10-14 still ask for it as the answer arrives: they find it, uncounted.
+    assert share(r, count=0) == ['SHARED', 'career-choice', D]
+    assert page(r)[0] == 'OK'
+    assert r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000) == [[D, 'career-choice', '2026-10-04T02:01:00.000Z']]
+    # Another record asked the same day with the same word takes the next address either way.
+    record(r, 2)
+    assert share(r, 2) == ['NEW', 'career-choice-2', D]

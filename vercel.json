@@ -50,12 +50,7 @@
     },
     { "src": "^/$", "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }], "dest": "/ask-app" },
     { "src": "^/robots\\.txt$", "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }], "dest": "/ask-app/robots.txt" },
-    {
-      "src": "^/api/answer-map$",
-      "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
-      "dest": "https://ask-lizheng.ai-builders.space/api/answer-map",
-      "respectOriginCacheControl": true
-    },
+    { "src": "^/api/answer-map$", "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-answer-map" },
     {
       "src": "/(.*)",
       "has": [{ "type": "host", "value": "ask\\.lizheng\\.ai" }],
@@ -69,11 +64,7 @@
       "respectOriginCacheControl": false,
       "headers": { "Cache-Control": "no-store" }
     },
-    {
-      "src": "^/api/ask-lizheng/answer-map$",
-      "dest": "https://ask-lizheng.ai-builders.space/api/answer-map",
-      "respectOriginCacheControl": true
-    },
+    { "src": "^/api/ask-lizheng/answer-map$", "dest": "/api/ask-lizheng-answer-map" },
     { "src": "^/$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app" },
     { "src": "^/en/?$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app/en" },
     { "src": "^/(.*)$", "has": [{ "type": "host", "value": "community\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://city.lizheng.ai/$1" } },

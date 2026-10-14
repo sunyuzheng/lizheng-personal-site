@@ -16,9 +16,12 @@ export type AnswerMapState = {
   selected: string | null;
 };
 export function loadAnswerMap(url?: string): Promise<AnswerMapData>;
+export function openableUrl(value?: string): string;
 export function sourceItem(map: AnswerMapData, source: MapSource | null | undefined, key?: string): number;
+export function paintAnswerMap(canvas: HTMLCanvasElement, map: AnswerMapData, state: AnswerMapState,
+  options: { width: number; height: number; scale?: number; font?: string }): { id: string; x: number; y: number; w: number; h: number }[];
 export class AnswerMap {
-  constructor(canvas: HTMLCanvasElement, map: AnswerMapData, options?: { onSelect?: (id: string) => void; reduce?: boolean; ambient?: boolean });
+  constructor(canvas: HTMLCanvasElement, map: AnswerMapData, options?: { onSelect?: (id: string) => void; onOpen?: (source: MapSource) => void; reduce?: boolean; ambient?: boolean });
   update(state: AnswerMapState): void;
   destroy(): void;
 }

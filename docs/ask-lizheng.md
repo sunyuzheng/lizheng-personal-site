@@ -177,3 +177,12 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - 安全策略多了 `font-src data:`：ask 页面的样式里内嵌了几小段标题字体。
 - 原来分享页专用的 `client/public/s/share.js` 和 `/s/answer-map.js` 删掉了；`/s/page.js`、`/s/fonts.css` 只剩「这个分享不在了」页面在用。
 - 统计：读分享页照旧由本函数记 `all:share_view`；ask 页面在分享页上不开始自己的使用统计，读者提问后才算。
+
+## 地图进图片和PDF，编号打开原材料（2026-10-13）
+
+立正：保存的图片和PDF要有这张图（「还挺亮眼的」），图上的点要能「点开到原始材料（最好是视频或帖子）的地方」，展开「别人在问什么」也要有图（「让人想分享」）。
+
+- **编号打开原材料**：地图代码（同步来的 `shared/ask-answer-map.js`）点编号时在新标签页打开出处的原文链接（`openableUrl`，只开 https），再调 `onOpen`；主页问答区在 `AskLizheng.tsx` 的 `openedMapSource` 里记 `markUsage("source")` 和 `Ask Source Click`，和点出处链接一样。原来的「滚到下面对应的出处卡片」保留。
+- **保存图片和PDF**（`client/src/lib/ask-share.js`，和 ask-lizheng 的 `src/share.js` 一起改）：结论下面用 `paintAnswerMap` 画一帧静态地图；PDF 里每个编号和它的灯是链接（`links` 随行带进 `renderPages`），图下中英文各一句说明。地图数据读不到时不画，导出照旧。
+- **「别人在问什么」展开的回答**：结论下面加 `AnswerMapPanel`（`cardMapTurn` 把公开回答转成地图要的样子，按回答缓存在 WeakMap 里），编号沿用公开回答的编号。
+- 地图说明文字原来被 `.lz-ask-answer p` 的墨色盖住（深绿底上看不清，主页回答里的地图也是），`home.css` 里说明各行的选择器前加了 `.lz-map`。

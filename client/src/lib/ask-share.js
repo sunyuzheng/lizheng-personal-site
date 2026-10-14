@@ -4,6 +4,7 @@
 // answer's own page (to the place to ask when it has none). Loaded only when someone saves an answer. Kept in step with
 // src/share.js in the ask-lizheng repository (that copy is Chinese only).
 import qrcode from 'qrcode-generator';
+import {loadAnswerMap, openableUrl, paintAnswerMap, sourceItem} from '../../../shared/ask-answer-map.js';
 import {MARK_PATHS} from '@/components/site/LizhengMark';
 import {isMemberVideo} from './ask-lizheng';
 import {sourceAttributionLabel} from '../../../shared/ask-source-attribution.js';
@@ -17,6 +18,8 @@ const LABELS = {
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
     video: '视频', memberVideo: '会员视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
     cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问', scanAnswer: '扫码看这条回答',
+    mapPdf: (what, n) => `图上标号的是${what}的${n}份材料，点编号打开原视频或原帖。`, mapImage: (what, n) => `图上标号的是${what}的${n}份材料，编号和正文、出处一致。`,
+    mapCited: '回答引用', mapFound: '找到', mapLegend: ['视频与对谈', '文字', '课程与书'], mapAxes: '越往外越新，方向是主题',
     kinds: {application: 'AI推演', personal: '结合你的处境', source: '材料里的观点'},
   },
   en: {
@@ -25,6 +28,8 @@ const LABELS = {
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
     video: 'Video', memberVideo: 'Members video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
     cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask', scanAnswer: 'Scan for this answer',
+    mapPdf: (what, n) => `The numbered lights are the ${n} sources ${what}; click one to open the video or post.`, mapImage: (what, n) => `The numbered lights are the ${n} sources ${what}, numbered as in the text.`,
+    mapCited: 'the answer cites', mapFound: 'found', mapLegend: ['Videos and talks', 'Writing', 'Courses and book'], mapAxes: 'Newer farther out; the direction is the topic',
     kinds: {application: 'AI’s application', personal: 'Applied to you', source: 'From the material'},
   },
 };
@@ -294,6 +299,43 @@ function sourceRow(ctx, source, number) {
   }};
 }
 
+// The answer map after the summary, as in the Ask section (ask-lizheng's src/share.js draws the
+// same), at the page's proportions scaled to the image's width. In a PDF each numbered light opens
+// the video or post; an image says the numbers are the text's (its QR code opens the live map).
+const MAP_W = 600, MAP_H = 300;
+function mapRow(map, result, kind) {
+  const sources = result.sources || [];
+  const cited = sources.map(source => ({id: source.id, item: sourceItem(map, source)}));
+  if (!cited.some(row => row.item >= 0)) return null;
+  const scale = INNER / MAP_W, mapH = Math.round(MAP_H * scale), h = mapH + 116;
+  const art = document.createElement('canvas');
+  const hits = paintAnswerMap(art, map, {live: false, done: true, stage: 'done', candidates: cited, cards: [], cited,
+    sources: new Map(sources.map(source => [source.id, source])), selected: null}, {width: MAP_W, height: MAP_H, scale: scale * 2, font: SANS});
+  const url = new Map(sources.map(source => [source.id, openableUrl(source.url)]).filter(([, value]) => value));
+  const links = kind === 'pdf' ? hits.filter(hit => url.has(hit.id))
+    .map(hit => ({x: PAD + hit.x * scale, y: hit.y * scale, w: hit.w * scale, h: hit.h * scale, url: url.get(hit.id)})) : [];
+  const what = result.status === 'sources-only' ? L.mapFound : L.mapCited;
+  const lead = (kind === 'pdf' ? L.mapPdf : L.mapImage)(what, sources.length);
+  return {h, links, draw(c, y) {
+    const glow = c.createRadialGradient(W / 2, y + mapH * 0.44, 0, W / 2, y + mapH * 0.44, INNER * 0.62);
+    glow.addColorStop(0, '#1a5132'); glow.addColorStop(0.55, C.forest); glow.addColorStop(1, '#0b2f1b');
+    c.fillStyle = glow; roundRect(c, PAD, y, INNER, h, 18); c.fill();
+    c.drawImage(art, PAD, y, INNER, mapH);
+    c.textBaseline = 'middle'; c.textAlign = 'left';
+    c.fillStyle = C.onForest; c.font = font(400, 22);
+    c.fillText(fitEllipsis(c, lead, INNER - 56), PAD + 28, y + mapH + 32);
+    c.font = font(400, 18);
+    let x = PAD + 28;
+    const ly = y + mapH + 78;
+    L.mapLegend.forEach((label, index) => {
+      c.fillStyle = ['#f8f1e4', '#8fd4a4', '#e2c27c'][index]; c.beginPath(); c.arc(x + 5, ly, 5, 0, Math.PI * 2); c.fill();
+      c.fillStyle = 'rgba(248,241,228,0.6)'; c.fillText(label, x + 17, ly);
+      x += 17 + c.measureText(label).width + 26;
+    });
+    c.textAlign = 'right'; c.fillText(L.mapAxes, PAD + INNER - 28, ly); c.textAlign = 'left';
+  }};
+}
+
 // The footer's QR code opens this answer's own page when it has one, otherwise the place to ask.
 function footerRow(link = '') {
   const h = 260;
@@ -325,7 +367,7 @@ function footerRow(link = '') {
   }};
 }
 
-function layout(ctx, {question, result, date, personal, link}) {
+function layout(ctx, {question, result, date, personal, link, map, kind}) {
   // Number sources 1..n in the shared file; the answer's ids skip sources it did not use.
   const cites = new Map((result.sources || []).map((s, i) => [s.id, String(i + 1)]));
   const rows = [header(), gap(62)];
@@ -337,6 +379,8 @@ function layout(ctx, {question, result, date, personal, link}) {
   for (const block of markdownBlocks(result.summary)) {
     rows.push(...textRows(ctx, inlineRuns(block.text, cites), {size: 32, lh: 1.75, weight: 600, color: C.ink, strong: C.ink}));
   }
+  const mapped = map && mapRow(map, result, kind);
+  if (mapped) rows.push(gap(40), mapped);
   for (const section of result.sections || []) {
     const kind = section.kind === 'application' && personal ? 'personal' : section.kind;
     rows.push(gap(46), ...headingRows(ctx, section.heading, kind), gap(8));
@@ -417,6 +461,7 @@ function renderPages(rows, question) {
     for (const {row, y} of items) {
       row.draw(c, y);
       if (row.link) links.push(row.footer ? {x: 0, y, w: W, h: row.h, url: row.link} : {x: PAD, y, w: INNER, h: row.h, url: row.link});
+      for (const link of row.links || []) links.push({...link, y: y + link.y});
     }
     c.textBaseline = 'middle'; c.font = font(400, 18); c.fillStyle = C.faint;
     if (index) c.fillText(fitEllipsis(c, `${L.brand} · ${question}`, INNER - 160), PAD, 46);
@@ -497,8 +542,10 @@ async function ensureFonts({question, result}) {
 export async function exportAnswer(kind, data, lang = 'zh') {
   L = LABELS[lang] || LABELS.zh;
   await ensureFonts(data);
+  // The section drew the map already; without its layout the file is the same, without the map.
+  const map = await loadAnswerMap('/api/ask-lizheng/answer-map').catch(() => null);
   const ctx = document.createElement('canvas').getContext('2d');
-  const rows = layout(ctx, data);
+  const rows = layout(ctx, {...data, map, kind});
   const words = data.question.replace(/[\\/:*?"<>|]+/g, '').trim().replace(/\s+/g, lang === 'en' ? '-' : '');
   const base = `${L.file}-${words.slice(0, lang === 'en' ? 40 : 18) || 'answer'}`;
   if (kind === 'png') return {blob: await toBlob(renderLong(rows), 'image/png'), name: `${base}.png`, type: 'image/png'};

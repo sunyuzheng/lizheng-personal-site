@@ -3550,15 +3550,17 @@
   margin-top: 6px;
 }
 
-.lz-home .lz-map-lead {
+/* .lz-map before each caption line: inside an answer, whose paragraphs are ink on paper. */
+.lz-home .lz-map .lz-map-lead {
   font-size: 14px;
   color: #f8f1e4;
 }
 
-.lz-home .lz-map-counts {
+.lz-home .lz-map .lz-map-counts {
   display: flex;
   flex-wrap: wrap;
   gap: 2px 16px;
+  color: rgb(248 241 228 / 0.78);
 }
 
 .lz-home .lz-map-card {
@@ -3575,7 +3577,7 @@
   transform: rotate(45deg);
 }
 
-.lz-home .lz-map-legend {
+.lz-home .lz-map .lz-map-legend {
   display: flex;
   flex-wrap: wrap;
   align-items: center;

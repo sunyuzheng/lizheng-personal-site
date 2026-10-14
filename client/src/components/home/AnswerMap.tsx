@@ -7,18 +7,18 @@ import { AnswerMap, loadAnswerMap, sourceItem, type AnswerMapData, type AnswerMa
 // src/answer-map-panel.jsx, whose drawing code shared/ask-answer-map.js copies): every public
 // material a light, farther out newer, the direction its topic. While the answer is found, the
 // candidates light and thread to the question; afterwards the cited sources carry the numbers the
-// text uses, and a number opens its source as a citation does.
+// text uses, and a number opens the video or post it cites (and its source card below).
 const COPY = {
   zh: {
     found: (n: number) => `${n}份候选材料`,
-    lead: (n: number) => `图上标号的是回答引用的${n}份材料，点编号看原文。`,
+    lead: (n: number) => `图上标号的是回答引用的${n}份材料，点编号打开原视频或原帖。`,
     card: "判断卡：",
     legend: ["视频与对谈", "文字", "课程与书", "判断卡"],
     axes: "越往外越新，方向是主题",
   },
   en: {
     found: (n: number) => `${n} candidate sources`,
-    lead: (n: number) => `The numbered lights are the ${n} sources the answer cites; click a number to open one.`,
+    lead: (n: number) => `The numbered lights are the ${n} sources the answer cites; click one to open the video or post.`,
     card: "Judgment card: ",
     legend: ["Videos and talks", "Writing", "Courses and book", "Judgment card"],
     axes: "Newer farther out; the direction is the topic",
@@ -44,14 +44,16 @@ function mapState(map: AnswerMapData, turn: MapTurn, live: boolean, selected: st
   return { live: live && !result, done: !!result, stage: result ? "done" : turn.progress?.stage || "retrieving", candidates, cards, cited, sources, selected };
 }
 
-export default function AnswerMapPanel({ turn, live = false, lang, selected = null, onSelect }: {
-  turn: MapTurn; live?: boolean; lang: Lang; selected?: string | null; onSelect: (id: string) => void;
+export default function AnswerMapPanel({ turn, live = false, lang, selected = null, onSelect, onOpen }: {
+  turn: MapTurn; live?: boolean; lang: Lang; selected?: string | null; onSelect: (id: string) => void; onOpen?: (source: MapSource) => void;
 }) {
   const t = COPY[lang];
   const canvas = useRef<HTMLCanvasElement>(null);
   const view = useRef<AnswerMap | null>(null);
   const select = useRef(onSelect);
   select.current = onSelect;
+  const opened = useRef(onOpen);
+  opened.current = onOpen;
   const [map, setMap] = useState<AnswerMapData | null>(null);
   const [failed, setFailed] = useState(false);
 
@@ -64,7 +66,7 @@ export default function AnswerMapPanel({ turn, live = false, lang, selected = nu
   useEffect(() => {
     if (!map || !canvas.current) return undefined;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    view.current = new AnswerMap(canvas.current, map, { onSelect: id => select.current(id), reduce });
+    view.current = new AnswerMap(canvas.current, map, { onSelect: id => select.current(id), onOpen: source => opened.current?.(source), reduce });
     return () => { view.current?.destroy(); view.current = null; };
   }, [map]);
 

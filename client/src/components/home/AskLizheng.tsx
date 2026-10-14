@@ -23,6 +23,7 @@ import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
 import AnswerMapPanel from "./AnswerMap";
+import type { MapSource } from "@shared/ask-answer-map.js";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
 import { sourceAttributionLabel } from "@shared/ask-source-attribution.js";
@@ -509,6 +510,17 @@ function SharePanel({ state, lang, link, exporting = "", onCreate, onCopy, onSen
   );
 }
 
+// An opened question's answer as the map reads it (AnswerMap.tsx), one per answer, so the map keeps it.
+const cardMaps = new WeakMap<DiscoveryDetail, AskAnswerState & { id: number }>();
+function cardMapTurn(detail: DiscoveryDetail, anchor: number) {
+  let turn = cardMaps.get(detail);
+  if (!turn) {
+    turn = { id: anchor, sources: detail.answer.sources, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult };
+    cardMaps.set(detail, turn);
+  }
+  return turn;
+}
+
 // A boundary note may name a source as S6; show it as a citation, like in the text.
 const citeIds = (text: string) => text.replace(/\[?\b(S\d+)\b\]?/g, "[$1]");
 
@@ -866,6 +878,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                   <div className="lz-ask-answer-summary">
                     <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
                   </div>
+                  {!!detail.answer.sources.length && (
+                    <AnswerMapPanel turn={cardMapTurn(detail, anchor)} lang={lang} onSelect={id => openMapSource({ id: anchor }, id)} onOpen={openedMapSource} />
+                  )}
                   <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
                   {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
                 </div>
@@ -1043,10 +1058,15 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     if (open) markShared(turn, "qr");
   }
   // A number on the map opens its source, as a citation does.
-  function openMapSource(turn: Turn, id: string) {
+  function openMapSource(turn: { id: number }, id: string) {
     const target = document.getElementById(`home-ask-${turn.id}-${id}`);
     target?.closest("details:not([open])")?.setAttribute("open", "");
     target?.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  // …and opens the video or post itself in a new tab, counted as a source click.
+  function openedMapSource(source: MapSource) {
+    markUsage("source");
+    if (source.url) track("Ask Source Click", { surface: "home", kind: sourceKind(source.url) });
   }
   // v4, public Q&A, in this page's voice; the situation is not kept since 2026-10-04 (/api/meta says context_archive: false).
   const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), contextKept });
@@ -1516,7 +1536,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                         </button>
                       </div>
                     )}
-                    {working && <AnswerMapPanel turn={turn} live lang={lang} onSelect={id => openMapSource(turn, id)} />}
+                    {working && <AnswerMapPanel turn={turn} live lang={lang} onSelect={id => openMapSource(turn, id)} onOpen={openedMapSource} />}
                     {turn.result && (
                       <div className="lz-ask-answer">
                         <div className="lz-ask-answer-summary">
@@ -1526,7 +1546,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                             turnId={turn.id}
                           />
                         </div>
-                        {!!(turn.result.sources || []).length && <AnswerMapPanel turn={turn} lang={lang} onSelect={id => openMapSource(turn, id)} />}
+                        {!!(turn.result.sources || []).length && <AnswerMapPanel turn={turn} lang={lang} onSelect={id => openMapSource(turn, id)} onOpen={openedMapSource} />}
                         <AnswerSections
                           sections={turn.result.sections || []}
                           sources={turn.sources}

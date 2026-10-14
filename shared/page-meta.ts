@@ -65,20 +65,20 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
 
 export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
-    title: "Books · Yuzheng Sun",
+    title: "Growth Data Analytics Playbook & 真本事 · Yuzheng Sun",
     description:
-      "Books by Yuzheng Sun: Growth Data Analytics Playbook and 真本事：从会工作到会赚钱.",
+      "Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun: product-market fit, retention, and experimentation. Also explore Yuzheng's Chinese book 真本事.",
     canonical: "https://www.lizheng.ai/en/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-04",
+    lastModified: "2026-10-13",
   },
   zh: {
-    title: "两本书 · 课代表立正",
+    title: "Growth Data Analytics Playbook与《真本事》｜孙煜征的书",
     description:
-      "孙煜征的两本书：英文《Growth Data Analytics Playbook》（中文版免费在线读）与中文《真本事：从会工作到会赚钱》。",
+      "《Growth Data Analytics Playbook》由Mengying Li、Joe Kumar与孙煜征合著，讨论产品市场匹配、留存、增长核算与实验，中文版免费阅读和下载。另有孙煜征所著《真本事：从会工作到会赚钱》。",
     canonical: "https://www.lizheng.ai/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-04",
+    lastModified: "2026-10-13",
   },
 };
 

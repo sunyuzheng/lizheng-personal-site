@@ -1,4 +1,5 @@
 import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "./book-links";
+import { growthBookAuthorIdentities } from "./book-authors";
 import {
   ABOUT_PAGE_META,
   BOOKS_PAGE_META,
@@ -338,11 +339,7 @@ function growthBookNode() {
     datePublished: "2025-11-18",
     bookFormat: "https://schema.org/Paperback",
     inLanguage: "en",
-    author: [
-      { "@type": "Person", name: "Mengying Li" },
-      { "@type": "Person", name: "Joe Kumar" },
-      { "@id": PERSON_ID },
-    ],
+    author: growthBookAuthorIdentities(),
     publisher: { "@type": "Organization", name: "Statsig" },
     sameAs: GROWTH_BOOK_AMAZON_URL,
     workTranslation: {

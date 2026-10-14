@@ -10,6 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SEAL } from "../shared/ask-seal.ts";
+import { growthBookAuthorIdentities, growthBookAuthorProfiles } from "../shared/book-authors.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE = path.join(ROOT, "content", "books", "growth-data-analytics-playbook-zh");
@@ -203,7 +204,7 @@ function frame(book: Book, page: { title: string; description: string; canonical
 <header class="stage">
 <div class="stage-inner">
 <div class="bar"><a class="brand" href="/" aria-label="孙煜征 · 课代表立正，回到首页">${SEAL}<span>孙煜征</span></a>
-<nav aria-label="这本书"><a href="${index}#contents">目录</a><a href="${index}#download">下载</a><a class="wide-only" href="/book">书</a></nav></div>
+<nav aria-label="这本书"><a href="${index}#contents">目录</a><a href="${index}#authors">作者</a><a href="${index}#download">下载</a><a class="wide-only" href="/book">书</a></nav></div>
 ${page.head}
 </div>
 </header>
@@ -238,7 +239,7 @@ function bookNode(book: Book) {
     isAccessibleForFree: true,
     datePublished: book.datePublished,
     dateModified: book.dateModified,
-    author: [{ "@type": "Person", name: "Mengying Li" }, { "@type": "Person", name: "Joe Kumar" }, { "@id": PERSON_ID }],
+    author: growthBookAuthorIdentities(),
     publisher: { "@id": PERSON_ID },
     isBasedOn: { "@id": ORIGINAL_BOOK_ID },
     associatedMedia: [
@@ -269,6 +270,7 @@ function renderIndex(book: Book, dist: string): string {
     "@graph": [
       { "@type": "WebPage", "@id": `${url}#webpage`, url, name: fullTitle(book), description: book.description, inLanguage: "zh-CN", isPartOf: { "@id": WEBSITE_ID }, mainEntity: { "@id": `${url}#book` }, breadcrumb: { "@id": `${url}#breadcrumb` } },
       bookNode(book),
+      ...growthBookAuthorProfiles(),
       { ...breadcrumbs(book), "@id": `${url}#breadcrumb` },
     ],
   };
@@ -317,7 +319,7 @@ function renderChapter(book: Book, index: number, dist: string): string {
     "@context": "https://schema.org",
     "@graph": [
       { "@type": "WebPage", "@id": `${url}#webpage`, url, name: heading(chapter), description: chapter.description, inLanguage: "zh-CN", isPartOf: { "@id": WEBSITE_ID }, mainEntity: { "@id": `${url}#chapter` }, breadcrumb: { "@id": `${url}#breadcrumb` } },
-      { "@type": "Chapter", "@id": `${url}#chapter`, url, name: heading(chapter), description: chapter.description, position: index + 1, inLanguage: "zh-CN", isPartOf: { "@id": `${bookUrl(book)}#book` }, isAccessibleForFree: true, author: [{ "@type": "Person", name: "Mengying Li" }, { "@type": "Person", name: "Joe Kumar" }, { "@id": PERSON_ID }] },
+      { "@type": "Chapter", "@id": `${url}#chapter`, url, name: heading(chapter), description: chapter.description, position: index + 1, inLanguage: "zh-CN", isPartOf: { "@id": `${bookUrl(book)}#book` }, isAccessibleForFree: true, author: growthBookAuthorIdentities() },
       { ...breadcrumbs(book, { name: heading(chapter), url }), "@id": `${url}#breadcrumb` },
     ],
   };

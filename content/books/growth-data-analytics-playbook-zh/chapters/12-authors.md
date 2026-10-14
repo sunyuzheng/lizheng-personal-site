@@ -1,12 +1,24 @@
 # 关于作者
 
-**Mengying Li**是数据科学负责人和增长策略专家，在全球最有影响力的几家科技公司做了十多年数据和增长工作。原书出版时，她在Braintrust负责数据战略和产品驱动增长（PLG），之前在MotherDuck、Notion、Meta和Microsoft任职。她也是早期创业公司信赖的顾问，通过天使投资和为Andreessen Horowitz（a16z）发掘项目来支持创始人。她的工作处在数据、产品和增长的交叉点上，热衷于帮助团队把洞察变成突破性的增长。
+## Mengying Li {#mengying-li}
 
-**Joe Kumar**是Meta的高级主任数据工程师（senior staff data engineer），在Meta工作了九年多，专注于把复杂的数据变成指导战略决策的洞察。他在Meta写了一套完整的产品分析手册，帮助产品团队用最佳实践改进决策；他还在新入职数据科学家和工程师的训练营里讲课，帮他们打好分析的基本功。在增长分析上，他统一了一批关键概念，写了一套被广泛采用的PMF评估手册，Reels、Threads、Horizon等Meta的重要产品都用它来改进增长策略、提升用户参与度。他还做了一套增长分析入门工具包，让各个团队能轻松搭好增长分析需要的数据基础。
+Mengying Li现任Hilbert的Fractional Head of Growth（非全职增长负责人），帮助团队在共同的数据与分析基础上实现增长，并为早期创业公司提供增长与市场进入策略（GTM）顾问服务。她曾在Braintrust负责数据和产品增长，此前在MotherDuck、Notion、Meta和Microsoft任职，也通过天使投资和担任Andreessen Horowitz（a16z）Scout支持创始人。她长期关注如何把增长分析标准化，让团队从数据中发现机会，再把机会转化为产品和业务决策；这也是她参与写作本书的出发点。
 
-**孙煜征（Yuzheng Sun）**，人称课代表立正，康奈尔大学经济学博士，Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是OpenAI收购团队早期成员。写这本书时，他在Statsig做数据科学家，推动产品增长和实验的最佳实践。他现在做的AI教育、社区、企业项目、写作与访谈，都围绕同一件事：帮助有专业积累的人，把判断和本事做成现实能够使用和检验的东西。
+[LinkedIn：Mengying Li](https://www.linkedin.com/in/mengyingli/)
 
-Mengying Li和Joe Kumar的介绍摘自原书，反映的是2025年原书出版时的情况。
+## Joe Kumar {#joe-kumar}
+
+Joe Kumar现任Anthropic的Member of Technical Staff，从事数据工程工作，于2026年6月加入。此前，他在Meta（原Facebook）从事数据工程十余年，围绕留存、增长核算和产品市场匹配（PMF），把反复出现的分析问题整理成可复用的数据模型、分析框架和工具。他在Meta建立了产品分析手册，并将其纳入数据工程师与数据科学家的入职培训；他参与建设的变现分析框架服务于Facebook、Instagram和Messenger的多个产品。这些经历构成了本书把增长分析从概念变成团队日常做法的重要基础。
+
+[LinkedIn：Joe Kumar](https://www.linkedin.com/in/joekumar/)
+
+## 孙煜征（Yuzheng Sun） {#yuzheng-sun}
+
+孙煜征，人称课代表立正，康奈尔大学经济学博士，Superlinear Academy创始人兼CEO。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监，以及Statsig的Principal Data Scientist兼公司布道师，在产品增长、因果分析、A/B测试与数据团队管理上积累了一线经验。Statsig后来被OpenAI收购。他现在通过AI Builders课程、社区、企业项目、写作与公开访谈，帮助个人与组织理解AI、重新设计工作，把判断和本事做成现实能够使用和检验的东西。他也是《真本事：从会工作到会赚钱》的作者。
+
+[个人主页](https://www.lizheng.ai/) · [LinkedIn：Yuzheng Sun](https://www.linkedin.com/in/yuzhengsun/)
+
+作者简介更新于2026年10月。
 
 ## 作者的话
 

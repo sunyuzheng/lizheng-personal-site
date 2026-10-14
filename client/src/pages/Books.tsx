@@ -1,4 +1,5 @@
 import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "@shared/book-links";
+import { GROWTH_BOOK_AUTHORS } from "@shared/book-authors";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Badge } from "@/components/ui/badge";
@@ -252,6 +253,26 @@ export default function Books() {
                   <p className="mt-3 text-[15.5px] leading-7 text-lz-ink-2">
                     {book.description}
                   </p>
+                  {book.id === "growth" && (
+                    <p className="mt-3 text-sm leading-6 text-lz-muted">
+                      {lang === "en" ? "By " : "作者："}
+                      {GROWTH_BOOK_AUTHORS.map((author, i) => (
+                        <span key={author.id}>
+                          {i > 0 && " · "}
+                          <a
+                            href={author.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-lz-line-2 underline-offset-4 hover:text-lz-green"
+                          >
+                            {lang === "zh" && author.name === "Yuzheng Sun"
+                              ? "孙煜征（Yuzheng Sun）"
+                              : author.name}
+                          </a>
+                        </span>
+                      ))}
+                    </p>
+                  )}
 
                   <div className="mt-5 flex flex-wrap gap-2">
                     {book.meta.map(item => (

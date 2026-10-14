@@ -1,14 +1,16 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, accessEnabled, resolveIdentity } from "../shared/ask-access.js";
 import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
-import { claimShareBonus, countShare, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
-import { renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
-import { fileWriter, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
-import { withPlainSourceLabels } from "../shared/ask-source-labels.js";
+import { claimShareBonus, countShare, countShareView, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
+import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
+import { fileWriter, publicJson, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
+import { publicDetail, PUBLIC_ID } from "../shared/ask-public-page.js";
+import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
-//   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap).
+//   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap);
+//   GET ask.lizheng.ai/q/<id> (public): a question from 别人在问什么, shared from its card.
 // The page is ask.lizheng.ai's own (shared/ask-share-page.ts): its scripts, its API on this origin,
 // and the small title-font slices its stylesheet carries inline (data:).
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https://www.lizheng.ai data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
@@ -53,11 +55,43 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
   }
 }
 
+// A public question on the same page (shared/ask-share-page.ts renderPublicAnswerPage), read from the
+// files Ops writes as /ask/<id> reads it; never kept, so one withdrawn in Ops is gone at once.
+async function publicAnswer(req: IncomingMessage, res: ServerResponse, url: URL) {
+  const html = "text/html; charset=utf-8";
+  const own: Record<string, string> = req.headers.host === "ask.lizheng.ai" ? {} : { "X-Robots-Tag": "noindex" };
+  const headers = { ...own, "Cache-Control": "no-store", "Content-Security-Policy": POLICY };
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    send(res, 405, "text/plain; charset=utf-8", "Method not allowed", { Allow: "GET, HEAD", "Cache-Control": "no-store" });
+    return;
+  }
+  try {
+    const id = url.searchParams.get("id") || "";
+    if (!PUBLIC_ID.test(id)) { send(res, 404, html, renderShareMissingPage(true), headers); return; }
+    let detail;
+    try {
+      detail = publicDetail(detailWithPlainSourceLabels(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`,
+        { onSource: source => res.setHeader("X-Ask-Public-Source", source) })));
+    } catch (error) {
+      if (error instanceof AccessError && error.status === 404) { send(res, 404, html, renderShareMissingPage(true), headers); return; }
+      throw error;
+    }
+    if (!detail) throw new AccessError("ops_gateway_unavailable");
+    if (req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot"))) {
+      try { await countShareView(); } catch { /* A missed count never fails the page. */ }
+    }
+    send(res, 200, html, renderPublicAnswerPage(detail), headers);
+  } catch {
+    send(res, 503, "text/plain; charset=utf-8", "这条问答暂时打不开，请稍后再试。", { ...own, "Cache-Control": "no-store", "Retry-After": "60" });
+  }
+}
+
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   const host = String(req.headers.host || "");
   const url = new URL(req.url || "/", `https://${host || "ask.lizheng.ai"}`);
   const route = url.searchParams.get("__route") || "";
   if (route === "page") return page(req, res, url);
+  if (route === "public") return publicAnswer(req, res, url);
   if (route === "sitemap") {
     try {
       send(res, 200, "application/xml; charset=utf-8", renderShareSitemap(await listShares()),

@@ -41,4 +41,4 @@ export async function copyWhenReady(text: string | Promise<string>): Promise<boo
 
 /** The address as people read it: without https://. */
 // A public question's page ends in its long id: it shows by the id's first part (the link stays whole).
-export const shareDisplay = (url: string) => url.replace(/^https:\/\//, "").replace(/(\/ask\/[0-9a-f]{8})-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i, "$1…");
+export const shareDisplay = (url: string) => url.replace(/^https:\/\//, "").replace(/(\/(?:ask|q)\/[0-9a-f]{8})-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i, "$1…");

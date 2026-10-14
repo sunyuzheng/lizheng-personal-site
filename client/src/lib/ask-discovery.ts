@@ -27,8 +27,11 @@ export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[
 export type DiscoveryView = "recent" | "frequent";
 /** How many questions each list holds (Ops' DISCOVERY_LIST_SIZE). */
 export const DISCOVERY_LIST_SIZE = 30;
-/** Every published question has its own public page, which is what sharing one sends. */
+/** Every published question has its own public page on www.lizheng.ai, the one search engines read. */
 export const discoveryPage = (id: string) => `https://www.lizheng.ai/ask/${id}`;
+// The link that shares it: ask.lizheng.ai's page with the answer in it, as the asker's own shared
+// answers open (api/ask-lizheng-share.ts, route "public"; its canonical is the www page above).
+export const discoveryLink = (id: string) => `https://ask.lizheng.ai/q/${id}`;
 const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const text = (value: unknown) => typeof value === "string" && value.trim().length > 0;
 const count = (value: unknown) => Number.isInteger(value) && (value as number) >= 0;

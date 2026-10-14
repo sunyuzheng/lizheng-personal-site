@@ -20,7 +20,7 @@ import {
 import { HOME_COPY, LINKS } from "./content";
 import { Arrow, EXTERNAL, Phrases } from "./parts";
 import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, discoveryDetail, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
+import { askedAgo, discoveryDetail, discoveryLink, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
@@ -769,18 +769,18 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // answer here, under its map (2026-10-14, the owner: once opened, it should be shareable): the
   // page's link to copy, send or scan, and the answer as an image or a PDF.
   const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
-  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: discoveryPage(card.public_id), ...cardShares[card.public_id] });
+  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: discoveryLink(card.public_id), ...cardShares[card.public_id] });
   const sharedCard = (action: string) => {
     markUsage("d_share");
     track("Ask Discovery Share", { surface: "home", view: discoveryTab, action });
   };
   const copyCard = async (card: DiscoveryCard | SimilarQuestion) => {
     sharedCard("copy");
-    setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
+    setCardShare(card.public_id, { copied: await copyWhenReady(discoveryLink(card.public_id)) });
   };
   const sendCard = async (card: DiscoveryCard | SimilarQuestion) => {
     sharedCard("send");
-    try { await navigator.share({ title: card.question, url: discoveryPage(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
+    try { await navigator.share({ title: card.question, url: discoveryLink(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
   };
   const qrCard = (card: DiscoveryCard | SimilarQuestion) => {
     const open = !cardShares[card.public_id]?.qr;
@@ -791,7 +791,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     sharedCard(kind);
     void deliver(kind, `q-${card.public_id}`, {
       question: card.question, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult,
-      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: discoveryPage(card.public_id),
+      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: discoveryLink(card.public_id),
     }, () => setCardExportError(card.public_id));
   };
   const likeOf = (card: DiscoveryCard | SimilarQuestion) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);

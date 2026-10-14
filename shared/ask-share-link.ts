@@ -178,6 +178,13 @@ export async function countShare(surface: ShareSurface, now = Date.now(), send: 
   await send(["EVAL", SHARE_COUNT_SCRIPT, 2, ...usageKeys(now), USAGE_TTL_SECONDS, `${surface}:share`, "all:share"]);
 }
 
+/** One reader of a public question's shared link (ask.lizheng.ai/q/<id>): counted with the shared
+ * pages' readers, as /s/ pages count theirs (SHARE_PAGE_SCRIPT). */
+export async function countShareView(now = Date.now(), send: Sender = redis) {
+  if (!counting()) return;
+  await send(["EVAL", SHARE_COUNT_SCRIPT, 2, ...usageKeys(now), USAGE_TTL_SECONDS, "all:share_view"]);
+}
+
 /** Gives back one of today's questions for a share, at most once a day. */
 export async function claimShareBonus(identity: AskIdentity, surface: ShareSurface, now = Date.now(), send: Sender = redis):
   Promise<{ bonus: ShareBonus; remaining?: number }> {

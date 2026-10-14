@@ -198,5 +198,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 立正：「这里打开之后最好也有办法分享」。主页问答区展开一条，地图下面就是和自己提问时一样的 `ShareBar`（`cardShare` 给出这条问答公开页 `discoveryPage(id)` 的网址）：复制链接、二维码、发给朋友、保存图片、下载PDF；底部的「分享」按钮和 `SharePanel` 去掉了。导出走同一个 `deliver`，`exportCard` 传 `other: true`，图片和PDF的问题上方写「有人问」（`client/src/lib/ask-share.js` 的 `L.asked`），日期用提问那天。统计仍是 `Ask Discovery Share`，多了 `action`（copy、send、qr、png、pdf）。公开页网址显示成编号前8位（`shareDisplay`，复制的是完整网址）。ask 页同样改了（ask-lizheng `docs/PRODUCT.md` 同名一节）。
 
+**分享链接打开就是问问立正**：立正又说「链接页面也改成问问立正的样子」。分享栏的链接改成 `ask.lizheng.ai/q/<编号>`（`discoveryLink`，ask-lizheng 的 `discovery.js` 同名），`vercel.json` 把它交给 `api/ask-lizheng-share.ts` 的 `public` 路由：像 `/ask/<编号>` 一样从 Ops 写的公开文件读这条问答（`publicJson`、`publicDetail`），用 `renderPublicAnswerPage` 画成 ask 页面本身（和 `/s/` 分享页共用 `renderAppPage`：页面骨架、`#ask-shared`、给搜索引擎和不跑脚本的读者的同一份文字），canonical 指向 www 的公开页、不带结构化数据，搜索引擎照旧读 www 那页。不缓存（Ops 撤下一条，链接马上不在，显示「这条问答不在了」）；读者打开计入 `all:share_view`（`countShareView`，和 `/s/` 页的读者算在一起，爬虫不算）。「反馈或举报」复制的仍是 www 的网址。
+
 同一天还调了地图字号：手机上主题名11.5号、年份10.5号并标在每年开始的线下，图下首句13.5号；图里主题名和图下说明左对齐（`home.css` 手机上说明的左右留白改成20px）；说明换行不留单字（`text-wrap: pretty`）。
 

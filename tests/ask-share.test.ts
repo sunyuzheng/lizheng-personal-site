@@ -8,7 +8,7 @@ import {
   SHARE_BONUS_SCRIPT, SHARE_COUNT_SCRIPT, SHARE_LIST_SCRIPT, SHARE_PAGE_SCRIPT, SHARE_SCRIPT, verifyShareProof,
   type SharedAnswer,
 } from "../shared/ask-share-link";
-import { renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page";
+import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page";
 import { usageDay } from "../shared/ask-usage";
 
 // Synthetic records only: no real asker's words in tests.
@@ -202,6 +202,32 @@ describe("the page", () => {
     const html = renderShareMissingPage();
     expect(html).toContain("这个分享不在了");
     expect(html).toContain('content="noindex, follow"');
+    expect(renderShareMissingPage(true)).toContain("这条问答不在了");
+  });
+
+  // 2026-10-14, the owner: a question from 别人在问什么 shared from its card opens 问问立正 too.
+  it("opens a public question's shared link the same way, its www page kept for search engines", () => {
+    const id = "2e195aff-2690-47b1-aaa6-5d39e6a8d821";
+    const html = renderPublicAnswerPage({
+      public_id: id, revision: 1, topic_key: "craft", topic_label: "合成主题", question: "合成的公开问题？",
+      published_at: "2026-10-14T01:00:00.000Z", updated_at: "2026-10-14T01:00:00.000Z",
+      answer: { status: "answered", summary: "合成的公开摘要。", limitations: "", followups: ["合成的追问？"],
+        sections: [{ heading: "合成的小标题", body: "合成的正文[S1]。", kind: "synthesis", source_ids: ["S1"] }],
+        sources: [{ id: "S1", title: "公开视频", url: "https://www.youtube.com/watch?v=abcdefghijk", excerpt: "合成摘录",
+          public_copy_url: "https://github.com/sunyuzheng/lizheng-open-context/blob/abc/corpus/videos/20240101-abcdefghijk.md" }] },
+    });
+    const data = JSON.parse(html.match(/<script type="application\/json" id="ask-shared">([\s\S]*?)<\/script>/)![1]);
+    expect(data).toMatchObject({ url: `https://ask.lizheng.ai/q/${id}`, public_id: id, question: "合成的公开问题？", intent: "understand",
+      created_at: "2026-10-14T01:00:00.000Z" });
+    expect(data.answer).toMatchObject({ status: "answered", clarifying_questions: [], followups: ["合成的追问？"] });
+    // The map finds each source's stroke by its public copy; no excerpts, as on every page search engines read.
+    expect(data.answer.sources[0].public_copy_url).toContain("corpus/videos/20240101-abcdefghijk.md");
+    expect(html).not.toContain("合成摘录");
+    expect(html).toContain(`<link rel="canonical" href="https://www.lizheng.ai/ask/${id}">`);
+    expect(html).toContain(`<meta property="og:url" content="https://ask.lizheng.ai/q/${id}">`);
+    expect(html).not.toContain("application/ld+json");
+    expect(html).toContain("合成的公开问题？");
+    expect(html.match(/rel="canonical"/g)).toHaveLength(1);
   });
 });
 
@@ -225,6 +251,13 @@ describe("the endpoint", () => {
     vi.stubGlobal("fetch", fetcher);
     return fetcher;
   }
+
+  it("answers an address that is no public question's with the page that says it is gone", async () => {
+    const reply = await call("/api/ask-lizheng-share?__route=public&id=not-a-question");
+    expect(reply.statusCode).toBe(404);
+    expect(reply.body).toContain("这条问答不在了");
+    expect(reply.headers.get("cache-control")).toBe("no-store");
+  });
 
   it("shares from the page's own origin and gives a question back", async () => {
     const fetcher = upstash(command => (command[1] === SHARE_SCRIPT ? ["NEW", "career-choice", "2026-10-04"] : command[1] === SHARE_BONUS_SCRIPT ? ["GRANTED", 2, 0] : 1));

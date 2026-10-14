@@ -202,3 +202,12 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 同一天还调了地图字号：手机上主题名11.5号、年份10.5号并标在每年开始的线下，图下首句13.5号；图里主题名和图下说明左对齐（`home.css` 手机上说明的左右留白改成20px）；说明换行不留单字（`text-wrap: pretty`）。
 
+## 每个回答问完就有网页（2026-10-14）
+
+立正：「问完 这个页面就生成了 url就固定了 就可以直接分享了 也没有什么凭证 或者要脱敏的地方 不需要点分享才能分享 天然就是能分享的 提问人其实只是贡献了一个问题 剩下都是我们的」；10-05 之前的「如果麻烦的话直接扔掉都行 我们架构尽量清晰robust」。
+
+- **存档时建网页**：Builder 的 finish 带 `share_word`（只有 answered 能带，`opsEvent` 检查），`OPS_FINISH_SCRIPT` 在同一个脚本里给 v4、非 apply 的已回答记录建网页：记录的 day、第一个空着的词（`PAGE_ADDRESS_LUA`，分享脚本 `SHARE_SCRIPT` 用同一段），写 `share_slug`、`shared_at`，进 `shares`（站点地图）。脚本回 `{这次完成了没有, slug, day}`；重试找到已建的那个；记录已有网页（提问人先分享过）就用它。带了词的 finish，`storeOpsEvent` 回 `{ok: true, share: "<day>/<slug>"}`，不带词的照旧只回 `{ok: true}`（旧 Builder 只认这个）。`api/ask-lizheng-query.ts` 回复之后用 `waitUntil`（`@vercel/functions`）写这条回答的副本（`copySharedAnswer`），不拖慢回答。
+- **页面**：结果的 `share.url` 就是网址，主页问答区和 ask 页直接显示（`answerPage`），不再自己调 `auto`；只有旧 Builder 没给网址时，不是处境问答（无 context、非 apply）的才照旧带 `auto: true` 去建。复制、发送、二维码照旧带 `auto: false` 记一次分享、领奖励。
+- **「别人在问什么」**：Ops 的卡片和公开问答带 `share_url`（这条问答记录的网页），`discoveryLink(id, page)` 用它，没有时才是 `/q/<编号>`；`/q/<编号>` 路由读到 `share_url` 就 308 跳过去（`publicDetail` 只认 `https://ask.lizheng.ai/s/日期/词` 形状），没有才照旧画页面。2026-10-05 00:20 UTC 之前的公开问答和种子题由 Ops 撤下，其余还没网页的由 Ops 一次补建（Ops 仓库 `shared/discovery-pages.ts`，它用的地址脚本和这里同一段，测试拿这里的分享脚本核对）。
+- 撤下只从「别人在问什么」和公开问答页拿掉，网页还在；Ops 删记录，网页才 404。
+

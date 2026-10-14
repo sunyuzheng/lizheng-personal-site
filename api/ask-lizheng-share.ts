@@ -9,7 +9,9 @@ import { withPlainSourceLabels } from "../shared/ask-source-labels.js";
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
 //   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap).
-const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://www.lizheng.ai data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
+// The page is ask.lizheng.ai's own (shared/ask-share-page.ts): its scripts, its API on this origin,
+// and the small title-font slices its stylesheet carries inline (data:).
+const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' https://www.lizheng.ai data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 // Crawlers and link previews read the page, but are not readers to count.
 const NOT_A_READER = /bot|crawl|spider|slurp|headless|lighthouse|preview|facebookexternalhit|embedly|whatsapp|telegram|skype/i;
 // The pages leave the bonus out inside WeChat and the iPhone app; so does the server.

@@ -148,6 +148,23 @@ describe("storage", () => {
 });
 
 describe("the page", () => {
+  it("is ask.lizheng.ai's own page with the answer in it, which it opens as the asker saw it", () => {
+    const html = renderSharePage(shared());
+    // The page itself, from the last ask-app sync, its scripts and styles from /ask-app/.
+    expect(html).toMatch(/<script type="module" crossorigin src="\/ask-app\/assets\/index-[\w-]+\.js">/);
+    expect(html).not.toMatch(/(?:href|src)="\/(?!ask-app\/)/);
+    const data = JSON.parse(html.match(/<script type="application\/json" id="ask-shared">([\s\S]*?)<\/script>/)![1]);
+    expect(data).toMatchObject({ url: "https://ask.lizheng.ai/s/2026-10-04/career-choice", day: "2026-10-04", slug: "career-choice",
+      question: "合成的问题：怎么选方向？", intent: "understand", created_at: "2026-10-04T02:00:00.000Z" });
+    expect(data.answer.status).toBe("answered");
+    expect(data.answer.sources.map((source: { id: string }) => source.id)).toEqual(["S1", "S2"]);
+    // No page search engines read carries transcript excerpts.
+    expect(html).not.toContain("合成摘录");
+    expect(data.answer.sources.some((source: Record<string, unknown>) => "excerpt" in source)).toBe(false);
+    // The question can follow on from it.
+    expect(data.answer.followups).toEqual(["合成的追问？"]);
+  });
+
   it("shows the question and answer in the first HTML, public and with a preview card", () => {
     const html = renderSharePage(shared());
     expect(html).toContain("<title>合成的问题：怎么选方向？ · 问问立正</title>");
@@ -157,20 +174,17 @@ describe("the page", () => {
     expect(html).toContain('<meta itemprop="image" content="https://www.lizheng.ai/og/ask-share-square.jpg">');
     expect(html).toContain('<link rel="canonical" href="https://ask.lizheng.ai/s/2026-10-04/career-choice">');
     expect(html).toContain('<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">');
+    // The start page's own description and preview are replaced, not doubled.
+    expect(html.match(/property="og:title"/g)).toHaveLength(1);
+    expect(html.match(/rel="canonical"/g)).toHaveLength(1);
+    expect(html).not.toContain('content="https://ask.lizheng.ai/"');
     expect(html).toContain('"@type":"Question"');
-    expect(html).toContain("2026年10月4日提问");
+    expect(html).toContain("2026年10月4日</time>提问");
+    expect(html).toContain("合成的小标题");
     expect(html).toContain("公开视频 &lt;b&gt;");
     expect(html).not.toContain("<b>公开视频");
-    // Sources show their title, kind and reason, never the transcript excerpt.
-    expect(html).not.toContain("合成摘录");
-    expect(html).toContain('class="member">超线性学院 · 会员');
-    expect(html).toContain('<a class="button" href="https://ask.lizheng.ai/" data-to="ask">去问问立正</a>');
     expect(html).toContain("也可以接着问");
     expect(html).toContain(">AI推演<");
-    // It lives on ask.lizheng.ai: its own files from /s/, everything else by full address.
-    expect(html).toContain('<script defer src="/s/page.js"></script>');
-    expect(html).toContain('href="https://www.lizheng.ai/ask/privacy"');
-    expect(html).not.toMatch(/href="\/(?!s\/)/);
   });
 
   it("gives every shared answer to search engines, and says whose situation an application uses", () => {
@@ -290,7 +304,8 @@ describe("the endpoint", () => {
     const fetcher = upstash(command => (command[1] === SHARE_PAGE_SCRIPT ? ["OK", "合成的问题？", JSON.stringify(answer()), "understand", "2026-10-04T02:00:00.000Z"] : null));
     const page = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice");
     expect(page.statusCode).toBe(200);
-    expect(page.body).toContain("<h1>");
+    expect(page.body).toContain('id="ask-shared"');
+    expect(page.body).toContain("合成的问题？");
     expect(page.headers.get("cache-control")).toBe("no-store");
     expect(page.headers.get("content-security-policy")).toContain("img-src 'self' https://www.lizheng.ai");
     expect(page.headers.has("x-robots-tag")).toBe(false);

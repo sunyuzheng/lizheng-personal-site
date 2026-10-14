@@ -167,3 +167,13 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **分享页**（`shared/ask-share-page.ts`）：问题下面「复制链接」「二维码」（能分享的手机多「发给朋友」，微信里改成提示点右上角）；结论下面是回答地图，编号点了跳到下面对应出处；结尾「把这一页发给需要的人」带网址和同样的按钮；二维码在服务器上画成 SVG（`qrcode-generator`），点了在弹窗里看。脚本是 `client/public/s/share.js`（ES 模块）和同步来的 `client/public/s/answer-map.js`；地图数据读 ask 域名的 `/api/answer-map`。`vercel.json` 的 `/s/` 静态路由加了这两个文件。实心绿只留给「去问问立正」。
 - **主页问答区**（`AskLizheng.tsx`、`AnswerMap.tsx`）：回答进行中在进度下面画地图，完成后放在一句话结论下面，编号点了滚到对应出处卡片；分享栏同 ask 页。地图数据走 `/api/ask-lizheng/answer-map`，ask 域名的 `/api/answer-map` 也是，都交给本站函数 `api/ask-lizheng-answer-map.ts`（排在转给 Builder 的兜底路由前面）：它去 Builder 取，回一小时的边缘缓存、过期后先给旧的再刷新，问答服务睡着时地图也能马上画出来。直接把请求转给 Builder 时 Vercel 不缓存它的回答（上线当天试过，每次都没命中），所以要经这个函数。保存的图片底部二维码指向这条回答的网页（`client/src/lib/ask-share.js` 和 ask-lizheng 的 `src/share.js` 一起改）。
 - **同步**：`pnpm sync:ask-app` 另外把 ask-lizheng 的 `src/answer-map.js` 拷成 `shared/ask-answer-map.js`（主页用，类型在 `shared/ask-answer-map.d.ts`）和 `client/public/s/answer-map.js`（分享页用），`version.json` 记 `answer_map_sha256`，`tests/ask-public-qa.test.ts` 防手改。
+
+## 分享页就是 ask.lizheng.ai 本身（2026-10-13）
+
+立正：问完就进入这个问题的子页面，打开链接看到的就是自己看到的东西。所以分享页不再单独排版：
+
+- `renderSharePage`（`shared/ask-share-page.ts`）用同步来的 ask 页面（`shared/ask-app-shell.js`，`pnpm sync:ask-app` 从 ask-lizheng 构建的 index.html 生成，`version.json` 记 `app_shell_sha256`）：换上这条问答的标题、描述、canonical、`index, follow`、预览卡片和结构化数据，把问答放进 `<script type="application/json" id="ask-shared">`（去掉字幕摘录），`#root` 里先放同一条问答的文字，用 ask 页面自己的类名排（搜索引擎、链接预览、不跑脚本的读者读这一份；页面接管时不跳）。页面脚本读到 `#ask-shared` 就把它当成对话打开，可以接着问。
+- ask 页面在回答的网页建好后把地址栏换成它（`history.replaceState`），刷新就进这个分享页。主页问答区在 www，不换地址。
+- 安全策略多了 `font-src data:`：ask 页面的样式里内嵌了几小段标题字体。
+- 原来分享页专用的 `client/public/s/share.js` 和 `/s/answer-map.js` 删掉了；`/s/page.js`、`/s/fonts.css` 只剩「这个分享不在了」页面在用。
+- 统计：读分享页照旧由本函数记 `all:share_view`；ask 页面在分享页上不开始自己的使用统计，读者提问后才算。

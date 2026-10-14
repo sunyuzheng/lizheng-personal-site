@@ -14,10 +14,10 @@ describe("public Q&A wording", () => {
     expect(createHash("sha256").update(read("shared/ask-public-qa.js")).digest("hex")).toBe(public_qa_sha256);
   });
 
-  it("draws every map with ask-lizheng's own code: the homepage's and the shared pages' copies are the synced one", () => {
-    const { answer_map_sha256 } = JSON.parse(read("client/public/ask-app/version.json"));
-    for (const file of ["shared/ask-answer-map.js", "client/public/s/answer-map.js"])
-      expect(createHash("sha256").update(read(file)).digest("hex")).toBe(answer_map_sha256);
+  it("draws the homepage's map with ask-lizheng's own code, and makes shared pages from its own page", () => {
+    const { answer_map_sha256, app_shell_sha256 } = JSON.parse(read("client/public/ask-app/version.json"));
+    expect(createHash("sha256").update(read("shared/ask-answer-map.js")).digest("hex")).toBe(answer_map_sha256);
+    expect(createHash("sha256").update(read("shared/ask-app-shell.js")).digest("hex")).toBe(app_shell_sha256);
   });
 
   it("is how the privacy policy opens, in both languages", () => {

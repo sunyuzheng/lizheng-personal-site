@@ -186,3 +186,10 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **保存图片和PDF**（`client/src/lib/ask-share.js`，和 ask-lizheng 的 `src/share.js` 一起改）：结论下面用 `paintAnswerMap` 画一帧静态地图；PDF 里每个编号和它的灯是链接（`links` 随行带进 `renderPages`），图下中英文各一句说明。地图数据读不到时不画，导出照旧。
 - **「别人在问什么」展开的回答**：结论下面加 `AnswerMapPanel`（`cardMapTurn` 把公开回答转成地图要的样子，按回答缓存在 WeakMap 里），编号沿用公开回答的编号。
 - 地图说明文字原来被 `.lz-ask-answer p` 的墨色盖住（深绿底上看不清，主页回答里的地图也是），`home.css` 里说明各行的选择器前加了 `.lz-map`。
+## 时间长卷；会员内容金色；展开问题不跳位置（2026-10-13）
+
+立正觉得地图（斜看的光点圆盘）和 city.lizheng.ai 太像，看了几种样稿后定了「时间长卷」：八个主题各一行，每份材料一道细线画在它发表的那天，问题在右端，引用的材料亮起并连过去（ask-lizheng `docs/PRODUCT.md`「时间长卷：地图改成一条时间线」）。又要会员内容打金标、地图编号也是金色，并录屏指出「别人在问什么」展开第二条时屏幕落到它的结尾。
+
+- **地图**：代码仍由 `pnpm sync:ask-app` 拷来（`shared/ask-answer-map.js`），接口不变，多了 `words`（右端问题的名字和悬停提示的词）。`AnswerMap.tsx` 的 `own` 区分自己的问题（「你的问题」/Your question）和「别人在问什么」里别人的（「这个问题」）；图下一句带引用材料的年份跨度，图例只剩一句「每一道细线是一份材料：按主题分行，越往右越新」。`home.css` 里地图底色改成从左到右变亮的森林绿，去掉了形式颜色的图例。保存的图片和PDF（`client/src/lib/ask-share.js`）同样改了说明和底色。数据多了每份材料的发表日期 `d`（ask-lizheng 的 `build_answer_map.py`）；边缘缓存里还是旧数据时按旧半径推算，最多差一个月左右。
+- **金标**：`isMembersOnly`（`source_visibility=members-only`）的出处，编号、正文角标、段落下的出处编号都是金色（`--lz-member-ink`），标签是金底的「会员视频」「会员课程」「会员帖子」「会员区回复」（`.lz-ask-member-badge.tag`）；社区会员区的写「原帖在超线性学院会员区，打开需要会员」。「发言：立正」这类归属标签改成普通灰字（`.lz-ask-attribution`），不再用金色。
+- **展开问题**：`toggleCard` 记下点的那条标题在屏幕上的位置，展开后（`useLayoutEffect`）把页面挪回去，上面那条收起也不跳。ask 页同样修了。

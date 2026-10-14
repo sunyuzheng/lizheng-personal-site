@@ -1,27 +1,32 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "@/contexts/LanguageContext";
 import type { AskAnswerState } from "@/lib/ask-lizheng";
-import { AnswerMap, loadAnswerMap, sourceItem, type AnswerMapData, type AnswerMapState, type MapSource } from "@shared/ask-answer-map.js";
+import { AnswerMap, loadAnswerMap, membersOnly, sourceItem, type AnswerMapData, type AnswerMapState, type MapSource } from "@shared/ask-answer-map.js";
 
 // The answer map in the homepage's Ask section, as on ask.lizheng.ai (ask-lizheng's
 // src/answer-map-panel.jsx, whose drawing code shared/ask-answer-map.js copies): every public
-// material a light, farther out newer, the direction its topic. While the answer is found, the
-// candidates light and thread to the question; afterwards the cited sources carry the numbers the
-// text uses, and a number opens the video or post it cites (and its source card below).
+// material a thin stroke on a timeline, a row a topic, 2020 at the left and today at the right,
+// where the question is. While the answer is found, the candidates light and thread to the
+// question; afterwards the cited sources carry the numbers the text uses, and a number opens the
+// video or post it cites (and its source card below). Members' content is gold.
 const COPY = {
   zh: {
     found: (n: number) => `${n}份候选材料`,
-    lead: (n: number) => `图上标号的是回答引用的${n}份材料，点编号打开原视频或原帖。`,
+    reach: (lo: number, hi: number) => (lo === hi ? `，都在${lo}年` : `，从${lo}年到${hi}年`),
+    lead: (n: number, reach: string) => `亮着的${n}份是这条回答引用的${reach}。点编号打开原视频或原帖。`,
+    members: "金色的是会员内容，打开需要会员。",
     card: "判断卡：",
-    legend: ["视频与对谈", "文字", "课程与书", "判断卡"],
-    axes: "越往外越新，方向是主题",
+    legend: "每一道细线是一份材料：按主题分行，越往右越新。",
+    words: (own: boolean) => ({ question: own ? "你的问题" : "这个问题", card: "判断卡", member: "会员" }),
   },
   en: {
     found: (n: number) => `${n} candidate sources`,
-    lead: (n: number) => `The numbered lights are the ${n} sources the answer cites; click one to open the video or post.`,
+    reach: (lo: number, hi: number) => (lo === hi ? `, all from ${lo}` : `, from ${lo} to ${hi}`),
+    lead: (n: number, reach: string) => `The ${n} lit strokes are the sources this answer cites${reach}; click a number to open the video or post.`,
+    members: "Gold ones are members' content; opening them needs a membership.",
     card: "Judgment card: ",
-    legend: ["Videos and talks", "Writing", "Courses and book", "Judgment card"],
-    axes: "Newer farther out; the direction is the topic",
+    legend: "Each thin stroke is one source: a row per topic, newer to the right.",
+    words: (own: boolean) => ({ question: own ? "Your question" : "This question", card: "Judgment card", member: "Members" }),
   },
 };
 
@@ -44,8 +49,9 @@ function mapState(map: AnswerMapData, turn: MapTurn, live: boolean, selected: st
   return { live: live && !result, done: !!result, stage: result ? "done" : turn.progress?.stage || "retrieving", candidates, cards, cited, sources, selected };
 }
 
-export default function AnswerMapPanel({ turn, live = false, lang, selected = null, onSelect, onOpen }: {
-  turn: MapTurn; live?: boolean; lang: Lang; selected?: string | null; onSelect: (id: string) => void; onOpen?: (source: MapSource) => void;
+/** `own`: the reader's own question (an opened public question is someone else's). */
+export default function AnswerMapPanel({ turn, live = false, lang, selected = null, own = true, onSelect, onOpen }: {
+  turn: MapTurn; live?: boolean; lang: Lang; selected?: string | null; own?: boolean; onSelect: (id: string) => void; onOpen?: (source: MapSource) => void;
 }) {
   const t = COPY[lang];
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -66,7 +72,7 @@ export default function AnswerMapPanel({ turn, live = false, lang, selected = nu
   useEffect(() => {
     if (!map || !canvas.current) return undefined;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    view.current = new AnswerMap(canvas.current, map, { onSelect: id => select.current(id), onOpen: source => opened.current?.(source), reduce });
+    view.current = new AnswerMap(canvas.current, map, { onSelect: id => select.current(id), onOpen: source => opened.current?.(source), reduce, words: t.words(own) });
     return () => { view.current?.destroy(); view.current = null; };
   }, [map]);
 
@@ -78,23 +84,24 @@ export default function AnswerMapPanel({ turn, live = false, lang, selected = nu
   const found = state?.candidates.filter(row => row.item >= 0).length || 0;
   const cards = state?.cards || [];
   const numbered = turn.result?.sources?.length || 0;
+  const members = (turn.result?.sources || []).some(membersOnly);
+  // How far back the answer reaches: the years of the sources it cites.
+  const years = (turn.result?.sources || []).map(source => Number(source.date?.slice(0, 4))).filter(Boolean);
+  const reach = years.length ? t.reach(Math.min(...years), Math.max(...years)) : "";
   return (
     <figure className={`lz-map ${live ? "is-live" : "is-done"}`}>
       <div className="lz-map-stage">
         <canvas ref={canvas} aria-hidden="true" />
       </div>
       <figcaption>
-        {!live && numbered > 0 && <p className="lz-map-lead">{t.lead(numbered)}</p>}
+        {!live && numbered > 0 && <p className="lz-map-lead">{t.lead(numbered, reach)}{members && <span className="lz-map-member"> {t.members}</span>}</p>}
         {((live && found > 0) || cards.length > 0) && (
           <p className="lz-map-counts">
             {live && found > 0 && <span>{t.found(found)}</span>}
             {cards.map(card => <span key={card.id} className="lz-map-card"><i aria-hidden="true" />{t.card}{card.title}</span>)}
           </p>
         )}
-        <p className="lz-map-legend">
-          {t.legend.map((label, index) => <span key={label}><i className={["v", "t", "c", "k"][index]} aria-hidden="true" />{label}</span>)}
-          <span className="lz-map-axes">{t.axes}</span>
-        </p>
+        <p className="lz-map-legend">{t.legend}</p>
       </figcaption>
     </figure>
   );

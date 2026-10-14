@@ -6,7 +6,7 @@
 import qrcode from 'qrcode-generator';
 import {loadAnswerMap, openableUrl, paintAnswerMap, sourceItem} from '../../../shared/ask-answer-map.js';
 import {MARK_PATHS} from '@/components/site/LizhengMark';
-import {isMemberVideo} from './ask-lizheng';
+import {isMemberCourse, isMemberPost, isMembersOnly, isMemberVideo} from './ask-lizheng';
 import {sourceAttributionLabel} from '../../../shared/ask-source-attribution.js';
 
 const MARK_VIEWBOX = [1219.044577, 649.234004];
@@ -16,20 +16,24 @@ const LABELS = {
     site: 'https://ask.lizheng.ai/', host: 'ask.lizheng.ai', brand: '问问立正', file: '问问立正', question: '你的问题',
     meta: day => `AI根据立正公开的文章和视频整理 · ${day}`, day: d => `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
-    video: '视频', memberVideo: '会员视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
+    video: '视频', memberVideo: '会员视频', memberCourse: '会员课程', memberPost: '会员帖子', memberReply: '会员区回复', member: '会员内容',
+    article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
     cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问', scanAnswer: '扫码看这条回答',
-    mapPdf: (what, n) => `图上标号的是${what}的${n}份材料，点编号打开原视频或原帖。`, mapImage: (what, n) => `图上标号的是${what}的${n}份材料，编号和正文、出处一致。`,
-    mapCited: '回答引用', mapFound: '找到', mapLegend: ['视频与对谈', '文字', '课程与书'], mapAxes: '越往外越新，方向是主题',
+    mapPdf: (what, n, reach) => `亮着的${n}份是${what}${reach}。点编号打开原视频或原帖。`, mapImage: (what, n, reach) => `亮着的${n}份是${what}${reach}，编号和正文、出处一致。`,
+    mapCited: '这条回答引用的', mapFound: '找到的材料', mapReach: (lo, hi) => (lo === hi ? `，都在${lo}年` : `，从${lo}年到${hi}年`),
+    mapLegend: '每一道细线是一份材料：按主题分行，越往右越新。', mapMember: '会员内容', mapWords: {question: '这个问题', card: '判断卡', member: '会员'},
     kinds: {application: 'AI推演', personal: '结合你的处境', source: '材料里的观点'},
   },
   en: {
     site: 'https://www.lizheng.ai/en#ask', host: 'lizheng.ai/en', brand: 'Ask Lizheng', file: 'Ask-Lizheng', question: 'Your question',
     meta: day => `AI synthesis of Lizheng’s public essays and talks · ${day}`, day: d => d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}),
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
-    video: 'Video', memberVideo: 'Members video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
+    video: 'Video', memberVideo: 'Members video', memberCourse: 'Members course', memberPost: 'Members post', memberReply: 'Members reply', member: 'Members only',
+    article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
     cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask', scanAnswer: 'Scan for this answer',
-    mapPdf: (what, n) => `The numbered lights are the ${n} sources ${what}; click one to open the video or post.`, mapImage: (what, n) => `The numbered lights are the ${n} sources ${what}, numbered as in the text.`,
-    mapCited: 'the answer cites', mapFound: 'found', mapLegend: ['Videos and talks', 'Writing', 'Courses and book'], mapAxes: 'Newer farther out; the direction is the topic',
+    mapPdf: (what, n, reach) => `The ${n} lit strokes are the sources ${what}${reach}; click a number to open the video or post.`, mapImage: (what, n, reach) => `The ${n} lit strokes are the sources ${what}${reach}, numbered as in the text.`,
+    mapCited: 'this answer cites', mapFound: 'found', mapReach: (lo, hi) => (lo === hi ? `, all from ${lo}` : `, from ${lo} to ${hi}`),
+    mapLegend: 'Each thin stroke is one source: a row per topic, newer to the right.', mapMember: 'Members only', mapWords: {question: 'This question', card: 'Judgment card', member: 'Members'},
     kinds: {application: 'AI’s application', personal: 'Applied to you', source: 'From the material'},
   },
 };
@@ -43,6 +47,7 @@ const C = {
   ink: '#121613', ink2: '#343a35', muted: '#6c7069', faint: '#8d9088', line: '#e2ddd1',
   ivory: '#f8f5ee', paper: '#fcfbf7', sand: '#efe9dc', green: '#238343', greenText: '#1c6b37',
   greenTint: '#e4efe3', forest: '#0f3d23', onForest: '#f8f1e4', amber: '#7a5512', amberTint: '#f5ead3',
+  member: '#79603f', memberTint: '#f3ead8',
 };
 const SERIF = '"Noto Serif SC", "Songti SC", "STSong", serif';
 const SANS = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", sans-serif';
@@ -264,7 +269,9 @@ function sourceRow(ctx, source, number) {
   const style = {size: 27, weight: 600, color: C.ink};
   const all = wrap(ctx, units([{text: source.title || ''}], style), INNER - 70);
   const titleLines = all.slice(0, 2);
-  const type = isMemberVideo(source) ? L.memberVideo : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
+  const type = isMemberVideo(source) ? L.memberVideo : isMemberCourse(source) ? L.memberCourse
+    : isMemberPost(source) ? (source.source_type === 'community-comment' ? L.memberReply : L.memberPost) : isMembersOnly(source) ? L.member
+    : source.source_type?.includes('video') ? L.video : source.source_type === 'context' ? L.context : L.article;
   const meta = [type, sourceAttributionLabel(source), source.date?.slice(0, 10) || L.undated, source.timecode ? L.from(source.timecode) : ''].filter(Boolean).join(' · ');
   // An image cannot be clicked, so the address must be readable in full: when it does not fit
   // after the details (a video with a start time, say), it gets lines of its own.
@@ -275,8 +282,10 @@ function sourceRow(ctx, source, number) {
   const h = 24 + titleLines.length * 40 + 34 + (urlLines ? urlLines.length * 30 : 0) + 24;
   return {h, link: source.url, draw(c, y) {
     c.fillStyle = C.line; c.fillRect(PAD, y, INNER, 2);
-    c.fillStyle = C.greenTint; roundRect(c, PAD, y + 26, 44, 44, 10); c.fill();
-    c.fillStyle = C.greenText; c.font = font(700, 22); c.textAlign = 'center'; c.textBaseline = 'middle';
+    // Members' content is gold, as on the page and the map.
+    const member = isMembersOnly(source);
+    c.fillStyle = member ? C.memberTint : C.greenTint; roundRect(c, PAD, y + 26, 44, 44, 10); c.fill();
+    c.fillStyle = member ? C.member : C.greenText; c.font = font(700, 22); c.textAlign = 'center'; c.textBaseline = 'middle';
     c.fillText(number, PAD + 22, y + 49);
     c.textAlign = 'left';
     let ty = y + 24;
@@ -310,29 +319,32 @@ function mapRow(map, result, kind) {
   const scale = INNER / MAP_W, mapH = Math.round(MAP_H * scale), h = mapH + 116;
   const art = document.createElement('canvas');
   const hits = paintAnswerMap(art, map, {live: false, done: true, stage: 'done', candidates: cited, cards: [], cited,
-    sources: new Map(sources.map(source => [source.id, source])), selected: null}, {width: MAP_W, height: MAP_H, scale: scale * 2, font: SANS});
+    sources: new Map(sources.map(source => [source.id, source])), selected: null}, {width: MAP_W, height: MAP_H, scale: scale * 2, font: SANS, words: L.mapWords});
   const url = new Map(sources.map(source => [source.id, openableUrl(source.url)]).filter(([, value]) => value));
   const links = kind === 'pdf' ? hits.filter(hit => url.has(hit.id))
     .map(hit => ({x: PAD + hit.x * scale, y: hit.y * scale, w: hit.w * scale, h: hit.h * scale, url: url.get(hit.id)})) : [];
   const what = result.status === 'sources-only' ? L.mapFound : L.mapCited;
-  const lead = (kind === 'pdf' ? L.mapPdf : L.mapImage)(what, sources.length);
+  const members = sources.some(isMembersOnly);
+  const years = sources.map(source => Number(source.date?.slice(0, 4))).filter(Boolean);
+  const reach = years.length ? L.mapReach(Math.min(...years), Math.max(...years)) : '';
+  const lead = (kind === 'pdf' ? L.mapPdf : L.mapImage)(what, sources.length, reach);
   return {h, links, draw(c, y) {
-    const glow = c.createRadialGradient(W / 2, y + mapH * 0.44, 0, W / 2, y + mapH * 0.44, INNER * 0.62);
-    glow.addColorStop(0, '#1a5132'); glow.addColorStop(0.55, C.forest); glow.addColorStop(1, '#0b2f1b');
+    // The forest, a little lighter towards today, as on the page.
+    const glow = c.createLinearGradient(PAD, 0, PAD + INNER, 0);
+    glow.addColorStop(0, '#0b2f1b'); glow.addColorStop(0.62, C.forest); glow.addColorStop(1, '#1a5132');
     c.fillStyle = glow; roundRect(c, PAD, y, INNER, h, 18); c.fill();
     c.drawImage(art, PAD, y, INNER, mapH);
     c.textBaseline = 'middle'; c.textAlign = 'left';
     c.fillStyle = C.onForest; c.font = font(400, 22);
     c.fillText(fitEllipsis(c, lead, INNER - 56), PAD + 28, y + mapH + 32);
     c.font = font(400, 18);
-    let x = PAD + 28;
     const ly = y + mapH + 78;
-    L.mapLegend.forEach((label, index) => {
-      c.fillStyle = ['#f8f1e4', '#8fd4a4', '#e2c27c'][index]; c.beginPath(); c.arc(x + 5, ly, 5, 0, Math.PI * 2); c.fill();
-      c.fillStyle = 'rgba(248,241,228,0.6)'; c.fillText(label, x + 17, ly);
-      x += 17 + c.measureText(label).width + 26;
-    });
-    c.textAlign = 'right'; c.fillText(L.mapAxes, PAD + INNER - 28, ly); c.textAlign = 'left';
+    c.fillStyle = 'rgba(248,241,228,0.6)'; c.fillText(L.mapLegend, PAD + 28, ly);
+    if (members) {
+      const x = PAD + 28 + c.measureText(L.mapLegend).width + 26;
+      c.fillStyle = '#e2c27c'; roundRect(c, x, ly - 7, 18, 14, 4); c.fill();
+      c.fillStyle = 'rgba(248,241,228,0.6)'; c.fillText(L.mapMember, x + 26, ly);
+    }
   }};
 }
 

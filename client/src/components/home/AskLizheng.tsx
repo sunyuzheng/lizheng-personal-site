@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import type { Lang } from "@/contexts/LanguageContext";
 import {
@@ -7,6 +7,8 @@ import {
   AskError,
   publicSourceUrl,
   isMemberCourse,
+  isMemberPost,
+  isMembersOnly,
   isMemberVideo,
   memberJoinUrl,
   type AskIntent,
@@ -345,14 +347,20 @@ function Source({
   const copy = publicSourceUrl(source.public_copy_url);
   const member = isMemberVideo(source);
   const course = isMemberCourse(source);
+  const post = isMemberPost(source);
+  const reply = post && source.source_type === "community-comment";
+  // Members' content is gold: its label and its number, here, in the text and on the map.
+  const limited = isMembersOnly(source);
   const attribution = sourceAttributionLabel(source);
   return (
     <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
       <div>
-        <span className="num">{source.id.slice(1)}</span>
-        {member && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
-        {course && <strong className="lz-ask-member-badge">{lang === "zh" ? "会员课程" : "Members course"}</strong>}
-        {attribution && <strong className="lz-ask-member-badge">{attribution}</strong>}
+        <span className={`num${limited ? " member" : ""}`}>{source.id.slice(1)}</span>
+        {member && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
+        {course && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员课程" : "Members course"}</strong>}
+        {post && <strong className="lz-ask-member-badge tag">{lang === "zh" ? (reply ? "会员区回复" : "会员帖子") : (reply ? "Members reply" : "Members post")}</strong>}
+        {limited && !member && !course && !post && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员内容" : "Members only"}</strong>}
+        {attribution && <strong className="lz-ask-attribution">{attribution}</strong>}
         <time>{source.date?.slice(0, 10)}</time>
       </div>
       {url ? (
@@ -365,6 +373,7 @@ function Source({
       {source.reason && <p>{source.reason}</p>}
       {member && <p className="lz-ask-member-note">{lang === "zh" ? "字幕资料已开放，完整视频需YouTube频道会员。" : "Transcript text is open; the full video requires YouTube channel membership."}</p>}
       {course && <p className="lz-ask-member-note">{lang === "zh" ? "文字稿已开放，课程视频需超线性学院会员。" : "The lesson text is open; the course videos are for Superlinear members."}</p>}
+      {post && <p className="lz-ask-member-note">{lang === "zh" ? `原${reply ? "回复" : "帖"}在超线性学院会员区，打开需要会员。` : `The original ${reply ? "reply" : "post"} is in the Superlinear members' area; opening it needs a membership.`}</p>}
       {source.transcript_quality === "uncorrected-asr" && <small>{lang === "zh" ? "自动转录未校正，请以原视频核实措辞。" : "Uncorrected ASR; verify wording in the original video."}</small>}
       {source.transcript_quality === "source-unverified" && <small>{lang === "zh" ? "字幕来源未确认，请以原视频核实。" : "Caption provenance is unverified; check the original video."}</small>}
       {member && url && <a className="lz-ask-member-watch" href={url} {...EXTERNAL}>{lang === "zh" ? "观看会员完整视频" : "Watch the full members video"} ↗</a>}
@@ -541,8 +550,9 @@ function AnswerText({
         a: ({ href, children }) => {
           const id = href?.startsWith("#cite-") ? href.slice(6) : "";
           // A footnote mark: the number only, joined to the word it marks.
-          return sources.some(s => s.id === id) ? (
-            <>{"\u2060"}<a className="lz-ask-cite" href={`#home-ask-${turnId}-${id}`} aria-label={`S${id.slice(1)}`}>
+          const source = sources.find(s => s.id === id);
+          return source ? (
+            <>{"\u2060"}<a className={`lz-ask-cite${isMembersOnly(source) ? " member" : ""}`} href={`#home-ask-${turnId}-${id}`} aria-label={`S${id.slice(1)}`}>
               {id.slice(1)}
             </a></>
           ) : (
@@ -584,7 +594,8 @@ function AnswerSections({
       {!/\[S\d+\]/.test(section.body) && (
         <div className="lz-ask-citations">
           {section.source_ids?.map(id => (
-            <a key={id} href={`#home-ask-${turnId}-${id}`} aria-label={id}>
+            <a key={id} href={`#home-ask-${turnId}-${id}`} aria-label={id}
+              className={sources.some(s => s.id === id && isMembersOnly(s)) ? "member" : undefined}>
               {id.slice(1)}
             </a>
           ))}
@@ -667,6 +678,16 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // In 最常问: whose similar questions are open (any number), and which of those shows its answer.
   const [openSimilar, setOpenSimilar] = useState<Set<string>>(() => new Set());
   const [openNested, setOpenNested] = useState("");
+  // One question open at a time: opening one below an open one folds that one, so the question
+  // tapped is kept where it was on screen, its answer starting under the finger (as on ask.lizheng.ai).
+  const keptHead = useRef<{ head: HTMLElement; top: number } | null>(null);
+  useLayoutEffect(() => {
+    const kept = keptHead.current;
+    keptHead.current = null;
+    if (!kept?.head.isConnected) return;
+    const moved = kept.head.getBoundingClientRect().top - kept.top;
+    if (Math.abs(moved) > 1) window.scrollBy(0, moved);
+  }, [openCard, openNested]);
   // Likes: what this browser liked (kept on this device), and the votes on their way, shown at once.
   const [likes, setLikes] = useState<LikeMemory>(readLikes);
   const [voting, setVoting] = useState<Record<string, { voted: boolean; likes: number }>>({});
@@ -760,8 +781,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     });
     return () => { clearTimeout(late); controller.abort(); };
   }, [lang]);
-  const toggleCard = (card: DiscoveryCard | SimilarQuestion, nested = false) => {
+  const toggleCard = (card: DiscoveryCard | SimilarQuestion, nested = false, head?: HTMLElement) => {
     const [shown, show] = nested ? [openNested, setOpenNested] : [openCard, setOpenCard];
+    if (head) keptHead.current = { head, top: head.getBoundingClientRect().top };
     if (shown === card.public_id) { show(""); return; }
     show(card.public_id);
     markUsage("d_open");
@@ -847,7 +869,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     return (
       <article key={card.public_id} className={["lz-ask-qcard", open && "open", nested && "nested"].filter(Boolean).join(" ")}>
         <div className="lz-ask-qcard-row">
-          <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={() => toggleCard(card, nested)}>
+          <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={event => toggleCard(card, nested, event.currentTarget)}>
             {often ? (
               <small className="often">{c.discoveryCount(similar)}</small>
             ) : card.asked_at ? (
@@ -879,7 +901,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                     <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
                   </div>
                   {!!detail.answer.sources.length && (
-                    <AnswerMapPanel turn={cardMapTurn(detail, anchor)} lang={lang} onSelect={id => openMapSource({ id: anchor }, id)} onOpen={openedMapSource} />
+                    <AnswerMapPanel turn={cardMapTurn(detail, anchor)} lang={lang} own={false} onSelect={id => openMapSource({ id: anchor }, id)} onOpen={openedMapSource} />
                   )}
                   <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
                   {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}

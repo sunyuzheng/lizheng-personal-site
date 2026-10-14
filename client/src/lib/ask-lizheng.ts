@@ -277,6 +277,16 @@ export function isMemberCourse(source: AskSource): boolean {
   return source.source_visibility === "members-only" && source.source_type === "course-lesson";
 }
 
+/** A post or reply in the community's members' area. */
+export function isMemberPost(source: AskSource): boolean {
+  return source.source_visibility === "members-only" && /^community-/.test(source.source_type || "");
+}
+
+/** Only members open the original (member video, course, post or reply): gold, its number too. */
+export function isMembersOnly(source: AskSource): boolean {
+  return source.source_visibility === "members-only";
+}
+
 export function memberJoinUrl(source: AskSource): string | undefined {
   const join = "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join";
   return isMemberVideo(source) && source.membership_url === join ? join : undefined;

@@ -78,7 +78,8 @@ afterEach(() => {
 });
 
 describe("askLizheng stream protocol", () => {
-  it("exports membership-derived articles as articles and only actual member videos as member videos", async () => {
+  // Since 2026-10-13 a members' area post is labelled as one (gold, like member videos), never as a video.
+  it("exports a members' area post as a member post and only actual member videos as member videos", async () => {
     const drawn: string[] = [];
     const context = new Proxy<Record<string, unknown>>({
       measureText: (text: string) => ({ width: text.length * 12 }),
@@ -105,7 +106,7 @@ describe("askLizheng stream protocol", () => {
         { ...source, id: "S3", source_type: "video-transcript", date: "2026-01-03" },
       ] },
     });
-    expect(drawn).toContain("文章 · 2026-01-01 · ");
+    expect(drawn).toContain("会员帖子 · 2026-01-01 · ");
     expect(drawn).toContain("会员视频 · 2026-01-02 · ");
     expect(drawn).toContain("视频 · 2026-01-03 · ");
     expect(drawn.filter(text => text.startsWith("会员视频 · "))).toHaveLength(1);

@@ -10,6 +10,7 @@
   --sans: var(--lz-sans-zh);
   --num: var(--lz-num);
   --lz-member-ink: #79603f;
+  --lz-member-tint: #f3ead8;
   --lz-member-line: #d9cfbb;
   --lz-member-surface: #faf8f2;
   background: var(--lz-ivory);
@@ -3219,6 +3220,32 @@
   letter-spacing: 0.04em;
 }
 
+/* Members' content is gold wherever it shows: a gold tag, its number here, in the text and on the
+   map, so a wall after clicking is no surprise. Who speaks is a plain label beside it. */
+.lz-home .lz-ask-member-badge.tag {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--lz-member-tint);
+}
+
+.lz-home .lz-ask-attribution {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-source > div > .num.member,
+.lz-home .lz-ask-cite.member,
+.lz-home .lz-ask-citations a.member {
+  color: var(--lz-member-ink);
+}
+
+.lz-home .lz-ask-cite.member:hover,
+.lz-home .lz-ask-citations a.member:hover {
+  background: var(--lz-member-ink);
+  color: #fff;
+}
+
 .lz-home .lz-ask-source a {
   display: block;
   font-size: 15px;
@@ -3504,13 +3531,14 @@
   color: #8b3b25;
 }
 
-/* The answer map (AnswerMap.tsx): the question at the centre of every public material, on the
-   forest of the site's dark sections so the lights can glow. Mint marks what opens a source. */
+/* The answer map (AnswerMap.tsx): every public material on a timeline, a row a topic, the question
+   at the right end, today; on the forest of the site's dark sections, a little lighter towards
+   today, so the strokes can glow. Mint marks what opens a source, gold members' content. */
 .lz-home .lz-map {
   max-width: 700px;
   margin: 18px 0 6px;
   border-radius: 10px;
-  background: radial-gradient(85% 70% at 50% 44%, #1a5132 0%, var(--lz-forest) 52%, var(--lz-forest-2) 100%);
+  background: linear-gradient(90deg, var(--lz-forest-2) 0%, var(--lz-forest) 62%, #1a5132 100%);
   color: rgb(248 241 228 / 0.78);
   overflow: hidden;
 }
@@ -3520,18 +3548,17 @@
 }
 
 .lz-home .lz-map-stage {
-  height: clamp(260px, 44vw, 330px);
+  height: clamp(272px, 46vw, 320px);
 }
 
 .lz-home .lz-map.is-done .lz-map-stage {
-  height: clamp(230px, 38vw, 280px);
+  height: clamp(250px, 42vw, 290px);
 }
 
 .lz-home .lz-map canvas {
   display: block;
   width: 100%;
   height: 100%;
-  cursor: grab;
   touch-action: pan-y;
   font-family: var(--sans);
 }
@@ -3563,62 +3590,27 @@
   color: rgb(248 241 228 / 0.78);
 }
 
+/* Gold is kept for members' content (its numbers); judgment cards are cream diamonds. */
 .lz-home .lz-map-card {
+  color: #f8f1e4;
+}
+
+.lz-home .lz-map .lz-map-member {
   color: #e2c27c;
 }
 
-.lz-home .lz-map-card i,
-.lz-home .lz-map-legend i.k {
+.lz-home .lz-map-card i {
   display: inline-block;
   width: 7px;
   height: 7px;
   margin: 0 7px 1px 1px;
-  background: #e2c27c;
+  background: #f8f1e4;
   transform: rotate(45deg);
 }
 
 .lz-home .lz-map .lz-map-legend {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px 14px;
   font-size: 12px;
   color: rgb(248 241 228 / 0.56);
-}
-
-.lz-home .lz-map-legend span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.lz-home .lz-map-legend i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
-
-.lz-home .lz-map-legend i.v {
-  background: #f8f1e4;
-}
-
-.lz-home .lz-map-legend i.t {
-  background: #8fd4a4;
-}
-
-.lz-home .lz-map-legend i.c {
-  background: #e2c27c;
-}
-
-.lz-home .lz-map-legend i.k {
-  width: 6px;
-  height: 6px;
-  margin: 0 1px;
-  border-radius: 0;
-}
-
-.lz-home .lz-map-axes {
-  margin-left: auto;
 }
 
 @media (max-width: 640px) {
@@ -3626,10 +3618,6 @@
   .lz-home .lz-ask-answer .lz-map {
     margin-inline: calc(-1 * var(--lz-gut));
     border-radius: 0;
-  }
-
-  .lz-home .lz-map-axes {
-    margin-left: 0;
   }
 }
 

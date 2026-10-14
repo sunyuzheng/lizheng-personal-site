@@ -10,6 +10,8 @@ import {
 } from "../shared/ask-share-link";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page";
 import { usageDay } from "../shared/ask-usage";
+import { forgetPublicCards } from "../shared/ask-public-cards";
+import { OPS_BACKEND_ORIGIN } from "../shared/ask-ops-gateway";
 
 // Synthetic records only: no real asker's words in tests.
 const SECRET = "a".repeat(64);
@@ -45,7 +47,7 @@ beforeEach(() => {
   vi.stubEnv("ASK_AUTH_REDIS_REST_URL", "https://synthetic.upstash.io");
   vi.stubEnv("ASK_AUTH_REDIS_REST_TOKEN", "synthetic-not-live");
 });
-afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); });
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); forgetPublicCards(); });
 
 describe("what a page may send", () => {
   it("takes one answer's record, word and proof, where it was shared and whether to give a question back", () => {
@@ -277,6 +279,32 @@ describe("the endpoint", () => {
     expect(reply.body).toContain("合成的公开问题？");
   });
 
+  // 2026-10-14: a question published on 别人在问什么 has its search page on www.lizheng.ai, same address.
+  it("points search engines at a published question's page on www.lizheng.ai, and lists the rest", async () => {
+    forgetPublicCards();
+    vi.stubEnv("ASK_OPS_BACKEND_ORIGIN", OPS_BACKEND_ORIGIN);
+    const published = "https://ask.lizheng.ai/s/2026-10-04/career-choice";
+    vi.stubGlobal("fetch", vi.fn(async (url: string, init?: RequestInit) => {
+      if (String(url).includes("/api/discovery")) return new Response(JSON.stringify({ v: 1, items: [{ public_id: "2e195aff-2690-47b1-aaa6-5d39e6a8d821",
+        revision: 2, topic_key: "c".repeat(32), topic_label: "合成主题", question: "合成的问题？", summary: "合成摘要", published_at: "2026-10-04T03:00:00.000Z",
+        updated_at: "2026-10-04T03:00:00.000Z", topic_question_count: 1, share_url: published }] }), { headers: { "content-type": "application/json" } });
+      const command = JSON.parse(String(init?.body));
+      return Response.json({ result: command[1] === SHARE_PAGE_SCRIPT ? ["OK", "合成的问题？", JSON.stringify(answer()), "understand", "2026-10-04T02:00:00.000Z"]
+        : command[1] === SHARE_LIST_SCRIPT ? [["2026-10-04", "career-choice", "2026-10-04T03:00:00.000Z"], ["2026-10-04", "other-word", "2026-10-04T04:00:00.000Z"]] : null });
+    }));
+    const page = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice");
+    expect(page.statusCode).toBe(200);
+    expect(page.body).toContain('<link rel="canonical" href="https://www.lizheng.ai/ask/2026-10-04/career-choice">');
+    expect(page.body).toContain(`<meta property="og:url" content="${published}">`);
+    expect(page.body).not.toContain("application/ld+json");
+    const other = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=other-word");
+    expect(other.body).toContain('<link rel="canonical" href="https://ask.lizheng.ai/s/2026-10-04/other-word">');
+    expect(other.body).toContain("application/ld+json");
+    const sitemap = await call("/api/ask-lizheng-share?__route=sitemap");
+    expect(sitemap.body).toContain("https://ask.lizheng.ai/s/2026-10-04/other-word");
+    expect(sitemap.body).not.toContain("career-choice");
+  });
+
   it("answers an address that is no public question's with the page that says it is gone", async () => {
     const reply = await call("/api/ask-lizheng-share?__route=public&id=not-a-question");
     expect(reply.statusCode).toBe(404);
@@ -368,10 +396,12 @@ describe("the endpoint", () => {
     expect(page.headers.get("content-security-policy")).toContain("img-src 'self' https://www.lizheng.ai");
     expect(page.headers.has("x-robots-tag")).toBe(false);
     // A link preview reads the page but is not counted as a reader.
+    const reads = () => fetcher.mock.calls.map(([, init]) => { try { return JSON.parse(String(init.body)); } catch { return null; } })
+      .filter(command => Array.isArray(command) && command[1] === SHARE_PAGE_SCRIPT);
     await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice", { agent: "Slackbot-LinkExpanding 1.0" });
-    expect(JSON.parse(String(fetcher.mock.calls[1][1].body))[7]).toBe(0);
+    expect(reads()[1][7]).toBe(0);
     const head = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice", { method: "HEAD" });
-    expect(JSON.parse(String(fetcher.mock.calls[2][1].body))[7]).toBe(0);
+    expect(reads()[2][7]).toBe(0);
     expect(head.statusCode).toBe(200);
     upstash(() => ["MISSING"]);
     const gone = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice");

@@ -5,8 +5,9 @@ import handler from "../api/ask-lizheng-public.js";
 import { OPS_BACKEND_ORIGIN } from "../shared/ask-ops-gateway.js";
 import {
   indexable, listedCards, publicCard, publicDetail, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
-  renderSitemap, representatives, similarAskings, type PublicCard, type PublicDetail,
+  renderSitemap, representatives, similarAskings, wwwPagePath, type PublicCard, type PublicDetail,
 } from "../shared/ask-public-page.js";
+import { forgetPublicCards } from "../shared/ask-public-cards.js";
 
 // Synthetic questions only: no real asker's words in tests.
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
@@ -101,6 +102,29 @@ describe("public answer pages", () => {
   });
 });
 
+// 2026-10-14: a question's page here has the address of its own page in 问问立正.
+describe("one address on both sites", () => {
+  const share = "https://ask.lizheng.ai/s/2026-10-14/career-choice";
+  it("gives a question with its own page that address here, and keeps the number for one without", () => {
+    expect(wwwPagePath(card(1, "合成的问题？", { share_url: share }))).toBe("/ask/2026-10-14/career-choice");
+    expect(wwwPagePath(card(1, "合成的问题？"))).toBe(`/ask/${id(1)}`);
+    expect(wwwPagePath(card(1, "合成的问题？", { share_url: "https://example.test/s/2026-10-14/x" }))).toBe(`/ask/${id(1)}`);
+  });
+  it("links the page, the list and the sitemap by that address, and continues the question in 问问立正", () => {
+    const html = renderQuestionPage({ ...detail(1, "一个合成的问题？"), share_url: share }, { related: [card(2, "第二个合成的问题？", { share_url: "https://ask.lizheng.ai/s/2026-10-13/second" })], similar: 1, indexable: true });
+    expect(html).toContain('<link rel="canonical" href="https://www.lizheng.ai/ask/2026-10-14/career-choice">');
+    expect(html).toContain(`<a class="button" href="${share}" data-to="continue">在问问立正里接着问</a>`);
+    expect(html).toContain('class="button line"');
+    expect(html).toContain('href="/ask/2026-10-13/second"');
+    expect(html).toContain('"url":"https://www.lizheng.ai/ask/2026-10-14/career-choice"');
+    const cards = [card(1, "一个合成的问题？", { share_url: share })];
+    expect(renderIndexPage(cards)).toContain('href="/ask/2026-10-14/career-choice"');
+    expect(renderSitemap(cards)).toContain("<loc>https://www.lizheng.ai/ask/2026-10-14/career-choice</loc>");
+    // Without its own page, only the question to ask again.
+    expect(renderQuestionPage(detail(1, "一个合成的问题？"), { related: [], similar: 1, indexable: true })).not.toContain("在问问立正里接着问");
+  });
+});
+
 type Reply = { status: number; headers: Record<string, string>; body: string };
 async function call(path: string, host = "www.lizheng.ai", method = "GET"): Promise<Reply> {
   const req = Readable.from([]);
@@ -139,6 +163,22 @@ describe("public answer page handler", () => {
     const down = await call(`/api/ask-lizheng-public?__route=page&id=${id(6)}`);
     expect(down.status).toBe(503);
     expect(down.headers["cache-control"]).toBe("no-store");
+  });
+
+  it("serves a question by its address, and moves its page by number there for good", async () => {
+    forgetPublicCards();
+    const share = "https://ask.lizheng.ai/s/2026-10-14/career-choice";
+    vi.stubGlobal("fetch", vi.fn(async (url: string) => String(url).includes("action=detail")
+      ? Response.json({ ...detail(1, "一个合成的问题？"), share_url: share }) : list([card(1, "一个合成的问题？", { share_url: share })])));
+    const page = await call("/api/ask-lizheng-public?__route=page&day=2026-10-14&slug=career-choice");
+    expect(page.status).toBe(200);
+    expect(page.body).toContain('<link rel="canonical" href="https://www.lizheng.ai/ask/2026-10-14/career-choice">');
+    const moved = await call(`/api/ask-lizheng-public?__route=page&id=${id(1)}`);
+    expect(moved.status).toBe(301);
+    expect(moved.headers.location).toBe("/ask/2026-10-14/career-choice");
+    // An address no published question has, or not an address at all.
+    expect((await call("/api/ask-lizheng-public?__route=page&day=2026-10-14&slug=other-word")).status).toBe(404);
+    expect((await call("/api/ask-lizheng-public?__route=page&day=2026-10-14&slug=Bad_Word")).status).toBe(404);
   });
 
   it("keeps copies on other hosts out of search, and serves the index and sitemap", async () => {

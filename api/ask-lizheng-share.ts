@@ -4,12 +4,15 @@ import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 import { claimShareBonus, countShare, countShareView, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
 import { copySharedAnswer, publicJson, readShareCopy } from "../shared/ask-public-files.js";
+import { loadPublicCards, wwwPageOf } from "../shared/ask-public-cards.js";
 import { publicDetail, PUBLIC_ID } from "../shared/ask-public-page.js";
 import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
-//   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap);
+//   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap); a page of a
+//   question published on 别人在问什么 points search engines at its page on www.lizheng.ai (same
+//   address, /ask/<date>/<word>), whose sitemap lists it instead (2026-10-14);
 //   GET ask.lizheng.ai/q/<id> (public): a question from 别人在问什么, as its card shared it before
 //   2026-10-14: it goes to the question's own page (share_url), or shows the answer if it has none.
 // The page is ask.lizheng.ai's own (shared/ask-share-page.ts): its scripts, its API on this origin,
@@ -41,6 +44,8 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
   }
   try {
     const day = url.searchParams.get("day") || "", slug = url.searchParams.get("slug") || "";
+    // Whether this is a question published on 别人在问什么, whose search page is on www.lizheng.ai.
+    const searchPage = wwwPageOf(`https://ask.lizheng.ai/s/${day}/${slug}`);
     let share;
     try {
       share = await readShare(day, slug, { reader: req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot")) });
@@ -50,7 +55,7 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
       if (!share) throw error;
     }
     if (!share) send(res, 404, html, renderShareMissingPage(), headers);
-    else send(res, 200, html, renderSharePage({ ...share, answer: withPlainSourceLabels(share.answer) }), headers);
+    else send(res, 200, html, renderSharePage({ ...share, answer: withPlainSourceLabels(share.answer) }, { searchPage: await searchPage }), headers);
   } catch {
     send(res, 503, "text/plain; charset=utf-8", "这个分享暂时打不开，请稍后再试。", { ...own, "Cache-Control": "no-store", "Retry-After": "60" });
   }
@@ -100,7 +105,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   if (route === "public") return publicAnswer(req, res, url);
   if (route === "sitemap") {
     try {
-      send(res, 200, "application/xml; charset=utf-8", renderShareSitemap(await listShares()),
+      // A question published on 别人在问什么 is in www.lizheng.ai's sitemap, at its page there.
+      const [shares, published] = await Promise.all([listShares(), loadPublicCards().catch(() => [])]);
+      const onWww = new Set(published.map(card => card.share_url).filter(Boolean));
+      send(res, 200, "application/xml; charset=utf-8", renderShareSitemap(shares.filter(share => !onWww.has(`https://ask.lizheng.ai/s/${share.day}/${share.slug}`))),
         { "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600" });
     } catch {
       send(res, 503, "text/plain; charset=utf-8", "Unavailable", { "Cache-Control": "no-store", "Retry-After": "120" });

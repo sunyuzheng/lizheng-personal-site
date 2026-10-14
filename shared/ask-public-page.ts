@@ -23,7 +23,13 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 export const ASK_APP = "https://ask.lizheng.ai/";
 export const ASK_INDEX = `${SITE_URL}/ask`;
 export const OG_IMAGE = `${SITE_URL}/og/home-zh.jpg`;
-export const pageUrl = (id: string) => `${SITE_URL}/ask/${id}`;
+/** A question's page here: /ask/<day>/<word>, the same address as its own page in 问问立正
+ * (ask.lizheng.ai/s/<day>/<word>, its share_url), since 2026-10-14; /ask/<public_id> for one without. */
+export function wwwPagePath(card: { public_id: string; share_url?: string }): string {
+  const parts = card.share_url?.match(/^https:\/\/ask\.lizheng\.ai\/s\/(\d{4}-\d{2}-\d{2})\/([a-z0-9-]+)$/);
+  return parts ? `/ask/${parts[1]}/${parts[2]}` : `/ask/${card.public_id}`;
+}
+export const pageUrl = (card: { public_id: string; share_url?: string }) => `${SITE_URL}${wwwPagePath(card)}`;
 export const PUBLIC_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 export type PublicCard = {
@@ -281,7 +287,8 @@ a{color:inherit;text-decoration:none}h1,h2,h3,p,ol,ul{margin:0}
 .next{margin-top:56px;padding:28px 0 0;border-top:2px solid var(--ink)}
 .next h2{font:900 clamp(22px,2.4vw,26px)/1.35 var(--serif)}
 .next p{margin-top:10px;color:var(--ink-2)}
-.next .button{margin-top:20px}
+.next .buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.button.line{background:transparent;color:var(--green);box-shadow:inset 0 0 0 1.5px var(--green)}.button.line:hover{background:transparent;color:var(--green-deep);box-shadow:inset 0 0 0 1.5px var(--green-deep)}
 .asks{margin-top:22px;list-style:none;padding:0;border-top:1px solid var(--rule)}
 .asks li{border-bottom:1px solid var(--rule)}
 .asks a{display:block;padding:13px 0;font-size:15.5px;line-height:1.6;color:var(--ink-2)}
@@ -360,7 +367,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 }): string {
   const { answer } = detail;
   const ids = new Set(answer.sources.map(source => source.id));
-  const url = pageUrl(detail.public_id);
+  const url = pageUrl(detail);
   const askedAt = context.card?.asked_at;
   const kicker = [detail.topic_label, askedAt ? `${chineseDate(askedAt)}提问` : "常被问到", context.similar >= 2 ? `${context.similar}次类似提问` : ""]
     .filter(Boolean).map(part => `<span>${escapeHtml(part)}</span>`).join("");
@@ -412,7 +419,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 ${sections}
 ${limits}
 ${sources ? `<section class="block" aria-labelledby="sources"><h2 id="sources">出处</h2><ol class="sources">\n${sources}\n</ol></section>` : ""}
-<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：回答附有出处，可以点回原文核对。</p><a class="button" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
+<section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：回答附有出处，可以点回原文核对。</p><div class="buttons">${detail.share_url ? `<a class="button" href="${escapeHtml(detail.share_url)}" data-to="continue">在问问立正里接着问</a>` : ""}<a class="button${detail.share_url ? " line" : ""}" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a></div>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
 ${related}
 </article>`,
   });
@@ -421,7 +428,7 @@ ${related}
 function row(card: PublicCard & { similar?: number }): string {
   const meta = [card.topic_label, card.asked_at ? `${chineseDate(card.asked_at)}提问` : "常被问到", (card.similar ?? 0) >= 2 ? `${card.similar}次类似提问` : ""]
     .filter(Boolean).map(part => `<span>${escapeHtml(part)}</span>`).join("");
-  return `<li class="row"><a href="/ask/${card.public_id}" data-to="question"><span class="meta">${meta}</span><b>${escapeHtml(card.question)}</b>${card.summary ? `<p>${escapeHtml(clip(card.summary, 120))}</p>` : ""}</a></li>`;
+  return `<li class="row"><a href="${wwwPagePath(card)}" data-to="question"><span class="meta">${meta}</span><b>${escapeHtml(card.question)}</b>${card.summary ? `<p>${escapeHtml(clip(card.summary, 120))}</p>` : ""}</a></li>`;
 }
 
 /** Up to six other questions a reader may want next: its own topic first, then the newest. */
@@ -444,7 +451,7 @@ export function renderIndexPage(cards: PublicCard[]): string {
       "@type": "CollectionPage", "@id": ASK_INDEX, url: ASK_INDEX, name: "别人在问什么", description, inLanguage: "zh-CN",
       isPartOf: { "@id": WEBSITE_ID }, publisher: { "@id": PERSON_ID },
       mainEntity: { "@type": "ItemList", numberOfItems: listed.length,
-        itemListElement: listed.slice(0, 100).map((card, i) => ({ "@type": "ListItem", position: i + 1, url: pageUrl(card.public_id), name: card.question })) },
+        itemListElement: listed.slice(0, 100).map((card, i) => ({ "@type": "ListItem", position: i + 1, url: pageUrl(card), name: card.question })) },
     },
     head: `<div class="head"><p class="kicker"><span>问问立正</span>${all.length ? `<span>${all.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，由AI挑选后原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
     body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">还没有公开的问题。</p>`}</div>`,
@@ -467,7 +474,7 @@ export function renderSitemap(cards: PublicCard[]): string {
   const latest = cards.reduce((max, card) => Math.max(max, Date.parse(card.updated_at)), 0);
   const urls = [
     { loc: ASK_INDEX, lastmod: latest ? new Date(latest).toISOString() : "" },
-    ...listed.map(card => ({ loc: pageUrl(card.public_id), lastmod: card.updated_at })),
+    ...listed.map(card => ({ loc: pageUrl(card), lastmod: card.updated_at })),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

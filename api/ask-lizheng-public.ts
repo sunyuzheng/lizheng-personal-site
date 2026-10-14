@@ -1,32 +1,27 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError } from "../shared/ask-access.js";
-import { publicJson, type PublicSource } from "../shared/ask-public-files.js";
+import { publicJson } from "../shared/ask-public-files.js";
+import { loadPublicCards, publicCardOf } from "../shared/ask-public-cards.js";
 import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 import {
-  indexable, publicCard, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
-  renderSitemap, representatives, similarAskings, type PublicCard,
+  indexable, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
+  renderSitemap, representatives, similarAskings, wwwPagePath, type PublicCard,
 } from "../shared/ask-public-page.js";
 
-// The public answer pages on www.lizheng.ai (vercel.json): /ask/<public_id> (page), /ask (index)
+// The public answer pages on www.lizheng.ai (vercel.json): /ask/<day>/<word> (page), /ask (index)
 // and /ask/sitemap.xml (sitemap), read from Ops' public index: the files Ops writes when it changes,
 // so the pages stay up while the database or Ops is down (shared/ask-public-files.ts). The CDN keeps a page for ten
 // minutes, so a question withdrawn in Ops leaves search results' pages within about that long.
+//
+// Since 2026-10-14 (the owner: ask.lizheng.ai is part of lizheng.ai; one question, its address used
+// on ask.lizheng.ai, its search page on the main site) a question's page here has the address of its
+// own page in 问问立正: ask.lizheng.ai/s/<day>/<word> is what people share and continue in, and points
+// search engines here, at www.lizheng.ai/ask/<day>/<word>. The pages before then, /ask/<public_id>,
+// move here for good (301).
 const CACHE = "public, max-age=0, s-maxage=600, stale-while-revalidate=600";
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
-// Every published card, newest first, in one read of Ops' index, kept for five minutes in a warm
-// function so a crawl of many pages reads it once.
-let memo: { at: number; cards: PublicCard[]; source: PublicSource } | undefined;
-async function loadCards(onSource: (source: PublicSource) => void = () => {}): Promise<PublicCard[]> {
-  if (memo && Date.now() - memo.at < 300_000) { onSource(memo.source); return memo.cards; }
-  let source: PublicSource = "ops";
-  const value = await publicJson("/api/discovery?action=index", { onSource: heard => { source = heard; } });
-  onSource(source);
-  if (!Array.isArray(value.items)) throw new AccessError("ops_gateway_unavailable");
-  const cards: PublicCard[] = [];
-  for (const item of value.items) { const card = publicCard(item); if (card) cards.push(card); }
-  memo = { at: Date.now(), cards, source };
-  return cards;
-}
+const DAY = /^\d{4}-\d{2}-\d{2}$/;
+const SLUG = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
 
 function send(res: ServerResponse, status: number, type: string, body: string, headers: Record<string, string> = {}) {
   res.statusCode = status;
@@ -49,25 +44,35 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   }
   try {
     if (route === "page") {
-      const id = url.searchParams.get("id") || "";
-      if (!PUBLIC_ID.test(id)) {
-        send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
-        return;
-      }
+      const missing = () => send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
+      const day = url.searchParams.get("day") || "", slug = url.searchParams.get("slug") || "";
+      let id = url.searchParams.get("id") || "";
+      let cards: PublicCard[] | undefined;
+      if (day || slug) {
+        // A question by its address: the published one whose own page that is.
+        if (!DAY.test(day) || !SLUG.test(slug)) { missing(); return; }
+        cards = await loadPublicCards(source => res.setHeader("X-Ask-Public-Source", source));
+        const card = publicCardOf(cards, `https://ask.lizheng.ai/s/${day}/${slug}`);
+        if (!card) { missing(); return; }
+        id = card.public_id;
+      } else if (!PUBLIC_ID.test(id)) { missing(); return; }
       let detail;
       try {
         detail = publicDetail(detailWithPlainSourceLabels(await publicJson(`/api/discovery?${new URLSearchParams({ action: "detail", public_id: id })}`,
           { onSource: source => res.setHeader("X-Ask-Public-Source", source) })));
       } catch (error) {
-        if (error instanceof AccessError && error.status === 404) {
-          send(res, 404, html, renderMissingPage(), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
-          return;
-        }
+        if (error instanceof AccessError && error.status === 404) { missing(); return; }
         throw error;
       }
       if (!detail) throw new AccessError("ops_gateway_unavailable");
+      // Its page by number moves to its page by address, for good.
+      const path = wwwPagePath(detail);
+      if (!(day || slug) && path !== `/ask/${id}`) {
+        send(res, 301, "text/plain; charset=utf-8", path, { ...own, "Cache-Control": CACHE, Location: path });
+        return;
+      }
       // Every question, to find its rewordings, its similar askings and what to read next.
-      const cards = await loadCards().catch(() => [] as PublicCard[]);
+      cards ??= await loadPublicCards().catch(() => [] as PublicCard[]);
       const reps = representatives(cards);
       const card = cards.find(other => other.public_id === id);
       send(res, 200, html, renderQuestionPage(detail, {
@@ -77,11 +82,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       return;
     }
     if (route === "index") {
-      send(res, 200, html, renderIndexPage(await loadCards(source => res.setHeader("X-Ask-Public-Source", source))), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
+      send(res, 200, html, renderIndexPage(await loadPublicCards(source => res.setHeader("X-Ask-Public-Source", source))), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
       return;
     }
     if (route === "sitemap") {
-      send(res, 200, "application/xml; charset=utf-8", renderSitemap(await loadCards(source => res.setHeader("X-Ask-Public-Source", source))),
+      send(res, 200, "application/xml; charset=utf-8", renderSitemap(await loadPublicCards(source => res.setHeader("X-Ask-Public-Source", source))),
         { ...own, "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600" });
       return;
     }

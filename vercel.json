@@ -11,6 +11,7 @@
     { "src": "^/ask$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=index" },
     { "src": "^/ask/sitemap\\.xml$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=sitemap" },
     { "src": "^/ask/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=page&id=$1" },
+    { "src": "^/ask/(\\d{4}-\\d{2}-\\d{2})/([a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4})$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=page&day=$1&slug=$2" },
     {
       "src": "^/ops/ask-lizheng$",
       "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }],

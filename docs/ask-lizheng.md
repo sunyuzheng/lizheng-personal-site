@@ -211,3 +211,12 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **「别人在问什么」**：Ops 的卡片和公开问答带 `share_url`（这条问答记录的网页），`discoveryLink(id, page)` 用它，没有时才是 `/q/<编号>`；`/q/<编号>` 路由读到 `share_url` 就 308 跳过去（`publicDetail` 只认 `https://ask.lizheng.ai/s/日期/词` 形状），没有才照旧画页面。2026-10-05 00:20 UTC 之前的公开问答和种子题由 Ops 撤下，其余还没网页的由 Ops 一次补建（Ops 仓库 `shared/discovery-pages.ts`，它用的地址脚本和这里同一段，测试拿这里的分享脚本核对）。
 - 撤下只从「别人在问什么」和公开问答页拿掉，网页还在；Ops 删记录，网页才 404。
 
+## 主站和 ask 用同一个地址（2026-10-14）
+
+立正：ask.lizheng.ai 也是 lizheng.ai 这个个人主页的一部分，能不能自动、可扩展地合起来，「这样既能用 ask.lizheng.ai/url 也能给主站提供 SEO」。
+
+- **一个问题，一个地址，两种看法**：人用的是 `ask.lizheng.ai/s/<日期>/<词>`（分享、打开、接着问）；搜索引擎读的是主站上同一个地址 `www.lizheng.ai/ask/<日期>/<词>`。只对进了「别人在问什么」的问题这样做（自动精选把过关）；别的回答的网页仍只在 ask 上，照旧给搜索引擎。
+- **主站**：`api/ask-lizheng-public.ts` 按地址出页（`vercel.json` 新路由，`publicCardOf` 在公开索引里找 `share_url` 是这个地址的那张卡），canonical、结构化数据、列表 `/ask`、站点地图 `/ask/sitemap.xml` 都用新地址（`wwwPagePath`）；旧的 `/ask/<编号>` 301 永久跳到新地址。页面底部「在问问立正里接着问」打开 ask 上的同一条，「问类似的问题」改成次要按钮。
+- **ask**：`/s/` 页面如果是公开问题，canonical 指向主站那一页、不带结构化数据（`renderSharePage(share, { searchPage })`，`wwwPageOf`）；`/s/sitemap.xml` 只列不在主站上的回答。
+- 判断「是不是公开问题」读公开索引，`shared/ask-public-cards.ts` 在热函数里留五分钟，主站问答页和 ask 网页共用，多少人看都只是五分钟读一次。刚发布的问题最多五分钟后 ask 页才指向主站；撤下的，主站那页 404，ask 页最多五分钟后指回自己。
+

@@ -12,7 +12,7 @@
  * The page lives on ask.lizheng.ai, where only the routes vercel.json names reach this site: the
  * page's scripts and styles come from /ask-app/assets/, the missing page's from /s/.
  */
-import { ASK_APP, chineseDate, clip, escapeHtml, paragraphs, phrases, plainText, SITE_URL, sourceKind, STYLE, type PublicDetail, type PublicSource } from "./ask-public-page.js";
+import { ASK_APP, chineseDate, clip, escapeHtml, pageUrl, paragraphs, phrases, plainText, SITE_URL, sourceKind, STYLE, type PublicDetail, type PublicSource } from "./ask-public-page.js";
 import { ASK_APP_HTML } from "./ask-app-shell.js";
 import { SEAL } from "./ask-seal.js";
 import { sourceAttributionLabel } from "./ask-source-attribution.js";
@@ -116,17 +116,20 @@ function pageData(page: AppPage) {
  * which opens it as the conversation, as its asker saw it, and lets its reader follow it up. Search
  * engines, link previews and readers without scripts get the same answer in the first HTML, laid out
  * with the page's own classes, so nothing moves when the page takes over. */
-export function renderSharePage(share: SharedAnswer): string {
+export function renderSharePage(share: SharedAnswer, options: { searchPage?: string | null } = {}): string {
   const url = shareUrl(share.day, share.slug);
-  return renderAppPage({ url, canonical: url, question: share.question, intent: share.intent, created_at: share.created_at,
-    structured: true, answer: share.answer, data: { day: share.day, slug: share.slug } });
+  // A question published on 别人在问什么 has its search page on www.lizheng.ai, at the same address
+  // (2026-10-14): search engines keep that one, which carries the structured data.
+  const searchPage = options.searchPage || "";
+  return renderAppPage({ url, canonical: searchPage || url, question: share.question, intent: share.intent, created_at: share.created_at,
+    structured: !searchPage, answer: share.answer, data: { day: share.day, slug: share.slug } });
 }
 
 /** A question from 别人在问什么, shared from its card (2026-10-14, the owner: its link should open
  * 问问立正 too): the same page with its answer in it, at ask.lizheng.ai/q/<id>. Search engines are
  * pointed at its page on www.lizheng.ai, which stays the one they read. */
 export function renderPublicAnswerPage(detail: PublicDetail): string {
-  return renderAppPage({ url: publicAnswerUrl(detail.public_id), canonical: `${SITE_URL}/ask/${detail.public_id}`,
+  return renderAppPage({ url: publicAnswerUrl(detail.public_id), canonical: pageUrl(detail),
     question: detail.question, intent: "understand", created_at: detail.published_at, structured: false,
     answer: detail.answer, data: { public_id: detail.public_id } });
 }

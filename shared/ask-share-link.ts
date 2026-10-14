@@ -12,6 +12,11 @@
  * taken on a day, stays with its record: a deleted record never hands its address to another
  * question. The page reads the live record each time, so a record deleted in Ops is gone at once.
  *
+ * Since 2026-10-13 (the owner's request) the page makes an answer's address as soon as the answer
+ * arrives (`auto`), so the asker sees it at once; an answer asked with the situation still waits for
+ * the asker. Making it is not a share: the share is the asker copying, sending or showing its QR
+ * code, which the page reports once (auto false). That is what Ops counts as a share.
+ *
  * A share may also give back one of today's questions: once a day per quota subject, only when one
  * was used, never for Founding Members (unlimited) and never inside WeChat or the iPhone app, where
  * the pages do not offer it. Ops' usage panel counts shares, bonuses and share page views, as numbers.
@@ -39,7 +44,7 @@ const QUOTA_RETENTION_SECONDS = 172_800;
 
 export type ShareSurface = (typeof SHARE_SURFACES)[number];
 export type ShareProof = { record_id: string; word: string; proof: string };
-export type ShareRequest = ShareProof & { surface: ShareSurface; bonus: boolean };
+export type ShareRequest = ShareProof & { surface: ShareSurface; bonus: boolean; auto: boolean };
 export type ShareBonus = "granted" | "claimed" | "unused" | "unlimited" | "off";
 type Sender = (command: (string | number)[]) => Promise<unknown>;
 
@@ -53,14 +58,17 @@ const usageKeys = (now: number) => [`${USAGE_PREFIX}day:${usageDay(now)}`, `${US
 export function shareRequest(value: unknown, host: string): ShareRequest {
   if (!value || typeof value !== "object" || Array.isArray(value)) invalid();
   const r = value as Record<string, unknown>;
-  if (Object.keys(r).sort().join() !== "bonus,proof,record_id,surface,word" || typeof r.record_id !== "string" || !UUID.test(r.record_id) ||
+  // Pages before 2026-10-13 send no `auto`.
+  const keys = Object.keys(r).sort().join();
+  if ((keys !== "bonus,proof,record_id,surface,word" && keys !== "auto,bonus,proof,record_id,surface,word") ||
+      ("auto" in r && typeof r.auto !== "boolean") || typeof r.record_id !== "string" || !UUID.test(r.record_id) ||
       typeof r.word !== "string" || !SHARE_WORD.test(r.word) || r.word.length > 40 ||
       typeof r.proof !== "string" || !/^[a-f0-9]{64}$/.test(r.proof)) invalid();
   // The homepage shares from www; ask.lizheng.ai and the app (the same page) from ask.
   const surfaces: readonly string[] = host === "www.lizheng.ai" ? ["home"] : ["ask", "app"];
   if (!surfaces.includes(r.surface as string) || typeof r.bonus !== "boolean") invalid();
   return { record_id: r.record_id as string, word: r.word as string, proof: r.proof as string,
-    surface: r.surface as ShareSurface, bonus: r.bonus as boolean };
+    surface: r.surface as ShareSurface, bonus: r.bonus as boolean, auto: r.auto === true };
 }
 
 /** Builder's proof that this page received this record, and this word with it. */
@@ -143,7 +151,7 @@ export async function createShare(request: ShareRequest, now = Date.now(), send:
   verifyShareProof(request);
   const [dayKey, totalKey] = usageKeys(now);
   const result = await send(["EVAL", SHARE_SCRIPT, 3, `${OPS_PREFIX}record:${request.record_id}`, `${OPS_PREFIX}deleted:${request.record_id}`,
-    SHARES_KEY, OPS_PREFIX, request.record_id, request.word, new Date(now).toISOString(), counting() ? 1 : 0, request.surface,
+    SHARES_KEY, OPS_PREFIX, request.record_id, request.word, new Date(now).toISOString(), counting() && !request.auto ? 1 : 0, request.surface,
     dayKey, totalKey, USAGE_TTL_SECONDS, now]);
   if (!Array.isArray(result) || result.length !== 3 || result.some(value => typeof value !== "string")) unavailable();
   const [code, slug, day] = result as string[];
@@ -162,6 +170,12 @@ function bonusKeys(subject: string, day: string) {
   // Builder's quota keys: ask-quota:v1:{sha256(subject)}:<day>:used and :pending (server/quota.py).
   const prefix = `ask-quota:v1:{${createHash("sha256").update(subject, "ascii").digest("hex")}}:${day}:`;
   return [`${prefix}used`, `${prefix}pending`, `${prefix}share-bonus`];
+}
+
+/** Counts the share of an address made earlier, when it was made as the answer arrived (`auto`). */
+export async function countShare(surface: ShareSurface, now = Date.now(), send: Sender = redis) {
+  if (!counting()) return;
+  await send(["EVAL", SHARE_COUNT_SCRIPT, 2, ...usageKeys(now), USAGE_TTL_SECONDS, `${surface}:share`, "all:share"]);
 }
 
 /** Gives back one of today's questions for a share, at most once a day. */

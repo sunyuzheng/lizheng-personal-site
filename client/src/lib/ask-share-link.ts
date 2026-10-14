@@ -18,9 +18,11 @@ async function post(path: string, body: unknown) {
   return value;
 }
 
-/** Makes (or finds) the answer's page; `bonus` asks for today's question back. */
-export async function createShareLink(share: AskShare, options: { bonus: boolean }): Promise<ShareResult> {
-  const value = await post("/api/ask-lizheng/share", { record_id: share.record_id, word: share.word, proof: share.proof, surface: "home", bonus: options.bonus });
+/** Makes (or finds) the answer's page; `bonus` asks for today's question back. `auto` is the page made
+ * as the answer arrives, before anyone shares it: not counted as a share (shared/ask-share-link.ts). */
+export async function createShareLink(share: AskShare, options: { bonus: boolean; auto?: boolean }): Promise<ShareResult> {
+  const value = await post("/api/ask-lizheng/share", { record_id: share.record_id, word: share.word, proof: share.proof, surface: "home",
+    bonus: options.bonus, auto: options.auto === true });
   if (typeof value.url !== "string" || !value.url.startsWith("https://ask.lizheng.ai/s/")) throw new Error("share_failed");
   return value as ShareResult;
 }

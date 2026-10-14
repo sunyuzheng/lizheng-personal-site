@@ -66,8 +66,11 @@ export type AskEvent =
   | { type: "progress"; value: { stage: string; message: string } }
   | { type: "approach"; value: AskApproach }
   | { type: "partial"; value: AskPartial }
-  | { type: "sources"; value: { sources: AskSource[] } }
+  | { type: "sources"; value: { sources: AskSource[]; candidates?: AskCandidate[] } }
   | { type: "result"; value: AskResult };
+
+/** Every candidate the answer may draw on, by source id and its material's key, for the answer map. */
+export type AskCandidate = { id: string; key: string };
 
 export type AskPartial = {
   sections: AskResult["sections"];
@@ -76,6 +79,7 @@ export type AskPartial = {
 
 export type AskAnswerState = {
   sources: AskSource[];
+  mapCandidates?: AskCandidate[];
   progress?: { stage: string; message: string };
   approach?: AskApproach;
   partial?: AskPartial;
@@ -94,7 +98,7 @@ export function applyAskEvent(
     };
   if (event.type === "approach") return { ...state, approach: event.value };
   if (event.type === "sources")
-    return { ...state, sources: event.value.sources };
+    return { ...state, sources: event.value.sources, ...(Array.isArray(event.value.candidates) ? { mapCandidates: event.value.candidates } : {}) };
   if (event.type === "partial")
     return {
       ...state,
@@ -121,6 +125,8 @@ export type AskApproach = {
   questions: string[];
   sources: { id: string; title: string }[];
   note: string;
+  /** The judgment cards this answer draws on, and the candidates they rest on (the answer map). */
+  cards?: { id: string; title: string; source_ids: string[] }[];
 };
 
 export class AskError extends Error {

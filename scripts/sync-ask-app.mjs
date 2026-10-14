@@ -7,7 +7,9 @@
  * (identical files, same @fontsource version), served by vercel.json. The previous release's
  * files used by the current production page stay for pages opened before an update. It also copies the words
  * about public Q&A (src/public-qa.js) to shared/ask-public-qa.js, which the homepage section uses
- * and the privacy policy is tested against, so the three never say different things.
+ * and the privacy policy is tested against, so the three never say different things; and the answer
+ * map (src/answer-map.js) to shared/ask-answer-map.js for the homepage section and to
+ * client/public/s/answer-map.js for the shared answer pages, so every map is drawn by the same code.
  *
  *   pnpm sync:ask-app [path to ask-lizheng]   (default /Users/sunyuzheng/Desktop/AI/apps/ask-lizheng)
  *
@@ -26,6 +28,7 @@ const OUT = path.join(ROOT, "client", "public", "ask-app");
 const FONT = /^noto-serif-sc-.+\.woff2$/;
 const PUBLIC_QA = path.join(ROOT, "shared", "ask-public-qa.js");
 const SOURCE_ATTRIBUTION = path.join(ROOT, "shared", "ask-source-attribution.js");
+const ANSWER_MAP = [path.join(ROOT, "shared", "ask-answer-map.js"), path.join(ROOT, "client", "public", "s", "answer-map.js")];
 const git = (...args) => execFileSync("git", ["-C", ASK, ...args], { encoding: "utf8" }).trim();
 const fail = message => { console.error(`✗ ${message}`); process.exit(1); };
 
@@ -66,8 +69,11 @@ const publicQa = `// Copied from ask-lizheng src/public-qa.js by scripts/sync-as
 fs.writeFileSync(PUBLIC_QA, publicQa);
 const sourceAttribution = `// Copied from ask-lizheng src/source-attribution.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "source-attribution.js"), "utf8")}`;
 fs.writeFileSync(SOURCE_ATTRIBUTION, sourceAttribution);
+const answerMap = `// Copied from ask-lizheng src/answer-map.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "answer-map.js"), "utf8")}`;
+for (const file of ANSWER_MAP) fs.writeFileSync(file, answerMap);
+const answer_map_sha256 = createHash("sha256").update(answerMap).digest("hex");
 const public_qa_sha256 = createHash("sha256").update(publicQa).digest("hex");
 const source_attribution_sha256 = createHash("sha256").update(sourceAttribution).digest("hex");
-fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256 }, null, 2)}\n`);
+fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256, answer_map_sha256 }, null, 2)}\n`);
 fs.rmSync(build, { recursive: true, force: true });
-console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, and shared/ask-public-qa.js`);
+console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, shared/ask-public-qa.js and the answer map`);

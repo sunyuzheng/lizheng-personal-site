@@ -49,11 +49,14 @@ afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs();
 
 describe("what a page may send", () => {
   it("takes one answer's record, word and proof, where it was shared and whether to give a question back", () => {
-    expect(shareRequest(body(), "ask.lizheng.ai")).toEqual(body());
+    expect(shareRequest(body(), "ask.lizheng.ai")).toEqual({ ...body(), auto: false });
     expect(shareRequest(body({ surface: "home", bonus: false }), "www.lizheng.ai").surface).toBe("home");
+    // The page makes the address as the answer arrives (auto), before anyone shares it.
+    expect(shareRequest(body({ auto: true, bonus: false }), "ask.lizheng.ai").auto).toBe(true);
+    expect(shareRequest(body({ auto: false }), "ask.lizheng.ai").auto).toBe(false);
     for (const bad of [
       body({ surface: "home" }), body({ question: "synthetic" }), body({ word: "Career" }), body({ word: "职业" }),
-      body({ word: "a-b-c-d-e" }), body({ record_id: "not-a-uuid" }), body({ proof: "x" }), body({ bonus: "yes" }), null, [],
+      body({ word: "a-b-c-d-e" }), body({ record_id: "not-a-uuid" }), body({ proof: "x" }), body({ bonus: "yes" }), body({ auto: "yes" }), null, [],
     ]) expect(() => shareRequest(bad, "ask.lizheng.ai")).toThrow("invalid_request");
     expect(() => shareRequest(body({ surface: "ask" }), "www.lizheng.ai")).toThrow("invalid_request");
   });
@@ -75,9 +78,12 @@ describe("storage", () => {
     expect(send.mock.calls[0][0]).toEqual(["EVAL", SHARE_SCRIPT, 3, `ask-ops:{v3}:record:${RECORD}`, `ask-ops:{v3}:deleted:${RECORD}`,
       "ask-ops:{v3}:shares", "ask-ops:{v3}:", RECORD, "career-choice", new Date(NOW).toISOString(), 1, "ask",
       `ask-ops:{v3}:usage:day:${usageDay(NOW)}`, "ask-ops:{v3}:usage:total", 400 * 86_400, NOW]);
+    // An address made as the answer arrives is not a share yet.
+    await createShare(shareRequest(body({ auto: true }), "ask.lizheng.ai"), NOW, send);
+    expect(send.mock.calls[1][0][10]).toBe(0);
     vi.stubEnv("ASK_USAGE_ENABLED", "false");
     await createShare(shareRequest(body(), "ask.lizheng.ai"), NOW, send);
-    expect(send.mock.calls[1][0][10]).toBe(0);
+    expect(send.mock.calls[2][0][10]).toBe(0);
     await expect(createShare(shareRequest(body(), "ask.lizheng.ai"), NOW, async () => ["GONE", "", ""])).rejects.toThrow("share_not_found");
     await expect(createShare(shareRequest(body(), "ask.lizheng.ai"), NOW, async () => ["NEW", "../x", "2026-10-04"])).rejects.toThrow("share_unavailable");
     // No proof, no storage.
@@ -225,6 +231,26 @@ describe("the endpoint", () => {
       expect(JSON.parse(reply.body)).toEqual({ url: "https://ask.lizheng.ai/s/2026-10-04/career-choice", bonus: "off" });
       expect(fetcher).toHaveBeenCalledTimes(1);
     }
+  });
+
+  it("counts a share once: as a new address is made, or when one made as the answer arrived is shared", async () => {
+    const scripts = (fetcher: ReturnType<typeof upstash>) => fetcher.mock.calls.map(([, init]) => JSON.parse(String(init.body))[1]);
+    // Made as the answer arrived: stored, not counted.
+    let fetcher = upstash(command => (command[1] === SHARE_SCRIPT ? ["NEW", "career-choice", "2026-10-04"] : 1));
+    let reply = await call("/api/ask-lizheng-share?__route=share", { method: "POST", origin: "https://ask.lizheng.ai", payload: body({ auto: true, bonus: false }) });
+    expect(JSON.parse(reply.body)).toEqual({ url: "https://ask.lizheng.ai/s/2026-10-04/career-choice", bonus: "off" });
+    expect(scripts(fetcher)).toEqual([SHARE_SCRIPT]);
+    expect(JSON.parse(String(fetcher.mock.calls[0][1].body))[10]).toBe(0);
+    // Then copied: the address stays, and the share is counted now.
+    fetcher = upstash(command => (command[1] === SHARE_SCRIPT ? ["SHARED", "career-choice", "2026-10-04"] : 1));
+    reply = await call("/api/ask-lizheng-share?__route=share", { method: "POST", origin: "https://ask.lizheng.ai", payload: body({ auto: false, bonus: false }) });
+    expect(JSON.parse(reply.body).url).toBe("https://ask.lizheng.ai/s/2026-10-04/career-choice");
+    expect(scripts(fetcher)).toEqual([SHARE_SCRIPT, SHARE_COUNT_SCRIPT]);
+    expect(JSON.parse(String(fetcher.mock.calls[1][1].body)).slice(6)).toEqual(["ask:share", "all:share"]);
+    // Made again as the answer reopens: nothing counted.
+    fetcher = upstash(command => (command[1] === SHARE_SCRIPT ? ["SHARED", "career-choice", "2026-10-04"] : 1));
+    await call("/api/ask-lizheng-share?__route=share", { method: "POST", origin: "https://ask.lizheng.ai", payload: body({ auto: true, bonus: false }) });
+    expect(scripts(fetcher)).toEqual([SHARE_SCRIPT]);
   });
 
   it("keeps the link when the question back cannot be given", async () => {

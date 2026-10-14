@@ -1,7 +1,7 @@
 // Turns one Ask Lizheng answer into a shareable long image or an A4 PDF, drawn
 // on canvas in lizheng.ai's look: the question first, then the answer, its
-// limits and the sources, and a footer with the 立正 seal and a QR code back to
-// the page. Loaded only when someone saves an answer. Kept in step with
+// limits and the sources, and a footer with the 立正 seal and a QR code to the
+// answer's own page (to the place to ask when it has none). Loaded only when someone saves an answer. Kept in step with
 // src/share.js in the ask-lizheng repository (that copy is Chinese only).
 import qrcode from 'qrcode-generator';
 import {MARK_PATHS} from '@/components/site/LizhengMark';
@@ -16,7 +16,7 @@ const LABELS = {
     meta: day => `AI根据立正公开的文章和视频整理 · ${day}`, day: d => `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
     video: '视频', memberVideo: '会员视频', article: '文章', context: 'AI整理', undated: '日期未标明', from: tc => `从 ${tc} 开始`,
-    cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问',
+    cta: '在 ask.lizheng.ai 问你自己的问题', disclaimer: ['AI根据立正公开的文章和视频整理，不是本人实时回复；', '重要的判断，请回到原文核对。'], scan: '扫码提问', scanAnswer: '扫码看这条回答',
     kinds: {application: 'AI推演', personal: '结合你的处境', source: '材料里的观点'},
   },
   en: {
@@ -24,7 +24,7 @@ const LABELS = {
     meta: day => `AI synthesis of Lizheng’s public essays and talks · ${day}`, day: d => d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}),
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
     video: 'Video', memberVideo: 'Members video', article: 'Essay', context: 'AI summary', undated: 'Undated', from: tc => `from ${tc}`,
-    cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask',
+    cta: 'Ask your own question at lizheng.ai/en', disclaimer: ['AI synthesis of Lizheng’s public essays and talks, not a live reply from him.', 'Check the original sources before important decisions.'], scan: 'Scan to ask', scanAnswer: 'Scan for this answer',
     kinds: {application: 'AI’s application', personal: 'Applied to you', source: 'From the material'},
   },
 };
@@ -294,18 +294,19 @@ function sourceRow(ctx, source, number) {
   }};
 }
 
-function footerRow() {
+// The footer's QR code opens this answer's own page when it has one, otherwise the place to ask.
+function footerRow(link = '') {
   const h = 260;
   const qr = qrcode(0, 'M');
-  qr.addData(L.site);
+  qr.addData(link || L.site);
   qr.make();
-  return {h, link: L.site, footer: true, draw(c, y) {
+  return {h, link: link || L.site, footer: true, draw(c, y) {
     c.fillStyle = C.paper; c.fillRect(0, y, W, h);
     c.fillStyle = C.line; c.fillRect(0, y, W, 2);
     drawSeal(c, PAD, y + 56, 78, C.green);
     c.textBaseline = 'middle';
     c.fillStyle = C.ink; c.font = font(900, 32, SERIF); c.fillText(L.brand, PAD + 78 + 18, y + 76);
-    c.fillStyle = C.ink2; c.font = font(400, 25); c.fillText(L.cta, PAD, y + 138);
+    c.fillStyle = C.ink2; c.font = font(400, 25); c.fillText(link ? link.replace(/^https:\/\//, '') : L.cta, PAD, y + 138);
     c.fillStyle = C.muted; c.font = font(400, 19);
     c.fillText(L.disclaimer[0], PAD, y + 182);
     c.fillText(L.disclaimer[1], PAD, y + 210);
@@ -319,12 +320,12 @@ function footerRow() {
       }
     }
     c.fillStyle = C.muted; c.font = font(500, 18); c.textAlign = 'center';
-    c.fillText(L.scan, qx + size / 2, qy + size + 28);
+    c.fillText(link ? L.scanAnswer : L.scan, qx + size / 2, qy + size + 28);
     c.textAlign = 'left';
   }};
 }
 
-function layout(ctx, {question, result, date, personal}) {
+function layout(ctx, {question, result, date, personal, link}) {
   // Number sources 1..n in the shared file; the answer's ids skip sources it did not use.
   const cites = new Map((result.sources || []).map((s, i) => [s.id, String(i + 1)]));
   const rows = [header(), gap(62)];
@@ -357,7 +358,7 @@ function layout(ctx, {question, result, date, personal}) {
     }}, gap(10));
     result.sources.forEach((source, i) => rows.push(sourceRow(ctx, source, String(i + 1))));
   }
-  rows.push(gap(56), footerRow());
+  rows.push(gap(56), footerRow(link));
   return rows;
 }
 

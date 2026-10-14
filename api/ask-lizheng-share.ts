@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, accessEnabled, resolveIdentity } from "../shared/ask-access.js";
 import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
-import { claimShareBonus, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
+import { claimShareBonus, countShare, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
 import { fileWriter, readShareCopy, saveShareCopy } from "../shared/ask-public-files.js";
 import { withPlainSourceLabels } from "../shared/ask-source-labels.js";
@@ -84,6 +84,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (key !== "__route" || url.searchParams.getAll(key).length !== 1) throw new AccessError("invalid_request", 400);
     const request = shareRequest(await discoveryRequestBody(req, SHARE_BODY_LIMIT), host);
     const shared = await createShare(request);
+    // Made as the answer arrived, then shared now: counted here (a new address counts as it is made).
+    if (!request.auto && !shared.first) {
+      try { await countShare(request.surface); } catch { /* A missed count never fails the share. */ }
+    }
     // A copy for when the database is down (shared/ask-public-files.ts); the link stands without it.
     const write = fileWriter();
     if (write) {

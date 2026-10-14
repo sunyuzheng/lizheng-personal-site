@@ -3431,6 +3431,206 @@
   color: var(--lz-muted);
 }
 
+/* 分享这条回答 under every finished answer (ShareBar): its own page, its address the thing to read,
+   copying it the first thing to do; the QR code opens it on a phone. */
+.lz-home .lz-ask-share-anchor {
+  scroll-margin-top: 96px;
+}
+
+/* Under the sources, whose last hairline it shares. */
+.lz-home .lz-ask-share-bar {
+  margin-top: 24px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lz-home .lz-ask-share-bar .label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-share-bar .url {
+  margin-top: 2px;
+  font-size: 17px;
+}
+
+.lz-home .lz-ask-share-bar .btn.primary {
+  font-weight: 600;
+  color: var(--lz-green-text);
+  box-shadow: inset 0 0 0 1px var(--lz-green);
+}
+
+.lz-home .lz-ask-share-bar .bonus {
+  margin-top: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
+.lz-home .lz-ask-share-bar .qr {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 14px 0 0;
+}
+
+.lz-home .lz-ask-share-bar .qr-code {
+  flex: none;
+  width: 136px;
+  height: 136px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--lz-line);
+}
+
+.lz-home .lz-ask-share-bar .qr-code svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lz-home .lz-ask-share-bar .qr figcaption {
+  max-width: 14em;
+  font-size: 13.5px;
+  color: var(--lz-muted);
+}
+
+.lz-home .lz-ask-export-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: #8b3b25;
+}
+
+/* The answer map (AnswerMap.tsx): the question at the centre of every public material, on the
+   forest of the site's dark sections so the lights can glow. Mint marks what opens a source. */
+.lz-home .lz-map {
+  max-width: 700px;
+  margin: 18px 0 6px;
+  border-radius: 10px;
+  background: radial-gradient(85% 70% at 50% 44%, #1a5132 0%, var(--lz-forest) 52%, var(--lz-forest-2) 100%);
+  color: rgb(248 241 228 / 0.78);
+  overflow: hidden;
+}
+
+.lz-home .lz-ask-answer .lz-map {
+  margin: 24px 0 8px;
+}
+
+.lz-home .lz-map-stage {
+  height: clamp(260px, 44vw, 330px);
+}
+
+.lz-home .lz-map.is-done .lz-map-stage {
+  height: clamp(230px, 38vw, 280px);
+}
+
+.lz-home .lz-map canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+  font-family: var(--sans);
+}
+
+.lz-home .lz-map figcaption {
+  padding: 0 18px 16px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.lz-home .lz-map figcaption > * {
+  margin: 0;
+}
+
+.lz-home .lz-map figcaption > * + * {
+  margin-top: 6px;
+}
+
+.lz-home .lz-map-lead {
+  font-size: 14px;
+  color: #f8f1e4;
+}
+
+.lz-home .lz-map-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+}
+
+.lz-home .lz-map-card {
+  color: #e2c27c;
+}
+
+.lz-home .lz-map-card i,
+.lz-home .lz-map-legend i.k {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 7px 1px 1px;
+  background: #e2c27c;
+  transform: rotate(45deg);
+}
+
+.lz-home .lz-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 14px;
+  font-size: 12px;
+  color: rgb(248 241 228 / 0.56);
+}
+
+.lz-home .lz-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lz-home .lz-map-legend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.lz-home .lz-map-legend i.v {
+  background: #f8f1e4;
+}
+
+.lz-home .lz-map-legend i.t {
+  background: #8fd4a4;
+}
+
+.lz-home .lz-map-legend i.c {
+  background: #e2c27c;
+}
+
+.lz-home .lz-map-legend i.k {
+  width: 6px;
+  height: 6px;
+  margin: 0 1px;
+  border-radius: 0;
+}
+
+.lz-home .lz-map-axes {
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .lz-home .lz-map,
+  .lz-home .lz-ask-answer .lz-map {
+    margin-inline: calc(-1 * var(--lz-gut));
+    border-radius: 0;
+  }
+
+  .lz-home .lz-map-axes {
+    margin-left: 0;
+  }
+}
+
 .lz-home .lz-ask-share-nudge {
   margin: 4px 0 0;
   font-size: 13.5px;

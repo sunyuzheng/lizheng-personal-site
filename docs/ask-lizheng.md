@@ -157,3 +157,13 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 ## 公开问答原样公开（2026-10-05）
 
 立正：「自动去个人信息这一步删掉吧，没必要了。」此后「别人在问什么」和公开问答页原样展示问题和完整回答，AI 只判断值不值得公开、归到主题（ask-lizheng `/api/curate` 的 `v: 2`，Ops 按提问时间决定用哪一版；之前问的人看到的是「去掉个人信息后公开」，仍按原来的方式改写）。`/api/meta` 的 `public_display` 改成 `as_asked`，本站主页问答区两种都认。改了的说法：主页问答区说明「真实的提问和回答，由AI挑选后原样展示。」、`/ask` 页的描述和导语、隐私政策三处（公开问答与同意、保存什么、DeepSeek 那条）和英文对应句、App 支持页「别人在问什么是什么」、两个 robots.txt 的注释；ask.lizheng.ai 的说明和同意框随 `pnpm sync:ask-app` 进来。
+
+## 回答写完就有网页，分享页和主页问答区的地图（2026-10-13）
+
+立正：分享页没有 ask 页好看；可以「别人问了以后就直接生成」分享链接，把分享页做得更简单清晰，也可以给二维码，让大家更愿意分享。又说 ask 首屏右边不平衡，主页也加上回答地图。
+
+- **自动建链接**：v4 的普通回答一到，页面就带 `auto: true` 调 `POST /api/ask-lizheng/share`（不给奖励），回答下面直接显示网址。`shareRequest` 接受有无 `auto` 两种请求（旧页面不带）。`auto` 建的不算分享：`createShare` 的计数开关为 0；之后用户复制、发送或打开二维码时，页面再带 `auto: false` 调一次（一条回答一次），地址已在（`SHARED`），由接口用 `countShare` 记 `<入口>:share`、`all:share`，奖励也在这次领。新地址直接带 `auto: false` 建的（带处境的回答、自动建失败的）照旧在建的时候记。带「结合我的处境」的回答不自动建，点了才建。
+- **搜索**：按「能分享的就给搜索引擎」，自动建的分享页同样进 `ask.lizheng.ai/s/sitemap.xml`、`index, follow`。
+- **分享页**（`shared/ask-share-page.ts`）：问题下面「复制链接」「二维码」（能分享的手机多「发给朋友」，微信里改成提示点右上角）；结论下面是回答地图，编号点了跳到下面对应出处；结尾「把这一页发给需要的人」带网址和同样的按钮；二维码在服务器上画成 SVG（`qrcode-generator`），点了在弹窗里看。脚本是 `client/public/s/share.js`（ES 模块）和同步来的 `client/public/s/answer-map.js`；地图数据读 ask 域名的 `/api/answer-map`。`vercel.json` 的 `/s/` 静态路由加了这两个文件。实心绿只留给「去问问立正」。
+- **主页问答区**（`AskLizheng.tsx`、`AnswerMap.tsx`）：回答进行中在进度下面画地图，完成后放在一句话结论下面，编号点了滚到对应出处卡片；分享栏同 ask 页。地图数据走 `/api/ask-lizheng/answer-map`（`vercel.json` 转给 Builder，`respectOriginCacheControl`，Builder 给一小时边缘缓存、睡着时用旧的）；ask 域名的 `/api/answer-map` 同样单独一条路由，排在转给 Builder 的兜底路由前面。保存的图片底部二维码指向这条回答的网页（`client/src/lib/ask-share.js` 和 ask-lizheng 的 `src/share.js` 一起改）。
+- **同步**：`pnpm sync:ask-app` 另外把 ask-lizheng 的 `src/answer-map.js` 拷成 `shared/ask-answer-map.js`（主页用，类型在 `shared/ask-answer-map.d.ts`）和 `client/public/s/answer-map.js`（分享页用），`version.json` 记 `answer_map_sha256`，`tests/ask-public-qa.test.ts` 防手改。

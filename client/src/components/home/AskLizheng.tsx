@@ -22,6 +22,7 @@ import { askedAgo, discoveryDetail, discoveryLists, discoveryPage, discoveryView
 import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
+import AnswerMapPanel from "./AnswerMap";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
 import { sourceAttributionLabel } from "@shared/ask-source-attribution.js";
@@ -84,7 +85,6 @@ const COPY = {
     exportFailed: "这次没能生成文件，可以稍后再试。",
     // 分享这条回答: the answer's own public page; sharing may give back one of today's questions.
     shareLabel: "分享这条回答",
-    shareBonusLabel: "分享这条回答，今天多问一次",
     shareQuota: "分享上面的回答，今天多问一次",
     shareCreate: "复制分享链接",
     shareCreating: "正在生成链接…",
@@ -96,6 +96,9 @@ const COPY = {
     shareCopiedAgain: "已复制",
     shareFailed: "这次没能生成链接，可以稍后再试。",
     shareWechat: "打开链接后，点右上角「···」就能发给朋友。",
+    shareQr: "二维码",
+    shareQrNote: "用手机扫一扫，打开这条回答。",
+    shareBonusHint: "分享出去，今天多问一次。",
     next: "可以接着问",
     nextHint: "点一下放进输入框，改好再发",
     clarify: "再补充一点，回答会更贴合你",
@@ -209,7 +212,6 @@ const COPY = {
     exporting: "Preparing…",
     exportFailed: "The file could not be created. Try again shortly.",
     shareLabel: "Share this answer",
-    shareBonusLabel: "Share this answer, ask one more today",
     shareQuota: "Share an answer above to ask one more today",
     shareCreate: "Copy share link",
     shareCreating: "Creating the link…",
@@ -221,6 +223,9 @@ const COPY = {
     shareCopiedAgain: "Copied",
     shareFailed: "The link could not be created. Try again shortly.",
     shareWechat: "Open the link, then tap ··· at the top right to send it.",
+    shareQr: "QR code",
+    shareQrNote: "Scan with a phone to open this answer.",
+    shareBonusHint: "Share it to ask one more today.",
     next: "Keep asking",
     nextHint: "Click to put it in the box, edit, then send",
     clarify: "A little more context would help",
@@ -392,8 +397,75 @@ function Source({
 
 type ShareState = {
   open?: boolean; phase?: "confirm" | "working" | "ready"; url?: string; copied?: boolean;
-  bonus?: ShareResult["bonus"]; error?: string;
+  bonus?: ShareResult["bonus"]; error?: string; qr?: boolean; counted?: boolean;
 };
+
+// The QR code of an answer's page, drawn when asked for (qrcode-generator, as the saved image's).
+function QrCode({ url, note }: { url: string; note: string }) {
+  const [svg, setSvg] = useState("");
+  useEffect(() => {
+    let alive = true;
+    import("qrcode-generator").then(({ default: qrcode }) => {
+      if (!alive) return;
+      const qr = qrcode(0, "M");
+      qr.addData(url);
+      qr.make();
+      setSvg(qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true }));
+    }, () => {});
+    return () => { alive = false; };
+  }, [url]);
+  return (
+    <figure className="qr">
+      <div className="qr-code" aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />
+      <figcaption>{note}</figcaption>
+    </figure>
+  );
+}
+
+// 分享这条回答, under every finished answer (as on ask.lizheng.ai): its own page as soon as it is
+// written, with what to do with it. An answer to a question with the situation gets its page only
+// when asked for, after saying what the page shows; so does one whose page could not be made at once.
+function ShareBar({ state = {}, lang, link, bonus, exporting = "", onCreate, onCopy, onSend, onQr, onExport }: {
+  state?: ShareState; lang: Lang; link: boolean; bonus: boolean; exporting?: string;
+  onCreate: () => void; onCopy: () => void; onSend: () => void; onQr: () => void; onExport: (kind: "png" | "pdf") => void;
+}) {
+  const c = COPY[lang];
+  const ready = link && state.phase === "ready";
+  return (
+    <div className="lz-ask-share lz-ask-share-bar">
+      <p className="label">{c.shareLabel}</p>
+      {ready ? <a className="url" href={state.url} {...EXTERNAL}>{shareDisplay(state.url || "")} ↗</a>
+        : link && state.phase !== "working" && <p>{PUBLIC_QA[lang].share}</p>}
+      {state.error && <p className="error" role="alert">{state.error}</p>}
+      <div className="actions">
+        {ready ? (
+          <>
+            <button type="button" className="btn btn-line primary" onClick={onCopy}>{state.copied ? c.shareCopiedAgain : c.shareCopy}</button>
+            <button type="button" className="btn btn-line" aria-expanded={!!state.qr} onClick={onQr}>{c.shareQr}</button>
+            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
+              <button type="button" className="btn btn-line" onClick={onSend}>{c.shareSend}</button>
+            )}
+          </>
+        ) : link && (
+          <button type="button" className="btn btn-line primary" disabled={state.phase === "working"} onClick={onCreate}>
+            {state.phase === "working" ? c.shareCreating : c.shareCreate}
+          </button>
+        )}
+        {(["png", "pdf"] as const).map(kind => (
+          <button key={kind} type="button" className="btn btn-line" disabled={!!exporting} onClick={() => onExport(kind)}>
+            {exporting === kind ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
+          </button>
+        ))}
+      </div>
+      {ready && (state.copied !== undefined || state.bonus === "granted") && (
+        <p className="status" role="status">{state.copied ? c.shareCopied : state.copied === false ? c.shareSelect : ""}{state.bonus === "granted" && <b>{c.shareBonus}</b>}</p>
+      )}
+      {ready && bonus && state.bonus !== "granted" && <p className="bonus">{c.shareBonusHint}</p>}
+      {ready && state.qr && <QrCode url={state.url || ""} note={c.shareQrNote} />}
+      {ready && IN_WECHAT && <p className="hint">{c.shareWechat}</p>}
+    </div>
+  );
+}
 
 // Sharing one answer: its own page (what that page shows, then its link and how to send it), a long
 // image or a PDF. `link` is false for an answer that cannot have a page; the image and PDF remain.
@@ -882,7 +954,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     setExporting(`${turn.id}-${kind}`);
     try {
       const { exportAnswer } = await import("@/lib/ask-share");
-      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context }, lang);
+      const page = shares[turn.id];
+      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context,
+        link: page?.phase === "ready" ? page.url : "" }, lang);
       const file = new File([blob], name, { type });
       if (kind === "png" && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
         try {
@@ -908,37 +982,71 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   const bonusOffer = !IN_WECHAT && !!account?.enabled && !account.unavailable && !account.founding &&
     account.share_bonus === true && (account.remaining ?? 3) < 3;
   const setShare = (id: number, patch: ShareState) => setShares(prev => ({ ...prev, [id]: { ...prev[id], ...patch } }));
-  const toggleShare = (turn: Turn) => {
-    const current = shares[turn.id];
-    const open = !current?.open;
-    setShare(turn.id, { open, ...(!current ? { phase: "confirm", error: "" } : {}) });
-    if (open) track("Ask Share", { surface: "home", action: "open" });
-  };
   const openShare = (turn: Turn) => {
-    setShare(turn.id, { open: true, ...(shares[turn.id]?.phase === "ready" ? {} : { phase: "confirm", error: "" }) });
     requestAnimationFrame(() => document.getElementById(`home-share-${turn.id}`)?.scrollIntoView({ block: "center" }));
   };
+  const tookBonus = (value: ShareResult) => {
+    if (value.bonus === "granted" || value.bonus === "claimed")
+      setAccount(prev => (prev ? { ...prev, share_bonus: false, ...(Number.isFinite(value.remaining) ? { remaining: value.remaining } : {}) } : prev));
+  };
+  // Every finished answer gets its page at once (`auto`, not counted as a share), except one to a
+  // question with the situation: its page waits until the asker makes it.
+  const autoShared = useRef(new Set<number>());
+  useEffect(() => {
+    for (const turn of turns) {
+      if (turn.result?.status !== "answered" || !turn.result.share || turn.request.context || autoShared.current.has(turn.id)) continue;
+      autoShared.current.add(turn.id);
+      setShare(turn.id, { phase: "working", error: "" });
+      createShareLink(turn.result.share, { bonus: false, auto: true })
+        .then(value => setShare(turn.id, { phase: "ready", url: value.url }), () => setShare(turn.id, { phase: "confirm" }));
+    }
+  }, [turns]);
+  // Copying, sending or showing the QR code is the share: the first one counts it, and may give
+  // back one of today's questions.
+  function markShared(turn: Turn, action: string) {
+    track("Ask Share", { surface: "home", action });
+    if (!turn.result?.share || shares[turn.id]?.counted) return;
+    setShare(turn.id, { counted: true });
+    createShareLink(turn.result.share, { bonus: bonusOffer, auto: false }).then(value => {
+      tookBonus(value);
+      if (value.bonus === "granted") setShare(turn.id, { bonus: "granted" });
+    }, () => setShare(turn.id, { counted: false }));
+  }
+  // The page made on request (with the situation, or when it could not be made at once): made,
+  // copied and counted together.
   async function createShare(turn: Turn) {
     if (!turn.result?.share) return;
     setShare(turn.id, { phase: "working", error: "" });
-    const link = createShareLink(turn.result.share, { bonus: bonusOffer });
+    const link = createShareLink(turn.result.share, { bonus: bonusOffer, auto: false });
     const copied = copyWhenReady(link.then(value => value.url));
     try {
       const value = await link;
-      if (value.bonus === "granted" || value.bonus === "claimed")
-        setAccount(prev => (prev ? { ...prev, share_bonus: false, ...(Number.isFinite(value.remaining) ? { remaining: value.remaining } : {}) } : prev));
-      setShare(turn.id, { phase: "ready", url: value.url, bonus: value.bonus, copied: await copied });
+      tookBonus(value);
+      setShare(turn.id, { phase: "ready", url: value.url, bonus: value.bonus, counted: true, copied: await copied });
       track("Ask Share", { surface: "home", action: value.bonus === "granted" ? "bonus" : "link" });
     } catch {
       setShare(turn.id, { phase: "confirm", error: c.shareFailed });
     }
   }
   async function copyShare(turn: Turn) {
-    setShare(turn.id, { copied: await copyWhenReady(shares[turn.id]?.url || "") });
+    const done = copyWhenReady(shares[turn.id]?.url || "");
+    markShared(turn, "copy");
+    setShare(turn.id, { copied: await done });
   }
   async function sendShare(turn: Turn) {
-    track("Ask Share", { surface: "home", action: "send" });
+    markShared(turn, "send");
     try { await navigator.share({ title: turn.question, url: shares[turn.id]?.url }); } catch { /* Closed, or not allowed here. */ }
+  }
+  function toggleQr(turn: Turn) {
+    const open = !shares[turn.id]?.qr;
+    setShare(turn.id, { qr: open });
+    if (open) markShared(turn, "qr");
+  }
+  // A number on the map opens its source, as a citation does.
+  function openMapSource(turn: Turn, id: string) {
+    const target = document.getElementById(`home-ask-${turn.id}-${id}`);
+    target?.closest("details:not([open])")?.setAttribute("open", "");
+    target?.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }
   // v4, public Q&A, in this page's voice; the situation is not kept since 2026-10-04 (/api/meta says context_archive: false).
   const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), contextKept });
@@ -1408,6 +1516,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                         </button>
                       </div>
                     )}
+                    {working && <AnswerMapPanel turn={turn} live lang={lang} onSelect={id => openMapSource(turn, id)} />}
                     {turn.result && (
                       <div className="lz-ask-answer">
                         <div className="lz-ask-answer-summary">
@@ -1417,6 +1526,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                             turnId={turn.id}
                           />
                         </div>
+                        {!!(turn.result.sources || []).length && <AnswerMapPanel turn={turn} lang={lang} onSelect={id => openMapSource(turn, id)} />}
                         <AnswerSections
                           sections={turn.result.sections || []}
                           sources={turn.sources}
@@ -1540,18 +1650,13 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                       </div>
                     )}
                     {turn.result?.status === "answered" && !working && (
-                      <div className="lz-ask-actions" id={`home-share-${turn.id}`}>
-                        <button type="button" className="share" aria-expanded={!!shares[turn.id]?.open} onClick={() => toggleShare(turn)}>
-                          {bonusOffer && turn.result.share ? c.shareBonusLabel : c.shareLabel}
-                        </button>
-                        {exportError === turn.id && <small role="alert">{c.exportFailed}</small>}
+                      <div id={`home-share-${turn.id}`} className="lz-ask-share-anchor">
+                        <ShareBar state={shares[turn.id]} lang={lang} link={!!turn.result.share} bonus={bonusOffer}
+                          exporting={exporting === `${turn.id}-png` ? "png" : exporting === `${turn.id}-pdf` ? "pdf" : exporting ? "other" : ""}
+                          onCreate={() => void createShare(turn)} onCopy={() => void copyShare(turn)} onSend={() => void sendShare(turn)}
+                          onQr={() => toggleQr(turn)} onExport={kind => void exportTurn(kind, turn)} />
+                        {exportError === turn.id && <small className="lz-ask-export-error" role="alert">{c.exportFailed}</small>}
                       </div>
-                    )}
-                    {turn.result?.status === "answered" && !working && shares[turn.id]?.open && (
-                      <SharePanel state={shares[turn.id]} lang={lang} link={!!turn.result.share}
-                        exporting={exporting === `${turn.id}-png` ? "png" : exporting === `${turn.id}-pdf` ? "pdf" : exporting ? "other" : ""}
-                        onCreate={() => void createShare(turn)} onCopy={() => void copyShare(turn)} onSend={() => void sendShare(turn)}
-                        onExport={kind => void exportTurn(kind, turn)} />
                     )}
                     {turn.result?.status !== "sources-only" && (
                       <small className="lz-ask-model">

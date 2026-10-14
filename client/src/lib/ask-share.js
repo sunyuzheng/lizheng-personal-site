@@ -13,7 +13,7 @@ const MARK_VIEWBOX = [1219.044577, 649.234004];
 const MARK_TRANSFORM = {translate: [-17.980429, 953.72375], scale: [0.1, -0.1]};
 const LABELS = {
   zh: {
-    site: 'https://ask.lizheng.ai/', host: 'ask.lizheng.ai', brand: '问问立正', file: '问问立正', question: '你的问题',
+    site: 'https://ask.lizheng.ai/', host: 'ask.lizheng.ai', brand: '问问立正', file: '问问立正', question: '你的问题', asked: '有人问',
     meta: day => `AI根据立正公开的文章和视频整理 · ${day}`, day: d => `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`,
     limits: '这个回答的边界', sources: '出处', sourcesNote: n => `回答依据的${n}份公开原文`,
     video: '视频', memberVideo: '会员视频', memberCourse: '会员课程', memberPost: '会员帖子', memberReply: '会员区回复', member: '会员内容',
@@ -25,7 +25,7 @@ const LABELS = {
     kinds: {application: 'AI推演', personal: '结合你的处境', source: '材料里的观点'},
   },
   en: {
-    site: 'https://www.lizheng.ai/en#ask', host: 'lizheng.ai/en', brand: 'Ask Lizheng', file: 'Ask-Lizheng', question: 'Your question',
+    site: 'https://www.lizheng.ai/en#ask', host: 'lizheng.ai/en', brand: 'Ask Lizheng', file: 'Ask-Lizheng', question: 'Your question', asked: 'Someone asked',
     meta: day => `AI synthesis of Lizheng’s public essays and talks · ${day}`, day: d => d.toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}),
     limits: 'Limits of this answer', sources: 'Sources', sourcesNote: n => `${n} public sources behind this answer`,
     video: 'Video', memberVideo: 'Members video', memberCourse: 'Members course', memberPost: 'Members post', memberReply: 'Members reply', member: 'Members only',
@@ -379,11 +379,12 @@ function footerRow(link = '') {
   }};
 }
 
-function layout(ctx, {question, result, date, personal, link, map, kind}) {
+function layout(ctx, {question, result, date, personal, link, map, kind, other}) {
   // Number sources 1..n in the shared file; the answer's ids skip sources it did not use.
   const cites = new Map((result.sources || []).map((s, i) => [s.id, String(i + 1)]));
   const rows = [header(), gap(62)];
-  rows.push(...textRows(ctx, [{text: L.question}], {size: 23, lh: 1.6, weight: 600, color: C.greenText, keep: true}), gap(6));
+  // Someone else's question (别人在问什么) is not the reader's own.
+  rows.push(...textRows(ctx, [{text: other ? L.asked : L.question}], {size: 23, lh: 1.6, weight: 600, color: C.greenText, keep: true}), gap(6));
   rows.push(...textRows(ctx, [{text: question}], {size: 44, lh: 1.5, weight: 700, family: SERIF, color: C.ink}));
   const meta = L.meta(L.day(date));
   rows.push(gap(14), ...textRows(ctx, [{text: meta}], {size: 21, lh: 1.6, weight: 400, color: C.faint}));

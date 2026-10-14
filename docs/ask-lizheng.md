@@ -193,3 +193,10 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **地图**：代码仍由 `pnpm sync:ask-app` 拷来（`shared/ask-answer-map.js`），接口不变，多了 `words`（右端问题的名字和悬停提示的词）。`AnswerMap.tsx` 的 `own` 区分自己的问题（「你的问题」/Your question）和「别人在问什么」里别人的（「这个问题」）；图下一句带引用材料的年份跨度，图例只剩一句「每一道细线是一份材料：按主题分行，越往右越新」。`home.css` 里地图底色改成从左到右变亮的森林绿，去掉了形式颜色的图例。保存的图片和PDF（`client/src/lib/ask-share.js`）同样改了说明和底色。数据多了每份材料的发表日期 `d`（ask-lizheng 的 `build_answer_map.py`）；边缘缓存里还是旧数据时按旧半径推算，最多差一个月左右。
 - **金标**：`isMembersOnly`（`source_visibility=members-only`）的出处，编号、正文角标、段落下的出处编号都是金色（`--lz-member-ink`），标签是金底的「会员视频」「会员课程」「会员帖子」「会员区回复」（`.lz-ask-member-badge.tag`）；社区会员区的写「原帖在超线性学院会员区，打开需要会员」。「发言：立正」这类归属标签改成普通灰字（`.lz-ask-attribution`），不再用金色。
 - **展开问题**：`toggleCard` 记下点的那条标题在屏幕上的位置，展开后（`useLayoutEffect`）把页面挪回去，上面那条收起也不跳。ask 页同样修了。
+
+## 「别人在问什么」打开就能分享（2026-10-14）
+
+立正：「这里打开之后最好也有办法分享」。主页问答区展开一条，地图下面就是和自己提问时一样的 `ShareBar`（`cardShare` 给出这条问答公开页 `discoveryPage(id)` 的网址）：复制链接、二维码、发给朋友、保存图片、下载PDF；底部的「分享」按钮和 `SharePanel` 去掉了。导出走同一个 `deliver`，`exportCard` 传 `other: true`，图片和PDF的问题上方写「有人问」（`client/src/lib/ask-share.js` 的 `L.asked`），日期用提问那天。统计仍是 `Ask Discovery Share`，多了 `action`（copy、send、qr、png、pdf）。公开页网址显示成编号前8位（`shareDisplay`，复制的是完整网址）。ask 页同样改了（ask-lizheng `docs/PRODUCT.md` 同名一节）。
+
+同一天还调了地图字号：手机上主题名11.5号、年份10.5号并标在每年开始的线下，图下首句13.5号；图里主题名和图下说明左对齐（`home.css` 手机上说明的左右留白改成20px）；说明换行不留单字（`text-wrap: pretty`）。
+

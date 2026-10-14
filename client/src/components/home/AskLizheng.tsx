@@ -25,6 +25,7 @@ import { track } from "@vercel/analytics";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
 import { copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
 import AnswerMapPanel from "./AnswerMap";
+import type { ExportData } from "@/lib/ask-share";
 import type { MapSource } from "@shared/ask-answer-map.js";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
@@ -68,7 +69,6 @@ const COPY = {
     discoveryMore: "看更多问题",
     discoveryExpand: (n: number) => `再看${n}个问题`,
     discoveryViews: ["最常问", "最近问"],
-    discoveryShare: "分享",
     discoveryHelpful: "有帮助",
     discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
     discoveryUnlike: "取消",
@@ -196,7 +196,6 @@ const COPY = {
     discoveryMore: "See more questions",
     discoveryExpand: (n: number) => `Show ${n} more`,
     discoveryViews: ["Most asked", "Newest"],
-    discoveryShare: "Share",
     discoveryHelpful: "Helpful",
     discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
     discoveryUnlike: "Undo",
@@ -477,48 +476,6 @@ function ShareBar({ state = {}, lang, link, bonus, exporting = "", onCreate, onC
   );
 }
 
-// Sharing one answer: its own page (what that page shows, then its link and how to send it), a long
-// image or a PDF. `link` is false for an answer that cannot have a page; the image and PDF remain.
-// A question others asked already has its page: only its link and how to send it (no onExport).
-function SharePanel({ state, lang, link, exporting = "", onCreate, onCopy, onSend, onExport }: {
-  state: ShareState; lang: Lang; link: boolean; exporting?: string;
-  onCreate?: () => void; onCopy: () => void; onSend: () => void; onExport?: (kind: "png" | "pdf") => void;
-}) {
-  const c = COPY[lang];
-  const ready = link && state.phase === "ready";
-  return (
-    <div className="lz-ask-share">
-      {ready ? (
-        <>
-          <a className="url" href={state.url} {...EXTERNAL}>{shareDisplay(state.url || "")} ↗</a>
-          <p className="status" role="status">{state.copied ? c.shareCopied : c.shareSelect}{state.bonus === "granted" && <b>{c.shareBonus}</b>}</p>
-        </>
-      ) : link && <p>{PUBLIC_QA[lang].share}</p>}
-      {state.error && <p className="error" role="alert">{state.error}</p>}
-      <div className="actions">
-        {ready ? (
-          <>
-            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
-              <button type="button" className="btn btn-line" onClick={onSend}>{c.shareSend}</button>
-            )}
-            <button type="button" className="btn btn-line" onClick={onCopy}>{state.copied ? c.shareCopiedAgain : c.shareCopy}</button>
-          </>
-        ) : link && (
-          <button type="button" className="btn btn-line" disabled={state.phase === "working"} onClick={onCreate}>
-            {state.phase === "working" ? c.shareCreating : c.shareCreate}
-          </button>
-        )}
-        {onExport && (["png", "pdf"] as const).map(kind => (
-          <button key={kind} type="button" className="btn btn-line" disabled={!!exporting} onClick={() => onExport(kind)}>
-            {exporting === kind ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
-          </button>
-        ))}
-      </div>
-      {ready && IN_WECHAT && <p className="hint">{c.shareWechat}</p>}
-    </div>
-  );
-}
-
 // An opened question's answer as the map reads it (AnswerMap.tsx), one per answer, so the map keeps it.
 const cardMaps = new WeakMap<DiscoveryDetail, AskAnswerState & { id: number }>();
 function cardMapTurn(detail: DiscoveryDetail, anchor: number) {
@@ -634,6 +591,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // Each answer's share, by turn: whether its panel is open, and how far it got.
   const [shares, setShares] = useState<Record<number, ShareState>>({});
   const [exportError, setExportError] = useState(0);
+  const [cardExportError, setCardExportError] = useState("");
   const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
   const loginCleanup = useRef<((closePopup?: boolean) => void) | undefined>(undefined);
   // Where a Founding verification stands, so it never looks like nothing happened.
@@ -807,20 +765,34 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     setOpenCard(""); setOpenNested(""); setOpenSimilar(new Set());
     track("Ask Discovery Sort", { surface: "home", sort: view });
   };
-  // A question others asked already has its public page: sharing copies its link at once, and a
-  // phone can also send it on.
+  // A question others asked already has its public page. Opened, it shows the same 分享这条回答 as an
+  // answer here, under its map (2026-10-14, the owner: once opened, it should be shareable): the
+  // page's link to copy, send or scan, and the answer as an image or a PDF.
   const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
-  const shareCard = async (card: DiscoveryCard | SimilarQuestion) => {
-    if (cardShares[card.public_id]?.open) { setCardShare(card.public_id, { open: false }); return; }
-    const url = discoveryPage(card.public_id);
-    setCardShare(card.public_id, { open: true, phase: "ready", url });
+  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: discoveryPage(card.public_id), ...cardShares[card.public_id] });
+  const sharedCard = (action: string) => {
     markUsage("d_share");
-    track("Ask Discovery Share", { surface: "home", view: discoveryTab });
-    setCardShare(card.public_id, { copied: await copyWhenReady(url) });
+    track("Ask Discovery Share", { surface: "home", view: discoveryTab, action });
   };
-  const copyCard = async (card: DiscoveryCard | SimilarQuestion) => setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
+  const copyCard = async (card: DiscoveryCard | SimilarQuestion) => {
+    sharedCard("copy");
+    setCardShare(card.public_id, { copied: await copyWhenReady(discoveryPage(card.public_id)) });
+  };
   const sendCard = async (card: DiscoveryCard | SimilarQuestion) => {
+    sharedCard("send");
     try { await navigator.share({ title: card.question, url: discoveryPage(card.public_id) }); } catch { /* Closed, or not allowed here. */ }
+  };
+  const qrCard = (card: DiscoveryCard | SimilarQuestion) => {
+    const open = !cardShares[card.public_id]?.qr;
+    setCardShare(card.public_id, { qr: open });
+    if (open) sharedCard("qr");
+  };
+  const exportCard = (kind: "png" | "pdf", card: DiscoveryCard | SimilarQuestion, detail: DiscoveryDetail) => {
+    sharedCard(kind);
+    void deliver(kind, `q-${card.public_id}`, {
+      question: card.question, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult,
+      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: discoveryPage(card.public_id),
+    }, () => setCardExportError(card.public_id));
   };
   const likeOf = (card: DiscoveryCard | SimilarQuestion) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);
   // Anyone may like, counted by browser. A like shows at once; if it does not go through, it goes back.
@@ -903,6 +875,12 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                   {!!detail.answer.sources.length && (
                     <AnswerMapPanel turn={cardMapTurn(detail, anchor)} lang={lang} own={false} onSelect={id => openMapSource({ id: anchor }, id)} onOpen={openedMapSource} />
                   )}
+                  {/* Opened, it can be shared at once: under its map, as under an answer here. */}
+                  <ShareBar state={cardShare(card)} lang={lang} link bonus={false}
+                    exporting={exporting.startsWith(`q-${card.public_id}-`) ? exporting.slice(-3) : exporting ? "other" : ""}
+                    onCreate={() => {}} onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} onQr={() => qrCard(card)}
+                    onExport={kind => exportCard(kind, card, detail)} />
+                  {cardExportError === card.public_id && <small className="lz-ask-export-error" role="alert">{c.exportFailed}</small>}
                   <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
                   {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
                 </div>
@@ -926,18 +904,12 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                 <span className="arrow" aria-hidden="true" />{c.discoveryHelpful}{like.likes > 0 && <span className="count">{like.likes}</span>}
               </button>
               <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
-              <button type="button" className="btn btn-line" aria-expanded={!!cardShares[card.public_id]?.open}
-                onClick={() => void shareCard(card)}>{c.discoveryShare}</button>
               <a className="feedback" href={LINKS.askFeedback} {...EXTERNAL} onClick={() => {
                 track("Ask Feedback", { surface: "home", location: "card" });
                 void copyWhenReady(discoveryPage(card.public_id)).then(copied => { if (copied) setCardFeedback(prev => ({ ...prev, [card.public_id]: true })); });
               }}>{c.discoveryFeedback} ↗</a>
             </div>
             {cardFeedback[card.public_id] && <p className="feedback-note" role="status">{c.discoveryFeedbackCopied}</p>}
-            {cardShares[card.public_id]?.open && (
-              <SharePanel state={cardShares[card.public_id]} lang={lang} link
-                onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} />
-            )}
           </div>
         )}
         {open && others.length > 0 && full && (
@@ -984,16 +956,14 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     );
     return () => clearInterval(timer);
   }, [busy]);
-  // A long image shares well in chat apps; the PDF keeps the source links clickable.
-  async function exportTurn(kind: "png" | "pdf", turn: Turn) {
-    if (!turn.result) return;
+  // A long image shares well in chat apps; the PDF keeps the source links clickable. On a phone the
+  // image goes to the share sheet; otherwise either is downloaded.
+  async function deliver(kind: "png" | "pdf", key: string, data: ExportData, onFail: () => void) {
     markUsage("export");
-    setExporting(`${turn.id}-${kind}`);
+    setExporting(`${key}-${kind}`);
     try {
       const { exportAnswer } = await import("@/lib/ask-share");
-      const page = shares[turn.id];
-      const { blob, name, type } = await exportAnswer(kind, { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context,
-        link: page?.phase === "ready" ? page.url : "" }, lang);
+      const { blob, name, type } = await exportAnswer(kind, data, lang);
       const file = new File([blob], name, { type });
       if (kind === "png" && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
         try {
@@ -1010,10 +980,16 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 60_000);
     } catch {
-      setExportError(turn.id);
+      onFail();
     } finally {
       setExporting("");
     }
+  }
+  function exportTurn(kind: "png" | "pdf", turn: Turn) {
+    if (!turn.result) return;
+    const page = shares[turn.id];
+    void deliver(kind, String(turn.id), { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context,
+      link: page?.phase === "ready" ? page.url : "" }, () => setExportError(turn.id));
   }
   // 分享这条回答. Sharing may give back one of today's questions, once a day, after one was used.
   const bonusOffer = !IN_WECHAT && !!account?.enabled && !account.unavailable && !account.founding &&

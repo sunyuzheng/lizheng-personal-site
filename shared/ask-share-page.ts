@@ -122,8 +122,10 @@ export function renderSharePage(share: SharedAnswer): string {
     let kind: string;
     try { kind = sourceKind(source); } catch { return ""; }
     const attribution = sourceAttributionLabel(source);
-    const meta = [escapeHtml(kind), attribution ? escapeHtml(attribution) : "", source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? source.date.slice(0, 10) : ""].filter(Boolean).join(" · ");
-    return `<article class="source" id="source-${source.id.slice(1)}"><p class="source-meta">${source.id.slice(1)} · ${meta}</p><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.title)} ↗</a>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</article>`;
+    // The same owned labels as the public answer pages: kind, who speaks, date.
+    const meta = [`<span>${source.id.slice(1)}</span>`, `<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, attribution ? `<span>${escapeHtml(attribution)}</span>` : "",
+      source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join(" ");
+    return `<article class="source" id="source-${source.id.slice(1)}"><p class="source-meta">${meta}</p><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.title)} ↗</a>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</article>`;
   }).filter(Boolean).join("\n");
   const followups = answer.followups.length
     ? `<div class="followups"><p>也可以接着问</p>${answer.followups.map(q => `<a href="${escapeHtml(askLink(q))}" rel="nofollow">${escapeHtml(q)}</a>`).join("")}</div>` : "";

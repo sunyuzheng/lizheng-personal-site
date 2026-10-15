@@ -14,9 +14,8 @@ describe("public Q&A wording", () => {
     expect(createHash("sha256").update(read("shared/ask-public-qa.js")).digest("hex")).toBe(public_qa_sha256);
   });
 
-  it("draws the homepage's map with ask-lizheng's own code, and makes shared pages from its own page", () => {
-    const { answer_map_sha256, app_shell_sha256 } = JSON.parse(read("client/public/ask-app/version.json"));
-    expect(createHash("sha256").update(read("shared/ask-answer-map.js")).digest("hex")).toBe(answer_map_sha256);
+  it("makes shared pages from ask.lizheng.ai's own page", () => {
+    const { app_shell_sha256 } = JSON.parse(read("client/public/ask-app/version.json"));
     expect(createHash("sha256").update(read("shared/ask-app-shell.js")).digest("hex")).toBe(app_shell_sha256);
   });
 

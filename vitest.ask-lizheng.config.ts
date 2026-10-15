@@ -3,7 +3,6 @@ export default defineConfig({
   test: {
     environment: "node",
     include: [
-      "client/src/lib/ask-lizheng.test.ts",
       "tests/ask-lizheng-relay.test.ts",
       "tests/ask-access.test.ts",
       "tests/ask-auth.test.ts",

@@ -1,6 +1,4 @@
 import { sameQuestion } from "../../../shared/ask-question-shape";
-import type { AskResult, AskSource } from "./ask-lizheng";
-import { isAnswerPage } from "./ask-share-link";
 
 /** Another question under a card of 最常问: what its row shows, and what a like needs. */
 export type SimilarQuestion = {
@@ -22,19 +20,16 @@ export type DiscoveryCard = {
    * questions that open under it (see discoveryView). */
   similar?: SimilarQuestion[];
 };
-export type DiscoveryAnswer = {
-  summary: string; sections: AskResult["sections"]; sources: AskSource[]; limitations?: string;
-};
-export type DiscoveryDetail = { public_id: string; revision: number; question: string; answer: DiscoveryAnswer; share_url?: string };
 
 /** 最近问 and 最常问: two short lists, the same for every reader, so the CDN can serve them. */
 export type DiscoveryLists = { recent: DiscoveryCard[]; frequent: DiscoveryCard[]; total: number | null };
 export type DiscoveryView = "recent" | "frequent";
 /** How many questions each list holds (Ops' DISCOVERY_LIST_SIZE). */
 export const DISCOVERY_LIST_SIZE = 30;
-/** Every published question has its own public page on www.lizheng.ai, the one search engines read. */
-export const discoveryPage = (id: string) => `https://www.lizheng.ai/ask/${id}`;
-// The link that shares it: its own page, ask.lizheng.ai/s/<day>/<word>, the same page its asker got
+// An answer's own page on ask.lizheng.ai (shared/ask-share-link.ts makes them).
+const PAGE = /^https:\/\/ask\.lizheng\.ai\/s\/\d{4}-\d{2}-\d{2}\/[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
+export const isAnswerPage = (url: unknown): url is string => typeof url === "string" && PAGE.test(url);
+// The link that opens and shares it: its own page, ask.lizheng.ai/s/<day>/<word>, the same page its asker got
 // (2026-10-14). /q/<id> is for one Ops has not given its page yet: it opens the page, or the answer.
 export const discoveryLink = (id: string, page?: string) => (isAnswerPage(page) ? page : `https://ask.lizheng.ai/q/${id}`);
 const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -54,27 +49,6 @@ function similarRow(value: unknown): value is SimilarQuestion {
 }
 const row = ({ public_id, revision, question, published_at, asked_at, likes, share_url }: SimilarQuestion): SimilarQuestion =>
   ({ public_id, revision, question, published_at, likes, ...(asked_at ? { asked_at } : {}), ...(isAnswerPage(share_url) ? { share_url } : {}) });
-
-// The answer renders with the conversation's own components, so only the fields they read, as strings.
-const SOURCE_FIELDS = ["id", "title", "url", "date", "excerpt", "author", "attribution_note", "public_copy_url", "reason", "source_type",
-  "source_visibility", "text_access", "membership_platform", "membership_url", "membership_verified_at",
-  "transcript_source_kind", "transcript_quality", "speaker_classification", "evidence_role", "timecode",
-  "data_layer", "speaker_id", "speaker_name", "speaker_status", "fragment_id", "source_snapshot_sha256", "participant_names", "participant_entity_ids", "participant_aliases", "participant_metadata_basis", "speech_act", "content_origin", "generation_method"] as const;
-const KINDS = ["source", "synthesis", "application"];
-function source(value: unknown): AskSource | null {
-  const v = value as Record<string, unknown>;
-  if (!v || typeof v.id !== "string" || !/^S\d+$/.test(v.id) || !text(v.title) || typeof v.url !== "string") return null;
-  return Object.fromEntries(SOURCE_FIELDS.filter(key => typeof v[key] === "string").map(key => [key, v[key]])) as AskSource;
-}
-function section(value: unknown): AskResult["sections"][number] | null {
-  const v = value as Record<string, unknown>;
-  if (!v || typeof v.heading !== "string" || typeof v.body !== "string") return null;
-  return {
-    heading: v.heading, body: v.body,
-    kind: (KINDS.includes(v.kind as string) ? v.kind : "synthesis") as AskResult["sections"][number]["kind"],
-    source_ids: Array.isArray(v.source_ids) ? v.source_ids.filter((id): id is string => typeof id === "string" && /^S\d+$/.test(id)) : [],
-  };
-}
 
 /** Both lists in one read; null when they cannot be read (other hosts, Ops down). */
 export async function discoveryLists(signal?: AbortSignal): Promise<DiscoveryLists | null> {
@@ -185,28 +159,6 @@ export function discoveryView(lists: DiscoveryLists, view: DiscoveryView): Disco
       .map(({ item }) => item).sort(likedFirst).slice(0, DISCOVERY_SIMILAR_SIZE);
     return { ...card, similar };
   }).sort(often).map(card => ({ ...card, role: "common" as const }));
-}
-
-export async function discoveryDetail(id: string, signal?: AbortSignal): Promise<DiscoveryDetail | null> {
-  try {
-    const response = await fetch(`/api/ask-lizheng/discovery/detail?public_id=${encodeURIComponent(id)}`,
-      { cache: "no-store", credentials: "omit", signal });
-    if (!response.ok) return null;
-    const value = await response.json();
-    const answer = value?.answer;
-    if (!text(value?.question) || !answer || typeof answer.summary !== "string" || !Array.isArray(answer.sections) ||
-        !Array.isArray(answer.sources)) return null;
-    return {
-      public_id: id, revision: count(value.revision) ? value.revision : 0, question: value.question,
-      ...(isAnswerPage(value.share_url) ? { share_url: value.share_url } : {}),
-      answer: {
-        summary: answer.summary,
-        sections: answer.sections.map(section).filter((item: unknown): item is AskResult["sections"][number] => !!item),
-        sources: answer.sources.map(source).filter((item: unknown): item is AskSource => !!item),
-        limitations: text(answer.limitations) ? answer.limitations : undefined,
-      },
-    };
-  } catch { return null; }
 }
 
 /** Anyone may like, counted by browser: the site keys the vote to this browser's anonymous cookie. */

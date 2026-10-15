@@ -1,670 +1,131 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { track } from "@vercel/analytics";
 import type { Lang } from "@/contexts/LanguageContext";
 import {
-  askLizheng,
-  applyAskEvent,
-  AskError,
-  publicSourceUrl,
-  isMemberCourse,
-  isMemberPost,
-  isMembersOnly,
-  isMemberVideo,
-  memberJoinUrl,
-  type AskIntent,
-  type AskPayload,
-  type AskAnswerState,
-  type AskResult,
-  type AskSource,
-} from "@/lib/ask-lizheng";
+  askedAgo,
+  discoveryLink,
+  discoveryLists,
+  discoveryView,
+  likeState,
+  readLikes,
+  rememberLike,
+  voteDiscovery,
+  type DiscoveryCard,
+  type DiscoveryLists,
+  type DiscoveryView,
+  type LikeMemory,
+} from "@/lib/ask-discovery";
+import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
+// What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
+import { answerService, publicQaCopy } from "@shared/ask-public-qa.js";
 import { HOME_COPY, LINKS } from "./content";
 import { Arrow, EXTERNAL, Phrases } from "./parts";
-import { askLoginHere, beginAskLogin, finishAskLogin, logoutAsk, readAskAccount, takeAskDraft, type AskAccount } from "@/lib/ask-account";
-import { askedAgo, discoveryDetail, discoveryLink, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, voteDiscovery, type DiscoveryCard, type DiscoveryDetail, type DiscoveryLists, type DiscoveryView, type LikeMemory, type SimilarQuestion } from "@/lib/ask-discovery";
-import { track } from "@vercel/analytics";
-import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
-import { answerPage, copyWhenReady, createShareLink, IN_WECHAT, shareDisplay, type ShareResult } from "@/lib/ask-share-link";
-import AnswerMapPanel from "./AnswerMap";
-import type { ExportData } from "@/lib/ask-share";
-import type { MapSource } from "@shared/ask-answer-map.js";
-// What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
-import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
-import { sourceAttributionLabel } from "@shared/ask-source-attribution.js";
-// 反馈问题, sent and worded as on ask.lizheng.ai (synced from ask-lizheng src/report.js).
-import { REPORT_TEXT_MAX, reportCopy, reportPayload, sendReport, type ReportPlace, type ReportResult, type ReportTurn } from "@shared/ask-report-client.js";
 
-// Where a link to the membership page sits, so its visits can be told apart there.
-const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
+/*
+ * 问问立正 on the homepage is a way in (2026-10-15; the owner chose it so that one asking page is kept,
+ * not two): the question box and 别人在问什么. Asking, answers, sharing, the daily count and sign-in
+ * all live on ask.lizheng.ai. The box opens that page with the question in the fragment (askPageUrl),
+ * and the page sends it at once because it was opened from here (ask-lizheng src/home-question.js);
+ * each question in the list opens its own page there.
+ */
 
 const COPY = {
   zh: {
     question: "你的问题",
     placeholder: "有什么你一直想弄明白的问题？",
+    placeholderFind: "比如：想了解AI时代怎么学习，先读哪几篇？",
     hints: {
       ask: "问一个概念、一个判断，或一直没想通的地方。",
-      personal: "回答会结合你的目标、现状和卡点，也会指出还缺什么信息。",
       find: "说一个话题，AI挑出最值得先读的文章和视频，说明各讲什么、从哪篇开始。",
     },
-    placeholderPersonal: "说说你在做的事，以及卡在哪里。",
-    placeholderFind: "比如：想了解AI时代怎么学习，先读哪几篇？",
-    context: "结合我的处境",
-    contextHint: "你的目标、现状和卡点，或已经试过什么。只写愿意分享的部分。",
-    noticeV3: "问答会保存下来，用来改进回答；请勿填写私密信息。",
-    noticeV3Parts: [
-      ["为什么保存", "看哪些问题答得不好、缺哪些材料，把回答做得更好；我也想知道大家关心什么。"],
-      ["保存什么", "提问、完整回答和所用出处，以及匿名的使用统计。记录只有我能看到。"],
-      ["你的隐私", "提问记录不关联邮箱、账号或IP；输入文字仍可能识别个人，发送给AI前不会自动去掉。登录只用来核验Founding身份，不会和提问记在一起。「结合我的处境」里填的内容不单独保存，但回答可能会提到它，所以请别填写私密信息。"],
-      ["另外", "回答由AI根据我公开的文章和视频整理，不是我本人回复。提问和必要背景会发给Builder Space的模型服务处理。刷新页面会清空当前对话。"],
-    ] as [string, string][],
+    where: "",
     send: "提问",
-    stop: "停止",
-    reset: "开始新问题",
     full: "打开完整页面",
     examples: "选一个问题，再改成自己的",
     discoveryTitle: "别人在问什么",
     discoveryNote: "真实的提问和回答，由AI挑选后原样展示。",
+    discoveryTotal: (n: number) => `已有${n}个公开问答`,
     discoveryCount: (n: number) => `${n}次类似提问`,
-    discoveryOthers: (n: number) => `另外${n}个类似提问`,
-    discoveryLoading: "正在打开…",
-    discoveryUnavailable: "这条回答暂时打不开，请稍后再试。",
-    discoverySimilar: "问个类似的",
+    discoveryOften: "常被问到",
     discoveryMore: "看更多问题",
     discoveryExpand: (n: number) => `再看${n}个问题`,
     discoveryViews: ["最常问", "最近问"],
     discoveryHelpful: "有帮助",
     discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
     discoveryUnlike: "取消",
-    discoveryFeedback: "反馈或举报",
-    discoveryFeedbackCopied: "这条问答的链接已复制，留言时贴上就行。",
-    discoveryAttribution: "AI整理，不是立正本人回复。",
-    loading: "正在查找相关公开材料…",
-    seconds: "秒",
-    waited: "已等待",
-    candidates: "已找到的材料 · 候选，尚未最终采用",
-    sources: "回答依据",
-    excerpt: "查看原文片段",
-    copy: "阅读公开资料副本",
-    saveImage: "保存图片",
-    savePdf: "下载PDF",
-    exporting: "正在生成…",
-    exportFailed: "这次没能生成文件，可以稍后再试。",
-    // 分享这条回答: the answer's own public page; sharing may give back one of today's questions.
-    shareLabel: "分享这条回答",
-    shareQuota: "分享上面的回答，今天多问一次",
-    shareCreate: "复制分享链接",
-    shareCreating: "正在生成链接…",
-    shareCopied: "链接已复制。",
-    shareSelect: "没能自动复制，长按或选中链接就能复制。",
-    shareBonus: "今天多了一次提问机会。",
-    shareSend: "发给朋友…",
-    shareCopy: "复制链接",
-    shareCopiedAgain: "已复制",
-    shareFailed: "这次没能生成链接，可以稍后再试。",
-    shareWechat: "打开链接后，点右上角「···」就能发给朋友。",
-    shareQr: "二维码",
-    shareQrNote: "用手机扫一扫，打开这条回答。",
-    shareBonusHint: "分享出去，今天多问一次。",
-    next: "可以接着问",
-    nextHint: "点一下放进输入框，改好再发",
-    clarify: "再补充一点，回答会更贴合你",
-    stopped: "已停止。问题和检索材料已保留，可以修改后重试。",
-    failed: "回答未完成。问题和已找到的材料仍在，可以重试。",
-    crowded: "现在提问较多，请稍后再试。问题和已找到的材料仍在。",
-    disconnected:
-      "连接中断了，完整回答未收到。问题和已找到的材料都保留着，可以重新生成。",
-    timeout: "这次回答等得太久，已结束等待。问题和材料已保留，可以重新生成。",
-    retry: "重新生成回答",
-    waiting: "回答还在整理，可以先读下面的资料，也可以随时停止。",
-    connecting: "正在连接服务…",
-    waking: "问答服务闲置时会休眠，正在唤醒，通常十几秒…",
-    accountWaking: "正在唤醒问答服务…",
-    connectionActive: "连接保持中",
-    noRecentResponse: "暂未收到新响应，仍在等待",
-    waitingLong:
-      "这次整理时间较长，可以先打开原文阅读。停止会保留问题和已找到的材料。",
-    partial: "正在生成的回答",
-    partialNote: "以下段落已核对来源编号；完整回答仍在生成。",
-    approach: "回答思路",
-    approachEnglish: "整理方向与资料主要使用中文。",
     privacy: "说明",
-    queryNotice: "提问会保存30天，用于改进回答。请勿填写私密信息。",
-    quotaLeft: (n: number) => `今天还能问${n}次`,
-    quotaNone: "今天的3次已用完，北京时间0点恢复",
-    quotaUnavailable: "暂时读不到今天的次数。",
-    quotaRetry: "重试",
-    quotaExhausted: "今天的3次已经用完。北京时间每天0点恢复；Founding Member验证后不限次。",
-    networkQuotaExhausted: "今天来自这个网络的免费提问已经很多了，北京时间每天0点恢复；Founding Member验证后不限次。",
-    founding: "Founding Member · 不限次",
-    signedIn: "已登录，未核验到Founding资格",
-    foundingOffer: "Founding Member不限次：",
-    verifyShort: "验证身份",
-    howToJoin: "如何成为",
-    foundingTitle: "什么是Founding Member",
-    foundingWho: "Stay Superlinear前3,000位新年费会员是Founding Member，一年$149/¥999。AI Builder、AI Architect的老学员也是。",
-    foundingGet: "会员每年有12+场嘉宾大师课，每个月和鸭哥与我直播答疑，问问立正也不限次。",
-    foundingCta: "了解会员",
-    foundingVerify: "已经是？验证身份",
-    becomeFounding: "如何成为Founding Member",
-    verifyButton: "验证Founding身份",
-    loginPending: "请在弹出的窗口里完成验证",
-    loginHere: "没看到窗口？在本页验证",
-    loginWaiting: "正在等待验证…",
-    loginIncomplete: "这次没有完成验证",
-    verified: "验证成功 · Founding Member · 不限次",
-    verifiedRetry: "验证成功，可以重新提问了。",
-    signOut: "退出",
-    privacyNote:
-      "回答依据立正的公开文章与视频，由AI综合，不代表本人回复。问题和必要背景会发送给Builder Space处理。我们保存提问文本、时间、模型、回答状态与耗时，用于改进回答，30天后自动删除；不保存补充背景、对话历史或完整回答，不把提问记录关联到邮箱或账号。当前对话只留在页面，刷新后清空。账号只用于Founding身份与额度核验；登录跳转可能在当前标签页短暂保留未发送草稿，返回即清除。请勿填写私密信息。",
     modes: ["想明白", "从哪读起"],
-    // AI synthesis is the default and goes unlabeled; the answer says once that AI wrote it.
-    kinds: {
-      source: "材料里的观点",
-      application: "AI推演",
-      personal: "结合你的处境",
-    },
-    steps: ["查找原文", "匹配材料", "整理回答", "核对来源"],
+    modesLabel: "这次想怎样使用",
+    viewsLabel: "怎样看这些问题",
   },
   en: {
     question: "Your question",
     placeholder: "What would you like to understand?",
+    placeholderFind: "For example: what should I read first about learning in the AI era?",
     hints: {
       ask: "Ask about an idea, a judgment, or something you haven’t worked out.",
-      personal: "The answer takes your goal, situation and sticking points into account, and says what else it needs.",
       find: "Name a topic. AI picks the essays and talks worth reading first, says what each covers and where to start.",
     },
-    placeholderPersonal: "Tell me what you’re working on and where you’re stuck.",
-    placeholderFind: "For example: what should I read first about learning in the AI era?",
-    context: "Apply to my situation",
-    contextHint: "Your goal, current situation, where you’re stuck, or what you’ve tried. Share only what you’re comfortable with.",
-    noticeV3: "Questions and answers are saved to improve answers; please keep private information out.",
-    noticeV3Parts: [
-      ["Why we save questions", "To see which questions get weak answers and what material is missing, so answers get better. I also want to know what people care about."],
-      ["What we keep", "Questions, full answers and their sources, plus anonymous usage stats. Only I can see these records."],
-      ["Your privacy", "Question records are not linked to email, accounts or IP. Your words may still identify you and are not automatically redacted before AI processing. Signing in only checks Founding Member status and is never stored with your questions. What you write under “Apply to my situation” is not stored separately, but an answer may mention it, so please keep private information out."],
-      ["Also", "Answers are AI syntheses of my public articles and videos, not personal replies. Questions and necessary context go to Builder Space’s model service. Refreshing clears this conversation."],
-    ] as [string, string][],
+    // The asking page is in Chinese; a question in English is answered all the same.
+    where: "Your question opens on ask.lizheng.ai, which is in Chinese. You can ask in English.",
     send: "Ask",
-    stop: "Stop",
-    reset: "New question",
     full: "Open full page",
     examples: "Choose a question, then make it yours",
     discoveryTitle: "What others are asking",
     discoveryNote: "Real questions and answers, picked by AI and shown as asked.",
+    discoveryTotal: (n: number) => `${n} public Q&As`,
     discoveryCount: (n: number) => `${n} similar questions`,
-    discoveryOthers: (n: number) => `${n} more similar questions`,
-    discoveryLoading: "Opening…",
-    discoveryUnavailable: "This answer can’t be opened right now. Please try again later.",
-    discoverySimilar: "Ask something similar",
+    discoveryOften: "Often asked",
     discoveryMore: "See more questions",
     discoveryExpand: (n: number) => `Show ${n} more`,
     discoveryViews: ["Most asked", "Newest"],
     discoveryHelpful: "Helpful",
     discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
     discoveryUnlike: "Undo",
-    discoveryFeedback: "Feedback or report",
-    discoveryFeedbackCopied: "This Q&A’s link is copied; paste it in your comment.",
-    discoveryAttribution: "Organized by AI, not a reply from Lizheng.",
-    loading: "Finding relevant public material…",
-    seconds: "s",
-    waited: "Waiting",
-    candidates: "Material found · candidates, not final citations",
-    sources: "Sources used",
-    excerpt: "Read the excerpt",
-    copy: "Read public source copy",
-    saveImage: "Save image",
-    savePdf: "Download PDF",
-    exporting: "Preparing…",
-    exportFailed: "The file could not be created. Try again shortly.",
-    shareLabel: "Share this answer",
-    shareQuota: "Share an answer above to ask one more today",
-    shareCreate: "Copy share link",
-    shareCreating: "Creating the link…",
-    shareCopied: "Link copied.",
-    shareSelect: "Couldn’t copy it automatically; press and hold or select the link to copy it.",
-    shareBonus: "You can ask one more today.",
-    shareSend: "Send…",
-    shareCopy: "Copy link",
-    shareCopiedAgain: "Copied",
-    shareFailed: "The link could not be created. Try again shortly.",
-    shareWechat: "Open the link, then tap ··· at the top right to send it.",
-    shareQr: "QR code",
-    shareQrNote: "Scan with a phone to open this answer.",
-    shareBonusHint: "Share it to ask one more today.",
-    next: "Keep asking",
-    nextHint: "Click to put it in the box, edit, then send",
-    clarify: "A little more context would help",
-    stopped:
-      "Stopped. Your question and material are still here; edit and try again.",
-    failed:
-      "The answer didn’t finish. Your question and material are still here; try again.",
-    crowded:
-      "There are many requests right now. Try again shortly; your question and material are still here.",
-    disconnected:
-      "The connection was interrupted before the answer finished. Your question and sources are still here; generate again when ready.",
-    timeout:
-      "This answer took too long. Your question and sources are still here; you can generate again.",
-    retry: "Generate again",
-    waiting:
-      "The answer is still being prepared. You can read the sources below or stop at any time.",
-    connecting: "Connecting to the service…",
-    waking: "The answer service sleeps when idle and is waking up. This usually takes 10 to 20 seconds…",
-    accountWaking: "Waking the answer service…",
-    connectionActive: "Connection active",
-    noRecentResponse: "No recent response; still waiting",
-    waitingLong:
-      "This is taking longer. You can open the sources while waiting; stopping keeps your question and material.",
-    partial: "Answer in progress",
-    partialNote:
-      "Citation IDs checked for these sections; the full answer is still being prepared.",
-    approach: "How this answer is being prepared",
-    approachEnglish:
-      "The reading outline and sources are primarily in Chinese.",
     privacy: "Details",
-    queryNotice: "Questions are saved for 30 days to improve answers. Please avoid private information.",
-    quotaLeft: (n: number) => `${n} answers left today`,
-    quotaNone: "Today’s 3 answers are used; they reset at midnight Beijing time",
-    quotaUnavailable: "Today’s count is unavailable right now.",
-    quotaRetry: "Retry",
-    quotaExhausted: "Your 3 daily answers are used. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
-    networkQuotaExhausted: "Free answers from this network are used up for today. They reset at midnight Beijing time; Founding Members can verify for unlimited answers.",
-    founding: "Founding Member · unlimited",
-    signedIn: "Signed in; no Founding Member status found",
-    foundingOffer: "Unlimited for Founding Members:",
-    verifyShort: "Verify",
-    howToJoin: "How to join",
-    foundingTitle: "What’s a Founding Member?",
-    foundingWho: "The first 3,000 new annual members of Stay Superlinear are Founding Members, at $149 or ¥999 a year. AI Builder and AI Architect alumni are too.",
-    foundingGet: "Members get 12+ guest masterclasses a year, a monthly live Q&A with Yage and me, and unlimited answers here.",
-    foundingCta: "About the membership",
-    foundingVerify: "Already one? Verify",
-    becomeFounding: "How to become a Founding Member",
-    verifyButton: "Verify Founding membership",
-    loginPending: "Finish verifying in the pop-up window",
-    loginHere: "No window? Verify on this page",
-    loginWaiting: "Waiting for verification…",
-    loginIncomplete: "Verification wasn’t completed",
-    verified: "Verified · Founding Member · unlimited",
-    verifiedRetry: "Verified. You can ask again.",
-    signOut: "Sign out",
-    privacyNote:
-      "AI synthesizes answers from Lizheng’s public articles and videos; these are not personal replies. Questions and necessary context are sent to Builder Space. We save question text, time, model, answer status and duration to improve answers, then automatically delete them after 30 days. We do not save added context, conversation history or full answers, or link question records to email addresses or accounts. Conversations stay in this page’s memory and clear on refresh. Accounts verify Founding status and quota; a sign-in redirect may briefly keep an unsent draft in this tab, then delete it on return. Keep private information out of your input.",
     modes: ["Understand", "What to read first"],
-    kinds: {
-      source: "From the material",
-      application: "AI’s application",
-      personal: "Applied to your situation",
-    },
-    steps: [
-      "Find sources",
-      "Match material",
-      "Draft answer",
-      "Check citations",
-    ],
+    modesLabel: "How you want to use this",
+    viewsLabel: "How to see these questions",
   },
 };
-type Turn = AskAnswerState & {
-  id: number;
-  question: string;
-  request: AskPayload;
-  lastActivity: number;
-  askedAt?: number;
-  error?: string;
-  errorCode?: string;
-  waited?: number;
-  quotaExhausted?: boolean;
-  model?: string;
-};
-type TurnReport = { turnId: number; place: Exclude<ReportPlace, "page">; turn: ReportTurn };
-// 想明白 explains (understand) or, with the situation switched on, applies the
-// material to the reader (apply). 从哪读起 picks what to read first (find).
+// 想明白 explains (understand); 从哪读起 picks what to read first (find). With the situation, on
+// ask.lizheng.ai.
 const MODES = ["ask", "find"] as const;
+type Mode = (typeof MODES)[number];
 // 别人在问什么 on the homepage: three questions until opened, then up to eight before the link.
 const DISCOVERY_FOLDED = 3;
 const DISCOVERY_OPEN = 8;
-type Mode = (typeof MODES)[number];
-const STAGE: Record<string, number> = {
-  retrieving: 0,
-  matching: 1,
-  thinking: 2,
-  drafting: 2,
-  checking: 3,
-  repairing: 3,
-};
 
-function sourceKind(url: string) {
-  const host = new URL(url).hostname;
-  if (/(^|\.)lizheng\.ai$/.test(host)) return "article";
-  if (/youtube\.com$|youtu\.be$|bilibili\.com$/.test(host)) return "video";
-  if (/superlinear\.academy$|circle\.so$/.test(host)) return "community";
-  return "other";
-}
-function Source({
-  source,
-  lang,
-  turnId,
-}: {
-  source: AskSource;
-  lang: Lang;
-  turnId: number;
-}) {
-  const c = COPY[lang];
-  const url = publicSourceUrl(source.url);
-  const copy = publicSourceUrl(source.public_copy_url);
-  const member = isMemberVideo(source);
-  const course = isMemberCourse(source);
-  const post = isMemberPost(source);
-  const reply = post && source.source_type === "community-comment";
-  // Members' content is gold: its label and its number, here, in the text and on the map.
-  const limited = isMembersOnly(source);
-  const attribution = sourceAttributionLabel(source);
-  return (
-    <article className={`lz-ask-source${member ? " lz-ask-source-member" : ""}`} id={`home-ask-${turnId}-${source.id}`}>
-      <div>
-        <span className={`num${limited ? " member" : ""}`}>{source.id.slice(1)}</span>
-        {member && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员视频" : "Members video"}</strong>}
-        {course && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员课程" : "Members course"}</strong>}
-        {post && <strong className="lz-ask-member-badge tag">{lang === "zh" ? (reply ? "会员区回复" : "会员帖子") : (reply ? "Members reply" : "Members post")}</strong>}
-        {limited && !member && !course && !post && <strong className="lz-ask-member-badge tag">{lang === "zh" ? "会员内容" : "Members only"}</strong>}
-        {attribution && <strong className="lz-ask-attribution">{attribution}</strong>}
-        <time>{source.date?.slice(0, 10)}</time>
-      </div>
-      {url ? (
-        <a href={url} {...EXTERNAL} onClick={() => { markUsage("source"); track("Ask Source Click", { surface: "home", kind: sourceKind(url) }); }}>
-          {source.title} ↗
-        </a>
-      ) : (
-        <b>{source.title}</b>
-      )}
-      {source.reason && <p>{source.reason}</p>}
-      {member && <p className="lz-ask-member-note">{lang === "zh" ? "字幕资料已开放，完整视频需YouTube频道会员。" : "Transcript text is open; the full video requires YouTube channel membership."}</p>}
-      {course && <p className="lz-ask-member-note">{lang === "zh" ? "文字稿已开放，课程视频需超线性学院会员。" : "The lesson text is open; the course videos are for Superlinear members."}</p>}
-      {post && <p className="lz-ask-member-note">{lang === "zh" ? `原${reply ? "回复" : "帖"}在超线性学院会员区，打开需要会员。` : `The original ${reply ? "reply" : "post"} is in the Superlinear members' area; opening it needs a membership.`}</p>}
-      {source.transcript_quality === "uncorrected-asr" && <small>{lang === "zh" ? "自动转录未校正，请以原视频核实措辞。" : "Uncorrected ASR; verify wording in the original video."}</small>}
-      {source.transcript_quality === "source-unverified" && <small>{lang === "zh" ? "字幕来源未确认，请以原视频核实。" : "Caption provenance is unverified; check the original video."}</small>}
-      {member && url && <a className="lz-ask-member-watch" href={url} {...EXTERNAL}>{lang === "zh" ? "观看会员完整视频" : "Watch the full members video"} ↗</a>}
-      {memberJoinUrl(source) && (
-        <p className="lz-ask-member-join">
-          <a href={memberJoinUrl(source)} {...EXTERNAL}>{lang === "zh" ? "加入 YouTube 频道会员" : "Join the YouTube channel membership"} ↗</a>
-          <span>{lang === "zh" ? "与 Founding Member 的提问次数无关" : "Separate from Founding Member question limits"}</span>
-        </p>
-      )}
-      {source.excerpt && (
-        <p className="lz-ask-excerpt-preview">
-          {source.excerpt.slice(0, 160)}
-          {source.excerpt.length > 160 ? "…" : ""}
-        </p>
-      )}
-      <details>
-        <summary>{c.excerpt}</summary>
-        <p>{source.excerpt}</p>
-        <small>
-          {source.author} {source.attribution_note}
-        </small>
-        {copy && (
-          <a href={copy} {...EXTERNAL}>
-            {c.copy} ↗
-          </a>
-        )}
-      </details>
-    </article>
-  );
-}
-
-type ShareState = {
-  open?: boolean; phase?: "confirm" | "working" | "ready"; url?: string; copied?: boolean;
-  bonus?: ShareResult["bonus"]; error?: string; qr?: boolean; counted?: boolean;
-};
-
-// The QR code of an answer's page, drawn when asked for (qrcode-generator, as the saved image's).
-function QrCode({ url, note }: { url: string; note: string }) {
-  const [svg, setSvg] = useState("");
-  useEffect(() => {
-    let alive = true;
-    import("qrcode-generator").then(({ default: qrcode }) => {
-      if (!alive) return;
-      const qr = qrcode(0, "M");
-      qr.addData(url);
-      qr.make();
-      setSvg(qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true }));
-    }, () => {});
-    return () => { alive = false; };
-  }, [url]);
-  return (
-    <figure className="qr">
-      <div className="qr-code" aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />
-      <figcaption>{note}</figcaption>
-    </figure>
-  );
-}
-
-// 分享这条回答, under every finished answer (as on ask.lizheng.ai): its own page as soon as it is
-// written, with what to do with it. An answer to a question with the situation gets its page only
-// when asked for, after saying what the page shows; so does one whose page could not be made at once.
-function ShareBar({ state = {}, lang, link, bonus, exporting = "", onCreate, onCopy, onSend, onQr, onExport }: {
-  state?: ShareState; lang: Lang; link: boolean; bonus: boolean; exporting?: string;
-  onCreate: () => void; onCopy: () => void; onSend: () => void; onQr: () => void; onExport: (kind: "png" | "pdf") => void;
-}) {
-  const c = COPY[lang];
-  const ready = link && state.phase === "ready";
-  return (
-    <div className="lz-ask-share lz-ask-share-bar">
-      <p className="label">{c.shareLabel}</p>
-      {ready ? <a className="url" href={state.url} {...EXTERNAL}>{shareDisplay(state.url || "")} ↗</a>
-        : link && state.phase !== "working" && <p>{PUBLIC_QA[lang].share}</p>}
-      {state.error && <p className="error" role="alert">{state.error}</p>}
-      <div className="actions">
-        {ready ? (
-          <>
-            <button type="button" className="btn btn-line primary" onClick={onCopy}>{state.copied ? c.shareCopiedAgain : c.shareCopy}</button>
-            <button type="button" className="btn btn-line" aria-expanded={!!state.qr} onClick={onQr}>{c.shareQr}</button>
-            {typeof navigator !== "undefined" && typeof navigator.share === "function" && (
-              <button type="button" className="btn btn-line" onClick={onSend}>{c.shareSend}</button>
-            )}
-          </>
-        ) : link && (
-          <button type="button" className="btn btn-line primary" disabled={state.phase === "working"} onClick={onCreate}>
-            {state.phase === "working" ? c.shareCreating : c.shareCreate}
-          </button>
-        )}
-        {(["png", "pdf"] as const).map(kind => (
-          <button key={kind} type="button" className="btn btn-line" disabled={!!exporting} onClick={() => onExport(kind)}>
-            {exporting === kind ? c.exporting : kind === "png" ? c.saveImage : c.savePdf}
-          </button>
-        ))}
-      </div>
-      {ready && (state.copied !== undefined || state.bonus === "granted") && (
-        <p className="status" role="status">{state.copied ? c.shareCopied : state.copied === false ? c.shareSelect : ""}{state.bonus === "granted" && <b>{c.shareBonus}</b>}</p>
-      )}
-      {ready && bonus && state.bonus !== "granted" && <p className="bonus">{c.shareBonusHint}</p>}
-      {ready && state.qr && <QrCode url={state.url || ""} note={c.shareQrNote} />}
-      {ready && IN_WECHAT && <p className="hint">{c.shareWechat}</p>}
-    </div>
-  );
-}
-
-// An opened question's answer as the map reads it (AnswerMap.tsx), one per answer, so the map keeps it.
-const cardMaps = new WeakMap<DiscoveryDetail, AskAnswerState & { id: number }>();
-function cardMapTurn(detail: DiscoveryDetail, anchor: number) {
-  let turn = cardMaps.get(detail);
-  if (!turn) {
-    turn = { id: anchor, sources: detail.answer.sources, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult };
-    cardMaps.set(detail, turn);
-  }
-  return turn;
-}
-
-// A boundary note may name a source as S6; show it as a citation, like in the text.
-const citeIds = (text: string) => text.replace(/\[?\b(S\d+)\b\]?/g, "[$1]");
-
-function AnswerText({
-  text,
-  sources,
-  turnId,
-}: {
-  text: string;
-  sources: AskSource[];
-  turnId: number;
-}) {
-  return (
-    <ReactMarkdown
-      skipHtml
-      components={{
-        img: () => null,
-        a: ({ href, children }) => {
-          const id = href?.startsWith("#cite-") ? href.slice(6) : "";
-          // A footnote mark: the number only, joined to the word it marks.
-          const source = sources.find(s => s.id === id);
-          return source ? (
-            <>{"\u2060"}<a className={`lz-ask-cite${isMembersOnly(source) ? " member" : ""}`} href={`#home-ask-${turnId}-${id}`} aria-label={`S${id.slice(1)}`}>
-              {id.slice(1)}
-            </a></>
-          ) : (
-            <span>{children}</span>
-          );
-        },
-      }}
-    >
-      {text.replace(/\[(S\d{1,2})\](?!\()/g, "[$1](#cite-$1)")}
-    </ReactMarkdown>
-  );
-}
-
-// Only sections that differ from AI synthesis say so. Sources show as numbers in the
-// text; a section that cites none in its text lists them below.
-function AnswerSections({
-  sections,
-  sources,
-  turnId,
-  lang,
-  personal = false,
-}: {
-  personal?: boolean;
-  sections: AskResult["sections"];
-  sources: AskSource[];
-  turnId: number;
-  lang: Lang;
-}) {
-  const c = COPY[lang];
-  return sections.map((section, i) => (
-    <section key={i}>
-      <div className="lz-ask-answer-title">
-        <h4>{section.heading}</h4>
-        {section.kind !== "synthesis" && (
-          <small>{section.kind === "application" && personal ? c.kinds.personal : c.kinds[section.kind]}</small>
-        )}
-      </div>
-      <AnswerText text={section.body} sources={sources} turnId={turnId} />
-      {!/\[S\d+\]/.test(section.body) && (
-        <div className="lz-ask-citations">
-          {section.source_ids?.map(id => (
-            <a key={id} href={`#home-ask-${turnId}-${id}`} aria-label={id}
-              className={sources.some(s => s.id === id && isMembersOnly(s)) ? "member" : undefined}>
-              {id.slice(1)}
-            </a>
-          ))}
-        </div>
-      )}
-    </section>
-  ));
-}
-
-/** `children` close the body: placed under the question box on wide screens (see .lz-ask-native-body). */
-// 反馈问题: a line, or nothing, goes to the owner with what the section saw of the question when the
-// person opened this (never the situation); lizheng.ai checks and mails it (shared/ask-report.ts).
-function ReportBox({ lang, report, onClose }: { lang: Lang; report: TurnReport; onClose: () => void }) {
-  // This page is Yuzheng's own voice: the report goes to 我 (me).
-  const words = reportCopy(lang, lang === "zh" ? "我" : "me");
-  const [text, setText] = useState("");
-  const [state, setState] = useState<"idle" | "sending" | ReportResult>("idle");
-  const box = useRef<HTMLDivElement>(null);
-  useEffect(() => { box.current?.scrollIntoView({ block: "nearest", behavior: "smooth" }); }, []);
-  async function send() {
-    setState("sending");
-    const result = await sendReport(reportPayload({ surface: "home", place: report.place, text, turn: report.turn }));
-    track("Ask Report", { surface: "home", place: report.place, step: result });
-    setState(result);
-  }
-  return (
-    <div className="lz-ask-report" role="group" aria-label={words.title} ref={box}>
-      <p className="lz-ask-report-title">{words.title}</p>
-      {state === "sent" ? (
-        <>
-          <p className="done" role="status">{words.sent}</p>
-          <div className="actions"><button type="button" className="btn btn-line" onClick={onClose}>{words.close}</button></div>
-        </>
-      ) : (
-        <>
-          <p>{words.introTurn}</p>
-          <label>
-            <span className="sr-only">{words.label}</span>
-            <textarea rows={3} maxLength={REPORT_TEXT_MAX} value={text} placeholder={words.placeholder} onChange={event => setText(event.target.value)} />
-          </label>
-          <small>{words.withTurn}</small>
-          {(state === "failed" || state === "limited") && <p className="error" role="alert">{words[state]}</p>}
-          <div className="actions">
-            <button type="button" className="btn btn-green" disabled={state === "sending"} onClick={() => void send()}>
-              {state === "sending" ? words.sending : words.send}
-            </button>
-            <button type="button" className="btn btn-line" onClick={onClose}>{words.cancel}</button>
-          </div>
-        </>
-      )}
-      <small>{words.community}<a href={LINKS.askFeedback} {...EXTERNAL}>{words.communityLink} ↗</a></small>
-    </div>
-  );
+/** ask.lizheng.ai with the question in the fragment, which no server sees (ask-lizheng src/home-question.js). */
+export function askPageUrl(question: string, mode: Mode) {
+  return `${LINKS.askLizheng}#q=${encodeURIComponent(question.trim())}${mode === "find" ? "&mode=find" : ""}`;
 }
 
 export default function AskLizheng({ lang, children }: { lang: Lang; children?: ReactNode }) {
   const t = HOME_COPY[lang].ask;
   const c = COPY[lang];
-  const reportWords = reportCopy(lang, lang === "zh" ? "我" : "me");
   const [question, setQuestion] = useState("");
-  const [context, setContext] = useState("");
   const [mode, setMode] = useState<Mode>("ask");
-  const [personal, setPersonal] = useState(false);
-  const intent: AskIntent = mode === "find" ? "find" : personal ? "apply" : "understand";
-  const situation = mode === "ask" && personal ? context : "";
-  const [turns, setTurns] = useState<Turn[]>([]);
-  const [busy, setBusy] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
-  const [model, setModel] = useState("");
-  // Writes the answer when the model does not respond in time (/api/meta backup_model, since 2026-10-15).
-  const [backupModel, setBackupModel] = useState("");
-  const [opsLogging, setOpsLogging] = useState(false);
-  // v4: answers may be published, as asked since 2026-10-05 (public_display "as_asked"; before, "deidentified").
-  const [publicArchive, setPublicArchive] = useState(false);
-  // Whether the situation is kept for analysis (before 2026-10-04) or used for the answer only.
-  const [contextKept, setContextKept] = useState(true);
-  const [loggingReady, setLoggingReady] = useState(false);
-  const [loggingFailed, setLoggingFailed] = useState(false);
-  // Builder, which sends these settings, sleeps when idle and takes up to half a minute to wake.
-  const [loggingWaking, setLoggingWaking] = useState(false);
-  const conversation = useRef<string | null>(null);
-  const [account, setAccount] = useState<AskAccount | null>(null);
-  const [exporting, setExporting] = useState("");
-  // Each answer's share, by turn: whether its panel is open, and how far it got.
-  const [shares, setShares] = useState<Record<number, ShareState>>({});
-  // 反馈问题 (ReportBox), opened under the place it was asked for.
-  const [reporting, setReporting] = useState<TurnReport | null>(null);
-  const openReport = (place: TurnReport["place"], turn: Turn) => {
-    const waiting = place === "waiting";
-    track("Ask Report", { surface: "home", place, step: "open" });
-    setReporting({ turnId: turn.id, place, turn: {
-      question: turn.question, askedAt: turn.askedAt, elapsed: waiting ? elapsed : turn.waited,
-      quiet: waiting && turn.lastActivity ? (Date.now() - turn.lastActivity) / 1000 : undefined,
-      stage: waiting ? turn.progress?.stage : undefined, error: turn.errorCode || turn.result?.failure_code,
-      status: turn.result?.status, model: turn.model,
-      share: (turn.result?.share && answerPage(turn.result.share)) || shares[turn.id]?.url,
-    } });
+  const input = useRef<HTMLTextAreaElement>(null);
+  // How the question box was last filled, sent with the hand-over: typed or example.
+  const questionFrom = useRef("typed");
+  // Which services write and check the answers, named in 说明 (/api/meta). Read once someone starts a
+  // question or opens 说明, which also wakes the answer service before the question arrives there.
+  const [services, setServices] = useState({ model: "", backup: "" });
+  const warmed = useRef(false);
+  const warm = () => {
+    if (warmed.current) return;
+    warmed.current = true;
+    void fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: AbortSignal.timeout(30_000) })
+      .then(response => (response.ok ? response.json() : null))
+      .then(value => {
+        if (value) setServices({ model: typeof value.model === "string" ? value.model : "", backup: typeof value.backup_model === "string" ? value.backup_model : "" });
+      })
+      .catch(() => {});
   };
-  const [exportError, setExportError] = useState(0);
-  const [cardExportError, setCardExportError] = useState("");
-  const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
-  const loginCleanup = useRef<((closePopup?: boolean) => void) | undefined>(undefined);
-  // Where a Founding verification stands, so it never looks like nothing happened.
-  const [loginStep, setLoginStep] = useState<"" | "pending" | "verified" | "member" | "incomplete">("");
-  // What a Founding Member is and how to become one, opened from the count line.
-  const [foundingOpen, setFoundingOpen] = useState(false);
+  // The page's own voice; the situation is not kept (since 2026-10-04), and is only offered on ask.lizheng.ai.
+  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(services.model), backup: answerService(services.backup), contextKept: false });
+
   // Real questions others asked, published from Ops: 最常问 and 最近问, the same lists for everyone;
   // shown on the Chinese page in place of the examples. 最常问 comes first and the list stays folded
   // to three (2026-10-12, the user: fold it, and show the most common questions); 再看N个 opens up
@@ -675,15 +136,22 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   const discoveryShown = useMemo(() => (questionLists ? discoveryView(questionLists, discoveryTab) : []), [questionLists, discoveryTab]);
   const discoveryCards = discoveryShown.slice(0, discoveryOpen ? DISCOVERY_OPEN : DISCOVERY_FOLDED);
   const discoveryHidden = discoveryOpen ? 0 : Math.min(discoveryShown.length, DISCOVERY_OPEN) - discoveryCards.length;
+  // Opened and still more in the list: link to the whole list on ask.lizheng.ai.
+  const discoveryMore = discoveryHidden === 0 && discoveryShown.length > discoveryCards.length;
   // Chinese page: loading until the list arrives, then ready; none when it cannot be read or takes
   // past eight seconds, and only then the examples show in its place.
   const [discoveryState, setDiscoveryState] = useState<"loading" | "ready" | "none">(lang === "zh" ? "loading" : "none");
-  // Questions asked in the last day among those this visit read, shown beside the note.
   const [publicTotal, setPublicTotal] = useState<number | null>(null);
   const discoveryList = useRef<HTMLDivElement>(null);
   const hasDiscovery = discoveryCards.length > 0;
-  // Anonymous usage of this page view for the owner's dashboard (lib/ask-usage): reading time,
-  // scroll depth, whether this section and its list were seen, and what was used.
+  // Likes: what this browser liked (kept on this device), and the votes on their way, shown at once.
+  const [likes, setLikes] = useState<LikeMemory>(readLikes);
+  const [voting, setVoting] = useState<Record<string, { voted: boolean; likes: number }>>({});
+  const votingNow = useRef(new Set<string>());
+
+  // Anonymous usage of this page view for the owner's dashboard (lib/ask-usage): reading time, scroll
+  // depth, whether this section and its list were seen, and which questions were opened. A question
+  // is counted where it is asked, on ask.lizheng.ai, so it is never counted twice.
   useEffect(() => {
     const stop = startUsage("home");
     watchUsage(document.getElementById("ask-lizheng"), "h_seen");
@@ -694,103 +162,6 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     markUsage("d_shown");
     watchUsage(discoveryList.current, "d_seen");
   }, [hasDiscovery]);
-  // Opened and still more in the list: link to the whole list on ask.lizheng.ai.
-  const discoveryMore = discoveryHidden === 0 && discoveryShown.length > discoveryCards.length;
-  // Each card's share: the link to its public page, and whether it was copied.
-  const [cardShares, setCardShares] = useState<Record<string, ShareState>>({});
-  const [openCard, setOpenCard] = useState("");
-  const [cardDetails, setCardDetails] = useState<Record<string, DiscoveryDetail | "loading" | "failed">>({});
-  // In 最常问: whose similar questions are open (any number), and which of those shows its answer.
-  const [openSimilar, setOpenSimilar] = useState<Set<string>>(() => new Set());
-  const [openNested, setOpenNested] = useState("");
-  // One question open at a time: opening one below an open one folds that one, so the question
-  // tapped is kept where it was on screen, its answer starting under the finger (as on ask.lizheng.ai).
-  const keptHead = useRef<{ head: HTMLElement; top: number } | null>(null);
-  useLayoutEffect(() => {
-    const kept = keptHead.current;
-    keptHead.current = null;
-    if (!kept?.head.isConnected) return;
-    const moved = kept.head.getBoundingClientRect().top - kept.top;
-    if (Math.abs(moved) > 1) window.scrollBy(0, moved);
-  }, [openCard, openNested]);
-  // Likes: what this browser liked (kept on this device), and the votes on their way, shown at once.
-  const [likes, setLikes] = useState<LikeMemory>(readLikes);
-  const [voting, setVoting] = useState<Record<string, { voted: boolean; likes: number }>>({});
-  const votingNow = useRef(new Set<string>());
-  // Which answers' links were copied on the way to the community post for feedback (2026-10-06,
-  // the user: feedback and reports are comments under the post that introduced the Ask).
-  const [cardFeedback, setCardFeedback] = useState<Record<string, boolean>>({});
-  // The count comes from Builder, which sleeps when idle: say so while it wakes.
-  const [accountWaking, setAccountWaking] = useState(false);
-  const refreshAccount = () => { void readAskAccount().then(setAccount); };
-  const showLoginResult = (next: AskAccount | null) => {
-    setAccount(next);
-    const step = !next?.enabled || next.unavailable ? "" : next.founding ? "verified" : next.authenticated ? "member" : "incomplete";
-    setLoginStep(step);
-    if (step) track("Ask Verify Result", { surface: "home", result: step });
-  };
-  useEffect(() => {
-    const signedIn = finishAskLogin();
-    // A draft means this tab is back from signing in on this page.
-    const draft = takeAskDraft();
-    if (draft) {
-      setQuestion(draft.question);
-      setContext(draft.context);
-      setMode(draft.intent === "find" ? "find" : "ask");
-      setPersonal(draft.intent === "apply" || !!draft.context);
-    }
-    let stopped = false;
-    const slow = setTimeout(() => setAccountWaking(true), 1_500);
-    // A read that times out while Builder wakes gets one more try a second later.
-    const load = (again: boolean) => void readAskAccount().then(next => {
-      if (stopped) return;
-      if (next?.unavailable && again) { setTimeout(() => load(false), 1_000); return; }
-      clearTimeout(slow);
-      setAccountWaking(false);
-      (signedIn || draft ? showLoginResult : setAccount)(next);
-    });
-    load(true);
-    const controller = new AbortController();
-    void loadLogging(controller.signal);
-    return () => { stopped = true; clearTimeout(slow); controller.abort(); loginCleanup.current?.(); };
-  }, []);
-
-  // Asks for up to a minute, 20 seconds a try, saying the service is waking after three seconds;
-  // settings that came back but do not match fail at once.
-  async function loadLogging(signal?: AbortSignal) {
-    setLoggingFailed(false);
-    setLoggingWaking(false);
-    const started = Date.now();
-    const slow = setTimeout(() => { if (!signal?.aborted) setLoggingWaking(true); }, 3000);
-    try {
-      for (;;) {
-        let value: Record<string, any> | undefined;
-        try {
-          const response = await fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(20_000)]) : AbortSignal.timeout(20_000) });
-          if (!response.ok) throw new Error();
-          value = await response.json();
-        } catch (error) {
-          if (signal?.aborted || Date.now() - started >= 60_000) throw error;
-          await new Promise(resolve => setTimeout(resolve, 2_000));
-          continue;
-        }
-        if (value?.query_logging?.enabled !== true) throw new Error();
-        const ops = value?.ops_logging;
-        const archive = ops?.enabled === true && ops.retention === "until_deleted" && ops.answer_archive === true;
-        // The page shows v4's notice only once the service says it keeps to v4.
-        const v4 = archive && ops.notice === "v4" && typeof ops.context_archive === "boolean"
-          && (ops.public_display === "as_asked" || ops.public_display === "deidentified");
-        if (!signal?.aborted) {
-          setPublicArchive(v4); setContextKept(ops?.context_archive === true);
-          if (typeof value?.model === "string") setModel(value.model);
-          setBackupModel(typeof value?.backup_model === "string" ? value.backup_model : "");
-          setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true);
-        }
-        return;
-      }
-    } catch { if (!signal?.aborted) setLoggingFailed(true); }
-    finally { clearTimeout(slow); if (!signal?.aborted) setLoggingWaking(false); }
-  }
   useEffect(() => {
     if (lang !== "zh") { setDiscoveryState("none"); return; }
     setDiscoveryState(state => (state === "ready" ? state : "loading"));
@@ -807,69 +178,37 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     });
     return () => { clearTimeout(late); controller.abort(); };
   }, [lang]);
-  const toggleCard = (card: DiscoveryCard | SimilarQuestion, nested = false, head?: HTMLElement) => {
-    const [shown, show] = nested ? [openNested, setOpenNested] : [openCard, setOpenCard];
-    if (head) keptHead.current = { head, top: head.getBoundingClientRect().top };
-    if (shown === card.public_id) { show(""); return; }
-    show(card.public_id);
-    markUsage("d_open");
-    track("Ask Discovery Open", { surface: "home", view: nested ? "similar" : discoveryTab });
-    const known = cardDetails[card.public_id];
-    if (known && known !== "failed") return;
-    setCardDetails(prev => ({ ...prev, [card.public_id]: "loading" }));
-    void discoveryDetail(card.public_id).then(detail =>
-      setCardDetails(prev => ({ ...prev, [card.public_id]: detail || "failed" })));
-  };
-  const askSimilar = (card: DiscoveryCard | SimilarQuestion) => {
-    markUsage("d_similar");
-    track("Ask Discovery Similar", { surface: "home", view: discoveryTab });
-    prefill(card.question, "card");
-    input.current?.scrollIntoView({ block: "center" });
-  };
+
+  // The question goes to ask.lizheng.ai in a new tab, as every other way out of this page does, and
+  // leaves the box, so coming back and pressing 提问 again does not ask it twice; where a browser
+  // opens no new tab (some in-app browsers), in this one.
+  function submit(event?: FormEvent) {
+    event?.preventDefault();
+    const text = question.trim();
+    if (!text) return;
+    track("Ask Handoff", { surface: "home", from: questionFrom.current });
+    const url = askPageUrl(text, mode);
+    const page = window.open(url, "_blank");
+    if (page) {
+      page.opener = null;
+      setQuestion("");
+    } else window.location.assign(url);
+    questionFrom.current = "typed";
+  }
+  function prefill(value: string) {
+    questionFrom.current = "example";
+    setQuestion(value);
+    input.current?.focus();
+  }
   const showTab = (view: DiscoveryView) => {
     if (view === discoveryTab) return;
     setDiscoveryTab(view);
     setDiscoveryOpen(false);
-    setOpenCard(""); setOpenNested(""); setOpenSimilar(new Set());
     track("Ask Discovery Sort", { surface: "home", sort: view });
   };
-  // A question others asked already has its public page. Opened, it shows the same 分享这条回答 as an
-  // answer here, under its map (2026-10-14, the owner: once opened, it should be shareable): the
-  // page's link to copy, send or scan, and the answer as an image or a PDF.
-  const setCardShare = (id: string, next: ShareState) => setCardShares(prev => ({ ...prev, [id]: { ...prev[id], ...next } }));
-  // Its own page, as its answer (or, before that is read, its card) gives it.
-  const cardLink = (card: DiscoveryCard | SimilarQuestion) => {
-    const detail = cardDetails[card.public_id];
-    return discoveryLink(card.public_id, (typeof detail === "object" && detail.share_url) || card.share_url);
-  };
-  const cardShare = (card: DiscoveryCard | SimilarQuestion): ShareState => ({ phase: "ready", url: cardLink(card), ...cardShares[card.public_id] });
-  const sharedCard = (action: string) => {
-    markUsage("d_share");
-    track("Ask Discovery Share", { surface: "home", view: discoveryTab, action });
-  };
-  const copyCard = async (card: DiscoveryCard | SimilarQuestion) => {
-    sharedCard("copy");
-    setCardShare(card.public_id, { copied: await copyWhenReady(cardLink(card)) });
-  };
-  const sendCard = async (card: DiscoveryCard | SimilarQuestion) => {
-    sharedCard("send");
-    try { await navigator.share({ title: card.question, url: cardLink(card) }); } catch { /* Closed, or not allowed here. */ }
-  };
-  const qrCard = (card: DiscoveryCard | SimilarQuestion) => {
-    const open = !cardShares[card.public_id]?.qr;
-    setCardShare(card.public_id, { qr: open });
-    if (open) sharedCard("qr");
-  };
-  const exportCard = (kind: "png" | "pdf", card: DiscoveryCard | SimilarQuestion, detail: DiscoveryDetail) => {
-    sharedCard(kind);
-    void deliver(kind, `q-${card.public_id}`, {
-      question: card.question, result: { ...detail.answer, status: "answered", followups: [], clarifying_questions: [] } as AskResult,
-      date: card.asked_at ? new Date(card.asked_at) : new Date(), other: true, link: cardLink(card),
-    }, () => setCardExportError(card.public_id));
-  };
-  const likeOf = (card: DiscoveryCard | SimilarQuestion) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);
+  const likeOf = (card: DiscoveryCard) => voting[card.public_id] || likeState(likes, card.public_id, card.likes);
   // Anyone may like, counted by browser. A like shows at once; if it does not go through, it goes back.
-  const likeCard = async (card: DiscoveryCard | SimilarQuestion) => {
+  const likeCard = async (card: DiscoveryCard) => {
     const id = card.public_id;
     if (votingNow.current.has(id)) return;
     votingNow.current.add(id);
@@ -880,41 +219,18 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     if (result) { setLikes(prev => rememberLike(prev, id, result)); track("Ask Discovery Vote", { surface: "home", vote }); }
     setVoting(prev => { const next = { ...prev }; delete next[id]; return next; });
   };
-  const toggleSimilar = (card: DiscoveryCard) => {
-    const open = !openSimilar.has(card.public_id);
-    setOpenSimilar(prev => { const next = new Set(prev); if (open) next.add(card.public_id); else next.delete(card.public_id); return next; });
-    if (open) track("Ask Discovery Similar List", { surface: "home" });
-  };
-  const logout = () => { setLoginStep(""); void logoutAsk().then(refreshAccount); };
-  const login = () => {
-    loginCleanup.current?.();
-    track("Ask Verify Start", { surface: "home" });
-    setLoginStep("pending");
-    loginCleanup.current = beginAskLogin({ question, context: situation, intent }, () => { void readAskAccount().then(showLoginResult); });
-  };
-  const loginHere = () => {
-    loginCleanup.current?.(true);
-    askLoginHere({ question, context: situation, intent });
-  };
-  // One question others asked: its like beside it, its answer opening in place; in 最常问, the topic's
-  // other questions open under it, each with its own like and answer. On the homepage a closed row
-  // is the question alone (no answer summary, no 另外N个类似提问), so the list fits beside the box;
-  // opening it shows the answer and the similar questions. `anchor` keeps its sources' anchors apart
-  // from the conversation's.
-  const renderCard = (card: DiscoveryCard | SimilarQuestion, anchor: number, nested = false): ReactNode => {
-    const open = (nested ? openNested : openCard) === card.public_id;
-    const detail = cardDetails[card.public_id];
+  // One question others asked: the question, which opens its own page on ask.lizheng.ai, and its like.
+  // Picked for being asked often, the count of similar askings leads; otherwise the time does, and the
+  // count, when it says more than this one question, sits below.
+  const renderCard = (card: DiscoveryCard) => {
     const like = likeOf(card);
-    const full = "summary" in card ? card : null;
-    // Picked for being asked often: the count of similar askings leads. Otherwise the time does, and
-    // the count, when it says more than this one question, sits below.
-    const similar = full ? full.similar_count ?? full.topic_question_count : 0;
-    const often = full?.role === "common" && similar >= 2;
-    const others = full?.role === "common" && !nested ? full.similar ?? [] : [];
+    const similar = card.similar_count ?? card.topic_question_count;
+    const often = card.role === "common" && similar >= 2;
     return (
-      <article key={card.public_id} className={["lz-ask-qcard", open && "open", nested && "nested"].filter(Boolean).join(" ")}>
+      <article key={card.public_id} className="lz-ask-qcard">
         <div className="lz-ask-qcard-row">
-          <button type="button" className="lz-ask-qcard-head" aria-expanded={open} onClick={event => toggleCard(card, nested, event.currentTarget)}>
+          <a className="lz-ask-qcard-head" href={discoveryLink(card.public_id, card.share_url)} {...EXTERNAL}
+            onClick={() => { markUsage("d_open"); track("Ask Discovery Open", { surface: "home", view: discoveryTab }); }}>
             {often ? (
               <small className="often">{c.discoveryCount(similar)}</small>
             ) : card.asked_at ? (
@@ -923,11 +239,11 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                 {askedAgo(card.asked_at)}
               </time>
             ) : (
-              <small>常被问到</small>
+              <small>{c.discoveryOften}</small>
             )}
             <b>{card.question}</b>
             {!often && similar >= 2 && <span className="meta">{c.discoveryCount(similar)}</span>}
-          </button>
+          </a>
           {/* A like, as Product Hunt and Reddit show one: an arrow over the count. */}
           <button type="button" className={like.voted ? "lz-ask-upvote on" : "lz-ask-upvote"} aria-pressed={like.voted}
             aria-label={like.likes > 0 ? c.discoveryHelpfulCount(like.likes) : c.discoveryHelpful}
@@ -936,393 +252,38 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
             {like.likes > 0 && <span className="count">{like.likes}</span>}
           </button>
         </div>
-        {open && (
-          <div className="lz-ask-qcard-body">
-            {detail === "loading" || !detail ? <p className="note">{c.discoveryLoading}</p>
-              : detail === "failed" ? <p className="note">{c.discoveryUnavailable}</p> : (
-              <>
-                <div className="lz-ask-answer">
-                  <div className="lz-ask-answer-summary">
-                    <AnswerText text={detail.answer.summary} sources={detail.answer.sources} turnId={anchor} />
-                  </div>
-                  {!!detail.answer.sources.length && (
-                    <AnswerMapPanel turn={cardMapTurn(detail, anchor)} lang={lang} own={false} onSelect={id => openMapSource({ id: anchor }, id)} onOpen={openedMapSource} />
-                  )}
-                  {/* Opened, it can be shared at once: under its map, as under an answer here. */}
-                  <ShareBar state={cardShare(card)} lang={lang} link bonus={false}
-                    exporting={exporting.startsWith(`q-${card.public_id}-`) ? exporting.slice(-3) : exporting ? "other" : ""}
-                    onCreate={() => {}} onCopy={() => void copyCard(card)} onSend={() => void sendCard(card)} onQr={() => qrCard(card)}
-                    onExport={kind => exportCard(kind, card, detail)} />
-                  {cardExportError === card.public_id && <small className="lz-ask-export-error" role="alert">{c.exportFailed}</small>}
-                  <AnswerSections sections={detail.answer.sections} sources={detail.answer.sources} turnId={anchor} lang={lang} />
-                  {detail.answer.limitations && <div className="lz-ask-limitations"><AnswerText text={citeIds(detail.answer.limitations)} sources={detail.answer.sources} turnId={anchor} /></div>}
-                </div>
-                {!!detail.answer.sources.length && (
-                  <div className="lz-ask-material">
-                    <p>{c.sources}</p>
-                    <div className="lz-ask-source-grid">
-                      {detail.answer.sources.map(source => (
-                        <Source key={`${source.id}-${source.url}`} source={source} lang={lang} turnId={anchor} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <small className="attribution">{c.discoveryAttribution}</small>
-              </>
-            )}
-            <div className="actions">
-              {/* Where reading an answer ends, the same like as beside the question. */}
-              <button type="button" className={like.voted ? "btn btn-line like on" : "btn btn-line like"} aria-pressed={like.voted}
-                onClick={() => void likeCard(card)}>
-                <span className="arrow" aria-hidden="true" />{c.discoveryHelpful}{like.likes > 0 && <span className="count">{like.likes}</span>}
-              </button>
-              <button type="button" className="btn btn-line" onClick={() => askSimilar(card)}>{c.discoverySimilar}</button>
-              <a className="feedback" href={LINKS.askFeedback} {...EXTERNAL} onClick={() => {
-                track("Ask Feedback", { surface: "home", location: "card" });
-                void copyWhenReady(discoveryPage(card.public_id)).then(copied => { if (copied) setCardFeedback(prev => ({ ...prev, [card.public_id]: true })); });
-              }}>{c.discoveryFeedback} ↗</a>
-            </div>
-            {cardFeedback[card.public_id] && <p className="feedback-note" role="status">{c.discoveryFeedbackCopied}</p>}
-          </div>
-        )}
-        {open && others.length > 0 && full && (
-          <div className="lz-ask-qcard-similar">
-            <button type="button" className="toggle" aria-expanded={openSimilar.has(card.public_id)} onClick={() => toggleSimilar(full)}>
-              {c.discoveryOthers(others.length)}
-            </button>
-            {openSimilar.has(card.public_id) && (
-              <div className="list">{others.map((item, i) => renderCard(item, anchor * 100 - i - 1, true))}</div>
-            )}
-          </div>
-        )}
       </article>
     );
   };
-  const input = useRef<HTMLTextAreaElement>(null);
-  const latest = useRef<HTMLElement>(null);
-  const active = useRef<AbortController | null>(null);
-  // How the question box was last filled, counted with each question: typed, example, card or followup.
-  const questionFrom = useRef("typed");
-  const counter = useRef(0);
-  useEffect(() => {
-    if (busy)
-      latest.current?.scrollIntoView({
-        block: "start",
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-      });
-  }, [busy]);
-  useEffect(
-    () => () => {
-      active.current?.abort();
-    },
-    []
-  );
-  useEffect(() => {
-    if (!busy) return;
-    const start = Date.now();
-    setElapsed(0);
-    const timer = setInterval(
-      () => setElapsed(Math.floor((Date.now() - start) / 1000)),
-      1000
-    );
-    return () => clearInterval(timer);
-  }, [busy]);
-  // A long image shares well in chat apps; the PDF keeps the source links clickable. On a phone the
-  // image goes to the share sheet; otherwise either is downloaded.
-  async function deliver(kind: "png" | "pdf", key: string, data: ExportData, onFail: () => void) {
-    markUsage("export");
-    setExporting(`${key}-${kind}`);
-    try {
-      const { exportAnswer } = await import("@/lib/ask-share");
-      const { blob, name, type } = await exportAnswer(kind, data, lang);
-      const file = new File([blob], name, { type });
-      if (kind === "png" && window.matchMedia("(pointer: coarse)").matches && navigator.canShare?.({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: lang === "zh" ? "问问立正" : "Ask Lizheng" });
-          return;
-        } catch (error) {
-          if ((error as Error)?.name === "AbortError") return;
-        }
-      }
-      const url = URL.createObjectURL(blob);
-      const link = Object.assign(document.createElement("a"), { href: url, download: name });
-      document.body.append(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60_000);
-    } catch {
-      onFail();
-    } finally {
-      setExporting("");
-    }
-  }
-  function exportTurn(kind: "png" | "pdf", turn: Turn) {
-    if (!turn.result) return;
-    const page = shares[turn.id];
-    void deliver(kind, String(turn.id), { question: turn.question, result: turn.result, date: new Date(), personal: !!turn.request.context,
-      link: page?.phase === "ready" ? page.url : "" }, () => setExportError(turn.id));
-  }
-  // 分享这条回答. Sharing may give back one of today's questions, once a day, after one was used.
-  const bonusOffer = !IN_WECHAT && !!account?.enabled && !account.unavailable && !account.founding &&
-    account.share_bonus === true && (account.remaining ?? 3) < 3;
-  const setShare = (id: number, patch: ShareState) => setShares(prev => ({ ...prev, [id]: { ...prev[id], ...patch } }));
-  const openShare = (turn: Turn) => {
-    requestAnimationFrame(() => document.getElementById(`home-share-${turn.id}`)?.scrollIntoView({ block: "center" }));
-  };
-  const tookBonus = (value: ShareResult) => {
-    if (value.bonus === "granted" || value.bonus === "claimed")
-      setAccount(prev => (prev ? { ...prev, share_bonus: false, ...(Number.isFinite(value.remaining) ? { remaining: value.remaining } : {}) } : prev));
-  };
-  // Every answered question has its page from the moment it was archived, and Builder sends its address
-  // with the answer (2026-10-14). From an older Builder the page asks for it (`auto`, not counted as a
-  // share). An answer about the asker's own situation gets a page only when its asker makes one.
-  const autoShared = useRef(new Set<number>());
-  useEffect(() => {
-    for (const turn of turns) {
-      if (turn.result?.status !== "answered" || !turn.result.share || autoShared.current.has(turn.id)) continue;
-      const page = answerPage(turn.result.share);
-      if (page) {
-        autoShared.current.add(turn.id);
-        setShare(turn.id, { phase: "ready", url: page });
-        continue;
-      }
-      if (turn.request.context || turn.request.intent === "apply") continue;
-      autoShared.current.add(turn.id);
-      setShare(turn.id, { phase: "working", error: "" });
-      createShareLink(turn.result.share, { bonus: false, auto: true })
-        .then(value => setShare(turn.id, { phase: "ready", url: value.url }), () => setShare(turn.id, { phase: "confirm" }));
-    }
-  }, [turns]);
-  // Copying, sending or showing the QR code is the share: the first one counts it, and may give
-  // back one of today's questions.
-  function markShared(turn: Turn, action: string) {
-    track("Ask Share", { surface: "home", action });
-    if (!turn.result?.share || shares[turn.id]?.counted) return;
-    setShare(turn.id, { counted: true });
-    createShareLink(turn.result.share, { bonus: bonusOffer, auto: false }).then(value => {
-      tookBonus(value);
-      if (value.bonus === "granted") setShare(turn.id, { bonus: "granted" });
-    }, () => setShare(turn.id, { counted: false }));
-  }
-  // The page made on request (with the situation, or when it could not be made at once): made,
-  // copied and counted together.
-  async function createShare(turn: Turn) {
-    if (!turn.result?.share) return;
-    setShare(turn.id, { phase: "working", error: "" });
-    const link = createShareLink(turn.result.share, { bonus: bonusOffer, auto: false });
-    const copied = copyWhenReady(link.then(value => value.url));
-    try {
-      const value = await link;
-      tookBonus(value);
-      setShare(turn.id, { phase: "ready", url: value.url, bonus: value.bonus, counted: true, copied: await copied });
-      track("Ask Share", { surface: "home", action: value.bonus === "granted" ? "bonus" : "link" });
-    } catch {
-      setShare(turn.id, { phase: "confirm", error: c.shareFailed });
-    }
-  }
-  async function copyShare(turn: Turn) {
-    const done = copyWhenReady(shares[turn.id]?.url || "");
-    markShared(turn, "copy");
-    setShare(turn.id, { copied: await done });
-  }
-  async function sendShare(turn: Turn) {
-    markShared(turn, "send");
-    try { await navigator.share({ title: turn.question, url: shares[turn.id]?.url }); } catch { /* Closed, or not allowed here. */ }
-  }
-  function toggleQr(turn: Turn) {
-    const open = !shares[turn.id]?.qr;
-    setShare(turn.id, { qr: open });
-    if (open) markShared(turn, "qr");
-  }
-  // A number on the map opens its source, as a citation does.
-  function openMapSource(turn: { id: number }, id: string) {
-    const target = document.getElementById(`home-ask-${turn.id}-${id}`);
-    target?.closest("details:not([open])")?.setAttribute("open", "");
-    target?.scrollIntoView({ block: "center", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-  }
-  // …and opens the video or post itself in a new tab, counted as a source click.
-  function openedMapSource(source: MapSource) {
-    markUsage("source");
-    if (source.url) track("Ask Source Click", { surface: "home", kind: sourceKind(source.url) });
-  }
-  // v4, public Q&A, in this page's voice; the situation is not kept since 2026-10-04 (/api/meta says context_archive: false).
-  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), backup: answerService(backupModel), contextKept });
-  // The answer above that the count line offers to share once the day's questions are used.
-  const shareable = bonusOffer ? turns.filter(turn => turn.result?.share).at(-1) : undefined;
-  function prefill(value: string, from = "followup") {
-    questionFrom.current = from;
-    setQuestion(value);
-    input.current?.focus();
-  }
-  async function submit(event?: FormEvent, retry?: Turn) {
-    event?.preventDefault();
-    if (active.current || !loggingReady || (!retry && !question.trim())) return;
-    if (loginStep !== "pending") setLoginStep("");
-    if (!retry) { markUsage("ask"); track("Ask Question", { surface: "home", from: questionFrom.current }); questionFrom.current = "typed"; }
-    const payload: AskPayload = retry?.request || {
-      question: question.trim(),
-      context: situation,
-      intent,
-      history: turns
-        .filter(turn => turn.result)
-        .slice(-6)
-        .map(turn => ({
-          question: turn.question,
-          summary: turn.result!.summary,
-        })),
-      ...(opsLogging ? {
-        query_log_notice: publicArchive ? ("v4" as const) : ("v3" as const),
-        conversation_id: conversation.current || (conversation.current = crypto.randomUUID()),
-      } : { query_log_notice: "v1" as const }),
-    };
-    const text = payload.question;
-    const id = retry?.id || ++counter.current;
-    const started = Date.now();
-    const controller = new AbortController();
-    let timedOut = false;
-    const deadline = setTimeout(() => {
-      timedOut = true;
-      controller.abort();
-    }, 110_000);
-    active.current = controller;
-    setBusy(true);
-    setQuestion(prev => (!retry || prev.trim() === text ? "" : prev));
-    setTurns(prev => [
-      ...prev.filter(turn => turn.id !== id),
-      {
-        id,
-        question: text,
-        request: payload,
-        sources: retry?.sources || [],
-        lastActivity: 0,
-        askedAt: started,
-        progress: { stage: "retrieving", message: c.loading },
-      },
-    ]);
-    const update = (value: Partial<Turn>) =>
-      setTurns(prev =>
-        prev.map(turn => (turn.id === id ? { ...turn, ...value } : turn))
-      );
-    // Public model metadata does not start an AI request.
-    void fetch("/api/ask-lizheng/meta", {
-      signal: controller.signal,
-      cache: "no-store",
-      credentials: "omit",
-    })
-      .then(r => (r.ok ? r.json() : null))
-      .then(value => {
-        if (value?.model && !controller.signal.aborted) {
-          setModel(value.model);
-          update({ model: value.model });
-        }
-      })
-      .catch(() => {});
-    try {
-      await askLizheng(
-        payload,
-        controller.signal,
-        event => {
-          if (controller.signal.aborted) return;
-          if (event.type === "result" && event.value.status === "answered") markUsage("answer");
-          setTurns(prev =>
-            prev.map(turn =>
-              turn.id === id ? { ...turn, ...applyAskEvent(turn, event) } : turn
-            )
-          );
-        },
-        () => {
-          if (!controller.signal.aborted) update({ lastActivity: Date.now() });
-        }
-      );
-    } catch (error) {
-      if (active.current === controller) {
-        const quotaExhausted = error instanceof AskError && error.code === "quota_exhausted";
-        const crowded =
-          error instanceof AskError &&
-          !quotaExhausted &&
-          (error.status === 429 || error.code === "provider_busy");
-        update({
-          quotaExhausted,
-          errorCode: error instanceof AskError && error.code ? error.code
-            : timedOut ? "timeout" : controller.signal.aborted ? "stopped" : "connection_lost",
-          waited: Math.round((Date.now() - started) / 1000),
-          error:
-            quotaExhausted
-              ? (error as AskError).scope === "network" ? c.networkQuotaExhausted : c.quotaExhausted
-              : error instanceof AskError && error.code === "ops_storage_unavailable"
-                ? (lang === "zh" ? "未能确认问题保存，这次没有开始生成，也不扣次数。请重试。" : "Question storage was not confirmed. No answer was generated and your quota was not used. Please retry.")
-              : error instanceof AskError && error.code === "answer_archive_failed"
-                ? (lang === "zh" ? "本次回答未能确认保存，未扣次数。请重试。" : "We could not confirm this answer was saved. Your quota was not used. Please retry.")
-              : timedOut ||
-            (error instanceof AskError && error.code === "relay_timeout")
-              ? c.timeout
-              : controller.signal.aborted
-                ? c.stopped
-                : crowded
-                  ? c.crowded
-                  : error instanceof AskError &&
-                      error.code !== "connection_lost"
-                    ? c.failed
-                    : c.disconnected,
-        });
-        setQuestion(prev => (prev.trim() ? prev : text));
-      }
-    } finally {
-      clearTimeout(deadline);
-      if (active.current === controller) {
-        controller.abort();
-        active.current = null;
-        setBusy(false);
-        refreshAccount();
-      }
-    }
-  }
+
   return (
-    <>
-      <div className="lz-ask-native rv" id="ask-lizheng">
-        <div className="lz-ask-native-head grain">
-          <div>
-            <div className="eyebrow">{t.eyebrow}</div>
-            <h2>{t.title}</h2>
-          </div>
-          <div>
-            <p>
-              <Phrases text={t.body} />
-            </p>
-            <a className="lz-link" href={LINKS.askLizheng} {...EXTERNAL}>
-              {c.full} <Arrow />
-            </a>
-          </div>
+    <div className="lz-ask-native rv" id="ask-lizheng">
+      <div className="lz-ask-native-head grain">
+        <div>
+          <div className="eyebrow">{t.eyebrow}</div>
+          <h2>{t.title}</h2>
         </div>
-        {/* Before a question, the box and 别人在问什么 sit side by side on wide screens; once there is
-            a conversation, it takes the full width under the box. */}
-        <div className={turns.length ? "lz-ask-native-body asking" : "lz-ask-native-body"}>
-          <div className="lz-ask-compose">
+        <div>
+          <p>
+            <Phrases text={t.body} />
+          </p>
+          <a className="lz-link" href={LINKS.askLizheng} {...EXTERNAL}>
+            {c.full} <Arrow />
+          </a>
+        </div>
+      </div>
+      {/* The box and 别人在问什么 sit side by side on wide screens. */}
+      <div className="lz-ask-native-body">
+        <div className="lz-ask-compose">
           <form onSubmit={submit} className="lz-ask-form">
-            <div
-              className="lz-ask-modes"
-              role="group"
-              aria-label={
-                lang === "zh" ? "这次想怎样使用" : "How you want to use this"
-              }
-            >
+            <div className="lz-ask-modes" role="group" aria-label={c.modesLabel}>
               {MODES.map((value, index) => (
-                <button
-                  type="button"
-                  key={value}
-                  aria-pressed={mode === value}
-                  disabled={busy}
-                  onClick={() => setMode(value)}
-                >
+                <button type="button" key={value} aria-pressed={mode === value} onClick={() => setMode(value)}>
                   {c.modes[index]}
                 </button>
               ))}
             </div>
-            <p className="lz-ask-mode-hint">
-              {mode === "find" ? c.hints.find : personal ? c.hints.personal : c.hints.ask}
-            </p>
+            <p className="lz-ask-mode-hint">{mode === "find" ? c.hints.find : c.hints.ask}</p>
             <label className="sr-only" htmlFor="home-ask-question">
               {c.question}
             </label>
@@ -1331,191 +292,55 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
               id="home-ask-question"
               value={question}
               onChange={event => { setQuestion(event.target.value); if (!event.target.value.trim()) questionFrom.current = "typed"; }}
+              onFocus={warm}
               maxLength={2000}
-              disabled={busy}
               rows={3}
-              placeholder={
-                mode === "find"
-                  ? c.placeholderFind
-                  : personal
-                    ? c.placeholderPersonal
-                    : c.placeholder
-              }
+              placeholder={mode === "find" ? c.placeholderFind : c.placeholder}
               onKeyDown={event => {
-                if (
-                  (event.metaKey || event.ctrlKey) &&
-                  event.key === "Enter" &&
-                  !event.nativeEvent.isComposing
-                ) {
+                if ((event.metaKey || event.ctrlKey) && event.key === "Enter" && !event.nativeEvent.isComposing) {
                   event.preventDefault();
-                  void submit();
+                  submit();
                 }
               }}
             />
             <div className="lz-ask-form-bottom">
-              <div className="lz-ask-situation">
-                {mode === "ask" && (
-                  <button
-                    type="button"
-                    className="lz-ask-switch"
-                    aria-pressed={personal}
-                    disabled={busy}
-                    onClick={() => setPersonal(on => !on)}
-                  >
-                    <span className="switch" aria-hidden="true" />
-                    {c.context}
-                  </button>
-                )}
-                {mode === "ask" && personal && (
-                  <>
-                    <label className="sr-only" htmlFor="home-ask-context">
-                      {c.context}
-                    </label>
-                    <textarea
-                      id="home-ask-context"
-                      maxLength={2500}
-                      disabled={busy}
-                      rows={3}
-                      value={context}
-                      onChange={event => setContext(event.target.value)}
-                      placeholder={c.contextHint}
-                    />
-                    {publicArchive && <p className="lz-ask-context-note">{qa.situation}</p>}
-                  </>
-                )}
-              </div>
-              {busy ? (
-                <button
-                  key="stop"
-                  className="btn btn-line"
-                  type="button"
-                  onClick={event => {
-                    event.preventDefault();
-                    active.current?.abort();
-                  }}
-                >
-                  {c.stop}
-                </button>
-              ) : (
-                <button
-                  key="send"
-                  className="btn btn-green"
-                  disabled={!question.trim() || outOfQuota || !loggingReady}
-                  type="submit"
-                >
-                  {c.send}
-                </button>
-              )}
+              {c.where && <p className="lz-ask-where">{c.where}</p>}
+              <button className="btn btn-green" disabled={!question.trim()} type="submit">
+                {c.send}
+              </button>
             </div>
           </form>
-          {!loggingReady && <p className="lz-ask-wait" role="status">{loggingFailed
-            ? <>{lang === "zh" ? "未能确认提问保存设置。" : "Could not confirm question storage."} <button type="button" onClick={() => void loadLogging()}>{lang === "zh" ? "重试" : "Retry"}</button></>
-            : loggingWaking
-              ? (lang === "zh" ? "问答服务正在唤醒，通常十几秒，可以先写问题。" : "Waking the answer service, usually 10 to 20 seconds. You can start typing.")
-              : (lang === "zh" ? "正在确认提问保存设置…" : "Checking question storage…")}</p>}
           <div className="lz-ask-meta">
-            {/* The notice waits for the service's saving settings, so an older one never shows first. */}
-            {loggingReady && <details className="lz-ask-about">
+            {/* The same words as by the box on ask.lizheng.ai, where the question is sent. */}
+            <details className="lz-ask-about" onToggle={event => { if ((event.currentTarget as HTMLDetailsElement).open) warm(); }}>
               <summary>
-                {publicArchive ? qa.notice : opsLogging ? c.noticeV3 : c.queryNotice}
+                {qa.notice}
                 <span>{c.privacy}</span>
               </summary>
-              {publicArchive || opsLogging ? (
-                <div className="notice-parts">
-                  {publicArchive
-                    ? <><p><b>{qa.title}</b></p>{qa.about.map(text => <p key={text}>{text}</p>)}</>
-                    : c.noticeV3Parts.map(([title, text]) => <p key={title}><b>{title}</b>{text}</p>)}
-                </div>
-              ) : <p>{c.privacyNote}</p>}
-            </details>}
-            {!account && accountWaking && (
-              <p className="lz-ask-account" aria-live="polite">
-                <span className="pending">{c.accountWaking}</span>
-              </p>
-            )}
-            {account?.enabled && (
-              <p className="lz-ask-account" aria-live="polite">
-                {account.unavailable ? (
-                  <>
-                    <span>{c.quotaUnavailable}</span>
-                    <button type="button" onClick={refreshAccount}>{c.quotaRetry}</button>
-                  </>
-                ) : account.founding ? (
-                  <>
-                    {loginStep === "verified" ? <b className="verified">{c.verified}</b> : <b>{c.founding}</b>}
-                    <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
-                  </>
-                ) : (
-                  <>
-                    {outOfQuota ? <b className="empty">{c.quotaNone}</b> : <b>{c.quotaLeft(account.remaining ?? 3)}</b>}
-                    {account.authenticated ? (
-                      <>
-                        <span className={loginStep === "member" ? "notice" : undefined}>{c.signedIn}</span>
-                        <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
-                          onClick={() => { if (!foundingOpen) track("Ask Founding Info", { surface: "home" }); setFoundingOpen(open => !open); }}>{c.howToJoin}</button>
-                        <button type="button" disabled={busy} onClick={logout}>{c.signOut}</button>
-                      </>
-                    ) : loginStep === "pending" ? (
-                      <>
-                        <span className="pending">{c.loginPending}</span>
-                        <button type="button" onClick={loginHere}>{c.loginHere}</button>
-                      </>
-                    ) : (
-                      account.login_ready && (
-                        <>
-                          {loginStep === "incomplete" && <span>{c.loginIncomplete}</span>}
-                          <span className="offer">
-                            {c.foundingOffer}
-                            <button type="button" disabled={busy} onClick={login}>{c.verifyShort}</button>
-                            <span className="sep" aria-hidden="true">·</span>
-                            <button type="button" className="toggle" aria-expanded={foundingOpen} aria-controls="lz-founding"
-                              onClick={() => { if (!foundingOpen) track("Ask Founding Info", { surface: "home" }); setFoundingOpen(open => !open); }}>{c.howToJoin}</button>
-                          </span>
-                        </>
-                      )
-                    )}
-                  </>
-                )}
-              </p>
-            )}
-            {outOfQuota && shareable && (
-              <p className="lz-ask-share-nudge">
-                <button type="button" onClick={() => openShare(shareable)}>{c.shareQuota}</button>
-              </p>
-            )}
-            {foundingOpen && account?.enabled && !account.unavailable && !account.founding && (
-              <div className="lz-founding" id="lz-founding">
-                <p className="title">{c.foundingTitle}</p>
-                <p>{c.foundingWho}</p>
-                <p>{c.foundingGet}</p>
-                <p className="actions">
-                  <a className="join" href={stayLink("founding_panel")} {...EXTERNAL}
-                    onClick={() => track("Ask Membership Click", { surface: "home", location: "founding_panel" })}>{c.foundingCta} ↗</a>
-                  {!account.authenticated && account.login_ready && loginStep !== "pending" && (
-                    <button type="button" disabled={busy} onClick={login}>{c.foundingVerify}</button>
-                  )}
-                </p>
+              <div className="notice-parts">
+                <p><b>{qa.title}</b></p>
+                {qa.about.map(text => <p key={text}>{text}</p>)}
               </div>
-            )}
+            </details>
           </div>
-          </div>
-          {!turns.length && (lang === "zh" && discoveryState !== "none" ? (
-            <div className="lz-ask-discovery" ref={discoveryList}>
-              <div className="lz-ask-discovery-head">
-                <h3>{c.discoveryTitle}</h3>
-                <p>{c.discoveryNote}</p>
-                {publicTotal && <p className="lz-ask-discovery-live">已有{publicTotal}个公开问答</p>}
-                {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
-                <div className="lz-ask-discovery-views" role="group" aria-label={lang === "zh" ? "怎样看这些问题" : "How to see these questions"}>
-                  {(["frequent", "recent"] as const).map((view, i) => (
-                    <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
-                  ))}
-                </div>
+        </div>
+        {lang === "zh" && discoveryState !== "none" ? (
+          <div className="lz-ask-discovery" ref={discoveryList}>
+            <div className="lz-ask-discovery-head">
+              <h3>{c.discoveryTitle}</h3>
+              <p>{c.discoveryNote}</p>
+              {publicTotal && <p className="lz-ask-discovery-live">{c.discoveryTotal(publicTotal)}</p>}
+              {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
+              <div className="lz-ask-discovery-views" role="group" aria-label={c.viewsLabel}>
+                {(["frequent", "recent"] as const).map((view, i) => (
+                  <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
+                ))}
               </div>
-              <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
+            </div>
+            <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
               {/* While the questions load, the rows they will fill; never the examples first. */}
               {!discoveryCards.length && [0, 1, 2].map(i => <div key={i} className="lz-ask-qcard-placeholder" aria-hidden="true"><i /><b /></div>)}
-              {discoveryCards.map((card, index) => renderCard(card, -(index + 1)))}
+              {discoveryCards.map(renderCard)}
               {discoveryHidden > 0 && (
                 <button type="button" className="lz-ask-discovery-more lz-ask-discovery-expand"
                   onClick={() => {
@@ -1530,339 +355,23 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                 </button>
               )}
               {discoveryMore && (
-                <a className="lz-ask-discovery-more" href={`https://ask.lizheng.ai/#${discoveryTab}`} {...EXTERNAL}
+                <a className="lz-ask-discovery-more" href={`${LINKS.askLizheng}#${discoveryTab}`} {...EXTERNAL}
                   onClick={() => { markUsage("d_more"); track("Ask Discovery More", { surface: "home", view: discoveryTab }); }}>{c.discoveryMore} <Arrow /></a>
               )}
-              </div>
             </div>
-          ) : (
-            <div className="lz-ask-starters">
-              <p>{c.examples}</p>
-              {t.examples.map(value => (
-                <button key={value} onClick={() => prefill(value, "example")}>
-                  {value}
-                </button>
-              ))}
-            </div>
-          ))}
-          {!!turns.length && (
-            <div className="lz-ask-turns">
-              {turns.map((turn, index) => {
-                const working = busy && index === turns.length - 1;
-                const canRetry = !busy && index === turns.length - 1 &&
-                  !!((turn.error && (!turn.quotaExhausted || account?.founding || (account?.remaining ?? 0) > 0)) || turn.result?.retryable);
-                const canReport = !!((turn.error && !turn.quotaExhausted) || turn.result?.retryable);
-                const step = STAGE[turn.progress?.stage || "retrieving"] ?? 0;
-                const recentActivityAge = turn.lastActivity
-                  ? Math.max(0, (Date.now() - turn.lastActivity) / 1000)
-                  : null;
-                const partialSourceIds = new Set(
-                  working ? turn.partial?.sources.map(source => source.id) : []
-                );
-                const partialSources = turn.sources.filter(source =>
-                  partialSourceIds.has(source.id)
-                );
-                const candidateSources = turn.sources.filter(
-                  source => !partialSourceIds.has(source.id)
-                );
-                return (
-                  <article
-                    className="lz-ask-turn"
-                    key={turn.id}
-                    ref={index === turns.length - 1 ? latest : undefined}
-                  >
-                    <p className="lz-ask-question">{turn.question}</p>
-                    {working && (
-                      <div className="lz-ask-progress">
-                        <p>
-                          <span role="status">
-                            {lang === "zh"
-                              ? turn.progress?.message
-                              : c.steps[step]}
-                          </span>{" "}
-                          <span>
-                            {c.waited} {elapsed}
-                            {c.seconds}
-                          </span>
-                        </p>
-                        <ol>
-                          {c.steps.map((label, i) => (
-                            <li
-                              key={label}
-                              aria-current={i === step ? "step" : undefined}
-                              className={i <= step ? "reached" : ""}
-                            >
-                              {label}
-                            </li>
-                          ))}
-                        </ol>
-                        <small aria-live="off">
-                          {recentActivityAge === null
-                            ? elapsed >= 5 ? c.waking : c.connecting
-                            : recentActivityAge <= 12
-                              ? c.connectionActive
-                              : c.noRecentResponse}
-                        </small>
-                        {elapsed >= 20 && (
-                          <small>
-                            {elapsed > 30 ? c.waitingLong : c.waiting}
-                          </small>
-                        )}
-                        <button
-                          className="btn btn-line"
-                          type="button"
-                          aria-label={
-                            lang === "zh" ? "停止当前回答" : "Stop this answer"
-                          }
-                          onClick={event => {
-                            event.preventDefault();
-                            active.current?.abort();
-                          }}
-                        >
-                          {c.stop}
-                        </button>
-                        <button className="btn btn-line" type="button" onClick={() => openReport("waiting", turn)}>
-                          {reportWords.button}
-                        </button>
-                      </div>
-                    )}
-                    {reporting?.turnId === turn.id && reporting.place === "waiting" && (
-                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
-                    )}
-                    {working && <AnswerMapPanel turn={turn} live lang={lang} onSelect={id => openMapSource(turn, id)} onOpen={openedMapSource} />}
-                    {turn.result && (
-                      <div className="lz-ask-answer">
-                        <div className="lz-ask-answer-summary">
-                          <AnswerText
-                            text={turn.result.summary}
-                            sources={turn.sources}
-                            turnId={turn.id}
-                          />
-                        </div>
-                        {!!(turn.result.sources || []).length && <AnswerMapPanel turn={turn} lang={lang} onSelect={id => openMapSource(turn, id)} onOpen={openedMapSource} />}
-                        <AnswerSections
-                          sections={turn.result.sections || []}
-                          sources={turn.sources}
-                          turnId={turn.id}
-                          lang={lang}
-                          personal={!!turn.request.context}
-                        />
-                        {turn.result.limitations && (
-                          <div className="lz-ask-limitations">
-                            <AnswerText text={citeIds(turn.result.limitations)} sources={turn.sources} turnId={turn.id} />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {working && !!turn.partial?.sections.length && (
-                      <div className="lz-ask-answer">
-                        <h4>{c.partial}</h4>
-                        <small>{c.partialNote}</small>
-                        <AnswerSections
-                          sections={turn.partial.sections}
-                          sources={turn.partial.sources}
-                          turnId={turn.id}
-                          lang={lang}
-                          personal={!!turn.request.context}
-                        />
-                      </div>
-                    )}
-                    {working && turn.approach && (
-                      <div className="lz-ask-approach">
-                        <h4>{c.approach}</h4>
-                        {lang === "en" && <small>{c.approachEnglish}</small>}
-                        <p>{turn.approach.summary}</p>
-                        {!!turn.approach.questions.length && (
-                          <ul>
-                            {turn.approach.questions.map(value => (
-                              <li key={value}>{value}</li>
-                            ))}
-                          </ul>
-                        )}
-                        <p className="lz-ask-approach-sources">
-                          {turn.approach.sources.map(source => (
-                            <span key={source.id}>
-                              {source.id} · {source.title}
-                            </span>
-                          ))}
-                        </p>
-                        <small>{turn.approach.note}</small>
-                      </div>
-                    )}
-                    {turn.error && (
-                      <p className={turn.quotaExhausted ? "lz-ask-error quota" : "lz-ask-error"} role="alert">
-                        {turn.error}
-                        {turn.quotaExhausted && (account?.founding ? (
-                          loginStep === "verified" && <b className="verified">{c.verifiedRetry}</b>
-                        ) : (
-                          <span className="actions">
-                            {account?.login_ready && !account.authenticated && (
-                              <button type="button" className="btn btn-line" disabled={loginStep === "pending"} onClick={login}>
-                                {loginStep === "pending" ? c.loginWaiting : c.verifyButton}
-                              </button>
-                            )}
-                            <a className="become" href={stayLink("quota_card")} {...EXTERNAL}
-                              onClick={() => track("Ask Membership Click", { surface: "home", location: "quota_card" })}>{c.becomeFounding} ↗</a>
-                          </span>
-                        ))}
-                      </p>
-                    )}
-                    {(canRetry || canReport) && (
-                      <div className="lz-ask-turn-actions">
-                        {canRetry && (
-                          <button
-                            className="btn btn-line lz-ask-retry"
-                            type="button"
-                            onClick={() => void submit(undefined, turn)}
-                          >
-                            {c.retry}
-                          </button>
-                        )}
-                        {canReport && (
-                          <button className="btn btn-line lz-ask-retry" type="button" onClick={() => openReport("failed", turn)}>
-                            {reportWords.button}
-                          </button>
-                        )}
-                      </div>
-                    )}
-                    {reporting?.turnId === turn.id && reporting.place === "failed" && (
-                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
-                    )}
-                    {!!turn.sources.length && (
-                      <div className="lz-ask-material">
-                        <p>{turn.result ? c.sources : c.candidates}</p>
-                        <div className="lz-ask-source-grid">
-                          {partialSources.map(source => (
-                            <Source
-                              key={`${source.id}-${source.url}`}
-                              source={source}
-                              lang={lang}
-                              turnId={turn.id}
-                            />
-                          ))}
-                          {candidateSources
-                            .slice(0, turn.result ? candidateSources.length : 2)
-                            .map(source => (
-                              <Source
-                                key={`${source.id}-${source.url}`}
-                                source={source}
-                                lang={lang}
-                                turnId={turn.id}
-                              />
-                            ))}
-                        </div>
-                        {!turn.result && candidateSources.length > 2 && (
-                          <details className="lz-ask-more-sources">
-                            <summary>
-                              {lang === "zh"
-                                ? `查看全部${candidateSources.length}份候选材料`
-                                : `All ${candidateSources.length} candidate sources`}
-                            </summary>
-                            <div className="lz-ask-source-grid">
-                              {candidateSources.slice(2).map(source => (
-                                <Source
-                                  key={`${source.id}-${source.url}`}
-                                  source={source}
-                                  lang={lang}
-                                  turnId={turn.id}
-                                />
-                              ))}
-                            </div>
-                          </details>
-                        )}
-                      </div>
-                    )}
-                    {turn.result?.status === "answered" && !working && (
-                      <div id={`home-share-${turn.id}`} className="lz-ask-share-anchor">
-                        <ShareBar state={shares[turn.id]} lang={lang} link={!!turn.result.share} bonus={bonusOffer}
-                          exporting={exporting === `${turn.id}-png` ? "png" : exporting === `${turn.id}-pdf` ? "pdf" : exporting ? "other" : ""}
-                          onCreate={() => void createShare(turn)} onCopy={() => void copyShare(turn)} onSend={() => void sendShare(turn)}
-                          onQr={() => toggleQr(turn)} onExport={kind => void exportTurn(kind, turn)} />
-                        {exportError === turn.id && <small className="lz-ask-export-error" role="alert">{c.exportFailed}</small>}
-                      </div>
-                    )}
-                    {turn.result?.status !== "sources-only" && (
-                      <small className="lz-ask-model">
-                        {turn.model || (working ? model : "")}
-                      </small>
-                    )}
-                    {turn.result && !turn.result.retryable && !working && (
-                      <button type="button" className="lz-ask-report-link" onClick={() => openReport("answer", turn)}>
-                        {reportWords.button}
-                      </button>
-                    )}
-                    {reporting?.turnId === turn.id && reporting.place === "answer" && (
-                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
-                    )}
-                    {!working && index === turns.length - 1 && turn.result && (
-                      <div className="lz-ask-followups">
-                        {!!turn.result.clarifying_questions?.length && (
-                          <>
-                            <p>{c.clarify}</p>
-                            {turn.result.clarifying_questions.map(value => (
-                              <button
-                                key={value}
-                                className="lz-ask-clarify"
-                                onClick={() => {
-                                  setQuestion(turn.question);
-                                  setMode("ask");
-                                  setPersonal(true);
-                                  setContext(prev => {
-                                    const next = `${prev}${prev ? "\n" : ""}${value}\n`;
-                                    return next.length <= 2500 ? next : prev;
-                                  });
-                                  requestAnimationFrame(() =>
-                                    document
-                                      .getElementById("home-ask-context")
-                                      ?.focus()
-                                  );
-                                }}
-                              >
-                                {value}
-                              </button>
-                            ))}
-                          </>
-                        )}
-                        {!!turn.result.followups?.length && (
-                          <>
-                            <p>
-                              {c.next}
-                              <span>{c.nextHint}</span>
-                            </p>
-                            {turn.result.followups.map(value => (
-                              <button
-                                key={value}
-                                onClick={() => prefill(value)}
-                              >
-                                {value}
-                              </button>
-                            ))}
-                          </>
-                        )}
-                      </div>
-                    )}
-                  </article>
-                );
-              })}
-              <button
-                disabled={busy}
-                className="lz-ask-reset"
-                onClick={() => {
-                  conversation.current = null;
-                  setTurns([]);
-                  setQuestion("");
-                  setContext("");
-                  setPersonal(false);
-                  input.current?.focus();
-                }}
-              >
-                {c.reset}
+          </div>
+        ) : (
+          <div className="lz-ask-starters">
+            <p>{c.examples}</p>
+            {t.examples.map(value => (
+              <button key={value} type="button" onClick={() => prefill(value)}>
+                {value}
               </button>
-            </div>
-          )}
-          {children}
-        </div>
+            ))}
+          </div>
+        )}
+        {children}
       </div>
-    </>
+    </div>
   );
 }

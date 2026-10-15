@@ -6,12 +6,13 @@
  * its scripts and styles in client/public/ask-app/. The title fonts are this site's own
  * (identical files, same @fontsource version), served by vercel.json. The previous release's
  * files used by the current production page stay for pages opened before an update. It also copies the words
- * about public Q&A (src/public-qa.js) to shared/ask-public-qa.js, which the homepage section uses
- * and the privacy policy is tested against, so the three never say different things; the answer
- * map (src/answer-map.js) to shared/ask-answer-map.js for the homepage section, so every map is
- * drawn by the same code; 反馈问题 (src/report.js) to shared/ask-report-client.js, so the homepage
- * section reports the same way; and the built page itself to shared/ask-app-shell.js, which the
- * shared answer pages (shared/ask-share-page.ts) are made from, so a shared answer opens in this page.
+ * about public Q&A (src/public-qa.js) to shared/ask-public-qa.js, which the homepage section shows
+ * by its box and the privacy policy is tested against, so the three never say different things;
+ * 反馈问题 (src/report.js) to shared/ask-report-client.js, which tests/ask-report.test.ts holds the
+ * report endpoint to; and the built page itself to shared/ask-app-shell.js, which the shared answer
+ * pages (shared/ask-share-page.ts) are made from, so a shared answer opens in this page. (Until
+ * 2026-10-15 the homepage section answered questions itself and took the answer map too; since then
+ * it hands questions to this page.)
  *
  *   pnpm sync:ask-app [path to ask-lizheng]   (default /Users/sunyuzheng/Desktop/AI/apps/ask-lizheng; it must be at
  *   ask-lizheng's latest main, or ahead of it, never behind)
@@ -31,7 +32,6 @@ const OUT = path.join(ROOT, "client", "public", "ask-app");
 const FONT = /^noto-serif-sc-.+\.woff2$/;
 const PUBLIC_QA = path.join(ROOT, "shared", "ask-public-qa.js");
 const SOURCE_ATTRIBUTION = path.join(ROOT, "shared", "ask-source-attribution.js");
-const ANSWER_MAP = path.join(ROOT, "shared", "ask-answer-map.js");
 const APP_SHELL = path.join(ROOT, "shared", "ask-app-shell.js");
 const REPORT = path.join(ROOT, "shared", "ask-report-client.js");
 const git = (...args) => execFileSync("git", ["-C", ASK, ...args], { encoding: "utf8" }).trim();
@@ -81,9 +81,6 @@ const publicQa = `// Copied from ask-lizheng src/public-qa.js by scripts/sync-as
 fs.writeFileSync(PUBLIC_QA, publicQa);
 const sourceAttribution = `// Copied from ask-lizheng src/source-attribution.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "source-attribution.js"), "utf8")}`;
 fs.writeFileSync(SOURCE_ATTRIBUTION, sourceAttribution);
-const answerMap = `// Copied from ask-lizheng src/answer-map.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "answer-map.js"), "utf8")}`;
-fs.writeFileSync(ANSWER_MAP, answerMap);
-const answer_map_sha256 = createHash("sha256").update(answerMap).digest("hex");
 const report = `// Copied from ask-lizheng src/report.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "report.js"), "utf8")}`;
 fs.writeFileSync(REPORT, report);
 const report_sha256 = createHash("sha256").update(report).digest("hex");
@@ -92,6 +89,6 @@ fs.writeFileSync(APP_SHELL, appShell);
 const app_shell_sha256 = createHash("sha256").update(appShell).digest("hex");
 const public_qa_sha256 = createHash("sha256").update(publicQa).digest("hex");
 const source_attribution_sha256 = createHash("sha256").update(sourceAttribution).digest("hex");
-fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256, answer_map_sha256, app_shell_sha256, report_sha256 }, null, 2)}\n`);
+fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256, app_shell_sha256, report_sha256 }, null, 2)}\n`);
 fs.rmSync(build, { recursive: true, force: true });
-console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, shared/ask-public-qa.js and the answer map`);
+console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, and the shared copies`);

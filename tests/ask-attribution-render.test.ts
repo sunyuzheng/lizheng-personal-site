@@ -6,7 +6,6 @@ import { renderSharePage } from "../shared/ask-share-page";
 import { readShare, type SharedAnswer } from "../shared/ask-share-link";
 import { withPlainSourceLabels } from "../shared/ask-source-labels";
 import { sourceAttributionLabel } from "../shared/ask-source-attribution.js";
-import { exportAnswer } from "../client/src/lib/ask-share.js";
 
 // Synthetic producer fixture only; no real question, answer or source text.
 const fixture = () => JSON.parse(readFileSync(new URL("./fixtures/ask-attribution-finish.json", import.meta.url), "utf8")).answer;
@@ -80,27 +79,3 @@ describe("attribution metadata on public and shared answers", () => {
   });
 });
 
-function fakeCanvas(drawn: string[]) {
-  const context = new Proxy({ measureText: (value: string) => ({ width: String(value).length * 8 }),
-    fillText: (value: string) => { drawn.push(String(value)); } } as Record<string, unknown>, {
-    get(target, key) { return key in target ? target[key as string] : () => {}; },
-  });
-  return { width: 0, height: 0, style: {}, getContext: () => context,
-    toBlob: (done: (blob: Blob) => void, type: string) => done(new Blob(["synthetic image bytes"], { type })) };
-}
-describe("image and PDF source attribution", () => {
-  for (const kind of ["png", "pdf"] as const) {
-    it.each(variants)(`${kind} carries the exact owned label for $name`, async ({ fields, label }) => {
-      const drawn: string[] = [];
-      vi.stubGlobal("document", { createElement: () => fakeCanvas(drawn) });
-      const answer = answerVariant(fields), before = JSON.stringify(answer);
-      const exported = await exportAnswer(kind, { question: "Synthetic question", result: answer, date: new Date("2026-10-01T00:00:00Z") });
-      expect(exported.type).toBe(kind === "png" ? "image/png" : "application/pdf");
-      const metadata = drawn.filter(value => value.includes("2026") && value.includes(" · "));
-      expect(metadata.length).toBeGreaterThan(0);
-      if (label) expect(metadata.some(value => value.includes(label))).toBe(true);
-      else expect(metadata.join("\n")).not.toMatch(/发言：|说话人待核|AI整理|多人发言/);
-      expect(JSON.stringify(answer)).toBe(before);
-    });
-  }
-});

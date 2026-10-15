@@ -1,7 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { askedLastDay, discoveryDetail, discoveryLink, discoveryLists, discoveryPage, discoveryView, likeState, readLikes, rememberLike, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
-import { answerPage } from "../client/src/lib/ask-share-link";
-import { isMemberVideo, memberJoinUrl } from "../client/src/lib/ask-lizheng";
+import { askedLastDay, discoveryLink, discoveryLists, discoveryView, likeState, readLikes, rememberLike, sameQuestion, similarCount, type DiscoveryCard } from "../client/src/lib/ask-discovery";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 // Made-up questions, no two alike (sameQuestion would fold 问题1 and 问题10 into one).
@@ -16,45 +14,6 @@ const POOL = [card(1, 2), card(2, 9), card(3, 1), card(4, 5), card(5, 7), card(6
 const ids = (cards: DiscoveryCard[]) => cards.map(item => item.public_id);
 afterEach(() => vi.unstubAllGlobals());
 
-describe("public answer source metadata", () => {
-  const join = "https://www.youtube.com/channel/UC_5lJHgnMP_lb_VpIiXV0hQ/join";
-  const source = {
-    id: "S1", title: "Synthetic member video", url: "https://www.youtube.com/watch?v=synthetic",
-    source_type: "video-transcript", source_visibility: "members-only", text_access: "public",
-    membership_platform: "youtube", membership_url: join, membership_verified_at: "2026-10-02",
-    transcript_source_kind: "previously-included-transcript", transcript_quality: "human-caption",
-    speaker_classification: "mixed-or-unresolved",
-  };
-  function respond(value: unknown) {
-    const fetch = vi.fn(async () => Response.json({
-      question: "Synthetic published question", revision: 1,
-      answer: { summary: "Synthetic public answer", sections: [], sources: [value] },
-    }));
-    vi.stubGlobal("fetch", fetch);
-    return fetch;
-  }
-
-  it("preserves the exact optional fields needed by member badges and links", async () => {
-    const fetch = respond({ ...source, email: "must-not-pass", reasoning_content: "must-not-pass" });
-    const detail = await discoveryDetail(id(1));
-    expect(fetch).toHaveBeenCalledWith(`/api/ask-lizheng/discovery/detail?public_id=${id(1)}`,
-      expect.objectContaining({ cache: "no-store", credentials: "omit" }));
-    expect(detail?.answer.sources).toEqual([source]);
-    expect(isMemberVideo(detail!.answer.sources[0])).toBe(true);
-    expect(memberJoinUrl(detail!.answer.sources[0])).toBe(join);
-  });
-
-  it("continues to omit unknown and non-string fields and supports old sources", async () => {
-    const old = { id: "S1", title: "Synthetic old source", url: "https://example.test/source" };
-    respond({ ...old, source_type: {}, source_visibility: ["members-only"], text_access: null,
-      membership_url: 42, transcript_quality: false, background: "must-not-pass" });
-    const detail = await discoveryDetail(id(2));
-    expect(detail?.answer.sources).toEqual([old]);
-    expect(isMemberVideo(detail!.answer.sources[0])).toBe(false);
-    expect(memberJoinUrl(detail!.answer.sources[0])).toBeUndefined();
-  });
-});
-
 // 2026-10-14: a question shown here links to its own page, the one its asker got.
 describe("a question's own page", () => {
   const page = "https://ask.lizheng.ai/s/2026-10-14/career-choice-2";
@@ -63,13 +22,8 @@ describe("a question's own page", () => {
     expect(discoveryLink(id(1))).toBe(`https://ask.lizheng.ai/q/${id(1)}`);
     for (const other of ["https://example.test/s/2026-10-14/career-choice", "https://ask.lizheng.ai/s/2026-10-14/Career", "https://ask.lizheng.ai/q/x"])
       expect(discoveryLink(id(1), other)).toBe(`https://ask.lizheng.ai/q/${id(1)}`);
-    expect(answerPage({ record_id: id(1), word: "career-choice", proof: "f".repeat(64), url: page })).toBe(page);
-    expect(answerPage({ record_id: id(1), word: "career-choice", proof: "f".repeat(64) })).toBe("");
   });
-  it("keeps the page an answer and the lists give", async () => {
-    vi.stubGlobal("fetch", vi.fn(async () => Response.json({ question: "合成的问题？", revision: 2, share_url: page,
-      answer: { summary: "合成摘要", sections: [], sources: [] } })));
-    expect((await discoveryDetail(id(1)))?.share_url).toBe(page);
+  it("keeps the page the lists give", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => Response.json({ recent: [{ ...card(1, 1), share_url: page }],
       frequent: [{ ...card(2, 1), similar: [{ public_id: id(3), revision: 1, question: "合成？", published_at: "2026-10-01T00:00:00Z", likes: 0,
         share_url: page }, { public_id: id(4), revision: 1, question: "合成二？", published_at: "2026-10-01T00:00:00Z", likes: 0, share_url: "https://example.test/" }] }] })));
@@ -217,10 +171,6 @@ describe("what 最近问 and 最常问 show, the same for everyone", () => {
     expect(await discoveryLists()).toBeNull();
     vi.stubGlobal("fetch", vi.fn(async () => Response.json({ items: [] })));
     expect(await discoveryLists()).toBeNull();
-  });
-
-  it("shares a question as its public page", () => {
-    expect(discoveryPage(id(7))).toBe(`https://www.lizheng.ai/ask/${id(7)}`);
   });
 });
 

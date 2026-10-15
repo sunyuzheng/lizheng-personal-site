@@ -4,8 +4,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/components/site/LizhengMark", () => ({ MARK_PATHS: [] }));
 import { archivedAnswer } from "../shared/ask-archive-answer";
 import { OPS_BODY_LIMIT, opsEvent, storeOpsEvent, verifyOpsProof } from "../shared/ask-ops-storage";
-import { parseAskFrame, applyAskEvent } from "../client/src/lib/ask-lizheng";
-import { discoveryDetail } from "../client/src/lib/ask-discovery";
 const raw = readFileSync(new URL("./fixtures/ask-attribution-finish.json", import.meta.url));
 const fixture = () => JSON.parse(raw.toString("utf8"));
 const ID = "01234567-89ab-4cde-8f01-23456789abcd";
@@ -67,24 +65,5 @@ describe("new source attribution archive contract", () => {
     const sender=vi.fn();
     await expect(storeOpsEvent(Buffer.concat([raw,Buffer.from(" ")]),proof(raw),sender)).rejects.toMatchObject({code:"invalid_admission"});
     expect(sender).not.toHaveBeenCalled();
-  });
-  it("live event parsing/types do not remove provenance fields", () => {
-    const answer=fixture().answer;
-    const event=parseAskFrame(`event: result\ndata: ${JSON.stringify(answer)}\n`)!;
-    expect(applyAskEvent({sources:[]},event).result?.sources[0]).toEqual(answer.sources[0]);
-  });
-  it("discovery cache sanitizer retains same approved source fields", async () => {
-    const answer=fixture().answer;
-    vi.stubGlobal("fetch",vi.fn(async () => Response.json({public_id:ID,revision:1,question:"Synthetic question",answer})));
-    const detail=await discoveryDetail(ID);
-    expect(detail?.answer.sources[0]).toEqual(answer.sources[0]);
-    expect(vi.mocked(fetch)).toHaveBeenCalledOnce();
-  });
-  it("discovery keeps dropping unknown and non-string metadata", async () => {
-    const answer=fixture().answer; answer.sources[0].participant_aliases=42; answer.sources[0].private_detail="not-public";
-    vi.stubGlobal("fetch",vi.fn(async () => Response.json({public_id:ID,revision:1,question:"Synthetic question",answer})));
-    const detail=await discoveryDetail(ID);
-    expect(detail?.answer.sources[0]).not.toHaveProperty("participant_aliases");
-    expect(detail?.answer.sources[0]).not.toHaveProperty("private_detail");
   });
 });

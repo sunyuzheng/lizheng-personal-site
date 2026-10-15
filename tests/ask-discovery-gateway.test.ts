@@ -80,7 +80,7 @@ describe("owner review gateway", () => {
   });
   it.each([
     { public_id: ID }, { expected_revision: 2 }, { public_id: ID, expected_revision: 0 }, { public_id: ID, expected_revision: 1.2 },
-    { topic_key: "bad" }, { question: "x".repeat(301) }, { topic_label: "x".repeat(81) }, { consent_reference: "x".repeat(501) },
+    { topic_key: "bad" }, { question: "x".repeat(2001) }, { topic_label: "x".repeat(81) }, { consent_reference: "x".repeat(501) },
     { consent_confirmed: "true" }, { review_confirmed: null }, { email: "synthetic-private@example.test" },
     { answer: { ...answer(), raw_reasoning: "synthetic-private" } }, { answer: { ...answer(), sections: [{ ...answer().sections[0], source_ids: ["S2"] }] } },
   ])("rejects malformed save fields without any upstream call", async patch => {

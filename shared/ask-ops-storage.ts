@@ -231,12 +231,13 @@ for i=10,11 do redis.call('HINCRBY',KEYS[i],ARGV[7],1) end
 return 1`;
 // KEYS: the record, the totals. ARGV: status, duration, prefix, answer, error code, then the page's
 // word ('' for none), record id, time (ISO) and time (ms). Finishes a generating record once; then an
-// answered v4 question, unless asked about the asker's own situation (apply), gets its page
-// (2026-10-14, the owner: the page exists once the question is answered, without anyone sharing it).
-// A retry finds the record finished and its page made. Returns {finished now (1|0), slug, day}.
+// answered v4 question gets its page (2026-10-14, the owner: the page exists once the question is
+// answered, without anyone sharing it; since 2026-10-15 a question about the asker's own situation
+// too, as every answered question is published). A retry finds the record finished and its page made.
+// Returns {finished now (1|0), slug, day}.
 export const OPS_FINISH_SCRIPT = `${PAGE_ADDRESS_LUA}
 if redis.call('EXISTS',KEYS[1]) == 0 then return {0,'',''} end
-local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','intent','share_slug')
+local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','share_slug')
 local status,day,done=row[1],row[2] or '',0
 if status == 'generating' then
  redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
@@ -248,8 +249,8 @@ if status == 'generating' then
  end
  status,done=ARGV[1],1
 end
-local slug=row[5] or ''
-if slug == '' and (ARGV[6] or '') ~= '' and status == 'answered' and row[3] == 'v4' and row[4] ~= 'apply' and day ~= '' then
+local slug=row[4] or ''
+if slug == '' and (ARGV[6] or '') ~= '' and status == 'answered' and row[3] == 'v4' and day ~= '' then
  slug=take_address(ARGV[3],day,ARGV[6],ARGV[7])
  if slug ~= '' then
   redis.call('HSET',KEYS[1],'share_slug',slug,'shared_at',ARGV[8])

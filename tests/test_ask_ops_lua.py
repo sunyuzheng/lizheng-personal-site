@@ -103,10 +103,16 @@ def test_the_same_word_on_one_day_numbers_on_and_follow_ups_get_pages(r):
     assert [finish(r, n, word='career-choice')[1] for n in (1, 2, 3)] == ['career-choice', 'career-choice-2', 'career-choice']
 
 
-@pytest.mark.parametrize('case', ['apply', 'v3', 'clarify', 'no word'])
-def test_no_page_for_the_asker_s_situation_older_records_other_results_or_without_a_word(r, case):
-    if case == 'apply': v4(r, intent='apply', background='1')
-    elif case == 'v3': start(r)
+def test_a_question_about_the_asker_s_own_situation_gets_its_page_too(r):
+    # 2026-10-15: every answered question is published, so every one has its page.
+    v4(r, intent='apply', background='1')
+    assert finish(r, word='career-choice') == [1, 'career-choice', D]
+    assert r.hget(P+'record:'+rid(1), 'share_slug') == 'career-choice'
+
+
+@pytest.mark.parametrize('case', ['v3', 'clarify', 'no word'])
+def test_no_page_for_older_records_other_results_or_without_a_word(r, case):
+    if case == 'v3': start(r)
     else: v4(r)
     status = 'clarify' if case == 'clarify' else 'answered'
     assert finish(r, status=status, word=None if case == 'no word' else 'career-choice') == [1, '', D]

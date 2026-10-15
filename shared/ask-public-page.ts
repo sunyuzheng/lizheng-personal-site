@@ -82,7 +82,7 @@ function https(value: unknown): value is string {
 export function publicCard(value: unknown): PublicCard | null {
   const r = value as Record<string, unknown> | null;
   if (!r || typeof r !== "object" || typeof r.public_id !== "string" || !PUBLIC_ID.test(r.public_id) || !count(r.revision) ||
-      typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 300) || typeof r.summary !== "string" ||
+      typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 2000) || typeof r.summary !== "string" ||
       !time(r.published_at) || !time(r.updated_at) || !count(r.topic_question_count) ||
       (r.asked_at !== undefined && !time(r.asked_at))) return null;
   return {
@@ -98,7 +98,7 @@ export function publicDetail(value: unknown): PublicDetail | null {
   const r = value as Record<string, unknown> | null;
   const a = r?.answer as Record<string, unknown> | undefined;
   if (!r || typeof r !== "object" || typeof r.public_id !== "string" || !PUBLIC_ID.test(r.public_id) || !count(r.revision) ||
-      typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 300) || !time(r.published_at) ||
+      typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 2000) || !time(r.published_at) ||
       !time(r.updated_at) || !a || typeof a !== "object" || typeof a.status !== "string" || typeof a.summary !== "string" ||
       !Array.isArray(a.sections) || !Array.isArray(a.sources)) return null;
   const sources: PublicSource[] = [];

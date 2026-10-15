@@ -71,7 +71,7 @@ export function opsGatewayEnvelope(url: URL, method: string, body?: unknown): Op
     if (action === "discovery-save") {
       const required = ["record_id", "topic_label", "question", "answer", "consent_reference", "consent_confirmed", "review_confirmed"];
       if (required.some(k => !(k in r)) || Object.keys(r).some(k => ![...required, "public_id", "expected_revision", "topic_key"].includes(k)) ||
-          typeof r.record_id !== "string" || !OPS_UUID.test(r.record_id) || !text(r.topic_label, 80) || !text(r.question, 300) ||
+          typeof r.record_id !== "string" || !OPS_UUID.test(r.record_id) || !text(r.topic_label, 80) || !text(r.question, 2000) ||
           !text(r.consent_reference, 500, false) || typeof r.consent_confirmed !== "boolean" || typeof r.review_confirmed !== "boolean" ||
           (("public_id" in r) !== ("expected_revision" in r)) ||
           ("public_id" in r && (typeof r.public_id !== "string" || !OPS_UUID.test(r.public_id) || !discoveryRevision(r.expected_revision))) ||

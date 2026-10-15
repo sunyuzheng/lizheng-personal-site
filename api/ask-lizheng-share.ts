@@ -4,8 +4,7 @@ import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
 import { claimShareBonus, countShare, countShareView, createShare, isMoved, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, shareUrl, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
 import { copySharedAnswer, publicJson, readShareCopy } from "../shared/ask-public-files.js";
-import { loadPublicCards, wwwPageOf } from "../shared/ask-public-cards.js";
-import { publicDetail, PUBLIC_ID } from "../shared/ask-public-page.js";
+import { publicDetail, PUBLIC_ID, wwwPagePath } from "../shared/ask-public-page.js";
 import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // 分享这条回答 (shared/ask-share-link.ts), routed by vercel.json:
@@ -33,6 +32,16 @@ function send(res: ServerResponse, status: number, type: string, body: string, h
   res.end(body);
 }
 
+/** Its search page on www.lizheng.ai, when this answer page is a published question's: read by the
+ * page's address (one file, 2026-10-15; until then every public question was read to find it). */
+async function wwwPageOf(day: string, slug: string): Promise<string | null> {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day) || !/^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/.test(slug)) return null;
+  try {
+    const detail = publicDetail(await publicJson(`/api/discovery?${new URLSearchParams({ action: "page", day, slug })}`));
+    return detail ? `https://www.lizheng.ai${wwwPagePath(detail)}` : null;
+  } catch { return null; }
+}
+
 async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
   const html = "text/html; charset=utf-8";
   // Only ask.lizheng.ai is the pages' address; copies on deployment hosts stay out of search.
@@ -46,7 +55,7 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
   try {
     const day = url.searchParams.get("day") || "", slug = url.searchParams.get("slug") || "";
     // Whether this is a question published on 别人在问什么, whose search page is on www.lizheng.ai.
-    const searchPage = wwwPageOf(`https://ask.lizheng.ai/s/${day}/${slug}`);
+    const searchPage = wwwPageOf(day, slug);
     let share;
     try {
       share = await readShare(day, slug, { reader: req.method === "GET" && !NOT_A_READER.test(String(req.headers["user-agent"] || "x-bot")) });
@@ -111,10 +120,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   if (route === "public") return publicAnswer(req, res, url);
   if (route === "sitemap") {
     try {
-      // A question published on 别人在问什么 is in www.lizheng.ai's sitemap, at its page there.
-      const [shares, published] = await Promise.all([listShares(), loadPublicCards().catch(() => [])]);
-      const onWww = new Set(published.map(card => card.share_url).filter(Boolean));
-      send(res, 200, "application/xml; charset=utf-8", renderShareSitemap(shares.filter(share => !onWww.has(`https://ask.lizheng.ai/s/${share.day}/${share.slug}`))),
+      // A question published on 别人在问什么 is in www.lizheng.ai's sitemap, at its page there (listShares leaves it out).
+      send(res, 200, "application/xml; charset=utf-8", renderShareSitemap(await listShares()),
         { "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=3600" });
     } catch {
       send(res, 503, "text/plain; charset=utf-8", "Unavailable", { "Cache-Control": "no-store", "Retry-After": "120" });

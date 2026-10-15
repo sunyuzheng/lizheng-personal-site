@@ -1,26 +1,32 @@
 /**
  * 每日体检 (2026-10-15). The user asked that what can fail unseen be checked and reported to him, and
  * only when something is wrong. Once a day, with the database check (api/ask-lizheng-db-watch.ts,
- * after Ops' 03:17 UTC backup), this reads counts and times only, never a question or an answer:
+ * 04:00 UTC, after Ops' backup of the day, which starts at 00:00 UTC), this reads counts and times
+ * only, never a question or an answer:
  *
  * - yesterday's questions (Beijing day) and how many were answered, and how many never finished;
  * - the public feed: when Ops' curation last finished, why it stopped, how far behind the newest
  *   question its cursor is (ask-lizheng-ops writes discovery:curate-health after each run);
  * - the public files' heartbeat, which Ops writes every minute;
  * - the last daily backup (Ops writes backup-health; this site cannot read the backup store);
- * - how full the public feed is (Ops stops publishing at 5000 items, withdrawn ones included);
+ * - how much the archive holds against the database's plan: the last backup's size (raw_bytes, close
+ *   to what the database holds) against the plan the database check last read (INFO maxmemory), from
+ *   seven tenths; Upstash upgrades a full database on its own, so this says it is coming, at most
+ *   weekly. (Until 2026-10-15 it warned of the public feed's 5000 items, a ceiling since removed: the
+ *   owner asked to assume 1,000,000 public answers.)
  * - whether the answer service answers /api/meta with its model and semantic index ready.
  *
  * Builder's own account (spend against its ceiling, the free hosting's end) needs Builder's token,
  * which this site never holds: ask-lizheng's health workflow checks those and GitHub mails a failure.
  */
 import { redis } from "./ask-access.js";
-import { sendMail, type Mail } from "./ask-db-watch.js";
+import { DB_WATCH_KEY, planSize, sendMail, type Mail } from "./ask-db-watch.js";
 import { fileReader, PUBLIC_FILES, type FileReader } from "./ask-public-files.js";
 
 const OPS = "ask-ops:{v3}:";
 export const HEALTH_KEY = "ask:watch:v1:health";
-export const FEED_CAPACITY = 5000;
+/** The share of the plan the archive may fill before the check says so. */
+export const SPACE_WARNING = 0.7;
 const BUILDER_META = "https://ask-lizheng.ai-builders.space/api/meta";
 const HOUR = 3_600_000;
 
@@ -48,7 +54,6 @@ const hours = (ms: number) => Math.max(1, Math.round(ms / HOUR));
 const STOPS: Record<string, string> = {
   unreadable_record: "有一条提问记录后台读不懂（多半是回答服务给存档加了后台还不认识的字段）",
   store_unavailable: "读数据库出错",
-  discovery_capacity: "公开问答已经存满5000条",
   ops_store_unavailable: "写数据库出错",
 };
 
@@ -99,12 +104,12 @@ export async function checkHealth({ send = redis as Send, read = fileReader(), f
   const backup = record(await send(["GET", OPS + "backup-health"]));
   if (!backup || typeof backup.at !== "number" || now - backup.at > 30 * HOUR)
     problems.push({ key: "backup", title: backup && typeof backup.at === "number" ? `最近一份每日备份是${hours(now - backup.at)}小时前` : "没有找到每日备份的记录",
-      detail: "后台每天 03:17 UTC 把问答存档备份一份、留30天。看 ask-lizheng-ops 的 Vercel 日志里 /api/backup。" });
+      detail: "后台每天从 UTC 0 点起分段把问答存档备份一份、留30天。看 ask-lizheng-ops 的 Vercel 日志里 /api/backup。" });
 
-  const items = Number(await send(["ZCARD", OPS + "discovery:items"])) || 0;
-  if (items >= FEED_CAPACITY * 0.8)
-    problems.push({ key: "capacity", title: `公开问答已有${items}条，上限${FEED_CAPACITY}条`,
-      detail: "到上限后自动整理会停下（撤下的也算在内）。要提高上限，改 ask-lizheng-ops 的 DISCOVERY_CAPACITY，并看数据库空间够不够。" });
+  const held = Number(backup?.raw_bytes) || 0, plan = Number(await send(["HGET", DB_WATCH_KEY, "plan_bytes"])) || 0;
+  if (held > 0 && plan > 0 && held >= plan * SPACE_WARNING)
+    problems.push({ key: "space", title: `问答存档约${planSize(held)}，数据库套餐上限${planSize(plan)}`,
+      detail: "存满时 Upstash 会自动换成更大的套餐，网站不停，但每月费用会变高（换了会另发一封信）。不想升级，可以在后台删掉不需要的存档。" });
 
   let ready = false;
   for (let attempt = 0; attempt < 2 && !ready; attempt++) {
@@ -131,15 +136,15 @@ export function healthMail(problems: Problem[], day: string): Mail {
   };
 }
 
-/** Mails the owner the day's problems, if any. The capacity warning comes at most once a week. */
+/** Mails the owner the day's problems, if any. The space warning comes at most once a week. */
 export async function watchHealth({ send = redis as Send, read = fileReader(), fetcher = fetch as Fetcher, mail = sendMail, now = Date.now() }:
   { send?: Send; read?: FileReader | null; fetcher?: Fetcher; mail?: (mail: Mail) => Promise<void>; now?: number } = {}): Promise<{ problems: string[]; mailed: boolean }> {
   let problems = await checkHealth({ send, read, fetcher, now });
-  const lastCapacity = Number(await send(["HGET", HEALTH_KEY, "capacity_mailed_at"])) || 0;
-  if (now - lastCapacity < 7 * 24 * HOUR) problems = problems.filter(problem => problem.key !== "capacity");
+  const lastSpace = Number(await send(["HGET", HEALTH_KEY, "space_mailed_at"])) || 0;
+  if (now - lastSpace < 7 * 24 * HOUR) problems = problems.filter(problem => problem.key !== "space");
   await send(["HSET", HEALTH_KEY, "checked_at", new Date(now).toISOString(), "problems", problems.map(problem => problem.key).join(",")]);
   if (!problems.length) return { problems: [], mailed: false };
   await mail(healthMail(problems, beijingDay(now)));
-  if (problems.some(problem => problem.key === "capacity")) await send(["HSET", HEALTH_KEY, "capacity_mailed_at", now]);
+  if (problems.some(problem => problem.key === "space")) await send(["HSET", HEALTH_KEY, "space_mailed_at", now]);
   return { problems: problems.map(problem => problem.key), mailed: true };
 }

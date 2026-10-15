@@ -141,6 +141,14 @@ def test_the_sitemap_list_keeps_live_shares_newest_first(r):
     assert rows == [[D, 'word2', '2026-10-04T03:00:00.000Z'], [D, 'word1', '2026-10-04T03:00:00.000Z']]
     # The deleted record leaves the list.
     assert r.zrange(SHARES, 0, -1) == [rid(1), rid(2), rid(4)]
+    # A question published on 别人在问什么 is listed by www.lizheng.ai's sitemap instead; withdrawn, here again.
+    r.sadd(P+'discovery:source-items:'+rid(2), 'p'*36)
+    rows = r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000)
+    assert rows == [[D, 'word2', '2026-10-04T03:00:00.000Z'], [D, 'word1', '2026-10-04T03:00:00.000Z']]
+    r.zadd(P+'discovery:published', {'p'*36: 1})
+    assert r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000) == [[D, 'word1', '2026-10-04T03:00:00.000Z']]
+    r.zrem(P+'discovery:published', 'p'*36)
+    assert len(r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000)) == 2
 
 
 # The quota script sets real expiry times, so these use today's clock, as Builder does.

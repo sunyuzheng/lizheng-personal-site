@@ -139,6 +139,18 @@ describe("public read and browser vote gateway", () => {
     expect(failed.status).toBe(503);
     expect(failed.headers["cache-control"]).toBe("no-store, no-transform");
   });
+  it("counts the public questions from the list of days (one small file), and stands without it", async () => {
+    const lists = () => Response.json({ v: 1, recent: [], frequent: [] });
+    vi.mocked(fetch).mockImplementation(async url => String(url).includes("action=days")
+      ? Response.json({ v: 1, days: [{ day: "2026-10-15", count: 3 }, { day: "2026-10-14", count: 4 }], total: 7 }) : lists());
+    expect((await call(discovery, "/api/ask-lizheng/discovery/lists")).body.total).toBe(7);
+    expect(vi.mocked(fetch).mock.calls.map(c => String(c[0])))
+      .toEqual([`${OPS_BACKEND_ORIGIN}/api/discovery?action=lists`, `${OPS_BACKEND_ORIGIN}/api/discovery?action=days`]);
+    vi.mocked(fetch).mockImplementation(async url => String(url).includes("action=days") ? new Response("{}", { status: 503 }) : lists());
+    const without = await call(discovery, "/api/ask-lizheng/discovery/lists");
+    expect(without.status).toBe(200);
+    expect(without.body).not.toHaveProperty("total");
+  });
   it.each(["?window=all", "?sort=recent", "?cursor=abc", `?public_id=${ID}`, "?__route=lists&__route=lists"])("takes no options for the lists %s", async query => {
     expect((await call(discovery, `/api/ask-lizheng/discovery/lists${query}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
   });

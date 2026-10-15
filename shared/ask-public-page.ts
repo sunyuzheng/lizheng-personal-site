@@ -8,11 +8,14 @@
  * whole conversation (2026-10-15): its page shows the follow-ups asked after it, read from the live
  * records, under the first answer.
  *
- * Only the first wording of a question is indexed: the same question asked in other words (see
- * ask-question-shape.ts) keeps its page for links but asks search engines not to index it, and an
- * answer too thin to help someone arriving from search is not indexed either.
+ * Only the first wording of a question is indexed: the same question asked in other words keeps its
+ * page for links but asks search engines not to index it, and an answer too thin to help someone
+ * arriving from search is not indexed either. Ops decides which is a later wording as it writes the
+ * files (duplicate_of); since 2026-10-15 no page compares questions or reads every one of them
+ * (the owner: 不应该每次访问实时计算; assume 1,000,000 public answers): a question's page reads its
+ * own file, its topic's newest questions and the newest lists; /ask the newest days; each day has
+ * its own page and sitemap.
  */
-import { sameQuestion } from "./ask-question-shape.js";
 import { SEAL } from "./ask-seal.js";
 import { sourceAttributionLabel } from "./ask-source-attribution.js";
 
@@ -36,7 +39,9 @@ export const PUBLIC_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a
 
 export type PublicCard = {
   public_id: string; revision: number; topic_key: string; topic_label: string; question: string; summary: string;
-  published_at: string; updated_at: string; asked_at?: string; topic_question_count: number; share_url?: string;
+  published_at: string; updated_at: string; asked_at?: string; topic_question_count?: number; share_url?: string;
+  // A later wording of the question this one names, first asked in its topic (Ops, as it writes the files).
+  duplicate_of?: string;
 };
 export type PublicSource = {
   id: string; title: string; url: string; date?: string; source_type?: string; reason?: string; source_visibility?: string;
@@ -62,8 +67,14 @@ export type PublicAnswer = {
 };
 export type PublicDetail = {
   public_id: string; revision: number; topic_key: string; topic_label: string; question: string;
-  answer: PublicAnswer; published_at: string; updated_at: string; share_url?: string;
+  answer: PublicAnswer; published_at: string; updated_at: string; share_url?: string; duplicate_of?: string;
 };
+/** A topic's newest questions and how many questions it gathers (Ops' public/topic/<topic>.json). */
+export type PublicTopicFile = { topic_key: string; topic_label: string; count: number; cards: PublicCard[] };
+/** The questions asked on one day, newest first (public/days/<day>.json). */
+export type PublicDayFile = { day: string; cards: PublicCard[] };
+/** Every day with public questions, newest first, and how many in all (public/days.json). */
+export type PublicDaysFile = { days: { day: string; count: number }[]; total: number };
 /** A question's own page in 问问立正: ask.lizheng.ai/s/<day>/<word>. */
 export const ANSWER_PAGE = /^https:\/\/ask\.lizheng\.ai\/s\/\d{4}-\d{2}-\d{2}\/[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
 const page = (value: unknown) => (typeof value === "string" && ANSWER_PAGE.test(value) ? { share_url: value } : {});
@@ -80,19 +91,42 @@ function https(value: unknown): value is string {
   } catch { return false; }
 }
 
-/** A card from Ops' public index, or null when it is not one. Likes are not shown on these pages. */
+const firstOf = (value: unknown) => (typeof value === "string" && PUBLIC_ID.test(value) ? { duplicate_of: value } : {});
+/** A card from Ops' public files, or null when it is not one. Likes are not shown on these pages. */
 export function publicCard(value: unknown): PublicCard | null {
   const r = value as Record<string, unknown> | null;
   if (!r || typeof r !== "object" || typeof r.public_id !== "string" || !PUBLIC_ID.test(r.public_id) || !count(r.revision) ||
       typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !text(r.question, 2000) || typeof r.summary !== "string" ||
-      !time(r.published_at) || !time(r.updated_at) || !count(r.topic_question_count) ||
+      !time(r.published_at) || !time(r.updated_at) || (r.topic_question_count !== undefined && !count(r.topic_question_count)) ||
       (r.asked_at !== undefined && !time(r.asked_at))) return null;
   return {
     public_id: r.public_id, revision: r.revision as number, topic_key: r.topic_key, topic_label: r.topic_label as string,
     question: (r.question as string).trim(), summary: r.summary.trim(), published_at: r.published_at as string,
-    updated_at: r.updated_at as string, topic_question_count: r.topic_question_count as number,
-    ...(r.asked_at ? { asked_at: r.asked_at as string } : {}), ...page(r.share_url),
+    updated_at: r.updated_at as string, ...(count(r.topic_question_count) ? { topic_question_count: r.topic_question_count } : {}),
+    ...(r.asked_at ? { asked_at: r.asked_at as string } : {}), ...page(r.share_url), ...firstOf(r.duplicate_of),
   };
+}
+const cardsOf = (value: unknown) => (Array.isArray(value) ? value.map(publicCard).filter((card): card is PublicCard => !!card) : null);
+const DAY = /^\d{4}-\d{2}-\d{2}$/;
+/** A topic's file, or null when it is not one. */
+export function publicTopicFile(value: unknown): PublicTopicFile | null {
+  const r = value as Record<string, unknown> | null, cards = cardsOf(r?.cards);
+  if (!r || typeof r.topic_key !== "string" || !text(r.topic_label, 80) || !count(r.count) || !cards) return null;
+  return { topic_key: r.topic_key, topic_label: r.topic_label as string, count: r.count as number, cards };
+}
+/** A day's file, or null when it is not one. */
+export function publicDayFile(value: unknown): PublicDayFile | null {
+  const r = value as Record<string, unknown> | null, cards = cardsOf(r?.cards);
+  if (!r || typeof r.day !== "string" || !DAY.test(r.day) || !cards) return null;
+  return { day: r.day, cards };
+}
+/** The list of days, or null when it is not one. */
+export function publicDaysFile(value: unknown): PublicDaysFile | null {
+  const r = value as Record<string, unknown> | null;
+  if (!r || !Array.isArray(r.days) || !count(r.total)) return null;
+  const days = (r.days as Record<string, unknown>[]).filter(d => d && typeof d.day === "string" && DAY.test(d.day) && count(d.count))
+    .map(d => ({ day: d.day as string, count: d.count as number }));
+  return { days, total: r.total as number };
 }
 
 /** A published question with its answer from Ops, or null when it is not one. */
@@ -122,7 +156,7 @@ export function publicDetail(value: unknown): PublicDetail | null {
   return {
     public_id: r.public_id, revision: r.revision as number, topic_key: r.topic_key, topic_label: r.topic_label as string,
     question: (r.question as string).trim(), published_at: r.published_at as string, updated_at: r.updated_at as string,
-    ...page(r.share_url),
+    ...page(r.share_url), ...firstOf(r.duplicate_of),
     answer: {
       status: a.status, summary: a.summary.trim(), sections, sources, followups: strings(a.followups, 3),
       limitations: typeof a.limitations === "string" ? a.limitations.trim() : "",
@@ -130,46 +164,20 @@ export function publicDetail(value: unknown): PublicDetail | null {
   };
 }
 
-const when = (card: Pick<PublicCard, "asked_at" | "published_at">) => Date.parse(card.asked_at ?? card.published_at);
-
-/**
- * Which page stands for each question: questions asked in other words fall into one group, in
- * the order they were published, and the first one published stands for the group, so the page
- * search engines know never moves. Returns the representative's id for every card.
- */
-export function representatives(cards: PublicCard[]): Map<string, string> {
-  const ordered = [...cards].sort((a, b) => Date.parse(a.published_at) - Date.parse(b.published_at) || a.public_id.localeCompare(b.public_id));
-  const groups: PublicCard[][] = [];
-  for (const card of ordered) {
-    const group = groups.find(members => members.some(other => sameQuestion(other.question, card.question)));
-    if (group) group.push(card); else groups.push([card]);
-  }
-  return new Map(groups.flatMap(group => group.map(card => [card.public_id, group[0].public_id] as [string, string])));
-}
-
-/** How many similar askings a card stands for: its topic, plus its rewordings filed elsewhere. */
-export function similarAskings(card: PublicCard, cards: PublicCard[], reps: Map<string, string>): number {
-  const group = cards.filter(other => other.public_id !== card.public_id && other.topic_key !== card.topic_key &&
-    reps.get(other.public_id) === reps.get(card.public_id));
-  return card.topic_question_count + group.length;
-}
-
-/** The questions /ask and the sitemap list: one per question, newest asked first. */
-export function listedCards(cards: PublicCard[]): PublicCard[] {
-  const reps = representatives(cards);
-  return cards.filter(card => reps.get(card.public_id) === card.public_id && Array.from(card.question).length >= 6)
-    .sort((a, b) => when(b) - when(a) || b.public_id.localeCompare(a.public_id));
-}
+/** A question a listing shows: its first wording, long enough to stand alone. */
+export const listable = (card: Pick<PublicCard, "question" | "duplicate_of">) => !card.duplicate_of && Array.from(card.question).length >= 6;
+/** The day a question was asked (Beijing), as its page's address names it. */
+export const dayOf = (card: { share_url?: string }) => card.share_url?.match(/\/s\/(\d{4}-\d{2}-\d{2})\//)?.[1];
 
 const bodyLength = (answer: PublicAnswer) => answer.sections.reduce((n, s) => n + Array.from(s.body).length, 0);
 
 /**
  * Whether search engines should index a page: a full answer with sources, long enough to help
- * someone arriving from search, and the first wording of its question (rep is its group's page).
+ * someone arriving from search, and the first wording of its question.
  */
-export function indexable(detail: PublicDetail, rep?: string): boolean {
+export function indexable(detail: PublicDetail): boolean {
   return detail.answer.status === "answered" && detail.answer.sources.length > 0 && bodyLength(detail.answer) >= 200 &&
-    Array.from(detail.question).length >= 6 && (!rep || rep === detail.public_id);
+    Array.from(detail.question).length >= 6 && !detail.duplicate_of;
 }
 
 /* ---------- Text ---------- */
@@ -314,10 +322,17 @@ a{color:inherit;text-decoration:none}h1,h2,h3,p,ol,ul{margin:0}
 .row a:hover b{color:var(--green-text)}
 .all{display:inline-block;margin-top:18px;font-size:14.5px;font-weight:600;color:var(--green-text)}
 .all:hover{color:var(--green-deep)}
+.days{list-style:none;padding:0}
+.days li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;padding:14px 0;border-bottom:1px solid var(--rule);font-variant-numeric:tabular-nums}
+.days .month{flex:0 0 6.5em;font-weight:600;color:var(--ink)}
+.days a{font-size:15px;color:var(--ink-2)}.days a:hover{color:var(--green-text)}
+.days small{margin-left:4px;font-size:12px;color:var(--faint)}
+.pager{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;margin-top:36px;font-size:14.5px;font-weight:600;color:var(--green-text)}
+.pager a:hover{color:var(--green-deep)}
 footer{border-top:1px solid var(--rule);color:var(--muted);font-size:13px}
 footer .body{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding-top:22px;padding-bottom:40px}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a:hover{color:var(--green-text)}
-@media (max-width:560px){.bar nav a:first-child{display:none}.head h1{font-size:28px;line-height:1.35}.section p,.section li{font-size:16.5px}.button{width:100%}}
+@media (max-width:560px){.bar nav a:first-child{display:none}.days .month{flex-basis:100%}.head h1{font-size:28px;line-height:1.35}.section p,.section li{font-size:16.5px}.button{width:100%}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 `;
 
@@ -408,7 +423,8 @@ ${sources ? `<section class="block"><h3>出处</h3><ol class="sources">\n${sourc
 }
 
 export function renderQuestionPage(detail: PublicDetail, context: {
-  card?: PublicCard; related: PublicCard[]; similar: number; indexable: boolean;
+  // How many questions its topic gathers (its file's count): 类似提问 from two.
+  related: PublicCard[]; similar: number; indexable: boolean;
   // The follow-ups asked after it in the same conversation (2026-10-15), oldest first.
   followUps?: PageFollowUp[];
 }): string {
@@ -416,7 +432,8 @@ export function renderQuestionPage(detail: PublicDetail, context: {
   const followUps = context.followUps ?? [];
   const ids = new Set(answer.sources.map(source => source.id));
   const url = pageUrl(detail);
-  const askedAt = context.card?.asked_at;
+  // The day it was asked, Beijing time, as its address names it.
+  const askedAt = dayOf(detail);
   const kicker = [detail.topic_label, askedAt ? `${chineseDate(askedAt)}提问` : "常被问到", followUps.length ? `追问${followUps.length}次` : "",
     context.similar >= 2 ? `${context.similar}次类似提问` : ""]
     .filter(Boolean).map(part => `<span>${escapeHtml(part)}</span>`).join("");
@@ -477,25 +494,38 @@ ${related}
   });
 }
 
-function row(card: PublicCard & { similar?: number }): string {
-  const meta = [card.topic_label, card.asked_at ? `${chineseDate(card.asked_at)}提问` : "常被问到", (card.similar ?? 0) >= 2 ? `${card.similar}次类似提问` : ""]
+function row(card: PublicCard): string {
+  const meta = [card.topic_label, card.asked_at ? `${chineseDate(card.asked_at)}提问` : "常被问到"]
     .filter(Boolean).map(part => `<span>${escapeHtml(part)}</span>`).join("");
   return `<li class="row"><a href="${wwwPagePath(card)}" data-to="question"><span class="meta">${meta}</span><b>${escapeHtml(card.question)}</b>${card.summary ? `<p>${escapeHtml(clip(card.summary, 120))}</p>` : ""}</a></li>`;
 }
 
-/** Up to six other questions a reader may want next: its own topic first, then the newest. */
-export function relatedCards(detail: Pick<PublicDetail, "public_id" | "topic_key">, cards: PublicCard[], limit = 6): PublicCard[] {
-  const listed = listedCards(cards).filter(card => card.public_id !== detail.public_id);
-  const same = listed.filter(card => card.topic_key === detail.topic_key);
-  return [...same, ...listed.filter(card => card.topic_key !== detail.topic_key)].slice(0, limit);
+/** Up to six other questions a reader may want next: its topic's newest first, then the newest asked. */
+export function relatedOf(detail: Pick<PublicDetail, "public_id">, topic: PublicTopicFile | null, recent: PublicCard[], limit = 6): PublicCard[] {
+  const seen = new Set([detail.public_id]), out: PublicCard[] = [];
+  for (const card of [...(topic?.cards ?? []), ...recent]) {
+    if (out.length >= limit) break;
+    if (seen.has(card.public_id) || !listable(card)) continue;
+    seen.add(card.public_id);
+    out.push(card);
+  }
+  return out;
 }
 
-/** /ask: every published question, one per question, newest asked first. */
-export function renderIndexPage(cards: PublicCard[]): string {
-  const reps = representatives(cards);
-  const all = listedCards(cards);
-  const listed = all.slice(0, 500).map(card => ({ ...card, similar: similarAskings(card, cards, reps) }));
+// The days of one month under /ask: 10月15日 (24).
+function months(days: PublicDaysFile["days"]): string {
+  const byMonth = new Map<string, PublicDaysFile["days"]>();
+  for (const day of days) byMonth.set(day.day.slice(0, 7), [...(byMonth.get(day.day.slice(0, 7)) ?? []), day]);
+  return [...byMonth].map(([month, list]) => `<li><span class="month">${Number(month.slice(0, 4))}年${Number(month.slice(5))}月</span>${list
+    .map(day => `<a href="/ask/${day.day}" data-to="day">${Number(day.day.slice(8))}日<small>${day.count}</small></a>`).join("")}</li>`).join("\n");
+}
+const dayHead = (day: string) => `${Number(day.slice(0, 4))}年${Number(day.slice(5, 7))}月${Number(day.slice(8))}日`;
+
+/** /ask: the newest questions, one per question, newest asked first, and every day that has some. */
+export function renderIndexPage(days: PublicDaysFile, newest: PublicCard[]): string {
+  const listed = newest.filter(listable);
   const description = "别人问问立正的真实问题，原样展示。回答来自立正公开的文章和视频，附出处。";
+  const archive = days.days.length ? `<section class="block" aria-labelledby="by-day"><h2 id="by-day">按日期</h2><ul class="days">\n${months(days.days)}\n</ul></section>` : "";
   return frame({
     title: "别人在问什么 · 问问立正", description, canonical: ASK_INDEX, type: "website", robots: "index, follow",
     jsonLd: {
@@ -505,27 +535,61 @@ export function renderIndexPage(cards: PublicCard[]): string {
       mainEntity: { "@type": "ItemList", numberOfItems: listed.length,
         itemListElement: listed.slice(0, 100).map((card, i) => ({ "@type": "ListItem", position: i + 1, url: pageUrl(card), name: card.question })) },
     },
-    head: `<div class="head"><p class="kicker"><span>问问立正</span>${all.length ? `<span>${all.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
-    body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">还没有公开的问题。</p>`}</div>`,
+    head: `<div class="head"><p class="kicker"><span>问问立正</span>${days.total ? `<span>${days.total}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
+    body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">还没有公开的问题。</p>`}
+${archive}</div>`,
   });
 }
 
-/** A question that is not public (never was, or was withdrawn). */
-export function renderMissingPage(): string {
+/** /ask/<day>: the questions asked that day (Beijing time), newest first; the days before and after. */
+export function renderDayPage(day: PublicDayFile, days: PublicDaysFile | null): string {
+  const listed = day.cards.filter(listable);
+  const url = `${ASK_INDEX}/${day.day}`;
+  const at = days?.days.findIndex(other => other.day === day.day) ?? -1;
+  // Newest first: the next day is the one before it in the list.
+  const later = at > 0 ? days!.days[at - 1].day : null, earlier = at >= 0 ? days!.days[at + 1]?.day ?? null : null;
+  const nav = [earlier ? `<a href="/ask/${earlier}" data-to="day">← ${dayHead(earlier)}</a>` : "", `<a href="/ask" data-to="index">所有问题</a>`,
+    later ? `<a href="/ask/${later}" data-to="day">${dayHead(later)} →</a>` : ""].filter(Boolean).join("");
   return frame({
-    title: "这个问题不在了 · 问问立正", description: "这个问题已经不公开了，或者地址有误。", canonical: ASK_INDEX, type: "website",
+    title: `${dayHead(day.day)}的提问 · 问问立正`, description: `${dayHead(day.day)}别人问问立正的问题，原样展示，回答附出处。`,
+    canonical: url, type: "website",
+    // A list for finding questions; the questions' own pages are what search shows.
     robots: "noindex, follow",
-    head: `<div class="head"><h1>这个问题不在了</h1><p class="lede">它可能已经撤下，或者地址有误。</p><a class="button" href="/ask" data-to="index">看别人在问什么</a></div>`,
+    head: `<div class="head"><p class="kicker"><span>问问立正</span><span>${day.cards.length}个问题</span></p><h1>${dayHead(day.day)}的提问</h1></div>`,
+    body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">这一天的问题都已在别处问过。</p>`}
+<nav class="pager" aria-label="按日期">${nav}</nav></div>`,
+  });
+}
+
+/** A question, or a day, that is not public (never was, or was withdrawn). */
+export function renderMissingPage(what: "question" | "day" = "question"): string {
+  const [title, lede] = what === "day" ? ["这一天没有公开的问题", "换一天看看，或者看最新的问题。"] : ["这个问题不在了", "它可能已经撤下，或者地址有误。"];
+  return frame({
+    title: `${title} · 问问立正`, description: what === "day" ? "这一天没有公开的问题。" : "这个问题已经不公开了，或者地址有误。",
+    canonical: ASK_INDEX, type: "website", robots: "noindex, follow",
+    head: `<div class="head"><h1>${title}</h1><p class="lede">${lede}</p><a class="button" href="/ask" data-to="index">看别人在问什么</a></div>`,
     body: "",
   });
 }
 
-/** The sitemap of /ask and the questions it lists, with the date each last changed. */
-export function renderSitemap(cards: PublicCard[]): string {
-  const listed = listedCards(cards);
-  const latest = cards.reduce((max, card) => Math.max(max, Date.parse(card.updated_at)), 0);
+/** /ask/sitemap.xml: one sitemap per day with public questions, newest first. */
+export function renderSitemapIndex(days: PublicDaysFile): string {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${days.days.map(day => `  <sitemap>
+    <loc>${ASK_INDEX}/sitemap/${day.day}.xml</loc>
+  </sitemap>`).join("\n")}
+</sitemapindex>
+`;
+}
+
+/** One day's sitemap: the questions asked that day that /ask lists, with the date each last
+ * changed; the newest day's also has /ask itself. */
+export function renderDaySitemap(day: PublicDayFile, newest: boolean): string {
+  const listed = day.cards.filter(listable);
+  const latest = day.cards.reduce((max, card) => Math.max(max, Date.parse(card.updated_at)), 0);
   const urls = [
-    { loc: ASK_INDEX, lastmod: latest ? new Date(latest).toISOString() : "" },
+    ...(newest ? [{ loc: ASK_INDEX, lastmod: latest ? new Date(latest).toISOString() : "" }] : []),
     ...listed.map(card => ({ loc: pageUrl(card), lastmod: card.updated_at })),
   ];
   return `<?xml version="1.0" encoding="UTF-8"?>

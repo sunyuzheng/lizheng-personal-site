@@ -10,7 +10,6 @@ import {
 } from "../shared/ask-share-link";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page";
 import { usageDay } from "../shared/ask-usage";
-import { forgetPublicCards } from "../shared/ask-public-cards";
 import { OPS_BACKEND_ORIGIN } from "../shared/ask-ops-gateway";
 
 // Synthetic records only: no real asker's words in tests.
@@ -47,7 +46,7 @@ beforeEach(() => {
   vi.stubEnv("ASK_AUTH_REDIS_REST_URL", "https://synthetic.upstash.io");
   vi.stubEnv("ASK_AUTH_REDIS_REST_TOKEN", "synthetic-not-live");
 });
-afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); forgetPublicCards(); });
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(); });
 
 describe("what a page may send", () => {
   it("takes one answer's record, word and proof, where it was shared and whether to give a question back", () => {
@@ -317,16 +316,23 @@ describe("the endpoint", () => {
 
   // 2026-10-14: a question published on 别人在问什么 has its search page on www.lizheng.ai, same address.
   it("points search engines at a published question's page on www.lizheng.ai, and lists the rest", async () => {
-    forgetPublicCards();
     vi.stubEnv("ASK_OPS_BACKEND_ORIGIN", OPS_BACKEND_ORIGIN);
     const published = "https://ask.lizheng.ai/s/2026-10-04/career-choice";
+    const asked: string[] = [];
     vi.stubGlobal("fetch", vi.fn(async (url: string, init?: RequestInit) => {
-      if (String(url).includes("/api/discovery")) return new Response(JSON.stringify({ v: 1, items: [{ public_id: "2e195aff-2690-47b1-aaa6-5d39e6a8d821",
-        revision: 2, topic_key: "c".repeat(32), topic_label: "合成主题", question: "合成的问题？", summary: "合成摘要", published_at: "2026-10-04T03:00:00.000Z",
-        updated_at: "2026-10-04T03:00:00.000Z", topic_question_count: 1, share_url: published }] }), { headers: { "content-type": "application/json" } });
+      // Whether a page is a published question's: that one page's piece, by its address (2026-10-15).
+      if (String(url).includes("/api/discovery")) {
+        asked.push(String(url).replace(OPS_BACKEND_ORIGIN, ""));
+        return String(url).includes("slug=career-choice")
+          ? Response.json({ v: 1, public_id: "2e195aff-2690-47b1-aaa6-5d39e6a8d821", revision: 2, topic_key: "c".repeat(32), topic_label: "合成主题",
+            question: "合成的问题？", published_at: "2026-10-04T03:00:00.000Z", updated_at: "2026-10-04T03:00:00.000Z",
+            attribution: "AI整理，不是立正本人回复", answer: answer(), share_url: published })
+          : Response.json({ code: "public_item_unavailable" }, { status: 404 });
+      }
       const command = JSON.parse(String(init?.body));
+      // The list script leaves out what is published (tests/test_ask_share_lua.py).
       return Response.json({ result: command[1] === SHARE_PAGE_SCRIPT ? ["OK", "合成的问题？", JSON.stringify(answer()), "understand", "2026-10-04T02:00:00.000Z"]
-        : command[1] === SHARE_LIST_SCRIPT ? [["2026-10-04", "career-choice", "2026-10-04T03:00:00.000Z"], ["2026-10-04", "other-word", "2026-10-04T04:00:00.000Z"]] : null });
+        : command[1] === SHARE_LIST_SCRIPT ? [["2026-10-04", "other-word", "2026-10-04T04:00:00.000Z"]] : null });
     }));
     const page = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice");
     expect(page.statusCode).toBe(200);
@@ -336,9 +342,10 @@ describe("the endpoint", () => {
     const other = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=other-word");
     expect(other.body).toContain('<link rel="canonical" href="https://ask.lizheng.ai/s/2026-10-04/other-word">');
     expect(other.body).toContain("application/ld+json");
+    expect(asked).toEqual(["/api/discovery?action=page&day=2026-10-04&slug=career-choice", "/api/discovery?action=page&day=2026-10-04&slug=other-word"]);
     const sitemap = await call("/api/ask-lizheng-share?__route=sitemap");
     expect(sitemap.body).toContain("https://ask.lizheng.ai/s/2026-10-04/other-word");
-    expect(sitemap.body).not.toContain("career-choice");
+    expect(asked).toHaveLength(2);
   });
 
   it("answers an address that is no public question's with the page that says it is gone", async () => {

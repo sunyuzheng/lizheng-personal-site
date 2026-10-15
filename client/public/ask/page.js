@@ -7,7 +7,7 @@
   fonts.href = "/fonts/serif.css";
   document.head.appendChild(fonts);
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  var page = location.pathname === "/ask" ? "index" : "question";
+  var page = location.pathname === "/ask" ? "index" : /^\/ask\/\d{4}-\d{2}-\d{2}$/.test(location.pathname) ? "day" : "question";
   document.addEventListener("click", function (event) {
     var link = event.target && event.target.closest ? event.target.closest("a[data-to]") : null;
     if (link) window.va("event", { name: "Ask Page Link", data: { page: page, to: link.getAttribute("data-to") } });

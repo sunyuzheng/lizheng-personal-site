@@ -86,11 +86,11 @@ Cursor 的设计负责人 Ryo Lu 说问问立正「有点太AI了」，用户要
 用户说问问立正也可以做SEO，尤其是那些提问和回答。「别人在问什么」里公开的每一条问答，现在在 www.lizheng.ai 有自己的网页，服务端渲染，问题、回答和出处都在第一份HTML里，搜索引擎和AI搜索不用执行JavaScript就能读到：
 
 - `/ask/<public_id>`：一条问答。标题是问题，描述是摘要；顶部森林绿上是话题、提问日期和「N次类似提问」，正文和 ask.lizheng.ai 的回答排法一样（摘要放大、绿色角标、「材料里的观点」「AI推演」、边界说明、编号出处），页尾是「问类似的问题」、几条「也可以接着问」（带着问题打开 ask.lizheng.ai，`?q=` 只填进输入框，不会发送）和「别人还问了」。出处只显示标题、类型、日期和引用理由，不放字幕摘录；会员视频和会员帖子标「会员」。
-- `/ask`：所有公开问题，一个问题一行，最新提问在前。
-- `/ask/sitemap.xml`：`/ask` 和每条可收录的问答，`lastmod` 是它最后修改的日期；`robots.txt` 里写了这份 sitemap。
-- 代码：`shared/ask-public-page.ts`（数据校验、去重、收录规则和页面）、`api/ask-lizheng-public.ts`（从 Ops 的 `index` 一次读出全部公开问题，暖着的函数留5分钟；`vercel.json` 只在 www 上把这三个地址交给它）、`client/public/ask/page.js`（不阻塞首屏地加载衬线字体，并把页面上点了哪个链接记成 Vercel Analytics 事件「Ask Page Link」）。字体走 `/fonts/serif.css`，构建时由 `scripts/prerender-guests.ts` 指向当次构建的字体文件。
+- `/ask`：所有公开问题，一个问题一行，最新提问在前。2026-10-15起只列最近几天的（凑满一百条为止，最多一周），下面「按日期」列出每一天；`/ask/<日期>` 是那一天的全部问题（`noindex, follow`，给人和爬虫找问题用），页尾链到前一天、后一天。见下文「十万、百万条」。
+- `/ask/sitemap.xml`：`/ask` 和每条可收录的问答，`lastmod` 是它最后修改的日期；`robots.txt` 里写了这份 sitemap。2026-10-15起它是网站地图的索引，每天一份 `/ask/sitemap/<日期>.xml`（那天问的问题；最新那天的也列 `/ask`）。
+- 代码：`shared/ask-public-page.ts`（数据校验、收录规则和页面）、`api/ask-lizheng-public.ts`（当时从 Ops 的 `index` 一次读出全部公开问题，暖着的函数留5分钟；2026-10-15起每页只读它要的几份文件；`vercel.json` 只在 www 上把这些地址交给它）、`client/public/ask/page.js`（不阻塞首屏地加载衬线字体，并把页面上点了哪个链接记成 Vercel Analytics 事件「Ask Page Link」）。字体走 `/fonts/serif.css`，构建时由 `scripts/prerender-guests.ts` 指向当次构建的字体文件。
 
-收录规则：只收录一个问题的第一种问法（同一问题换个说法问的，网页保留，但告诉搜索引擎不要收录，判断方法和主页折叠相同，在 `shared/ask-question-shape.ts`）；回答要完整、有出处、正文至少200字。不是每次被问都新造一页：页面只来自已经去掉个人信息、经提问人同意公开的问答，撤下的问答网页返回404。CDN 缓存10分钟，所以撤下后网页大约十分钟内失效，搜索引擎下次抓取时移除；急需从 Google 搜索结果里拿掉，用 Search Console 的删除工具。隐私政策的「提问和回答」和「保存多久」已写明这些。
+收录规则：只收录一个问题的第一种问法（同一问题换个说法问的，网页保留，但告诉搜索引擎不要收录，判断方法和主页折叠相同，在 `shared/ask-question-shape.ts`；2026-10-15起由 Ops 写文件时判断，在后来的问法上记 `duplicate_of`，同一主题最早的一千个里找）；回答要完整、有出处、正文至少200字。不是每次被问都新造一页：页面只来自已经去掉个人信息、经提问人同意公开的问答，撤下的问答网页返回404。CDN 缓存10分钟，所以撤下后网页大约十分钟内失效，搜索引擎下次抓取时移除；急需从 Google 搜索结果里拿掉，用 Search Console 的删除工具。隐私政策的「提问和回答」和「保存多久」已写明这些。
 
 这和 `docs/seo-geo.md` 「不为GEO批量生成文章」的原则不冲突：这些页面不是为搜索写的，是已经公开给人看的问答换了一个能被找到的地址；数量随真实提问增长，质量不够的不收录。
 
@@ -128,7 +128,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 ## 数据库升级提醒（2026-10-04）
 
-问问立正、Ops 和分享都用 Vercel Storage 里的 Upstash 库 `ask-lizheng-kv`（原名 upstash-kv-byzantium-school；Fixed 250MB）。10-04 立正要求打开 Auto Upgrade（在 Upstash 控制台的库 Settings 里开，Vercel 的配置窗口里那个开关是锁住的），并且升级时要通知他。`api/ask-lizheng-db-watch.ts` 由 Vercel Cron 每天调一次（`vercel.json` 的 `crons`；原来 01:00 UTC，2026-10-15起 04:00 UTC，排在 Ops 03:17 的备份之后，同时做每日体检，见下文「架构体检」）：读 `INFO memory` 的 `maxmemory`（套餐上限），和上次记在 `ask:watch:v1:db` 的不同就用邮箱验证码那把 Resend 密钥从 `立正 <podcast@notify.lizheng.ai>` 发信到 sunyuzheng@gmail.com；第一次运行发一封「提醒已开启」。项目设了 `CRON_SECRET` 时只有 Cron 能调；没设时谁调都只在套餐变化时发信。`used_memory` 和控制台的数据大小对不上（10-04 是 0.3MB 对 4–7MB），所以不用它判断快满了。同一天 Coffee Pass 换成自己的按量付费库 `stay-coffee-pass-kv`，不再和问问立正共用。
+问问立正、Ops 和分享都用 Vercel Storage 里的 Upstash 库 `ask-lizheng-kv`（原名 upstash-kv-byzantium-school；Fixed 250MB）。10-04 立正要求打开 Auto Upgrade（在 Upstash 控制台的库 Settings 里开，Vercel 的配置窗口里那个开关是锁住的），并且升级时要通知他。`api/ask-lizheng-db-watch.ts` 由 Vercel Cron 每天调一次（`vercel.json` 的 `crons`；原来 01:00 UTC，2026-10-15起 04:00 UTC，排在 Ops 当天的备份之后（那时 03:17，同日晚起从 UTC 0 点开始分段写），同时做每日体检，见下文「架构体检」）：读 `INFO memory` 的 `maxmemory`（套餐上限），和上次记在 `ask:watch:v1:db` 的不同就用邮箱验证码那把 Resend 密钥从 `立正 <podcast@notify.lizheng.ai>` 发信到 sunyuzheng@gmail.com；第一次运行发一封「提醒已开启」。项目设了 `CRON_SECRET` 时只有 Cron 能调；没设时谁调都只在套餐变化时发信。`used_memory` 和控制台的数据大小对不上（10-04 是 0.3MB 对 4–7MB），所以不用它判断快满了。同一天 Coffee Pass 换成自己的按量付费库 `stay-coffee-pass-kv`，不再和问问立正共用。
 
 ## 公开问答怎么说（2026-10-04）
 
@@ -140,7 +140,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 立正看了整体架构后决定：大家看的东西在写的时候就生成好，看的时候不再去查数据库，这样数据库或后台出事时，「别人在问什么」、公开问答页和分享页照常能看（ask-lizheng 的 `docs/ARCHITECTURE.md`）。两个站都读一个私有的 Vercel Blob 存储，用它自己的令牌 `ASK_FILES_BLOB_TOKEN`（本项目原有的 `BLOB_READ_WRITE_TOKEN` 是社区地图的公开存储，不混用）：
 
-- `public/`：Ops 在公开问答变化时写列表、索引和每条回答，每次完整导出后写心跳 `public/state.json`（ask-lizheng-ops 的 docs/public-discovery.md「公开内容写成文件」）。本站 `shared/ask-public-files.ts` 的 `publicJson`：心跳三分钟内就用文件，文件里没有的问题就是已撤下（404）；心跳过期就问 Ops；Ops 也答不上来才拿最后一份文件顶上。所以导出一直失败也不会让撤下的问答留着。`/api/ask-lizheng/discovery/lists`、`detail` 和 `/ask` 的页面都走它；旧的分页列表照旧问 Ops。CDN 缓存不变（列表1分钟、问答页10分钟）。
+- `public/`：Ops 在公开问答变化时写列表、索引和每条回答（2026-10-15起不再写一份全部问题的索引，改成每个主题、每一天各一份和一份日期列表，见下文「十万、百万条」），每次完整导出后写心跳 `public/state.json`（ask-lizheng-ops 的 docs/public-discovery.md「公开内容写成文件」）。本站 `shared/ask-public-files.ts` 的 `publicJson`：心跳三分钟内就用文件，文件里没有的问题就是已撤下（404）；心跳过期就问 Ops；Ops 也答不上来才拿最后一份文件顶上。所以导出一直失败也不会让撤下的问答留着。`/api/ask-lizheng/discovery/lists`、`detail` 和 `/ask` 的页面都走它；旧的分页列表照旧问 Ops。CDN 缓存不变（列表1分钟、问答页10分钟）。
 - `share/<day>/<slug>.json`：分享时本站顺手写一份回答的副本（没配令牌就不写）。分享页照旧实时读记录（删除立刻生效、真人打开要计数），只在数据库答不上来时用副本；数据库说已经没有了，就不用副本。Ops 删除记录前先删副本，删不掉就不删记录。这个功能上线前分享过的页面没有副本，要等再被分享一次。
 - 隐私政策「保存多久」加了一句：每天另存一份备份，留30天，删除的问答在之前的备份里最多再留30天（备份在 Ops，见它的 docs/backup.md）。
 - 旧回答里的内部出处编号：2026-10-04 之前有些回答在正文里写了「S1 说得更直接」这类内部编号（Builder 之后改成只在引用标记 [S1] 里出现）。主站送出回答时（`/api/ask-lizheng/discovery/detail`、`/ask/<id>` 页面、分享页）把这类编号读成读者看到的「出处1」（`shared/ask-source-labels.ts`，只换这条回答自己的出处编号，不动引用标记和原文摘录），所以不用改已经公开的数据。
@@ -236,7 +236,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 立正：「整体梳理一下这个产品，看看架构上是不是都合理稳定了？」，看完报告后「需要修改的修改」。本站这边改了四处（c9f14cf、88815e0、a0e52c3、48bbcd9）；回答服务和后台的改动见 ask-lizheng 的 `docs/PRODUCT.md`「架构体检」和 Ops 的文档。
 
 - **转发不再卡在25秒**：Vercel 要求 Edge 函数25秒内开始回话。10-15 有两次提问被切断（504），Builder 一两秒内就开始处理了，回应却二十多秒才到这里。`api/ask-lizheng.ts` 现在12秒（`STREAM_BY_MS`）内没收到 Builder 的回应，就先给页面回一个边等边发心跳的流，Builder 的回答之后照常流过来；12秒内到的照旧原样转发，状态码不变。这之后才到的拒绝（次数用完、模型变了、保存没确认）在流里变成 `error` 事件，带着 HTTP 拒绝时同样的字段和 `status`、`scope`；主页问答区（`client/src/lib/ask-lizheng.ts` 的 `parseAskFrame`，当天晚些时候随主页问答区一起删了）和 ask 页（ask-lizheng 5e980bf 的 `refusal()`）对两种拒绝说同样的话。页面已经走了才到的回应不再读。测试：`tests/ask-lizheng-relay.test.ts`。
-- **每日体检**：`shared/ask-health.ts`，和数据库检查同一个 Cron（`api/ask-lizheng-db-watch.ts`，04:00 UTC，`vercel.json` 给这个函数90秒，够把睡着的回答服务叫醒）。只读次数和时间，不读问题和回答，有问题才发一封信（同一把 Resend 密钥，收件人同上）：昨天（北京时间）的提问大多没答完或有几个一直没结果；Ops 的自动整理两小时没跑完、停在某条记录或数据库上、落后最新提问三小时以上（读 Ops 每轮写的 `ask-ops:{v3}:discovery:curate-health`）；公开文件的心跳超过15分钟；最近一次每日备份超过30小时（读 Ops 写的 `ask-ops:{v3}:backup-health`）；公开问答到5000条容量的八成（每周最多提一次）；回答服务的 `/api/meta` 两次都没回应就绪。记录在 `ask:watch:v1:health`。Builder 账号的花费上限、免费托管到期、部署状态和线上资料版本要 Builder 的令牌，本站不持有，由 ask-lizheng 的 `health` 工作流每天查。测试：`tests/ask-health.test.ts`。
+- **每日体检**：`shared/ask-health.ts`，和数据库检查同一个 Cron（`api/ask-lizheng-db-watch.ts`，04:00 UTC，`vercel.json` 给这个函数90秒，够把睡着的回答服务叫醒）。只读次数和时间，不读问题和回答，有问题才发一封信（同一把 Resend 密钥，收件人同上）：昨天（北京时间）的提问大多没答完或有几个一直没结果；Ops 的自动整理两小时没跑完、停在某条记录或数据库上、落后最新提问三小时以上（读 Ops 每轮写的 `ask-ops:{v3}:discovery:curate-health`）；公开文件的心跳超过15分钟；最近一次每日备份超过30小时（读 Ops 写的 `ask-ops:{v3}:backup-health`）；公开问答到5000条容量的八成（每周最多提一次；同日晚起上限取消，改成问答存档到数据库套餐的七成，见下文「十万、百万条」）；回答服务的 `/api/meta` 两次都没回应就绪。记录在 `ask:watch:v1:health`。Builder 账号的花费上限、免费托管到期、部署状态和线上资料版本要 Builder 的令牌，本站不持有，由 ask-lizheng 的 `health` 工作流每天查。测试：`tests/ask-health.test.ts`。
 - **认不得的字段不再让记录读不出**：`shared/ask-archive-answer.ts` 的 `archivedAnswer(value, lenient)`。来自 Builder 存档的回答（writer 存档时，分享页和分享副本读记录时）宽容地读：多出来的字段丢掉，存档里就不存它；格式坏了的已知字段照旧拒收。本站自己写的公开版本、立正在后台提交的内容（ops-gateway 的保存）照旧严格。10-11 Ops 因为一个新字段停更了一天，而本站的 writer 如果比 Builder 晚认识新字段，会拒绝存档、也就拒绝所有回答；现在两种都不会了。Ops 同一天（58164e0）改成同样的读法。
 - **同步 ask 页只认最新的 main**：`pnpm sync:ask-app`（`scripts/sync-ask-app.mjs`）原来只在提交不在 origin/main 上时警告，而 main 上任何一个旧提交都算在上面；默认读的那份 ask-lizheng 本地副本曾经落后 main 很多，从它同步会把旧页面推上线。现在落后 origin/main 就拒绝，什么都不改。
 
@@ -272,3 +272,15 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **「别人在问什么」点开一条**：`api/ask-lizheng-discovery.ts` 的 detail 多带 `turns`（`shared/ask-conversation.ts` 的 `followUpsOfPage`，和 www 页同一个读法，CDN 一分钟），ask 页原地展开时接在回答下面。
 - **ask 页**：随 `pnpm sync:ask-app` 从 ask-lizheng 23d51c4 同步（别人网页上提问是提问人自己新开的对话，立正确认；「我的提问」只存他自己问的部分）（整段对话、我的提问一段一条、接着问还在同一页、「回答从哪里来」的三个数）。帮助页「别人在问什么」那条和隐私政策中英文改成一段对话一条、追问在同一个网页里；「我的提问」写成一段对话一条。
 - 测试：`tests/test_ask_ops_lua.py`、`tests/test_ask_share_lua.py`（同一段对话、第一问没答上、标题那一问被删、追问被删、以前追问的网址）、`tests/ask-share.test.ts`、`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`。
+
+## 十万、百万条（2026-10-15）
+
+立正看了可扩展性复查后：「最新的就直接排序，最常见的应该是稳定的，不应该每次访问实时计算」「公开回答我们要假设会有10万，100万条。为啥上线只有5000这么低？」「每日备份最好存到数据库而不是内存对吗？」。Ops 去掉了5000条上限，按主题、按天写文件，备份分段写（ask-lizheng-ops 的 docs/public-discovery.md「十万、百万条」、docs/backup.md）。本站跟着改成没有一处读全部公开问题：
+
+- **公开问答页**（`api/ask-lizheng-public.ts`）：一个问题读三份文件：它自己（按地址，`action=page`，`public/page/<日>/<词>.json`）、它所在主题最新的12条和主题的提问数（`action=topic`，「N次类似提问」用这个数）、两份列表（「别人还问了」先同主题、再最新的）。旧的 `/ask/<编号>` 读 `detail` 再 301。提问日期取网址里的日期。后两份读不到时页面照样出，只是没有「别人还问了」。
+- **`/ask`**：读日期列表（`public/days.json`，每天几条和总数），再从最新的一天往前读，凑满一百条或读满七天；下面按月列出每一天。**`/ask/<日期>`**：那一天的文件（`public/days/<日>.json`）。**网站地图**：`/ask/sitemap.xml` 是索引，每天一份 `/ask/sitemap/<日期>.xml`。一份网站地图最多五万条，一天远到不了。
+- **同一问题的不同问法**：原来每次渲染都把所有问题两两比一遍（`representatives`，问题越多越慢，五千条要七秒）。现在 Ops 写文件时在后来的问法上记 `duplicate_of`，页面只看这个字段：有它的不收录、不进列表和网站地图。跨主题的同一问题不再合并计数。
+- **ask.lizheng.ai 的回答页**：是不是已公开、搜索页在哪，按地址读那一份文件（`wwwPageOf`，不再读全部）；`/s/sitemap.xml` 不列已公开的，由 `SHARE_LIST_SCRIPT` 看这条记录有没有已发布的公开问答（`discovery:source-items` 和 `discovery:published`）。
+- **主页「已有N个公开问答」**：读日期列表的总数（含同一问题的不同问法）。
+- **每日体检**：去掉5000条的提醒，改成「问答存档约多少 MB，数据库套餐上限多少」：最近一份备份的 `raw_bytes`（接近库里存了多少）到套餐（数据库检查记下的 `maxmemory`）七成时提醒，每周最多一次；满了 Upstash 会自动升级，网站不停。
+- 删了 `shared/ask-public-cards.ts`（读全部问题的那一份）。测试：`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`、`tests/ask-share.test.ts`、`tests/ask-discovery-gateway.test.ts`、`tests/ask-health.test.ts`、`tests/test_ask_share_lua.py`。

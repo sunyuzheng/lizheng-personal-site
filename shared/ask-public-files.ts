@@ -5,8 +5,10 @@
  * store with its own token (ASK_FILES_BLOB_TOKEN; never this project's BLOB_READ_WRITE_TOKEN, which
  * is the community map's public store):
  *
- * - public/: Ops writes the lists, the index and each published answer whenever they change, and a
- *   heartbeat after every complete export (ask-lizheng-ops shared/public-files.ts). While the
+ * - public/: Ops writes, whenever they change, the lists, each published answer (by id and by its
+ *   page's address), each topic's newest questions, each day's questions and the list of days, and
+ *   a heartbeat after every complete export (ask-lizheng-ops shared/public-files.ts); since
+ *   2026-10-15 no page here reads every question (the owner: assume 1,000,000). While the
  *   heartbeat is a few minutes old the files are the answer, and a question they do not have is
  *   gone; otherwise Ops is asked, and only when Ops cannot answer either do the last files stand in.
  *   So a broken export can never keep a withdrawn question up.
@@ -26,9 +28,15 @@ import { isMoved, readShare, SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./
 export const PUBLIC_FILES = {
   state: "public/state.json",
   lists: "public/lists.json",
-  index: "public/index.json",
   detail: (publicId: string) => `public/detail/${publicId}.json`,
+  page: (day: string, slug: string) => `public/page/${day}/${slug}.json`,
+  topic: (topic: string) => `public/topic/${topic}.json`,
+  day: (day: string) => `public/days/${day}.json`,
+  days: "public/days.json",
 };
+const DAY = /^\d{4}-\d{2}-\d{2}$/, SLUG = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/, TOPIC = /^[a-f0-9]{32}$/;
+// A file of one question, topic or day: while the files are fresh, its absence means there is none.
+const ONE_OF = /^public\/(detail|page|topic|days)\//;
 export const shareFile = (day: string, slug: string) => `share/${day}/${slug}.json`;
 // Ops beats the heartbeat every minute; three minutes leaves room for a late or skipped run.
 const FRESH_MS = 180_000;
@@ -63,12 +71,16 @@ export function fileWriter(): FileWriter | null {
 /** Which file holds one of Ops' public reads; the older paged list has none. */
 export function publicFileFor(opsPath: string): string | null {
   const url = new URL(opsPath, "https://ops.invalid");
-  const keys = [...url.searchParams.keys()];
+  const p = url.searchParams, keys = [...p.keys()].sort().join();
   if (url.pathname !== "/api/discovery") return null;
-  const action = url.searchParams.get("action");
-  if ((action === "lists" || action === "index") && keys.length === 1) return action === "lists" ? PUBLIC_FILES.lists : PUBLIC_FILES.index;
-  const id = url.searchParams.get("public_id") || "";
-  if (action === "detail" && keys.length === 2 && OPS_UUID.test(id)) return PUBLIC_FILES.detail(id);
+  const action = p.get("action");
+  if (action === "lists" && keys === "action") return PUBLIC_FILES.lists;
+  if (action === "days" && keys === "action") return PUBLIC_FILES.days;
+  if (action === "detail" && keys === "action,public_id" && OPS_UUID.test(p.get("public_id") || "")) return PUBLIC_FILES.detail(p.get("public_id")!);
+  if (action === "page" && keys === "action,day,slug" && DAY.test(p.get("day") || "") && SLUG.test(p.get("slug") || ""))
+    return PUBLIC_FILES.page(p.get("day")!, p.get("slug")!);
+  if (action === "topic" && keys === "action,topic_key" && TOPIC.test(p.get("topic_key") || "")) return PUBLIC_FILES.topic(p.get("topic_key")!);
+  if (action === "day" && keys === "action,day" && DAY.test(p.get("day") || "")) return PUBLIC_FILES.day(p.get("day")!);
   return null;
 }
 
@@ -115,7 +127,7 @@ export async function publicJson(opsPath: string, options: {
     let raw: string | null | undefined;
     try { raw = await read(file); } catch { raw = undefined; }
     if (raw !== undefined) {
-      if (raw === null && file.startsWith("public/detail/")) { heard("files"); throw new AccessError("public_item_unavailable", 404); }
+      if (raw === null && ONE_OF.test(file)) { heard("files"); throw new AccessError("public_item_unavailable", 404); }
       if (raw !== null) { try { const value = object(raw); heard("files"); return value; } catch { /* ask Ops */ } }
     }
   }

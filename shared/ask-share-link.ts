@@ -293,15 +293,23 @@ export const isMoved = (share: SharedAnswer | MovedShare | null): share is Moved
 
 // KEYS: the list of shared records. ARGV: prefix, how many. Newest shared first: each shared record
 // that is still there, with its address and when it was shared. A record deleted in Ops leaves the list;
-// a follow-up's address from before 2026-10-15 is not listed (it moves to its conversation's page).
+// a follow-up's address from before 2026-10-15 is not listed (it moves to its conversation's page),
+// nor is a question published on 别人在问什么 (its search page is www.lizheng.ai's, whose sitemap
+// lists it; read from its record's public items since 2026-10-15, not from every public question).
 export const SHARE_LIST_SCRIPT = `${CONVERSATION_HEAD_LUA}
+local function published(prefix,id)
+ for _,item in ipairs(redis.call('SMEMBERS',prefix..'discovery:source-items:'..id)) do
+  if redis.call('ZSCORE',prefix..'discovery:published',item) then return true end
+ end
+ return false
+end
 local out={}
 for _,id in ipairs(redis.call('ZREVRANGE',KEYS[1],0,tonumber(ARGV[2])-1)) do
  local row=redis.call('HMGET',ARGV[1]..'record:'..id,'share_slug','day','status','notice_version','shared_at','conversation_id')
  if not row[3] then
   redis.call('ZREM',KEYS[1],id)
  elseif row[1] and row[1]~='' and row[3]=='answered' and row[4]=='v4' and redis.call('EXISTS',ARGV[1]..'deleted:'..id)==0
-   and (conversation_head(ARGV[1],row[6]) or id)==id then
+   and (conversation_head(ARGV[1],row[6]) or id)==id and not published(ARGV[1],id) then
   out[#out+1]={row[2],row[1],row[5] or ''}
  end
 end
@@ -309,7 +317,7 @@ return out`;
 
 export type ShareListing = { day: string; slug: string; shared_at: string };
 
-/** Shared pages, newest first, for the sitemap: every one of them goes to search engines. */
+/** Shared pages, newest first, for the sitemap: every one not published on 别人在问什么 goes to search engines. */
 export async function listShares(limit = 1000, send: Sender = redis): Promise<ShareListing[]> {
   const result = await send(["EVAL", SHARE_LIST_SCRIPT, 1, SHARES_KEY, OPS_PREFIX, limit]);
   if (!Array.isArray(result)) unavailable();

@@ -3,7 +3,7 @@ import { AccessError, resolveDiscoveryVoter, sameOrigin } from "../shared/ask-ac
 import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscoveryVote } from "../shared/ask-discovery-gateway.js";
 import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
 import { publicJson } from "../shared/ask-public-files.js";
-import { listedCards, publicCard, type PublicCard } from "../shared/ask-public-page.js";
+import { publicDaysFile } from "../shared/ask-public-page.js";
 import { followUpsOfPage } from "../shared/ask-conversation.js";
 import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 
@@ -16,14 +16,12 @@ import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 // minute too, and none come when the database cannot say.
 const SHARED = "public, max-age=0, s-maxage=60, stale-while-revalidate=60";
 
-// How many questions and answers are public, as www.lizheng.ai/ask counts them; the lists stand
-// without it if the index cannot be read.
+// How many questions and answers are public, as www.lizheng.ai/ask counts them (the list of days,
+// one small file, since 2026-10-15); the lists stand without it if that cannot be read.
 async function publicTotal(): Promise<{ total?: number }> {
   try {
-    const index = await publicJson("/api/discovery?action=index");
-    if (!Array.isArray(index?.items)) return {};
-    const cards = index.items.map(publicCard).filter((card: PublicCard | null): card is PublicCard => !!card);
-    return { total: listedCards(cards).length };
+    const days = publicDaysFile(await publicJson("/api/discovery?action=days"));
+    return days ? { total: days.total } : {};
   } catch {
     return {};
   }

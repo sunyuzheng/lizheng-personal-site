@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import { beijingDay, checkHealth, FEED_CAPACITY, HEALTH_KEY, healthMail, watchHealth } from "../shared/ask-health";
+import { beijingDay, checkHealth, HEALTH_KEY, healthMail, watchHealth } from "../shared/ask-health";
+import { DB_WATCH_KEY } from "../shared/ask-db-watch";
 
 const NOW = Date.parse("2026-10-16T04:00:00.000Z");
 const HOUR = 3_600_000;
@@ -11,8 +12,8 @@ function day(change: Record<string, unknown> = {}) {
     [OPS + "day:" + beijingDay(NOW - 24 * HOUR)]: ["questions", "40", "answered", "31", "cancelled", "4", "generating", "0"],
     [OPS + "discovery:curate-health"]: JSON.stringify({ at: NOW - 10 * 60_000, cursor_at: NOW - 40 * 60_000, considered: 2, published: 1, stopped: null }),
     newest: NOW - 40 * 60_000,
-    [OPS + "backup-health"]: JSON.stringify({ at: NOW - 43 * 60_000, day: "2026-10-16", keys: 3000, bytes: 9_000_000 }),
-    items: 420,
+    [OPS + "backup-health"]: JSON.stringify({ at: NOW - 43 * 60_000, day: "2026-10-16", keys: 3000, bytes: 9_000_000, raw_bytes: 40_000_000 }),
+    plan: 268435456,
     ...change,
   };
   const hash = new Map<string, string>();
@@ -20,7 +21,7 @@ function day(change: Record<string, unknown> = {}) {
     const [name, key] = command;
     if (name === "HGETALL" || name === "GET") return values[String(key)] ?? (name === "HGETALL" ? [] : null);
     if (name === "ZREVRANGE") return values.newest === null ? [] : ["synthetic-id", String(values.newest)];
-    if (name === "ZCARD") return values.items;
+    if (name === "HGET" && key === DB_WATCH_KEY) return command[2] === "plan_bytes" && values.plan ? String(values.plan) : null;
     if (name === "HGET") return hash.get(String(command[2])) ?? null;
     if (name === "HSET") { for (let i = 2; i + 1 < command.length; i += 2) hash.set(String(command[i]), String(command[i + 1])); return 1; }
     throw new Error("unexpected " + name);
@@ -65,11 +66,16 @@ describe("daily check", () => {
       .toEqual([]);
   });
 
-  it("notices stale public files, a missing backup and a feed nearly full", async () => {
+  it("notices stale public files, a missing backup and an archive filling its plan", async () => {
     expect(await keys({ files: JSON.stringify({ v: 1, epoch: 9, checked_at: new Date(NOW - 40 * 60_000).toISOString() }) })).toEqual(["files"]);
     expect(await keys({ [OPS + "backup-health"]: null })).toEqual(["backup"]);
     expect(await keys({ [OPS + "backup-health"]: JSON.stringify({ at: NOW - 50 * HOUR }) })).toEqual(["backup"]);
-    expect(await keys({ items: FEED_CAPACITY * 0.8 })).toEqual(["capacity"]);
+    const backup = (raw: number) => JSON.stringify({ at: NOW - HOUR, day: "2026-10-16", keys: 9000, bytes: raw / 5, raw_bytes: raw });
+    expect(await keys({ [OPS + "backup-health"]: backup(190_000_000) })).toEqual(["space"]);
+    expect(await keys({ [OPS + "backup-health"]: backup(180_000_000) })).toEqual([]);
+    // Upgraded to 1GB: room again. Before the database check has read a plan, nothing to compare.
+    expect(await keys({ [OPS + "backup-health"]: backup(190_000_000), plan: 1073741824 })).toEqual([]);
+    expect(await keys({ [OPS + "backup-health"]: backup(190_000_000), plan: null })).toEqual([]);
     // Without the files' token there is nothing to read there; the rest is still checked.
     const { send, fetcher } = day();
     expect(await checkHealth({ send, read: null, fetcher, now: NOW })).toEqual([]);
@@ -83,19 +89,20 @@ describe("daily check", () => {
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
-  it("mails the day's problems once, in plain words, and the capacity warning at most once a week", async () => {
-    const { send, read, fetcher, hash } = day({ items: 4500, [OPS + "backup-health"]: null });
+  it("mails the day's problems once, in plain words, and the space warning at most once a week", async () => {
+    const { send, read, fetcher, hash } = day({ [OPS + "backup-health"]: JSON.stringify({ at: NOW - 40 * HOUR, raw_bytes: 200_000_000 }) });
     const mail = vi.fn();
-    expect(await watchHealth({ send, read, fetcher, mail, now: NOW })).toEqual({ problems: ["backup", "capacity"], mailed: true });
+    expect(await watchHealth({ send, read, fetcher, mail, now: NOW })).toEqual({ problems: ["backup", "space"], mailed: true });
     const sent = mail.mock.calls[0][0];
     expect(sent.subject).toBe("问问立正每日体检：2件事要看一下");
-    expect(sent.text).toContain("1. 没有找到每日备份的记录");
-    expect(sent.key).toBe(`ask-health:${beijingDay(NOW)}:backup,capacity`);
-    expect(hash.get("capacity_mailed_at")).toBe(String(NOW));
-    // The next day, the same full feed is not mentioned again; the backup still is.
+    expect(sent.text).toContain("1. 最近一份每日备份是40小时前");
+    expect(sent.text).toContain("2. 问答存档约191MB，数据库套餐上限256MB");
+    expect(sent.key).toBe(`ask-health:${beijingDay(NOW)}:backup,space`);
+    expect(hash.get("space_mailed_at")).toBe(String(NOW));
+    // The next day, the same full archive is not mentioned again; the backup still is.
     const next = await watchHealth({ send, read, fetcher, mail, now: NOW + 24 * HOUR });
     expect(next.problems).toContain("backup");
-    expect(next.problems).not.toContain("capacity");
+    expect(next.problems).not.toContain("space");
     expect(hash.get(HEALTH_KEY)).toBeUndefined();
     expect(healthMail([{ key: "x", title: "t", detail: "d" }], "2026-10-16").text).toContain("修好后第二天就不再提");
   });

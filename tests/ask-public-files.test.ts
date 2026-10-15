@@ -9,7 +9,7 @@ import type { SharedAnswer } from "../shared/ask-share-link";
 // the store and for Ops. Synthetic questions only.
 const NOW = Date.parse("2026-10-04T20:00:00.000Z");
 const ID = "00000000-0000-4000-8000-000000000001";
-const LISTS = "/api/discovery?action=lists", INDEX = "/api/discovery?action=index";
+const LISTS = "/api/discovery?action=lists", DAYS = "/api/discovery?action=days";
 const DETAIL = `/api/discovery?action=detail&public_id=${ID}`;
 const beat = (ago: number) => JSON.stringify({ v: 1, epoch: 7, checked_at: new Date(NOW - ago).toISOString() });
 function store(files: Record<string, string | Error>) {
@@ -31,8 +31,17 @@ beforeEach(() => forgetHeartbeat());
 describe("what readers see, from files", () => {
   it("knows which file holds each public read, and that the paged list has none", () => {
     expect(publicFileFor(LISTS)).toBe(PUBLIC_FILES.lists);
-    expect(publicFileFor(INDEX)).toBe(PUBLIC_FILES.index);
+    expect(publicFileFor(DAYS)).toBe("public/days.json");
     expect(publicFileFor(DETAIL)).toBe(`public/detail/${ID}.json`);
+    // Since 2026-10-15 each piece by itself: a question by its address, a topic's newest, one day.
+    expect(publicFileFor("/api/discovery?action=page&day=2026-10-14&slug=career-choice")).toBe("public/page/2026-10-14/career-choice.json");
+    expect(publicFileFor(`/api/discovery?action=topic&topic_key=${"a".repeat(32)}`)).toBe(`public/topic/${"a".repeat(32)}.json`);
+    expect(publicFileFor("/api/discovery?action=day&day=2026-10-14")).toBe("public/days/2026-10-14.json");
+    expect(publicFileFor("/api/discovery?action=page&day=2026-10-14&slug=../state")).toBeNull();
+    expect(publicFileFor("/api/discovery?action=topic&topic_key=../../state")).toBeNull();
+    expect(publicFileFor("/api/discovery?action=day&day=latest")).toBeNull();
+    // Every question in one file is no longer read.
+    expect(publicFileFor("/api/discovery?action=index")).toBeNull();
     expect(publicFileFor("/api/discovery?action=list&window=all&sort=recent&limit=10")).toBeNull();
     expect(publicFileFor("/api/discovery?action=detail&public_id=../state")).toBeNull();
     expect(publicFileFor("/api/discovery?action=lists&extra=1")).toBeNull();
@@ -69,8 +78,13 @@ describe("what readers see, from files", () => {
     const ops = fromOps({ from: "ops" });
     await expect(publicJson(DETAIL, { read, ops, now: NOW })).rejects.toMatchObject({ code: "public_item_unavailable", status: 404 });
     expect(ops).not.toHaveBeenCalled();
-    // A missing list is not "gone": Ops answers.
+    // So is a page, a topic or a day they do not have.
+    for (const path of ["/api/discovery?action=page&day=2026-10-14&slug=gone", `/api/discovery?action=topic&topic_key=${"b".repeat(32)}`, "/api/discovery?action=day&day=2026-01-01"])
+      await expect(publicJson(path, { read, ops, now: NOW })).rejects.toMatchObject({ status: 404 });
+    expect(ops).not.toHaveBeenCalled();
+    // A missing list is not "gone": Ops answers. Nor is the list of days.
     expect(await publicJson(LISTS, { read, ops, now: NOW })).toEqual({ from: "ops" });
+    expect(await publicJson(DAYS, { read, ops, now: NOW })).toEqual({ from: "ops" });
   });
 
   it("asks Ops once the heartbeat is stale, so a broken export cannot keep anything up", async () => {
@@ -82,16 +96,16 @@ describe("what readers see, from files", () => {
   });
 
   it("falls back to the last files only when Ops cannot answer either", async () => {
-    const { read } = store({ [PUBLIC_FILES.state]: beat(3_600_000), [PUBLIC_FILES.index]: '{"from":"file"}' });
+    const { read } = store({ [PUBLIC_FILES.state]: beat(3_600_000), [PUBLIC_FILES.days]: '{"from":"file"}' });
     const down = new AccessError("ops_gateway_unavailable");
-    expect(await publicJson(INDEX, { read, ops: fromOps(down), now: NOW })).toEqual({ from: "file" });
+    expect(await publicJson(DAYS, { read, ops: fromOps(down), now: NOW })).toEqual({ from: "file" });
     await expect(publicJson(LISTS, { read, ops: fromOps(down), now: NOW })).rejects.toBe(down);
   });
 
   it("asks Ops when a file cannot be read or parsed", async () => {
-    const { read } = store({ [PUBLIC_FILES.state]: beat(0), [PUBLIC_FILES.lists]: new Error("store down"), [PUBLIC_FILES.index]: "[1,2]" });
+    const { read } = store({ [PUBLIC_FILES.state]: beat(0), [PUBLIC_FILES.lists]: new Error("store down"), [PUBLIC_FILES.days]: "[1,2]" });
     expect(await publicJson(LISTS, { read, ops: fromOps({ from: "ops" }), now: NOW })).toEqual({ from: "ops" });
-    expect(await publicJson(INDEX, { read, ops: fromOps({ from: "ops" }), now: NOW })).toEqual({ from: "ops" });
+    expect(await publicJson(DAYS, { read, ops: fromOps({ from: "ops" }), now: NOW })).toEqual({ from: "ops" });
   });
 
   it("does not trust a heartbeat it cannot read, or one from the future", async () => {

@@ -13,7 +13,8 @@
  * section reports the same way; and the built page itself to shared/ask-app-shell.js, which the
  * shared answer pages (shared/ask-share-page.ts) are made from, so a shared answer opens in this page.
  *
- *   pnpm sync:ask-app [path to ask-lizheng]   (default /Users/sunyuzheng/Desktop/AI/apps/ask-lizheng)
+ *   pnpm sync:ask-app [path to ask-lizheng]   (default /Users/sunyuzheng/Desktop/AI/apps/ask-lizheng; it must be at
+ *   ask-lizheng's latest main, or ahead of it, never behind)
  *
  * Then commit and release this site as usual. See docs/ask-lizheng.md.
  */
@@ -39,9 +40,16 @@ const fail = message => { console.error(`✗ ${message}`); process.exit(1); };
 if (!fs.existsSync(path.join(ASK, "package.json"))) fail(`no ask-lizheng repository at ${ASK}`);
 if (git("status", "--porcelain")) fail(`${ASK} has uncommitted changes; the page must come from a commit`);
 const commit = git("rev-parse", "HEAD");
-let onMain = false;
-try { git("fetch", "-q", "origin", "main"); onMain = !!git("branch", "-r", "--contains", commit, "origin/main"); } catch {}
-if (!onMain) console.warn(`! ${commit.slice(0, 7)} is not on origin/main yet; push it before releasing`);
+// Only ask-lizheng's latest main is released: a copy that is merely an older commit of main would put
+// an older page live (the default path above has been a checkout far behind main).
+let latest = "";
+try { git("fetch", "-q", "origin", "main"); latest = git("rev-parse", "origin/main"); } catch {}
+if (!latest) fail(`could not read ask-lizheng's origin/main from ${ASK}`);
+if (commit !== latest) {
+  const behind = git("rev-list", "--count", `${commit}..origin/main`);
+  if (Number(behind) > 0) fail(`${ASK} is at ${commit.slice(0, 7)}, ${behind} commit(s) behind origin/main; sync from a copy of the latest main`);
+  console.warn(`! ${commit.slice(0, 7)} is not on origin/main yet; push it before releasing`);
+}
 
 const version = dir => JSON.parse(fs.readFileSync(path.join(dir, "node_modules", "@fontsource", "noto-serif-sc", "package.json"), "utf8")).version;
 if (version(ASK) !== version(ROOT)) fail(`@fontsource/noto-serif-sc differs (ask ${version(ASK)}, site ${version(ROOT)}); the page's fonts come from this site`);

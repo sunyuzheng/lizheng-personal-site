@@ -12,6 +12,10 @@ import {
 } from "../shared/guest-data.ts";
 import { getGuestEnglishInsights } from "../shared/guest-insights.ts";
 import {
+  PRODUCT_GUIDE_META,
+  buildProductGuideStructuredData,
+} from "../shared/product-guide.ts";
+import {
   COLLAB_PAGE_META,
   CREATOR_COLLAB_PAGE_META,
   ENTERPRISE_TRAINING_PAGE_META,
@@ -294,6 +298,7 @@ function buildSitemapXml(guests: GuestProfile[]) {
     ...[
       HOME_PAGE_META,
       ABOUT_PAGE_META,
+      PRODUCT_GUIDE_META,
       BOOKS_PAGE_META,
       COLLAB_PAGE_META,
       CREATOR_COLLAB_PAGE_META,
@@ -410,6 +415,10 @@ const homeAlternates = languageAlternates(
 const aboutAlternates = languageAlternates(
   ABOUT_PAGE_META.en.canonical,
   ABOUT_PAGE_META.zh.canonical
+);
+const productGuideAlternates = languageAlternates(
+  PRODUCT_GUIDE_META.en.canonical,
+  PRODUCT_GUIDE_META.zh.canonical
 );
 const booksAlternates = languageAlternates(
   BOOKS_PAGE_META.en.canonical,
@@ -556,6 +565,13 @@ const staticPages: StaticPage[] = [
     ogType: "profile",
     imageAlt: "孙煜征头像",
   },
+  ...(["en", "zh"] as const).map(lang => ({
+    route: lang === "en" ? "/en/for-agents" : "/for-agents",
+    meta: PRODUCT_GUIDE_META[lang],
+    lang,
+    jsonLd: buildProductGuideStructuredData(lang),
+    alternates: productGuideAlternates,
+  })),
   {
     route: "/en/book",
     meta: BOOKS_PAGE_META.en,

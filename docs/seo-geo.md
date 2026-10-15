@@ -46,6 +46,8 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 
 ## 构建与发布检查
 
+产品与资料指南位于`/for-agents`与`/en/for-agents`，为人和AI助手提供机构关系、产品适用场景、价格与权限摘要，以及公开资料入口。两页直接预渲染完整正文，使用self-canonical、双向hreflang和CollectionPage / ItemList结构化数据；从共用导航、页脚、sitemap与`llms.txt`可发现。产品事实owner、核对日期与维护方式见[product-guide.md](product-guide.md)。
+
 - `pnpm check`
 - `pnpm build`
 - `vercel build --yes`

@@ -82,6 +82,7 @@ Later dated calls, each with its original record: in January 2025, that agentic 
 
 Chinese is the site's default language; English versions live under /en.
 
+- [Products & resources](https://www.lizheng.ai/en/for-agents): How Yuzheng Sun, Superlinear Academy, its free community, AI Builders, Stay Superlinear, and enterprise programs fit together. [中文](https://www.lizheng.ai/for-agents).
 - Website, Chinese: [lizheng.ai](https://www.lizheng.ai/)
 - Website, English: [lizheng.ai/en](https://www.lizheng.ai/en)
 - Factual profile, Chinese: [lizheng.ai/about](https://www.lizheng.ai/about)

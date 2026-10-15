@@ -6,6 +6,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 const ZH_TO_EN_PATH: Record<string, string> = {
   "/": "/en",
   "/about": "/en/about",
+  "/for-agents": "/en/for-agents",
   "/book": "/en/book",
   "/collab": "/en/collab",
   "/collab/creators": "/en/collab/creators",

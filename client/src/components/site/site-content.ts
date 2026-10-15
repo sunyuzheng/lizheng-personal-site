@@ -5,7 +5,7 @@ export const CONTACT_EMAIL = "yz@superlinear.academy";
 export const SHOP_URL = "https://shop.lizheng.ai/";
 
 /** Pages reachable from the shared header's "More" menu and the footer. */
-export type SitePage = "about" | "book" | "decks" | "collab";
+export type SitePage = "about" | "book" | "decks" | "collab" | "guide";
 
 /**
  * Homepage sections in page order, keyed by their stable element ids. The books chapter is left
@@ -29,6 +29,12 @@ export const SITE_PAGES: Array<{
   { page: "book", href: "/book", zh: "书", en: "Books" },
   { page: "decks", href: "/decks", zh: "演讲资料", en: "Talks & slides" },
   { page: "collab", href: "/collab", zh: "合作", en: "Collaborate" },
+  {
+    page: "guide",
+    href: "/for-agents",
+    zh: "产品与资料指南",
+    en: "Products & resources",
+  },
 ];
 
 export const SITE_COPY = {

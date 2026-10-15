@@ -5,7 +5,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import handler from "../api/ask-lizheng-share";
 import {
   claimShareBonus, createShare, listShares, quotaDay, readShare, shareBonusOpen, shareRequest,
-  SHARE_BONUS_SCRIPT, SHARE_COUNT_SCRIPT, SHARE_LIST_SCRIPT, SHARE_PAGE_SCRIPT, SHARE_SCRIPT, verifyShareProof,
+  SHARE_BONUS_SCRIPT, SHARE_COUNT_SCRIPT, SHARE_LIST_SCRIPT, SHARE_PAGE_SCRIPT, SHARE_SCRIPT, SHARE_TURNS_MAX, verifyShareProof,
   type SharedAnswer,
 } from "../shared/ask-share-link";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page";
@@ -34,7 +34,7 @@ const answer = (extra: Record<string, unknown> = {}) => ({
 });
 const shared = (extra: Partial<SharedAnswer> = {}): SharedAnswer => ({
   day: "2026-10-04", slug: "career-choice", question: "合成的问题：怎么选方向？", answer: answer() as SharedAnswer["answer"],
-  intent: "understand", created_at: "2026-10-04T02:00:00.000Z", ...extra,
+  intent: "understand", created_at: "2026-10-04T02:00:00.000Z", turns: [], ...extra,
 });
 
 beforeEach(() => {
@@ -125,11 +125,22 @@ describe("storage", () => {
     const send = vi.fn(async () => ["OK", "合成的问题？", JSON.stringify(answer()), "apply", "2026-10-04T02:00:00.000Z"]);
     const page = await readShare("2026-10-04", "career-choice-2", { reader: true, now: NOW, send });
     expect(page).toMatchObject({ day: "2026-10-04", slug: "career-choice-2", question: "合成的问题？", intent: "apply", created_at: "2026-10-04T02:00:00.000Z" });
+    expect(page).toMatchObject({ turns: [] });
     expect(send.mock.calls[0][0]).toEqual(["EVAL", SHARE_PAGE_SCRIPT, 1, "ask-ops:{v3}:share:2026-10-04:career-choice-2", "ask-ops:{v3}:",
-      "2026-10-04", "career-choice-2", 1, `ask-ops:{v3}:usage:day:${usageDay(NOW)}`, "ask-ops:{v3}:usage:total", 400 * 86_400]);
+      "2026-10-04", "career-choice-2", 1, `ask-ops:{v3}:usage:day:${usageDay(NOW)}`, "ask-ops:{v3}:usage:total", 400 * 86_400, SHARE_TURNS_MAX]);
     await readShare("2026-10-04", "career-choice", { reader: false, now: NOW, send });
     expect(send.mock.calls[1][0][7]).toBe(0);
     expect(await readShare("2026-10-04", "career-choice", { reader: true, now: NOW, send: async () => ["MISSING"] })).toBeNull();
+    // A conversation: its first question, then each follow-up answered after it (2026-10-15).
+    const turn = (question: string, intent = "understand") => [question, JSON.stringify(answer()), intent, "2026-10-04T03:00:00.000Z"];
+    const conversation = await readShare("2026-10-04", "career-choice", { reader: false, now: NOW,
+      send: async () => ["OK", ...turn("第一个？"), ...turn("第二个？", "apply"), ...turn("坏的？").map((v, i) => (i === 1 ? "{" : v)), ...turn("第三个？")] });
+    expect(conversation).toMatchObject({ question: "第一个？", turns: [{ question: "第二个？", intent: "apply" }, { question: "第三个？" }] });
+    // A follow-up's own page from before moves to its conversation's.
+    expect(await readShare("2026-10-04", "own-word", { reader: true, now: NOW, send: async () => ["MOVED", "2026-10-03", "career-choice"] }))
+      .toEqual({ moved: { day: "2026-10-03", slug: "career-choice" } });
+    await expect(readShare("2026-10-04", "own-word", { reader: true, now: NOW, send: async () => ["MOVED", "x", "career-choice"] })).rejects.toThrow();
+    await expect(readShare("2026-10-04", "career-choice", { reader: true, now: NOW, send: async () => ["OK", "q", "{}", "understand"] })).rejects.toThrow();
     const untouched = vi.fn();
     for (const [day, slug] of [["2026-1-4", "a"], ["2026-10-04", "UPPER"], ["2026-10-04", "a_b"], ["2026-10-04", "a/b"]])
       expect(await readShare(day, slug, { reader: true, send: untouched })).toBeNull();
@@ -198,6 +209,31 @@ describe("the page", () => {
     expect(html).toContain("也可以接着问");
     expect(renderSharePage(shared({ answer: answer({ sections: [{ heading: "短", body: "太短了。", kind: "synthesis", source_ids: ["S1"] }] }) as SharedAnswer["answer"] })))
       .toContain('content="index, follow, max-snippet:-1, max-image-preview:large"');
+  });
+
+  // 2026-10-15, the owner: a conversation is one page, titled by its first question.
+  it("shows a whole conversation, its first question titling it and each follow-up after it", () => {
+    const html = renderSharePage(shared({ turns: [
+      { question: "合成的追问一？", intent: "understand", created_at: "2026-10-05T02:00:00.000Z", answer: answer({ followups: ["只在最后的追问？"] }) as SharedAnswer["answer"] },
+      { question: "合成的追问二？", intent: "apply", created_at: "2026-10-05T03:00:00.000Z", answer: answer({ followups: ["最后一问的追问？"] }) as SharedAnswer["answer"] },
+    ] }));
+    expect(html).toContain("<title>合成的问题：怎么选方向？ · 问问立正</title>");
+    expect(html.match(/<article class="turn"/g)).toHaveLength(3);
+    expect(html).toContain('<article class="turn" id="answer">');
+    expect(html).toContain('<article class="turn" id="answer-3">');
+    expect(html).toContain("2026年10月5日</time>追问");
+    // Each question's sources and citations have their own anchors.
+    expect(html).toContain('id="t2-source-1"');
+    expect(html).toContain('href="#t3-source-1"');
+    // Only the last answer offers what to ask next (the page's data keeps every answer whole).
+    expect(html.match(/rel="nofollow">[^<]*<\/a>/g)).toEqual(['rel="nofollow">最后一问的追问？</a>']);
+    const data = JSON.parse(html.match(/<script type="application\/json" id="ask-shared">([\s\S]*?)<\/script>/)![1]);
+    expect(data.question).toBe("合成的问题：怎么选方向？");
+    expect(data.turns.map((turn: { question: string }) => turn.question)).toEqual(["合成的追问一？", "合成的追问二？"]);
+    expect(data.turns[1]).toMatchObject({ intent: "apply", created_at: "2026-10-05T03:00:00.000Z" });
+    expect(data.turns.every((turn: { answer: { sources: Record<string, unknown>[] } }) => turn.answer.sources.every(source => !("excerpt" in source)))).toBe(true);
+    // Search engines get the first question as the page's question.
+    expect(html.match(/"@type":"Question"/g)).toHaveLength(1);
   });
 
   it("says plainly when a share is gone", () => {
@@ -411,6 +447,15 @@ describe("the endpoint", () => {
     expect(elsewhere.headers.get("x-robots-tag")).toBe("noindex");
     upstash(() => { throw new Error("down"); });
     expect((await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=career-choice")).statusCode).toBe(503);
+  });
+
+  // 2026-10-15: one conversation, one address. A follow-up's own page from before moves there for good.
+  it("moves a follow-up's own page to its conversation's", async () => {
+    upstash(command => (command[1] === SHARE_PAGE_SCRIPT ? ["MOVED", "2026-10-03", "career-choice"] : null));
+    const moved = await call("/api/ask-lizheng-share?__route=page&day=2026-10-04&slug=own-word");
+    expect(moved.statusCode).toBe(301);
+    expect(moved.headers.get("location")).toBe("https://ask.lizheng.ai/s/2026-10-03/career-choice");
+    expect(moved.headers.get("cache-control")).toBe("no-store");
   });
 
   it("serves the sitemap of pages search engines may index", async () => {

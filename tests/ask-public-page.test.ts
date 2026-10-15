@@ -125,6 +125,27 @@ describe("one address on both sites", () => {
   });
 });
 
+// 2026-10-15: a question's page is its whole conversation, the follow-ups under its answer.
+describe("a conversation on one page", () => {
+  it("shows each follow-up after the answer, with its own sources, and asks next from the last", () => {
+    const followUp = (question: string, followups: string[]) => ({ question, created_at: "2026-10-15T02:00:00.000Z",
+      answer: { ...detail(2, question).answer, followups } });
+    const html = renderQuestionPage({ ...detail(1, "一个合成的问题？"), share_url: "https://ask.lizheng.ai/s/2026-10-14/career-choice" },
+      { related: [], similar: 0, indexable: true, followUps: [followUp("合成的追问一？", ["不该出现的建议？"]), followUp("合成的追问二？", ["最后的建议？"])] });
+    expect(html).toContain("<span>追问2次</span>");
+    expect(html).toContain('<section class="turn" id="answer-2" aria-labelledby="question-2">');
+    expect(html).toContain('<h2 class="turn-question" id="question-3">');
+    expect(html).toContain("合成的追问二？");
+    expect(html).toContain('id="t3-source-1"');
+    expect(html.indexOf("合成的追问二？")).toBeLessThan(html.indexOf("你也有想问的？"));
+    expect(html).toContain("最后的建议？");
+    expect(html).not.toContain("不该出现的建议？");
+    // The page's question for search engines stays the first one.
+    expect(html.match(/"@type":"Question"/g)).toHaveLength(1);
+    expect(renderQuestionPage(detail(1, "一个合成的问题？"), { related: [], similar: 0, indexable: true })).not.toContain('class="turn"');
+  });
+});
+
 type Reply = { status: number; headers: Record<string, string>; body: string };
 async function call(path: string, host = "www.lizheng.ai", method = "GET"): Promise<Reply> {
   const req = Readable.from([]);

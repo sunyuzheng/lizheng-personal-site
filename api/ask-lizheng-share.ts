@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, accessEnabled, resolveIdentity } from "../shared/ask-access.js";
 import { discoveryRequestBody } from "../shared/ask-discovery-gateway.js";
-import { claimShareBonus, countShare, countShareView, createShare, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, type ShareBonus } from "../shared/ask-share-link.js";
+import { claimShareBonus, countShare, countShareView, createShare, isMoved, listShares, readShare, SHARE_BODY_LIMIT, shareRequest, shareUrl, type ShareBonus } from "../shared/ask-share-link.js";
 import { renderPublicAnswerPage, renderShareMissingPage, renderSharePage, renderShareSitemap } from "../shared/ask-share-page.js";
 import { copySharedAnswer, publicJson, readShareCopy } from "../shared/ask-public-files.js";
 import { loadPublicCards, wwwPageOf } from "../shared/ask-public-cards.js";
@@ -12,7 +12,8 @@ import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/as
 //   POST /api/ask-lizheng/share on www.lizheng.ai and ask.lizheng.ai, from the page itself;
 //   GET ask.lizheng.ai/s/<date>/<word> (page) and ask.lizheng.ai/s/sitemap.xml (sitemap); a page of a
 //   question published on 别人在问什么 points search engines at its page on www.lizheng.ai (same
-//   address, /ask/<date>/<word>), whose sitemap lists it instead (2026-10-14);
+//   address, /ask/<date>/<word>), whose sitemap lists it instead (2026-10-14); a page is a whole
+//   conversation, and a follow-up's own address from before 2026-10-15 moves to it (301);
 //   GET ask.lizheng.ai/q/<id> (public): a question from 别人在问什么, as its card shared it before
 //   2026-10-14: it goes to the question's own page (share_url), or shows the answer if it has none.
 // The page is ask.lizheng.ai's own (shared/ask-share-page.ts): its scripts, its API on this origin,
@@ -55,7 +56,12 @@ async function page(req: IncomingMessage, res: ServerResponse, url: URL) {
       if (!share) throw error;
     }
     if (!share) send(res, 404, html, renderShareMissingPage(), headers);
-    else send(res, 200, html, renderSharePage({ ...share, answer: withPlainSourceLabels(share.answer) }, { searchPage: await searchPage }), headers);
+    // A follow-up's own page from before 2026-10-15 is now its conversation's (one conversation, one address).
+    else if (isMoved(share)) {
+      const to = shareUrl(share.moved.day, share.moved.slug);
+      send(res, 301, "text/plain; charset=utf-8", to, { ...headers, Location: to });
+    } else send(res, 200, html, renderSharePage({ ...share, answer: withPlainSourceLabels(share.answer),
+      turns: share.turns.map(turn => ({ ...turn, answer: withPlainSourceLabels(turn.answer) })) }, { searchPage: await searchPage }), headers);
   } catch {
     send(res, 503, "text/plain; charset=utf-8", "这个分享暂时打不开，请稍后再试。", { ...own, "Cache-Control": "no-store", "Retry-After": "60" });
   }

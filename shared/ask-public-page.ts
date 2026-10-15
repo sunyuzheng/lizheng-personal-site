@@ -4,7 +4,9 @@
  * the first HTML a crawler reads. /ask lists them and /ask/sitemap.xml names them for search
  * engines. The questions were published from Ops as they were asked (see docs/ask-lizheng.md); a
  * withdrawn one stops existing here as well. Each also has its own page in 问问立正,
- * ask.lizheng.ai/s/<day>/<word> (share_url, since 2026-10-14), the page its asker got.
+ * ask.lizheng.ai/s/<day>/<word> (share_url, since 2026-10-14), the page its asker got. A question is a
+ * whole conversation (2026-10-15): its page shows the follow-ups asked after it, read from the live
+ * records, under the first answer.
  *
  * Only the first wording of a question is indexed: the same question asked in other words (see
  * ask-question-shape.ts) keeps its page for links but asks search engines not to index it, and an
@@ -192,24 +194,25 @@ const isoDay = (iso: string) => new Date(Date.parse(iso) + 8 * 3_600_000).toISOS
  * One answer paragraph as HTML: escaped text, **strong**, links reduced to their words (answers
  * never link out in the text), and [S3] as a footnote number joined to the word it marks.
  */
-function inline(value: string, ids: Set<string>): string {
+// `anchor` starts the id of each source a mark links to: source-1, or t2-source-1 for a follow-up's.
+function inline(value: string, ids: Set<string>, anchor = "source-"): string {
   const plain = value.replace(/\[([^\]]+)\]\((?:[^)]+)\)/g, "$1").replace(/\s+(?=\[S\d{1,2}\])/g, "");
   // Marks side by side ([S1][S2]) read as 1,2, not as 12.
   return plain.split(/((?:\[S\d{1,2}\]\s*)+)/g).map(part => {
     if (/^(?:\[S\d{1,2}\]\s*)+$/.test(part)) {
       const marks = [...part.matchAll(/S(\d{1,2})/g)].filter(m => ids.has(`S${m[1]}`))
-        .map(m => `<a class="cite" href="#source-${m[1]}" aria-label="出处${m[1]}">${m[1]}</a>`);
+        .map(m => `<a class="cite" href="#${anchor}${m[1]}" aria-label="出处${m[1]}">${m[1]}</a>`);
       return marks.length ? `\u2060${marks.join('<span class="cite-sep">,</span>')}` : "";
     }
     return escapeHtml(part).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
   }).join("");
 }
-export function paragraphs(value: string, ids: Set<string>): string {
+export function paragraphs(value: string, ids: Set<string>, anchor = "source-"): string {
   return value.split(/\n\s*\n/).map(block => block.trim()).filter(Boolean).map(block => {
     const lines = block.split("\n").map(line => line.trim()).filter(Boolean);
     if (lines.length > 1 && lines.every(line => /^([-*•]|\d+[.、])\s+/.test(line)))
-      return `<ul>${lines.map(line => `<li>${inline(line.replace(/^([-*•]|\d+[.、])\s+/, ""), ids)}</li>`).join("")}</ul>`;
-    return `<p>${inline(lines.join(""), ids)}</p>`;
+      return `<ul>${lines.map(line => `<li>${inline(line.replace(/^([-*•]|\d+[.、])\s+/, ""), ids, anchor)}</li>`).join("")}</ul>`;
+    return `<p>${inline(lines.join(""), ids, anchor)}</p>`;
   }).join("");
 }
 export const plainText = (value: string) => value.replace(/\[([^\]]+)\]\((?:[^)]+)\)/g, "$1").replace(/\[S\d{1,2}\]/g, "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
@@ -284,6 +287,13 @@ a{color:inherit;text-decoration:none}h1,h2,h3,p,ol,ul{margin:0}
 .source-meta .member{color:var(--member);font-weight:600}
 .source-meta span+span::before{content:"·";margin:0 7px;color:var(--faint)}
 .source-reason{grid-column:2;margin-top:6px;font-size:14px;line-height:1.8;color:var(--ink-2)}
+.turn{margin-top:64px;padding-top:26px;border-top:2px solid var(--ink);scroll-margin-top:24px}
+.turn-kicker{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.turn-kicker span+span::before{content:"·";margin:0 8px}
+.turn-question{margin:10px 0 20px;font:900 clamp(23px,2.8vw,30px)/1.38 var(--serif);letter-spacing:.005em;font-feature-settings:"palt"}
+.section h3{font-size:18.5px;font-weight:700;line-height:1.5}
+.turn .block{margin-top:40px}
+.turn .block>h3{padding-bottom:10px;border-bottom:1px solid var(--ink);font:700 17px/1.4 var(--serif);letter-spacing:.02em}
 .next{margin-top:56px;padding:28px 0 0;border-top:2px solid var(--ink)}
 .next h2{font:900 clamp(22px,2.4vw,26px)/1.35 var(--serif)}
 .next p{margin-top:10px;color:var(--ink-2)}
@@ -362,14 +372,53 @@ ${options.body}
 const askLink = (question: string) => `${ASK_APP}?q=${encodeURIComponent(question)}`;
 
 /** One published question and its answer, as the page a search result opens. */
+/** A follow-up asked after the question, as its page shows it. */
+export type PageFollowUp = { question: string; created_at: string; answer: PublicAnswer };
+
+/** One follow-up under the first answer: #answer-<n> (n from 2), its sources #t<n>-source-<id>. */
+function followUpSection(turn: PageFollowUp, n: number): string {
+  const { answer } = turn;
+  const ids = new Set(answer.sources.map(source => source.id));
+  const anchor = `t${n}-source-`;
+  const sections = answer.sections.map(section => {
+    const marked = /\[S\d{1,2}\]/.test(section.body);
+    const loose = marked ? "" : section.source_ids.filter(id => ids.has(id))
+      .map(id => `<a class="cite" href="#${anchor}${id.slice(1)}" aria-label="出处${id.slice(1)}">${id.slice(1)}</a>`).join(" ");
+    const kind = KIND[section.kind] ? `<span class="kind kind-${escapeHtml(section.kind)}">${KIND[section.kind]}</span>` : "";
+    return `<section class="section"><div class="section-head"><h3>${escapeHtml(section.heading)}</h3>${kind}</div>${paragraphs(section.body, ids, anchor)}${loose ? `<p class="cites">出处 ${loose}</p>` : ""}</section>`;
+  }).join("\n");
+  const limits = answer.limitations
+    ? `<div class="limits">${paragraphs(answer.limitations.replace(/\[?\b(S\d{1,2})\b\]?/g, "[$1]"), ids, anchor)}</div>` : "";
+  const sources = answer.sources.map(source => {
+    let kind: string;
+    try { kind = sourceKind(source); } catch { return ""; }
+    const attribution = sourceAttributionLabel(source);
+    const meta = [`<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, attribution ? `<span>${escapeHtml(attribution)}</span>` : "", source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join("");
+    return `<li class="source" id="${anchor}${source.id.slice(1)}"><span class="num">${source.id.slice(1)}</span><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener" data-to="source">${escapeHtml(source.title)}<span class="ext" aria-hidden="true">↗</span></a><p class="source-meta">${meta}</p>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</li>`;
+  }).filter(Boolean).join("\n");
+  const when = turn.created_at && Number.isFinite(Date.parse(turn.created_at)) ? `<span>${escapeHtml(chineseDate(turn.created_at))}</span>` : "";
+  return `<section class="turn" id="answer-${n}" aria-labelledby="question-${n}">
+<p class="turn-kicker"><span>追问</span>${when}</p>
+<h2 class="turn-question" id="question-${n}">${phrases(turn.question)}</h2>
+<div class="summary">${paragraphs(answer.summary, ids, anchor)}</div>
+${sections}
+${limits}
+${sources ? `<section class="block"><h3>出处</h3><ol class="sources">\n${sources}\n</ol></section>` : ""}
+</section>`;
+}
+
 export function renderQuestionPage(detail: PublicDetail, context: {
   card?: PublicCard; related: PublicCard[]; similar: number; indexable: boolean;
+  // The follow-ups asked after it in the same conversation (2026-10-15), oldest first.
+  followUps?: PageFollowUp[];
 }): string {
   const { answer } = detail;
+  const followUps = context.followUps ?? [];
   const ids = new Set(answer.sources.map(source => source.id));
   const url = pageUrl(detail);
   const askedAt = context.card?.asked_at;
-  const kicker = [detail.topic_label, askedAt ? `${chineseDate(askedAt)}提问` : "常被问到", context.similar >= 2 ? `${context.similar}次类似提问` : ""]
+  const kicker = [detail.topic_label, askedAt ? `${chineseDate(askedAt)}提问` : "常被问到", followUps.length ? `追问${followUps.length}次` : "",
+    context.similar >= 2 ? `${context.similar}次类似提问` : ""]
     .filter(Boolean).map(part => `<span>${escapeHtml(part)}</span>`).join("");
   const sections = answer.sections.map(section => {
     const marked = /\[S\d{1,2}\]/.test(section.body);
@@ -386,8 +435,10 @@ export function renderQuestionPage(detail: PublicDetail, context: {
     const meta = [`<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, attribution ? `<span>${escapeHtml(attribution)}</span>` : "", source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join("");
     return `<li class="source" id="source-${source.id.slice(1)}"><span class="num">${source.id.slice(1)}</span><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener" data-to="source">${escapeHtml(source.title)}<span class="ext" aria-hidden="true">↗</span></a><p class="source-meta">${meta}</p>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</li>`;
   }).join("\n");
-  const followups = answer.followups.length
-    ? `<ul class="asks">${answer.followups.map(q => `<li><a href="${escapeHtml(askLink(q))}" rel="nofollow" data-to="followup">${escapeHtml(q)}</a></li>`).join("")}</ul>` : "";
+  // What to ask next: the last answer's suggestions.
+  const next = (followUps.at(-1)?.answer ?? answer).followups;
+  const followups = next.length
+    ? `<ul class="asks">${next.map(q => `<li><a href="${escapeHtml(askLink(q))}" rel="nofollow" data-to="followup">${escapeHtml(q)}</a></li>`).join("")}</ul>` : "";
   const related = context.related.length ? `<section class="block" aria-labelledby="related"><h2 id="related">别人还问了</h2><ul class="list">${context.related.map(row).join("\n")}</ul><a class="all" href="/ask" data-to="index">所有问题 →</a></section>` : "";
   const description = clip(plainText(answer.summary) || detail.question, 110);
   const jsonLd = {
@@ -419,6 +470,7 @@ export function renderQuestionPage(detail: PublicDetail, context: {
 ${sections}
 ${limits}
 ${sources ? `<section class="block" aria-labelledby="sources"><h2 id="sources">出处</h2><ol class="sources">\n${sources}\n</ol></section>` : ""}
+${followUps.map((turn, i) => followUpSection(turn, i + 2)).join("\n")}
 <section class="next" aria-labelledby="ask-own"><h2 id="ask-own">你也有想问的？</h2><p>卡住的时候，问问立正：回答附有出处，可以点回原文核对。</p><div class="buttons">${detail.share_url ? `<a class="button" href="${escapeHtml(detail.share_url)}" data-to="continue">在问问立正里接着问</a>` : ""}<a class="button${detail.share_url ? " line" : ""}" href="${escapeHtml(askLink(detail.question))}" rel="nofollow" data-to="similar">问类似的问题</a></div>${followups ? `<p>也可以接着问：</p>${followups}` : ""}</section>
 ${related}
 </article>`,
@@ -443,7 +495,7 @@ export function renderIndexPage(cards: PublicCard[]): string {
   const reps = representatives(cards);
   const all = listedCards(cards);
   const listed = all.slice(0, 500).map(card => ({ ...card, similar: similarAskings(card, cards, reps) }));
-  const description = "别人问问立正的真实问题，由AI挑选后原样展示。回答来自立正公开的文章和视频，附出处。";
+  const description = "别人问问立正的真实问题，原样展示。回答来自立正公开的文章和视频，附出处。";
   return frame({
     title: "别人在问什么 · 问问立正", description, canonical: ASK_INDEX, type: "website", robots: "index, follow",
     jsonLd: {
@@ -453,7 +505,7 @@ export function renderIndexPage(cards: PublicCard[]): string {
       mainEntity: { "@type": "ItemList", numberOfItems: listed.length,
         itemListElement: listed.slice(0, 100).map((card, i) => ({ "@type": "ListItem", position: i + 1, url: pageUrl(card), name: card.question })) },
     },
-    head: `<div class="head"><p class="kicker"><span>问问立正</span>${all.length ? `<span>${all.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，由AI挑选后原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
+    head: `<div class="head"><p class="kicker"><span>问问立正</span>${all.length ? `<span>${all.length}个问题</span>` : ""}</p><h1>别人在问什么</h1><p class="lede">真实的提问，原样展示。回答来自立正公开的文章和视频，每条都附出处。</p><a class="button" href="${ASK_APP}" data-to="ask">问你自己的问题</a></div>`,
     body: `<div class="body">${listed.length ? `<ul class="list">\n${listed.map(row).join("\n")}\n</ul>` : `<p class="note">还没有公开的问题。</p>`}</div>`,
   });
 }

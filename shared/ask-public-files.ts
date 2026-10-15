@@ -14,12 +14,14 @@
  *   2026-10-14 as the answer is archived, just after replying to Builder) and again when it is shared.
  *   The page still reads the live record (a deleted record is gone at once, and the view is counted)
  *   and uses the copy only when the database cannot answer. Ops deletes the copy before the record.
+ *   The copy is the conversation's first question alone: Ops deletes a follow-up without touching
+ *   the copy, so its text is never kept there.
  */
 import { get, put } from "@vercel/blob";
 import { AccessError } from "./ask-access.js";
 import { archivedAnswer } from "./ask-archive-answer.js";
 import { fetchOpsJson, OPS_GATEWAY_MAX_RESPONSE_BYTES, OPS_UUID } from "./ask-ops-gateway.js";
-import { readShare, SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./ask-share-link.js";
+import { isMoved, readShare, SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./ask-share-link.js";
 
 export const PUBLIC_FILES = {
   state: "public/state.json",
@@ -126,11 +128,13 @@ export async function publicJson(opsPath: string, options: {
   }
 }
 
-/** Keeps a copy of a shared answer for when the database cannot answer. Never fails the share. */
+/** Keeps a copy of a shared answer for when the database cannot answer: the conversation's first
+ * question and its answer, never its follow-ups. Never fails the share. */
 export async function saveShareCopy(share: SharedAnswer, write: FileWriter | null = fileWriter()) {
   if (!write) return false;
   try {
-    await write(shareFile(share.day, share.slug), JSON.stringify({ v: 1, ...share }));
+    const { day, slug, question, answer, intent, created_at } = share;
+    await write(shareFile(day, slug), JSON.stringify({ v: 1, day, slug, question, answer, intent, created_at }));
     return true;
   } catch { return false; }
 }
@@ -140,7 +144,7 @@ export async function copySharedAnswer(day: string, slug: string, write: FileWri
   if (!write) return false;
   try {
     const share = await readShare(day, slug, { reader: false });
-    return share ? await saveShareCopy(share, write) : false;
+    return share && !isMoved(share) ? await saveShareCopy(share, write) : false;
   } catch { return false; }
 }
 
@@ -154,6 +158,6 @@ export async function readShareCopy(day: string, slug: string, read: FileReader 
     const answer = archivedAnswer(value.answer, true);
     if (value.v !== 1 || value.day !== day || value.slug !== slug || typeof value.question !== "string" || !value.question.trim() ||
         answer.status !== "answered" || typeof value.intent !== "string" || typeof value.created_at !== "string") return null;
-    return { day, slug, question: value.question.trim(), answer, intent: value.intent, created_at: value.created_at };
+    return { day, slug, question: value.question.trim(), answer, intent: value.intent, created_at: value.created_at, turns: [] };
   } catch { return null; }
 }

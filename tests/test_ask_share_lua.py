@@ -37,17 +37,20 @@ def r():
 def rid(n): return str(UUID(int=n))
 
 
-def record(r, n=1, day=D, notice=('v4', '0', ''), status='answered', intent='understand', question='一个合成的问题？', body=BODY):
-    """A record as the site's writer stores it: start, then finish."""
-    i = rid(n)
-    keys = [P+'record:'+i, P+'deleted:'+i, P+'records', P+'conversation:'+'c'*64, P+'sequence:'+'c'*64, P+'total',
+def record(r, n=1, day=D, notice=('v4', '0', ''), status='answered', intent='understand', question='一个合成的问题？', body=BODY,
+           conversation=None, word=''):
+    """A record as the site's writer stores it: start, then finish (with the page's word, as Builder sends it).
+    Each question is its own conversation unless a test puts several in one."""
+    i, c = rid(n), conversation or '%064x' % n
+    keys = [P+'record:'+i, P+'deleted:'+i, P+'records', P+'conversation:'+c, P+'sequence:'+c, P+'total',
             P+'day:'+day, P+'visitors', P+'day-visitors:'+day, P+'conversations', P+'day-conversations:'+day]
     assert r.eval(OPS['OPS_START_SCRIPT'], len(keys), *keys, 'synthetic'+i, i, question, day+'T02:00:00.000Z',
-                  'deepseek-v4-flash', 'a'*64, 'c'*64, intent, 'standalone', len(question), day, 1, *notice) == 1
+                  'deepseek-v4-flash', 'a'*64, c, intent, 'standalone', len(question), day, 1, *notice) == 1
     answer = {'status': status, 'summary': '合成摘要[S1]。', 'sections': [{'heading': '合成小标题', 'body': body, 'source_ids': ['S1'], 'kind': 'synthesis'}],
               'sources': [{'id': 'S1', 'title': '合成出处', 'url': 'https://example.test/a'}], 'followups': [], 'clarifying_questions': [], 'limitations': ''}
     if status != 'generating':
-        assert r.eval(OPS['OPS_FINISH_SCRIPT'], 2, P+'record:'+i, P+'total', status, 1200, P, json.dumps(answer, ensure_ascii=False), '')[0] == 1
+        page = [word, i, day+'T02:01:00.000Z', 900] if word else []
+        assert r.eval(OPS['OPS_FINISH_SCRIPT'], 2, P+'record:'+i, P+'total', status, 1200, P, json.dumps(answer, ensure_ascii=False), '', *page)[0] == 1
     return i
 
 
@@ -57,8 +60,8 @@ def share(r, n=1, word='career-choice', count=1, surface='ask', at=1000):
                   count, surface, U+'day:20730', U+'total', 400*86400, at)
 
 
-def page(r, slug='career-choice', day=D, count=1):
-    return r.eval(SHARE['SHARE_PAGE_SCRIPT'], 1, P+'share:'+day+':'+slug, P, day, slug, count, U+'day:20730', U+'total', 400*86400)
+def page(r, slug='career-choice', day=D, count=1, most=40):
+    return r.eval(SHARE['SHARE_PAGE_SCRIPT'], 1, P+'share:'+day+':'+slug, P, day, slug, count, U+'day:20730', U+'total', 400*86400, most)
 
 
 def test_a_share_takes_its_question_day_and_word_once(r):
@@ -200,6 +203,89 @@ def test_a_page_made_when_the_answer_was_archived_is_the_one_its_asker_finds(r):
     assert share(r, count=0) == ['SHARED', 'career-choice', D]
     assert page(r)[0] == 'OK'
     assert r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000) == [[D, 'career-choice', '2026-10-04T02:01:00.000Z']]
-    # Another record asked the same day with the same word takes the next address either way.
+    # Another conversation asked the same day with the same word takes the next address either way.
     record(r, 2)
     assert share(r, 2) == ['NEW', 'career-choice-2', D]
+
+
+C = 'c' * 64
+
+
+def test_a_conversation_s_page_shows_its_follow_ups_in_order(r):
+    # 2026-10-15, the owner: one conversation, one address, titled by its first question.
+    record(r, 1, conversation=C, question='第一个问题？', word='career-choice')
+    record(r, 2, conversation=C, question='第二个问题？', word='other-word', day='2026-10-05')
+    record(r, 3, conversation=C, question='没答完的追问？', status='error')
+    record(r, 4, conversation=C, question='第三个问题？', word='third-word', intent='apply')
+    ok = page(r)
+    assert ok[0] == 'OK' and (len(ok) - 1) % 4 == 0
+    turns = [ok[i:i+4] for i in range(1, len(ok), 4)]
+    assert [t[0] for t in turns] == ['第一个问题？', '第二个问题？', '第三个问题？']
+    assert [t[2] for t in turns] == ['understand', 'understand', 'apply']
+    assert turns[1][3] == '2026-10-05T02:00:00.000Z'
+    assert all(json.loads(t[1])['status'] == 'answered' for t in turns)
+    # One reader, counted once, whatever the page holds.
+    assert r.hget(U+'total', 'all:share_view') == '1'
+    # At most `most` questions.
+    assert len(page(r, count=0, most=2)) == 1 + 4*2
+
+
+def test_a_follow_up_shares_its_conversation_s_page(r):
+    record(r, 1, conversation=C, word='career-choice')
+    record(r, 2, conversation=C, word='other-word')
+    assert share(r, 2, word='other-word') == ['SHARED', 'career-choice', D]
+    assert not r.hget(P+'record:'+rid(2), 'share_slug')
+    # The first question's page made only now (from before 2026-10-14): the follow-up's share makes it.
+    record(r, 3, conversation='d'*64)
+    record(r, 4, conversation='d'*64)
+    assert share(r, 4, word='fresh-word') == ['NEW', 'fresh-word', D]
+    assert r.get(P+'share:'+D+':fresh-word') == rid(3) and r.zscore(SHARES, rid(3)) == 1000
+
+
+def test_a_follow_up_s_own_page_from_before_moves_to_its_conversation(r):
+    record(r, 1, conversation=C, word='career-choice')
+    record(r, 2, conversation=C)
+    # A follow-up given its own page before 2026-10-15.
+    r.hset(P+'record:'+rid(2), 'share_slug', 'own-word'); r.set(P+'share:'+D+':own-word', rid(2)); r.zadd(SHARES, {rid(2): 5})
+    assert page(r, slug='own-word') == ['MOVED', D, 'career-choice']
+    assert r.hget(U+'total', 'all:share_view') is None
+    # Not listed for search: its conversation's page is.
+    assert r.eval(SHARE['SHARE_LIST_SCRIPT'], 1, SHARES, P, 1000) == [[D, 'career-choice', D+'T02:01:00.000Z']]
+
+
+def test_a_follow_up_s_page_whose_first_question_had_none_shows_the_conversation_there(r):
+    record(r, 1, conversation=C, question='第一个问题？')
+    record(r, 2, conversation=C, question='第二个问题？')
+    r.hset(P+'record:'+rid(2), 'share_slug', 'own-word'); r.set(P+'share:'+D+':own-word', rid(2))
+    ok = page(r, slug='own-word')
+    assert ok[0] == 'OK' and [ok[1], ok[5]] == ['第一个问题？', '第二个问题？'] and len(ok) == 9
+
+
+def test_deleting_a_conversation_s_first_question_takes_its_pages(r):
+    record(r, 1, conversation=C, word='career-choice')
+    record(r, 2, conversation=C)
+    r.hset(P+'record:'+rid(2), 'share_slug', 'own-word'); r.set(P+'share:'+D+':own-word', rid(2))
+    # As Ops deletes it: the record, its place in the conversation, a tombstone.
+    r.delete(P+'record:'+rid(1)); r.zrem(P+'conversation:'+C, rid(1)); r.set(P+'deleted:'+rid(1), '1')
+    assert page(r) == ['MISSING'] and page(r, slug='own-word') == ['MISSING']
+    assert share(r, 2)[0] == 'GONE'
+
+
+def test_deleting_a_follow_up_leaves_it_off_the_page(r):
+    record(r, 1, conversation=C, question='第一个问题？', word='career-choice')
+    record(r, 2, conversation=C, question='第二个问题？')
+    record(r, 3, conversation=C, question='第三个问题？')
+    r.delete(P+'record:'+rid(2)); r.zrem(P+'conversation:'+C, rid(2))
+    ok = page(r)
+    assert [ok[1], ok[5]] == ['第一个问题？', '第三个问题？'] and len(ok) == 9
+
+
+def test_a_question_asked_again_right_after_itself_shows_once(r):
+    # A retry whose first try was answered but never reached the page: the asker saw one answer.
+    record(r, 1, conversation=C, question='第一个问题？', word='career-choice')
+    record(r, 2, conversation=C, question='第一个问题？')
+    record(r, 3, conversation=C, question='第二个问题？')
+    record(r, 4, conversation=C, question='第二个问题？')
+    record(r, 5, conversation=C, question='第一个问题？')
+    ok = page(r)
+    assert [ok[i] for i in range(1, len(ok), 4)] == ['第一个问题？', '第二个问题？', '第一个问题？']

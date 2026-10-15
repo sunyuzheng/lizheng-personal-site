@@ -13,7 +13,7 @@ const ID = "01234567-89ab-4cde-8f01-23456789abcd";
 const rawDetail = (answer = fixture()) => ({ public_id: ID, revision: 1, topic_key: "a".repeat(32), topic_label: "Synthetic topic",
   question: "Synthetic question", published_at: "2026-10-01T00:00:00Z", updated_at: "2026-10-01T00:00:00Z", answer });
 const shared = (answer = fixture()): SharedAnswer => ({ day: "2026-10-01", slug: "synthetic-question", question: "Synthetic question",
-  intent: "understand", created_at: "2026-10-01T00:00:00Z", answer });
+  intent: "understand", created_at: "2026-10-01T00:00:00Z", answer, turns: [] });
 const variants = [
   { name: "unknown", fields: { data_layer: "raw", speaker_id: "unknown", speaker_name: "", speaker_classification: "mixed-or-unresolved" }, label: "说话人待核" },
   { name: "known", fields: { data_layer: "raw", speaker_id: "guest:synthetic", speaker_name: "Synthetic speaker", speaker_classification: "mixed-or-unresolved" }, label: "发言：Synthetic speaker" },

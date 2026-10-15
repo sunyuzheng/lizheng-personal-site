@@ -65,6 +65,30 @@ local function take_address(prefix,day,word,id)
  end
  return ''
 end`;
+/**
+ * Lua: the record whose page a conversation is, or nil while none of its questions is answered.
+ * A conversation is one question with one page (2026-10-15, the owner: 多轮对话应该在同一个 URL 里边,
+ * titled by its first question): its first question answered under the v4 notice. Its follow-ups
+ * are shown on that page, after it, and have no address of their own. Kept once found
+ * (conversation-head:<conversation>), so deleting that question takes the whole page with it rather
+ * than putting a follow-up in its place; a conversation from before 2026-10-15 is found on first need.
+ * Ops (ask-lizheng-ops) runs the same text to publish a conversation once, by this question.
+ */
+export const CONVERSATION_HEAD_LUA = `
+local function conversation_head(prefix,conversation)
+ if not conversation or conversation == '' then return nil end
+ local pin=prefix..'conversation-head:'..conversation
+ local head=redis.call('GET',pin)
+ if head then return head end
+ for _,id in ipairs(redis.call('ZRANGE',prefix..'conversation:'..conversation,0,-1)) do
+  local row=redis.call('HMGET',prefix..'record:'..id,'status','notice_version')
+  if row[1] == 'answered' and row[2] == 'v4' then
+   redis.call('SET',pin,id)
+   return id
+  end
+ end
+ return nil
+end`;
 export type Sender = (command: (string | number)[]) => Promise<unknown>;
 function fail(): never {
   throw new AccessError("invalid_request", 400);
@@ -233,11 +257,13 @@ return 1`;
 // word ('' for none), record id, time (ISO) and time (ms). Finishes a generating record once; then an
 // answered v4 question gets its page (2026-10-14, the owner: the page exists once the question is
 // answered, without anyone sharing it; since 2026-10-15 a question about the asker's own situation
-// too, as every answered question is published). A retry finds the record finished and its page made.
-// Returns {finished now (1|0), slug, day}.
-export const OPS_FINISH_SCRIPT = `${PAGE_ADDRESS_LUA}
+// too, as every answered question is published). A follow-up's answer goes on its conversation's page
+// (CONVERSATION_HEAD_LUA), which is returned as its page, made now if that question had none yet. A
+// retry finds the record finished and its page made. Returns {finished now (1|0), slug, day}: the
+// page's, which for a follow-up is its conversation's, made on that question's day.
+export const OPS_FINISH_SCRIPT = `${PAGE_ADDRESS_LUA}${CONVERSATION_HEAD_LUA}
 if redis.call('EXISTS',KEYS[1]) == 0 then return {0,'',''} end
-local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','share_slug')
+local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','share_slug','conversation_id')
 local status,day,done=row[1],row[2] or '',0
 if status == 'generating' then
  redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
@@ -249,12 +275,21 @@ if status == 'generating' then
  end
  status,done=ARGV[1],1
 end
-local slug=row[4] or ''
-if slug == '' and (ARGV[6] or '') ~= '' and status == 'answered' and row[3] == 'v4' and day ~= '' then
- slug=take_address(ARGV[3],day,ARGV[6],ARGV[7])
- if slug ~= '' then
-  redis.call('HSET',KEYS[1],'share_slug',slug,'shared_at',ARGV[8])
-  redis.call('ZADD',ARGV[3]..'shares',tonumber(ARGV[9]),ARGV[7])
+local slug,page,id=row[4] or '',KEYS[1],ARGV[7]
+if status == 'answered' and row[3] == 'v4' and day ~= '' then
+ local head=conversation_head(ARGV[3],row[5])
+ if head and head ~= id then
+  -- A follow-up: its conversation's page, or none when that question was deleted.
+  local h=redis.call('HMGET',ARGV[3]..'record:'..head,'status','day','share_slug')
+  if h[1] ~= 'answered' then return {done,'',''} end
+  page,id,day,slug=ARGV[3]..'record:'..head,head,h[2] or '',h[3] or ''
+ end
+ if slug == '' and (ARGV[6] or '') ~= '' and day ~= '' then
+  slug=take_address(ARGV[3],day,ARGV[6],id)
+  if slug ~= '' then
+   redis.call('HSET',page,'share_slug',slug,'shared_at',ARGV[8])
+   redis.call('ZADD',ARGV[3]..'shares',tonumber(ARGV[9]),id)
+  end
  end
 end
 return {done,slug,day}`;

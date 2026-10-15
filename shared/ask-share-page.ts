@@ -4,6 +4,8 @@
  * page, copied from ask-lizheng by scripts/sync-ask-app.mjs (shared/ask-app-shell.js), with the
  * question and answer in it: the page opens them as the conversation, its map, sources and share bar
  * included, and its reader can follow them up; the asker's address bar already shows this address.
+ * A page is a whole conversation (2026-10-15, the owner: 多轮对话应该在同一个 URL 里边): its first
+ * answered question, which titles it, then each follow-up answered after it, in the order asked.
  * Never the situation the asker wrote, and no transcript excerpts. It is public and given to search
  * engines, every one (the owner's rule: what can be shared goes to search), with the answer in the
  * first HTML for them and for link previews (WeChat, iMessage, Slack: the question, the opening of
@@ -39,12 +41,15 @@ export const publicAnswerUrl = (id: string) => `${SHARE_ORIGIN}/q/${id}`;
  * (/q/<id>). `url` is the page's own address, the one its share bar copies; `canonical` the one search
  * engines keep (a public question's is its page on www.lizheng.ai, which also carries the structured
  * data); `data` what else #ask-shared says about it. */
-type AppPage = {
-  url: string; canonical: string; question: string; intent: string; created_at: string; structured: boolean;
-  answer: Pick<SharedAnswer["answer"], "summary" | "limitations" | "followups"> & {
-    sections: { heading: string; body: string; kind: string; source_ids: string[] }[];
-    sources: object[];
-  };
+type PageAnswer = Pick<SharedAnswer["answer"], "summary" | "limitations" | "followups"> & {
+  sections: { heading: string; body: string; kind: string; source_ids: string[] }[];
+  sources: object[];
+};
+type PageTurn = { question: string; intent: string; created_at: string; answer: PageAnswer };
+type AppPage = PageTurn & {
+  url: string; canonical: string; structured: boolean;
+  // The follow-ups after the first question, in the order asked.
+  turns: PageTurn[];
   data: Record<string, string>;
 };
 
@@ -103,12 +108,17 @@ ${options.body}
 
 /** What ask.lizheng.ai's page needs of an answer to show it as its asker saw it: everything but the
  * transcript excerpts, which no page search engines read carries (as /ask/<id> and these pages). */
-function pageData(page: AppPage) {
-  const answer = { status: "answered", clarifying_questions: [], ...page.answer, sources: page.answer.sources.map(source => {
+function pageAnswer(answer: PageAnswer) {
+  return { status: "answered", clarifying_questions: [], ...answer, sources: answer.sources.map(source => {
     const { excerpt: _excerpt, ...rest } = source as Record<string, unknown>;
     return rest;
   }) };
-  return JSON.stringify({ url: page.url, ...page.data, question: page.question, intent: page.intent, created_at: page.created_at, answer })
+}
+/** The conversation for ask.lizheng.ai's page: the first question's answer, and `turns` after it. */
+function pageData(page: AppPage) {
+  return JSON.stringify({ url: page.url, ...page.data, question: page.question, intent: page.intent, created_at: page.created_at,
+    answer: pageAnswer(page.answer),
+    turns: page.turns.map(turn => ({ question: turn.question, intent: turn.intent, created_at: turn.created_at, answer: pageAnswer(turn.answer) })) })
     .replace(/</g, "\\u003c");
 }
 
@@ -122,7 +132,7 @@ export function renderSharePage(share: SharedAnswer, options: { searchPage?: str
   // (2026-10-14): search engines keep that one, which carries the structured data.
   const searchPage = options.searchPage || "";
   return renderAppPage({ url, canonical: searchPage || url, question: share.question, intent: share.intent, created_at: share.created_at,
-    structured: !searchPage, answer: share.answer, data: { day: share.day, slug: share.slug } });
+    structured: !searchPage, answer: share.answer, turns: share.turns, data: { day: share.day, slug: share.slug } });
 }
 
 /** A question from 别人在问什么, shared from its card (2026-10-14, the owner: its link should open
@@ -131,23 +141,27 @@ export function renderSharePage(share: SharedAnswer, options: { searchPage?: str
 export function renderPublicAnswerPage(detail: PublicDetail): string {
   return renderAppPage({ url: publicAnswerUrl(detail.public_id), canonical: pageUrl(detail),
     question: detail.question, intent: "understand", created_at: detail.published_at, structured: false,
-    answer: detail.answer, data: { public_id: detail.public_id } });
+    answer: detail.answer, turns: [], data: { public_id: detail.public_id } });
 }
 
-function renderAppPage(page: AppPage): string {
-  const { answer, url } = page;
+/** One question of the page and its answer, laid out with ask.lizheng.ai's own classes. The first
+ * is #answer with sources #source-<n>; a follow-up (index 1, 2…) is #answer-<index+1>, its sources
+ * #t<index+1>-source-<n>. Only the last offers what to ask next. */
+function turnArticle(turn: PageTurn, index: number, last: boolean): string {
+  const { answer } = turn;
   const ids = new Set(answer.sources.map(source => (source as PublicSource).id));
+  const anchor = index ? `t${index + 1}-source-` : "source-";
   const sections = answer.sections.map(section => {
     const marked = /\[S\d{1,2}\]/.test(section.body);
     const loose = marked ? "" : section.source_ids.filter(id => ids.has(id))
-      .map(id => `<a class="cite" href="#source-${id.slice(1)}" aria-label="出处${id.slice(1)}">${id.slice(1)}</a>`).join(" ");
+      .map(id => `<a class="cite" href="#${anchor}${id.slice(1)}" aria-label="出处${id.slice(1)}">${id.slice(1)}</a>`).join(" ");
     // An application to the asker's own situation says so; otherwise it is the AI's reasoning.
-    const label = section.kind === "source" ? "材料里的观点" : section.kind === "application" ? (page.intent === "apply" ? "结合提问者的处境" : "AI推演") : "";
+    const label = section.kind === "source" ? "材料里的观点" : section.kind === "application" ? (turn.intent === "apply" ? "结合提问者的处境" : "AI推演") : "";
     const kind = label ? `<span class="kind kind-${escapeHtml(section.kind)}">${label}</span>` : "";
-    return `<section class="answer-section"><div class="section-head"><h3>${escapeHtml(section.heading)}</h3>${kind}</div>${paragraphs(section.body, ids)}${loose ? `<p class="section-sources"><span>出处</span> ${loose}</p>` : ""}</section>`;
+    return `<section class="answer-section"><div class="section-head"><h3>${escapeHtml(section.heading)}</h3>${kind}</div>${paragraphs(section.body, ids, anchor)}${loose ? `<p class="section-sources"><span>出处</span> ${loose}</p>` : ""}</section>`;
   }).join("\n");
   const limits = answer.limitations
-    ? `<div class="limits">${paragraphs(answer.limitations.replace(/\[?\b(S\d{1,2})\b\]?/g, "[$1]"), ids)}</div>` : "";
+    ? `<div class="limits">${paragraphs(answer.limitations.replace(/\[?\b(S\d{1,2})\b\]?/g, "[$1]"), ids, anchor)}</div>` : "";
   const sources = answer.sources.map(raw => {
     const source = raw as unknown as PublicSource;
     let kind: string;
@@ -156,10 +170,25 @@ function renderAppPage(page: AppPage): string {
     // The same owned labels as the public answer pages: kind, who speaks, date.
     const meta = [`<span>${source.id.slice(1)}</span>`, `<span${/会员/.test(kind) ? ' class="member"' : ""}>${escapeHtml(kind)}</span>`, attribution ? `<span>${escapeHtml(attribution)}</span>` : "",
       source.date && /^\d{4}-\d{2}-\d{2}/.test(source.date) ? `<span>${source.date.slice(0, 10)}</span>` : ""].join(" ");
-    return `<article class="source" id="source-${source.id.slice(1)}"><p class="source-meta">${meta}</p><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.title)} ↗</a>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</article>`;
+    return `<article class="source" id="${anchor}${source.id.slice(1)}"><p class="source-meta">${meta}</p><a class="source-title" href="${escapeHtml(source.url)}" target="_blank" rel="noopener">${escapeHtml(source.title)} ↗</a>${source.reason ? `<p class="source-reason">${escapeHtml(source.reason)}</p>` : ""}</article>`;
   }).filter(Boolean).join("\n");
-  const followups = answer.followups.length
+  const followups = last && answer.followups.length
     ? `<div class="followups"><p>也可以接着问</p>${answer.followups.map(q => `<a href="${escapeHtml(askLink(q))}" rel="nofollow">${escapeHtml(q)}</a>`).join("")}</div>` : "";
+  // The first question was asked (提问); each after it followed it up (追问).
+  const when = turn.created_at ? `<p class="question-when"><time datetime="${escapeHtml(turn.created_at)}">${chineseDate(turn.created_at)}</time>${index ? "追问" : "提问"}</p>` : "";
+  return `<article class="turn" id="${index ? `answer-${index + 1}` : "answer"}">
+<header class="question"><h2>${phrases(turn.question)}</h2>${when}</header>
+<div class="answer"><p class="answer-meta"><span>AI根据立正公开的文章和视频整理，不是他本人回复</span></p>
+<div class="summary">${paragraphs(answer.summary, ids, anchor)}</div>
+${sections}
+${limits}
+${sources ? `<details class="inline-sources" open><summary>回到${answer.sources.length}份原文</summary><div>\n${sources}\n</div></details>` : ""}
+${followups}
+</div></article>`;
+}
+
+function renderAppPage(page: AppPage): string {
+  const { answer, url } = page;
   const description = clip(plainText(answer.summary) || page.question, 110);
   const title = `${clip(page.question, 56)} · 问问立正`;
   const ogTitle = clip(page.question, 60);
@@ -196,15 +225,9 @@ function renderAppPage(page: AppPage): string {
 <meta itemprop="image" content="${SHARE_THUMB}">
 ${page.structured ? `<script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</script>` : ""}`;
   const fallback = `<header class="header"><div class="header-inner"><a class="brand" href="${ASK_APP}">${SEAL.replace("<svg ", '<svg class="mark" ')}<span>问问立正</span></a><nav class="header-nav" aria-label="页面"><a class="header-link new-chat" href="${ASK_APP}">新问题</a><a class="header-link site-link" href="${SITE_URL}/">lizheng.ai</a></nav></div></header>
-<main id="main-content"><div class="layout"><div class="thread-column"><section class="thread"><article class="turn" id="answer">
-<header class="question"><h2>${phrases(page.question)}</h2>${page.created_at ? `<p class="question-when"><time datetime="${escapeHtml(page.created_at)}">${chineseDate(page.created_at)}</time>提问</p>` : ""}</header>
-<div class="answer"><p class="answer-meta"><span>AI根据立正公开的文章和视频整理，不是他本人回复</span></p>
-<div class="summary">${paragraphs(answer.summary, ids)}</div>
-${sections}
-${limits}
-${sources ? `<details class="inline-sources" open><summary>回到${answer.sources.length}份原文</summary><div>\n${sources}\n</div></details>` : ""}
-${followups}
-</div></article></section></div></div></main>`;
+<main id="main-content"><div class="layout"><div class="thread-column"><section class="thread">
+${[page, ...page.turns].map((turn, index, all) => turnArticle(turn, index, index === all.length - 1)).join("\n")}
+</section></div></div></main>`;
   return ASK_APP_HTML
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
     .replace(/\s*<meta name="description"[^>]*>/, "")

@@ -2,10 +2,11 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError } from "../shared/ask-access.js";
 import { publicJson } from "../shared/ask-public-files.js";
 import { loadPublicCards, publicCardOf } from "../shared/ask-public-cards.js";
-import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
+import { detailWithPlainSourceLabels, withPlainSourceLabels } from "../shared/ask-source-labels.js";
+import { isMoved, readShare, type SharedTurn } from "../shared/ask-share-link.js";
 import {
   indexable, publicDetail, PUBLIC_ID, relatedCards, renderIndexPage, renderMissingPage, renderQuestionPage,
-  renderSitemap, representatives, similarAskings, wwwPagePath, type PublicCard,
+  renderSitemap, representatives, similarAskings, wwwPagePath, type PageFollowUp, type PublicAnswer, type PublicCard,
 } from "../shared/ask-public-page.js";
 
 // The public answer pages on www.lizheng.ai (vercel.json): /ask/<day>/<word> (page), /ask (index)
@@ -17,8 +18,31 @@ import {
 // on ask.lizheng.ai, its search page on the main site) a question's page here has the address of its
 // own page in 问问立正: ask.lizheng.ai/s/<day>/<word> is what people share and continue in, and points
 // search engines here, at www.lizheng.ai/ask/<day>/<word>. The pages before then, /ask/<public_id>,
-// move here for good (301).
+// move here for good (301). A question is its whole conversation (2026-10-15): the follow-ups asked
+// after it come from the live records, under its answer.
 const CACHE = "public, max-age=0, s-maxage=600, stale-while-revalidate=600";
+
+/** A follow-up as the page shows it: the sources its answer cites, with plain source numbers. */
+function followUp(turn: SharedTurn): PageFollowUp {
+  const { answer } = turn;
+  const cited = new Set([
+    ...answer.sections.flatMap(section => section.source_ids),
+    ...[answer.summary, answer.limitations, ...answer.sections.map(section => section.body)]
+      .flatMap(text => [...text.matchAll(/\[(S\d{1,2})\]/g)].map(match => match[1])),
+  ]);
+  const sources = answer.sources.filter(source => cited.has(source.id) && typeof source.title === "string" && typeof source.url === "string");
+  return { question: turn.question, created_at: turn.created_at,
+    answer: withPlainSourceLabels({ ...answer, sources } as unknown as PublicAnswer) };
+}
+
+/** The follow-ups asked after a published question, read from its live records (2026-10-15); none
+ * when the database cannot say, so the page stands on Ops' files alone. */
+async function followUpsOf(day: string, slug: string): Promise<PageFollowUp[]> {
+  try {
+    const share = await readShare(day, slug, { reader: false });
+    return share && !isMoved(share) ? share.turns.map(followUp) : [];
+  } catch { return []; }
+}
 const POLICY = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
 const SLUG = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,4}$/;
@@ -77,7 +101,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const card = cards.find(other => other.public_id === id);
       send(res, 200, html, renderQuestionPage(detail, {
         card, related: relatedCards(detail, cards), similar: card ? similarAskings(card, cards, reps) : 0,
-        indexable: indexable(detail, reps.get(id)),
+        indexable: indexable(detail, reps.get(id)), followUps: await followUpsOf(day, slug),
       }), { ...own, "Cache-Control": CACHE, "Content-Security-Policy": POLICY });
       return;
     }

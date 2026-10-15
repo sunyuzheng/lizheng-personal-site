@@ -116,6 +116,7 @@ describe("a shared answer's copy", () => {
     day: "2026-10-04", slug: "career-choice", question: "合成的问题：怎么选方向？", intent: "understand", created_at: "2026-10-04T02:00:00.000Z",
     answer: { status: "answered", summary: "合成的摘要。", followups: [], clarifying_questions: [], limitations: "",
       sections: [{ heading: "合成的小标题", body: "合成的回答段落。", kind: "synthesis", source_ids: [] }], sources: [] } as unknown as SharedAnswer["answer"],
+    turns: [],
   };
 
   it("is written where the share page looks for it, and never fails the share", async () => {
@@ -125,6 +126,11 @@ describe("a shared answer's copy", () => {
     expect(await saveShareCopy(share, async () => { throw new Error("store down"); })).toBe(false);
     expect(await saveShareCopy(share, null)).toBe(false);
     const { read } = store(written);
+    expect(await readShareCopy("2026-10-04", "career-choice", read)).toEqual(share);
+    // A conversation's copy is its first question alone: a follow-up deleted in Ops is never kept there.
+    const followUp = { question: "合成的追问？", intent: "understand", created_at: "2026-10-04T03:00:00.000Z", answer: share.answer };
+    expect(await saveShareCopy({ ...share, turns: [followUp] }, async (path, body) => { written[path] = body; })).toBe(true);
+    expect(written[shareFile("2026-10-04", "career-choice")]).not.toContain("合成的追问？");
     expect(await readShareCopy("2026-10-04", "career-choice", read)).toEqual(share);
   });
 

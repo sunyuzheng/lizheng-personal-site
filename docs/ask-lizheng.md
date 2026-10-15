@@ -260,3 +260,14 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **说法**：主页「别人在问什么」下的说明改成「真实的提问和回答，原样展示。」（英文同步）；隐私政策中英文改成每个回答过的问题都会原样公开（带处境和接着问的也一样），DeepSeek 那条改成它只给公开问答归主题、不决定是否公开；ask 页的说明和 App 同意页随 `pnpm sync:ask-app` 从 ask-lizheng c5a8b35 同步过来。
 - 后台（Ops）怎么发、怎么一次补发 10-05 以来被跳过的，见 ask-lizheng-ops 的 docs/public-discovery.md「全都放」一节；回答服务那边见 ask-lizheng 的 PRODUCT.md 同名一节。
 
+
+## 一段对话一个网页（2026-10-15）
+
+立正：「多轮对话应该在同一个 URL 里边」「讲的时候也应该是第一个问问题，而不是把多轮对话变成了不同的问题」「如果整个页面的设置没有为多轮对话进行考虑的话，我们在这儿也考虑好」。
+
+- **哪个问题是对话的标题**：`shared/ask-ops-storage.ts` 的 `CONVERSATION_HEAD_LUA`：这段对话第一个回答过的 v4 问题，找到后记在 `ask-ops:{v3}:conversation-head:<对话>`，不再变（那一问被删，整段对话的网页就没有了，不会让追问顶上去）。以前的对话第一次用到时现找现记。Ops 用同一段文字决定发布哪一个问题（一字不差，Ops 的测试比对）。
+- **存档**：`OPS_FINISH_SCRIPT` 只给这个问题建网页；追问不建，回给 Builder 的是对话的网页（标题那一问还没有网页时，用追问带来的词给它建）。分享（`SHARE_SCRIPT`）同理：追问分享的是对话的网页。
+- **网页**：`SHARE_PAGE_SCRIPT` 返回标题那一问，再按问的顺序返回它之后每个答完的追问（最多40个；紧挨着又问了一遍的同一个问题只显示一次：重试时第一次其实答完了、只是没送到页面，提问人看到的是一个回答）；以前追问自己的网址返回 `MOVED`，`api/ask-lizheng-share.ts` 301 到对话的网页；网站地图不列追问的旧网址。`shared/ask-share-page.ts` 把整段对话放进首屏 HTML（每问一个 `article.turn`，后面的写「追问」，各自的出处锚点 `t<n>-source-<id>`，只有最后一个回答下有「也可以接着问」）和 `#ask-shared` 的 `turns`；搜索引擎的结构化数据只有第一个问题。数据库连不上时用的副本（`share/<日>/<词>.json`）只存第一个问题，Ops 删追问时不必管副本。
+- **主站的公开问答页**（www.lizheng.ai/ask/<日>/<词>）：问题和回答照旧读 Ops 的文件，追问从存档实时读（`api/ask-lizheng-public.ts` 的 `followUpsOf`，读不到就不显示），只列回答引用了的出处；页头写「追问N次」，「也可以接着问」用最后一个回答的。CDN 缓存10分钟，追问最多10分钟后出现。
+- **ask 页**：随 `pnpm sync:ask-app` 从 ask-lizheng 1d2eb0b 同步（整段对话、我的提问一段一条、接着问还在同一页、「回答从哪里来」的三个数）。帮助页「别人在问什么」那条和隐私政策中英文改成一段对话一条、追问在同一个网页里；「我的提问」写成一段对话一条。
+- 测试：`tests/test_ask_ops_lua.py`、`tests/test_ask_share_lua.py`（同一段对话、第一问没答上、标题那一问被删、追问被删、以前追问的网址）、`tests/ask-share.test.ts`、`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`。

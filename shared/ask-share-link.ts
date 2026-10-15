@@ -30,7 +30,7 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { AccessError, redis, type AskIdentity } from "./ask-access.js";
 import { archivedAnswer, type ArchivedAnswer } from "./ask-archive-answer.js";
-import { OPS_PREFIX, PAGE_ADDRESS_LUA, PAGE_SLUG, PAGE_WORD } from "./ask-ops-storage.js";
+import { CONVERSATION_HEAD_LUA, OPS_PREFIX, PAGE_ADDRESS_LUA, PAGE_SLUG, PAGE_WORD } from "./ask-ops-storage.js";
 import { USAGE_PREFIX, USAGE_TTL_SECONDS, usageDay } from "./ask-usage.js";
 
 export const SHARE_ORIGIN = "https://ask.lizheng.ai";
@@ -87,17 +87,25 @@ export function verifyShareProof(request: ShareProof) {
 // KEYS: the record, its deletion tombstone, the list of shared records. ARGV: prefix, record id,
 // word, time, count (0|1), surface, usage day key, usage total key, ttl, time (ms). Only an answered
 // v4 record, still there, can be shared. A shared record keeps its address; otherwise it takes the
-// first free word of its day (word, word-2…). Counts each record's share once.
-export const SHARE_SCRIPT = `${PAGE_ADDRESS_LUA}
+// first free word of its day (word, word-2…). Counts each record's share once. A follow-up shares
+// its conversation's page (CONVERSATION_HEAD_LUA), which takes the address if it has none.
+export const SHARE_SCRIPT = `${PAGE_ADDRESS_LUA}${CONVERSATION_HEAD_LUA}
 if redis.call('EXISTS',KEYS[2])==1 or redis.call('EXISTS',KEYS[1])==0 then return {'GONE','',''} end
-local row=redis.call('HMGET',KEYS[1],'status','notice_version','answer','day','share_slug')
+local row=redis.call('HMGET',KEYS[1],'status','notice_version','answer','day','share_slug','conversation_id')
 local day=row[4]
 if row[1]~='answered' or row[2]~='v4' or not row[3] or row[3]=='' or not day or day=='' then return {'UNSHAREABLE','',''} end
+local page,id=KEYS[1],ARGV[2]
+local head=conversation_head(ARGV[1],row[6])
+if head and head~=id then
+ local h=redis.call('HMGET',ARGV[1]..'record:'..head,'status','day','share_slug')
+ if h[1]~='answered' or not h[2] or h[2]=='' then return {'GONE','',''} end
+ page,id,day,row[5]=ARGV[1]..'record:'..head,head,h[2],h[3]
+end
 if row[5] and row[5]~='' then return {'SHARED',row[5],day} end
-local slug=take_address(ARGV[1],day,ARGV[3],ARGV[2])
+local slug=take_address(ARGV[1],day,ARGV[3],id)
 if slug=='' then return {'FULL','',''} end
-redis.call('HSET',KEYS[1],'share_slug',slug,'shared_at',ARGV[4])
-redis.call('ZADD',KEYS[3],tonumber(ARGV[10]),ARGV[2])
+redis.call('HSET',page,'share_slug',slug,'shared_at',ARGV[4])
+redis.call('ZADD',KEYS[3],tonumber(ARGV[10]),id)
 if ARGV[5]=='1' then
  for _,key in ipairs({ARGV[7],ARGV[8]}) do
   redis.call('HINCRBY',key,ARGV[6]..':share',1)
@@ -107,20 +115,50 @@ if ARGV[5]=='1' then
 end
 return {'NEW',slug,day}`;
 
-// KEYS: the address. ARGV: prefix, day, slug, count (0|1), usage day key, usage total key, ttl.
-// The page exists only while its record does, still shared under this address and day, answered
-// under the v4 notice.
-export const SHARE_PAGE_SCRIPT = `
+// At most this many questions of a conversation on its page (the first and its follow-ups).
+export const SHARE_TURNS_MAX = 40;
+// KEYS: the address. ARGV: prefix, day, slug, count (0|1), usage day key, usage total key, ttl, most
+// questions. The page exists only while its record does, still shared under this address and day,
+// answered under the v4 notice. It is its conversation's (CONVERSATION_HEAD_LUA): the first answered
+// question, then each follow-up answered after it, in the order asked; a follow-up's own address from
+// before 2026-10-15 moves to it ({'MOVED', day, slug}), and is gone with it. A question asked again
+// right after itself (a retry whose first try was answered but never reached the page) shows once.
+// Returns {'OK'} and then question, answer, intent, created_at for each question shown.
+export const SHARE_PAGE_SCRIPT = `${CONVERSATION_HEAD_LUA}
 local id=redis.call('GET',KEYS[1])
 if not id or redis.call('EXISTS',ARGV[1]..'deleted:'..id)==1 then return {'MISSING'} end
-local row=redis.call('HMGET',ARGV[1]..'record:'..id,'share_slug','day','status','notice_version','question','answer','intent','created_at')
+local fields={'question','answer','intent','created_at','status','notice_version'}
+local row=redis.call('HMGET',ARGV[1]..'record:'..id,'share_slug','day','status','notice_version','question','answer','intent','created_at','conversation_id')
 if row[1]~=ARGV[3] or row[2]~=ARGV[2] or row[3]~='answered' or row[4]~='v4' or not row[5] or not row[6] then return {'MISSING'} end
+local head=conversation_head(ARGV[1],row[9]) or id
+local first={row[5],row[6],row[7] or '',row[8] or ''}
+if head~=id then
+ local h=redis.call('HMGET',ARGV[1]..'record:'..head,'share_slug','day',unpack(fields))
+ if h[7]~='answered' or h[8]~='v4' or not h[3] or not h[4] then return {'MISSING'} end
+ if h[1] and h[1]~='' and h[2] and h[2]~='' then return {'MOVED',h[2],h[1]} end
+ -- Its conversation's first question never had an address: the conversation is shown here.
+ first={h[3],h[4],h[5] or '',h[6] or ''}
+end
 if ARGV[4]=='1' then
  redis.call('HINCRBY',ARGV[5],'all:share_view',1)
  redis.call('EXPIRE',ARGV[5],tonumber(ARGV[7]))
  redis.call('HINCRBY',ARGV[6],'all:share_view',1)
 end
-return {'OK',row[5],row[6],row[7] or '',row[8] or ''}`;
+local out={'OK',first[1],first[2],first[3],first[4]}
+local most=tonumber(ARGV[8]) or 1
+local after,shown=false,first[1]
+for _,other in ipairs(redis.call('ZRANGE',ARGV[1]..'conversation:'..(row[9] or ''),0,-1)) do
+ if #out>=1+4*most then break end
+ if other==head then after=true
+ elseif after then
+  local t=redis.call('HMGET',ARGV[1]..'record:'..other,unpack(fields))
+  if t[5]=='answered' and t[6]=='v4' and t[1] and t[2] and t[1]~=shown then
+   out[#out+1]=t[1];out[#out+1]=t[2];out[#out+1]=t[3] or '';out[#out+1]=t[4] or ''
+   shown=t[1]
+  end
+ end
+end
+return out`;
 
 // KEYS: today's used count, pending reservations and bonus mark of one quota subject (the keys
 // Builder's quota script keeps). ARGV: now (seconds), when the mark expires. One question back a
@@ -210,38 +248,60 @@ export async function shareBonusOpen(identity: AskIdentity, now = Date.now(), se
   } catch { return undefined; }
 }
 
-export type SharedAnswer = {
-  day: string; slug: string; question: string; answer: ArchivedAnswer; intent: string; created_at: string;
-};
+/** One question of a conversation and its answer, as its page shows it. */
+export type SharedTurn = { question: string; answer: ArchivedAnswer; intent: string; created_at: string };
+/** A conversation's page: its first answered question, and the follow-ups answered after it (`turns`,
+ * in the order asked; none for a single question). */
+export type SharedAnswer = SharedTurn & { day: string; slug: string; turns: SharedTurn[] };
+/** A follow-up's own address from before 2026-10-15: its conversation's page is where it went. */
+export type MovedShare = { moved: { day: string; slug: string } };
 
-/** The shared question and answer behind an address, or null when there is none. */
+function sharedTurn(question: string, raw: string, intent: string, created_at: string): SharedTurn | null {
+  let answer: ArchivedAnswer;
+  try { answer = archivedAnswer(JSON.parse(raw), true); } catch { return null; }
+  if (answer.status !== "answered" || !question.trim()) return null;
+  return { question: question.trim(), answer, intent, created_at };
+}
+
+/** The conversation behind an address, where it moved, or null when there is none. */
 export async function readShare(day: string, slug: string, options: { reader: boolean; now?: number; send?: Sender }):
-  Promise<SharedAnswer | null> {
+  Promise<SharedAnswer | MovedShare | null> {
   if (!SHARE_DAY.test(day) || !SHARE_SLUG.test(slug) || slug.length > 120) return null;
   const now = options.now ?? Date.now(), send = options.send ?? redis;
   const [dayKey, totalKey] = usageKeys(now);
   const result = await send(["EVAL", SHARE_PAGE_SCRIPT, 1, `${OPS_PREFIX}share:${day}:${slug}`,
-    OPS_PREFIX, day, slug, options.reader && counting() ? 1 : 0, dayKey, totalKey, USAGE_TTL_SECONDS]);
+    OPS_PREFIX, day, slug, options.reader && counting() ? 1 : 0, dayKey, totalKey, USAGE_TTL_SECONDS, SHARE_TURNS_MAX]);
   if (!Array.isArray(result) || typeof result[0] !== "string") unavailable();
   const values = result as string[];
+  if (values.some(value => typeof value !== "string")) unavailable();
+  if (values[0] === "MOVED") {
+    if (values.length !== 3 || !SHARE_DAY.test(values[1]) || !SHARE_SLUG.test(values[2])) unavailable();
+    return { moved: { day: values[1], slug: values[2] } };
+  }
   if (values[0] !== "OK") return null;
-  if (values.length !== 5 || values.some(value => typeof value !== "string")) unavailable();
-  const [, question, raw, intent, created] = values;
-  let answer: ArchivedAnswer;
-  try { answer = archivedAnswer(JSON.parse(raw), true); } catch { return null; }
-  if (answer.status !== "answered" || !question.trim()) return null;
-  return { day, slug, question: question.trim(), answer, intent, created_at: created };
+  if (values.length < 5 || (values.length - 1) % 4 !== 0) unavailable();
+  const first = sharedTurn(values[1], values[2], values[3], values[4]);
+  if (!first) return null;
+  const turns: SharedTurn[] = [];
+  for (let i = 5; i < values.length; i += 4) {
+    const turn = sharedTurn(values[i], values[i + 1], values[i + 2], values[i + 3]);
+    if (turn) turns.push(turn);
+  }
+  return { day, slug, ...first, turns };
 }
+export const isMoved = (share: SharedAnswer | MovedShare | null): share is MovedShare => !!share && "moved" in share;
 
 // KEYS: the list of shared records. ARGV: prefix, how many. Newest shared first: each shared record
-// that is still there, with its address and when it was shared. A record deleted in Ops leaves the list.
-export const SHARE_LIST_SCRIPT = `
+// that is still there, with its address and when it was shared. A record deleted in Ops leaves the list;
+// a follow-up's address from before 2026-10-15 is not listed (it moves to its conversation's page).
+export const SHARE_LIST_SCRIPT = `${CONVERSATION_HEAD_LUA}
 local out={}
 for _,id in ipairs(redis.call('ZREVRANGE',KEYS[1],0,tonumber(ARGV[2])-1)) do
- local row=redis.call('HMGET',ARGV[1]..'record:'..id,'share_slug','day','status','notice_version','shared_at')
+ local row=redis.call('HMGET',ARGV[1]..'record:'..id,'share_slug','day','status','notice_version','shared_at','conversation_id')
  if not row[3] then
   redis.call('ZREM',KEYS[1],id)
- elseif row[1] and row[1]~='' and row[3]=='answered' and row[4]=='v4' and redis.call('EXISTS',ARGV[1]..'deleted:'..id)==0 then
+ elseif row[1] and row[1]~='' and row[3]=='answered' and row[4]=='v4' and redis.call('EXISTS',ARGV[1]..'deleted:'..id)==0
+   and (conversation_head(ARGV[1],row[6]) or id)==id then
   out[#out+1]={row[2],row[1],row[5] or ''}
  end
 end

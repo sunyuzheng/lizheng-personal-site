@@ -228,7 +228,7 @@ export async function readShare(day: string, slug: string, options: { reader: bo
   if (values.length !== 5 || values.some(value => typeof value !== "string")) unavailable();
   const [, question, raw, intent, created] = values;
   let answer: ArchivedAnswer;
-  try { answer = archivedAnswer(JSON.parse(raw)); } catch { return null; }
+  try { answer = archivedAnswer(JSON.parse(raw), true); } catch { return null; }
   if (answer.status !== "answered" || !question.trim()) return null;
   return { day, slug, question: question.trim(), answer, intent, created_at: created };
 }

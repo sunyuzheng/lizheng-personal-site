@@ -135,7 +135,8 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
     )
       fail();
     if (r.answer !== null) {
-      archivedAnswer(r.answer);
+      // Kept as read: a field this site does not know yet is left out of the archive, not refused.
+      r.answer = archivedAnswer(r.answer, true);
       if (r.answer.status !== r.status) fail();
     } else if (!["error", "cancelled"].includes(r.status)) fail();
     // Only an answered question has a page.

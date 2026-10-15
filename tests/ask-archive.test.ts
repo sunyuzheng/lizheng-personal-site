@@ -303,6 +303,21 @@ describe("an answer's page, made as it is archived (2026-10-14)", () => {
   });
 });
 describe("trusted v3 intake boundary", () => {
+  it("archives an answer whose sources carry a field this site does not know yet, without that field", async () => {
+    // Builder may add a source field before every reader knows it; on 2026-10-11 one stopped the
+    // public feed for a day. The answer is kept; the unknown field is not.
+    const known = answer();
+    const sent = { ...known, sources: known.sources.map(s => ({ ...s, synthetic_new_field: "synthetic" })) };
+    const finish = { v: 3, event: "finish", record_id: ID, status: "answered", duration_ms: 1200, answer: sent, error_code: null };
+    const body = Buffer.from(JSON.stringify(finish));
+    vi.mocked(fetch).mockImplementationOnce(async () => Response.json({ result: [1, "", "2026-10-14"] }));
+    expect(await storeOpsEvent(body, proof(body))).toEqual({ ok: true });
+    const command = JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]?.body));
+    expect(JSON.parse(command[8])).toEqual(known);
+    // A malformed known field is still refused.
+    const bad = Buffer.from(JSON.stringify({ ...finish, answer: { ...sent, summary: "" } }));
+    expect(() => opsEvent(bad)).toThrow("invalid_request");
+  });
   it("archives the complete displayed answer and source snapshot with the same final status", async () => {
     const finish = {
       v: 3,

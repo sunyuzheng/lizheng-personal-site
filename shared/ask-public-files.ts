@@ -151,7 +151,7 @@ export async function readShareCopy(day: string, slug: string, read: FileReader 
     const raw = await read(shareFile(day, slug));
     if (raw === null) return null;
     const value = object(raw);
-    const answer = archivedAnswer(value.answer);
+    const answer = archivedAnswer(value.answer, true);
     if (value.v !== 1 || value.day !== day || value.slug !== slug || typeof value.question !== "string" || !value.question.trim() ||
         answer.status !== "answered" || typeof value.intent !== "string" || typeof value.created_at !== "string") return null;
     return { day, slug, question: value.question.trim(), answer, intent: value.intent, created_at: value.created_at };

@@ -93,13 +93,18 @@ function https(value: string) {
     return false;
   }
 }
-export function archivedAnswer(value: unknown): ArchivedAnswer {
+// An answer as Builder archived it. Builder may add a field to its answers before every reader knows
+// it (server/ops_records.py SOURCE_FIELDS); on 2026-10-11 one new source field made every new answer
+// unreadable to Ops and stopped the public feed for a day. So where answers come from Builder's
+// archive (lenient: its writer and every reader of records), a field this code does not know is left
+// out, never fatal: the original object when nothing is unknown, otherwise a copy that keeps only the
+// known fields, so nothing unknown is stored or published. Answers this code wrote itself (public
+// versions) or the owner sent are still refused for any unknown field. Malformed known fields are
+// always refused.
+export function archivedAnswer(value: unknown, lenient = false): ArchivedAnswer {
   const r = object(value);
   if (
     REQUIRED.some(k => !(k in r)) ||
-    Object.keys(r).some(
-      k => ![...REQUIRED, "retryable", "failure_code"].includes(k)
-    ) ||
     !["answered", "clarify", "unsupported", "sources-only"].includes(
       String(r.status)
     ) ||
@@ -117,11 +122,13 @@ export function archivedAnswer(value: unknown): ArchivedAnswer {
         !/^[a-z_]{1,80}$/.test(r.failure_code)))
   )
     invalid();
+  const known = [...REQUIRED, "retryable", "failure_code"];
+  let unknown = Object.keys(r).some(k => !known.includes(k));
+  const SECTION = ["heading", "body", "source_ids", "kind"];
   for (const section of r.sections) {
     const s = object(section);
     if (
-      Object.keys(s).sort().join() !==
-        ["body", "heading", "kind", "source_ids"].join() ||
+      SECTION.some(k => !(k in s)) ||
       !text(s.heading, 90, true) ||
       !text(s.body, 2600, true) ||
       !["source", "synthesis", "application"].includes(String(s.kind)) ||
@@ -130,6 +137,7 @@ export function archivedAnswer(value: unknown): ArchivedAnswer {
       s.source_ids.some(id => typeof id !== "string" || !/^S\d{1,2}$/.test(id))
     )
       invalid();
+    unknown ||= Object.keys(s).some(k => !SECTION.includes(k));
   }
   const ids = new Set<string>();
   for (const source of r.sources) {
@@ -142,16 +150,25 @@ export function archivedAnswer(value: unknown): ArchivedAnswer {
       !text(s.url, 2048, true) ||
       !https(s.url) ||
       Object.entries(s).some(
-        ([k, v]) => !(k in SOURCE_LIMITS) || !text(v, SOURCE_LIMITS[k])
+        ([k, v]) => k in SOURCE_LIMITS && !text(v, SOURCE_LIMITS[k])
       ) ||
       (typeof s.public_copy_url === "string" && !https(s.public_copy_url)) ||
       (typeof s.membership_url === "string" && !https(s.membership_url))
     )
       invalid();
+    unknown ||= Object.keys(s).some(k => !(k in SOURCE_LIMITS));
     ids.add(s.id);
   }
   for (const s of r.sections as ArchivedAnswer["sections"])
     if (s.source_ids.some(id => !ids.has(id))) invalid();
   if (r.status === "answered" && !r.sections.length) invalid();
-  return r as unknown as ArchivedAnswer;
+  if (!unknown) return r as unknown as ArchivedAnswer;
+  if (!lenient) invalid();
+  const keep = (from: Record<string, unknown>, keys: string[]) =>
+    Object.fromEntries(Object.entries(from).filter(([k]) => keys.includes(k)));
+  return {
+    ...keep(r, known),
+    sections: (r.sections as Record<string, unknown>[]).map(s => keep(s, SECTION)),
+    sources: (r.sources as Record<string, unknown>[]).map(s => keep(s, Object.keys(SOURCE_LIMITS))),
+  } as unknown as ArchivedAnswer;
 }

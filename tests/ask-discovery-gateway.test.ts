@@ -99,25 +99,21 @@ describe("owner review gateway", () => {
 });
 
 describe("public read and browser vote gateway", () => {
-  it("reads only published public data with defaults and no identity/cookie headers", async () => {
-    const result = await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { authorization: "synthetic-authorization" } });
+  it("reads only published public data, with no identity/cookie headers, from its fixed path", async () => {
+    const result = await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`, { headers: { authorization: "synthetic-authorization" } });
     expect(result.status).toBe(200); expect(auth.owner).not.toHaveBeenCalled(); expect(auth.voter).not.toHaveBeenCalled();
     const [url, init] = vi.mocked(fetch).mock.calls[0];
-    expect(url).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=list&window=this_week&sort=recent&limit=10`);
+    expect(url).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=detail&public_id=${ID}`);
     expect(init).toMatchObject({ method: "GET", cache: "no-store", redirect: "manual", credentials: "omit" });
     expect(init).not.toHaveProperty("headers"); expect(init).not.toHaveProperty("body");
-    expect(result.headers).toMatchObject({ "cache-control": "no-store, no-transform", "x-robots-tag": "noindex, nofollow, noarchive" });
+    expect(result.headers).toMatchObject({ "x-robots-tag": "noindex, nofollow, noarchive" });
   });
-  it("forwards bounded read filters and detail only to their fixed paths", async () => {
-    await call(discovery, "/api/ask-lizheng-discovery?__route=questions&window=7d&sort=liked&limit=20&cursor=abc-_" );
-    expect(vi.mocked(fetch).mock.calls[0][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=list&window=7d&sort=liked&limit=20&cursor=abc-_`);
-    await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`);
-    expect(vi.mocked(fetch).mock.calls[1][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=detail&public_id=${ID}`);
-  });
-  it.each(["?window=today", "?sort=private", "?limit=0", "?limit=21", "?limit=01", "?limit=1.5", "?limit=1&limit=2",
-    "?window=all&url=https%3A%2F%2Fevil.example", "?maxid=1", "?public_id=" + ID, "?cursor=bad:uuid", "?cursor=" + "x".repeat(513)])(
-    "rejects extra or invalid read filters %s", async query => {
-      expect((await call(discovery, `/api/ask-lizheng/discovery/questions${query}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
+  it.each([`/detail?public_id=not-a-uuid`, `/detail?public_id=${ID}&public_id=${ID}`, `/detail?public_id=${ID}&url=https%3A%2F%2Fevil.example`,
+    "/detail", "/detail?maxid=1",
+    // The older paged list, gone on 2026-10-15 with Ops' list: no page read it.
+    "/questions", "/questions?window=all&sort=recent&limit=10"])(
+    "rejects extra or invalid reads %s", async path => {
+      expect((await call(discovery, `/api/ask-lizheng/discovery${path}`)).status).toBe(400); expect(fetch).not.toHaveBeenCalled();
     }
   );
   it("reads 最近问 and 最常问 in one fixed call, and lets the CDN share them and each answer for a minute", async () => {
@@ -131,8 +127,6 @@ describe("public read and browser vote gateway", () => {
     expect(lists.headers).not.toHaveProperty("vary");
     const detail = await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`);
     expect(detail.headers["cache-control"]).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=60");
-    // The older paged list carries a cursor per reader: never shared.
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions")).headers["cache-control"]).toBe("no-store, no-transform");
     // A failure is never kept.
     vi.mocked(fetch).mockResolvedValue(new Response("{}", { status: 503 }));
     const failed = await call(discovery, "/api/ask-lizheng/discovery/lists");
@@ -194,20 +188,20 @@ describe("public read and browser vote gateway", () => {
       expect(fetch).not.toHaveBeenCalled();
     }
   );
-  it.each([["questions", "POST", "GET"], ["detail", "OPTIONS", "GET"], ["vote", "GET", "POST"]])("enforces %s method", async (action, method, allow) => {
+  it.each([["lists", "POST", "GET"], ["detail", "OPTIONS", "GET"], ["vote", "GET", "POST"]])("enforces %s method", async (action, method, allow) => {
     expect(await call(discovery, `/api/ask-lizheng/discovery/${action}`, { method })).toMatchObject({ status: 405, headers: { allow } }); expect(fetch).not.toHaveBeenCalled();
   });
   it("rejects foreign hosts, cross-host origins and absolute foreign URLs before any call", async () => {
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "evil.example" } })).status).toBe(403);
-    expect((await call(discovery, "https://evil.example/api/ask-lizheng/discovery/questions")).status).toBe(403);
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions",
+    expect((await call(discovery, "/api/ask-lizheng/discovery/lists", { headers: { host: "evil.example" } })).status).toBe(403);
+    expect((await call(discovery, "https://evil.example/api/ask-lizheng/discovery/lists")).status).toBe(403);
+    expect((await call(discovery, "/api/ask-lizheng/discovery/lists",
       { headers: { host: "ask.lizheng.ai", origin: "https://www.lizheng.ai" } })).status).toBe(403);
     expect(fetch).not.toHaveBeenCalled();
   });
   it("serves ask.lizheng.ai from its own origin, reads and votes alike", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => Response.json({ ok: true })));
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions", { headers: { host: "ask.lizheng.ai" } })).status).toBe(200);
-    expect(vi.mocked(fetch).mock.calls[0][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=list&window=this_week&sort=recent&limit=10`);
+    expect((await call(discovery, "/api/ask-lizheng/discovery/lists", { headers: { host: "ask.lizheng.ai" } })).status).toBe(200);
+    expect(vi.mocked(fetch).mock.calls[0][0]).toBe(`${OPS_BACKEND_ORIGIN}/api/discovery?action=lists`);
     const vote = await call(discovery, "/api/ask-lizheng/discovery/vote", { method: "POST",
       headers: { host: "ask.lizheng.ai", origin: "https://ask.lizheng.ai" }, body: { public_id: ID, expected_revision: 2, vote: true } });
     expect(vote.status).toBe(200);
@@ -257,17 +251,17 @@ describe("bounded body and safe business failures", () => {
   it.each([[409, "unknown_private_error"], [500, "revision_conflict"], [400, "revision_conflict"], [429, "unknown_private_error"],
     [400, "source_not_public_eligible"], [500, "source_not_public_eligible"]])("sanitizes unapproved status/code pairs", async (status, code) => {
     vi.mocked(fetch).mockResolvedValue(Response.json({ code, detail: "synthetic-private" }, { status }));
-    expect(await call(discovery, "/api/ask-lizheng/discovery/questions")).toMatchObject({ status: 503, body: { code: "ops_gateway_unavailable" } });
+    expect(await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`)).toMatchObject({ status: 503, body: { code: "ops_gateway_unavailable" } });
   });
   it.each([409, 429])("bounds marked business errors to4KB and1s instead of hanging on their bodies (%s)", async status => {
     const cancel = vi.fn(() => new Promise<void>(() => {}));
     const body = new ReadableStream<Uint8Array>({ cancel });
     vi.mocked(fetch).mockResolvedValue(new Response(body, { status, headers: { "content-type": "application/json" } }));
-    const result = call(discovery, "/api/ask-lizheng/discovery/questions");
+    const result = call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`);
     await vi.advanceTimersByTimeAsync(1000);
     expect((await result).body).toEqual({ code: "ops_gateway_unavailable" }); expect(cancel).toHaveBeenCalledOnce(); expect(body.locked).toBe(false);
     vi.mocked(fetch).mockResolvedValue(Response.json({ code: "revision_conflict", padding: "x".repeat(4096) }, { status: 409 }));
-    expect((await call(discovery, "/api/ask-lizheng/discovery/questions")).status).toBe(503);
+    expect((await call(discovery, `/api/ask-lizheng/discovery/detail?public_id=${ID}`)).status).toBe(503);
   });
 });
 

@@ -1,6 +1,6 @@
 import type { IncomingMessage } from "node:http";
 import { AccessError } from "./ask-access.js";
-import { discoveryCursor, discoveryRevision, fetchOpsJson, gatewayProof, OPS_UUID } from "./ask-ops-gateway.js";
+import { discoveryRevision, fetchOpsJson, gatewayProof, OPS_UUID } from "./ask-ops-gateway.js";
 
 function invalid(): never { throw new AccessError("invalid_request", 400); }
 function parse(raw: Buffer): unknown {
@@ -41,24 +41,15 @@ export async function discoveryRequestBody(req: IncomingMessage, limit: number):
 
 export function discoveryReadPath(url: URL, action: string): string {
   const query = url.searchParams;
-  // lists: 最近问 and 最常问, the same for everyone, with no options; questions: the older paged list.
-  const allowed = action === "questions" ? ["__route", "window", "sort", "limit", "cursor"] : action === "lists" ? ["__route"] : ["__route", "public_id"];
+  // lists: 最近问 and 最常问, the same for everyone, with no options; detail: one answer.
+  const allowed = action === "lists" ? ["__route"] : ["__route", "public_id"];
   for (const key of query.keys()) if (!allowed.includes(key) || query.getAll(key).length !== 1) invalid();
   if (action === "lists") return "/api/discovery?action=lists";
-  const out = new URLSearchParams({ action: action === "questions" ? "list" : "detail" });
+  const out = new URLSearchParams({ action: "detail" });
   if (action === "detail") {
     const id = query.get("public_id") || "";
     if (!OPS_UUID.test(id)) invalid();
     out.set("public_id", id);
-  } else if (action === "questions") {
-    const window = query.get("window") ?? "this_week", sort = query.get("sort") ?? "recent", limit = query.get("limit") ?? "10";
-    if (!["this_week", "7d", "all"].includes(window) || !["recent", "frequent", "liked"].includes(sort) || !/^(?:[1-9]|1[0-9]|20)$/.test(limit)) invalid();
-    out.set("window", window); out.set("sort", sort); out.set("limit", limit);
-    if (query.has("cursor")) {
-      const cursor = query.get("cursor")!;
-      if (!discoveryCursor(cursor)) invalid();
-      out.set("cursor", cursor);
-    }
   } else invalid();
   return `/api/discovery?${out}`;
 }

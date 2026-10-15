@@ -283,4 +283,4 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **ask.lizheng.ai 的回答页**：是不是已公开、搜索页在哪，按地址读那一份文件（`wwwPageOf`，不再读全部）；`/s/sitemap.xml` 不列已公开的，由 `SHARE_LIST_SCRIPT` 看这条记录有没有已发布的公开问答（`discovery:source-items` 和 `discovery:published`）。
 - **主页「已有N个公开问答」**：读日期列表的总数（含同一问题的不同问法）。
 - **每日体检**：去掉5000条的提醒，改成「问答存档约多少 MB，数据库套餐上限多少」：最近一份备份的 `raw_bytes`（接近库里存了多少）到套餐（数据库检查记下的 `maxmemory`）七成时提醒，每周最多一次；满了 Upstash 会自动升级，网站不停。
-- 删了 `shared/ask-public-cards.ts`（读全部问题的那一份）。测试：`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`、`tests/ask-share.test.ts`、`tests/ask-discovery-gateway.test.ts`、`tests/ask-health.test.ts`、`tests/test_ask_share_lua.py`。
+- 删了 `shared/ask-public-cards.ts`（读全部问题的那一份），和没有页面在用的旧分页列表 `/api/ask-lizheng/discovery/questions`（Ops 同日删了 `list` 和全部问题的 `index`）。Ops 还记下每条后来的问法对应哪条第一问法：第一问法撤下后，后来的问法会重新写成第一问法，进列表和网站地图。测试：`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`、`tests/ask-share.test.ts`、`tests/ask-discovery-gateway.test.ts`、`tests/ask-health.test.ts`、`tests/test_ask_share_lua.py`。

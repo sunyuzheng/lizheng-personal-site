@@ -1,7 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { AccessError, resolveDiscoveryVoter, sameOrigin } from "../shared/ask-access.js";
 import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscoveryVote } from "../shared/ask-discovery-gateway.js";
-import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
 import { publicJson } from "../shared/ask-public-files.js";
 import { publicDaysFile } from "../shared/ask-public-page.js";
 import { followUpsOfPage } from "../shared/ask-conversation.js";
@@ -11,7 +10,8 @@ import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 // a minute, then serves that copy while it fetches the next: a reader costs Ops nothing, and a
 // question withdrawn in Ops leaves the lists and its answer within about two minutes. They come from
 // the files Ops writes when they change (shared/ask-public-files.ts), so they stay up while the
-// database or Ops is down; the older paged list still asks Ops. An answer comes with the follow-ups
+// database or Ops is down. (The older paged list, questions, went on 2026-10-15 with Ops' list: no
+// page read it.) An answer comes with the follow-ups
 // asked after it (shared/ask-conversation.ts), read from the live records, so the CDN keeps them a
 // minute too, and none come when the database cannot say.
 const SHARED = "public, max-age=0, s-maxage=60, stale-while-revalidate=60";
@@ -43,7 +43,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     if (url.origin !== own || (req.headers.origin && req.headers.origin !== own))
       throw new AccessError("invalid_origin", 403);
     action = url.searchParams.get("__route") || url.pathname.split("/").at(-1) || "";
-    if (!["lists", "questions", "detail", "vote"].includes(action)) throw new AccessError("invalid_request", 400);
+    if (!["lists", "detail", "vote"].includes(action)) throw new AccessError("invalid_request", 400);
     if (req.method !== (action === "vote" ? "POST" : "GET")) throw new AccessError("method_not_allowed", 405);
     let result;
     if (action === "vote") {
@@ -61,12 +61,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (cookie) res.setHeader("Set-Cookie", cookie);
       result = await proxyDiscoveryVote(vote, voter);
     } else {
-      result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" })
-        : publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
+      result = await publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) });
       // A question is its whole conversation (2026-10-15): its follow-ups come with it, read live.
       if (action === "detail") result = { ...detailWithPlainSourceLabels(result), turns: await followUpsOfPage(result?.share_url) };
       if (action === "lists") result = { ...result, ...(await publicTotal()) };
-      if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
+      res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary");
     }
     res.statusCode = 200;
     res.end(JSON.stringify(result));

@@ -1,5 +1,6 @@
 {
-  "crons": [{ "path": "/api/ask-lizheng-db-watch", "schedule": "0 1 * * *" }],
+  "crons": [{ "path": "/api/ask-lizheng-db-watch", "schedule": "0 4 * * *" }],
+  "functions": { "api/ask-lizheng-db-watch.ts": { "maxDuration": 90 } },
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": "vite",

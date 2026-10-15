@@ -27,9 +27,9 @@ export default defineConfig({
       "tests/ask-public-files.test.ts",
       "tests/ask-share-copy.test.ts",
       "tests/ask-source-labels.test.ts",
+      "tests/ask-report.test.ts",
     ],
     pool: "forks",
-    minWorkers: 1,
     maxWorkers: 1,
   },
 });

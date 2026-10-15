@@ -4,13 +4,16 @@ import { discoveryReadPath, discoveryRequestBody, discoveryVoteBody, proxyDiscov
 import { fetchOpsJson } from "../shared/ask-ops-gateway.js";
 import { publicJson } from "../shared/ask-public-files.js";
 import { listedCards, publicCard, type PublicCard } from "../shared/ask-public-page.js";
+import { followUpsOfPage } from "../shared/ask-conversation.js";
 import { detailWithPlainSourceLabels } from "../shared/ask-source-labels.js";
 
 // The lists and each answer are the same for every reader and carry no cookie, so the CDN keeps them
 // a minute, then serves that copy while it fetches the next: a reader costs Ops nothing, and a
 // question withdrawn in Ops leaves the lists and its answer within about two minutes. They come from
 // the files Ops writes when they change (shared/ask-public-files.ts), so they stay up while the
-// database or Ops is down; the older paged list still asks Ops.
+// database or Ops is down; the older paged list still asks Ops. An answer comes with the follow-ups
+// asked after it (shared/ask-conversation.ts), read from the live records, so the CDN keeps them a
+// minute too, and none come when the database cannot say.
 const SHARED = "public, max-age=0, s-maxage=60, stale-while-revalidate=60";
 
 // How many questions and answers are public, as www.lizheng.ai/ask counts them; the lists stand
@@ -62,7 +65,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     } else {
       result = await (action === "questions" ? fetchOpsJson(discoveryReadPath(url, action), { method: "GET" })
         : publicJson(discoveryReadPath(url, action), { onSource: source => res.setHeader("X-Ask-Public-Source", source) }));
-      if (action === "detail") result = detailWithPlainSourceLabels(result);
+      // A question is its whole conversation (2026-10-15): its follow-ups come with it, read live.
+      if (action === "detail") result = { ...detailWithPlainSourceLabels(result), turns: await followUpsOfPage(result?.share_url) };
       if (action === "lists") result = { ...result, ...(await publicTotal()) };
       if (action !== "questions") { res.setHeader("Cache-Control", SHARED); res.removeHeader("Vary"); }
     }

@@ -269,5 +269,6 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **存档**：`OPS_FINISH_SCRIPT` 只给这个问题建网页；追问不建，回给 Builder 的是对话的网页（标题那一问还没有网页时，用追问带来的词给它建）。分享（`SHARE_SCRIPT`）同理：追问分享的是对话的网页。
 - **网页**：`SHARE_PAGE_SCRIPT` 返回标题那一问，再按问的顺序返回它之后每个答完的追问（最多40个；紧挨着又问了一遍的同一个问题只显示一次：重试时第一次其实答完了、只是没送到页面，提问人看到的是一个回答）；以前追问自己的网址返回 `MOVED`，`api/ask-lizheng-share.ts` 301 到对话的网页；网站地图不列追问的旧网址。`shared/ask-share-page.ts` 把整段对话放进首屏 HTML（每问一个 `article.turn`，后面的写「追问」，各自的出处锚点 `t<n>-source-<id>`，只有最后一个回答下有「也可以接着问」）和 `#ask-shared` 的 `turns`；搜索引擎的结构化数据只有第一个问题。数据库连不上时用的副本（`share/<日>/<词>.json`）只存第一个问题，Ops 删追问时不必管副本。
 - **主站的公开问答页**（www.lizheng.ai/ask/<日>/<词>）：问题和回答照旧读 Ops 的文件，追问从存档实时读（`api/ask-lizheng-public.ts` 的 `followUpsOf`，读不到就不显示），只列回答引用了的出处；页头写「追问N次」，「也可以接着问」用最后一个回答的。CDN 缓存10分钟，追问最多10分钟后出现。
-- **ask 页**：随 `pnpm sync:ask-app` 从 ask-lizheng 1d2eb0b 同步（整段对话、我的提问一段一条、接着问还在同一页、「回答从哪里来」的三个数）。帮助页「别人在问什么」那条和隐私政策中英文改成一段对话一条、追问在同一个网页里；「我的提问」写成一段对话一条。
+- **「别人在问什么」点开一条**：`api/ask-lizheng-discovery.ts` 的 detail 多带 `turns`（`shared/ask-conversation.ts` 的 `followUpsOfPage`，和 www 页同一个读法，CDN 一分钟），ask 页原地展开时接在回答下面。
+- **ask 页**：随 `pnpm sync:ask-app` 从 ask-lizheng 38cf704 同步（整段对话、我的提问一段一条、接着问还在同一页、「回答从哪里来」的三个数）。帮助页「别人在问什么」那条和隐私政策中英文改成一段对话一条、追问在同一个网页里；「我的提问」写成一段对话一条。
 - 测试：`tests/test_ask_ops_lua.py`、`tests/test_ask_share_lua.py`（同一段对话、第一问没答上、标题那一问被删、追问被删、以前追问的网址）、`tests/ask-share.test.ts`、`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`。

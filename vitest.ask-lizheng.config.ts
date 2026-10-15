@@ -28,6 +28,7 @@ export default defineConfig({
       "tests/ask-share-copy.test.ts",
       "tests/ask-source-labels.test.ts",
       "tests/ask-report.test.ts",
+      "tests/ask-conversation.test.ts",
     ],
     pool: "forks",
     maxWorkers: 1,

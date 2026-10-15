@@ -30,6 +30,8 @@ import type { MapSource } from "@shared/ask-answer-map.js";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, PUBLIC_QA, publicQaCopy } from "@shared/ask-public-qa.js";
 import { sourceAttributionLabel } from "@shared/ask-source-attribution.js";
+// 反馈问题, sent and worded as on ask.lizheng.ai (synced from ask-lizheng src/report.js).
+import { REPORT_TEXT_MAX, reportCopy, reportPayload, sendReport, type ReportPlace, type ReportResult, type ReportTurn } from "@shared/ask-report-client.js";
 
 // Where a link to the membership page sits, so its visits can be told apart there.
 const stayLink = (medium: string) => `${LINKS.stay}?utm_source=ask-lizheng&utm_medium=${medium}`;
@@ -305,10 +307,14 @@ type Turn = AskAnswerState & {
   question: string;
   request: AskPayload;
   lastActivity: number;
+  askedAt?: number;
   error?: string;
+  errorCode?: string;
+  waited?: number;
   quotaExhausted?: boolean;
   model?: string;
 };
+type TurnReport = { turnId: number; place: Exclude<ReportPlace, "page">; turn: ReportTurn };
 // 想明白 explains (understand) or, with the situation switched on, applies the
 // material to the reader (apply). 从哪读起 picks what to read first (find).
 const MODES = ["ask", "find"] as const;
@@ -563,9 +569,55 @@ function AnswerSections({
 }
 
 /** `children` close the body: placed under the question box on wide screens (see .lz-ask-native-body). */
+// 反馈问题: a line, or nothing, goes to the owner with what the section saw of the question when the
+// person opened this (never the situation); lizheng.ai checks and mails it (shared/ask-report.ts).
+function ReportBox({ lang, report, onClose }: { lang: Lang; report: TurnReport; onClose: () => void }) {
+  // This page is Yuzheng's own voice: the report goes to 我 (me).
+  const words = reportCopy(lang, lang === "zh" ? "我" : "me");
+  const [text, setText] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | ReportResult>("idle");
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => { box.current?.scrollIntoView({ block: "nearest", behavior: "smooth" }); }, []);
+  async function send() {
+    setState("sending");
+    const result = await sendReport(reportPayload({ surface: "home", place: report.place, text, turn: report.turn }));
+    track("Ask Report", { surface: "home", place: report.place, step: result });
+    setState(result);
+  }
+  return (
+    <div className="lz-ask-report" role="group" aria-label={words.title} ref={box}>
+      <p className="lz-ask-report-title">{words.title}</p>
+      {state === "sent" ? (
+        <>
+          <p className="done" role="status">{words.sent}</p>
+          <div className="actions"><button type="button" className="btn btn-line" onClick={onClose}>{words.close}</button></div>
+        </>
+      ) : (
+        <>
+          <p>{words.introTurn}</p>
+          <label>
+            <span className="sr-only">{words.label}</span>
+            <textarea rows={3} maxLength={REPORT_TEXT_MAX} value={text} placeholder={words.placeholder} onChange={event => setText(event.target.value)} />
+          </label>
+          <small>{words.withTurn}</small>
+          {(state === "failed" || state === "limited") && <p className="error" role="alert">{words[state]}</p>}
+          <div className="actions">
+            <button type="button" className="btn btn-green" disabled={state === "sending"} onClick={() => void send()}>
+              {state === "sending" ? words.sending : words.send}
+            </button>
+            <button type="button" className="btn btn-line" onClick={onClose}>{words.cancel}</button>
+          </div>
+        </>
+      )}
+      <small>{words.community}<a href={LINKS.askFeedback} {...EXTERNAL}>{words.communityLink} ↗</a></small>
+    </div>
+  );
+}
+
 export default function AskLizheng({ lang, children }: { lang: Lang; children?: ReactNode }) {
   const t = HOME_COPY[lang].ask;
   const c = COPY[lang];
+  const reportWords = reportCopy(lang, lang === "zh" ? "我" : "me");
   const [question, setQuestion] = useState("");
   const [context, setContext] = useState("");
   const [mode, setMode] = useState<Mode>("ask");
@@ -592,6 +644,19 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   const [exporting, setExporting] = useState("");
   // Each answer's share, by turn: whether its panel is open, and how far it got.
   const [shares, setShares] = useState<Record<number, ShareState>>({});
+  // 反馈问题 (ReportBox), opened under the place it was asked for.
+  const [reporting, setReporting] = useState<TurnReport | null>(null);
+  const openReport = (place: TurnReport["place"], turn: Turn) => {
+    const waiting = place === "waiting";
+    track("Ask Report", { surface: "home", place, step: "open" });
+    setReporting({ turnId: turn.id, place, turn: {
+      question: turn.question, askedAt: turn.askedAt, elapsed: waiting ? elapsed : turn.waited,
+      quiet: waiting && turn.lastActivity ? (Date.now() - turn.lastActivity) / 1000 : undefined,
+      stage: waiting ? turn.progress?.stage : undefined, error: turn.errorCode || turn.result?.failure_code,
+      status: turn.result?.status, model: turn.model,
+      share: (turn.result?.share && answerPage(turn.result.share)) || shares[turn.id]?.url,
+    } });
+  };
   const [exportError, setExportError] = useState(0);
   const [cardExportError, setCardExportError] = useState("");
   const outOfQuota = !!account?.enabled && !account.unavailable && !account.founding && account.remaining === 0;
@@ -1114,6 +1179,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     };
     const text = payload.question;
     const id = retry?.id || ++counter.current;
+    const started = Date.now();
     const controller = new AbortController();
     let timedOut = false;
     const deadline = setTimeout(() => {
@@ -1131,6 +1197,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
         request: payload,
         sources: retry?.sources || [],
         lastActivity: 0,
+        askedAt: started,
         progress: { stage: "retrieving", message: c.loading },
       },
     ]);
@@ -1178,6 +1245,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
           (error.status === 429 || error.code === "provider_busy");
         update({
           quotaExhausted,
+          errorCode: error instanceof AskError && error.code ? error.code
+            : timedOut ? "timeout" : controller.signal.aborted ? "stopped" : "connection_lost",
+          waited: Math.round((Date.now() - started) / 1000),
           error:
             quotaExhausted
               ? (error as AskError).scope === "network" ? c.networkQuotaExhausted : c.quotaExhausted
@@ -1479,6 +1549,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
             <div className="lz-ask-turns">
               {turns.map((turn, index) => {
                 const working = busy && index === turns.length - 1;
+                const canRetry = !busy && index === turns.length - 1 &&
+                  !!((turn.error && (!turn.quotaExhausted || account?.founding || (account?.remaining ?? 0) > 0)) || turn.result?.retryable);
+                const canReport = !!((turn.error && !turn.quotaExhausted) || turn.result?.retryable);
                 const step = STAGE[turn.progress?.stage || "retrieving"] ?? 0;
                 const recentActivityAge = turn.lastActivity
                   ? Math.max(0, (Date.now() - turn.lastActivity) / 1000)
@@ -1548,7 +1621,13 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                         >
                           {c.stop}
                         </button>
+                        <button className="btn btn-line" type="button" onClick={() => openReport("waiting", turn)}>
+                          {reportWords.button}
+                        </button>
                       </div>
+                    )}
+                    {reporting?.turnId === turn.id && reporting.place === "waiting" && (
+                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
                     )}
                     {working && <AnswerMapPanel turn={turn} live lang={lang} onSelect={id => openMapSource(turn, id)} onOpen={openedMapSource} />}
                     {turn.result && (
@@ -1628,17 +1707,27 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                         ))}
                       </p>
                     )}
-                    {!busy &&
-                      index === turns.length - 1 &&
-                      ((turn.error && (!turn.quotaExhausted || account?.founding || (account?.remaining ?? 0) > 0)) || turn.result?.retryable) && (
-                        <button
-                          className="btn btn-line lz-ask-retry"
-                          type="button"
-                          onClick={() => void submit(undefined, turn)}
-                        >
-                          {c.retry}
-                        </button>
-                      )}
+                    {(canRetry || canReport) && (
+                      <div className="lz-ask-turn-actions">
+                        {canRetry && (
+                          <button
+                            className="btn btn-line lz-ask-retry"
+                            type="button"
+                            onClick={() => void submit(undefined, turn)}
+                          >
+                            {c.retry}
+                          </button>
+                        )}
+                        {canReport && (
+                          <button className="btn btn-line lz-ask-retry" type="button" onClick={() => openReport("failed", turn)}>
+                            {reportWords.button}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {reporting?.turnId === turn.id && reporting.place === "failed" && (
+                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
+                    )}
                     {!!turn.sources.length && (
                       <div className="lz-ask-material">
                         <p>{turn.result ? c.sources : c.candidates}</p>
@@ -1696,6 +1785,14 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                       <small className="lz-ask-model">
                         {turn.model || (working ? model : "")}
                       </small>
+                    )}
+                    {turn.result && !turn.result.retryable && !working && (
+                      <button type="button" className="lz-ask-report-link" onClick={() => openReport("answer", turn)}>
+                        {reportWords.button}
+                      </button>
+                    )}
+                    {reporting?.turnId === turn.id && reporting.place === "answer" && (
+                      <ReportBox lang={lang} report={reporting} onClose={() => setReporting(null)} />
                     )}
                     {!working && index === turns.length - 1 && turn.result && (
                       <div className="lz-ask-followups">

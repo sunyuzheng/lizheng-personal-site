@@ -226,3 +226,7 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 
 - 这个站跟着改了三处：同步来的公开问答说明（`shared/ask-public-qa.js`）多了 `{backup}`，首页问答区读 `/api/meta` 的 `backup_model` 传进去（「DeepSeek写回答（它没有及时回应时改由OpenAI写），OpenAI找资料」）；隐私政策的 OpenAI 一条写明它也是回答的备用、接收和 DeepSeek 相同的内容（`tests/ask-public-qa.test.ts` 查两种语言）；App 的同意弹窗在同步来的页面里，同意范围加了备用，App 用户会被重新问一次。
 - 上线顺序：先这个站（页面在问答服务给出 `backup_model` 之前不显示备用、不发 `ai_consent_backup`），再部署问答服务。
+
+## 反馈问题（2026-10-15）
+
+立正要一个「汇报bug」的快速渠道，尤其是等回答的时候。页面（ask 页等回答时、回答没完成后、回答下面、首屏底部；主页问答区等回答时、没完成后、回答下面）点「反馈问题」，补一句或不写，发到 `POST /api/ask-lizheng/report`（`api/ask-lizheng-report.ts`，只认 www 和 ask 两个来源）。`shared/ask-report.ts` 检查固定字段（写的话、问题、提问时间、等了多久、最近一次进展、进行到哪、出错代码、回答状态、回答网页、模型；没有处境），按网络（每天10条）和全站（每天40封）计数，键 `ask:report:v1:*` 两天后过期，再用 `ASK_AUTH_EMAIL_API_KEY` 经 Resend 发邮件给立正，加上 UA、发送时间和主站版本。超出限量回 429，邮件发不出去回 503；无头浏览器和爬虫的请求不计数、不发邮件，照样回 204，所以线上检查不会吵到他。页面这边的字段和文案在 ask-lizheng `src/report.js`，同步成 `shared/ask-report-client.js` 给主页用（`version.json` 的 `report_sha256` 守着不被本地改）。隐私政策中英文写明了发什么、发给谁、留多久。

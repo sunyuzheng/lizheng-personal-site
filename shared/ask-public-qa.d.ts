@@ -8,10 +8,11 @@ type Words = {
   share: string;
   policy: string;
   answerer: string;
+  backup: (backup: string) => string;
 };
 export const PUBLIC_QA: { zh: Words; en: Words };
 export function answerService(model: string | null | undefined): string | null;
 export function publicQaCopy(
   lang: "zh" | "en",
-  voice: { owner: string; self: string; answerer: string | null | undefined; contextKept: boolean }
+  voice: { owner: string; self: string; answerer: string | null | undefined; backup?: string | null; contextKept: boolean }
 ): { notice: string; title: string; about: string[]; situation: string; share: string; policy: string };

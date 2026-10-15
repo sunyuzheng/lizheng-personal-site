@@ -220,3 +220,9 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **ask**：`/s/` 页面如果是公开问题，canonical 指向主站那一页、不带结构化数据（`renderSharePage(share, { searchPage })`，`wwwPageOf`）；`/s/sitemap.xml` 只列不在主站上的回答。
 - 判断「是不是公开问题」读公开索引，`shared/ask-public-cards.ts` 在热函数里留五分钟，主站问答页和 ask 网页共用，多少人看都只是五分钟读一次。刚发布的问题最多五分钟后 ask 页才指向主站；撤下的，主站那页 404，ask 页最多五分钟后指回自己。
 
+## 回答的备用模型（2026-10-15）
+
+10-15 早上 DeepSeek 有一个多小时个别请求卡住，几次提问超时（其中一条因此没进「别人在问什么」）。立正同意加备用：DeepSeek 30秒还没开始写、或在写之前出错，问问立正改由 OpenAI 的 gpt-5 重答一次（ask-lizheng 4e8b5f0，`server/answers.py` 的 `BACKUP_MODELS`，`/api/meta` 的 `backup_model`）。
+
+- 这个站跟着改了三处：同步来的公开问答说明（`shared/ask-public-qa.js`）多了 `{backup}`，首页问答区读 `/api/meta` 的 `backup_model` 传进去（「DeepSeek写回答（它没有及时回应时改由OpenAI写），OpenAI找资料」）；隐私政策的 OpenAI 一条写明它也是回答的备用、接收和 DeepSeek 相同的内容（`tests/ask-public-qa.test.ts` 查两种语言）；App 的同意弹窗在同步来的页面里，同意范围加了备用，App 用户会被重新问一次。
+- 上线顺序：先这个站（页面在问答服务给出 `backup_model` 之前不显示备用、不发 `ai_consent_backup`），再部署问答服务。

@@ -576,6 +576,8 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   const [busy, setBusy] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [model, setModel] = useState("");
+  // Writes the answer when the model does not respond in time (/api/meta backup_model, since 2026-10-15).
+  const [backupModel, setBackupModel] = useState("");
   const [opsLogging, setOpsLogging] = useState(false);
   // v4: answers may be published, as asked since 2026-10-05 (public_display "as_asked"; before, "deidentified").
   const [publicArchive, setPublicArchive] = useState(false);
@@ -716,6 +718,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
         if (!signal?.aborted) {
           setPublicArchive(v4); setContextKept(ops?.context_archive === true);
           if (typeof value?.model === "string") setModel(value.model);
+          setBackupModel(typeof value?.backup_model === "string" ? value.backup_model : "");
           setOpsLogging(archive && (ops.notice === "v3" || v4)); setLoggingReady(true);
         }
         return;
@@ -1080,7 +1083,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     if (source.url) track("Ask Source Click", { surface: "home", kind: sourceKind(source.url) });
   }
   // v4, public Q&A, in this page's voice; the situation is not kept since 2026-10-04 (/api/meta says context_archive: false).
-  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), contextKept });
+  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(model), backup: answerService(backupModel), contextKept });
   // The answer above that the count line offers to share once the day's questions are used.
   const shareable = bonusOffer ? turns.filter(turn => turn.result?.share).at(-1) : undefined;
   function prefill(value: string, from = "followup") {

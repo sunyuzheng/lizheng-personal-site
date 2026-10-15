@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 vi.mock("@/components/site/LizhengMark", () => ({ MARK_PATHS: [] }));
 import {
+  AskError,
   askLizheng,
   applyAskEvent,
   publicSourceUrl,
@@ -557,6 +558,22 @@ describe("askLizheng stream protocol", () => {
     expect(onEvent).not.toHaveBeenCalled();
     expect(cancel).toHaveBeenCalledOnce();
     expect(stream.locked).toBe(false);
+  });
+
+  it("keeps a late refusal's code, status and scope when it arrives in the stream", async () => {
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(encoder.encode(": relay keep-alive \n\n"));
+        controller.enqueue(encoder.encode(frame("error", {
+          code: "quota_exhausted", remaining: 0, reset_at: "2026-10-16T16:00:00+00:00", status: 429,
+          message: "今天的3次体验已用完。",
+        })));
+      },
+    });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(responseFor(stream)));
+    const failure = await askLizheng(payload, new AbortController().signal, vi.fn()).catch(error => error);
+    expect(failure).toBeInstanceOf(AskError);
+    expect(failure).toMatchObject({ code: "quota_exhausted", status: 429 });
   });
 
   it("releases the stream reader when stop aborts a pending read", async () => {

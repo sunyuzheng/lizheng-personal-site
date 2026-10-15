@@ -3,8 +3,15 @@ import { AccessError, accessEnabled, admission, backendOrigin, NetworkQuotaError
 export const config = { runtime: "edge" };
 
 const HEADERS = { "Cache-Control": "no-store, no-transform" };
+const STREAM_HEADERS = { ...HEADERS, "Content-Type": "text/event-stream; charset=utf-8", "X-Accel-Buffering": "no" };
 const HEARTBEAT_MS = 5_000;
 const FRAME_LIMIT = 512_000;
+// Vercel stops an Edge function that has not begun its response within 25 seconds of the request, and
+// Builder's reply has reached us later than that although Builder had begun within two seconds
+// (2026-10-15, twice). From this point after the request arrived, the page is answered at once with a
+// stream that waits; Builder's answer follows in it, or its refusal as an error event carrying the
+// same fields as the refusal the page would otherwise get with its HTTP status.
+export const STREAM_BY_MS = 12_000;
 const encoder = new TextEncoder();
 // Padding helps small streaming writes flush through intermediary buffers.
 const heartbeat = encoder.encode(
@@ -44,11 +51,20 @@ function terminalFrame(frame: Uint8Array): boolean {
   return event === "result" || event === "error";
 }
 
+function failureBody(code: string): Record<string, unknown> {
+  return { code, message: code === "ops_storage_unavailable" ? "未能确认问题保存，这次没有开始生成，也不扣次数。请重试。" : "The answer did not finish. Try again shortly." };
+}
+
 function failure(status: number, code: string): Response {
-  return Response.json(
-    { code, message: code === "ops_storage_unavailable" ? "未能确认问题保存，这次没有开始生成，也不扣次数。请重试。" : "The answer did not finish. Try again shortly." },
-    { status, headers: HEADERS }
-  );
+  return Response.json(failureBody(code), { status, headers: HEADERS });
+}
+
+function errorFrame(value: Record<string, unknown>): Uint8Array {
+  return encoder.encode("event: error\ndata: " + JSON.stringify(value) + "\n\n");
+}
+
+function answerStream(upstream: Response): boolean {
+  return upstream.ok && !!upstream.body && !!upstream.headers.get("content-type")?.includes("text/event-stream");
 }
 
 async function boundedErrorBody(response: Response): Promise<Record<string, unknown> | null> {
@@ -75,7 +91,44 @@ async function boundedErrorBody(response: Response): Promise<Record<string, unkn
   finally { clearTimeout(timer); reader.releaseLock(); }
 }
 
+type Settled = { response: Response } | { error: unknown };
+
+/** Builder made no answer: the page gets only the fixed contracts, never Builder's own words. */
+async function refusal(upstream: Response): Promise<{ status: number; body: Record<string, unknown> }> {
+  if (upstream.status === 409 &&
+      upstream.headers.get("x-ask-error-code") === "ai_consent_changed" &&
+      upstream.headers.get("content-type")?.includes("application/json")) {
+    const value = await boundedErrorBody(upstream);
+    if (value?.code === "ai_consent_changed" && typeof value.model === "string" &&
+        value.model.length > 0 && value.model.length <= 128)
+      return { status: 409, body: { code: "ai_consent_changed", model: value.model } };
+  }
+  if (accessEnabled() && upstream.status === 429 &&
+      upstream.headers.get("x-ask-error-code") === "quota_exhausted" &&
+      upstream.headers.get("content-type")?.includes("application/json")) {
+    try {
+      const value = await boundedErrorBody(upstream);
+      if (value?.code === "quota_exhausted" && value.remaining === 0 &&
+          typeof value.reset_at === "string" && /^\d{4}-\d{2}-\d{2}T[\d:.+-]+Z?$/.test(value.reset_at))
+        return { status: 429, body: { code: "quota_exhausted", remaining: 0, reset_at: value.reset_at,
+          message: "今天的3次体验已用完。Founding Member可登录后不限次提问。" } };
+    } catch { /* Only the fixed quota contract is forwarded. */ }
+  }
+  if (accessEnabled() && upstream.status === 503 &&
+      upstream.headers.get("x-ask-error-code") === "ops_storage_unavailable" &&
+      upstream.headers.get("content-type")?.includes("application/json")) {
+    const value = await boundedErrorBody(upstream);
+    if (value?.code === "ops_storage_unavailable") return { status: 503, body: failureBody("ops_storage_unavailable") };
+  }
+  void upstream.body?.cancel().catch(() => {});
+  return {
+    status: upstream.ok || (upstream.status >= 300 && upstream.status < 400) ? 502 : upstream.status,
+    body: failureBody(upstream.status === 429 ? "rate_limited" : upstream.ok ? "invalid_upstream_stream" : "upstream_unavailable"),
+  };
+}
+
 export default async function handler(request: Request): Promise<Response> {
+  const arrived = Date.now();
   if (request.method !== "POST") return failure(405, "method_not_allowed");
   let guestCookie: string | undefined;
   let releaseNetwork: (() => Promise<void>) | undefined;
@@ -152,7 +205,7 @@ export default async function handler(request: Request): Promise<Response> {
       if (identity.tier !== "founding") releaseNetwork = await reserveGuestNetwork(request);
       proof = await admission(identity, "POST", "/api/ask", body, ops);
     }
-    const upstream = await fetch(`${backendOrigin()}/api/ask`, {
+    const settled: Promise<Settled> = fetch(`${backendOrigin()}/api/ask`, {
       method: "POST",
       body,
       signal: abort.signal,
@@ -166,58 +219,26 @@ export default async function handler(request: Request): Promise<Response> {
         "Accept-Encoding": "identity",
         ...(proof ? { "X-Ask-Admission": proof } : {}),
       },
-    });
-    if (
-      !upstream.ok ||
-      !upstream.body ||
-      !upstream.headers.get("content-type")?.includes("text/event-stream")
-    ) {
+    }).then(response => ({ response }), error => ({ error }));
+    let waiting: ReturnType<typeof setTimeout> | undefined;
+    const early = await Promise.race([
+      settled,
+      new Promise<null>(resolve => {
+        waiting = setTimeout(() => resolve(null), Math.max(0, STREAM_BY_MS - (Date.now() - arrived)));
+      }),
+    ]);
+    clearTimeout(waiting);
+    if (early && "error" in early) throw early.error;
+    if (early && !answerStream(early.response)) {
       // No answer was made, so the network's guest count is given back.
       await releaseNetwork?.();
-      if (upstream.status === 409 &&
-          upstream.headers.get("x-ask-error-code") === "ai_consent_changed" &&
-          upstream.headers.get("content-type")?.includes("application/json")) {
-        const value = await boundedErrorBody(upstream);
-        if (value?.code === "ai_consent_changed" && typeof value.model === "string" &&
-            value.model.length > 0 && value.model.length <= 128) {
-          cleanup();
-          return reply(Response.json({ code: "ai_consent_changed", model: value.model },
-            { status: 409, headers: HEADERS }));
-        }
-      }
-      if (accessEnabled() && upstream.status === 429 &&
-          upstream.headers.get("x-ask-error-code") === "quota_exhausted" &&
-          upstream.headers.get("content-type")?.includes("application/json")) {
-        try {
-          const value = await boundedErrorBody(upstream);
-          if (value?.code === "quota_exhausted" && value.remaining === 0 &&
-              typeof value.reset_at === "string" && /^\d{4}-\d{2}-\d{2}T[\d:.+-]+Z?$/.test(value.reset_at)) {
-            cleanup();
-            return reply(Response.json({ code: "quota_exhausted", remaining: 0, reset_at: value.reset_at,
-              message: "今天的3次体验已用完。Founding Member可登录后不限次提问。" }, { status: 429, headers: HEADERS }));
-          }
-        } catch { /* Only the fixed quota contract is forwarded. */ }
-      }
-      if (accessEnabled() && upstream.status === 503 &&
-          upstream.headers.get("x-ask-error-code") === "ops_storage_unavailable" &&
-          upstream.headers.get("content-type")?.includes("application/json")) {
-        const value = await boundedErrorBody(upstream);
-        if (value?.code === "ops_storage_unavailable") { cleanup(); return reply(failure(503, "ops_storage_unavailable")); }
-      }
-      void upstream.body?.cancel().catch(() => {});
+      const { status, body: refused } = await refusal(early.response);
       cleanup();
-      return reply(failure(
-        upstream.ok || (upstream.status >= 300 && upstream.status < 400)
-          ? 502
-          : upstream.status,
-        upstream.status === 429
-          ? "rate_limited"
-          : upstream.ok
-            ? "invalid_upstream_stream"
-            : "upstream_unavailable"
-      ));
+      return reply(Response.json(refused, { status, headers: HEADERS }));
     }
-    const input = upstream.body.getReader();
+    // Builder's answer stream, or (late) a stream that waits for it.
+    const late = !early;
+    let input: ReadableStreamDefaultReader<Uint8Array> | undefined = early ? early.response.body!.getReader() : undefined;
     let cancelled = false;
     let ended = false;
     let released = false;
@@ -225,17 +246,18 @@ export default async function handler(request: Request): Promise<Response> {
     let pending = new Uint8Array(0);
     let finish!: (code?: string) => void;
     const release = () => {
-      if (!released) {
+      if (!released && input) {
         released = true;
         input.releaseLock();
       }
     };
     const stopUpstream = () => {
       abort.abort();
-      void input
-        .cancel()
-        .catch(() => {})
-        .finally(release);
+      if (input)
+        void input
+          .cancel()
+          .catch(() => {})
+          .finally(release);
     };
     const stream = new ReadableStream<Uint8Array>({
       start(controller) {
@@ -254,6 +276,8 @@ export default async function handler(request: Request): Promise<Response> {
         };
         streamAbort = () => finish(timedOut ? "relay_timeout" : undefined);
         abort.signal.addEventListener("abort", streamAbort, { once: true });
+        // A waiting stream says so at once: the page's connection is open before Builder replies.
+        if (late) controller.enqueue(heartbeat);
         keepAlive = setInterval(() => {
           if (
             !ended &&
@@ -267,6 +291,27 @@ export default async function handler(request: Request): Promise<Response> {
       },
       async pull(controller) {
         try {
+          if (!input) {
+            const outcome = await settled;
+            if (ended) {
+              // The page left or the deadline passed first: a late reply is not read.
+              if ("response" in outcome) void outcome.response.body?.cancel().catch(() => {});
+              return;
+            }
+            if ("error" in outcome) {
+              await releaseNetwork?.();
+              finish(timedOut ? "relay_timeout" : "upstream_unavailable");
+              return;
+            }
+            if (!answerStream(outcome.response)) {
+              await releaseNetwork?.();
+              const { status, body: refused } = await refusal(outcome.response);
+              if (!ended && !cancelled && !request.signal.aborted) controller.enqueue(errorFrame({ ...refused, status }));
+              finish();
+              return;
+            }
+            input = outcome.response.body!.getReader();
+          }
           while (!ended) {
             const { done, value } = await input.read();
             if (ended) return;
@@ -315,13 +360,7 @@ export default async function handler(request: Request): Promise<Response> {
         stopUpstream();
       },
     });
-    return reply(new Response(stream, {
-      headers: {
-        ...HEADERS,
-        "Content-Type": "text/event-stream; charset=utf-8",
-        "X-Accel-Buffering": "no",
-      },
-    }));
+    return reply(new Response(stream, { headers: STREAM_HEADERS }));
   } catch (error) {
     cleanup();
     await releaseNetwork?.();

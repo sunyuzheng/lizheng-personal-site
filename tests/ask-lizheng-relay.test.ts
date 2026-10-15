@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { webcrypto } from "node:crypto";
-import handler from "../api/ask-lizheng";
+import handler, { STREAM_BY_MS } from "../api/ask-lizheng";
 import { clientNetwork, createSession, GUEST_NETWORK_DAILY_LIMIT } from "../shared/ask-access";
 
 const encoder = new TextEncoder();
@@ -37,6 +37,12 @@ function event(name: string, value: unknown) {
 
 async function ticks() {
   for (let i = 0; i < 12; i++) await Promise.resolve();
+}
+
+// Captured before any test fakes timers: lets real async work (webcrypto) finish while time stands still.
+const realImmediate = setImmediate;
+async function untilCalled(mock: ReturnType<typeof vi.fn>) {
+  for (let i = 0; i < 500 && !mock.mock.calls.length; i++) await new Promise(resolve => realImmediate(resolve));
 }
 
 function abortingFetch() {
@@ -585,21 +591,114 @@ describe("fixed Builder SSE relay", () => {
     expect(upstream.locked).toBe(false);
   });
 
-  it("limits upstream connection waiting to the shared 100-second deadline", async () => {
+  it("limits upstream connection waiting to the shared 100-second deadline, inside a stream begun in time", async () => {
     vi.useFakeTimers();
     const fetch = abortingFetch();
     vi.stubGlobal("fetch", fetch);
-    const pending = handler(request());
+    let settled = false;
+    const pending = handler(request()).then(response => { settled = true; return response; });
     await ticks();
     expect(fetch).toHaveBeenCalledOnce();
     const signal = fetch.mock.calls[0][1].signal!;
-    await vi.advanceTimersByTimeAsync(99_999);
+    // Vercel stops a function that has not begun its response within 25 seconds.
+    await vi.advanceTimersByTimeAsync(STREAM_BY_MS);
+    expect(settled).toBe(true);
+    const response = await pending;
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-type")).toContain("text/event-stream");
+    const output = response.text();
+    await vi.advanceTimersByTimeAsync(99_999 - STREAM_BY_MS);
     expect(signal.aborted).toBe(false);
     await vi.advanceTimersByTimeAsync(1);
-    const response = await pending;
     expect(signal.aborted).toBe(true);
-    expect(response.status).toBe(504);
-    expect((await response.json()).code).toBe("relay_timeout");
+    const text = await output;
+    expect(text.startsWith(heartbeat)).toBe(true);
+    expect(text).toContain('"code":"relay_timeout"');
+    expect(text).not.toContain("synthetic private upstream detail");
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("answers in time with a waiting stream when Builder's reply is late, then relays the answer", async () => {
+    vi.useFakeTimers();
+    let reply!: (response: Response) => void;
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(resolve => { reply = resolve; })));
+    const pending = handler(request());
+    await vi.advanceTimersByTimeAsync(STREAM_BY_MS);
+    const response = await pending;
+    expect(response.status).toBe(200);
+    const reader = response.body!.getReader();
+    expect(decoder.decode((await reader.read()).value)).toBe(heartbeat);
+    // Still waiting: the stream stays open with heartbeats, inventing no progress.
+    await vi.advanceTimersByTimeAsync(5_000);
+    expect(decoder.decode((await reader.read()).value)).toBe(heartbeat);
+    reply(sse(new ReadableStream({ start(controller) {
+      controller.enqueue(event("progress", { stage: "retrieving" }));
+      controller.enqueue(event("result", { status: "answered", summary: "late but whole" }));
+      controller.close();
+    } })));
+    let rest = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      rest += decoder.decode(value, { stream: true });
+    }
+    expect(rest).toContain("event: progress");
+    expect(rest).toContain('"summary":"late but whole"');
+    expect(rest).not.toContain("event: error");
+    expect(vi.getTimerCount()).toBe(0);
+  });
+
+  it("gives a late refusal as an error event with the HTTP contract's fields, and refunds the network count", async () => {
+    let reply!: (response: Response) => void;
+    const upstream = vi.fn(() => new Promise<Response>(resolve => { reply = resolve; }));
+    vi.stubGlobal("fetch", withRedis(upstream));
+    const incoming = protectedRequest();
+    vi.useFakeTimers();
+    const pending = handler(incoming);
+    await untilCalled(upstream);
+    await vi.advanceTimersByTimeAsync(STREAM_BY_MS);
+    const response = await pending;
+    expect(response.status).toBe(200);
+    expect(response.headers.get("set-cookie")).toContain("__Secure-ask-guest=");
+    const output = response.text();
+    reply(Response.json({ code: "quota_exhausted", remaining: 0, reset_at: "2026-10-16T16:00:00+00:00", private_detail: "synthetic-private" },
+      { status: 429, headers: { "X-Ask-Error-Code": "quota_exhausted" } }));
+    const text = await output;
+    const frame = text.split("\n\n").find(part => part.startsWith("event: error"))!;
+    const value = JSON.parse(frame.split("\ndata: ")[1]);
+    expect(value).toMatchObject({ code: "quota_exhausted", remaining: 0, reset_at: "2026-10-16T16:00:00+00:00", status: 429 });
+    expect(value).not.toHaveProperty("private_detail");
+    expect(networkCounts()[0][1]).toBe(0);
+  });
+
+  it("gives a late model change as an error event the app can act on", async () => {
+    vi.useFakeTimers();
+    let reply!: (response: Response) => void;
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(resolve => { reply = resolve; })));
+    const pending = handler(request());
+    await vi.advanceTimersByTimeAsync(STREAM_BY_MS);
+    const output = (await pending).text();
+    reply(Response.json({ code: "ai_consent_changed", model: "new-answer-model" },
+      { status: 409, headers: { "X-Ask-Error-Code": "ai_consent_changed" } }));
+    const frame = (await output).split("\n\n").find(part => part.startsWith("event: error"))!;
+    expect(JSON.parse(frame.split("\ndata: ")[1])).toEqual({ code: "ai_consent_changed", model: "new-answer-model", status: 409 });
+  });
+
+  it("does not read a reply that arrives after the page has gone", async () => {
+    vi.useFakeTimers();
+    let reply!: (response: Response) => void;
+    const fetch = vi.fn(() => new Promise<Response>(resolve => { reply = resolve; }));
+    vi.stubGlobal("fetch", fetch);
+    const pending = handler(request());
+    await vi.advanceTimersByTimeAsync(STREAM_BY_MS);
+    const reader = (await pending).body!.getReader();
+    await reader.read();
+    await reader.cancel();
+    expect(fetch.mock.calls[0][1].signal!.aborted).toBe(true);
+    const cancelled = vi.fn();
+    reply(sse(new ReadableStream({ cancel: cancelled })));
+    await ticks();
+    expect(cancelled).toHaveBeenCalledOnce();
     expect(vi.getTimerCount()).toBe(0);
   });
 

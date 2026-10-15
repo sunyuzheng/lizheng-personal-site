@@ -159,10 +159,13 @@ export function parseAskFrame(frame: string): AskEvent | null {
       "invalid_stream"
     );
   }
+  // A refusal that came late arrives here with its HTTP contract's fields (api/ask-lizheng.ts).
   if (event === "error")
     throw new AskError(
       value.message || "The answer did not finish.",
-      value.code
+      value.code,
+      typeof value.status === "number" ? value.status : undefined,
+      typeof value.scope === "string" ? value.scope : undefined
     );
   if (
     event === "progress" ||

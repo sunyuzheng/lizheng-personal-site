@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { catalogGuestDirectory, guestDirectoryNameTable, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
+import { appearanceParticipantIds, catalogGuestDirectory, guestDirectoryNameTable, nameKey, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
 import { getGuestsPageMeta } from "../shared/guest-data";
 import { loadGuestSnapshot, digest, verifyGuestRelease, writeGuestRelease, type GuestReleasePin } from "../scripts/sync-guests";
 
@@ -14,16 +14,20 @@ function fixture(): { catalog: GuestCatalog; articles: GuestArticleCatalog } {
 }
 const dirs: string[] = [];
 afterEach(() => { for (const dir of dirs.splice(0)) fs.rmSync(dir, { recursive: true, force: true }); vi.unstubAllGlobals(); });
-function localInput(): { root: string; hash: string } {
+function localInput(participants: { speaker_id: string; speaker_name: string }[] = []): { root: string; hash: string } {
   const root = fs.mkdtempSync(path.join(fs.realpathSync(os.tmpdir()), "guest-catalog-test-")); dirs.push(root); fs.mkdirSync(path.join(root, "catalog"));
   const { catalog, articles } = fixture();
-  const names = { schema_version: 1, generated_from: ["catalog/guests.json"], key_rule: "NFKC, casefold, then drop marks", key_drop: "&()-./_",
+  const names = { schema_version: 1, generated_from: ["catalog/guests.json", "catalog/guest-appearances.jsonl"], key_rule: "NFKC, casefold, then drop marks", key_drop: "&()-./_",
     key_examples: [["Leo (Charisma)", "leocharisma"]], speakers: [{ speaker_id: "yuzheng", role: "host", names: [{ name: "立正", key: "立正" }] }],
-    names: [{ name: "Alpha", key: "alpha", entity_ids: ["guest:alpha"], kinds: ["alias"] }], qualifiers: {} };
+    names: [{ name: "Alpha", key: "alpha", entity_ids: ["guest:alpha"], kinds: ["alias"] },
+      ...participants.map(person => ({ name: person.speaker_name, key: nameKey(person.speaker_name, "&()-./_"), entity_ids: [person.speaker_id], kinds: ["appearance-participant"] }))], qualifiers: {} };
   const files = [["catalog/guests.json", catalog], ["catalog/guest-articles.json", articles], ["catalog/guest-names.json", names]].map(([file, value]) => {
     const blob = JSON.stringify(value); fs.writeFileSync(path.join(root, file as string), blob);
     return { path: file, bytes: Buffer.byteLength(blob), sha256: digest(blob) };
   });
+  const appearancePath = "catalog/guest-appearances.jsonl", appearanceBlob = JSON.stringify({ id: "synthetic-appearance", data_layer: "structured", source_type: "guest-appearance-catalog", evidence_role: "metadata-only", speaker_status: "not-speech", participants }) + "\n";
+  fs.writeFileSync(path.join(root, appearancePath), appearanceBlob);
+  files.push({ path: appearancePath, bytes: Buffer.byteLength(appearanceBlob), sha256: digest(appearanceBlob) });
   const blob = JSON.stringify({ schema_version: 3, repository: "sunyuzheng/lizheng-open-context", intended_visibility: "public", files }); fs.writeFileSync(path.join(root, "release-manifest.json"), blob);
   return { root, hash: digest(blob) };
 }
@@ -42,6 +46,39 @@ describe("single canonical guest catalog", () => {
     expect(JSON.stringify(names)).toBe(before);
     expect(() => guestDirectoryNameTable({ ...names, generated_from: ["catalog/guests.json"] }, catalog)).toThrow("external_identity_invalid");
     expect(() => guestDirectoryNameTable({ ...names, names: [{ ...names.names[0], entity_ids: ["guest:unbound"] }] }, catalog)).toThrow("external_identity_invalid");
+  });
+  it("accepts guest participants bound to the same hashed appearance release without adding directory pages", async () => {
+    const { root, hash } = localInput([{ speaker_id: "guest:outside", speaker_name: "Synthetic Outside" }]);
+    const result = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
+    expect(result.counts.entities).toBe(1);
+    expect(result.snapshot).not.toContain("guest:outside");
+    const appearanceHash = digest(fs.readFileSync(path.join(root, "catalog/guest-appearances.jsonl")));
+    expect(result.hashes["catalog/guest-appearances.jsonl"]).toBe(appearanceHash);
+    expect(result.snapshot).toContain(`// guest-appearances.jsonl SHA256: ${appearanceHash}`);
+    fs.appendFileSync(path.join(root, "catalog/guest-appearances.jsonl"), "\n");
+    await expect(loadGuestSnapshot({ contextDir: root, manifestSha256: hash })).rejects.toThrow("catalog_hash_drift");
+  });
+  it("rejects a shared guest ID absent from the exact release's appearance participants", async () => {
+    const { root } = localInput([{ speaker_id: "guest:outside", speaker_name: "Synthetic Outside" }]);
+    const relative = "catalog/guest-appearances.jsonl", file = path.join(root, relative);
+    const appearance = JSON.parse(fs.readFileSync(file, "utf8")); appearance.participants = [];
+    const blob = JSON.stringify(appearance) + "\n"; fs.writeFileSync(file, blob);
+    const manifestPath = path.join(root, "release-manifest.json"), manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    Object.assign(manifest.files.find((entry: { path: string }) => entry.path === relative), { sha256: digest(blob), bytes: Buffer.byteLength(blob) });
+    fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+    await expect(loadGuestSnapshot({ contextDir: root, manifestSha256: digest(fs.readFileSync(manifestPath)) })).rejects.toThrow("external_identity_invalid");
+  });
+  it("rejects malformed or duplicate participant identities before trusting external IDs", () => {
+    const row = { id: "synthetic-appearance", data_layer: "structured", source_type: "guest-appearance-catalog", evidence_role: "metadata-only", speaker_status: "not-speech", participants: [{ speaker_id: "guest:outside", speaker_name: "Synthetic Outside" }] };
+    expect([...appearanceParticipantIds([row])]).toEqual(["guest:outside"]);
+    expect(() => appearanceParticipantIds([row, row])).toThrow("appearance_invalid");
+    expect(() => appearanceParticipantIds([{ ...row, data_layer: "raw" }])).toThrow("appearance_invalid");
+    for (const participants of [
+      [...row.participants, ...row.participants],
+      [{ speaker_id: "private:outside", speaker_name: "Synthetic Outside" }],
+      [{ speaker_id: "guest:outside", speaker_name: "" }],
+      [{ ...row.participants[0], aliases: ["Invalid\nAlias"] }],
+    ]) expect(() => appearanceParticipantIds([{ ...row, participants }])).toThrow();
   });
   it("rejects a snapshot from a different release and manual data edits before build", async () => {
     const { root, hash } = localInput(); const { snapshot } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
@@ -134,7 +171,7 @@ describe("single canonical guest catalog", () => {
       return new Response(fs.readFileSync(path.join(root, input.slice(prefix.length))));
     });
     const result = await loadGuestSnapshot({ commit, manifestSha256: hash });
-    expect(result.counts.entities).toBe(1); expect(requests).toHaveLength(8);
+    expect(result.counts.entities).toBe(1); expect(requests).toHaveLength(10);
   });
   it("rejects manifest/hash drift and missing complete catalog", async () => {
     const { root, hash } = localInput(); await expect(loadGuestSnapshot({ contextDir: root, manifestSha256: "a".repeat(64) })).rejects.toThrow("manifest_hash_drift");

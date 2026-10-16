@@ -64,8 +64,34 @@ function validateNameTable(value: unknown, catalog: GuestCatalog, externalIds: R
   record(value.qualifiers);
   for (const id of Object.keys(value.qualifiers)) requireValue(entities.has(id), "name_table_qualifier_invalid");
 }
-/** The shared table also names external hosts; the guest directory only renders its own entities. */
-export function guestDirectoryNameTable(value: unknown, catalog: GuestCatalog): GuestNameTable {
+/** Exact appearance metadata can name guests and hosts who have no directory page. */
+export function appearanceParticipantIds(rows: readonly unknown[]): ReadonlySet<string> {
+  const ids = new Set<string>(), appearances = new Set<string>();
+  for (const row of rows) {
+    record(row);
+    requireValue(typeof row.id === "string" && row.id && !appearances.has(row.id)
+      && row.data_layer === "structured" && row.source_type === "guest-appearance-catalog"
+      && row.evidence_role === "metadata-only" && row.speaker_status === "not-speech"
+      && Array.isArray(row.participants), "name_table_appearance_invalid");
+    appearances.add(row.id);
+    const people = new Set<string>();
+    for (const person of row.participants) {
+      record(person);
+      requireValue(typeof person.speaker_id === "string" && /^(?:yuzheng|(?:guest|host):[a-z0-9_.:-]+)$/.test(person.speaker_id)
+        && !people.has(person.speaker_id) && typeof person.speaker_name === "string" && person.speaker_name.trim()
+        && person.speaker_name.length <= 100 && !/[\u0000-\u001f]/.test(person.speaker_name), "name_table_appearance_participant_invalid");
+      for (const field of ["aliases", "qualifiers"]) {
+        const names = person[field] ?? [];
+        stringList(names);
+        requireValue(names.every(name => name.trim() && name.length <= 100 && !/[\u0000-\u001f]/.test(name)), "name_table_appearance_participant_invalid");
+      }
+      people.add(person.speaker_id); ids.add(person.speaker_id);
+    }
+  }
+  return ids;
+}
+/** Validate shared identities, then project only the directory's existing entities. */
+export function guestDirectoryNameTable(value: unknown, catalog: GuestCatalog, appearanceIds?: ReadonlySet<string>): GuestNameTable {
   record(value);
   requireValue(Array.isArray(value.names), "name_table_invalid");
   const guests = new Set(catalog.entities.map(entity => entity.entity_id)), external = new Set<string>();
@@ -73,7 +99,8 @@ export function guestDirectoryNameTable(value: unknown, catalog: GuestCatalog): 
     record(row);
     requireValue(Array.isArray(row.entity_ids), "name_table_entry_invalid");
     for (const id of row.entity_ids) if (!guests.has(id)) {
-      requireValue(typeof id === "string" && /^host:[a-z0-9_.:-]+$/.test(id)
+      requireValue(typeof id === "string" && /^(?:guest|host):[a-z0-9_.:-]+$/.test(id)
+        && (appearanceIds ? appearanceIds.has(id) : id.startsWith("host:"))
         && Array.isArray(value.generated_from) && value.generated_from.includes("catalog/guest-appearances.jsonl")
         && Array.isArray(row.kinds) && row.kinds.includes("appearance-participant"), "name_table_external_identity_invalid");
       external.add(id);

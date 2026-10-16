@@ -1,8 +1,9 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 53310702f013c809eef90dad125b0e31496d1a8fd7920f35ff38f2f91082b7d1
+// Manifest SHA256: 504f4f66b72e7f42f5887054fc3058e70c4972a112721f7b71f49ab69ff376b6
 // guests.json SHA256: c1e6d8bc1dad22985e3dffa55bb6bda0955df2ea6b6f731d8008dbe6bd40591b
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: 5677eaf552496fa8ad5f982834c57847a4c48642999cea39d0bee73bec4199eb
+// guest-names.json SHA256: 377a69639ca23bb7162606841e29aa383f783d3625bce1fe2510d0d927f69951
+// guest-appearances.jsonl SHA256: 3bf60f7221dae942fc48741918ecbed24ba9e8c582140e977504c5202429a014
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
 export const guestCatalog: GuestCatalog = {
@@ -12216,7 +12217,8 @@ export const guestNameTable: GuestNameTable = {
   "schema_version": 1,
   "generated_from": [
     "catalog/guests.json",
-    "config/speaker-names.json"
+    "config/speaker-names.json",
+    "catalog/guest-appearances.jsonl"
   ],
   "key_rule": "NFKC, casefold, then drop whitespace and the characters !\"#&'(),-./:;<>?@[]_{|}·–—‘’“”•、。《》「」『』【】・",
   "key_drop": "!\"#&'(),-./:;<>?@[]_{|}·–—‘’“”•、。《》「」『』【】・",
@@ -12306,7 +12308,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:ashley-twin-programmer"
       ],
       "kinds": [
-        "base"
+        "base",
+        "appearance-participant"
       ]
     },
     {
@@ -12890,13 +12893,24 @@ export const guestNameTable: GuestNameTable = {
       ]
     },
     {
+      "name": "Howie Xu（硅谷徐老师）",
+      "key": "howiexu硅谷徐老师",
+      "entity_ids": [
+        "guest:howie-xu"
+      ],
+      "kinds": [
+        "appearance-participant"
+      ]
+    },
+    {
       "name": "Indigo",
       "key": "indigo",
       "entity_ids": [
         "guest:indigo"
       ],
       "kinds": [
-        "display"
+        "display",
+        "appearance-participant"
       ]
     },
     {
@@ -12987,7 +13001,8 @@ export const guestNameTable: GuestNameTable = {
       ],
       "kinds": [
         "display",
-        "base"
+        "base",
+        "appearance-participant"
       ]
     },
     {
@@ -13078,7 +13093,8 @@ export const guestNameTable: GuestNameTable = {
       ],
       "kinds": [
         "alias",
-        "member"
+        "member",
+        "appearance-participant"
       ]
     },
     {
@@ -13557,7 +13573,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:wang-ran"
       ],
       "kinds": [
-        "alias"
+        "alias",
+        "appearance-participant"
       ]
     },
     {
@@ -13657,7 +13674,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:sean"
       ],
       "kinds": [
-        "alias"
+        "alias",
+        "appearance-participant"
       ]
     },
     {
@@ -13948,7 +13966,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:tu-wang"
       ],
       "kinds": [
-        "alias"
+        "alias",
+        "appearance-participant"
       ]
     },
     {
@@ -14158,7 +14177,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:ya-ge"
       ],
       "kinds": [
-        "alias"
+        "alias",
+        "appearance-participant"
       ]
     },
     {
@@ -14292,6 +14312,16 @@ export const guestNameTable: GuestNameTable = {
       ]
     },
     {
+      "name": "Zhou Yu",
+      "key": "zhouyu",
+      "entity_ids": [
+        "guest:yu-zhou"
+      ],
+      "kinds": [
+        "appearance-participant"
+      ]
+    },
+    {
       "name": "Zou Xin",
       "key": "zouxin",
       "entity_ids": [
@@ -14329,6 +14359,16 @@ export const guestNameTable: GuestNameTable = {
       ],
       "kinds": [
         "display"
+      ]
+    },
+    {
+      "name": "俞舟",
+      "key": "俞舟",
+      "entity_ids": [
+        "guest:yu-zhou"
+      ],
+      "kinds": [
+        "appearance-participant"
       ]
     },
     {
@@ -14540,7 +14580,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:tu-wang"
       ],
       "kinds": [
-        "display"
+        "display",
+        "appearance-participant"
       ]
     },
     {
@@ -14581,6 +14622,16 @@ export const guestNameTable: GuestNameTable = {
       ],
       "kinds": [
         "display"
+      ]
+    },
+    {
+      "name": "屠龙",
+      "key": "屠龙",
+      "entity_ids": [
+        "guest:yang-ying"
+      ],
+      "kinds": [
+        "appearance-participant"
       ]
     },
     {
@@ -14721,7 +14772,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:yang-ying"
       ],
       "kinds": [
-        "base"
+        "base",
+        "appearance-participant"
       ]
     },
     {
@@ -14731,7 +14783,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:yang-ying"
       ],
       "kinds": [
-        "display"
+        "display",
+        "appearance-participant"
       ]
     },
     {
@@ -14932,7 +14985,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:wang-lu"
       ],
       "kinds": [
-        "display"
+        "display",
+        "appearance-participant"
       ]
     },
     {
@@ -15344,7 +15398,8 @@ export const guestNameTable: GuestNameTable = {
         "guest:ya-ge"
       ],
       "kinds": [
-        "display"
+        "display",
+        "appearance-participant"
       ]
     },
     {
@@ -15627,6 +15682,10 @@ export const guestNameTable: GuestNameTable = {
       {
         "name": "GEN",
         "key": "gen"
+      },
+      {
+        "name": "科技早知道圆桌",
+        "key": "科技早知道圆桌"
       }
     ],
     "guest:indigo": [
@@ -16055,6 +16114,12 @@ export const guestNameTable: GuestNameTable = {
         "key": "palpayformer平安"
       }
     ],
+    "guest:wang-lu": [
+      {
+        "name": "王路在隐身",
+        "key": "王路在隐身"
+      }
+    ],
     "guest:wang-ran": [
       {
         "name": "课程格子",
@@ -16119,6 +16184,10 @@ export const guestNameTable: GuestNameTable = {
       {
         "name": "屠龙大实话",
         "key": "屠龙大实话"
+      },
+      {
+        "name": "屠龙大实话主理人；串台互访中的主要受访者",
+        "key": "屠龙大实话主理人串台互访中的主要受访者"
       }
     ],
     "guest:yangqing-jia": [
@@ -16141,6 +16210,10 @@ export const guestNameTable: GuestNameTable = {
       {
         "name": "Arklex",
         "key": "arklex"
+      },
+      {
+        "name": "Arklex.AI",
+        "key": "arklexai"
       }
     ],
     "guest:yujian": [

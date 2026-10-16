@@ -116,6 +116,9 @@
     { "src": "/decks/ai-side-income-commercial-gates/(.+)", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1" },
     { "src": "/decks/waytoagi-silicon-valley-2026/slides", "dest": "https://waytoagi-silicon-valley-2026.vercel.app/" },
     { "src": "/decks/waytoagi-silicon-valley-2026/(.+)", "dest": "https://waytoagi-silicon-valley-2026.vercel.app/$1" },
+    { "src": "/decks/same-tools-different-results", "status": 307, "headers": { "Location": "/decks/same-tools-different-results/slides" } },
+    { "src": "/decks/same-tools-different-results/slides", "dest": "https://same-tools-different-results-2026.vercel.app/" },
+    { "src": "/decks/same-tools-different-results/(.+)", "dest": "https://same-tools-different-results-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

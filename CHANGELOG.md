@@ -1,5 +1,9 @@
 # 更新记录
 
+## 2026-10-16 演讲库加上《差的不是人，是市场》
+
+- 立正在「通往AGI之路」直播「现在去硅谷，到底能看到什么？」里的15分钟分享进了演讲库：网页版在 `/decks/waytoagi-silicon-valley-2026`（每页截图，讲稿作正文），幻灯片在 `/decks/waytoagi-silicon-valley-2026/slides`，由 deck 自己的 Vercel 项目 `waytoagi-silicon-valley-2026` 回源。卡片在「从User到Builder」。
+
 ## 2026-10-14 主站和 ask 用同一个地址
 
 进了「别人在问什么」的问题，主站上的搜索页改成和它在问问立正里的网页同一个地址：`www.lizheng.ai/ask/<日期>/<词>`（旧的 `/ask/<编号>` 301 跳过去），ask 上的 `/s/` 页把搜索引擎指向它（canonical），ask 的站点地图不再重复列。主站页面底部加「在问问立正里接着问」。公开索引的读取挪到 `shared/ask-public-cards.ts`，两处共用。见 docs/ask-lizheng.md「主站和 ask 用同一个地址」。

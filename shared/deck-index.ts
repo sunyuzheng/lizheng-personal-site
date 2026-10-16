@@ -102,6 +102,44 @@ export const DECK_CATEGORIES: DeckCategoryDefinition[] = [
 
 export const DECK_LIBRARY: DeckEntry[] = [
   {
+    id: "waytoagi-silicon-valley-2026",
+    collection: "public",
+    category: "builder-work",
+    organization: "通往AGI之路",
+    occasion: {
+      en: "Livestream: What can you actually see in Silicon Valley now?",
+      zh: "直播「现在去硅谷，到底能看到什么？」",
+    },
+    title: "差的不是人，是市场",
+    date: "2026-10-16",
+    language: "zh",
+    audience: {
+      en: "Chinese-speaking AI practitioners and learners following the US–China AI gap",
+      zh: "关心中美AI差距的中文AI从业者与学习者",
+    },
+    takeaway: {
+      en: "Between the US and China, the people are on par and the markets are far apart: US companies pay for software, so AI becomes productivity, while in China much of the compute goes to content such as short dramas. You can't change the market, but you decide how you use AI: practice the verbs, install an agentic tool tonight, and manage AI by its results.",
+      zh: "中美AI之间，人没有代差，市场差得很远：美国企业为软件买单，AI成了生产力；中国的算力很多流向了短剧。市场改变不了，怎么用AI自己说了算：练动词、今晚装一个Agentic工具、像管理者一样管结果。",
+    },
+    href: "https://www.lizheng.ai/decks/waytoagi-silicon-valley-2026/slides",
+    page: "/decks/waytoagi-silicon-valley-2026",
+    linkKind: "deck",
+    featured: true,
+    accent: "#97E2B2",
+    keywords: [
+      "WaytoAGI",
+      "Silicon Valley",
+      "US China AI",
+      "agentic tools",
+      "Claude Code",
+      "通往AGI之路",
+      "硅谷",
+      "中美AI",
+      "结果确定性",
+      "学AI",
+    ],
+  },
+  {
     id: "columbia-fake-work-fake-learning-2026",
     collection: "public",
     category: "builder-work",

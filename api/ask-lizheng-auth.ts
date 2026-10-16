@@ -97,8 +97,8 @@ const PAGE_STYLE = `*{box-sizing:border-box}body{margin:0;min-height:100vh;paddi
 // in it. Optional: every page works the same without it. The CSP allows it by hash.
 const PAGE_SCRIPT = 'document.addEventListener("click",function(e){if(e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||!e.target.closest)return;var back=window.opener&&e.target.closest("a[data-back]");if(back){e.preventDefault();window.close();setTimeout(function(){location.assign(back.href)},300);return}var a=e.target.closest("a[data-busy]");if(!a)return;if(a.hasAttribute("data-label")){e.preventDefault();return}hold(a)});document.addEventListener("submit",function(e){var b=e.target.querySelector("button[data-busy]");if(!b)return;if(b.hasAttribute("data-label")){e.preventDefault();return}hold(b)});addEventListener("pageshow",function(e){if(!e.persisted)return;var l=document.querySelectorAll("[data-label]");for(var i=0;i<l.length;i++){l[i].textContent=l[i].getAttribute("data-label");l[i].removeAttribute("data-label");l[i].removeAttribute("aria-disabled");l[i].classList.remove("busy")}});function hold(el){el.setAttribute("data-label",el.textContent);el.textContent=el.getAttribute("data-busy");el.setAttribute("aria-disabled","true");el.classList.add("busy")}';
 const PAGE_CSP = `default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-${createHash("sha256").update(PAGE_SCRIPT).digest("base64")}'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'`;
-function page(title: string, body: string) {
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>问问立正 · ${title}</title><style>${PAGE_STYLE}</style></head><body><main><div class="brand">${SEAL}<span>问问立正</span></div>${body}</main><script>${PAGE_SCRIPT}</script></body></html>`;
+function page(title: string, body: string, brand = "问问立正") {
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${brand} · ${title}</title><style>${PAGE_STYLE}</style></head><body><main><div class="brand">${SEAL}<span>${brand}</span></div>${body}</main><script>${PAGE_SCRIPT}</script></body></html>`;
 }
 // The iPhone app verifies by email code only. The Academy's sign-in page also lets people create
 // an account, and App Store rules require an app that allows sign-up to offer account deletion too.
@@ -106,31 +106,34 @@ const fromApp = (req: IncomingMessage) => /AskLizhengApp\//.test(String(req.head
 function emailPage(url: URL, verifying: boolean, message = "", inApp = false) {
   const returnPath = safeReturnPath(url.searchParams.get("return"));
   const ops = returnPath === "/ops/ask-lizheng";
-  const params = new URLSearchParams({ return: ops ? returnPath : returnPath.startsWith("/en/") ? "/en/" : "/" });
+  const guestIntake = returnPath === "/ops/guest-intake";
+  const params = new URLSearchParams({ return: ops || guestIntake ? returnPath : returnPath.startsWith("/en/") ? "/en/" : "/" });
   const popup = url.searchParams.get("popup") === "1";
   if (popup) params.set("popup", "1");
   const query = params.toString();
   const action = `/api/ask-lizheng/auth/${verifying ? "email-verify" : "email-request"}?${query}`;
-  const backLabel = ops ? "返回后台" : "返回提问";
-  const heading = ops ? "登录运营后台" : "验证Founding Member身份";
+  const backLabel = guestIntake ? "返回嘉宾池管理" : ops ? "返回后台" : "返回提问";
+  const heading = guestIntake ? "登录嘉宾池管理" : ops ? "登录运营后台" : "验证Founding Member身份";
+  const title = guestIntake ? "管理员登录" : ops ? "运营后台登录" : "验证Founding身份";
+  const brand = guestIntake ? "嘉宾池管理" : "问问立正";
   const control = verifying
     ? '<label for="code">邮箱里的6位验证码</label><input id="code" class="code" name="code" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" required autofocus>'
-    : '<label for="email">邮箱</label><input id="email" name="email" type="email" maxlength="320" autocomplete="email" placeholder="你在超线性学院用的邮箱" required autofocus>';
+    : `<label for="email">邮箱</label><input id="email" name="email" type="email" maxlength="320" autocomplete="email" placeholder="${guestIntake ? "管理员邮箱" : "你在超线性学院用的邮箱"}" required autofocus>`;
   const lead = verifying
     ? "验证码已发到你的邮箱，10分钟内有效。没收到的话，看看垃圾邮件，或者重新发送。"
-    : ops ? "输入运营账号邮箱，我们发一个6位验证码。" : "输入你在超线性学院用的邮箱，我们发一个6位验证码。核验后，Founding Member每天提问不限次。";
+    : guestIntake ? "输入管理员邮箱，我们发一个6位验证码。" : ops ? "输入运营账号邮箱，我们发一个6位验证码。" : "输入你在超线性学院用的邮箱，我们发一个6位验证码。核验后，Founding Member每天提问不限次。";
   const note = verifying
     ? "验证码只能用一次；输错5次需要重新发送。"
-    : ops ? "只有预先配置的运营账号能查看提问。社区会员身份不授予后台权限。" : "邮箱只用于核验身份。不是Founding Member也可以直接提问，每天3次。";
+    : guestIntake ? "仅预先配置的管理员可查看和整理登记资料。" : ops ? "只有预先配置的运营账号能查看提问。社区会员身份不授予后台权限。" : "邮箱只用于核验身份。不是Founding Member也可以直接提问，每天3次。";
   const links = verifying
     ? `<a href="/api/ask-lizheng/auth/login?${query}">重新发送或换个邮箱</a><a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`
     : `<a href="${returnPath}"${popup ? " data-back" : ""}>${backLabel}</a>`;
   // With a dedicated Academy application, SSO leads and the email code is the fallback, as at Story Coffee.
   if (!verifying && ssoReady() && !inApp) {
-    const intro = message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${ops ? "使用超线性学院账号登录，随后核验后台访问权限。" : "用超线性学院账号登录，核验后Founding Member每天提问不限次。"}</p>`;
-    return page(ops ? "运营后台登录" : "验证Founding身份", `<h1>${heading}</h1>${intro}<a class="sso" href="/api/ask-lizheng/auth/login?provider=logto&${query}" data-busy="正在前往超线性学院…">使用超线性学院账号登录</a><p class="or">没有学院账号？用邮箱收验证码</p><form action="${action}" method="post">${control.replace(" autofocus", "")}<button type="submit" data-busy="正在发送…">发送验证码</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
+    const intro = message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${guestIntake ? "验证管理员邮箱后，进入嘉宾池管理。" : ops ? "使用超线性学院账号登录，随后核验后台访问权限。" : "用超线性学院账号登录，核验后Founding Member每天提问不限次。"}</p>`;
+    return page(title, `<h1>${heading}</h1>${intro}<a class="sso" href="/api/ask-lizheng/auth/login?provider=logto&${query}" data-busy="正在前往超线性学院…">使用超线性学院账号登录</a><p class="or">没有学院账号？用邮箱收验证码</p><form action="${action}" method="post">${control.replace(" autofocus", "")}<button type="submit" data-busy="正在发送…">发送验证码</button></form><p class="note">${note}</p><p class="links">${links}</p>`, brand);
   }
-  return page(ops ? "运营后台登录" : "验证Founding身份", `<h1>${heading}</h1><ol><li data-n="1" class="${verifying ? "done" : "on"}">输入邮箱</li><li data-n="2" class="${verifying ? "on" : ""}">填写验证码</li></ol>${message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${lead}</p>`}<form action="${action}" method="post">${control}<button type="submit" data-busy="${verifying ? "正在核验…" : "正在发送…"}">${verifying ? "确认验证码" : "发送验证码"}</button></form><p class="note">${note}</p><p class="links">${links}</p>`);
+  return page(title, `<h1>${heading}</h1><ol><li data-n="1" class="${verifying ? "done" : "on"}">输入邮箱</li><li data-n="2" class="${verifying ? "on" : ""}">填写验证码</li></ol>${message ? `<p class="alert" role="alert">${message}</p>` : `<p class="lead">${lead}</p>`}<form action="${action}" method="post">${control}<button type="submit" data-busy="${verifying ? "正在核验…" : "正在发送…"}">${verifying ? "确认验证码" : "发送验证码"}</button></form><p class="note">${note}</p><p class="links">${links}</p>`, brand);
 }
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   for (const [key, value] of Object.entries(ACCESS_HEADERS)) res.setHeader(key, value);
@@ -148,10 +151,11 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     res.setHeader("Referrer-Policy", "same-origin");
     res.end(value);
   };
-  let action: string | undefined, currentUrl: URL | undefined;
+  let action: string | undefined, currentUrl: URL | undefined, guestIntakeLogin = false;
   try {
     const request = requestFrom(req), url = new URL(request.url);
     currentUrl = url;
+    guestIntakeLogin = safeReturnPath(url.searchParams.get("return")) === "/ops/guest-intake";
     action = url.searchParams.get("__route") || url.pathname.split("/").at(-1);
     if (!accessEnabled()) {
       if (action === "session") return json(200, { enabled: false });
@@ -201,8 +205,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         return form ? html(200, emailPage(url, true)) : json(200, { ok: true, expires_in: challenge.expires_in });
       }
       const verified = await verifyEmailCode(request, input.code);
-      const founding = await foundingStatus(verified.email, { signIn: true });
-      const cookie = await createSession(await opaqueSubject("user", `email:${verified.email}`), verified.email, founding);
+      guestIntakeLogin = new URL(verified.redirect).pathname === "/ops/guest-intake";
+      const founding = guestIntakeLogin ? false : await foundingStatus(verified.email, { signIn: true });
+      const cookie = await createSession(await opaqueSubject("user", `email:${verified.email}`), verified.email, founding, { deferMembershipLookup: guestIntakeLogin });
       res.setHeader("Set-Cookie", [cookie, authCookie(COOKIE_EMAIL, "", 0)]);
       if (!form) return json(200, { ok: true, redirect: verified.redirect });
       res.statusCode = 303; res.setHeader("Location", verified.redirect); return res.end();
@@ -230,6 +235,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (!transaction || transaction.origin !== origin || transaction.expiresAt <= Date.now() / 1000 ||
           !transaction.values || typeof transaction.values !== "object") throw new AccessError("login_expired", 401);
     }
+    guestIntakeLogin = transaction.returnPath === "/ops/guest-intake";
     let redirect: string | undefined;
     const configuration = logtoConfiguration();
     const client = new LogtoClient(configuration, {
@@ -256,8 +262,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       if (!claims.sub || typeof claims.email !== "string" || claims.email_verified !== true)
         throw new AccessError("identity_unverified", 403);
       const email = claims.email.trim().toLowerCase();
-      const founding = await foundingStatus(email, { signIn: true });
-      const cookie = await createSession(await opaqueSubject("user", claims.sub), email, founding);
+      const founding = guestIntakeLogin ? false : await foundingStatus(email, { signIn: true });
+      const cookie = await createSession(await opaqueSubject("user", claims.sub), email, founding, { deferMembershipLookup: guestIntakeLogin });
       res.setHeader("Set-Cookie", [cookie, authCookie(COOKIE_TRANSACTION, "", 0)]);
       redirect = `${origin}${transaction.returnPath}`;
       // ID/access tokens are discarded; only the encrypted verified identity remains.
@@ -281,6 +287,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       return html(failure.status, emailPage(currentUrl, action === "email-verify", messages[failure.code] || fallback, fromApp(req)));
     }
     if ((req.url || "").includes("callback") || (req.url || "").includes("/login") || (req.url || "").includes("__route=login")) {
+      if (guestIntakeLogin) return html(failure.status, page("暂时未能完成登录", '<h1>暂时未能完成登录</h1><p class="lead">请返回嘉宾池管理页重新登录。</p><a class="sso" href="/ops/guest-intake">返回嘉宾池管理</a>', "嘉宾池管理"));
       res.statusCode = failure.status;
       res.setHeader("Content-Type", "text/html; charset=utf-8");
       res.end(page("暂时未能完成登录", `<h1>暂时未能完成登录</h1><p class="lead">请回到提问页面再试。这次核验没有扣提问次数；如果是在当前页面跳转过来的，回去后未发送的问题还在。</p><button type="button" onclick="if(window.opener){window.close()}else{location.assign('/#ask-lizheng')}" style="width:100%">返回提问</button>`));

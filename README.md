@@ -63,3 +63,5 @@ See `QUICK_START.md` for common update tasks and deployment details.
 ## 私人运营入口
 
 问问立正现有提问的私人后台与权限、统计边界见[运营后台说明](docs/ask-ops.md)。后台候选与问答APP的完整保存升级分开发布。
+
+社区播客嘉宾报名位于[`/guest-intake`](https://www.lizheng.ai/guest-intake)，姜喵的管理入口为[`/ops/guest-intake`](https://www.lizheng.ai/ops/guest-intake)。页面、数据和独立管理权限见[嘉宾资料收集说明](docs/guest-intake.md)。

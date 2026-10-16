@@ -35,6 +35,10 @@ describe("deck web versions", () => {
       expect(fs.existsSync(path.join(ROOT, "client", "public", "deck-slides", fileOf(page), slide.image))).toBe(true);
     }
     expect(fs.existsSync(path.join(ROOT, "client", "public", "deck-slides", fileOf(page), "og.jpg"))).toBe(true);
+    // A slide that names a live page (the deck's data-live) offers it in place of its picture.
+    for (const slide of capture.slides as Array<{ live?: { src: string } }>) {
+      if (slide.live) expect(html).toContain(`<figure class="live" data-src="${slide.live.src}`);
+    }
     for (const json of html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) ?? []) {
       expect(() => JSON.parse(json.replace(/^<script[^>]*>|<\/script>$/g, ""))).not.toThrow();
     }

@@ -2,6 +2,26 @@
   "note": "Which decks get a web version at /decks/<slug>, and how scripts/decks/capture_decks.mjs reads each one. See README.md in this folder.",
   "decks": [
     {
+      "page": "/decks/waytoagi-silicon-valley-2026",
+      "deck": "waytoagi-silicon-valley-2026",
+      "language": "zh",
+      "capture": "https://waytoagi-silicon-valley-2026.vercel.app/",
+      "slides": "/decks/waytoagi-silicon-valley-2026/slides",
+      "nav": "keys",
+      "active": ".slide.active",
+      "count": 13,
+      "notes": {
+        "from": "global",
+        "expr": "JSON.parse(document.getElementById('notes').textContent)[i].n.replace(/\\n/g, '\\n\\n')"
+      },
+      "hide": [
+        "#help",
+        "#pv",
+        ".progress",
+        ".live-open"
+      ]
+    },
+    {
       "page": "/decks/fake-work-fake-learning",
       "deck": "columbia-fake-work-fake-learning-2026",
       "language": "en",

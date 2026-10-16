@@ -22,7 +22,7 @@
 
 讲稿只在 `sources.json` 写了 `notes` 的 deck 里读。加之前先看一遍备注是不是讲给听众的话：
 
-- 适合：哥伦比亚《假学习的终结》、两套AI副业、腾讯游戏战略，备注就是讲稿。
+- 适合：哥伦比亚《假学习的终结》、两套AI副业、腾讯游戏战略、通往AGI之路直播《差的不是人，是市场》，备注就是讲稿。
 - 不适合：Amazon那套的备注是写给自己的提示（"Open with…""Say that…"）；《AI会让假工作先爆炸，再贬值》是录视频用的提词卡，备注是"照着说""停一下再翻页"。这两套只用幻灯片上的文字。
 
 暂时没做网页版的（卡片照旧链到原来的地方）：
@@ -56,8 +56,12 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 
 1. deck 已经公开、已经在 `shared/deck-index.ts` 里有卡片。
 2. 在卡片上加 `page: "/decks/<slug>"`；如果幻灯片原来就挂在 `www.lizheng.ai/decks/<slug>`，把幻灯片挪到 `/decks/<slug>/slides`（`vercel.json` 里先写 `/slides` 那条，再写 `/(.+)` 资源那条；卡片的 `href` 跟着改）。
-3. 在 `sources.json` 加一条，跑上面的命令，看一遍截图和 `pages/` 里的文字。
+3. 在 `sources.json` 加一条，跑上面的命令，看一遍截图和 `pages/` 里的文字。每页的标题先取 deck 里那一页的 `data-title`，没有就取 `aria-label`（「第N页：…」），再没有就取页里的 h1/h2；只给讲者视图看的标签（「封面：」「转场：」）别放在 `data-title`，否则会成为网页版上的标题（通往AGI之路那套改成了 `data-pv-title`）。
 4. `pnpm build` 会检查卡片的 `page` 和这里的文件一一对应。
+
+## 可交互的一页
+
+幻灯片上的一页如果代表一个在线的页面（比如社区地图），deck 可以在这页放一个带 `data-live="https://…"` 的元素（再加 `data-live-href` 给「在新页面打开」用，`data-live-label` 作标题）。读的时候会记下来，网页版这一页的图片上就多一个「打开互动地图」：点了才在图片的位置载入那个页面，旁边一行写怎么玩、可以在新页面打开。通往AGI之路那套第3页就是这样嵌 `city.lizheng.ai/window`（主页那扇看得见这座城的窗，单独成页，见 `docs/community-graph.md`）。deck 自己的按钮在截图时用 `hide` 藏起来。
 
 ## 旧链接
 

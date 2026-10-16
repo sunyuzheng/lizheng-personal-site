@@ -108,7 +108,14 @@ function extractSlide({ selector, skip }) {
   const label = (root.getAttribute("aria-label") || "").match(/^(?:第\d+页[：:]|Slide \d+: )(.+)$/);
   const title = root.getAttribute("data-title") || (label ? label[1] : "");
   const chapter = (root.getAttribute("data-chapter") || "").replace(/\s+/g, " ").trim();
-  return { blocks, links, title, chapter };
+  // A slide can name a live page that its picture stands for (data-live, e.g. city.lizheng.ai/window);
+  // the web version then offers it in place of the picture. Read even when the deck's button is hidden.
+  const liveEl = root.querySelector("[data-live]");
+  const liveSrc = liveEl && liveEl.getAttribute("data-live");
+  const live = liveSrc && /^https:\/\//.test(liveSrc)
+    ? { src: liveSrc, href: liveEl.getAttribute("data-live-href") || liveSrc, label: liveEl.getAttribute("data-live-label") || "" }
+    : undefined;
+  return { blocks, links, title, chapter, ...(live ? { live } : {}) };
 }
 
 async function settle(page, ms = 700) {

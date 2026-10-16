@@ -8,6 +8,18 @@
   "trailingSlash": false,
   "routes": [
     { "src": "^/api/ask-lizheng/ops/(session|summary|records|export|delete|discovery-list|discovery-save|discovery-publish|discovery-withdraw)$", "dest": "/api/ask-lizheng-ops?__route=$1" },
+    {
+      "src": "^/guest-intake/?$",
+      "has": [{ "type": "host", "value": "www.lizheng.ai" }],
+      "continue": true,
+      "headers": { "Cache-Control": "no-cache", "X-Robots-Tag": "noindex, nofollow", "Referrer-Policy": "same-origin" }
+    },
+    {
+      "src": "^/ops/guest-intake/?$",
+      "has": [{ "type": "host", "value": "www.lizheng.ai" }],
+      "dest": "/guest-intake",
+      "headers": { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow, noarchive", "Referrer-Policy": "same-origin", "X-Frame-Options": "DENY" }
+    },
     { "src": "^/api/ask-lizheng/discovery/(lists|detail|vote)$", "has": [{ "type": "host", "value": "(?:www|ask)\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-discovery?__route=$1" },
     { "src": "^/ask$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=index" },
     { "src": "^/ask/sitemap\\.xml$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "dest": "/api/ask-lizheng-public?__route=sitemap" },
@@ -73,6 +85,7 @@
     { "src": "^/api/ask-lizheng/answer-map$", "dest": "/api/ask-lizheng-answer-map" },
     { "src": "^/$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app" },
     { "src": "^/en/?$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app/en" },
+    { "src": "^/window/?$", "has": [{ "type": "host", "value": "city\\.lizheng\\.ai" }], "dest": "/community-app/window" },
     { "src": "^/(.*)$", "has": [{ "type": "host", "value": "community\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://city.lizheng.ai/$1" } },
     { "src": "^/community-app(?:/.*)?$", "has": [{ "type": "host", "value": "www\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://city.lizheng.ai/" } },
     {
@@ -101,6 +114,8 @@
     { "src": "/decks/ai-side-income-career-capital/(.+)", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-career-capital/$1" },
     { "src": "/decks/ai-side-income-commercial-gates/slides", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates" },
     { "src": "/decks/ai-side-income-commercial-gates/(.+)", "dest": "https://ai-side-income-2026.vercel.app/decks/ai-side-income-commercial-gates/$1" },
+    { "src": "/decks/waytoagi-silicon-valley-2026/slides", "dest": "https://waytoagi-silicon-valley-2026.vercel.app/" },
+    { "src": "/decks/waytoagi-silicon-valley-2026/(.+)", "dest": "https://waytoagi-silicon-valley-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

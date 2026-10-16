@@ -133,7 +133,7 @@ export function authCookie(name: string, value: string, seconds: number) {
   return `${name}=${value}; Path=/; Max-Age=${seconds}; HttpOnly; Secure; SameSite=Lax`;
 }
 export function safeReturnPath(value: string | null) {
-  if (value === "/ops/ask-lizheng") return value;
+  if (value === "/ops/ask-lizheng" || value === "/ops/guest-intake") return value;
   return value === "/en" || value === "/en/" ? "/en/#ask-lizheng" : "/#ask-lizheng";
 }
 export async function lookupFounding(rawEmail: string): Promise<boolean> {
@@ -207,10 +207,10 @@ export async function foundingStatus(rawEmail: string, options: { signIn?: boole
 export type SessionRecord = {
   subject: string; email: string; founding: boolean; checkedAt: number; expiresAt: number;
 };
-export async function createSession(subject: string, email: string, founding: boolean) {
+export async function createSession(subject: string, email: string, founding: boolean, options: { deferMembershipLookup?: boolean } = {}) {
   const now = Math.floor(Date.now() / 1000);
   const id = randomId();
-  const record: SessionRecord = { subject, email, founding, checkedAt: now, expiresAt: now + SESSION_SECONDS };
+  const record: SessionRecord = { subject, email, founding, checkedAt: options.deferMembershipLookup ? 0 : now, expiresAt: now + SESSION_SECONDS };
   await redis(["SET", await redisKey("session", id), await encryptRecord(record), "EX", SESSION_SECONDS]);
   return authCookie(COOKIE_SESSION, id, SESSION_SECONDS);
 }
@@ -236,6 +236,12 @@ async function loadSession(request: Request, now: number, retry = 0, refreshMemb
     }
   }
   return value;
+}
+/** Verified email identity only; callers must enforce their own independent authorization. */
+export async function verifiedSessionEmail(request: Request): Promise<{ email: string } | null> {
+  officialOrigin(request.url);
+  const session = await loadSession(request, Math.floor(Date.now() / 1000), 0, false);
+  return session ? { email: session.email } : null;
 }
 /**
  * The guest quota counts by cookie, so a client that drops cookies (a script,

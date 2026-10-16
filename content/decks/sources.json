@@ -17,7 +17,8 @@
       "hide": [
         "#help",
         "#pv",
-        ".progress"
+        ".progress",
+        ".live-open"
       ]
     },
     {

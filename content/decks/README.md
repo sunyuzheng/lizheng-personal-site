@@ -59,6 +59,10 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 3. 在 `sources.json` 加一条，跑上面的命令，看一遍截图和 `pages/` 里的文字。每页的标题先取 deck 里那一页的 `data-title`，没有就取 `aria-label`（「第N页：…」），再没有就取页里的 h1/h2；只给讲者视图看的标签（「封面：」「转场：」）别放在 `data-title`，否则会成为网页版上的标题（通往AGI之路那套改成了 `data-pv-title`）。
 4. `pnpm build` 会检查卡片的 `page` 和这里的文件一一对应。
 
+## 可交互的一页
+
+幻灯片上的一页如果代表一个在线的页面（比如社区地图），deck 可以在这页放一个带 `data-live="https://…"` 的元素（再加 `data-live-href` 给「在新页面打开」用，`data-live-label` 作标题）。读的时候会记下来，网页版这一页的图片上就多一个「打开互动地图」：点了才在图片的位置载入那个页面，旁边一行写怎么玩、可以在新页面打开。通往AGI之路那套第3页就是这样嵌 `city.lizheng.ai/window`（主页那扇看得见这座城的窗，单独成页，见 `docs/community-graph.md`）。deck 自己的按钮在截图时用 `hide` 藏起来。
+
 ## 旧链接
 
 幻灯片原来的页内锚点（`#s05`、`#slide-05`、reveal 的 `#/4`）打开网页版时会跳到对应那一节。

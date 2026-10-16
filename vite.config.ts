@@ -49,6 +49,8 @@ export default defineConfig({
         guestIntake: path.resolve(import.meta.dirname, "client", "guest-intake", "index.html"),
         // community.lizheng.ai (vercel.json serves it on that host).
         community: path.resolve(import.meta.dirname, "client", "community-app", "index.html"),
+        // city.lizheng.ai/window: the homepage's window alone, for other pages to embed.
+        communityWindow: path.resolve(import.meta.dirname, "client", "community-app", "window", "index.html"),
       },
     },
   },

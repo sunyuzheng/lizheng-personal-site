@@ -32,6 +32,10 @@ import { Phrases } from "./parts";
  * section falls back to the dot map (CityField).
  *
  * The drawing code and data load only when the section nears the screen.
+ *
+ * `embed` is the same window alone, for city.lizheng.ai/window (which other
+ * pages embed): no caption or calls to action, and its links open in a new
+ * tab. `onReady` says when the city is drawn, or the dot map is shown instead.
  */
 
 interface Card {
@@ -51,6 +55,9 @@ interface Links {
 // The card keeps this far from its light and from the frame's edges.
 const GAP = 14;
 const EDGE = 8;
+
+// Embedded in another page, the ways on open in a new tab instead of inside the frame.
+const NEW_TAB = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 // The prerender has no layout; measuring only makes sense in the browser.
 const useBrowserLayoutEffect =
@@ -80,13 +87,19 @@ export default function CityWindow({
   copy,
   view,
   action,
+  embed = false,
+  onReady,
 }: {
   lang: Lang;
   /** The dot map's words: its fallback, search, and the card's figures. */
   copy: CityCopy;
   view: WindowCopy;
   /** The section's calls to action, shown beside the caption. */
-  action: ReactNode;
+  action?: ReactNode;
+  /** Alone in a frame another page embeds: no caption, links in a new tab. */
+  embed?: boolean;
+  /** The city is drawn (or the dot map shown in its place). */
+  onReady?: () => void;
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -102,6 +115,8 @@ export default function CityWindow({
   const listId = useId();
   const openRef = useRef(false);
   openRef.current = Boolean(card?.open);
+  const readyRef = useRef(onReady);
+  readyRef.current = onReady;
 
   // Shows a member's card at their light: open, or following the pointer.
   // Only refs and state setters inside, so the window's callbacks can keep it.
@@ -183,6 +198,7 @@ export default function CityWindow({
             });
           },
         });
+        readyRef.current?.();
       })
       .catch(() => setMode("fallback"));
     return () => {
@@ -224,6 +240,11 @@ export default function CityWindow({
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [card?.open, closeCard]);
+
+  // Where the city cannot be drawn, the dot map is what is ready.
+  useEffect(() => {
+    if (mode === "fallback") readyRef.current?.();
+  }, [mode]);
 
   // Search by name, among members whose card can link to them.
   const searchIndex = useMemo(
@@ -406,6 +427,7 @@ export default function CityWindow({
             />
             <MemberCard
               element={cardRef}
+              embed={embed}
               lang={lang}
               data={data}
               links={links}
@@ -419,27 +441,32 @@ export default function CityWindow({
         <a
           className="city-enter"
           href={lang === "en" ? LINKS.connectionsEn : LINKS.connections}
+          {...(embed ? NEW_TAB : {})}
         >
           {view.enter} <span aria-hidden="true">→</span>
         </a>
       </div>
-      <div className="city-caption">
-        <div className="city-legend" {...reserve}>
-          <p>
-            <Phrases text={caption[0]} />
-            {caption[1] && (
-              <>
-                <br />
-                <Phrases text={caption[1]} />
-              </>
-            )}
-            {data && (
-              <small>{view.updated(formatDate(data.generatedAt, lang))}</small>
-            )}
-          </p>
+      {!embed && (
+        <div className="city-caption">
+          <div className="city-legend" {...reserve}>
+            <p>
+              <Phrases text={caption[0]} />
+              {caption[1] && (
+                <>
+                  <br />
+                  <Phrases text={caption[1]} />
+                </>
+              )}
+              {data && (
+                <small>
+                  {view.updated(formatDate(data.generatedAt, lang))}
+                </small>
+              )}
+            </p>
+          </div>
+          {action}
         </div>
-        {action}
-      </div>
+      )}
     </div>
   );
 }
@@ -451,6 +478,7 @@ export default function CityWindow({
  */
 function MemberCard({
   element,
+  embed,
   lang,
   data,
   links,
@@ -460,6 +488,7 @@ function MemberCard({
   onClose,
 }: {
   element: Ref<HTMLDivElement>;
+  embed: boolean;
   lang: Lang;
   data: Community;
   links: Links;
@@ -515,7 +544,7 @@ function MemberCard({
           >
             {view.profile} <span aria-hidden="true">↗</span>
           </a>
-          <a href={links.page(lang, uid)}>
+          <a href={links.page(lang, uid)} {...(embed ? NEW_TAB : {})}>
             {view.explore} <span aria-hidden="true">→</span>
           </a>
         </span>

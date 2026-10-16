@@ -40,6 +40,13 @@ interface Block {
   cell?: boolean;
 }
 
+/** A live page the slide's picture stands for (the deck's data-live), offered in its place. */
+interface Live {
+  src: string;
+  href: string;
+  label: string;
+}
+
 interface CapturedSlide {
   n: number;
   image: string;
@@ -48,6 +55,7 @@ interface CapturedSlide {
   blocks: Block[];
   links: Array<{ href: string; text: string }>;
   notes: string[];
+  live?: Live;
 }
 
 interface Capture {
@@ -70,6 +78,7 @@ interface Slide {
   lines: Line[];
   notes: string[];
   links: Array<{ href: string; text: string }>;
+  live?: Live;
 }
 
 interface DeckPage {
@@ -223,6 +232,7 @@ function readSlides(capture: Capture): Slide[] {
       // A paragraph that is only a bracketed cue ("[Pause about ten seconds.]") is for the speaker.
       notes: slide.notes.filter(p => !/^\s*[[［【][^\]］】]*[\]］】]\s*$/.test(p)),
       links: slide.links.filter(link => !/^https?:\/\/(www\.)?lizheng\.ai\/?$/.test(link.href)),
+      ...(slide.live ? { live: slide.live } : {}),
     };
   });
 }
@@ -294,6 +304,10 @@ const COPY = {
     script: "讲稿",
     links: "本页链接",
     imageAlt: (n: number, title: string) => `第${n}页：${title}`,
+    liveOpen: "打开互动地图",
+    liveClose: "收起地图",
+    liveNote: "拖着能转，点一盏灯看是谁",
+    liveNewTab: "在新页面打开",
     aboutTitle: "关于这份材料",
     aboutBody: (notes: boolean) => `这是幻灯片的网页版：每张图是原来的一页，文字取自幻灯片本身${notes ? "，讲稿取自讲者备注" : ""}。`,
     playFull: "全屏播放原幻灯片",
@@ -330,6 +344,10 @@ const COPY = {
     script: "Talk track",
     links: "Links on this slide",
     imageAlt: (n: number, title: string) => `Slide ${n}: ${title}`,
+    liveOpen: "Open the interactive map",
+    liveClose: "Close the map",
+    liveNote: "Drag to turn it; tap a light to see who it is",
+    liveNewTab: "Open in a new tab",
     aboutTitle: "About this page",
     aboutBody: (notes: boolean) =>
       `This is the web version of the slides. Each picture is one slide; the text comes from the slides themselves${notes ? ", and the talk track from the speaker notes" : ""}.`,
@@ -395,6 +413,18 @@ main{padding-bottom:40px}
 .shot{display:block;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgb(20 23 20/.06),0 10px 30px rgb(20 23 20/.08),0 0 0 1px var(--rule)}
 .shot img{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .no-script figure{max-width:980px}
+.live-frame{position:relative}
+.live-open{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:9px;padding:10px 16px 10px 14px;border:1px solid rgb(143 212 164/.65);border-radius:999px;background:rgb(5 22 12/.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#8fd4a4;font:600 14px/1 var(--sans);cursor:pointer;transition:background .2s}
+.live-open::before{content:"";border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+.live-open:hover,.live-open:focus-visible{background:rgb(143 212 164/.2)}
+.live-open[aria-busy=true]{cursor:progress;opacity:.7}
+.live-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:10px;background:#082313;opacity:0;transition:opacity .4s}
+.live.on iframe{opacity:1}.live.on .shot{visibility:hidden}.live.on .live-open{display:none}
+.live-close{position:absolute;top:10px;right:10px;padding:7px 13px;border:1px solid rgb(248 241 228/.3);border-radius:999px;background:rgb(5 22 12/.78);color:var(--on-forest);font:500 13px/1 var(--sans);cursor:pointer}
+.live-close:hover,.live-close:focus-visible{border-color:var(--on-forest)}
+.live-note{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.live-note a{color:var(--green-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+@media (max-width:960px){.live.on .live-frame{height:min(72vh,460px)}.live.on .shot{display:none}}
 .script p{font-size:17px;line-height:1.95;color:var(--ink-2)}.script p+p{margin-top:14px}
 .script .script-label{margin-bottom:10px;font-size:12.5px;line-height:1.6;letter-spacing:.08em;color:var(--faint)}
 .lines{max-width:var(--measure)}
@@ -428,12 +458,13 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 18px}footer a:hover{color:var(--g
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 `;
 
-// Highlights the chapter in view, fills the progress line, and sends old slide links (#s05, #slide-5,
-// #/4) to the matching section.
+// Highlights the chapter in view, fills the progress line, sends old slide links (#s05, #slide-5,
+// #/4) to the matching section, and opens a slide's live page (figure.live) in place of its picture.
 const SCRIPT = `(()=>{const h=location.hash,m=h.match(/^#s(\\d+)$/)||h.match(/^#slide-0+(\\d+)$/)||h.match(/^#\\/(\\d+)/);if(m){const n=+m[1]+(h.startsWith("#/")?1:0),t=document.getElementById("slide-"+n);if(t){history.replaceState(null,"","#slide-"+n);t.scrollIntoView()}}
 const bar=document.querySelector(".progress"),main=document.querySelector("main");const tick=()=>{if(!bar||!main)return;const b=main.getBoundingClientRect(),p=Math.min(1,Math.max(0,-b.top/(b.height-innerHeight)));bar.style.width=p*100+"%"};addEventListener("scroll",tick,{passive:true});tick();
 const links=[...document.querySelectorAll(".chapters a")];if(links.length&&"IntersectionObserver"in window){const io=new IntersectionObserver(es=>{for(const e of es){if(!e.isIntersecting)continue;const c=e.target.dataset.chapter;links.forEach(a=>a.setAttribute("aria-current",String(a.dataset.chapter===c)))}},{rootMargin:"-40% 0px -55% 0px"});document.querySelectorAll(".slide").forEach(s=>io.observe(s))}
-const d=document.querySelector(".toc details");if(d){d.addEventListener("click",e=>{if(e.target.closest("ol a"))d.open=false});document.addEventListener("click",e=>{if(d.open&&!d.contains(e.target))d.open=false})}})();`;
+const d=document.querySelector(".toc details");if(d){d.addEventListener("click",e=>{if(e.target.closest("ol a"))d.open=false});document.addEventListener("click",e=>{if(d.open&&!d.contains(e.target))d.open=false})}
+document.querySelectorAll("figure.live").forEach(f=>{const box=f.querySelector(".live-frame"),open=f.querySelector(".live-open"),close=f.querySelector(".live-close");let frame=null,timer=0;const show=()=>{if(!frame)return;clearTimeout(timer);open.removeAttribute("aria-busy");f.classList.add("on");close.hidden=false};open.addEventListener("click",()=>{if(frame)return;frame=document.createElement("iframe");frame.title=f.dataset.title||"";frame.src=f.dataset.src;open.setAttribute("aria-busy","true");box.append(frame);timer=setTimeout(show,10000)});close.addEventListener("click",()=>{clearTimeout(timer);if(frame)frame.remove();frame=null;f.classList.remove("on");close.hidden=true;open.removeAttribute("aria-busy");open.focus()});addEventListener("message",e=>{if(frame&&e.source===frame.contentWindow&&e.data&&e.data.source==="lizheng-city"&&e.data.type==="ready")show()})})})();`;
 
 function slidesHref(card: DeckEntry): string | undefined {
   if (!card.href) return undefined;
@@ -472,7 +503,13 @@ function renderSlide(page: DeckPage, slide: Slide): string {
   const hasScript = slide.notes.length > 0;
   const img = `/deck-slides/${page.file}/${slide.image}`;
   const eager = slide.n === 1;
-  const figure = `<figure><a class="shot" href="${escapeHtml(img)}" aria-label="${escapeHtml(t.imageAlt(slide.n, slide.title))}"><img src="${escapeHtml(img)}" width="1280" height="720" alt="${escapeHtml(t.imageAlt(slide.n, slide.title))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></a></figure>`;
+  const shot = `<a class="shot" href="${escapeHtml(img)}" aria-label="${escapeHtml(t.imageAlt(slide.n, slide.title))}"><img src="${escapeHtml(img)}" width="1280" height="720" alt="${escapeHtml(t.imageAlt(slide.n, slide.title))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></a>`;
+  // A slide that stands for a live page (the community map) opens it in place of its picture, on request.
+  const live = slide.live;
+  const liveSrc = live && (page.lang === "en" ? `${live.src}${live.src.includes("?") ? "&" : "?"}lang=en` : live.src);
+  const figure = live
+    ? `<figure class="live" data-src="${escapeHtml(liveSrc!)}" data-title="${escapeHtml(live.label)}"><div class="live-frame">${shot}<button type="button" class="live-open">${t.liveOpen}</button><button type="button" class="live-close" hidden>✕ ${t.liveClose}</button></div><figcaption class="live-note">${t.liveNote} · <a href="${escapeHtml(live.href)}" rel="noopener" target="_blank">${t.liveNewTab} ↗</a></figcaption></figure>`
+    : `<figure>${shot}</figure>`;
   const lines = slide.lines.length ? `<div class="lines">\n${renderLines(slide.lines)}\n</div>` : "";
   const links = slide.links.length
     ? `<p class="links"><span>${t.links}</span>${slide.links.map(link => `<a href="${escapeHtml(link.href)}" rel="noopener" target="_blank">${escapeHtml(link.text || link.href)} ↗</a>`).join("")}</p>`

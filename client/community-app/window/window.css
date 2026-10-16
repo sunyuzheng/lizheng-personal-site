@@ -1,0 +1,62 @@
+/* city.lizheng.ai/window: the homepage's window alone, filling whatever frame embeds it.
+   The window's own rules are in home.css; these only make it fill the frame. */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--lz-forest-3);
+}
+
+.lz-home.city-embed {
+  height: 100%;
+  overflow: hidden;
+  padding: 12px;
+  background: var(--lz-forest-3);
+  color: var(--lz-on-forest);
+}
+
+.lz-home.city-embed .city-map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lz-home.city-embed .city-tools {
+  flex: none;
+  margin-bottom: 10px;
+}
+
+.lz-home.city-embed .field {
+  flex: 1;
+  min-height: 0;
+}
+
+.lz-home.city-embed .city-window .field canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* No caption below here, so the way to the full map stays in its corner,
+   on touch screens too. */
+.lz-home.city-embed .city-enter {
+  display: inline;
+  opacity: 0.85;
+  transform: none;
+}
+
+.lz-home.city-embed .city-window .field:hover .city-enter,
+.lz-home.city-embed .city-enter:focus-visible {
+  opacity: 1;
+}
+
+/* Inside a frame that another page scales (a deck), the card's frosted glass
+   blurs a box larger than the card; a solid card reads the same and stays put. */
+.lz-home.city-embed .city-tip {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: rgb(8 35 19 / 0.94);
+}

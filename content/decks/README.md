@@ -56,7 +56,7 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 
 1. deck 已经公开、已经在 `shared/deck-index.ts` 里有卡片。
 2. 在卡片上加 `page: "/decks/<slug>"`；如果幻灯片原来就挂在 `www.lizheng.ai/decks/<slug>`，把幻灯片挪到 `/decks/<slug>/slides`（`vercel.json` 里先写 `/slides` 那条，再写 `/(.+)` 资源那条；卡片的 `href` 跟着改）。
-3. 在 `sources.json` 加一条，跑上面的命令，看一遍截图和 `pages/` 里的文字。
+3. 在 `sources.json` 加一条，跑上面的命令，看一遍截图和 `pages/` 里的文字。每页的标题先取 deck 里那一页的 `data-title`，没有就取 `aria-label`（「第N页：…」），再没有就取页里的 h1/h2；只给讲者视图看的标签（「封面：」「转场：」）别放在 `data-title`，否则会成为网页版上的标题（通往AGI之路那套改成了 `data-pv-title`）。
 4. `pnpm build` 会检查卡片的 `page` 和这里的文件一一对应。
 
 ## 旧链接

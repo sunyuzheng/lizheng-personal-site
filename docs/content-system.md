@@ -147,6 +147,7 @@ Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心�
 ### 播客与视频访谈资料
 
 - `/collab/creators`是中文节目邀请与host kit的线上canonical：案例、合作方式、可聊方向、bio、头像、事实链接与联系入口都从这里维护。
+- 完整做客记录由Open Context的`catalog/guest-appearances.jsonl`维护；本站只消费`shared/guest-appearances-snapshot.ts`及其版本pin，更新命令见[`guests-maintenance.md`](guests-maintenance.md)。不要在页面或生成快照中手改节目元数据。
 - `https://creators.lizheng.ai`是同一中文页面的传播短入口；它永久跳转到上述正式路径，避免维护两份页面状态。
 - `/collab/podcast-kit-zh.pdf`是可下载、可转发的六页离线资料：封面先回答嘉宾稀缺性、观点质量、音视频适配和协作放大四项判断，再用经历、Koji与屠龙案例、节目级问题及host kit展开。PDF不是删掉案例后的品牌宣言，也不是网页版的缩印。
 - `scripts/generate-podcast-collab-pdf.py`是PDF生成源；修改事实、案例、链接或版式后，需要重新生成并逐页渲染检查。生成时也覆盖`/Users/sunyuzheng/Desktop/superlinear/0-常用素材/播客与视频访谈资料.pdf`，让商务转发副本始终与网站下载版一致。

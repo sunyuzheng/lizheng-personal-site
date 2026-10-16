@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { catalogGuestDirectory, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
+import { catalogGuestDirectory, guestDirectoryNameTable, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
 import { getGuestsPageMeta } from "../shared/guest-data";
 import { loadGuestSnapshot, digest, verifyGuestRelease, writeGuestRelease, type GuestReleasePin } from "../scripts/sync-guests";
 
@@ -28,6 +28,21 @@ function localInput(): { root: string; hash: string } {
   return { root, hash: digest(blob) };
 }
 describe("single canonical guest catalog", () => {
+  it("projects the shared Ashley ambiguity onto guest pages without creating an external host page", () => {
+    const { catalog, articles } = fixture();
+    const names = { schema_version: 1, generated_from: ["catalog/guests.json", "catalog/guest-appearances.jsonl"],
+      key_rule: "NFKC, casefold, then drop marks", key_drop: "&()-./_", key_examples: [], speakers: [],
+      names: [{ name: "Ashley", key: "ashley", entity_ids: ["guest:alpha", "host:ashley-qi"], kinds: ["alias", "appearance-participant"] },
+        { name: "Ashley Qi", key: "ashleyqi", entity_ids: ["host:ashley-qi"], kinds: ["appearance-participant"] }],
+      qualifiers: { "host:ashley-qi": [{ name: "西雅图中文电台", key: "西雅图中文电台" }] } };
+    const before = JSON.stringify(names), projected = guestDirectoryNameTable(names, catalog);
+    expect(projected.names.map(row => [row.key, row.entity_ids])).toEqual([["ashley", ["guest:alpha"]]]);
+    expect(projected.qualifiers).toEqual({});
+    expect(catalogGuestDirectory(catalog, articles, projected)).toHaveLength(1);
+    expect(JSON.stringify(names)).toBe(before);
+    expect(() => guestDirectoryNameTable({ ...names, generated_from: ["catalog/guests.json"] }, catalog)).toThrow("external_identity_invalid");
+    expect(() => guestDirectoryNameTable({ ...names, names: [{ ...names.names[0], entity_ids: ["guest:unbound"] }] }, catalog)).toThrow("external_identity_invalid");
+  });
   it("rejects a snapshot from a different release and manual data edits before build", async () => {
     const { root, hash } = localInput(); const { snapshot } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
     const pin: GuestReleasePin = { schema_version: 2, repository: "sunyuzheng/lizheng-open-context", commit: "a".repeat(40), manifest_sha256: hash, snapshot_sha256: digest(snapshot) };

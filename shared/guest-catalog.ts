@@ -47,10 +47,13 @@ export function nameKey(text: string, drop: string): string {
   return [...text.normalize("NFKC").toLowerCase()].filter(char => !/\s/u.test(char) && !drop.includes(char)).join("");
 }
 export function validateGuestNameTable(value: unknown, catalog: GuestCatalog): asserts value is GuestNameTable {
+  validateNameTable(value, catalog);
+}
+function validateNameTable(value: unknown, catalog: GuestCatalog, externalIds: ReadonlySet<string> = new Set()): asserts value is GuestNameTable {
   record(value); keys(value, ["schema_version", "generated_from", "key_rule", "key_drop", "key_examples", "speakers", "names", "qualifiers"]);
   requireValue(value.schema_version === 1 && typeof value.key_drop === "string" && Array.isArray(value.names) && Array.isArray(value.key_examples), "name_table_invalid");
   for (const example of value.key_examples) requireValue(Array.isArray(example) && nameKey(example[0], value.key_drop) === example[1], "name_table_key_rule_mismatch");
-  const entities = new Set(catalog.entities.map(e => e.entity_id));
+  const entities = new Set([...catalog.entities.map(e => e.entity_id), ...externalIds]);
   const seen = new Set<string>();
   for (const row of value.names) {
     record(row);
@@ -60,6 +63,27 @@ export function validateGuestNameTable(value: unknown, catalog: GuestCatalog): a
   }
   record(value.qualifiers);
   for (const id of Object.keys(value.qualifiers)) requireValue(entities.has(id), "name_table_qualifier_invalid");
+}
+/** The shared table also names external hosts; the guest directory only renders its own entities. */
+export function guestDirectoryNameTable(value: unknown, catalog: GuestCatalog): GuestNameTable {
+  record(value);
+  requireValue(Array.isArray(value.names), "name_table_invalid");
+  const guests = new Set(catalog.entities.map(entity => entity.entity_id)), external = new Set<string>();
+  for (const row of value.names) {
+    record(row);
+    requireValue(Array.isArray(row.entity_ids), "name_table_entry_invalid");
+    for (const id of row.entity_ids) if (!guests.has(id)) {
+      requireValue(typeof id === "string" && /^host:[a-z0-9_.:-]+$/.test(id)
+        && Array.isArray(value.generated_from) && value.generated_from.includes("catalog/guest-appearances.jsonl")
+        && Array.isArray(row.kinds) && row.kinds.includes("appearance-participant"), "name_table_external_identity_invalid");
+      external.add(id);
+    }
+  }
+  validateNameTable(value, catalog, external);
+  return { ...value,
+    names: value.names.map((row: GuestNameTable["names"][number]) => ({ ...row, entity_ids: row.entity_ids.filter(id => guests.has(id)) })).filter((row: GuestNameTable["names"][number]) => row.entity_ids.length),
+    qualifiers: Object.fromEntries(Object.entries(value.qualifiers).filter(([id]) => guests.has(id))),
+  };
 }
 const TYPES = new Set(["person", "group", "virtual-character", "anonymous-label", "unresolved"]);
 const ENTITY = /^guest:[a-z0-9][a-z0-9-]*$/;

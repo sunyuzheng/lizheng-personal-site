@@ -3,6 +3,7 @@ export default defineConfig({
   test: {
     environment: "node",
     include: [
+      "tests/guest-intake*.test.ts",
       "tests/ask-lizheng-relay.test.ts",
       "tests/ask-access.test.ts",
       "tests/ask-auth.test.ts",

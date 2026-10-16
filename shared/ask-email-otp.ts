@@ -73,7 +73,7 @@ async function consumeSendLimit(email: string, address: string) {
     3, 20, 100, VALID_SECONDS, 60]);
   if (allowed !== 1) throw new AccessError("email_throttled", 429);
 }
-async function deliverCode(email: string, code: string, id: string) {
+async function deliverCode(email: string, code: string, id: string, guestIntake = false) {
   const key = process.env.ASK_AUTH_EMAIL_API_KEY?.trim();
   if (!key) throw new AccessError("email_unavailable");
   const controller = new AbortController();
@@ -84,9 +84,9 @@ async function deliverCode(email: string, code: string, id: string) {
       method: "POST", headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json",
         "Idempotency-Key": `ask-email-otp:${id}` },
       body: JSON.stringify({ from: "立正 <podcast@notify.lizheng.ai>", to: [email],
-        reply_to: "sunyuzheng@gmail.com", subject: "问问立正｜邮箱验证码",
-        text: `你的问问立正邮箱验证码是：${code}\n10分钟内有效。若非本人操作，请忽略本邮件。`,
-        html: `<p>你的问问立正邮箱验证码是：</p><p style="font-size:28px;font-weight:700;letter-spacing:4px">${code}</p><p>10分钟内有效。若非本人操作，请忽略本邮件。</p>` }),
+        reply_to: "sunyuzheng@gmail.com", subject: `${guestIntake ? "嘉宾池管理" : "问问立正"}｜邮箱验证码`,
+        text: `你的${guestIntake ? "嘉宾池管理" : "问问立正"}邮箱验证码是：${code}\n10分钟内有效。若非本人操作，请忽略本邮件。`,
+        html: `<p>你的${guestIntake ? "嘉宾池管理" : "问问立正"}邮箱验证码是：</p><p style="font-size:28px;font-weight:700;letter-spacing:4px">${code}</p><p>10分钟内有效。若非本人操作，请忽略本邮件。</p>` }),
       cache: "no-store", redirect: "manual", signal: controller.signal,
     });
     if (!response.ok || !response.body) {
@@ -128,7 +128,7 @@ export async function requestEmailCode(request: Request, rawEmail: unknown, addr
   const challenge: Challenge = { v: 1, email, origin, returnPath: emailReturnPath(url),
     codeHash: await codeHash(id, email, code), expiresAt: Math.floor(Date.now() / 1000) + VALID_SECONDS };
   await redis(["SET", key, await encryptRecord(challenge), "EX", VALID_SECONDS]);
-  try { await deliverCode(email, code, id); }
+  try { await deliverCode(email, code, id, challenge.returnPath === "/ops/guest-intake"); }
   catch (error) { await redis(["DEL", key]); throw error; }
   const previous = readCookie(request, COOKIE_EMAIL);
   if (previous && /^[a-f0-9]{64}$/.test(previous)) {
@@ -148,7 +148,7 @@ export async function verifyEmailCode(request: Request, rawCode: unknown): Promi
   if (!challenge || challenge.v !== 1 || challenge.origin !== origin ||
       !Number.isInteger(challenge.expiresAt) || challenge.expiresAt <= Date.now() / 1000 ||
       typeof challenge.codeHash !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(challenge.codeHash) ||
-      !["/ops/ask-lizheng", "/#ask-lizheng", "/en/#ask-lizheng", "/?ask_login=done#ask-lizheng", "/en/?ask_login=done#ask-lizheng"].includes(challenge.returnPath))
+      !["/ops/guest-intake", "/ops/ask-lizheng", "/#ask-lizheng", "/en/#ask-lizheng", "/?ask_login=done#ask-lizheng", "/en/?ask_login=done#ask-lizheng"].includes(challenge.returnPath))
     throw new AccessError("email_expired", 401);
   const email = emailAddress(challenge.email);
   const submitted = await codeHash(id, email, rawCode.trim());

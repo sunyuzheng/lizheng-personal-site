@@ -46,6 +46,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(import.meta.dirname, "client", "index.html"),
+        guestIntake: path.resolve(import.meta.dirname, "client", "guest-intake", "index.html"),
         // community.lizheng.ai (vercel.json serves it on that host).
         community: path.resolve(import.meta.dirname, "client", "community-app", "index.html"),
       },

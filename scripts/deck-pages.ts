@@ -414,15 +414,15 @@ main{padding-bottom:40px}
 .shot img{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .no-script figure{max-width:980px}
 .live-frame{position:relative}
-.live-open{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:9px;padding:10px 16px 10px 14px;border:1px solid rgb(143 212 164/.65);border-radius:999px;background:rgb(5 22 12/.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#8fd4a4;font:600 14px/1 var(--sans);cursor:pointer;transition:background .2s}
+.live-open{position:absolute;z-index:2;right:15%;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:9px;padding:10px 16px 10px 14px;border:1px solid rgb(143 212 164/.65);border-radius:999px;background:rgb(5 22 12/.74);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#8fd4a4;font:600 14px/1 var(--sans);cursor:pointer;transition:background .2s}
 .live-open::before{content:"";border-left:10px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
 .live-open:hover,.live-open:focus-visible{background:rgb(143 212 164/.2)}
 .live-open[aria-busy=true]{cursor:progress;opacity:.7}
 .live-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:10px;background:#082313;opacity:0;transition:opacity .4s}
 .live.on iframe{opacity:1}.live.on .shot{visibility:hidden}.live.on .live-open{display:none}
-.live-close{position:absolute;top:10px;right:10px;padding:7px 13px;border:1px solid rgb(248 241 228/.3);border-radius:999px;background:rgb(5 22 12/.78);color:var(--on-forest);font:500 13px/1 var(--sans);cursor:pointer}
-.live-close:hover,.live-close:focus-visible{border-color:var(--on-forest)}
-.live-note{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.live-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.live-close{margin-left:auto;padding:5px 12px;border:1px solid var(--rule);border-radius:999px;background:var(--card);color:var(--ink-2);font:500 13px/1.3 var(--sans);cursor:pointer}
+.live-close:hover,.live-close:focus-visible{border-color:var(--ink-2);color:var(--ink)}
 .live-note a{color:var(--green-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 @media (max-width:960px){.live.on .live-frame{height:min(72vh,460px)}.live.on .shot{display:none}}
 .script p{font-size:17px;line-height:1.95;color:var(--ink-2)}.script p+p{margin-top:14px}
@@ -508,7 +508,7 @@ function renderSlide(page: DeckPage, slide: Slide): string {
   const live = slide.live;
   const liveSrc = live && (page.lang === "en" ? `${live.src}${live.src.includes("?") ? "&" : "?"}lang=en` : live.src);
   const figure = live
-    ? `<figure class="live" data-src="${escapeHtml(liveSrc!)}" data-title="${escapeHtml(live.label)}"><div class="live-frame">${shot}<button type="button" class="live-open">${t.liveOpen}</button><button type="button" class="live-close" hidden>✕ ${t.liveClose}</button></div><figcaption class="live-note">${t.liveNote} · <a href="${escapeHtml(live.href)}" rel="noopener" target="_blank">${t.liveNewTab} ↗</a></figcaption></figure>`
+    ? `<figure class="live" data-src="${escapeHtml(liveSrc!)}" data-title="${escapeHtml(live.label)}"><div class="live-frame">${shot}<button type="button" class="live-open">${t.liveOpen}</button></div><figcaption class="live-note"><span>${t.liveNote} · <a href="${escapeHtml(live.href)}" rel="noopener" target="_blank">${t.liveNewTab} ↗</a></span><button type="button" class="live-close" hidden>✕ ${t.liveClose}</button></figcaption></figure>`
     : `<figure>${shot}</figure>`;
   const lines = slide.lines.length ? `<div class="lines">\n${renderLines(slide.lines)}\n</div>` : "";
   const links = slide.links.length

@@ -3,7 +3,7 @@
  "deck": "waytoagi-silicon-valley-2026",
  "language": "zh",
  "capturedFrom": "https://waytoagi-silicon-valley-2026.vercel.app/",
- "capturedAt": "2026-10-16",
+ "capturedAt": "2026-10-17",
  "slides": [
   {
    "n": 1,
@@ -334,6 +334,71 @@
      ]
     },
     {
+     "text": "下载「超线性学院」App，加入社区",
+     "tag": "p",
+     "fs": 26,
+     "fw": 600,
+     "li": false,
+     "box": [
+      100,
+      656,
+      803,
+      26
+     ]
+    },
+    {
+     "text": "iPhone",
+     "tag": "b",
+     "fs": 30,
+     "fw": 700,
+     "li": false,
+     "box": [
+      227,
+      722,
+      250,
+      30
+     ]
+    },
+    {
+     "text": "App Store 搜「超线性学院」",
+     "tag": "span",
+     "fs": 24,
+     "fw": 400,
+     "li": false,
+     "box": [
+      227,
+      759,
+      250,
+      29
+     ]
+    },
+    {
+     "text": "安卓",
+     "tag": "b",
+     "fs": 30,
+     "fw": 700,
+     "li": false,
+     "box": [
+      643,
+      722,
+      260,
+      30
+     ]
+    },
+    {
+     "text": "下载安装包（用浏览器扫码）",
+     "tag": "span",
+     "fs": 24,
+     "fw": 400,
+     "li": false,
+     "box": [
+      643,
+      759,
+      260,
+      29
+     ]
+    },
+    {
      "text": "超线性学院社区地图 · city.lizheng.ai\n每盏灯是一位成员，每条线是一次来往 · 数据截至2026年10月",
      "tag": "p",
      "fs": 19,
@@ -373,7 +438,16 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://apps.apple.com/cn/app/id6760123187",
+     "text": "iPhone App Store 搜「超线性学院」"
+    },
+    {
+     "href": "https://ai-builders.com/resources/branded_app_android.apk",
+     "text": "安卓 下载安装包（用浏览器扫码）"
+    }
+   ],
    "title": "",
    "chapter": "",
    "live": {
@@ -2461,20 +2535,98 @@
      ]
     },
     {
-     "text": "课代表立正 · superlinear.academy",
-     "tag": "span",
-     "fs": 28,
+     "text": "社区主页",
+     "tag": "b",
+     "fs": 22,
      "fw": 500,
      "li": false,
      "box": [
-      1128,
-      801,
-      372,
-      23
+      850,
+      780,
+      257,
+      18
+     ]
+    },
+    {
+     "text": "superlinear.academy",
+     "tag": "span",
+     "fs": 32,
+     "fw": 600,
+     "li": false,
+     "box": [
+      850,
+      807,
+      257,
+      27
+     ]
+    },
+    {
+     "text": "个人主页",
+     "tag": "b",
+     "fs": 22,
+     "fw": 500,
+     "li": false,
+     "box": [
+      1161,
+      780,
+      118,
+      18
+     ]
+    },
+    {
+     "text": "lizheng.ai",
+     "tag": "span",
+     "fs": 32,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1161,
+      807,
+      118,
+      27
+     ]
+    },
+    {
+     "text": "问问立正",
+     "tag": "b",
+     "fs": 22,
+     "fw": 500,
+     "li": false,
+     "box": [
+      1332,
+      780,
+      168,
+      18
+     ]
+    },
+    {
+     "text": "ask.lizheng.ai",
+     "tag": "span",
+     "fs": 32,
+     "fw": 600,
+     "li": false,
+     "box": [
+      1332,
+      807,
+      168,
+      27
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/",
+     "text": "社区主页 superlinear.academy"
+    },
+    {
+     "href": "https://www.lizheng.ai/",
+     "text": "个人主页 lizheng.ai"
+    },
+    {
+     "href": "https://ask.lizheng.ai/",
+     "text": "问问立正 ask.lizheng.ai"
+    }
+   ],
    "title": "",
    "chapter": "",
    "notes": [

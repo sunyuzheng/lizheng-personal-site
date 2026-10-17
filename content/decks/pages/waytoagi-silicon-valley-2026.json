@@ -321,94 +321,68 @@
      ]
     },
     {
-     "text": "成员来自OpenAI、Google、Meta、Amazon、\nMicrosoft、字节跳动……",
-     "tag": "p",
-     "fs": 25,
-     "fw": 400,
-     "li": false,
-     "box": [
-      100,
-      565,
-      583,
-      67
-     ]
-    },
-    {
-     "text": "下载「超线性学院」App，加入社区",
-     "tag": "p",
-     "fs": 26,
-     "fw": 600,
-     "li": false,
-     "box": [
-      100,
-      656,
-      803,
-      26
-     ]
-    },
-    {
      "text": "iPhone",
-     "tag": "b",
-     "fs": 30,
-     "fw": 700,
-     "li": false,
-     "box": [
-      227,
-      722,
-      250,
-      30
-     ]
-    },
-    {
-     "text": "App Store 搜「超线性学院」",
      "tag": "span",
-     "fs": 24,
-     "fw": 400,
+     "fs": 17,
+     "fw": 500,
      "li": false,
      "box": [
-      227,
-      759,
-      250,
-      29
+      125,
+      803,
+      50,
+      14
      ]
     },
     {
      "text": "安卓",
-     "tag": "b",
-     "fs": 30,
-     "fw": 700,
+     "tag": "span",
+     "fs": 17,
+     "fw": 500,
      "li": false,
      "box": [
-      643,
-      722,
-      260,
-      30
+      248,
+      803,
+      30,
+      14
      ]
     },
     {
-     "text": "下载安装包（用浏览器扫码）",
-     "tag": "span",
+     "text": "下载「超线性学院」App，加入社区",
+     "tag": "b",
      "fs": 24,
+     "fw": 600,
+     "li": false,
+     "box": [
+      338,
+      717,
+      447,
+      26
+     ]
+    },
+    {
+     "text": "iPhone 在 App Store 搜「超线性学院」，安卓用浏览器扫码",
+     "tag": "span",
+     "fs": 21,
      "fw": 400,
      "li": false,
      "box": [
-      643,
-      759,
-      260,
-      29
+      338,
+      751,
+      447,
+      25
      ]
     },
     {
-     "text": "超线性学院社区地图 · city.lizheng.ai\n每盏灯是一位成员，每条线是一次来往 · 数据截至2026年10月",
+     "text": "超线性学院社区地图 · city.lizheng.ai · 数据截至2026年10月",
      "tag": "p",
      "fs": 19,
      "fw": 400,
      "li": false,
      "box": [
-      1070,
-      783,
-      430,
-      48
+      1089,
+      793,
+      411,
+      24
      ]
     },
     {
@@ -441,11 +415,11 @@
    "links": [
     {
      "href": "https://apps.apple.com/cn/app/id6760123187",
-     "text": "iPhone App Store 搜「超线性学院」"
+     "text": "iPhone · App Store"
     },
     {
      "href": "https://ai-builders.com/resources/branded_app_android.apk",
-     "text": "安卓 下载安装包（用浏览器扫码）"
+     "text": "安卓 · 下载安装包"
     }
    ],
    "title": "",

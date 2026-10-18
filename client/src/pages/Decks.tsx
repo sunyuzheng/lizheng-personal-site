@@ -25,6 +25,7 @@ import {
   FileClock,
   Github,
   Layers3,
+  LockKeyhole,
   Mail,
   PlayCircle,
   Search,
@@ -56,6 +57,7 @@ const copy = {
     noResults: "No deck matches that search.",
     clear: "Clear filters",
     openDeck: "Open deck",
+    protectedDeck: "Password protected",
     readOnline: "Read online",
     playSlides: "Play slides",
     watchReplay: "Watch replay",
@@ -90,6 +92,7 @@ const copy = {
     noResults: "没有找到符合条件的材料。",
     clear: "清除筛选",
     openDeck: "打开课件",
+    protectedDeck: "密码访问",
     readOnline: "看网页版",
     playSlides: "播放幻灯片",
     watchReplay: "看完整实录",
@@ -203,8 +206,12 @@ function DeckCard({ deck: originalDeck }: { deck: DeckEntry }) {
   const deck = deckForLanguage(originalDeck, lang);
   const t = copy[lang];
   const category = categoryDefinition(deck.category);
-  const primaryLabel = deck.linkKind === "replay" ? t.watchReplay : t.openDeck;
-  const PrimaryIcon = deck.linkKind === "replay" ? PlayCircle : ExternalLink;
+  const primaryLabel = deck.passwordProtected
+    ? t.protectedDeck
+    : deck.linkKind === "replay" ? t.watchReplay : t.openDeck;
+  const PrimaryIcon = deck.passwordProtected
+    ? LockKeyhole
+    : deck.linkKind === "replay" ? PlayCircle : ExternalLink;
   const secondaryLabel =
     deck.secondaryLinkKind === "replay" ? t.watchReplay : t.openDeck;
   const SecondaryIcon =

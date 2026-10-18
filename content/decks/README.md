@@ -69,6 +69,12 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 
 ## 不公开的 deck
 
+有密码的分享入口也可以出现在列表里，但只放已公开的标题、受众和简介，不生成逐页网页版、截图或搜索索引：
+
+- `/decks/tencent-judgment-engineering`：腾讯IEG《什么是好的战略分析？》，2026-07-09的30页v16正式版。卡片标记`passwordProtected`；回源仍由原交付项目`strategy-briefing-judgment-engineering`拥有，Vercel项目为`tencent-ai-native-builder-gap`。只有输入分享密码后才能解开幻灯片和PDF；PPTX、讲者备注和原始素材不在分享包中。
+- 加密构建使用`scripts/decks/build-protected.mjs --source <本机PNG/PDF导出目录> --output <仅含加密产物的dist目录> --password-file <本机私有密码文件> --slug tencent-judgment-engineering --title '什么是好的战略分析？'`。输出目录必须为空或由同一构建拥有。密码默认生成至少20个随机字符，也可采用用户指定的密码（至少8个字符）；不写进命令、Git或浏览器存储。仅部署输出目录；先验证回源，再发布个人站转接和卡片。
+- 新部署会移除回源当前版本的明文图片、`deck.pdf`与`deck.pptx`，旧的不可变部署地址不在这一变更的撤回范围内。加密包仍可能被下载，已持有密码者可保存解密后的内容。
+
 有的幻灯片只给特定的人看，挂在 `/decks/<slug>/slides`，但不进 `shared/deck-index.ts`、没有网页版、不让搜索引擎收录：
 
 - `/decks/same-tools-different-results`（Build with AI 第一节课，cohort 14，2026-10-17）：整份课件和讲稿加了密，打开先输密码。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module1-cohort14-web/`（`scripts/build_protected.mjs`），回源是 Vercel 项目 `same-tools-different-results-2026`。`vercel.json` 里三条：`/decks/<slug>` 307 到 `/slides`，`/slides` 和 `/(.+)` 转到回源。

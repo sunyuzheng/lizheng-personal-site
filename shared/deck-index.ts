@@ -43,6 +43,7 @@ export interface DeckEntry {
     page?: string;
   };
   linkKind: DeckLinkKind;
+  passwordProtected?: boolean;
   secondaryHref?: string;
   secondaryLinkKind?: Exclude<DeckLinkKind, "pending">;
   sourceHref?: string;
@@ -287,7 +288,9 @@ export const DECK_LIBRARY: DeckEntry[] = [
       en: "A strong strategic analysis challenges the starting view, clarifies what is tangled, and turns judgment into action. AI can build the 60-point factual base; people must push the judgment to 90.",
       zh: "好的战略分析，不只是把信息写得更完整。它要颠覆原有判断、讲清混乱，再把判断推到行动。AI把事实底座做到60分，人负责把判断推到90分。",
     },
-    linkKind: "pending",
+    href: "https://www.lizheng.ai/decks/tencent-judgment-engineering",
+    linkKind: "deck",
+    passwordProtected: true,
     featured: true,
     accent: "#FFB15C",
     keywords: [

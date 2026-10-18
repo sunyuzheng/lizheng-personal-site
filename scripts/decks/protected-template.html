@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <title>__TITLE__ · 立正</title>
+  <link rel="icon" href="data:,">
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#0b271a;color:#f5f0e6;font-family:system-ui,-apple-system,"PingFang SC",sans-serif}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.5}[hidden]{display:none!important}
+    #gate{min-height:100svh;display:grid;place-items:center;padding:28px;background:radial-gradient(ellipse at top right,#165636,#0b271a 70%)}.box{width:min(100%,600px)}.eyebrow{color:#a3dcac;font-size:14px;letter-spacing:.14em}h1{font-size:clamp(30px,5vw,48px);line-height:1.3;letter-spacing:-.03em;margin:26px 0 18px}.note{color:#c8d1c9;line-height:1.7;margin-bottom:32px}label{display:block;margin-bottom:10px;font-size:14px}form{display:flex;gap:10px}input{min-width:0;flex:1;padding:15px;border:1px solid #769082;border-radius:6px;background:#ffffff0a;color:#fff}input:focus-visible,button:focus-visible{outline:3px solid #a3dcac;outline-offset:3px}.primary{padding:14px 22px;background:#238343;border:0;border-radius:6px;color:#fff;font-weight:650}.error{min-height:28px;color:#ffc5b0;font-size:14px}
+    #viewer{height:100svh;display:flex;flex-direction:column;background:#101815}header{flex-shrink:0;display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid #ffffff20}.title{flex:1;font-size:14px;margin:0;line-height:1.4}header button,footer button{border:1px solid #ffffff40;background:#ffffff08;color:#f5f0e6;border-radius:5px;padding:9px 13px}.stage{flex:1;min-height:0;display:grid;place-items:center;position:relative;padding:8px}.stage img{display:block;position:absolute;inset:8px;width:calc(100% - 16px);height:calc(100% - 16px);object-fit:contain}.stage.loading img{opacity:.35}footer{flex-shrink:0;display:flex;align-items:center;justify-content:center;gap:24px;padding:10px 16px}.count{font-variant-numeric:tabular-nums;min-width:76px;text-align:center}#status{position:absolute;bottom:10px;left:12px;margin:0;padding:6px 10px;background:#101815dd;font-size:13px;color:#f5f0e6}#status:empty{display:none}@media(max-width:550px){header{padding:10px;gap:8px}.title{font-size:12px}header button{font-size:12px;padding:9px}#fullscreen{display:none}footer{gap:18px;padding-bottom:max(12px,env(safe-area-inset-bottom))}form{flex-direction:column}}
+  </style>
+  <script src="viewer.js" defer></script>
+</head>
+<body>
+  <main id="gate">
+    <div class="box">
+      <p class="eyebrow">立正 · 培训课件</p>
+      <h1>__TITLE__</h1>
+      <p class="note">本课件仅向受邀读者开放。<br>请输入分享者提供的密码。</p>
+      <label for="password">访问密码</label>
+      <form id="unlock"><input id="password" type="password" autocomplete="current-password" required autofocus><button class="primary" id="open" type="submit" disabled>打开课件</button></form>
+      <p class="error" id="error" role="alert"></p>
+      <noscript>请启用JavaScript后查看课件。</noscript>
+    </div>
+  </main>
+  <main id="viewer" hidden>
+    <header><p class="title">__TITLE__</p><button id="download" type="button">下载PDF</button><button id="fullscreen" type="button">全屏</button><button id="lock" type="button">锁定</button></header>
+    <div class="stage" id="stage"><img id="slide" alt=""><p id="status" role="status"></p><button id="retry" class="primary" type="button" hidden>重试本页</button></div>
+    <footer><button id="previous" type="button" aria-label="上一页">← 上一页</button><span class="count" id="count" aria-live="polite"></span><button id="next" type="button" aria-label="下一页">下一页 →</button></footer>
+  </main>
+</body>
+</html>

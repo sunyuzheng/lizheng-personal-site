@@ -1,5 +1,6 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import {
+  FLP_READ_URL,
   GROWTH_BOOK_AMAZON_URL,
   GROWTH_BOOK_ZH_PATH,
 } from "@shared/book-links";
@@ -19,6 +20,8 @@ export const LINKS = {
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
   growthBookZh: GROWTH_BOOK_ZH_PATH,
+  // Feels Like Progress: its own page on makewhatlasts.com, opened at the Prologue.
+  flpRead: FLP_READ_URL,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
   askLizheng: "https://ask.lizheng.ai/",
   // The community as a city of connections (client/community-app).
@@ -388,11 +391,19 @@ const zh = {
     ],
   ]),
   // The books chapter (the stable id stays "works"). The show is the conversations chapter and
-  // the academy is the city, so this chapter is only the two books.
+  // the academy is the city, so this chapter is only the books: the new English book first.
   works: {
     eyebrow: "书",
     title: ["想清楚的事，", "写成了书。"],
-    intro: "一本写给想靠能力、而不是靠头衔立足的人，一本写给做产品和增长的人。",
+    intro:
+      "一本讲假工作、假学习和AI时代什么会留下来；一本写给想靠能力、而不是靠头衔立足的人；一本写给做产品和增长的人。",
+    flp: {
+      meta: "著 · 英文 · 即将出版",
+      title: "Feels Like Progress",
+      body: "AI会先把假工作吹大，再让它大幅贬值。什么还留得下来？一本讲假工作、假学习的英文书。",
+      go: "免费读开头",
+      alt: "《Feels Like Progress》封面",
+    },
     zbs: {
       meta: "著 · 人民邮电出版社 · 2026",
       title: "真本事：从会工作到会赚钱",
@@ -832,7 +843,14 @@ const en: HomeCopy = {
     eyebrow: "Books",
     title: ["What I’ve worked out,", "written down."],
     intro:
-      "One for people who build products and growth, and one, in Chinese, for people who want to stand on what they can do rather than on a title.",
+      "One on fake work, fake learning, and what will last when AI can blow it all up; one for people who build products and growth; and one, in Chinese, for people who want to stand on what they can do rather than on a title.",
+    flp: {
+      meta: "Author · coming soon",
+      title: "Feels Like Progress",
+      body: "Fake work, fake learning, and what will last when AI can blow it all up. A book of ideas.",
+      go: "Read the opening free",
+      alt: "Cover of Feels Like Progress",
+    },
     zbs: {
       meta: "Author · in Chinese · 2026",
       title: "真本事",

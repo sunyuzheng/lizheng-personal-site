@@ -1,4 +1,9 @@
-import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "@shared/book-links";
+import {
+  FLP_BOOK_URL,
+  FLP_READ_URL,
+  GROWTH_BOOK_AMAZON_URL,
+  GROWTH_BOOK_ZH_PATH,
+} from "@shared/book-links";
 import { GROWTH_BOOK_AUTHORS } from "@shared/book-authors";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
@@ -16,6 +21,29 @@ import { buildBooksStructuredData } from "@shared/structured-data";
 
 const books = {
   en: [
+    {
+      id: "flp",
+      label: "English book · coming soon",
+      title: "Feels Like Progress",
+      subtitle: "What will last when AI can blow it all up?",
+      description:
+        "Fake work produces the evidence of work. Fake learning produces the evidence of learning. AI can now produce both in a minute or two: first it will inflate fake work, then destroy much of what that evidence was worth. A book of ideas about what will last.",
+      meta: [
+        "Superlinear Press · 2026",
+        "Paperback and ebook coming soon",
+        "ISBN 9798982282002",
+      ],
+      primary: {
+        label: "Read the opening free",
+        href: FLP_READ_URL,
+        external: true,
+      },
+      secondary: {
+        label: "makewhatlasts.com",
+        href: FLP_BOOK_URL,
+        external: true,
+      },
+    },
     {
       id: "growth",
       label: "English book",
@@ -61,6 +89,25 @@ const books = {
     },
   ],
   zh: [
+    {
+      id: "flp",
+      label: "英文书 · 即将出版",
+      title: "Feels Like Progress",
+      subtitle: "假工作、假学习，AI来了以后什么还留得下来？",
+      description:
+        "一本讲理念的书。假工作产出的是做过事的证据，假学习产出的是学会了的证据；AI现在一两分钟就能把两样都做出来，先把假工作吹大，再让这些证据大幅贬值。书讲的是什么会留下来。",
+      meta: ["Superlinear Press · 2026", "平装和电子书即将出版", "英文"],
+      primary: {
+        label: "免费读开头",
+        href: FLP_READ_URL,
+        external: true,
+      },
+      secondary: {
+        label: "makewhatlasts.com",
+        href: FLP_BOOK_URL,
+        external: true,
+      },
+    },
     {
       id: "growth",
       label: "英文书 · 有免费中文版",
@@ -108,6 +155,12 @@ const books = {
 };
 
 const COVERS = {
+  flp: {
+    src: "/home/books/feels-like-progress.webp",
+    alt: "Feels Like Progress",
+    width: 460,
+    height: 736,
+  },
   zbs: {
     src: "/home/books/zhenbenshi.webp",
     alt: "《真本事：从会工作到会赚钱》",
@@ -124,7 +177,8 @@ const COVERS = {
 
 // Same treatment as the book cards in the homepage's selected work.
 function BookVisual({ id }: { id: string }) {
-  const cover = id === "zbs" ? COVERS.zbs : COVERS.growth;
+  const cover =
+    id === "zbs" ? COVERS.zbs : id === "flp" ? COVERS.flp : COVERS.growth;
   return (
     <img
       src={cover.src}
@@ -215,11 +269,11 @@ export default function Books() {
             </p>
             <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.2] [text-wrap:balance] md:text-6xl">
               {lang === "en" ? (
-                "Two books. Two questions."
+                "Three books. Three questions."
               ) : (
                 <>
-                  <span className="inline-block">两本书，</span>
-                  <span className="inline-block">回答两个问题。</span>
+                  <span className="inline-block">三本书，</span>
+                  <span className="inline-block">回答三个问题。</span>
                 </>
               )}
             </h1>
@@ -229,11 +283,20 @@ export default function Books() {
             {books[lang].map(book => (
               <article
                 key={book.id}
-                className="group grid gap-8 rounded-[14px] bg-lz-paper p-6 shadow-[0_0_0_1px_var(--lz-line)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_0_1px_var(--lz-line-2),0_28px_50px_-30px_rgba(20,30,20,0.45)] md:grid-cols-[150px_minmax(0,1fr)] md:items-center md:p-8"
+                className={cn(
+                  "group grid gap-8 rounded-[14px] bg-lz-paper p-6 shadow-[0_0_0_1px_var(--lz-line)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_0_1px_var(--lz-line-2),0_28px_50px_-30px_rgba(20,30,20,0.45)] md:grid-cols-[150px_minmax(0,1fr)] md:items-center md:p-8",
+                  // The newest book takes the whole first row.
+                  book.id === "flp" && "lg:col-span-2"
+                )}
               >
                 <BookVisual id={book.id} />
 
-                <div className="flex min-w-0 flex-col justify-center">
+                <div
+                  className={cn(
+                    "flex min-w-0 flex-col justify-center",
+                    book.id === "flp" && "max-w-3xl"
+                  )}
+                >
                   <p className="text-[13.5px] tracking-[0.03em] text-lz-muted">
                     {book.label}
                   </p>

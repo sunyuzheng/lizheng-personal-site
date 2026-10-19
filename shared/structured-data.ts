@@ -1,4 +1,8 @@
-import { GROWTH_BOOK_AMAZON_URL, GROWTH_BOOK_ZH_PATH } from "./book-links";
+import {
+  FLP_BOOK_URL,
+  GROWTH_BOOK_AMAZON_URL,
+  GROWTH_BOOK_ZH_PATH,
+} from "./book-links";
 import { growthBookAuthorIdentities } from "./book-authors";
 import {
   ABOUT_PAGE_META,
@@ -354,6 +358,24 @@ function growthBookNode() {
   };
 }
 
+// Feels Like Progress has its own site; this node shares that page's @id, so search engines can join them.
+function flpBookNode() {
+  return {
+    "@type": "Book",
+    "@id": `${FLP_BOOK_URL}#book`,
+    name: "Feels Like Progress",
+    alternativeHeadline:
+      "Fake Work, Fake Learning, and What Will Last When AI Can Blow It All Up",
+    url: FLP_BOOK_URL,
+    image: `${FLP_BOOK_URL}img/cover.jpg`,
+    isbn: "9798982282002",
+    bookFormat: "https://schema.org/Paperback",
+    inLanguage: "en",
+    author: { "@id": PERSON_ID },
+    publisher: { "@type": "Organization", name: "Superlinear Press" },
+  };
+}
+
 function zhenbenshiBookNode() {
   return {
     "@type": "Book",
@@ -376,7 +398,8 @@ function zhenbenshiBookNode() {
 }
 
 export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
-  const name = lang === "en" ? "Books by Yuzheng Sun" : "孙煜征的两本书";
+  const name = lang === "en" ? "Books by Yuzheng Sun" : "孙煜征的书";
+  const flpBook = flpBookNode();
   const growthBook = growthBookNode();
   const zhenbenshiBook = zhenbenshiBookNode();
 
@@ -394,16 +417,21 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
         dateModified: BOOKS_PAGE_META[lang].lastModified,
         mainEntity: {
           "@type": "ItemList",
-          numberOfItems: 2,
+          numberOfItems: 3,
           itemListElement: [
             {
               "@type": "ListItem",
               position: 1,
-              item: { "@id": growthBook["@id"] },
+              item: { "@id": flpBook["@id"] },
             },
             {
               "@type": "ListItem",
               position: 2,
+              item: { "@id": growthBook["@id"] },
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
               item: { "@id": zhenbenshiBook["@id"] },
             },
           ],
@@ -411,6 +439,7 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
       },
       websiteNode(),
       personNode(lang),
+      flpBook,
       growthBook,
       zhenbenshiBook,
       breadcrumbNode(

@@ -7,10 +7,38 @@ import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 /**
  * The books chapter (its id stays "works" for older links). The show has its
  * own chapter (the conversations) and Superlinear Academy is the city, so this
- * chapter holds only the two books.
+ * chapter holds only the books. The newest, Feels Like Progress, takes the
+ * first row; it links to its own page on makewhatlasts.com.
  */
 export default function Works({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].works;
+
+  const flp = (
+    <a
+      key="flp"
+      className="card c-book feature rv"
+      href={LINKS.flpRead}
+      {...EXTERNAL}
+    >
+      <img
+        className="cover"
+        src="/home/books/feels-like-progress.webp"
+        alt={t.flp.alt}
+        width={460}
+        height={736}
+        loading="lazy"
+        decoding="async"
+      />
+      <div>
+        <div className="meta">{t.flp.meta}</div>
+        <h3 lang="en">{t.flp.title}</h3>
+        <p>{t.flp.body}</p>
+        <span className="go lz-link">
+          {t.flp.go} <Arrow />
+        </span>
+      </div>
+    </a>
+  );
 
   const zbs = (
     <Link
@@ -68,8 +96,8 @@ export default function Works({ lang }: { lang: Lang }) {
     </a>
   );
 
-  // Chinese readers meet 真本事 first; English readers meet the English book.
-  const books = lang === "zh" ? [zbs, growth] : [growth, zbs];
+  // The newest book first. Then Chinese readers meet 真本事, English readers the English book.
+  const books = lang === "zh" ? [flp, zbs, growth] : [flp, growth, zbs];
 
   return (
     <section className="sec works" id={SECTION.works}>

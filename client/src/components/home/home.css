@@ -1180,6 +1180,15 @@
   padding-top: 16px;
 }
 
+/* The newest book takes the whole first row; its text keeps a readable measure. */
+.lz-home .c-book.feature {
+  grid-column: span 12;
+}
+
+.lz-home .c-book.feature > div {
+  max-width: 640px;
+}
+
 @media (max-width: 980px) {
   .lz-home .bento > .card {
     grid-column: span 12;

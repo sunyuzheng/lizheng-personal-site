@@ -1,5 +1,13 @@
 # 更新记录
 
+## 2026-10-18 新书《Feels Like Progress》上了书页和首页
+
+- 英文新书《Feels Like Progress》排在 `/book`、`/en/book` 第一张（占满第一行），标题改成「三本书，回答三个问题。」/「Three books. Three questions.」。它回答的问题是副标题的议题：英文「What will last when AI can blow it all up?」，中文「假工作、假学习，AI来了以后什么还留得下来？」。两个按钮都去书自己的网站：免费读开头（makewhatlasts.com/#read）、makewhatlasts.com；那一页上架前不让搜索引擎收录。
+- 首页「书」这一章也把它放在第一行，导语改成三本书各写给谁。
+- 书页的结构化数据加了这本书，`@id` 和书网站上的一样（`https://makewhatlasts.com/#book`），作者指向本站的 `#person`。
+- 关于页的按钮「两本书」改成「三本书」。
+- 书网站不在这个仓库：`/Users/sunyuzheng/Desktop/AI/_workspace/english-books-2026-10/book-site`（Vercel 项目 feels-like-progress）。makewhatlasts.com 和 .org 原来挂在本站项目上、跳到 www.lizheng.ai，10-18 按立正的决定挪到了书网站项目。
+
 ## 2026-10-16 演讲库加上《差的不是人，是市场》
 
 - 立正在「通往AGI之路」直播「现在去硅谷，到底能看到什么？」里的15分钟分享进了演讲库：网页版在 `/decks/waytoagi-silicon-valley-2026`（每页截图，讲稿作正文），幻灯片在 `/decks/waytoagi-silicon-valley-2026/slides`，由 deck 自己的 Vercel 项目 `waytoagi-silicon-valley-2026` 回源。卡片在「从User到Builder」。

@@ -239,7 +239,7 @@ export default function About() {
       ),
       sourcesTitle: "资料与联系",
       reviewed: "事实最后核对：2026年9月2日。会变化的数字保留各自的核对日期。",
-      books: "两本书",
+      books: "三本书",
       hosted: "我采访过的人",
       appeared: "我做客的节目",
       invite: "邀请我上节目",

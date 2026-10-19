@@ -57,9 +57,18 @@ export default function Works({ lang }: { lang: Lang }) {
       />
       <div>
         <div className="meta">{t.zbs.meta}</div>
-        <h3 lang={lang === "en" ? "zh-CN" : undefined}>
-          <Phrases text={t.zbs.title} />
-        </h3>
+        {lang === "en" ? (
+          <h3>
+            {t.zbs.title}{" "}
+            <span lang="zh-CN" className="zh-name">
+              真本事
+            </span>
+          </h3>
+        ) : (
+          <h3>
+            <Phrases text={t.zbs.title} />
+          </h3>
+        )}
         <p>{t.zbs.body}</p>
         <span className="go lz-link">
           {t.zbs.go} <Arrow />

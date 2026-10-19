@@ -71,11 +71,16 @@ const books = {
     {
       id: "zbs",
       label: "Chinese book",
-      title: "真本事：从会工作到会赚钱",
+      // The English title Feels Like Progress uses for it; the Chinese name sits beside it.
+      title: "Real Stuff",
       subtitle: "How does capability become income?",
       description:
         "A Chinese book about taking back agency at work, building capability through practice, and learning how value becomes income.",
-      meta: ["人民邮电出版社 · 2026", "ISBN 9787115690500", "中文"],
+      meta: [
+        "Posts & Telecom Press · 2026",
+        "ISBN 9787115690500",
+        "In Chinese",
+      ],
       primary: {
         label: "Read the book page",
         href: "/zbs",
@@ -301,7 +306,14 @@ export default function Books() {
                     {book.label}
                   </p>
                   <h2 className="mt-2 text-2xl font-black leading-snug [text-wrap:balance] md:text-3xl">
-                    {book.id === "zbs" ? (
+                    {book.id === "zbs" && lang === "en" ? (
+                      <>
+                        {book.title}{" "}
+                        <span lang="zh-CN" className="text-lz-muted">
+                          真本事
+                        </span>
+                      </>
+                    ) : book.id === "zbs" ? (
                       <>
                         真本事：
                         <span className="inline-block">从会工作到会赚钱</span>

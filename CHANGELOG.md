@@ -1,5 +1,10 @@
 # 更新记录
 
+## 2026-10-18 英文页上《真本事》用英文名 Real Stuff
+
+- 英文书页 `/en/book`、英文首页「书」那张卡、英文关于页，《真本事》都改用英文名 *Real Stuff*，旁边留着灰色的中文名「真本事」。和英文书《Feels Like Progress》里的写法一致（作者介绍写 "*Real Stuff* (真本事)"），英文读者在书里看到的名字，到网站能对上。立正 10-18 同意的。
+- 英文书页这本书的出版信息改成 Posts & Telecom Press · 2026、In Chinese；英文书页的搜索标题和简介跟着改；结构化数据加了 `alternateName: "Real Stuff: From Working Well to Earning Well"`（书里 Notes 用的全名）。中文页没动。
+
 ## 2026-10-18 新书《Feels Like Progress》上了书页和首页
 
 - 英文新书《Feels Like Progress》排在 `/book`、`/en/book` 第一张（占满第一行），标题改成「三本书，回答三个问题。」/「Three books. Three questions.」。它回答的问题是副标题的议题：英文「What will last when AI can blow it all up?」，中文「假工作、假学习，AI来了以后什么还留得下来？」。两个按钮都去书自己的网站：免费读开头（makewhatlasts.com/#read）、makewhatlasts.com；那一页上架前不让搜索引擎收录。

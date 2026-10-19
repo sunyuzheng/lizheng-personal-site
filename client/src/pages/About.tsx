@@ -189,10 +189,10 @@ export default function About() {
             href="/zbs"
             className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
           >
-            真本事：从会工作到会赚钱
-          </Link>
-          . I host long-form conversations on my channel and join other shows as
-          a guest.
+            Real Stuff
+          </Link>{" "}
+          (<span lang="zh-CN">真本事</span>), a book in Chinese. I host
+          long-form conversations on my channel and join other shows as a guest.
         </>
       ),
       sourcesTitle: "Sources and contact",

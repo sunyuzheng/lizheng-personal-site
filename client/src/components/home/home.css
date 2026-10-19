@@ -1169,6 +1169,11 @@
   line-height: 1.4;
 }
 
+/* The English card names 真本事 by its English title and keeps the Chinese name beside it. */
+.lz-home .c-book h3 .zh-name {
+  color: var(--lz-muted);
+}
+
 .lz-home .c-book p {
   margin-top: 10px;
   font-size: 15.5px;

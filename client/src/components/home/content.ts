@@ -853,10 +853,10 @@ const en: HomeCopy = {
     },
     zbs: {
       meta: "Author · in Chinese · 2026",
-      title: "真本事",
+      title: "Real Stuff",
       body: "A Chinese book on capability, agency, and income: what you can still do once the credential, title, and company name are taken away.",
       go: "About the book",
-      alt: "Cover of 真本事",
+      alt: "Cover of Real Stuff (真本事)",
     },
     growth: {
       meta: "Co-author · 2025 WSJ CIO Journal reading list",

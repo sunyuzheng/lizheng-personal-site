@@ -66,9 +66,9 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
 export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title:
-      "Feels Like Progress, Growth Data Analytics Playbook & 真本事 · Yuzheng Sun",
+      "Feels Like Progress, Growth Data Analytics Playbook & Real Stuff · Yuzheng Sun",
     description:
-      "Feels Like Progress, coming soon: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. And Yuzheng's Chinese book 真本事.",
+      "Feels Like Progress, coming soon: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. And Yuzheng's Chinese book Real Stuff (真本事).",
     canonical: "https://www.lizheng.ai/en/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
     lastModified: "2026-10-18",

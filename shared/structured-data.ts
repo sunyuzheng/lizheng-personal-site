@@ -381,6 +381,7 @@ function zhenbenshiBookNode() {
     "@type": "Book",
     "@id": `${SITE_URL}/zbs#book`,
     name: "真本事：从会工作到会赚钱",
+    alternateName: "Real Stuff: From Working Well to Earning Well",
     url: `${SITE_URL}/zbs`,
     image: `${SITE_URL}/book/cover-front.png`,
     isbn: "9787115690500",

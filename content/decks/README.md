@@ -78,3 +78,4 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 有的幻灯片只给特定的人看，挂在 `/decks/<slug>/slides`，但不进 `shared/deck-index.ts`、没有网页版、不让搜索引擎收录：
 
 - `/decks/same-tools-different-results`（Build with AI 第一节课，cohort 14，2026-10-17）：整份课件和讲稿加了密，打开先输密码。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module1-cohort14-web/`（`scripts/build_protected.mjs`），回源是 Vercel 项目 `same-tools-different-results-2026`。`vercel.json` 里三条：`/decks/<slug>` 307 到 `/slides`，`/slides` 和 `/(.+)` 转到回源。
+- `/decks/same-tools-different-results-zh`（上面那份的中文版，给 AI Builders 自学版录制，2026-10-19）：做法相同，密码不同。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module1-zh-selfpaced-web/`，回源是 Vercel 项目 `same-tools-different-results-zh-2026`；它的生产地址被 Vercel 截成了 `same-tools-different-results-zh-202.vercel.app`（不是笔误），`vercel.json` 里的三条转到这个地址。

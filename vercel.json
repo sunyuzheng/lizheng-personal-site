@@ -125,6 +125,9 @@
     { "src": "/decks/same-tools-different-results-zh", "status": 307, "headers": { "Location": "/decks/same-tools-different-results-zh/slides" } },
     { "src": "/decks/same-tools-different-results-zh/slides", "dest": "https://same-tools-different-results-zh-202.vercel.app/" },
     { "src": "/decks/same-tools-different-results-zh/(.+)", "dest": "https://same-tools-different-results-zh-202.vercel.app/$1" },
+    { "src": "/decks/ai-answers-you-choose", "status": 307, "headers": { "Location": "/decks/ai-answers-you-choose/slides" } },
+    { "src": "/decks/ai-answers-you-choose/slides", "dest": "https://ai-answers-you-choose-2026.vercel.app/" },
+    { "src": "/decks/ai-answers-you-choose/(.+)", "dest": "https://ai-answers-you-choose-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

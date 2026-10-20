@@ -79,3 +79,4 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 
 - `/decks/same-tools-different-results`（Build with AI 第一节课，cohort 14，2026-10-17）：整份课件和讲稿加了密，打开先输密码。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module1-cohort14-web/`（`scripts/build_protected.mjs`），回源是 Vercel 项目 `same-tools-different-results-2026`。`vercel.json` 里三条：`/decks/<slug>` 307 到 `/slides`，`/slides` 和 `/(.+)` 转到回源。
 - `/decks/same-tools-different-results-zh`（上面那份的中文版，给 AI Builders 自学版录制，2026-10-19）：做法相同，密码不同。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module1-zh-selfpaced-web/`，回源是 Vercel 项目 `same-tools-different-results-zh-2026`；它的生产地址被 Vercel 截成了 `same-tools-different-results-zh-202.vercel.app`（不是笔误），`vercel.json` 里的三条转到这个地址。
+- `/decks/ai-answers-you-choose`（Build with AI 第四节课，cohort 14，2026-10-25）：做法和第一节相同，密码也相同。源文件和加密构建在 `superlinear/1-客户交付/decks/Maven Course/module4-cohort14-web/`，回源是 Vercel 项目 `ai-answers-you-choose-2026`（`ai-answers-you-choose-2026.vercel.app`）。

@@ -1,5 +1,9 @@
 # 更新记录
 
+## 2026-10-20 《Feels Like Progress》换成绿色进度条的封面
+
+- 书第11版的封面进度条从橙红改成 Superlinear 的品牌绿 `#238343`，书页和首页那张封面（`client/public/home/books/feels-like-progress.webp`，460×736）按书的电子书封面重新生成。文字和按钮没动。书网站 makewhatlasts.com 同一天更新到第11版。
+
 ## 2026-10-18 英文页上《真本事》用英文名 Real Stuff
 
 - 英文书页 `/en/book`、英文首页「书」那张卡、英文关于页，《真本事》都改用英文名 *Real Stuff*，旁边留着灰色的中文名「真本事」。和英文书《Feels Like Progress》里的写法一致（作者介绍写 "*Real Stuff* (真本事)"），英文读者在书里看到的名字，到网站能对上。立正 10-18 同意的。

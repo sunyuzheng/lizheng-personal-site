@@ -1,6 +1,6 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import {
-  FLP_READ_URL,
+  FLP_AMAZON_URL,
   GROWTH_BOOK_AMAZON_URL,
   GROWTH_BOOK_ZH_PATH,
 } from "@shared/book-links";
@@ -20,8 +20,8 @@ export const LINKS = {
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
   growthBookZh: GROWTH_BOOK_ZH_PATH,
-  // Feels Like Progress: its own page on makewhatlasts.com, opened at the Prologue.
-  flpRead: FLP_READ_URL,
+  // Feels Like Progress on Amazon (paperback; the page also offers the Kindle edition).
+  flpAmazon: FLP_AMAZON_URL,
   openContext: "https://github.com/sunyuzheng/lizheng-open-context",
   askLizheng: "https://ask.lizheng.ai/",
   // The community as a city of connections (client/community-app).
@@ -398,10 +398,10 @@ const zh = {
     intro:
       "一本讲假工作、假学习和AI时代什么会留下来；一本写给想靠能力、而不是靠头衔立足的人；一本写给做产品和增长的人。",
     flp: {
-      meta: "著 · 英文 · 即将出版",
+      meta: "著 · 英文 · 2026",
       title: "Feels Like Progress",
       body: "AI会先把假工作吹大，再让它大幅贬值。什么还留得下来？一本讲假工作、假学习的英文书。",
-      go: "免费读开头",
+      go: "在Amazon查看",
       alt: "《Feels Like Progress》封面",
     },
     zbs: {
@@ -845,10 +845,10 @@ const en: HomeCopy = {
     intro:
       "One on fake work, fake learning, and what will last when AI can blow it all up; one for people who build products and growth; and one, in Chinese, for people who want to stand on what they can do rather than on a title.",
     flp: {
-      meta: "Author · coming soon",
+      meta: "Author · 2026",
       title: "Feels Like Progress",
       body: "Fake work, fake learning, and what will last when AI can blow it all up. A book of ideas.",
-      go: "Read the opening free",
+      go: "View on Amazon",
       alt: "Cover of Feels Like Progress",
     },
     zbs: {

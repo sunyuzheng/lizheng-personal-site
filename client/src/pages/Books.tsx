@@ -1,5 +1,5 @@
 import {
-  FLP_BOOK_URL,
+  FLP_AMAZON_URL,
   FLP_READ_URL,
   GROWTH_BOOK_AMAZON_URL,
   GROWTH_BOOK_ZH_PATH,
@@ -23,24 +23,24 @@ const books = {
   en: [
     {
       id: "flp",
-      label: "English book · coming soon",
+      label: "English book",
       title: "Feels Like Progress",
       subtitle: "What will last when AI can blow it all up?",
       description:
         "Fake work produces the evidence of work. Fake learning produces the evidence of learning. AI can now produce both in a minute or two: first it will inflate fake work, then destroy much of what that evidence was worth. A book of ideas about what will last.",
       meta: [
         "Superlinear Press · 2026",
-        "Paperback and ebook coming soon",
+        "Paperback and Kindle",
         "ISBN 9798982282002",
       ],
       primary: {
-        label: "Read the opening free",
-        href: FLP_READ_URL,
+        label: "View on Amazon",
+        href: FLP_AMAZON_URL,
         external: true,
       },
       secondary: {
-        label: "makewhatlasts.com",
-        href: FLP_BOOK_URL,
+        label: "Read the opening free",
+        href: FLP_READ_URL,
         external: true,
       },
     },
@@ -96,20 +96,20 @@ const books = {
   zh: [
     {
       id: "flp",
-      label: "英文书 · 即将出版",
+      label: "英文书",
       title: "Feels Like Progress",
       subtitle: "假工作、假学习，AI来了以后什么还留得下来？",
       description:
         "一本讲理念的书。假工作产出的是做过事的证据，假学习产出的是学会了的证据；AI现在一两分钟就能把两样都做出来，先把假工作吹大，再让这些证据大幅贬值。书讲的是什么会留下来。",
-      meta: ["Superlinear Press · 2026", "平装和电子书即将出版", "英文"],
+      meta: ["Superlinear Press · 2026", "平装和Kindle电子书", "英文"],
       primary: {
-        label: "免费读开头",
-        href: FLP_READ_URL,
+        label: "在Amazon查看",
+        href: FLP_AMAZON_URL,
         external: true,
       },
       secondary: {
-        label: "makewhatlasts.com",
-        href: FLP_BOOK_URL,
+        label: "免费读开头",
+        href: FLP_READ_URL,
         external: true,
       },
     },

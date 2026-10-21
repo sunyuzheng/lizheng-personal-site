@@ -68,19 +68,19 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
     title:
       "Feels Like Progress, Growth Data Analytics Playbook & Real Stuff · Yuzheng Sun",
     description:
-      "Feels Like Progress, coming soon: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. And Yuzheng's Chinese book Real Stuff (真本事).",
+      "Feels Like Progress: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. And Yuzheng's Chinese book Real Stuff (真本事).",
     canonical: "https://www.lizheng.ai/en/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-18",
+    lastModified: "2026-10-20",
   },
   zh: {
     title:
       "Feels Like Progress、Growth Data Analytics Playbook与《真本事》｜孙煜征的书",
     description:
-      "新书《Feels Like Progress》讲假工作、假学习，和AI时代什么会留下来（英文，即将出版）。《Growth Data Analytics Playbook》由Mengying Li、Joe Kumar与孙煜征合著，中文版免费阅读和下载。另有孙煜征所著《真本事：从会工作到会赚钱》。",
+      "英文书《Feels Like Progress》讲假工作、假学习，和AI时代什么会留下来。《Growth Data Analytics Playbook》由Mengying Li、Joe Kumar与孙煜征合著，中文版免费阅读和下载。另有孙煜征所著《真本事：从会工作到会赚钱》。",
     canonical: "https://www.lizheng.ai/book",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-18",
+    lastModified: "2026-10-20",
   },
 };
 

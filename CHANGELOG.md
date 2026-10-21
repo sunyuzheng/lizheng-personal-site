@@ -1,5 +1,12 @@
 # 更新记录
 
+## 2026-10-20 《Feels Like Progress》可以买了：书卡片换成亚马逊链接
+
+- 立正 10-20 说书已经上线，可以直接给购买链接。书页 `/book`、`/en/book` 这本书的第一个按钮改成「在Amazon查看」/「View on Amazon」（平装页 `https://www.amazon.com/dp/B0HNQW9N9G`，页上也能选 Kindle），第二个是「免费读开头」/「Read the opening free」（makewhatlasts.com/#read）；去掉「即将出版」/「coming soon」，出版信息写「平装和Kindle电子书」/「Paperback and Kindle」。
+- 首页「书」这一章，这本书的卡片改去亚马逊，按钮文字和 GDAP 卡片一样用「View on Amazon」，中文「在Amazon查看」；小字改成「著 · 英文 · 2026」/「Author · 2026」。
+- 书页的搜索简介去掉「即将出版」；结构化数据加了 `datePublished: 2026-10-18`（亚马逊平装页的出版日期）和 `sameAs` 亚马逊链接，和 GDAP 一样。
+- 书网站 makewhatlasts.com 同一天上架：首屏「Buy the book」、亚马逊平装和 Kindle 按钮，去掉 noindex。
+
 ## 2026-10-20 《Feels Like Progress》换成绿色进度条的封面
 
 - 书第11版的封面进度条从橙红改成 Superlinear 的品牌绿 `#238343`，书页和首页那张封面（`client/public/home/books/feels-like-progress.webp`，460×736）按书的电子书封面重新生成。文字和按钮没动。书网站 makewhatlasts.com 同一天更新到第11版。

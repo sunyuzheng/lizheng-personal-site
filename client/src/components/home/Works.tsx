@@ -8,7 +8,8 @@ import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
  * The books chapter (its id stays "works" for older links). The show has its
  * own chapter (the conversations) and Superlinear Academy is the city, so this
  * chapter holds only the books. The newest, Feels Like Progress, takes the
- * first row; it links to its own page on makewhatlasts.com.
+ * first row; it links to the book on Amazon (the books page also links to its
+ * free opening on makewhatlasts.com).
  */
 export default function Works({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].works;
@@ -17,7 +18,7 @@ export default function Works({ lang }: { lang: Lang }) {
     <a
       key="flp"
       className="card c-book feature rv"
-      href={LINKS.flpRead}
+      href={LINKS.flpAmazon}
       {...EXTERNAL}
     >
       <img

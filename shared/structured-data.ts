@@ -1,4 +1,5 @@
 import {
+  FLP_AMAZON_URL,
   FLP_BOOK_URL,
   GROWTH_BOOK_AMAZON_URL,
   GROWTH_BOOK_ZH_PATH,
@@ -369,10 +370,12 @@ function flpBookNode() {
     url: FLP_BOOK_URL,
     image: `${FLP_BOOK_URL}img/cover.jpg`,
     isbn: "9798982282002",
+    datePublished: "2026-10-18",
     bookFormat: "https://schema.org/Paperback",
     inLanguage: "en",
     author: { "@id": PERSON_ID },
     publisher: { "@type": "Organization", name: "Superlinear Press" },
+    sameAs: FLP_AMAZON_URL,
   };
 }
 

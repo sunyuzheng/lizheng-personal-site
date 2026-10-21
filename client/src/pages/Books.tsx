@@ -6,6 +6,7 @@ import {
 } from "@shared/book-links";
 import { GROWTH_BOOK_AUTHORS } from "@shared/book-authors";
 import SiteFooter from "@/components/site/SiteFooter";
+import FoundingBooksLink from "@/components/FoundingBooksLink";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -284,7 +285,9 @@ export default function Books() {
             </h1>
           </div>
 
-          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+          <FoundingBooksLink lang={lang} className="mt-8" />
+
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
             {books[lang].map(book => (
               <article
                 key={book.id}

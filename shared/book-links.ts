@@ -10,3 +10,5 @@ export const GROWTH_BOOK_ZH_PATH = "/book/growth-data-analytics-playbook";
 export const FLP_BOOK_URL = "https://makewhatlasts.com/";
 export const FLP_READ_URL = "https://makewhatlasts.com/#read";
 export const FLP_AMAZON_URL = "https://www.amazon.com/dp/B0HNQW9N9G";
+
+export const FOUNDING_BOOKS_URL = "https://coffee.staysuperlinear.com/books";

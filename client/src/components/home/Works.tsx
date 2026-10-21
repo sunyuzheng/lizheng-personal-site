@@ -1,6 +1,7 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { Link } from "wouter";
+import FoundingBooksLink from "@/components/FoundingBooksLink";
 import { HOME_COPY, LINKS, SECTION } from "./content";
 import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 
@@ -124,6 +125,7 @@ export default function Works({ lang }: { lang: Lang }) {
             <Phrases text={t.intro} />
           </p>
         </div>
+        <FoundingBooksLink lang={lang} className="mb-6 rv" />
         <div className="bento">{books}</div>
       </div>
     </section>

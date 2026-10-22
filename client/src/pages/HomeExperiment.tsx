@@ -834,7 +834,7 @@ export default function HomeExperiment() {
               <p className="exp-residue-index">02</p>
               <h3>{page.booksTitle}</h3>
               <p>{page.booksBody}</p>
-              <Link href={withLanguage("/book", lang)}>
+              <Link href={withLanguage("/books", lang)}>
                 <BookOpen aria-hidden="true" />
                 {page.booksCta}
               </Link>

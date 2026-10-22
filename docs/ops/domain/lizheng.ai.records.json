@@ -81,6 +81,11 @@
         "minimumValues": 1
       },
       {
+        "name": "books",
+        "type": "A",
+        "minimumValues": 1
+      },
+      {
         "name": "pod",
         "type": "CNAME",
         "ttl": 3600,
@@ -272,6 +277,60 @@
       "finalUrl": "https://www.lizheng.ai/",
       "titleContains": "课代表立正",
       "canonical": "https://www.lizheng.ai/"
+    },
+    {
+      "url": "https://www.lizheng.ai/books",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/books",
+      "titleContains": "孙煜征的书",
+      "canonical": "https://www.lizheng.ai/books"
+    },
+    {
+      "url": "https://www.lizheng.ai/en/books",
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/en/books",
+      "titleContains": "Feels Like Progress",
+      "canonical": "https://www.lizheng.ai/en/books"
+    },
+    {
+      "url": "https://books.lizheng.ai/",
+      "redirect": {
+        "status": 308,
+        "location": "https://www.lizheng.ai/books"
+      },
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/books",
+      "canonical": "https://www.lizheng.ai/books"
+    },
+    {
+      "url": "https://books.lizheng.ai/en",
+      "redirect": {
+        "status": 308,
+        "location": "https://www.lizheng.ai/en/books"
+      },
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/en/books",
+      "canonical": "https://www.lizheng.ai/en/books"
+    },
+    {
+      "url": "https://www.lizheng.ai/book",
+      "redirect": {
+        "status": 308,
+        "location": "https://www.lizheng.ai/books"
+      },
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/books",
+      "canonical": "https://www.lizheng.ai/books"
+    },
+    {
+      "url": "https://www.lizheng.ai/en/book",
+      "redirect": {
+        "status": 308,
+        "location": "https://www.lizheng.ai/en/books"
+      },
+      "status": 200,
+      "finalUrl": "https://www.lizheng.ai/en/books",
+      "canonical": "https://www.lizheng.ai/en/books"
     },
     {
       "url": "https://podcast.lizheng.ai/",

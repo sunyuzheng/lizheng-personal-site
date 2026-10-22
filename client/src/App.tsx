@@ -125,6 +125,8 @@ function Router() {
         />
         <Route path={"/experiment/emil"} component={EmilExperimentRoute} />
         <Route path={"/en/experiment/emil"} component={EmilExperimentRoute} />
+        <Route path={"/books"} component={Books} />
+        <Route path={"/en/books"} component={Books} />
         <Route path={"/book"} component={Books} />
         <Route path={"/en/book"} component={Books} />
         <Route path={"/en/collab/creators"} component={CreatorCollab} />

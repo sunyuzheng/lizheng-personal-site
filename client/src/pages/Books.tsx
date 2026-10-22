@@ -291,6 +291,11 @@ export default function Books() {
             {books[lang].map(book => (
               <article
                 key={book.id}
+                id={
+                  book.id === "growth"
+                    ? "growth-data-analytics-playbook"
+                    : book.id
+                }
                 className={cn(
                   "group grid gap-8 rounded-[14px] bg-lz-paper p-6 shadow-[0_0_0_1px_var(--lz-line)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_0_1px_var(--lz-line-2),0_28px_50px_-30px_rgba(20,30,20,0.45)] md:grid-cols-[150px_minmax(0,1fr)] md:items-center md:p-8",
                   // The newest book takes the whole first row.

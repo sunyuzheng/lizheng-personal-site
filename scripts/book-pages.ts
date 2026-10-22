@@ -17,7 +17,7 @@ const SOURCE = path.join(ROOT, "content", "books", "growth-data-analytics-playbo
 const SITE_URL = "https://www.lizheng.ai";
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
-const ORIGINAL_BOOK_ID = `${SITE_URL}/book#growth-data-analytics-playbook`;
+const ORIGINAL_BOOK_ID = `${SITE_URL}/books#growth-data-analytics-playbook`;
 const AMAZON_URL = "https://www.amazon.com/Growth-Data-Analytics-Playbook-Product-Market/dp/1544549822";
 
 interface Chapter {
@@ -204,14 +204,14 @@ function frame(book: Book, page: { title: string; description: string; canonical
 <header class="stage">
 <div class="stage-inner">
 <div class="bar"><a class="brand" href="/" aria-label="孙煜征 · 课代表立正，回到首页">${SEAL}<span>孙煜征</span></a>
-<nav aria-label="这本书"><a href="${index}#contents">目录</a><a href="${index}#authors">作者</a><a href="${index}#download">下载</a><a class="wide-only" href="/book">书</a></nav></div>
+<nav aria-label="这本书"><a href="${index}#contents">目录</a><a href="${index}#authors">作者</a><a href="${index}#download">下载</a><a class="wide-only" href="/books">书</a></nav></div>
 ${page.head}
 </div>
 </header>
 <main id="main">
 ${page.main}
 </main>
-<footer><div class="body"><span>${escapeHtml(fullTitle(book))} · 免费阅读</span><nav aria-label="更多"><a href="${index}">目录</a><a href="/book">立正的书</a><a href="/">lizheng.ai</a></nav></div></footer>
+<footer><div class="body"><span>${escapeHtml(fullTitle(book))} · 免费阅读</span><nav aria-label="更多"><a href="${index}">目录</a><a href="/books">立正的书</a><a href="/">lizheng.ai</a></nav></div></footer>
 </body>
 </html>
 `;
@@ -253,7 +253,7 @@ function bookNode(book: Book) {
 function breadcrumbs(book: Book, last?: { name: string; url: string }) {
   const items = [
     { name: "立正", url: `${SITE_URL}/` },
-    { name: "书", url: `${SITE_URL}/book` },
+    { name: "书", url: `${SITE_URL}/books` },
     { name: fullTitle(book), url: bookUrl(book) },
     ...(last ? [last] : []),
   ];

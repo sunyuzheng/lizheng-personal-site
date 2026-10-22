@@ -643,7 +643,7 @@ export default function HomeExperimentEmil() {
               {copy.browse}
               <ArrowRight aria-hidden="true" />
             </Link>
-            <Link href={withLanguage("/book", lang)}>
+            <Link href={withLanguage("/books", lang)}>
               <BookOpen aria-hidden="true" />
               {copy.books}
             </Link>

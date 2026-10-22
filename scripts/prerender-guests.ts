@@ -573,7 +573,7 @@ const staticPages: StaticPage[] = [
     alternates: productGuideAlternates,
   })),
   {
-    route: "/en/book",
+    route: "/en/books",
     meta: BOOKS_PAGE_META.en,
     lang: "en",
     jsonLd: buildBooksStructuredData("en", BOOKS_PAGE_META.en.canonical),
@@ -581,7 +581,7 @@ const staticPages: StaticPage[] = [
     imageAlt: "Yuzheng Sun at the Growth Data Analytics Playbook launch",
   },
   {
-    route: "/book",
+    route: "/books",
     meta: BOOKS_PAGE_META.zh,
     lang: "zh",
     jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),

@@ -25,6 +25,10 @@ interface HttpCheck {
   url: string;
   status: number;
   finalUrl: string;
+  redirect?: {
+    status: number;
+    location: string;
+  };
   titleContains?: string;
   canonical?: string;
 }
@@ -235,13 +239,37 @@ async function checkNameservers(
 }
 
 async function checkHttp(check: HttpCheck): Promise<void> {
-  const response = await fetch(check.url, {
-    redirect: "follow",
+  const requestOptions = {
     signal: AbortSignal.timeout(15_000),
     headers: {
       "user-agent": "lizheng.ai-domain-verifier/1.0",
     },
+  };
+  let response = await fetch(check.url, {
+    ...requestOptions,
+    redirect: check.redirect ? "manual" : "follow",
   });
+
+  if (check.redirect) {
+    const location = response.headers.get("location");
+    if (response.status !== check.redirect.status) {
+      throw new Error(
+        `${check.url} expected first HTTP ${check.redirect.status}, received ${response.status}`
+      );
+    }
+    if (
+      !location ||
+      new URL(location, check.url).href !== check.redirect.location
+    ) {
+      throw new Error(
+        `${check.url} expected redirect to ${check.redirect.location}, received ${location || "<missing>"}`
+      );
+    }
+    response = await fetch(check.redirect.location, {
+      ...requestOptions,
+      redirect: "follow",
+    });
+  }
 
   if (response.status !== check.status) {
     throw new Error(

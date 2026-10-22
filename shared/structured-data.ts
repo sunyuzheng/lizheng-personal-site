@@ -336,9 +336,9 @@ export function buildAboutStructuredData(lang: SiteLang, canonical: string) {
 function growthBookNode() {
   return {
     "@type": "Book",
-    "@id": `${SITE_URL}/book#growth-data-analytics-playbook`,
+    "@id": `${SITE_URL}/books#growth-data-analytics-playbook`,
     name: "Growth Data Analytics Playbook",
-    url: `${SITE_URL}/book#growth-data-analytics-playbook`,
+    url: `${SITE_URL}/books#growth-data-analytics-playbook`,
     image: `${SITE_URL}/book/growth-data-analytics-playbook.jpg`,
     isbn: "9781544549828",
     datePublished: "2025-11-18",

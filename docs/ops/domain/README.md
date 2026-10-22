@@ -13,6 +13,7 @@
   - `creators.lizheng.ai`
   - `podcast.lizheng.ai`
   - `speaker.lizheng.ai`
+  - `books.lizheng.ai`
   - `notify.lizheng.ai`
   - `pod.lizheng.ai`
   - `shop.lizheng.ai` / `www.shop.lizheng.ai`
@@ -34,6 +35,8 @@
 `creators.lizheng.ai`是中文播客与视频合作页的传播短入口；它以308永久跳转到`https://www.lizheng.ai/collab/creators`（2026-09-30起中文页不带`/zh`前缀），避免维护两份页面状态。
 
 `speaker.lizheng.ai`是定向嘉宾邀请页的独立入口；它承载邀请别人来到立正节目中的页面，与邀请立正参加别人节目的`creators.lizheng.ai`分工相反。
+
+`books.lizheng.ai`是书籍总览的传播入口，308跳转到`https://www.lizheng.ai/books`；`/en`跳转到英文总览`/en/books`。主站旧`/book`和`/en/book`保留308跳转。Founding Member完整原版的阅读和领取继续由`coffee.staysuperlinear.com/books`的既有身份验证提供。
 
 ## 验证命令
 

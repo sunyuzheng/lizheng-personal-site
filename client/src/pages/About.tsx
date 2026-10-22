@@ -439,7 +439,7 @@ export default function About() {
                   asChild
                   className="bg-superlinear text-white hover:bg-superlinear-deep"
                 >
-                  <Link href={withLanguage("/book", lang)}>
+                  <Link href={withLanguage("/books", lang)}>
                     <BookOpen className="mr-2 h-4 w-4" />
                     {copy.books}
                   </Link>

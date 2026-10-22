@@ -64,7 +64,7 @@ Metrics change and should retain their dates.
 
 ## Books
 
-- [Growth Data Analytics Playbook](https://www.lizheng.ai/en/book): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
+- [Growth Data Analytics Playbook](https://www.lizheng.ai/en/books): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
 - [Growth Data Analytics Playbook 中文版](https://www.lizheng.ai/book/growth-data-analytics-playbook): the free Chinese edition, rewritten in Yuzheng's Chinese voice with every chart and exercise kept; read each chapter online or download the EPUB or PDF.
 - [真本事：从会工作到会赚钱](https://www.lizheng.ai/zbs): written by Yuzheng Sun and published by 人民邮电出版社; career agency, capability building, side projects, and compounding work.
 
@@ -87,8 +87,8 @@ Chinese is the site's default language; English versions live under /en.
 - Website, English: [lizheng.ai/en](https://www.lizheng.ai/en)
 - Factual profile, Chinese: [lizheng.ai/about](https://www.lizheng.ai/about)
 - Factual profile, English: [lizheng.ai/en/about](https://www.lizheng.ai/en/about)
-- Books, Chinese: [lizheng.ai/book](https://www.lizheng.ai/book)
-- Books, English: [lizheng.ai/en/book](https://www.lizheng.ai/en/book)
+- Books, Chinese: [lizheng.ai/books](https://www.lizheng.ai/books)
+- Books, English: [lizheng.ai/en/books](https://www.lizheng.ai/en/books)
 - Guest archive: [lizheng.ai/guests](https://www.lizheng.ai/guests)
 - Work and organization collaboration, Chinese: [lizheng.ai/collab](https://www.lizheng.ai/collab)
 - Work and organization collaboration, English: [lizheng.ai/en/collab](https://www.lizheng.ai/en/collab)

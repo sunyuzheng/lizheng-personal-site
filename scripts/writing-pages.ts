@@ -190,7 +190,7 @@ function frame(collection: Collection, page: { title: string; description: strin
 <header class="stage">
 <div class="stage-inner">
 <div class="bar"><a class="brand" href="/" aria-label="孙煜征 · 课代表立正，回到首页">${SEAL}<span>孙煜征</span></a>
-<nav aria-label="这组文章"><a href="${index}">全部文章</a><a href="/about">关于我</a><a class="wide-only" href="/book">书</a></nav></div>
+<nav aria-label="这组文章"><a href="${index}">全部文章</a><a href="/about">关于我</a><a class="wide-only" href="/books">书</a></nav></div>
 ${page.head}
 </div>
 </header>

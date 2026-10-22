@@ -26,7 +26,7 @@ export const SITE_PAGES: Array<{
   en: string;
 }> = [
   { page: "about", href: "/about", zh: "关于我", en: "About" },
-  { page: "book", href: "/book", zh: "书", en: "Books" },
+  { page: "book", href: "/books", zh: "书", en: "Books" },
   { page: "decks", href: "/decks", zh: "演讲资料", en: "Talks & slides" },
   { page: "collab", href: "/collab", zh: "合作", en: "Collaborate" },
   {

@@ -7,6 +7,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
+    { "src": "^/en(?:/books)?/?$", "has": [{ "type": "host", "value": "books\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://www.lizheng.ai/en/books" } },
+    { "src": "^/(.*)$", "has": [{ "type": "host", "value": "books\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://www.lizheng.ai/books" } },
+    { "src": "^/book/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/books" } },
+    { "src": "^/en/book/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/en/books" } },
+    { "src": "^/zh/books?/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/books" } },
     { "src": "^/api/ask-lizheng/ops/(session|summary|records|export|delete|discovery-list|discovery-save|discovery-publish|discovery-withdraw)$", "dest": "/api/ask-lizheng-ops?__route=$1" },
     {
       "src": "^/guest-intake/?$",

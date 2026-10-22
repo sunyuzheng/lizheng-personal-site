@@ -7,7 +7,7 @@ const ZH_TO_EN_PATH: Record<string, string> = {
   "/": "/en",
   "/about": "/en/about",
   "/for-agents": "/en/for-agents",
-  "/book": "/en/book",
+  "/books": "/en/books",
   "/collab": "/en/collab",
   "/collab/creators": "/en/collab/creators",
   "/collab/enterprise": "/en/collab/enterprise",
@@ -39,6 +39,8 @@ export function withLanguage(href: string, lang: Lang): string {
     return href;
   }
   const url = new URL(href, "https://www.lizheng.ai");
+  if (url.pathname === "/book") url.pathname = "/books";
+  if (url.pathname === "/en/book") url.pathname = "/en/books";
   url.searchParams.delete("lang");
   const mapped =
     lang === "en" ? ZH_TO_EN_PATH[url.pathname] : EN_TO_ZH_PATH[url.pathname];

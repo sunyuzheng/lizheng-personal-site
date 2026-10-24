@@ -13,6 +13,7 @@
     "refresh:guests": "pnpm sync:guests --apply && pnpm check && pnpm build",
     "format": "prettier --write .",
     "community:graph": "tsx --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/build-community-graph.ts",
+    "community:og": "tsx scripts/community-og.ts",
     "test:ask-lizheng": "vitest run --config vitest.ask-lizheng.config.ts",
     "test:decks": "vitest run --root . tests/deck-pages.test.ts",
     "sync:ask-app": "node scripts/sync-ask-app.mjs",

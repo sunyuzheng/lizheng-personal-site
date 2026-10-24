@@ -1,5 +1,11 @@
 # 更新记录
 
+## 2026-10-24 city.lizheng.ai 的分享图换成斜着看的城
+
+- 链接发出去时显示的分享图（中文页 `/community-app/og.jpg`、英文页 `og-en.jpg`，1200×630）还是10-11以前俯视的圆球。换成现在斜着看的城：左上是「我们在建一座城」和导语，没有搜索框、时间轴、数字和加入按钮，城上不显示名字。
+- 以前这两张是手工截的，现在由 `pnpm community:og`（`scripts/community-og.ts`）从线上页面截：1440×900的窗口、减少动态效果（城停在起始角度）、裁掉底部时间轴那一条、缩成1200×630。页面的样子或文字改了，部署后重跑再部署一次。说明在 `docs/community-graph.md`「分享图」。
+- 主页 www.lizheng.ai 的分享图是首屏肖像那张（`/og/home-*.jpg`），没用这两张，没改。
+
 ## 2026-10-20 《Feels Like Progress》可以买了：书卡片换成亚马逊链接
 
 - 立正 10-20 说书已经上线，可以直接给购买链接。书页 `/book`、`/en/book` 这本书的第一个按钮改成「在Amazon查看」/「View on Amazon」（平装页 `https://www.amazon.com/dp/B0HNQW9N9G`，页上也能选 Kindle），第二个是「免费读开头」/「Read the opening free」（makewhatlasts.com/#read）；去掉「即将出版」/「coming soon」，出版信息写「平装和Kindle电子书」/「Paperback and Kindle」。

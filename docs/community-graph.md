@@ -11,6 +11,7 @@
 | 数据                 | `scripts/build-community-graph.ts`（`pnpm community:graph`），零件在 `scripts/community/`：`circle.ts`（读 Circle）、`graph.ts`（谁和谁连、年轮布局）、`output.ts`（graph.json）、`city.ts`（city.json）、`avatars.ts`（头像图）、`blob.ts`（上传）                                                                                                                                             |
 | 每天更新             | `.github/workflows/community-city.yml`                                                                                                                                                                                                                                                                                                                                                          |
 | 托管                 | `vercel.json`（域名）、`vite.config.ts`（Vite 的第二个入口）、`scripts/prerender-community.ts`（英文页）                                                                                                                                                                                                                                                                                        |
+| 分享图               | `scripts/community-og.ts`（`pnpm community:og`）：从线上页面截出 `client/public/community-app/og.jpg` 和英文页的 `og-en.jpg`                                                                                                                                                                                                                                                                    |
 
 ## 城里有什么
 
@@ -117,6 +118,14 @@ pnpm community:graph --upload
 ## 页面怎么放在 city.lizheng.ai
 
 和 ask.lizheng.ai 一样由主站托管：`client/community-app/` 是 Vite 的第二个入口，构建到 `dist/public/community-app/`；`scripts/prerender-community.ts` 写出英文页 `/community-app/en/`。`vercel.json` 里 `city.lizheng.ai` 的 `/` 和 `/en` 指向这两页，`community.lizheng.ai`（旧名，整站308跳转，旧链接包括 `#某人` 照常能用）和 `www.lizheng.ai/community-app` 都跳到 city.lizheng.ai。两个子域名都加在 Vercel 项目 `lizheng-personal-site_codex` 里（lizheng.ai 的解析在 Vercel，加域名时会自动加记录）。仓库里的目录、脚本和数据路径仍叫 community（`client/community-app/`、`pnpm community:graph`、Blob 的 `community/`），只有对外的地址改了。
+
+## 分享图
+
+链接发到微信、LinkedIn、X 时显示的图：中文页是 `/community-app/og.jpg`，英文页是 `og-en.jpg`（`prerender-community.ts` 写英文页时换的地址），都是1200×630的JPG。画面就是页面静止时的样子：斜着看的城，左上是标题和导语；不带搜索框、时间轴和数字、加入按钮，城上也不显示名字。
+
+`pnpm community:og` 生成这两张：用 Chrome 打开线上页面，窗口1440×900（笔记本屏幕的大小，标题和城互不遮挡；窄一些或矮一些，导语就压到城上），开着「减少动态效果」，所以不播开场、城停在起始的角度；裁掉底部给时间轴留的那一条，缩成1200×630。图里是截图当天线上的数据，数据每天在变，不用每天重截；页面的样子或标题、导语改了，先部署，再重跑、提交、部署一次。`--base=<地址>` 改截别的地址，比如 `pnpm dev` 的 `http://localhost:5173/community-app/`。要用本机的 Playwright 和 Chrome for Testing（路径见脚本开头）。
+
+这两张原来是10-11手工截的俯视圆球，城改成斜着看以后没跟着换，2026-10-24换成脚本截的图。主页 www.lizheng.ai 的分享图是首屏的肖像（`/og/home-zh.jpg`、`home-en.jpg`），不用这两张。
 
 ## 需要立刻把某个人拿掉
 

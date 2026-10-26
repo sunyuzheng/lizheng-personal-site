@@ -133,6 +133,9 @@
     { "src": "/decks/ai-answers-you-choose", "status": 307, "headers": { "Location": "/decks/ai-answers-you-choose/slides" } },
     { "src": "/decks/ai-answers-you-choose/slides", "dest": "https://ai-answers-you-choose-2026.vercel.app/" },
     { "src": "/decks/ai-answers-you-choose/(.+)", "dest": "https://ai-answers-you-choose-2026.vercel.app/$1" },
+    { "src": "/decks/ai-answers-you-choose-zh", "status": 307, "headers": { "Location": "/decks/ai-answers-you-choose-zh/slides" } },
+    { "src": "/decks/ai-answers-you-choose-zh/slides", "dest": "https://ai-answers-you-choose-zh-2026.vercel.app/" },
+    { "src": "/decks/ai-answers-you-choose-zh/(.+)", "dest": "https://ai-answers-you-choose-zh-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

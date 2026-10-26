@@ -136,6 +136,9 @@
     { "src": "/decks/ai-answers-you-choose-zh", "status": 307, "headers": { "Location": "/decks/ai-answers-you-choose-zh/slides" } },
     { "src": "/decks/ai-answers-you-choose-zh/slides", "dest": "https://ai-answers-you-choose-zh-2026.vercel.app/" },
     { "src": "/decks/ai-answers-you-choose-zh/(.+)", "dest": "https://ai-answers-you-choose-zh-2026.vercel.app/$1" },
+    { "src": "/decks/ask-lizheng-one-day", "status": 307, "headers": { "Location": "/decks/ask-lizheng-one-day/slides" } },
+    { "src": "/decks/ask-lizheng-one-day/slides", "dest": "https://ask-lizheng-one-day-2026.vercel.app/" },
+    { "src": "/decks/ask-lizheng-one-day/(.+)", "dest": "https://ask-lizheng-one-day-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

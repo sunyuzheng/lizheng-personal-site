@@ -743,7 +743,12 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-tutorial",
+     "text": "立正《学AI的两大误区》· 2026年2月"
+    }
+   ],
    "title": "tutorial跳过的东西，最值钱",
    "chapter": "",
    "notes": [
@@ -884,7 +889,7 @@
      ]
     },
     {
-     "text": "问问立正首页 · 真实截图",
+     "text": "问问立正首页 · 真实截图 ↗",
      "tag": "div",
      "fs": 20,
      "fw": 600,
@@ -892,7 +897,7 @@
      "box": [
       960,
       104,
-      265,
+      290,
       38
      ]
     },
@@ -973,9 +978,31 @@
       312,
       52
      ]
+    },
+    {
+     "text": "做这个网站的复盘：《复盘「问问立正」：我原以为套壳不值得做，做完发现好香》",
+     "tag": "div",
+     "fs": 21,
+     "fw": 500,
+     "li": false,
+     "box": [
+      120,
+      1010,
+      756,
+      21
+     ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://ask.lizheng.ai/",
+     "text": "问问立正"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/share-your-projects/ask-lizheng-not-just-a-wrapper",
+     "text": "《复盘「问问立正」：我原以为套壳不值得做，做完发现好香》"
+    }
+   ],
    "title": "近800万字，没搭复杂的RAG",
    "chapter": "",
    "notes": [
@@ -1401,7 +1428,7 @@
      ]
     },
     {
-     "text": "数据库每天的请求数 · Upstash 控制台，2026年10月",
+     "text": "数据库每天的请求数 · Upstash 控制台，2026年10月 · 砍掉“没看过”的经过：《复盘「问问立正」》",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -1409,12 +1436,17 @@
      "box": [
       120,
       1010,
-      530,
+      971,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/share-your-projects/ask-lizheng-not-just-a-wrapper",
+     "text": "《复盘「问问立正」》"
+    }
+   ],
    "title": "“没看过”：砍掉一个功能",
    "chapter": "",
    "notes": [
@@ -1619,7 +1651,7 @@
    "image": "17.webp",
    "blocks": [
     {
-     "text": "Jim Fan：什么是世界模型",
+     "text": "Jim Fan：什么是世界模型 ↗",
      "tag": "div",
      "fs": 24,
      "fw": 500,
@@ -1627,7 +1659,7 @@
      "box": [
       900,
       150,
-      297,
+      326,
       36
      ]
     },
@@ -1710,7 +1742,12 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://x.com/DrJimFan/status/1709947595525951787",
+     "text": "Jim Fan：什么是世界模型 ↗"
+    }
+   ],
    "title": "世界模型是什么",
    "chapter": "",
    "notes": [
@@ -1955,7 +1992,16 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://openreview.net/pdf?id=BZ5a1r-kVsf",
+     "text": "Yann LeCun 的立场论文"
+    },
+    {
+     "href": "https://x.com/DrJimFan/status/1709947595525951787",
+     "text": "Jim Fan 的帖子"
+    }
+   ],
    "title": "想要更好的判断，长世界模型",
    "chapter": "",
    "notes": [
@@ -2525,7 +2571,7 @@
      ]
     },
     {
-     "text": "《关于ChatGPT最重要的五个问题》2023年3月 · 2026年回头打分",
+     "text": "《关于ChatGPT最重要的五个问题》2023年3月 · 英文版 · Statsig 技术分享 · 2026年回头打分",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -2533,12 +2579,25 @@
      "box": [
       120,
       1010,
-      639,
+      963,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/chatgpt",
+     "text": "《关于ChatGPT最重要的五个问题》"
+    },
+    {
+     "href": "https://yuzheng.substack.com/p/the-five-most-important-questions",
+     "text": "英文版"
+    },
+    {
+     "href": "https://youtu.be/mQveBlevbZo",
+     "text": "Statsig 技术分享"
+    }
+   ],
    "title": "这件事真做得到吗：六个判断打分",
    "chapter": "",
    "notes": [
@@ -2719,7 +2778,7 @@
      ]
     },
     {
-     "text": "鸭哥《我们让AI读完三年微信群聊记录，它写了一本出人意料的小书》2025-04-16",
+     "text": "鸭哥《我们让AI读完三年微信群聊记录，它写了一本出人意料的小书》2025-04-16 · 方法：《通过Jev，辨清AI新技术的叙事陷阱》",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -2727,12 +2786,21 @@
      "box": [
       120,
       1010,
-      782,
+      1250,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-book-wechat",
+     "text": "鸭哥《我们让AI读完三年微信群聊记录，它写了一本出人意料的小书》"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/ai-builders-learning-path",
+     "text": "《通过Jev，辨清AI新技术的叙事陷阱》"
+    }
+   ],
    "title": "鸭哥也是这么做的",
    "chapter": "",
    "notes": [
@@ -3029,7 +3097,7 @@
      ]
     },
     {
-     "text": "AI Architect《课代表和鸭哥工作的实况（二）》33:21–35:58、1:02:17–1:09:56",
+     "text": "AI Architect《课代表和鸭哥工作的实况（二）｜高手的判断从哪里来？》33:21–35:58、1:02:17–1:09:56",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -3037,12 +3105,17 @@
      "box": [
       120,
       1010,
-      827,
+      1068,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/aa/sections/840969/lessons/4669557",
+     "text": "AI Architect《课代表和鸭哥工作的实况（二）｜高手的判断从哪里来？》"
+    }
+   ],
    "title": "鸭哥那一眼从哪来",
    "chapter": "",
    "notes": [
@@ -3210,7 +3283,20 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/share-your-projects/ai-architect-40",
+     "text": "一位学员"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/aa/sections/840969/lessons/3196086",
+     "text": "AI Architect「什么时候不该用AI」"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/ai/sections/336476/lessons/1247928",
+     "text": "《我们为什么不教RAG》"
+    }
+   ],
    "title": "鸭哥这么厉害，我怎么学？",
    "chapter": "",
    "notes": [
@@ -3339,7 +3425,12 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.lizheng.ai/zbs",
+     "text": "《真本事》"
+    }
+   ],
    "title": "为什么非得自己上手",
    "chapter": "",
    "notes": [
@@ -3635,7 +3726,12 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/anxiety",
+     "text": "立正《AI焦虑的三种形态》"
+    }
+   ],
    "title": "劲漏到哪：看，和焦虑",
    "chapter": "",
    "notes": [
@@ -3777,7 +3873,7 @@
      ]
     },
     {
-     "text": "AI Architect「什么时候不该用AI」：学员帖子《从40秒到准实时：儿童识字助手的三次架构演进》",
+     "text": "学员的帖子：《从40秒到准实时：儿童识字助手的三次架构演进》 · 课：AI Architect「什么时候不该用AI」",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -3785,12 +3881,21 @@
      "box": [
       120,
       1010,
-      948,
+      1049,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/share-your-projects/ai-architect-40",
+     "text": "《从40秒到准实时：儿童识字助手的三次架构演进》"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/aa/sections/840969/lessons/3196086",
+     "text": "AI Architect「什么时候不该用AI」"
+    }
+   ],
    "title": "识字助手的三版",
    "chapter": "",
    "notes": [
@@ -3970,7 +4075,7 @@
      ]
     },
     {
-     "text": "立正 · 大师课回顾02",
+     "text": "立正 · 大师课回顾02｜Daliana Liu：把专业变成选择权",
      "tag": "div",
      "fs": 21,
      "fw": 500,
@@ -3978,12 +4083,21 @@
      "box": [
       120,
       870,
-      210,
+      559,
       21
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://www.superlinear.academy/c/ai-resources/anxiety",
+     "text": "立正《AI焦虑的三种形态》"
+    },
+    {
+     "href": "https://www.superlinear.academy/c/masterclass-recording/sections/1135481/lessons/4512216",
+     "text": "大师课回顾02｜Daliana Liu：把专业变成选择权"
+    }
+   ],
    "title": "抽象让人焦虑，具体不会",
    "chapter": "",
    "notes": [
@@ -4202,7 +4316,12 @@
      ]
     }
    ],
-   "links": [],
+   "links": [
+    {
+     "href": "https://ai-builders.com/",
+     "text": "我们的课"
+    }
+   ],
    "title": "一门课该上的三件事",
    "chapter": "",
    "notes": [

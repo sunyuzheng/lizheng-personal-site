@@ -60,7 +60,7 @@ Metrics change and should retain their dates.
 - 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.
 - 21,686 members who completed profile setup in the free Superlinear Academy community as of 2026-08-20; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
 - 24,536 active member accounts in the Superlinear Academy community snapshot of 2026-09-30 (the source of the homepage map). "Active" is the account status, not a measure of posting or participation.
-- [AI Engineer](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) publicly named Yuzheng as a collaborator on the upcoming [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), scheduled for November 5-6, 2026. This establishes the announced collaboration, not a completed event outcome.
+- [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), the first AI Engineer conference in China (November 5-6, 2026, Shanghai), lists Mengying Li and Yuzheng as its co-organizers (联合主办人) on its official page; Standup Partners is the Shanghai organizer of record. AI Engineer's [LinkedIn announcement](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) also named them. His part is the program, speaker invitations, and connecting developer communities in the US and China. Until the event has taken place, this establishes the role, not an event outcome.
 
 ## Books
 

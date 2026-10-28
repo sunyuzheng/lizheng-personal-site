@@ -760,7 +760,8 @@
     gap: 6px 18px;
   }
 
-  .lz-home .orgs .o {
+  .lz-home .orgs .o,
+  .lz-home .cohost .o {
     font-size: 15.5px;
   }
 
@@ -769,7 +770,8 @@
   }
 }
 
-.lz-home .orgs .o {
+.lz-home .orgs .o,
+.lz-home .cohost .o {
   font-family: var(--num);
   font-size: 17px;
   font-weight: 600;
@@ -787,6 +789,29 @@
 .lz-home .orgs .etc {
   font-size: 14px;
   color: var(--lz-muted);
+}
+
+/* The conference he co-organizes: its name set like the organizations above (.o), one quiet line
+   saying what it is, and the way to its site at the end of the row. */
+.lz-home .cohost {
+  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+}
+
+.lz-home .cohost p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 18px;
+}
+
+.lz-home .cohost .note {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-home .cohost .note span + span::before {
+  content: " · ";
 }
 
 /* Peer endorsements: four short quotes in large serif, each signed in one line. */
@@ -908,6 +933,31 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+  }
+
+  /* The label and the link share the first line, as the peers' label and 读完整评价 do. */
+  .lz-home .proof-row.cohost {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .lz-home .cohost > .lab {
+    grid-area: 1 / 1;
+  }
+
+  .lz-home .cohost > .lz-link {
+    grid-area: 1 / 2;
+  }
+
+  .lz-home .cohost > p {
+    grid-area: 2 / 1 / 3 / -1;
+  }
+
+  .lz-home .cohost .note span {
+    display: block;
+  }
+
+  .lz-home .cohost .note span + span::before {
+    content: none;
   }
 
   .lz-home .orgs p {

@@ -36,6 +36,10 @@ export const LINKS = {
   collaborate: "https://www.superlinear.academy/c/collaborate/",
   // Feedback and reports on 问问立正: comments under the community post that introduced it.
   askFeedback: "https://www.superlinear.academy/c/tools/ask-lizheng",
+  // AI Engineer Shanghai 2026. The event's first screen lists its organizers, Mengying Li and
+  // Yuzheng Sun, and its organizing team section calls both 联合主办人 / Co-organizer.
+  aieShanghai: "https://www.ai.engineer/shanghai/2026",
+  aieShanghaiZh: "https://www.ai.engineer/shanghai/2026?lang=cn",
 };
 
 // Section ids keep the pre-redesign anchor names, so /#judgment,
@@ -370,6 +374,17 @@ const zh = {
       ["哥伦比亚大学", "zh"],
     ] as Array<[string, "zh"?]>,
     orgsMore: "等",
+    // The other direction, under the places that invited him: a conference he co-organizes. One
+    // line with no tense, so it reads the same before and after the event; the link opens the
+    // event's own site, whose first screen names its organizers.
+    cohost: {
+      label: "联合主办",
+      name: "AI Engineer 上海站",
+      // What it is, then when; side by side on a laptop, one under the other on a phone.
+      note: ["硅谷的AI工程师大会第一次来中国", "2026年11月5–6日"],
+      link: "大会官网",
+      href: LINKS.aieShanghaiZh,
+    },
   },
   scenesLabel: "现场",
   scenes: scenes([
@@ -819,6 +834,13 @@ const en: HomeCopy = {
       ["Columbia University"],
     ],
     orgsMore: "and more",
+    cohost: {
+      label: "Co-organizer of",
+      name: "AI Engineer Shanghai",
+      note: ["The first AI Engineer conference in China", "Nov 5–6, 2026"],
+      link: "Event site",
+      href: LINKS.aieShanghai,
+    },
   },
   scenesLabel: "On stage",
   scenes: scenes([

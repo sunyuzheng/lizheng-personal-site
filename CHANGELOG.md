@@ -1,5 +1,12 @@
 # 更新记录
 
+## 2026-10-28 主页加一行「联合主办 · AI Engineer 上海站」
+
+- 首页「数字与同行评价」在「受邀分享与培训」和「来自同行的评价」之间加一行：「联合主办 · AI Engineer 上海站 · 硅谷的AI工程师大会第一次来中国 · 2026年11月5–6日」，右端「大会官网 →」去 www.ai.engineer/shanghai/2026（中文页带 `?lang=cn`），官网首屏写着上海站组织者是李孟颖和立正。英文主页同一行是「Co-organizer of · AI Engineer Shanghai · The first AI Engineer conference in China · Nov 5–6, 2026 · Event site →」。手机上标签和链接在第一行，说明和日期各占一行。
+- 关于页「经历」下面加一段：和李孟颖联合主办AI Engineer上海站，以及他做了什么（用官网对他角色的说法）；链接里加「AI Engineer上海站组织团队」（官网 `#organizers`）。
+- `llms.txt` 里原来「合作方」那条改成联合主办的说法。
+- 口径：AI Engineer官网10-22起把两人列为 Co-organizer / 联合主办人（PR #2143，swyx 让合并的），`yuzheng-profile` 的 EVIDENCE.md 和 facts.json 一起改了。为什么只放一行，见 `docs/content-system.md`。
+
 ## 2026-10-24 city.lizheng.ai 的分享图换成斜着看的城
 
 - 链接发出去时显示的分享图（中文页 `/community-app/og.jpg`、英文页 `og-en.jpg`，1200×630）还是10-11以前俯视的圆球。换成现在斜着看的城：左上是「我们在建一座城」和导语，没有搜索框、时间轴、数字和加入按钮，城上不显示名字。

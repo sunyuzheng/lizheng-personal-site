@@ -2,6 +2,7 @@ import CourseReviews from "@/components/CourseReviews";
 import DefiningWork from "@/components/DefiningWork";
 import PeerEndorsements from "@/components/PeerEndorsements";
 import CareerPath, { type CareerStep } from "@/components/home/CareerPath";
+import { LINKS } from "@/components/home/content";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
@@ -169,6 +170,9 @@ export default function About() {
       backgroundTitle: "Background",
       background:
         "I worked as an economist at Amazon, a data scientist at Meta, and Director of Growth Data Science & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
+      // Worded so it stays true before and after the November 2026 event.
+      aie: "AI Engineer Shanghai 2026, the first AI Engineer conference in China, names Mengying Li and me as its co-organizers. My part is the program, speaker invitations, and connecting developer communities in the US and China.",
+      aieLink: "AI Engineer Shanghai organizing team",
       currentTitle: "The academy I’m building",
       currentIntro:
         "Superlinear Academy is where my teaching, community, and enterprise work come together. You can begin with the free community.",
@@ -212,6 +216,8 @@ export default function About() {
       backgroundTitle: "经历",
       background:
         "我做过Amazon经济学家、Meta数据科学家和腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设Superlinear Academy。",
+      aie: "2026年，我和李孟颖联合主办AI Engineer上海站，这是硅谷的AI工程师大会第一次来中国。我参与议程筹划和嘉宾邀请，也帮中美两边的开发者社区牵线。",
+      aieLink: "AI Engineer上海站组织团队",
       currentTitle: "我正在办的这所学院",
       currentIntro:
         "课程、社区和企业项目，都在Superlinear Academy。想了解我们，可以先从免费社区开始。",
@@ -325,6 +331,9 @@ export default function About() {
               <p className="mt-5 text-lg leading-9 text-[#48443B]">
                 {copy.background}
               </p>
+              <p className="mt-4 text-lg leading-9 text-[#48443B]">
+                {copy.aie}
+              </p>
               <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:gap-x-8">
                 <a
                   href="https://economics.cornell.edu/historical-placement-phd-students"
@@ -347,6 +356,15 @@ export default function About() {
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 )}
+                <a
+                  href={`${lang === "en" ? LINKS.aieShanghai : LINKS.aieShanghaiZh}#organizers`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                >
+                  {copy.aieLink}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </div>

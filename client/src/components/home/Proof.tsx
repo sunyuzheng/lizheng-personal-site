@@ -2,6 +2,7 @@ import type { Lang } from "@/contexts/LanguageContext";
 import { prefersReducedMotion } from "@/lib/scroll";
 import { useEffect, useRef, useState } from "react";
 import { HOME_COPY, type Stat } from "./content";
+import { Arrow, EXTERNAL } from "./parts";
 import Peers from "./Peers";
 
 function formatStat(value: number, format: Stat["format"]) {
@@ -72,7 +73,8 @@ export default function Proof({ lang }: { lang: Lang }) {
             </div>
           ))}
         </div>
-        {/* Rows with a label column: who invited him, then what peers say. */}
+        {/* Rows with a label column: who invited him, the conference he co-organizes, then what
+            peers say. */}
         <div className="proof-row orgs">
           <div className="lab">{t.orgsLabel}</div>
           <p>
@@ -83,6 +85,21 @@ export default function Proof({ lang }: { lang: Lang }) {
             ))}
             <span className="etc">{t.orgsMore}</span>
           </p>
+        </div>
+        {/* One line, so the way to the event's site fills the space at its end. */}
+        <div className="proof-row cohost">
+          <div className="lab">{t.cohost.label}</div>
+          <p>
+            <span className="o">{t.cohost.name}</span>
+            <span className="note">
+              {t.cohost.note.map(part => (
+                <span key={part}>{part}</span>
+              ))}
+            </span>
+          </p>
+          <a className="lz-link" href={t.cohost.href} {...EXTERNAL}>
+            {t.cohost.link} <Arrow />
+          </a>
         </div>
         <Peers lang={lang} />
       </div>

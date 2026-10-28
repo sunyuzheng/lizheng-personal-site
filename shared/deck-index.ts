@@ -103,6 +103,45 @@ export const DECK_CATEGORIES: DeckCategoryDefinition[] = [
 
 export const DECK_LIBRARY: DeckEntry[] = [
   {
+    id: "what-ai-cant-give-2026",
+    collection: "public",
+    category: "builder-work",
+    organization: "课代表立正",
+    occasion: {
+      en: "Open class · long-form video",
+      zh: "公开课·长视频",
+    },
+    title: "AI都会教你了，为什么还要上课？",
+    date: "2026-10-28",
+    language: "zh",
+    audience: {
+      en: "Chinese-speaking learners deciding whether a class is still worth it now that AI can teach, and people who have watched plenty but still can't get results",
+      zh: "想学AI、在想还要不要上课的中文学习者，和看了很多却用不好的人",
+    },
+    takeaway: {
+      en: "AI has made answers nearly free. What a class still has to teach is what AI can't hand you: the judgment below the waterline, and the drive to build it. Judgment comes from a world model, grown by writing predictions that can be wrong and letting reality grade them, and from craft, which only comes from doing; the parts that can be said, we turn into lessons. The drive leaks into watching videos and into anxiety; small concrete loops and someone beside you bring it back.",
+      zh: "AI让答案几乎免费，一门课要上的，是AI给不了的两样：水面下的判断，和把它练出来的那股劲。判断来自世界模型和手艺：世界模型靠把预测写成会错的样子、让现实打分来长；手艺只能上手做，能说出来的部分我们做成课。劲常漏到看视频和焦虑里，靠具体的小闭环和旁边有人补回来。",
+    },
+    href: "https://www.lizheng.ai/decks/what-ai-cant-give/slides",
+    page: "/decks/what-ai-cant-give",
+    linkKind: "deck",
+    accent: "#FFD43B",
+    keywords: [
+      "learning AI",
+      "AI course",
+      "world model",
+      "craft",
+      "judgment",
+      "学AI",
+      "AI课",
+      "冰山",
+      "世界模型",
+      "手艺",
+      "技术直觉",
+      "产品直觉",
+    ],
+  },
+  {
     id: "waytoagi-silicon-valley-2026",
     collection: "public",
     category: "builder-work",

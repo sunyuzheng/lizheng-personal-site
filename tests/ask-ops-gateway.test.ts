@@ -254,12 +254,26 @@ describe("bounded sanitized upstream", () => {
 describe("separate frontend route boundary", () => {
   it("routes only the exact www bookmark and hashed JS/CSS to the local stripping gateway before catchalls", () => {
     const config = JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8"));
-    const api = config.routes[0], page = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops-page"),
+    const api = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops?__route=$1"),
+      page = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops-page"),
       assets = config.routes.find((r: { dest: string }) => r.dest === "/api/ask-lizheng-ops-page?__asset=$1");
     expect(api.dest).toBe("/api/ask-lizheng-ops?__route=$1");
     expect(new RegExp(api.src).test("/api/ask-lizheng/ops/records/extra")).toBe(false);
     expect(page.dest).toBe("/api/ask-lizheng-ops-page");
     expect(assets.dest).toBe("/api/ask-lizheng-ops-page?__asset=$1");
+    // Check precedence on the Ops host, allowing unrelated host redirects first.
+    const routeFor = (path: string) => config.routes.find((route: {
+      src?: string; handle?: string; has?: { type: string; value: string }[];
+    }) => route.handle === "filesystem" || (
+      route.src && new RegExp(`^(?:${route.src})$`).test(path) &&
+      (route.has ?? []).every(({ type, value }) =>
+        type === "host" && new RegExp(`^(?:${value})$`).test("www.lizheng.ai"))
+    ));
+    for (const [path, route] of [
+      ["/api/ask-lizheng/ops/records", api], ["/ops/ask-lizheng", page],
+      ["/ops/ask-lizheng/assets/index-Abcdef12.js", assets],
+      ["/ops/ask-lizheng/assets/index-Abcdef12.css", assets],
+    ] as const) expect(routeFor(path)).toBe(route);
     for (const route of [page, assets]) {
       expect(route.has).toEqual([{ type: "host", value: "www\\.lizheng\\.ai" }]);
       expect(route.dest).not.toMatch(/^https?:/);

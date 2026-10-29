@@ -1,5 +1,4 @@
 import LizhengMark from "@/components/site/LizhengMark";
-import { SocialIcon, socialLinks } from "@/components/site/social";
 import type { Lang } from "@/contexts/LanguageContext";
 import { prefersReducedMotion } from "@/lib/scroll";
 import { useEffect, useRef } from "react";
@@ -53,28 +52,20 @@ export default function Hero({ lang }: { lang: Lang }) {
           <p className="lede rise d3">
             <RichText value={t.lede} phrases />
           </p>
+          {/* The page's one join button on its first screen: the header holds its own back until
+              this one has scrolled away (SiteHeader). The ways to follow are in the footer. */}
           <div className="cta-row rise d4">
-            <a className="btn btn-ivory" href={LINKS.community} {...EXTERNAL}>
+            <a
+              className="btn btn-ivory"
+              href={LINKS.community}
+              data-hero-join=""
+              {...EXTERNAL}
+            >
               {t.primary}
             </a>
             <SectionLink className="btn btn-line" to={SECTION.talks}>
               {t.secondary}
             </SectionLink>
-          </div>
-          <div className="social rise d4">
-            <span className="lab">{t.follow}</span>
-            {socialLinks(lang).map(link => (
-              <a
-                key={link.id}
-                href={link.href}
-                aria-label={link.label[lang]}
-                data-label={link.label[lang]}
-                data-id={link.id}
-                {...EXTERNAL}
-              >
-                <SocialIcon id={link.id} />
-              </a>
-            ))}
           </div>
         </div>
         <div className="hero-art" aria-hidden="true">

@@ -36,6 +36,8 @@ export default function SiteHeader({
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [pastHero, setPastHero] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [heroJoinShown, setHeroJoinShown] = useState(overlay);
   const [activeId, setActiveId] = useState<string | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -73,14 +75,23 @@ export default function SiteHeader({
     };
   }, [menuOpen, moreOpen]);
 
-  // Overlay variant: turn solid once the hero has scrolled under the header,
-  // and mark the section that crosses a reading line a third down the screen.
+  // Overlay variant: tint as soon as the page moves, so the links never sit on
+  // the hero's title or seal; turn solid once the hero has scrolled under the
+  // header; hold the join button back while the hero's own is on screen; and
+  // mark the section that crosses a reading line a third down the screen.
   useEffect(() => {
     if (!overlay) return;
     const update = () => {
       const hero = document.getElementById("hero");
       const threshold = hero ? hero.offsetHeight - 80 : 0;
       setPastHero(window.scrollY > threshold);
+      setScrolled(window.scrollY > 4);
+      const heroJoin = document.querySelector("[data-hero-join]");
+      const headerBottom =
+        headerRef.current?.getBoundingClientRect().bottom ?? 0;
+      setHeroJoinShown(
+        !!heroJoin && heroJoin.getBoundingClientRect().bottom > headerBottom
+      );
       const line = window.innerHeight / 3;
       const active = HOME_SECTIONS.find(section => {
         const box = document
@@ -169,6 +180,8 @@ export default function SiteHeader({
     "lz-header",
     overlay ? "is-overlay" : "",
     overlay && (pastHero || menuOpen) ? "solid" : "",
+    overlay && scrolled && !pastHero && !menuOpen ? "tinted" : "",
+    overlay && heroJoinShown && !menuOpen ? "hero-join-shown" : "",
     lang === "en" ? "l-en" : "",
   ]
     .filter(Boolean)

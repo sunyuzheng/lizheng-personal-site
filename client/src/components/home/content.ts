@@ -308,12 +308,6 @@ export interface WindowCopy {
   updated: (date: string) => string;
 }
 
-export interface Stat {
-  value: number;
-  format: "k" | "comma";
-  label: string;
-}
-
 const zh = {
   hero: {
     // The header, the seal and the lede already name him; English keeps the
@@ -327,7 +321,6 @@ const zh = {
     ] as Inline[],
     primary: "免费加入超线性学院",
     secondary: "看我的对话",
-    follow: "关注我",
   },
   career: {
     label: "履历",
@@ -351,13 +344,7 @@ const zh = {
     ],
   },
   proof: {
-    label: "数字与合作",
-    stats: [
-      { value: 400, format: "k", label: "全网关注" },
-      { value: 200, format: "comma", label: "场公开深度对话" },
-      { value: 20000, format: "comma", label: "超线性学院社区成员" },
-      { value: 3000, format: "comma", label: "付费学员" },
-    ] as Stat[],
+    label: "受邀机构与同行评价",
     // One row on a laptop: the names a reader knows at a glance, then 等. Binance, Safeway, Monzo,
     // FlowGPT, 华盛顿大学 and 美国统计协会 were also listed until 2026-10-12; 等 stands for them.
     orgsLabel: "受邀分享与培训",
@@ -374,6 +361,8 @@ const zh = {
       ["哥伦比亚大学", "zh"],
     ] as Array<[string, "zh"?]>,
     orgsMore: "等",
+    // Where the talks and trainings can be looked at, in the label column as 读完整评价 is below.
+    orgsLink: "看演讲资料",
     // The other direction, under the places that invited him: a conference he co-organizes. One
     // line with no tense, so it reads the same before and after the event; the link opens the
     // event's own site, whose first screen names its organizers.
@@ -783,7 +772,6 @@ const en: HomeCopy = {
     ],
     primary: "Join the free community",
     secondary: "Watch the conversations",
-    follow: "Follow",
   },
   career: {
     label: "Career",
@@ -809,17 +797,7 @@ const en: HomeCopy = {
     ],
   },
   proof: {
-    label: "Numbers and organizations",
-    stats: [
-      {
-        value: 400,
-        format: "k",
-        label: "followers on YouTube, Bilibili & Xiaohongshu",
-      },
-      { value: 200, format: "comma", label: "public long-form conversations" },
-      { value: 20000, format: "comma", label: "free-community members" },
-      { value: 3000, format: "comma", label: "paying learners" },
-    ],
+    label: "Organizations and peers",
     orgsLabel: "Invited to speak and train at",
     // As in Chinese, one row on a laptop; English names run longer, so Meituan and Xiaohongshu
     // wait too.
@@ -834,6 +812,7 @@ const en: HomeCopy = {
       ["Columbia University"],
     ],
     orgsMore: "and more",
+    orgsLink: "See the slides",
     cohost: {
       label: "Co-organizer of",
       name: "AI Engineer Shanghai",

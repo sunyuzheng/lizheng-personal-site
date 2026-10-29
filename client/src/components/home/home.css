@@ -416,78 +416,6 @@
   }
 }
 
-/* Social: compact icon buttons with a label on hover and focus. */
-.lz-home .social {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-top: 28px;
-}
-
-.lz-home .social .lab {
-  margin-right: 8px;
-  font-size: 13.5px;
-  color: var(--lz-on-forest-3);
-}
-
-.lz-home .social a {
-  position: relative;
-  display: inline-grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  background: rgb(248 241 228 / 0.08);
-  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
-  color: var(--lz-on-forest);
-  transition:
-    background 0.2s,
-    transform 0.2s;
-}
-
-.lz-home .social a:hover {
-  background: rgb(248 241 228 / 0.18);
-  transform: translateY(-1px);
-}
-
-.lz-home .social svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* The Xiaohongshu mark is a wordmark; it needs more width to stay legible. */
-.lz-home .social a[data-id="xiaohongshu"] svg {
-  width: 28px;
-  height: 28px;
-}
-
-.lz-home .social a::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  padding: 6px 9px;
-  border-radius: 6px;
-  background: var(--lz-ink);
-  color: var(--lz-on-forest);
-  font-size: 12px;
-  line-height: 1;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translate(-50%, 4px);
-  transition:
-    opacity 0.15s,
-    transform 0.15s;
-}
-
-.lz-home .social a:hover::after,
-.lz-home .social a:focus-visible::after {
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
 /* Wide screens: the words and the portrait are centred on each other. The portrait sets the first
    screen's height, its head at the top of its box and its hands at the bottom edge; the words sit in
    its middle, so the head rises as far above them as the hands reach below (2026-10-12, Yuzheng: the
@@ -547,12 +475,6 @@
 
   .lz-home .hero h1 {
     margin-top: 18px;
-  }
-}
-
-@media (max-width: 380px) {
-  .lz-home .social .lab {
-    flex-basis: 100%;
   }
 }
 
@@ -678,57 +600,24 @@
 /* ---------- Proof ---------- */
 
 .lz-home .proof {
+  padding-top: 14px;
   background: var(--lz-paper);
   border-bottom: 1px solid var(--lz-line);
 }
 
-.lz-home .stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding-block: 44px 34px;
-}
-
-.lz-home .stat {
-  padding: 4px 28px;
-  border-left: 1px solid var(--lz-line);
-}
-
-.lz-home .stat:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.lz-home .stat .n {
-  font-family: var(--num);
-  font-size: clamp(36px, 3.8vw, 54px);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums lining-nums;
-  color: var(--lz-ink);
-}
-
-.lz-home .stat .n sup {
-  margin-left: 2px;
-  font-size: 0.45em;
-  vertical-align: 0.95em;
-  color: var(--lz-green);
-}
-
-.lz-home .stat .l {
-  margin-top: 10px;
-  font-size: 14.5px;
-  color: var(--lz-muted);
-}
-
-/* Who invited him and what peers say: rows under a hairline, each with a label column on the left,
-   so both lists start at the same edge and the organizations fit on one line. */
+/* Who invited him and what peers say: rows between hairlines, each with a label column on the left,
+   so the lists start at the same edge and the organizations fit on one line. The first row sits
+   straight under the career band, so it needs no line of its own. */
 .lz-home .proof-row {
   display: grid;
   grid-template-columns: 7.5rem minmax(0, 1fr);
   column-gap: 28px;
   padding-block: 20px;
   border-top: 1px solid var(--lz-line);
+}
+
+.lz-home .proof-row:first-child {
+  border-top: 0;
 }
 
 .lz-home .proof-row > .lab {
@@ -912,23 +801,13 @@
 }
 
 @media (max-width: 860px) {
-  .lz-home .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 28px;
-    padding-block: 36px 30px;
-  }
-
-  .lz-home .stat:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
-  }
-
   /* The label goes above the row. */
   .lz-home .proof-row {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 12px;
   }
 
+  .lz-home .proof-row.orgs > .lab,
   .lz-home .proof-row.peers > .lab {
     flex-direction: row;
     justify-content: space-between;
@@ -980,12 +859,6 @@
 
   .lz-home .peer-list li:last-child figcaption {
     padding-bottom: 0;
-  }
-}
-
-@media (max-width: 380px) {
-  .lz-home .stat {
-    padding-inline: 16px 0;
   }
 }
 

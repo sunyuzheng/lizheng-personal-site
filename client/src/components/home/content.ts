@@ -333,12 +333,13 @@ const zh = {
       {
         org: "腾讯IEG",
         latin: false,
-        role: ["增长数据科学与AI总监", "带领30人团队"],
+        // "|" marks where a narrow column may break (Phrases), so no character is left alone on a line.
+        role: ["增长数据科学|与AI总监", "带领30人团队"],
       },
       {
         org: "Statsig",
         latin: true,
-        role: ["Principal数据科学家", "OpenAI收购团队早期成员"],
+        role: ["Principal|数据科学家", "OpenAI收购团队|早期成员"],
       },
       { org: "超线性学院", latin: false, role: ["创始人 · 全职投入"] },
     ],

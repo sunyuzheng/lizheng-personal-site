@@ -1,6 +1,7 @@
 import type { Lang } from "@/contexts/LanguageContext";
 import { Fragment } from "react";
 import { HOME_COPY } from "./content";
+import { Phrases } from "./parts";
 
 export interface CareerStep {
   org: string;
@@ -41,7 +42,7 @@ export default function CareerPath({
                 {step.role.map((line, lineIndex) => (
                   <Fragment key={line}>
                     {lineIndex > 0 && <br />}
-                    {line}
+                    <Phrases text={line} />
                   </Fragment>
                 ))}
               </span>

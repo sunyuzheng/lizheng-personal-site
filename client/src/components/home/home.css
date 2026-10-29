@@ -574,7 +574,8 @@
   letter-spacing: 0;
 }
 
-.lz-cpath span {
+/* The role under each name; its phrases (Phrases) are spans of their own and keep to the line. */
+.lz-cpath li > span {
   display: block;
   margin-top: 7px;
   font-size: 13.5px;

@@ -141,6 +141,8 @@
     { "src": "/decks/ask-lizheng-one-day/(.+)", "dest": "https://ask-lizheng-one-day-2026.vercel.app/$1" },
     { "src": "/decks/what-ai-cant-give/slides", "dest": "https://what-ai-cant-give-2026.vercel.app/" },
     { "src": "/decks/what-ai-cant-give/(.+)", "dest": "https://what-ai-cant-give-2026.vercel.app/$1" },
+    { "src": "/decks/end-of-fake-work/slides", "dest": "https://end-of-fake-work-2026.vercel.app/" },
+    { "src": "/decks/end-of-fake-work/(.+)", "dest": "https://end-of-fake-work-2026.vercel.app/$1" },
     {
       "src": "/zh",
       "status": 308,

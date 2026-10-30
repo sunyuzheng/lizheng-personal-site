@@ -1,9 +1,9 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 504f4f66b72e7f42f5887054fc3058e70c4972a112721f7b71f49ab69ff376b6
+// Manifest SHA256: f656380f1db268cdb629f7ca194ed10834a7fc9fdb9918bc6e685a388a731c6a
 // guests.json SHA256: c1e6d8bc1dad22985e3dffa55bb6bda0955df2ea6b6f731d8008dbe6bd40591b
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: 377a69639ca23bb7162606841e29aa383f783d3625bce1fe2510d0d927f69951
-// guest-appearances.jsonl SHA256: 3bf60f7221dae942fc48741918ecbed24ba9e8c582140e977504c5202429a014
+// guest-names.json SHA256: dcee76dc0f04407af0a03e9a075ef874b9988f28675a8f26525d578ceda60ba9
+// guest-appearances.jsonl SHA256: 7da0609006a278df8aa6ff700e7ba152690cf9aca581f34328494aa581ee9fab
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
 export const guestCatalog: GuestCatalog = {

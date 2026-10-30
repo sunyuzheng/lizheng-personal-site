@@ -240,7 +240,7 @@ export function buildPodcastStructuredData() {
         name: "课代表立正",
         url: `${PODCAST_URL}/`,
         description:
-          "《课代表立正》是一档中文深度访谈。200+场对话里，课代表立正与AI研究者、科技创业者、一线管理者和各领域实践者反复追问：真正把事做成的人，到底做对了什么？",
+          "课代表立正（孙煜征）的中文播客。他去找硅谷和国内一线的研究者、创业者、投资人长谈，聊AI正在怎样改变工作和生意：他们看见了什么、为什么敢下注、现实又怎样改写了答案。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉、真格基金戴雨森、硅谷徐老师、樊登。",
         image: cover,
         webFeed: "https://feeds.transistor.fm/kedaibiao",
         author: { "@id": PERSON_ID },
@@ -258,11 +258,11 @@ export function buildPodcastStructuredData() {
         url: `${PODCAST_URL}/`,
         name: "课代表立正Podcast",
         description:
-          "课代表立正（孙煜征）的官方中文播客：与AI研究者、科技创业者、一线管理者和真实实践者深度对话，讨论AI、职业、商业与真实世界的判断。",
+          "课代表立正（孙煜征）的中文播客：去找硅谷和国内一线的研究者、创业者、投资人长谈，聊AI正在怎样改变工作和生意。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉等。",
         mainEntity: { "@id": podcastId },
         about: { "@id": PERSON_ID },
         inLanguage: "zh-CN",
-        dateModified: "2026-08-20",
+        dateModified: "2026-10-30",
       },
       personNode("zh"),
     ],

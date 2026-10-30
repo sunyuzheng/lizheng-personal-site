@@ -94,12 +94,12 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
 };
 
 export const PODCAST_PAGE_META: PageMeta = {
-  title: "课代表立正Podcast｜真正把事做成的人，做对了什么？",
+  title: "课代表立正Podcast｜AI正在怎样改变工作和生意",
   description:
-    "课代表立正（孙煜征）的官方中文播客。200+场与AI研究者、科技创业者、一线管理者和实践者的深度对话，追问真正把事做成的人，到底做对了什么。",
+    "课代表立正（孙煜征）的中文播客：去找硅谷和国内一线的研究者、创业者、投资人长谈，聊AI正在怎样改变工作和生意。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉等。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/avatar.png",
-  lastModified: "2026-09-04",
+  lastModified: "2026-10-30",
 };
 
 export const GUEST_INVITATION_PAGE_META: PageMeta = {

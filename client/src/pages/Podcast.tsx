@@ -412,10 +412,10 @@ export default function Podcast() {
                 课代表立正
               </h1>
               <p className="mt-5 text-xl font-medium leading-8 text-superlinear-pale sm:text-2xl">
-                真正把事做成的人，到底做对了什么？
+                AI正在怎样改变工作和生意？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-                200+场长对话，和AI研究者、科技创业者、管理者与实践者，聊他们如何想清楚、做决定、把事情做成。
+                我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。也有我的单口，十几分钟讲清一个判断。
               </p>
 
               <div className="mt-7 flex flex-wrap gap-2">

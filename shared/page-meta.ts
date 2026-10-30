@@ -94,9 +94,9 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
 };
 
 export const PODCAST_PAGE_META: PageMeta = {
-  title: "课代表立正Podcast｜AI正在怎样改变工作和生意",
+  title: "课代表立正Podcast｜AI到底怎么用，钱到底怎么赚",
   description:
-    "课代表立正（孙煜征）的中文播客：去找硅谷和国内一线的研究者、创业者、投资人长谈，聊AI正在怎样改变工作和生意。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉等。",
+    "课代表立正（孙煜征）的中文播客：AI到底怎么用，钱到底怎么赚？他替你去问硅谷和国内一线的研究者、创业者、投资人。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉等。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/avatar.png",
   lastModified: "2026-10-30",

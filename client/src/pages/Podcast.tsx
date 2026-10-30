@@ -412,7 +412,7 @@ export default function Podcast() {
                 课代表立正
               </h1>
               <p className="mt-5 text-xl font-medium leading-8 text-superlinear-pale sm:text-2xl">
-                AI正在怎样改变工作和生意？
+                AI到底怎么用，钱到底怎么赚？
               </p>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
                 我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。也有我的单口，十几分钟讲清一个判断。

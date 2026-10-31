@@ -623,8 +623,9 @@ const zh = {
     },
   },
   city: {
-    eyebrow: "超线性学院 · Superlinear Academy",
-    title: ["我们在建一座城。"],
+    eyebrow: "超线性学院 · 我们在建一座城",
+    // The academy's outward line (brand platform §7, 2026-10-30), word for word.
+    title: ["不怕AI天天变，", "就来超线性学院。"],
     // What the academy is, in plain words, for someone who has never heard of it; the city is
     // explained by the essay it comes from.
     intro: [

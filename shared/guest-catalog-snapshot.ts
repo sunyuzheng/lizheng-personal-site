@@ -1,8 +1,8 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: fc3f83bcc775aa2e12f40a6b3e365181178869c5cb605b9f19ec944ab0da59e9
-// guests.json SHA256: 7d498d3d8e77213024f5c708c1f93067ee067246c5afc5dde63cee11b399e92d
+// Manifest SHA256: 681a1c494e4da6e02155e0f481104704864c35725ffb913484f3fca8a56106a1
+// guests.json SHA256: 6f29ed6449dc9435aae33a99defe66f753b55df05fca9df083901f52a5bcb5a3
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: eac2710dc9baaa2ec0674079d1740cf85da094873f6db8c714dcb79c6dbd3d97
+// guest-names.json SHA256: 3c649dbbde3dde3ee95baee58cc182e6ec54ed6f42c89baba0fe97d49efcf233
 // guest-appearances.jsonl SHA256: 7da0609006a278df8aa6ff700e7ba152690cf9aca581f34328494aa581ee9fab
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
@@ -2663,11 +2663,13 @@ export const guestCatalog: GuestCatalog = {
       "entity_type": "person",
       "display_name": "Mujtaba",
       "aliases": [
-        "Mujtaba"
+        "Mujtaba",
+        "Mujtaba Tirmizi"
       ],
       "slug": "mujtaba",
       "alias_slugs": [
-        "mujtaba"
+        "mujtaba",
+        "mujtaba-tirmizi"
       ],
       "primary_source_id": "youtube-c7M6B2GR5-k",
       "community_resources": [],
@@ -5389,21 +5391,6 @@ export const guestCatalog: GuestCatalog = {
       "slug": "gene-tabach",
       "alias_slugs": [
         "gene-tabach"
-      ],
-      "primary_source_id": "youtube-hckVR-Aa-vs",
-      "community_resources": [],
-      "thumbnail_url": "https://img.youtube.com/vi/hckVR-Aa-vs/hqdefault.jpg"
-    },
-    {
-      "entity_id": "guest:mujtaba-tirmizi",
-      "entity_type": "person",
-      "display_name": "Mujtaba Tirmizi",
-      "aliases": [
-        "Mujtaba Tirmizi"
-      ],
-      "slug": "mujtaba-tirmizi",
-      "alias_slugs": [
-        "mujtaba-tirmizi"
       ],
       "primary_source_id": "youtube-hckVR-Aa-vs",
       "community_resources": [],
@@ -12092,10 +12079,10 @@ export const guestCatalog: GuestCatalog = {
       "is_primary": true
     },
     {
-      "entity_id": "guest:mujtaba-tirmizi",
+      "entity_id": "guest:mujtaba",
       "source_id": "youtube-hckVR-Aa-vs",
-      "index": 0,
-      "is_primary": true
+      "index": 1,
+      "is_primary": false
     }
   ],
   "redirects": [
@@ -13653,10 +13640,10 @@ export const guestNameTable: GuestNameTable = {
       "name": "Mujtaba Tirmizi",
       "key": "mujtabatirmizi",
       "entity_ids": [
-        "guest:mujtaba-tirmizi"
+        "guest:mujtaba"
       ],
       "kinds": [
-        "display"
+        "alias"
       ]
     },
     {

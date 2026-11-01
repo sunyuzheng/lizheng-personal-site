@@ -15,14 +15,14 @@ export type DiscoverySaveParams = {
 };
 export type OpsGatewayEnvelope = {
   v: 1; method: "GET" | "POST";
-  action: "summary" | "records" | "export" | "delete" | "discovery-list" | "discovery-save" | "discovery-publish" | "discovery-withdraw";
+  action: "summary" | "records" | "export" | "delete" | "redact" | "discovery-list" | "discovery-save" | "discovery-publish" | "discovery-withdraw";
   params: {
     range?: OpsRange; cursor?: string; conversation?: string; record_id?: string;
     public_id?: string; expected_revision?: number; topic_key?: string; topic_label?: string;
     question?: string; answer?: ArchivedAnswer; consent_reference?: string; consent_confirmed?: boolean; review_confirmed?: boolean;
   };
 };
-export const OPS_POST_ACTIONS = new Set(["delete", "discovery-save", "discovery-publish", "discovery-withdraw"]);
+export const OPS_POST_ACTIONS = new Set(["delete", "redact", "discovery-save", "discovery-publish", "discovery-withdraw"]);
 export function opsGatewayAction(url: URL) {
   return url.searchParams.get("__route") || url.pathname.split("/").at(-1) || "";
 }
@@ -45,13 +45,13 @@ function invalid(): never { throw new AccessError("invalid_request", 400); }
 export function opsGatewayEnvelope(url: URL, method: string, body?: unknown): OpsGatewayEnvelope | null {
   const query = url.searchParams;
   const action = opsGatewayAction(url);
-  if (!["session", "summary", "records", "export", "delete", "discovery-list", "discovery-save", "discovery-publish", "discovery-withdraw"].includes(action)) invalid();
+  if (!["session", "summary", "records", "export", "delete", "redact", "discovery-list", "discovery-save", "discovery-publish", "discovery-withdraw"].includes(action)) invalid();
   const expectedMethod = OPS_POST_ACTIONS.has(action) ? "POST" : "GET";
   if (method !== expectedMethod) throw new AccessError("method_not_allowed", 405);
   const allowed = new Set(["__route", "dataset"]);
   if (action === "discovery-list") allowed.add("cursor");
   else if (action.startsWith("discovery-")) { /* Mutation parameters come only from the bounded body. */ }
-  else if (action === "delete") allowed.add("record_id");
+  else if (action === "delete" || action === "redact") allowed.add("record_id");
   else if (action !== "session") {
     allowed.add("range");
     if (action !== "summary") allowed.add("cursor");
@@ -83,7 +83,7 @@ export function opsGatewayEnvelope(url: URL, method: string, body?: unknown): Op
         typeof r.public_id !== "string" || !OPS_UUID.test(r.public_id) || !discoveryRevision(r.expected_revision)) invalid();
     return { v: 1, method: "POST", action: action as "discovery-publish" | "discovery-withdraw", params: { public_id: r.public_id, expected_revision: r.expected_revision } };
   }
-  if (action === "delete") {
+  if (action === "delete" || action === "redact") {
     const record_id = query.get("record_id") || "";
     if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(record_id)) invalid();
     return { v: 1, method: "POST", action, params: { record_id } };
@@ -109,6 +109,8 @@ const SAFE_ERRORS: Record<string, number> = {
   invalid_request: 400, discovery_not_found: 404, source_unavailable: 422, source_not_public_eligible: 422, revision_conflict: 409,
   publication_requires_review: 422, publication_requires_consent: 422, publication_requires_source: 422, public_item_unavailable: 404,
   discovery_capacity: 422, discovery_cursor_expired: 409, vote_rate_limited: 429,
+  redaction_busy: 409, redaction_changed: 409, redaction_generating: 409,
+  redaction_too_large: 422, redaction_not_found: 404, source_redacted: 422,
 };
 function safeFailure(value: unknown): value is AccessError {
   return value instanceof AccessError && SAFE_ERRORS[value.code] === value.status;
@@ -127,18 +129,18 @@ export function gatewayProof(raw: string, domain: "ask-ops-gateway:v1" | "ask-di
   return `v1.${expiry}.${signature}`;
 }
 /** Server-fixed endpoints only; no caller-supplied headers or identity are inherited. */
-export async function fetchOpsJson(path: string, options: RequestInit = {}): Promise<Record<string, unknown>> {
+export async function fetchOpsJson(path: string, options: RequestInit = {}, deadlineMs = DEADLINE_MS): Promise<Record<string, unknown>> {
   configuredOrigin();
   const destination = new URL(path, OPS_BACKEND_ORIGIN);
   if (destination.origin !== OPS_BACKEND_ORIGIN || !["/api/ops", "/api/discovery", "/api/discovery-vote"].includes(destination.pathname) ||
       destination.username || destination.password || destination.hash) throw unavailable();
   const controller = new AbortController();
-  const signal = AbortSignal.any([AbortSignal.timeout(DEADLINE_MS), controller.signal]);
+  const signal = AbortSignal.any([AbortSignal.timeout(deadlineMs), controller.signal]);
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   let timer: ReturnType<typeof setTimeout> | undefined;
   let errorTimer: ReturnType<typeof setTimeout> | undefined;
   const deadline = new Promise<never>((_, reject) => {
-    timer = setTimeout(() => { controller.abort(); reject(unavailable()); }, DEADLINE_MS);
+    timer = setTimeout(() => { controller.abort(); reject(unavailable()); }, deadlineMs);
   });
   const operation = async () => {
     const response = await fetch(destination.href, { ...options, cache: "no-store", redirect: "manual", credentials: "omit", signal });
@@ -203,5 +205,5 @@ export async function proxyOps(envelope: OpsGatewayEnvelope): Promise<Record<str
   if (Buffer.byteLength(raw, "utf8") > OPS_GATEWAY_BODY_LIMIT) throw new AccessError("input_too_large", 413);
   return fetchOpsJson("/api/ops", {
     method: "POST", headers: { "Content-Type": "application/octet-stream", "x-ask-ops-proof": gatewayProof(raw) }, body: raw,
-  });
+  }, envelope.action === "redact" ? 60_000 : DEADLINE_MS);
 }

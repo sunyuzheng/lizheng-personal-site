@@ -39,7 +39,7 @@ async function call(path: string, options: { method?: string; payload?: unknown 
   return result;
 }
 function upstash(reply: (command: (string | number)[]) => unknown) {
-  vi.stubGlobal("fetch", vi.fn(async (_url: string, init: RequestInit) => Response.json({ result: reply(JSON.parse(String(init.body))) })));
+  vi.stubGlobal("fetch", vi.fn(async (_url: string, init: RequestInit) => Response.json({ result: JSON.parse(String(init.body))[0] === "SET" ? "OK" : reply(JSON.parse(String(init.body))) })));
 }
 
 beforeEach(() => {

@@ -20,7 +20,9 @@
  *   the copy, so its text is never kept there.
  */
 import { get, put } from "@vercel/blob";
-import { AccessError } from "./ask-access.js";
+import { randomUUID } from "node:crypto";
+import { AccessError, redis } from "./ask-access.js";
+import { OPS_PREFIX, type Sender } from "./ask-ops-storage.js";
 import { archivedAnswer } from "./ask-archive-answer.js";
 import { fetchOpsJson, OPS_GATEWAY_MAX_RESPONSE_BYTES, OPS_UUID } from "./ask-ops-gateway.js";
 import { isMoved, readShare, SHARE_DAY, SHARE_SLUG, type SharedAnswer } from "./ask-share-link.js";
@@ -152,12 +154,23 @@ export async function saveShareCopy(share: SharedAnswer, write: FileWriter | nul
 }
 
 /** Writes one page's copy as its live record reads now; false when it could not (the page stands without it). */
-export async function copySharedAnswer(day: string, slug: string, write: FileWriter | null = fileWriter()) {
-  if (!write) return false;
+export async function copySharedAnswer(day: string, slug: string, write: FileWriter | null = fileWriter(), send: Sender = redis) {
+  if (!write || !SHARE_DAY.test(day) || !SHARE_SLUG.test(slug) || slug.length > 120) return false;
+  // Ops holds the same lock while replacing a conversation. An in-flight copy must finish before
+  // that replacement, so it cannot restore an old question after the owner has removed its text.
+  const lock = OPS_PREFIX + "share-copy-lock:" + day + ":" + slug, token = randomUUID();
+  let held = false;
   try {
-    const share = await readShare(day, slug, { reader: false });
+    held = await send(["SET", lock, token, "NX", "PX", 120_000]) === "OK";
+    if (!held) return false;
+    const share = await readShare(day, slug, { reader: false, send });
     return share && !isMoved(share) ? await saveShareCopy(share, write) : false;
   } catch { return false; }
+  finally {
+    if (held) try {
+      await send(["EVAL", "if redis.call('GET',KEYS[1])==ARGV[1] then return redis.call('DEL',KEYS[1]) end return 0", 1, lock, token]);
+    } catch { /* The lock expires; copying must never fail the share itself. */ }
+  }
 }
 
 /** A shared answer's copy, or null: only while the database cannot say whether it is still shared. */

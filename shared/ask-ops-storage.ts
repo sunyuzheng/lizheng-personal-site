@@ -235,6 +235,7 @@ export function verifyOpsProof(
 }
 // All keys use one hash tag. Atomic intake assigns a turn and increments each index once.
 export const OPS_START_SCRIPT = `
+if redis.call('EXISTS','ask-ops:{v3}:conversation-redacted:'..ARGV[7]) == 1 then return 3 end
 if redis.call('EXISTS',KEYS[2]) == 1 then return 2 end
 if redis.call('EXISTS',KEYS[1]) == 1 then
   if redis.call('HGET',KEYS[1],'start_hash') ~= ARGV[1] then return -1 end
@@ -264,6 +265,7 @@ return 1`;
 export const OPS_FINISH_SCRIPT = `${PAGE_ADDRESS_LUA}${CONVERSATION_HEAD_LUA}
 if redis.call('EXISTS',KEYS[1]) == 0 then return {0,'',''} end
 local row=redis.call('HMGET',KEYS[1],'status','day','notice_version','share_slug','conversation_id')
+if row[5] and redis.call('EXISTS',ARGV[3]..'conversation-redacted:'..row[5]) == 1 then return {0,'',''} end
 local status,day,done=row[1],row[2] or '',0
 if status == 'generating' then
  redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
@@ -376,6 +378,7 @@ export async function storeOpsEvent(
       ? { ok: true as const, share: `${day}/${slug}` }
       : { ok: true as const };
   }
+  if (result === 3) throw new AccessError("conversation_redacted", 409);
   if (![0, 1, 2].includes(Number(result)) || typeof result !== "number")
     throw new AccessError("ops_storage_unavailable");
   return { ok: true as const };

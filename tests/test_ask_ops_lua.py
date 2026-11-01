@@ -178,3 +178,15 @@ def test_a_page_made_by_its_asker_first_is_kept(r):
     r.hset(P+'record:'+rid(1), mapping={'share_slug': 'own-word', 'shared_at': 'earlier'})
     assert finish(r, word='career-choice') == [1, 'own-word', D]
     assert not r.exists(P+'share:'+D+':career-choice')
+
+
+@pytest.mark.parametrize('status', ['answered', 'generating'])
+def test_redacted_conversation_blocks_new_intake_and_late_finish(r, status):
+    v4(r, 1, conversation=C)
+    if status == 'answered': finish(r, 1, word='career-choice')
+    r.set(P+'conversation-redacted:'+C, '1')
+    before = {key: r.dump(key) for key in r.keys('*')}
+    assert start(r, 1, notice=('v4', '0', '')) == 3
+    assert start(r, 2, notice=('v4', '0', '')) == 3
+    assert finish(r, 1, word='a-new-word') == [0, '', '']
+    assert {key: r.dump(key) for key in r.keys('*')} == before

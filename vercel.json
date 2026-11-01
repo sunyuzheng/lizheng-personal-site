@@ -1,6 +1,6 @@
 {
   "crons": [{ "path": "/api/ask-lizheng-db-watch", "schedule": "0 4 * * *" }],
-  "functions": { "api/ask-lizheng-db-watch.ts": { "maxDuration": 90 } },
+  "functions": { "api/ask-lizheng-db-watch.ts": { "maxDuration": 90 }, "api/ask-lizheng-ops.ts": { "maxDuration": 90 } },
   "buildCommand": "pnpm build",
   "outputDirectory": "dist/public",
   "framework": "vite",
@@ -12,7 +12,7 @@
     { "src": "^/book/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/books" } },
     { "src": "^/en/book/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/en/books" } },
     { "src": "^/zh/books?/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/books" } },
-    { "src": "^/api/ask-lizheng/ops/(session|summary|records|export|delete|discovery-list|discovery-save|discovery-publish|discovery-withdraw)$", "dest": "/api/ask-lizheng-ops?__route=$1" },
+    { "src": "^/api/ask-lizheng/ops/(session|summary|records|export|delete|redact|discovery-list|discovery-save|discovery-publish|discovery-withdraw)$", "dest": "/api/ask-lizheng-ops?__route=$1" },
     {
       "src": "^/guest-intake/?$",
       "has": [{ "type": "host", "value": "www.lizheng.ai" }],

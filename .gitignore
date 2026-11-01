@@ -117,3 +117,5 @@ client/public/community/
 
 # Playwright CLI console logs from local checks
 .playwright-cli/
+
+/.local/

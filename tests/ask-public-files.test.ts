@@ -158,3 +158,45 @@ describe("a shared answer's copy", () => {
     expect(await readShareCopy("2026-10-04", "career-choice", null)).toBeNull();
   });
 });
+
+describe("share copies during owner redaction", () => {
+  it("does not read or write an old answer while Ops holds the address lock", async () => {
+    const { copySharedAnswer } = await import("../shared/ask-public-files");
+    const send = vi.fn(async () => null);
+    const write = vi.fn();
+    expect(await copySharedAnswer("2026-10-04", "career-choice", write, send)).toBe(false);
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(write).not.toHaveBeenCalled();
+  });
+
+  it("holds the address lock until the old copy finishes, and releases it after a write failure", async () => {
+    const { copySharedAnswer } = await import("../shared/ask-public-files");
+    const { SHARE_PAGE_SCRIPT } = await import("../shared/ask-share-link");
+    const locks = new Map<string, string>();
+    const answer = { status: "answered", summary: "合成摘要", sections: [{ heading: "标题", body: "合成正文", kind: "synthesis", source_ids: [] }], sources: [], followups: [], clarifying_questions: [], limitations: "" };
+    const send = vi.fn(async (command: (string | number)[]) => {
+      if (command[0] === "SET") {
+        const key = String(command[1]);
+        if (locks.has(key)) return null;
+        locks.set(key, String(command[2])); return "OK";
+      }
+      if (command[1] === SHARE_PAGE_SCRIPT) return ["OK", "合成提问", JSON.stringify(answer), "understand", "2026-10-04T02:00:00.000Z"];
+      const key = String(command[3]);
+      if (locks.get(key) === command[4]) locks.delete(key);
+      return 1;
+    });
+    let release!: () => void, started!: () => void;
+    const began = new Promise<void>(resolve => { started = resolve; });
+    const pending = copySharedAnswer("2026-10-04", "career-choice", async () => {
+      started(); await new Promise<void>(resolve => { release = resolve; }); throw Error("store unavailable");
+    }, send);
+    await began;
+    expect(locks.size).toBe(1);
+    const newerWrite = vi.fn();
+    expect(await copySharedAnswer("2026-10-04", "career-choice", newerWrite, send)).toBe(false);
+    expect(newerWrite).not.toHaveBeenCalled();
+    release();
+    expect(await pending).toBe(false);
+    expect(locks.size).toBe(0);
+  });
+});

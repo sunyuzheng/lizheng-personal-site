@@ -89,10 +89,10 @@ describe("HOME owner boundary", () => {
     expect((await call("https://evil.example/api/ask-lizheng/ops/summary")).status).toBe(403);
     expect(auth.require).not.toHaveBeenCalled(); expect(fetch).not.toHaveBeenCalled();
   });
-  it("requires same-origin DELETE action even for a verified owner", async () => {
-    const result = await call(`/api/ask-lizheng/ops/delete?record_id=${ID}`, "POST");
+  it.each(["delete", "redact"])("requires same-origin %s action even for a verified owner", async action => {
+    const result = await call(`/api/ask-lizheng/ops/${action}?record_id=${ID}`, "POST");
     expect(result.status).toBe(403); expect(fetch).not.toHaveBeenCalled();
-    expect((await call(`/api/ask-lizheng/ops/delete?record_id=${ID}`, "POST", { origin: "https://www.lizheng.ai" })).status).toBe(200);
+    expect((await call(`/api/ask-lizheng/ops/${action}?record_id=${ID}`, "POST", { origin: "https://www.lizheng.ai" })).status).toBe(200);
   });
   it("does not forward browser cookies, authorization, email or client URL fields", async () => {
     const result = await call("/api/ask-lizheng/ops/records", "GET", {
@@ -122,9 +122,9 @@ describe("strict signed RPC contract", () => {
     expect(options!.signal).toBeInstanceOf(AbortSignal);
     expect(JSON.parse(raw)).not.toHaveProperty("dataset");
   });
-  it("wraps a delete as POST with only the canonical record UUID", async () => {
-    await call(`/api/ask-lizheng/ops/delete?record_id=${ID}&dataset=archive`, "POST", { origin: "https://www.lizheng.ai" });
-    expect(JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]!.body))).toEqual({ v: 1, method: "POST", action: "delete", params: { record_id: ID } });
+  it.each(["delete", "redact"])("wraps %s as POST with only the canonical record UUID", async action => {
+    await call(`/api/ask-lizheng/ops/${action}?record_id=${ID}&dataset=archive`, "POST", { origin: "https://www.lizheng.ai" });
+    expect(JSON.parse(String(vi.mocked(fetch).mock.calls[0][1]!.body))).toEqual({ v: 1, method: "POST", action, params: { record_id: ID } });
   });
   it.each(["summary", "records", "export"])("defaults %s to archive/7 without transmitting legacy", action => {
     expect(opsGatewayEnvelope(url(`/api/ask-lizheng/ops/${action}`), "GET")).toEqual({ v: 1, method: "GET", action, params: { range: "7" } });
@@ -152,11 +152,12 @@ describe("strict signed RPC contract", () => {
   });
   it.each([
     `delete?record_id=${ID}&range=all`, `delete?record_id=${ID}&cursor=x`, "delete?record_id=bad", "delete",
-  ])("rejects malformed delete parameters: %s", async path => {
+    `redact?record_id=${ID}&range=all`, `redact?record_id=${ID}&replacement=other`, "redact?record_id=bad", "redact",
+  ])("rejects malformed archive mutation parameters: %s", async path => {
     expect((await call(`/api/ask-lizheng/ops/${path}`, "POST", { origin: "https://www.lizheng.ai" })).status).toBe(400);
     expect(fetch).not.toHaveBeenCalled();
   });
-  it.each([["records", "POST", "GET"], ["delete", "GET", "POST"], ["session", "OPTIONS", "GET"]])(
+  it.each([["records", "POST", "GET"], ["delete", "GET", "POST"], ["redact", "GET", "POST"], ["session", "OPTIONS", "GET"]])(
     "enforces action method %s %s", async (action, method, allowed) => {
       const result = await call(`/api/ask-lizheng/ops/${action}`, method);
       expect(result).toMatchObject({ status: 405, headers: { allow: allowed } });
@@ -188,6 +189,10 @@ describe("bounded sanitized upstream", () => {
     expect(result).toMatchObject({ status: 503, value: { code: "ops_gateway_unavailable" } });
     expect(cancel).toHaveBeenCalledOnce(); expect(fetch).toHaveBeenCalledOnce();
     expect(result.headers).not.toHaveProperty("location"); expect(result.headers).not.toHaveProperty("set-cookie");
+  });
+  it.each([["redaction_busy", 409], ["redaction_changed", 409], ["redaction_generating", 409], ["redaction_not_found", 404], ["redaction_too_large", 422], ["source_redacted", 422]])("preserves safe privacy-operation error %s", async (code, status) => {
+    vi.mocked(fetch).mockResolvedValueOnce(Response.json({ code }, { status: Number(status) }));
+    await expect(proxyOps({ v: 1, method: "POST", action: "redact", params: { record_id: ID } })).rejects.toMatchObject({ code, status });
   });
   it("bounds declared size before reading a stalled body", async () => {
     const cancel = vi.fn();

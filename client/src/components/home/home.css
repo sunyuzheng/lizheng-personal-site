@@ -2155,6 +2155,19 @@
   box-shadow: inset 0 -2px 0 var(--lz-green);
 }
 
+.lz-home .lz-ask-discovery-refresh {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-height: 44px;
+  color: var(--lz-muted);
+  font-size: 13px;
+}
+
+.lz-home .lz-ask-discovery-refresh:hover,
+.lz-home .lz-ask-discovery-refresh[data-pending] {
+  color: var(--lz-green-text);
+}
+
 .lz-home .lz-ask-discovery-list {
   display: grid;
   align-content: start;

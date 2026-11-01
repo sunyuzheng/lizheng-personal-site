@@ -16,6 +16,7 @@ import {
   type LikeMemory,
 } from "@/lib/ask-discovery";
 import { markUsage, startUsage, watchUsage } from "@/lib/ask-usage";
+import { changedDiscoveryIds, watchDiscoveryLists } from "@shared/ask-discovery-refresh.js";
 // What we tell people about public Q&A, shared with ask.lizheng.ai and the privacy policy (synced from ask-lizheng).
 import { answerService, publicQaCopy } from "@shared/ask-public-qa.js";
 import { HOME_COPY, LINKS } from "./content";
@@ -131,6 +132,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // to three (2026-10-12, the user: fold it, and show the most common questions); 再看N个 opens up
   // to eight here, and only then 看更多问题 leads to the whole list on ask.lizheng.ai.
   const [questionLists, setQuestionLists] = useState<DiscoveryLists | null>(null);
+  const listsNow = useRef<DiscoveryLists | null>(null), pendingLists = useRef<DiscoveryLists | null>(null);
+  const listWatcher = useRef<ReturnType<typeof watchDiscoveryLists> | null>(null);
+  const [listsPending, setListsPending] = useState(false);
   const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("frequent");
   const [discoveryOpen, setDiscoveryOpen] = useState(false);
   const discoveryShown = useMemo(() => (questionLists ? discoveryView(questionLists, discoveryTab) : []), [questionLists, discoveryTab]);
@@ -162,22 +166,36 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     markUsage("d_shown");
     watchUsage(discoveryList.current, "d_seen");
   }, [hasDiscovery]);
+  const applyLists = (lists: DiscoveryLists) => {
+    listsNow.current = lists;
+    pendingLists.current = null;
+    setListsPending(false);
+    setPublicTotal(lists.total);
+    setQuestionLists(lists);
+    setDiscoveryState(lists.recent.length || lists.frequent.length ? "ready" : "none");
+  };
+  const receiveLists = useRef<(lists: DiscoveryLists, context: { manual: boolean }) => void>(() => {});
+  receiveLists.current = (lists, { manual }) => {
+    const top = discoveryList.current?.getBoundingClientRect().top;
+    if (!manual && listsNow.current && top !== undefined && top < window.innerHeight && !changedDiscoveryIds(discoveryCards, lists).size && JSON.stringify(listsNow.current) !== JSON.stringify(lists)) {
+      pendingLists.current = lists;
+      setListsPending(true);
+    } else applyLists(lists);
+  };
   useEffect(() => {
     if (lang !== "zh") { setDiscoveryState("none"); return; }
     setDiscoveryState(state => (state === "ready" ? state : "loading"));
-    const controller = new AbortController();
-    const late = setTimeout(() => setDiscoveryState(state => (state === "loading" ? "none" : state)), 8000);
-    void discoveryLists(controller.signal).then(lists => {
-      clearTimeout(late);
-      if (controller.signal.aborted) return;
-      if (!lists || (!lists.recent.length && !lists.frequent.length)) { setDiscoveryState("none"); return; }
-      // 最常问 draws on both lists, so it has questions whenever either does: no fallback to 最近问.
-      setPublicTotal(lists.total);
-      setQuestionLists(lists);
-      setDiscoveryState("ready");
+    const watcher = watchDiscoveryLists({read: discoveryLists,
+      onLists: (lists, context) => receiveLists.current(lists, context),
+      onUnavailable: () => { if (!listsNow.current) setDiscoveryState("none"); },
     });
-    return () => { clearTimeout(late); controller.abort(); };
+    listWatcher.current = watcher;
+    return () => { watcher.stop(); listWatcher.current = null; };
   }, [lang]);
+  const refreshLists = () => {
+    if (pendingLists.current) applyLists(pendingLists.current);
+    else listWatcher.current?.refresh();
+  };
 
   // The question goes to ask.lizheng.ai in a new tab, as every other way out of this page does, and
   // leaves the box, so coming back and pressing 提问 again does not ask it twice; where a browser
@@ -201,6 +219,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     input.current?.focus();
   }
   const showTab = (view: DiscoveryView) => {
+    refreshLists();
     if (view === discoveryTab) return;
     setDiscoveryTab(view);
     setDiscoveryOpen(false);
@@ -336,6 +355,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
                   <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
                 ))}
               </div>
+              <button type="button" className="lz-ask-discovery-refresh" data-pending={listsPending || undefined} onClick={refreshLists}>
+                <span aria-live="polite">{listsPending ? "有更新，点击查看" : "刷新列表"}</span>
+              </button>
             </div>
             <div className="lz-ask-discovery-list" aria-busy={!discoveryCards.length}>
               {/* While the questions load, the rows they will fill; never the examples first. */}

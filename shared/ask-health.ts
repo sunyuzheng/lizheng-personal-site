@@ -76,7 +76,7 @@ export async function checkHealth({ send = redis as Send, read = fileReader(), f
   const newestAt = Array.isArray(newest) && newest.length === 2 ? Number(newest[1]) : 0;
   if (!curate || typeof curate.at !== "number")
     problems.push({ key: "feed_unknown", title: "「别人在问什么」的自动整理没有留下运行记录",
-      detail: "后台每15分钟整理一轮，每轮结束会记一笔；没有这笔记录，说明整理一直没跑完。看 ask-lizheng-ops 的 Vercel 日志里 /api/curate。" });
+      detail: "后台每分钟整理一轮，每轮结束会记一笔；没有这笔记录，说明整理一直没跑完。看 ask-lizheng-ops 的 Vercel 日志里 /api/curate。" });
   else {
     if (now - curate.at > 2 * HOUR)
       problems.push({ key: "feed_idle", title: `「别人在问什么」的自动整理已经${hours(now - curate.at)}小时没跑完`,

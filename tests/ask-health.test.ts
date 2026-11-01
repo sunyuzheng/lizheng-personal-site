@@ -54,6 +54,9 @@ describe("daily check", () => {
   });
 
   it("notices a feed that has stopped, stalled or fallen behind", async () => {
+    // A minute's scan may wait for a question still being answered; this is ordinary progress.
+    expect(await keys({ [OPS + "discovery:curate-health"]: JSON.stringify({ at: NOW, cursor_at: NOW - 40 * 60_000, stopped: "generating" }), newest: NOW - 60_000 }))
+      .toEqual([]);
     expect(await keys({ [OPS + "discovery:curate-health"]: null })).toEqual(["feed_unknown"]);
     expect(await keys({ [OPS + "discovery:curate-health"]: JSON.stringify({ at: NOW - 5 * HOUR, cursor_at: NOW - 40 * 60_000, stopped: null }) }))
       .toEqual(["feed_idle"]);

@@ -284,3 +284,9 @@ ask.lizheng.ai 首屏改为「卡住的时候，问问立正。」，下面一�
 - **主页「已有N个公开问答」**：读日期列表的总数（含同一问题的不同问法）。
 - **每日体检**：去掉5000条的提醒，改成「问答存档约多少 MB，数据库套餐上限多少」：最近一份备份的 `raw_bytes`（接近库里存了多少）到套餐（数据库检查记下的 `maxmemory`）七成时提醒，每周最多一次；满了 Upstash 会自动升级，网站不停。
 - 删了 `shared/ask-public-cards.ts`（读全部问题的那一份），和没有页面在用的旧分页列表 `/api/ask-lizheng/discovery/questions`（Ops 同日删了 `list` 和全部问题的 `index`）。Ops 还记下每条后来的问法对应哪条第一问法：第一问法撤下后，后来的问法会重新写成第一问法，进列表和网站地图。测试：`tests/ask-public-page.test.ts`、`tests/ask-public-files.test.ts`、`tests/ask-share.test.ts`、`tests/ask-discovery-gateway.test.ts`、`tests/ask-health.test.ts`、`tests/test_ask_share_lua.py`。
+
+## 公开列表刷新（2026-10-31）
+
+Ops改为每分钟处理已完成的回答，仍在生成的记录独立等待最多5分钟，避免提前扫描漏掉慢回答。文件同步和CDN缓存继续沿用。
+
+主站中文问答区与ask首页共用刷新调度：前台每分钟检查，回到前台时再读；ask从对话返回首页时也重读，离开首页就停止。阅读中的列表有变化时显示「有更新，点击查看」，点击后才替换，避免位置跳动；「刷新列表」和重新选择排序可主动更新。撤下或修订的可见问答立即更新，不等待点击。后台刷新失败保留原列表。`pnpm sync:ask-app`同时同步`src/discovery-refresh.js`到`shared/ask-discovery-refresh.js`，版本文件校验这份调度代码。每日体检将`stopped: generating`视为正常短暂等待。

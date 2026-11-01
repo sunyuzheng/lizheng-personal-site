@@ -1,16 +1,17 @@
 {
-  "commit": "a185fc9e7b7dbc87491fabfd20d1bf1564daa0f1",
-  "built_at": "2026-10-16T19:04:37.738Z",
+  "commit": "efc554c2a36692b499d30d2dbd4231a3b41d5c98",
+  "built_at": "2026-11-01T05:16:19.423Z",
   "files": [
     "700-_R09kR8R.css",
     "900-B9_L0wIC.css",
-    "index-3UVcO95C.js",
-    "index-CAHYDaPA.css",
+    "index-DJqOU0VD.css",
+    "index-Dm7Wekat.js",
     "qrcode-DJw-22Yv.js",
-    "share-DK5wAvS2.js"
+    "share-n_tMwsni.js"
   ],
   "public_qa_sha256": "6640429fbacacbae9860bd644299b0ee2bcccc8ff524ffd5f905be5f599dd6c8",
   "source_attribution_sha256": "44d3c00b0c5c1e53b44367204e31931d2864e16bf0f00555430cf852a288206a",
-  "app_shell_sha256": "512daafcd88f1294a0b79984346510f45b175257546a6c189af65fe93f3dab5c",
-  "report_sha256": "46a0ce530d38747ea4971ade3e243abf4be1fb7fcde6253e2ba0eb0dc7e41a7c"
+  "app_shell_sha256": "26a8a051b91b2a097899728ed4dd5f5f80e29590b45e9e49a6af8cc32f98b50f",
+  "report_sha256": "46a0ce530d38747ea4971ade3e243abf4be1fb7fcde6253e2ba0eb0dc7e41a7c",
+  "discovery_refresh_sha256": "9d2dd844dd07e45a4b9c6ea006be0a43a88513a4d809e886833b43b6156207ba"
 }

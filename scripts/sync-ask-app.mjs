@@ -34,6 +34,7 @@ const PUBLIC_QA = path.join(ROOT, "shared", "ask-public-qa.js");
 const SOURCE_ATTRIBUTION = path.join(ROOT, "shared", "ask-source-attribution.js");
 const APP_SHELL = path.join(ROOT, "shared", "ask-app-shell.js");
 const REPORT = path.join(ROOT, "shared", "ask-report-client.js");
+const DISCOVERY_REFRESH = path.join(ROOT, "shared", "ask-discovery-refresh.js");
 const git = (...args) => execFileSync("git", ["-C", ASK, ...args], { encoding: "utf8" }).trim();
 const fail = message => { console.error(`✗ ${message}`); process.exit(1); };
 
@@ -83,12 +84,15 @@ const sourceAttribution = `// Copied from ask-lizheng src/source-attribution.js 
 fs.writeFileSync(SOURCE_ATTRIBUTION, sourceAttribution);
 const report = `// Copied from ask-lizheng src/report.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "report.js"), "utf8")}`;
 fs.writeFileSync(REPORT, report);
+const discoveryRefresh = `// Copied from ask-lizheng src/discovery-refresh.js by scripts/sync-ask-app.mjs. Edit it there, then sync.\n${fs.readFileSync(path.join(ASK, "src", "discovery-refresh.js"), "utf8")}`;
+fs.writeFileSync(DISCOVERY_REFRESH, discoveryRefresh);
+const discovery_refresh_sha256 = createHash("sha256").update(discoveryRefresh).digest("hex");
 const report_sha256 = createHash("sha256").update(report).digest("hex");
 const appShell = `// The built ask.lizheng.ai page (index.html), copied by scripts/sync-ask-app.mjs: shared answer pages are made from it.\nexport const ASK_APP_HTML = ${JSON.stringify(fs.readFileSync(path.join(build, "index.html"), "utf8"))};\n`;
 fs.writeFileSync(APP_SHELL, appShell);
 const app_shell_sha256 = createHash("sha256").update(appShell).digest("hex");
 const public_qa_sha256 = createHash("sha256").update(publicQa).digest("hex");
 const source_attribution_sha256 = createHash("sha256").update(sourceAttribution).digest("hex");
-fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256, app_shell_sha256, report_sha256 }, null, 2)}\n`);
+fs.writeFileSync(path.join(OUT, "version.json"), `${JSON.stringify({ commit, built_at: new Date().toISOString(), files, public_qa_sha256, source_attribution_sha256, app_shell_sha256, report_sha256, discovery_refresh_sha256 }, null, 2)}\n`);
 fs.rmSync(build, { recursive: true, force: true });
 console.log(`✓ ask.lizheng.ai page from ask-lizheng ${commit.slice(0, 7)}: index.html and ${files.length} files in client/public/ask-app/, and the shared copies`);

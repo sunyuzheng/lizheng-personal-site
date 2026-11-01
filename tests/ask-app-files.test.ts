@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 
 // ask.lizheng.ai's page is served from client/public/ask-app (scripts/sync-ask-app.mjs). Every file
@@ -8,6 +9,11 @@ const DIR = path.resolve(__dirname, "../client/public/ask-app");
 const read = (file: string) => readFileSync(path.join(DIR, file), "utf8");
 
 describe("ask.lizheng.ai page files", () => {
+  it("uses the same refresh scheduler on both home pages", () => {
+    const { discovery_refresh_sha256 } = JSON.parse(read("version.json"));
+    const source = readFileSync(path.resolve(__dirname, "../shared/ask-discovery-refresh.js"), "utf8");
+    expect(createHash("sha256").update(source).digest("hex")).toBe(discovery_refresh_sha256);
+  });
   it("has the page, its version and the ask host's robots.txt", () => {
     expect(read("index.html")).toContain('<div id="root"></div>');
     expect(JSON.parse(read("version.json")).commit).toMatch(/^[0-9a-f]{40}$/);

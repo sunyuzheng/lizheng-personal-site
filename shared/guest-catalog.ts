@@ -20,7 +20,7 @@ export interface GuestMember { name: string; en_name?: string; entity_id?: strin
 export interface GuestSource {
   source_id: string; video_id: string | null; source_type: "youtube" | "circle";
   url: string; title: string; thumbnail_url: string;
-  published_at?: string; view_count?: number; metadata_verified_at?: string;
+  published_at?: string; view_count?: number; metadata_verified_at?: string; description?: string;
 }
 export interface GuestAppearance { entity_id: string; source_id: string; index: number; is_primary: boolean }
 export interface GuestCatalog {
@@ -174,7 +174,8 @@ export function validateGuestCatalog(value: unknown, articleValue: unknown): ass
     }
   }
   for (const s of value.sources) {
-    record(s); keys(s, ["source_id", "video_id", "source_type", "url", "title", "thumbnail_url"], ["published_at", "view_count", "metadata_verified_at"]);
+    record(s); keys(s, ["source_id", "video_id", "source_type", "url", "title", "thumbnail_url"], ["published_at", "view_count", "metadata_verified_at", "description"]);
+    if ("description" in s) requireValue(typeof s.description === "string" && s.description.length <= 20000, "source_description_invalid");
     requireValue(typeof s.source_id === "string" && !sources.has(s.source_id) && typeof s.title === "string" && s.title.length > 0, "source_identity_invalid");
     safeUrl(s.url); safeUrl(s.thumbnail_url, true);
     requireValue(s.source_type === "youtube" ? typeof s.video_id === "string" && VIDEO.test(s.video_id) && s.source_id === `youtube-${s.video_id}` && youtubeId(s.url) === s.video_id : s.source_type === "circle" && s.video_id === null && s.source_id === s.url, "source_url_id_mismatch");

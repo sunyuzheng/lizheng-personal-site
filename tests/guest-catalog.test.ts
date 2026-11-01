@@ -32,6 +32,14 @@ function localInput(participants: { speaker_id: string; speaker_name: string }[]
   return { root, hash: digest(blob) };
 }
 describe("single canonical guest catalog", () => {
+  it("accepts bounded published programme notes as metadata without changing the programme identity", () => {
+    const { catalog, articles } = fixture();
+    catalog.sources[0].description = "Publisher's programme notes; not a speaker transcript.";
+    expect(() => validateGuestCatalog(catalog, articles)).not.toThrow();
+    expect(catalogGuestDirectory(catalog, articles)[0].episodes[0].title).toBe("Synthetic programme");
+    catalog.sources[0].description = "x".repeat(20001);
+    expect(() => validateGuestCatalog(catalog, articles)).toThrow("source_description_invalid");
+  });
   it("projects the shared Ashley ambiguity onto guest pages without creating an external host page", () => {
     const { catalog, articles } = fixture();
     const names = { schema_version: 1, generated_from: ["catalog/guests.json", "catalog/guest-appearances.jsonl"],

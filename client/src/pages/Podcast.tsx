@@ -1,28 +1,17 @@
-import { Button } from "@/components/ui/button";
+import { EXTERNAL } from "@/components/home/parts";
+import { SoloFooter, SoloHeader } from "@/components/site/SoloShell";
 import { applyPageSeo } from "@/lib/seo";
 import { PODCAST_PAGE_META } from "@shared/page-meta";
 import { buildPodcastStructuredData } from "@shared/structured-data";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CalendarDays,
-  ChevronDown,
-  CirclePlay,
-  Clock3,
-  ExternalLink,
-  Headphones,
-  LoaderCircle,
-  Pause,
-  Play,
-  Radio,
-  RefreshCw,
-  Rss,
-  Search,
-  ScrollText,
-  X,
-  Youtube,
-} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+
+/*
+ * The podcast's own site (podcast.lizheng.ai): the show, the latest episode, every episode with
+ * search, and a player. It reads the official RSS in the browser. The page wears the site's
+ * language (components/site/subpages.css, "The podcast's own site"): a forest head with the show's
+ * cover, then paper; episodes are rows between hairlines, not cards; things to click are words.
+ * It has a host of its own, so its header and footer carry this page's few links.
+ */
 
 const PUBLIC_FEED_URL = "https://feeds.transistor.fm/kedaibiao";
 const SHOW_COVER = "/podcast/avatar.png";
@@ -31,22 +20,18 @@ const PLATFORMS = [
   {
     name: "Apple Podcasts",
     href: "https://podcasts.apple.com/us/podcast/%E8%AF%BE%E4%BB%A3%E8%A1%A8%E7%AB%8B%E6%AD%A3/id1859339631",
-    Icon: Headphones,
   },
   {
     name: "Spotify",
     href: "https://open.spotify.com/show/4YoFrN0YArKCIqZq46yHr3",
-    Icon: Radio,
   },
   {
     name: "小宇宙",
     href: "https://www.xiaoyuzhoufm.com/podcast/6934fbe84ef12f9fe94eed5f",
-    Icon: CirclePlay,
   },
   {
     name: "YouTube",
     href: "https://www.youtube.com/@kedaibiao",
-    Icon: Youtube,
   },
 ] as const;
 
@@ -195,7 +180,7 @@ function Artwork({
 }: {
   src: string;
   alt: string;
-  className: string;
+  className?: string;
   eager?: boolean;
 }) {
   return (
@@ -216,25 +201,44 @@ function Artwork({
   );
 }
 
+/** Which episode, when, how long: one quiet line. */
 function EpisodeMeta({ episode }: { episode: PodcastEpisode }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-500">
+    <p className="ep-meta">
       {episode.episodeNumber && (
-        <span className="font-mono text-superlinear-on-dark">
-          E{episode.episodeNumber}
-        </span>
+        <span className="no">E{episode.episodeNumber}</span>
       )}
-      <span className="inline-flex items-center gap-1">
-        <CalendarDays className="h-3.5 w-3.5" aria-hidden="true" />
-        {formatDate(episode.publishedAt)}
-      </span>
+      <span>{formatDate(episode.publishedAt)}</span>
       {episode.durationSeconds && (
-        <span className="inline-flex items-center gap-1">
-          <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-          {formatDuration(episode.durationSeconds)}
-        </span>
+        <span>{formatDuration(episode.durationSeconds)}</span>
       )}
-    </div>
+    </p>
+  );
+}
+
+/**
+ * An episode's title, kept in phrases: a line turns after a comma, a question mark or the bar
+ * between a series number and its title, not in the middle of a word.
+ */
+function TitlePhrases({ text }: { text: string }) {
+  const parts = text.match(/[^，：；、？！。｜]+[，：；、？！。｜]*\s*/g) ?? [text];
+  if (parts.length < 2) return <>{text}</>;
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={index} className="phrase">
+          {part}
+        </span>
+      ))}
+    </>
+  );
+}
+
+function Ext() {
+  return (
+    <span className="ext" aria-hidden="true">
+      ↗
+    </span>
   );
 }
 
@@ -343,313 +347,218 @@ export default function Podcast() {
     else player.pause();
   };
 
+  const isLatestPlaying =
+    !!latestEpisode && activeEpisode?.id === latestEpisode.id && isPlaying;
+
   return (
     <div
-      className={`min-h-screen overflow-x-clip bg-[#0B0F1A] text-zinc-100 ${
-        activeEpisode ? "pb-36 md:pb-28" : ""
-      }`}
+      className={`lz-site lz-home lz-sub pod${activeEpisode ? " has-player" : ""}`}
+      lang="zh-CN"
     >
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0B0F1A]/88 backdrop-blur-xl">
-        <div className="container flex h-[68px] items-center justify-between gap-4">
-          <a
-            href="https://www.lizheng.ai"
-            className="inline-flex min-h-11 items-center gap-2 text-sm text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">返回lizheng.ai</span>
-            <span className="sm:hidden">主页</span>
-          </a>
-
-          <a
-            href="/"
-            className="absolute left-1/2 -translate-x-1/2 text-center"
-            aria-label="课代表立正Podcast首页"
-          >
-            <span className="block text-sm font-semibold text-white">
-              课代表立正
-            </span>
-            <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-superlinear-on-dark">
-              Podcast
-            </span>
-          </a>
-
-          <a
-            href={PUBLIC_FEED_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-3 text-xs font-medium text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
-          >
-            <Rss className="h-3.5 w-3.5" aria-hidden="true" />
-            RSS
-          </a>
-        </div>
-      </header>
+      <SoloHeader
+        brandHref="/"
+        brandLabel="课代表立正Podcast首页"
+        small="Podcast"
+      >
+        <a className="plain" href="https://www.lizheng.ai">
+          返回lizheng.ai
+        </a>
+        <a className="lz-lang" href={PUBLIC_FEED_URL} {...EXTERNAL}>
+          RSS
+        </a>
+      </SoloHeader>
 
       <main>
-        <section className="relative isolate overflow-hidden border-b border-white/10">
-          <div className="absolute inset-0">
-            <img
-              src={SHOW_COVER}
-              alt=""
-              aria-hidden="true"
-              className="h-full w-full scale-110 object-cover opacity-20 blur-3xl"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(11,15,26,0.96)_0%,rgba(11,15,26,0.86)_50%,rgba(11,15,26,0.96)_100%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_35%,rgba(35,131,67,0.14),transparent_38%)]" />
-          </div>
-
-          <div className="container relative z-10 grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(260px,400px)_1fr] lg:items-center lg:gap-16 lg:py-20">
-            <div className="mx-auto w-full max-w-[340px] lg:max-w-[400px]">
-              <div className="relative">
-                <div className="absolute -inset-5 rounded-[2.2rem] bg-superlinear/15 blur-2xl" />
-                <Artwork
-                  src={feed?.cover || SHOW_COVER}
-                  alt="课代表立正Podcast节目封面"
-                  className="relative aspect-square w-full rounded-[1.75rem] border border-white/15 object-cover shadow-2xl shadow-black/50"
-                  eager
-                />
-                <div className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/70 px-3 py-2 text-xs font-medium text-white backdrop-blur-lg">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-superlinear-online opacity-75 motion-reduce:animate-none" />
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-superlinear-online" />
-                  </span>
-                  RSS实时同步
-                </div>
+        {/* ── The show ── */}
+        <section className="forest-head pod-head grain">
+          <div className="wrap">
+            <div className="cols2">
+              <Artwork
+                src={feed?.cover || SHOW_COVER}
+                alt="课代表立正Podcast节目封面"
+                className="cover"
+                eager
+              />
+              <div>
+                <div className="eyebrow">Official Podcast</div>
+                <h1>课代表立正</h1>
+                <p className="lede">AI到底怎么用，钱到底怎么赚？</p>
+                <p className="aside">
+                  我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。也有我的单口，十几分钟讲清一个判断。
+                </p>
+                <ul className="listen">
+                  {PLATFORMS.map(({ name, href }) => (
+                    <li key={name}>
+                      <a href={href} {...EXTERNAL}>
+                        {name}
+                        <Ext />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
-            <div className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-superlinear-on-dark">
-                Official Podcast
-              </p>
-              <h1 className="mt-5 text-5xl font-semibold tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">
-                课代表立正
-              </h1>
-              <p className="mt-5 text-xl font-medium leading-8 text-superlinear-pale sm:text-2xl">
-                AI到底怎么用，钱到底怎么赚？
-              </p>
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-zinc-400 sm:text-base">
-                我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。也有我的单口，十几分钟讲清一个判断。
-              </p>
-
-              <div className="mt-7 flex flex-wrap gap-2">
-                {PLATFORMS.map(({ name, href, Icon }) => (
-                  <a
-                    key={name}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm font-medium text-zinc-200 transition hover:-translate-y-0.5 hover:border-superlinear-on-dark/40 hover:bg-superlinear/10 hover:text-superlinear-pale focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark motion-reduce:transform-none"
-                  >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                    {name}
-                  </a>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-zinc-500">
-                <span>
-                  {feed
-                    ? `RSS收录${feed.episodes.length}期`
-                    : "正在读取官方RSS"}
-                </span>
-                <span>持续更新</span>
-                <span>中文</span>
-              </div>
-            </div>
+            <ul className="facts-line">
+              <li>
+                {feed ? (
+                  <>
+                    RSS收录<b className="in">{feed.episodes.length}</b>期
+                  </>
+                ) : (
+                  "正在读取官方RSS"
+                )}
+              </li>
+              <li>持续更新</li>
+              <li>中文</li>
+              <li>RSS实时同步</li>
+            </ul>
           </div>
         </section>
 
-        <section className="container py-12 sm:py-16">
-          <div className="mb-7 flex items-end justify-between gap-4">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                Latest Episode
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">
-                最新一期
-              </h2>
+        {/* ── The latest episode ── */}
+        <section className="sec">
+          <div className="wrap">
+            <div className="head">
+              <h2>最新一期</h2>
+              {feed?.lastBuildAt && (
+                <p className="updated">
+                  RSS更新于{formatDate(feed.lastBuildAt)}
+                </p>
+              )}
             </div>
-            {feed?.lastBuildAt && (
-              <p className="hidden text-xs text-zinc-600 sm:block">
-                RSS更新于{formatDate(feed.lastBuildAt)}
-              </p>
+
+            {feedState.status === "loading" && (
+              <div className="latest wait" aria-label="正在读取最新一期">
+                <div className="art" />
+                <div className="body">
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
             )}
-          </div>
 
-          {feedState.status === "loading" && (
-            <div
-              className="grid animate-pulse gap-0 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] md:grid-cols-[minmax(260px,390px)_1fr]"
-              aria-label="正在读取最新一期"
-            >
-              <div className="aspect-square bg-white/10" />
-              <div className="space-y-5 p-6 sm:p-9">
-                <div className="h-4 w-40 rounded bg-white/10" />
-                <div className="h-9 max-w-xl rounded bg-white/10" />
-                <div className="h-20 max-w-2xl rounded bg-white/10" />
-                <div className="h-11 w-36 rounded-full bg-white/10" />
-              </div>
-            </div>
-          )}
-
-          {feedState.status === "error" && (
-            <div
-              role="alert"
-              className="rounded-3xl border border-superlinear-on-dark/20 bg-superlinear/[0.06] p-8 text-center"
-            >
-              <p className="text-base font-medium text-superlinear-pale">
-                暂时没有读到官方RSS
-              </p>
-              <p className="mt-2 text-sm text-zinc-400">{feedState.error}</p>
-              <div className="mt-5 flex flex-wrap justify-center gap-3">
-                <Button
-                  type="button"
-                  onClick={() => setRefreshKey(value => value + 1)}
-                  className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
-                >
-                  <RefreshCw className="mr-2 h-4 w-4" />
-                  重新同步
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="min-h-11 border-white/15 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                >
-                  <a
-                    href={PUBLIC_FEED_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
+            {feedState.status === "error" && (
+              <div role="alert" className="feed-error">
+                <h3>暂时没有读到官方RSS</h3>
+                <p>{feedState.error}</p>
+                <div className="cta-row">
+                  <button
+                    type="button"
+                    className="btn btn-green"
+                    onClick={() => setRefreshKey(value => value + 1)}
                   >
-                    打开RSS
-                    <ExternalLink className="ml-2 h-4 w-4" />
+                    重新同步
+                  </button>
+                  <a className="lz-link" href={PUBLIC_FEED_URL} {...EXTERNAL}>
+                    打开RSS <i aria-hidden="true">→</i>
                   </a>
-                </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {latestEpisode && (
-            <article className="group grid overflow-hidden rounded-3xl border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.075),rgba(255,255,255,0.025))] shadow-2xl shadow-black/20 md:grid-cols-[minmax(260px,390px)_1fr]">
-              <div className="relative aspect-square overflow-hidden">
-                <Artwork
-                  src={latestEpisode.artwork}
-                  alt={`${latestEpisode.title}单集封面`}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.025] motion-reduce:transform-none"
-                  eager
-                />
+            {latestEpisode && (
+              <article className="latest">
                 <button
                   type="button"
+                  className="art"
                   onClick={() => playEpisode(latestEpisode)}
-                  className="absolute inset-0 flex items-center justify-center bg-black/10 transition hover:bg-black/25 focus-visible:bg-black/25 focus-visible:outline-none"
-                  aria-label={`播放${latestEpisode.title}`}
+                  aria-label={`${isLatestPlaying ? "暂停" : "播放"}${latestEpisode.title}`}
                 >
-                  <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-black/70 text-white shadow-xl backdrop-blur-md transition group-hover:scale-105 motion-reduce:transform-none">
-                    {activeEpisode?.id === latestEpisode.id && isPlaying ? (
-                      <Pause
-                        className="h-6 w-6 fill-current"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <Play
-                        className="ml-1 h-6 w-6 fill-current"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </span>
+                  <Artwork
+                    src={latestEpisode.artwork}
+                    alt={`${latestEpisode.title}单集封面`}
+                    eager
+                  />
                 </button>
-              </div>
-
-              <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
-                <EpisodeMeta episode={latestEpisode} />
-                <h3 className="mt-5 text-2xl font-semibold leading-tight text-white sm:text-3xl">
-                  {latestEpisode.title}
-                </h3>
-                <p className="mt-5 line-clamp-4 max-w-2xl text-sm leading-7 text-zinc-400">
-                  {compactDescription(latestEpisode.description)}
-                </p>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <Button
-                    type="button"
-                    onClick={() => playEpisode(latestEpisode)}
-                    className="min-h-11 bg-superlinear text-white hover:bg-superlinear-deep"
-                  >
-                    {activeEpisode?.id === latestEpisode.id && isPlaying ? (
-                      <Pause className="mr-2 h-4 w-4 fill-current" />
-                    ) : (
-                      <Play className="mr-2 h-4 w-4 fill-current" />
-                    )}
-                    {activeEpisode?.id === latestEpisode.id && isPlaying
-                      ? "暂停"
-                      : "立即播放"}
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="min-h-11 border-white/15 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                  >
-                    <a
-                      href={latestEpisode.shareUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                <div className="body">
+                  <EpisodeMeta episode={latestEpisode} />
+                  <h3>
+                    <TitlePhrases text={latestEpisode.title} />
+                  </h3>
+                  <p className="desc">
+                    {compactDescription(latestEpisode.description)}
+                  </p>
+                  <div className="cta-row">
+                    <button
+                      type="button"
+                      className="btn btn-green"
+                      onClick={() => playEpisode(latestEpisode)}
                     >
-                      单集详情
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      {isLatestPlaying ? "暂停" : "立即播放"}
+                    </button>
+                    <a
+                      className="lz-link"
+                      href={latestEpisode.shareUrl}
+                      {...EXTERNAL}
+                    >
+                      单集详情 <i aria-hidden="true">→</i>
                     </a>
-                  </Button>
+                  </div>
                 </div>
-              </div>
-            </article>
-          )}
+              </article>
+            )}
+          </div>
         </section>
 
-        <section className="border-t border-white/10 bg-[#080B12]">
-          <div className="container py-12 sm:py-16">
-            <div className="grid gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
+        {/* ── Every episode ── */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                  All Episodes
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
-                  全部单集
-                </h2>
-                <p className="mt-3 text-sm leading-6 text-zinc-500">
+                <h2>全部单集</h2>
+                <p className="after">
                   默认按RSS发布日期从新到旧排列。历史修复不会被当成新发布。
                 </p>
               </div>
-
-              <div className="relative w-full lg:w-[360px]">
-                <label htmlFor="episode-search" className="sr-only">
-                  搜索集数、标题或内容
-                </label>
-                <Search
-                  className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500"
-                  aria-hidden="true"
-                />
-                <input
-                  id="episode-search"
-                  type="search"
-                  value={query}
-                  onChange={event => setQuery(event.target.value)}
-                  placeholder="搜索集数、标题或内容…"
-                  className="min-h-12 w-full rounded-full border border-white/10 bg-white/[0.05] py-3 pl-11 pr-12 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-superlinear-on-dark/50 focus:bg-white/[0.08] focus:ring-2 focus:ring-superlinear-on-dark/20"
-                />
-                {query && (
-                  <button
-                    type="button"
-                    onClick={() => setQuery("")}
-                    aria-label="清空搜索"
-                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-superlinear-on-dark"
+              <div className="finder">
+                <div className="search">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
-                    <X className="h-4 w-4" aria-hidden="true" />
-                  </button>
-                )}
+                    <circle
+                      cx="11"
+                      cy="11"
+                      r="7"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M20 20l-4-4"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <label htmlFor="episode-search" className="sr-only">
+                    搜索集数、标题或内容
+                  </label>
+                  <input
+                    id="episode-search"
+                    type="search"
+                    value={query}
+                    onChange={event => setQuery(event.target.value)}
+                    placeholder="搜索集数、标题或内容…"
+                  />
+                  {query && (
+                    <button
+                      type="button"
+                      className="clear"
+                      onClick={() => setQuery("")}
+                    >
+                      清空搜索
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            <p
-              className="mt-6 min-h-5 text-sm text-zinc-500"
-              aria-live="polite"
-            >
+            <p className="count" aria-live="polite">
               {feed &&
                 (query
                   ? `找到${filteredEpisodes.length}期相关节目`
@@ -657,126 +566,80 @@ export default function Podcast() {
             </p>
 
             {feedState.status === "loading" && (
-              <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <ul className="episodes wait" aria-hidden="true">
                 {Array.from({ length: 6 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex animate-pulse gap-4 rounded-2xl border border-white/10 bg-white/[0.035] p-4"
-                  >
-                    <div className="h-28 w-28 shrink-0 rounded-xl bg-white/10" />
-                    <div className="flex-1 space-y-3 py-2">
-                      <div className="h-3 w-32 rounded bg-white/10" />
-                      <div className="h-6 w-4/5 rounded bg-white/10" />
-                      <div className="h-10 w-full rounded bg-white/10" />
+                  <li key={index}>
+                    <div className="art" />
+                    <div className="body">
+                      <i />
+                      <i />
+                      <i />
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             )}
 
             {feed && visibleEpisodes.length > 0 && (
-              <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <ul className="episodes">
                 {visibleEpisodes.map(episode => {
                   const isActive = activeEpisode?.id === episode.id;
+                  const playing = isActive && isPlaying;
                   return (
-                    <article
-                      key={episode.id}
-                      className={`group flex gap-4 overflow-hidden rounded-2xl border p-3 transition duration-300 sm:gap-5 sm:p-4 ${
-                        isActive
-                          ? "border-superlinear-on-dark/40 bg-superlinear/[0.08]"
-                          : "border-white/10 bg-white/[0.035] hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06]"
-                      } motion-reduce:transform-none`}
-                    >
+                    <li key={episode.id} className={isActive ? "on" : undefined}>
                       <button
                         type="button"
+                        className="art"
                         onClick={() => playEpisode(episode)}
-                        className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-superlinear-on-dark sm:h-36 sm:w-36"
-                        aria-label={`${isActive && isPlaying ? "暂停" : "播放"}${episode.title}`}
+                        aria-label={`${playing ? "暂停" : "播放"}${episode.title}`}
                       >
                         <Artwork
                           src={episode.artwork}
                           alt={`${episode.title}单集封面`}
-                          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03] motion-reduce:transform-none"
                         />
-                        <span className="absolute inset-0 flex items-center justify-center bg-black/15 transition hover:bg-black/35">
-                          <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/65 text-white backdrop-blur-sm">
-                            {isActive && isPlaying ? (
-                              <Pause
-                                className="h-4 w-4 fill-current"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <Play
-                                className="ml-0.5 h-4 w-4 fill-current"
-                                aria-hidden="true"
-                              />
-                            )}
-                          </span>
-                        </span>
                       </button>
-
-                      <div className="min-w-0 flex-1 py-1">
+                      <div className="body">
                         <EpisodeMeta episode={episode} />
-                        <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-6 text-white sm:text-lg">
-                          {episode.title}
+                        <h3>
+                          <TitlePhrases text={episode.title} />
                         </h3>
-                        <p className="mt-2 line-clamp-2 text-xs leading-5 text-zinc-500 sm:text-sm sm:leading-6">
+                        <p className="desc">
                           {compactDescription(episode.description)}
                         </p>
-                        <div className="mt-3 flex flex-wrap items-center gap-4 text-xs font-medium">
-                          <button
-                            type="button"
-                            onClick={() => playEpisode(episode)}
-                            className="inline-flex min-h-11 items-center gap-1.5 text-superlinear-on-dark transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
-                          >
-                            {isActive && isPlaying ? (
-                              <Pause className="h-3.5 w-3.5 fill-current" />
-                            ) : (
-                              <Play className="h-3.5 w-3.5 fill-current" />
-                            )}
-                            {isActive && isPlaying ? "暂停" : "播放"}
-                          </button>
-                          <a
-                            href={episode.shareUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
-                          >
-                            详情
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                          {episode.transcriptUrl && (
-                            <a
-                              href={episode.transcriptUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hidden min-h-11 items-center gap-1.5 text-zinc-400 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark sm:inline-flex"
-                            >
-                              <ScrollText className="h-3.5 w-3.5" />
-                              文字稿
-                            </a>
-                          )}
-                        </div>
                       </div>
-                    </article>
+                      <div className="acts">
+                        <button
+                          type="button"
+                          className="play"
+                          onClick={() => playEpisode(episode)}
+                        >
+                          {playing ? "暂停" : "播放"}
+                        </button>
+                        <a href={episode.shareUrl} {...EXTERNAL}>
+                          详情
+                          <Ext />
+                        </a>
+                        {episode.transcriptUrl && (
+                          <a href={episode.transcriptUrl} {...EXTERNAL}>
+                            文字稿
+                            <Ext />
+                          </a>
+                        )}
+                      </div>
+                    </li>
                   );
                 })}
-              </div>
+              </ul>
             )}
 
             {feed && visibleEpisodes.length === 0 && (
-              <div className="mt-6 rounded-3xl border border-white/10 bg-white/[0.03] px-6 py-16 text-center">
-                <Search className="mx-auto h-6 w-6 text-zinc-600" />
-                <h3 className="mt-4 text-base font-medium text-zinc-200">
-                  没有找到「{query.trim()}」
-                </h3>
-                <p className="mt-2 text-sm text-zinc-500">
-                  可以试试集数、嘉宾名字或更短的关键词。
-                </p>
+              <div className="no-episodes">
+                <h3>没有找到「{query.trim()}」</h3>
+                <p>可以试试集数、嘉宾名字或更短的关键词。</p>
                 <button
                   type="button"
+                  className="lz-expand"
                   onClick={() => setQuery("")}
-                  className="mt-5 min-h-11 rounded-full border border-white/10 px-5 text-sm text-superlinear-on-dark transition hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
                 >
                   清空搜索
                 </button>
@@ -784,144 +647,97 @@ export default function Podcast() {
             )}
 
             {visibleCount < filteredEpisodes.length && (
-              <div className="mt-8 text-center">
-                <Button
-                  type="button"
-                  onClick={() => setVisibleCount(value => value + 12)}
-                  variant="outline"
-                  className="min-h-12 rounded-full border-white/15 bg-white/[0.03] px-6 text-white hover:bg-white/[0.08]"
-                >
-                  再看12期
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
+              <button
+                type="button"
+                className="lz-expand more-episodes"
+                onClick={() => setVisibleCount(value => value + 12)}
+              >
+                再看12期
+              </button>
             )}
           </div>
         </section>
 
-        <section className="border-t border-white/10 bg-[#0B0F1A]">
-          <div className="container grid gap-10 py-12 sm:py-16 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                Subscribe
-              </p>
-              <h2 className="mt-3 max-w-2xl text-2xl font-semibold text-white sm:text-3xl">
-                在你常用的平台继续听
-              </h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-zinc-500">
-                同一份官方RSS会把音频、集数、发布日期和封面同步到各个Podcast平台。
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 lg:max-w-xl lg:justify-end">
-              {PLATFORMS.map(({ name, href, Icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm text-zinc-300 transition hover:border-superlinear-on-dark/40 hover:bg-superlinear/10 hover:text-superlinear-pale focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-superlinear-on-dark"
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                  {name}
-                </a>
-              ))}
+        {/* ── Where else to listen ── */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <h2>在你常用的平台继续听</h2>
+                <p className="say">
+                  同一份官方RSS会把音频、集数、发布日期和封面同步到各个Podcast平台。
+                </p>
+              </div>
+              <ul className="points platforms">
+                {PLATFORMS.map(({ name, href }) => (
+                  <li key={name}>
+                    <a href={href} {...EXTERNAL}>
+                      <b>{name}</b>
+                      <Ext />
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-[#080B12]">
-        <div className="container flex flex-col gap-5 py-9 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-medium text-zinc-300">
-              课代表立正·Official Podcast
-            </p>
-            <p className="mt-1">© 2026课代表立正</p>
-          </div>
-          <div className="flex flex-wrap items-center gap-5">
-            <a
-              href="https://speaker.lizheng.ai"
-              className="transition hover:text-superlinear-on-dark"
-            >
-              嘉宾邀请
-            </a>
-            <a
-              href="https://www.lizheng.ai/about"
-              className="transition hover:text-superlinear-on-dark"
-            >
-              关于我
-            </a>
-            <a
-              href="https://staysuperlinear.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition hover:text-superlinear-on-dark"
-            >
-              Stay Superlinear会员
-            </a>
-            <a
-              href="https://ai-builders.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition hover:text-superlinear-on-dark"
-            >
-              AI Builders
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SoloFooter
+        name="课代表立正·Official Podcast"
+        label="相关页面"
+        rights="© 2026课代表立正"
+      >
+        <li>
+          <a href="https://speaker.lizheng.ai">嘉宾邀请</a>
+        </li>
+        <li>
+          <a href="https://www.lizheng.ai/about">关于我</a>
+        </li>
+        <li>
+          <a href="https://staysuperlinear.com" {...EXTERNAL}>
+            Stay Superlinear会员
+          </a>
+        </li>
+        <li>
+          <a href="https://ai-builders.com" {...EXTERNAL}>
+            AI Builders
+          </a>
+        </li>
+      </SoloFooter>
 
+      {/* The player stays at the foot of the window while an episode is chosen. */}
       {activeEpisode && (
-        <div className="fixed inset-x-0 bottom-0 z-[60] border-t border-superlinear-on-dark/25 bg-[#090C14]/96 shadow-[0_-18px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-          <div className="container flex items-center gap-3 py-3 sm:gap-4">
-            <Artwork
-              src={activeEpisode.artwork}
-              alt=""
-              className="h-12 w-12 shrink-0 rounded-lg object-cover sm:h-14 sm:w-14"
-            />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-white">
-                {activeEpisode.title}
-              </p>
+        <div className="player" role="region" aria-label="播放器">
+          <div className="wrap">
+            <Artwork src={activeEpisode.artwork} alt="" className="thumb" />
+            <div className="now">
+              <p>{activeEpisode.title}</p>
               <audio
                 ref={playerRef}
                 src={activeEpisode.audioUrl}
                 controls
                 preload="metadata"
-                className="mt-2 h-9 w-full max-w-2xl [color-scheme:dark]"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onEnded={() => setIsPlaying(false)}
               />
             </div>
-            <a
-              href={activeEpisode.shareUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden min-h-11 shrink-0 items-center gap-2 rounded-full border border-white/10 px-4 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.06] hover:text-white sm:inline-flex"
-            >
-              单集页
-              <ExternalLink className="h-3.5 w-3.5" />
+            <a className="lz-link" href={activeEpisode.shareUrl} {...EXTERNAL}>
+              单集页 <i aria-hidden="true">→</i>
             </a>
             <button
               type="button"
+              className="close"
               onClick={() => {
                 playerRef.current?.pause();
                 setActiveEpisode(null);
               }}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-zinc-500 transition hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-superlinear-on-dark"
               aria-label="关闭播放器"
             >
-              <X className="h-5 w-5" aria-hidden="true" />
+              关闭
             </button>
           </div>
-        </div>
-      )}
-
-      {feedState.status === "loading" && (
-        <div className="pointer-events-none fixed bottom-4 right-4 z-50 hidden items-center gap-2 rounded-full border border-white/10 bg-black/70 px-4 py-2 text-xs text-zinc-300 shadow-xl backdrop-blur-md sm:flex">
-          <LoaderCircle className="h-3.5 w-3.5 animate-spin" />
-          同步官方RSS
         </div>
       )}
     </div>

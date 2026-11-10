@@ -667,3 +667,70 @@
   font-family: var(--lz-num);
   font-variant-numeric: lining-nums tabular-nums;
 }
+
+/* ---------- The pages on hosts of their own (podcast, guest invitation) ---------- */
+
+/* The same header, with that page's few links on the right instead of the site's navigation. */
+.lz-header.solo .lz-actions {
+  gap: 20px;
+  margin-left: auto;
+}
+
+.lz-header.solo .lz-actions .plain {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  color: var(--lz-ink-2);
+  transition: color 0.15s;
+}
+
+.lz-header.solo .lz-actions .plain:hover {
+  color: var(--lz-green-text);
+}
+
+/* The same footer, reduced to one line: whose page it is, a few links, the year. */
+.lz-footer.solo {
+  padding-block: 30px;
+}
+
+.lz-footer.solo .base {
+  justify-content: flex-start;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.lz-footer.solo .name {
+  margin: 0;
+  font-weight: 500;
+  color: var(--lz-on-forest);
+}
+
+.lz-footer.solo .rights {
+  margin-left: auto;
+}
+
+@media (max-width: 760px) {
+  .lz-footer.solo .rights {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  /* A phone keeps the mark, the name and the page's main link; the line under the name gives way. */
+  .lz-header.solo .lz-brand small {
+    display: none;
+  }
+
+  .lz-header.solo .lz-actions {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  /* The narrowest phones keep the mark, the name and the one button. */
+  .lz-header.solo .lz-actions .plain {
+    display: none;
+  }
+}

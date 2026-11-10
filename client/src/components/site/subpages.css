@@ -2838,3 +2838,686 @@
     height: min(70vh, 40rem);
   }
 }
+
+/* ---------- The guest invitation (speaker.lizheng.ai) ---------- */
+
+/* A page with no crumb above its head: the head takes its own room at the top. Its one sentence is
+   the largest thing on the page; beside it, what two guests said on tape. */
+.lz-sub .invite-head {
+  padding-top: clamp(52px, 6vw, 92px);
+}
+
+.lz-sub .invite-head .cols2 {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 40px 64px;
+}
+
+.lz-sub .invite-head h1 {
+  font-size: clamp(40px, 5.4vw, 80px);
+  line-height: 1.14;
+}
+
+.lz-sub .invite-head h1 .line {
+  white-space: nowrap;
+}
+
+.lz-sub .invite-head .lede {
+  max-width: 28em;
+  font-size: clamp(17.5px, 1.5vw, 20px);
+  color: var(--lz-on-forest);
+}
+
+/* Quotations on the forest: the homepage's, in ivory, between hairlines. */
+.lz-sub .said {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--lz-forest-line);
+}
+
+.lz-sub .said li {
+  padding: 22px 0 24px;
+  border-top: 1px solid var(--lz-forest-line);
+}
+
+.lz-sub .said figure {
+  margin: 0;
+}
+
+.lz-sub .said blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.5vw, 21px);
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .said blockquote .phrase {
+  position: relative;
+  text-wrap: balance;
+}
+
+.lz-sub .said blockquote .mark {
+  position: absolute;
+  top: 0;
+  right: 100%;
+}
+
+.lz-sub .said figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .said figcaption a {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 32px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--lz-on-forest);
+  transition: color 0.2s;
+}
+
+.lz-sub .said figcaption a:hover {
+  color: var(--lz-mint);
+}
+
+.lz-sub .said .ext {
+  margin-left: 6px;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+/* Plain facts in one line across the foot of the head. */
+.lz-sub .facts-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 40px;
+  margin: clamp(36px, 4vw, 56px) 0 0;
+  padding: 16px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-forest-line);
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-sub .facts-line b {
+  margin-right: 6px;
+  font-family: var(--num);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--lz-on-forest);
+}
+
+/* Two moments to watch: the frame, who, the question, what happened next, where to start. */
+.lz-sub .moments {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 56px;
+}
+
+.lz-sub .moments .still {
+  display: block;
+}
+
+.lz-sub .moments .still img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .moments .t {
+  margin-top: 18px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .moments h3 {
+  margin-top: 4px;
+  font-size: clamp(22px, 2vw, 26px);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub .moments h3 a {
+  transition: color 0.2s;
+}
+
+.lz-sub .moments h3 a:hover {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .moments p {
+  max-width: 34em;
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+  text-wrap: pretty;
+}
+
+.lz-sub .moments .lz-link {
+  min-height: 44px;
+  margin-top: 6px;
+}
+
+/* Where and in which languages, side by side under the contact line. */
+.lz-sub .split .mail.where {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 28px;
+}
+
+.lz-sub .band .split .mail + .mail {
+  margin-top: 6px;
+}
+
+@media (max-width: 860px) {
+  .lz-sub .invite-head .cols2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .invite-head h1 {
+    font-size: clamp(30px, 10.4vw, 56px);
+  }
+
+  /* The facts line under the quotations brings its own rule. */
+  .lz-sub .said {
+    border-bottom: 0;
+  }
+
+  .lz-sub .moments {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- The podcast's own site (podcast.lizheng.ai) ---------- */
+
+/* The show: its cover on the left, what it is and where to listen on the right. */
+.lz-sub .pod-head {
+  padding-top: clamp(44px, 5vw, 76px);
+}
+
+.lz-sub .pod-head .cols2 {
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 32px 64px;
+  align-items: center;
+}
+
+.lz-sub .pod-head .cover {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+  background: var(--lz-forest-2);
+}
+
+.lz-sub .pod-head h1 {
+  font-size: clamp(48px, 6.4vw, 92px);
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+}
+
+.lz-sub .pod-head .lede {
+  margin-top: 16px;
+  font-family: var(--serif);
+  font-size: clamp(19px, 1.9vw, 26px);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .pod-head .aside {
+  max-width: 36em;
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+
+/* Where to listen: four places, as words. */
+.lz-sub .listen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 30px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-sub .listen a {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: 44px;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 44px;
+  color: var(--lz-on-forest);
+  transition: color 0.2s;
+}
+
+.lz-sub .listen a:hover {
+  color: var(--lz-mint);
+}
+
+.lz-sub.pod .ext {
+  margin-left: 6px;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+
+.lz-sub .facts-line b.in {
+  margin-inline: 4px;
+}
+
+/* A chapter head with a small fact on its right (when the feed last changed). */
+.lz-sub.pod .head {
+  margin-bottom: 26px;
+}
+
+.lz-sub .head .updated {
+  justify-self: end;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+/* An episode's picture is a button that plays it. Covers are wide frames inside a black square:
+   a 4:3 window shows the frame and leaves the black out. */
+.lz-sub.pod .art {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.lz-sub.pod .art img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+  transition: opacity 0.2s;
+}
+
+.lz-sub.pod button.art:hover img {
+  opacity: 0.86;
+}
+
+.lz-sub .ep-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  font-variant-numeric: tabular-nums;
+  color: var(--lz-muted);
+}
+
+.lz-sub .ep-meta .no {
+  font-family: var(--num);
+  font-weight: 600;
+  color: var(--lz-ink-2);
+}
+
+/* Summaries are clipped to a few lines; the whole text is on the episode's own page. */
+.lz-sub.pod .desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* The latest episode: the picture, then its words, one size up from the list. */
+.lz-sub .latest {
+  display: grid;
+  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  gap: 24px 56px;
+  align-items: center;
+  padding-top: 28px;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .latest h3 {
+  margin-top: 8px;
+  font-size: clamp(24px, 2.4vw, 34px);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+
+.lz-sub .latest .desc {
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  max-width: 40em;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .latest .cta-row {
+  align-items: center;
+  gap: 12px 24px;
+  margin-top: 22px;
+}
+
+/* The search field sits beside the chapter's title. */
+.lz-sub.pod .head .finder {
+  align-self: end;
+  margin-bottom: 0;
+}
+
+.lz-sub.pod .finder .search {
+  margin-bottom: 0;
+}
+
+.lz-sub.pod .finder input {
+  padding-right: 96px;
+}
+
+.lz-sub.pod .count {
+  min-height: 1.7em;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-muted);
+}
+
+/* Every episode: a row each, between hairlines. Its picture; number, date, length, title and two
+   lines of summary; the things to do with it. The one that is playing carries a green rule. */
+.lz-sub .episodes {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .episodes > li {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr) auto;
+  gap: 6px 28px;
+  align-items: start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .episodes > li.on {
+  padding-left: 18px;
+  box-shadow: inset 3px 0 0 var(--lz-green);
+}
+
+.lz-sub .episodes h3 {
+  margin-top: 2px;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.lz-sub .episodes .desc {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  max-width: 46em;
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .acts {
+  display: flex;
+  align-items: center;
+  gap: 0 22px;
+  white-space: nowrap;
+}
+
+.lz-sub .acts :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  color: var(--lz-ink-2);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lz-sub .acts .play {
+  min-width: 2.4em;
+  font-weight: 600;
+  color: var(--lz-green-text);
+}
+
+.lz-sub .acts :is(a, button):hover {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .more-episodes {
+  margin-top: 18px;
+}
+
+.lz-sub .no-episodes {
+  padding: 34px 0 6px;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .no-episodes h3,
+.lz-sub .feed-error h3 {
+  font-size: 22px;
+  line-height: 1.45;
+}
+
+.lz-sub .no-episodes p,
+.lz-sub .feed-error p {
+  margin-top: 6px;
+  font-size: 15.5px;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .no-episodes .lz-expand {
+  margin-top: 8px;
+}
+
+.lz-sub .no-episodes .lz-expand::after {
+  content: none;
+}
+
+.lz-sub .feed-error {
+  padding-top: 28px;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .feed-error .cta-row {
+  align-items: center;
+  gap: 12px 24px;
+  margin-top: 20px;
+}
+
+/* While the feed is being read: the rows' places, in a pale tone, nothing moving. */
+.lz-sub .wait .art {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background: var(--lz-sand);
+  cursor: default;
+}
+
+.lz-sub .wait .body i {
+  display: block;
+  height: 14px;
+  margin-top: 12px;
+  border-radius: 3px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .wait .body i:first-child {
+  width: 9em;
+  margin-top: 4px;
+}
+
+.lz-sub .wait .body i:nth-child(2) {
+  width: min(28em, 80%);
+  height: 20px;
+}
+
+.lz-sub .wait .body i:nth-child(3) {
+  width: min(40em, 100%);
+}
+
+/* Where else to listen: the four places as rows, in the Latin serif. */
+.lz-sub .platforms a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  transition: color 0.2s;
+}
+
+.lz-sub .platforms b {
+  font-family: var(--num);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.lz-sub .platforms a:hover {
+  color: var(--lz-green-text);
+}
+
+/* The player: one line along the foot of the window, on paper, under a rule in ink. */
+.lz-sub.has-player {
+  padding-bottom: 92px;
+}
+
+.lz-sub .player {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 60;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: rgb(252 251 247 / 0.96);
+  -webkit-backdrop-filter: saturate(1.3) blur(14px);
+  backdrop-filter: saturate(1.3) blur(14px);
+  box-shadow: 0 -1px 0 var(--lz-ink);
+  color: var(--lz-ink);
+}
+
+.lz-sub .player .wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-block: 10px;
+}
+
+.lz-sub .player .thumb {
+  flex: none;
+  width: 72px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .player .now {
+  flex: 1;
+  min-width: 0;
+}
+
+.lz-sub .player .now p {
+  overflow: hidden;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lz-sub .player audio {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  height: 36px;
+  margin-top: 4px;
+  color-scheme: light;
+}
+
+.lz-sub .player .close {
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14.5px;
+  color: var(--lz-ink-2);
+  cursor: pointer;
+}
+
+.lz-sub .player .close:hover {
+  color: var(--lz-green-text);
+}
+
+@media (max-width: 860px) {
+  .lz-sub .pod-head .cols2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .pod-head .cover {
+    max-width: 260px;
+  }
+
+  .lz-sub .head .updated {
+    justify-self: start;
+  }
+
+  .lz-sub .latest {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .player .lz-link {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  /* The picture and the words share the first line; the things to do run under both. */
+  .lz-sub .episodes > li {
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 4px 16px;
+    padding: 16px 0 8px;
+  }
+
+  .lz-sub .episodes > li.on {
+    padding-left: 12px;
+  }
+
+  .lz-sub .episodes h3 {
+    font-size: 18px;
+  }
+
+  .lz-sub .acts {
+    grid-column: 1 / -1;
+  }
+
+  .lz-sub .player .thumb {
+    width: 56px;
+  }
+
+  .lz-sub .player .wrap {
+    gap: 12px;
+  }
+}

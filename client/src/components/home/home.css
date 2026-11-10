@@ -830,6 +830,9 @@
 /* The opening mark hangs outside the first phrase, so every line starts on the same edge. */
 .lz-home .peer-list blockquote .phrase {
   position: relative;
+  /* A phrase longer than the line wraps inside itself: balanced, so two characters are never left
+     alone on its last line. */
+  text-wrap: balance;
 }
 
 .lz-home .peer-list blockquote .mark {
@@ -1239,10 +1242,6 @@
   padding-top: 16px;
 }
 
-/* The member line under the shelf: its link in the green of every other link. */
-.lz-home .works aside a {
-  color: var(--lz-green-text);
-}
 
 @media (max-width: 860px) {
   /* Each book a row: its cover, then its words, between hairlines. */

@@ -1,6 +1,5 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ExternalLink } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Quotation } from "@/components/home/Peers";
 
 // Public Maven learner reviews; Chinese text translates the selected excerpts.
 // EZ: use the opening course evaluation, not the following general view about tools.
@@ -25,70 +24,56 @@ const reviews = [
   },
 ];
 
+/** Two learners' words, set like the peers' quotations, with the way to the originals on Maven. */
 export default function CourseReviews() {
   const { lang } = useLanguage();
   return (
     <div
-      className="mt-8"
       aria-label={
         lang === "en" ? "AI Builders learner reviews" : "AI Builders学员评价"
       }
     >
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-        <p className="text-xs font-medium text-superlinear-deep">
+      <ul className="peer-list">
+        {reviews.map(review => (
+          <li key={review.name}>
+            <figure>
+              <blockquote>
+                <Quotation text={review[lang]} />
+              </blockquote>
+              <figcaption>
+                <img
+                  src={review.avatar}
+                  alt=""
+                  loading="lazy"
+                  width={44}
+                  height={44}
+                />
+                <span>
+                  <b>{review.company}</b>
+                  <small>
+                    {review.name} · {review.role}
+                  </small>
+                </span>
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+      <p className="source">
+        <span>
           {lang === "en"
-            ? "AI Builders · Learner reviews"
-            : "AI Builders · 学员评价"}
-        </p>
+            ? "Excerpts from individual learners’ public course reviews."
+            : "节选自学员公开课程评价，中文为译文。"}
+        </span>
         <a
+          className="lz-link"
           href="https://maven.com/superlinear/aibuilders#reviews"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex min-h-11 items-center gap-2 text-xs text-superlinear-link hover:text-superlinear-deep"
         >
-          {lang === "en" ? "Read on Maven" : "在Maven读原文"}
-          <ExternalLink className="size-3.5" />
+          {lang === "en" ? "Read on Maven" : "在Maven读原文"}{" "}
+          <i aria-hidden="true">→</i>
         </a>
-      </div>
-      <div className="grid border-y border-[#DDD9D0] md:grid-cols-2">
-        {reviews.map((review, index) => (
-          <figure
-            key={review.name}
-            className={cn(
-              "flex flex-col py-6",
-              index === 0
-                ? "md:pr-9"
-                : "border-t border-[#DDD9D0] md:border-l md:border-t-0 md:pl-9"
-            )}
-          >
-            <blockquote className="text-base leading-7 text-[#302C25]">
-              “{review[lang]}”
-            </blockquote>
-            <figcaption className="mt-auto flex items-center gap-3 pt-5">
-              <img
-                src={review.avatar}
-                alt={review.name}
-                loading="lazy"
-                width={40}
-                height={40}
-                className="size-10 shrink-0 rounded-full object-cover"
-              />
-              <div>
-                <p className="text-lg font-semibold leading-6 text-superlinear-ink">
-                  {review.company}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-[#5C574D]">
-                  {review.name} · {review.role}
-                </p>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-      <p className="mt-2 text-[11px] leading-5 text-[#777064]">
-        {lang === "en"
-          ? "Excerpts from individual learners’ public course reviews."
-          : "节选自学员公开课程评价，中文为译文。"}
       </p>
     </div>
   );

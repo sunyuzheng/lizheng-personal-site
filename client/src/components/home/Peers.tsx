@@ -19,16 +19,30 @@ const GUEST_PAGE: Record<string, string> = {
 
 /**
  * A quotation set as lines: in Chinese a line breaks only after punctuation or
- * a dash, never inside a word (as Phrases does), and a phrase longer than the
- * line still wraps inside itself. The opening mark hangs outside the first
- * line, so every line starts on the same edge; the closing mark stays with the
- * last phrase, so it never falls on a line of its own.
+ * a dash, never inside a word (as Phrases does). A phrase too long for a narrow
+ * column may also break after the words listed in `soft` (typesetting hints
+ * kept beside the quotation, whose own text stays untouched). The opening mark
+ * hangs outside the first line, so every line starts on the same edge; the
+ * closing mark stays with the last phrase, so it never falls on a line of its
+ * own.
  */
-function Quotation({ text }: { text: string }) {
-  const parts = text
+export function Quotation({
+  text,
+  soft = [],
+}: {
+  text: string;
+  soft?: readonly string[];
+}) {
+  const hinted = soft.reduce(
+    (value, words) => value.replace(words, `${words}|`),
+    text
+  );
+  const parts = hinted
     .split("——")
     .map((part, index, all) => (index < all.length - 1 ? `${part}——` : part))
-    .flatMap(part => part.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [part]);
+    .flatMap(part => part.match(/[^，：；、？！。]+[，：；、？！。]*/g) ?? [part])
+    .flatMap(part => part.split("|"))
+    .filter(Boolean);
   return (
     <>
       {parts.map((part, index) => (
@@ -64,7 +78,10 @@ export default function Peers({ lang }: { lang: Lang }) {
             <li key={item.id}>
               <figure>
                 <blockquote>
-                  <Quotation text={text.quote} />
+                  <Quotation
+                    text={text.quote}
+                    soft={"soft" in text ? text.soft : undefined}
+                  />
                 </blockquote>
                 <figcaption>
                   <img

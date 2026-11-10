@@ -8,13 +8,10 @@ import { GROWTH_BOOK_AUTHORS } from "@shared/book-authors";
 import SiteFooter from "@/components/site/SiteFooter";
 import FoundingBooksLink from "@/components/FoundingBooksLink";
 import SiteHeader from "@/components/site/SiteHeader";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
-import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
 import { BOOKS_PAGE_META, languageAlternates } from "@shared/page-meta";
@@ -181,23 +178,6 @@ const COVERS = {
   },
 } as const;
 
-// Same treatment as the book cards in the homepage's selected work.
-function BookVisual({ id }: { id: string }) {
-  const cover =
-    id === "zbs" ? COVERS.zbs : id === "flp" ? COVERS.flp : COVERS.growth;
-  return (
-    <img
-      src={cover.src}
-      alt={cover.alt}
-      width={cover.width}
-      height={cover.height}
-      className="mx-auto w-[150px] rounded-[3px_6px_6px_3px] shadow-[0_1px_0_rgba(0,0,0,0.05),0_24px_32px_-18px_rgba(0,0,0,0.55),inset_3px_0_0_rgba(255,255,255,0.25)] transition-transform duration-500 [transform:perspective(900px)_rotateY(-10deg)] group-hover:[transform:perspective(900px)_rotateY(-2deg)] md:mx-0"
-      loading="eager"
-      decoding="async"
-    />
-  );
-}
-
 function SmartLink({
   href,
   external,
@@ -260,156 +240,148 @@ export default function Books() {
 
   return (
     <div
-      className={cn(
-        "lz-site min-h-screen overflow-x-clip bg-lz-ivory text-lz-ink",
-        lang === "en" && "l-en"
-      )}
+      className={lang === "en" ? "lz-site lz-home lz-sub l-en" : "lz-site lz-home lz-sub"}
+      lang={lang === "en" ? "en" : "zh-CN"}
     >
       <SiteHeader current="book" />
 
       <main>
-        <section className="container py-16 md:py-24">
-          <div className="max-w-4xl">
-            <p className="text-sm font-medium tracking-[0.08em] text-lz-green">
-              {lang === "en" ? "Books" : "书"}
-            </p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-black leading-[1.2] [text-wrap:balance] md:text-6xl">
+        <section className="page-head">
+          <div className="wrap">
+            <div className="eyebrow">{lang === "en" ? "Books" : "书"}</div>
+            <h1>
               {lang === "en" ? (
                 "Three books. Three questions."
               ) : (
                 <>
-                  <span className="inline-block">三本书，</span>
-                  <span className="inline-block">回答三个问题。</span>
+                  <span className="phrase">三本书，</span>
+                  <span className="phrase">回答三个问题。</span>
                 </>
               )}
             </h1>
           </div>
+        </section>
 
-          <FoundingBooksLink lang={lang} className="mt-8" />
-
-          <div className="mt-8 grid gap-5 lg:grid-cols-2">
-            {books[lang].map(book => (
-              <article
-                key={book.id}
-                id={
-                  book.id === "growth"
-                    ? "growth-data-analytics-playbook"
-                    : book.id
-                }
-                className={cn(
-                  "group grid gap-8 rounded-[14px] bg-lz-paper p-6 shadow-[0_0_0_1px_var(--lz-line)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_0_0_1px_var(--lz-line-2),0_28px_50px_-30px_rgba(20,30,20,0.45)] md:grid-cols-[150px_minmax(0,1fr)] md:items-center md:p-8",
-                  // The newest book takes the whole first row.
-                  book.id === "flp" && "lg:col-span-2"
-                )}
-              >
-                <BookVisual id={book.id} />
-
-                <div
-                  className={cn(
-                    "flex min-w-0 flex-col justify-center",
-                    book.id === "flp" && "max-w-3xl"
-                  )}
-                >
-                  <p className="text-[13.5px] tracking-[0.03em] text-lz-muted">
-                    {book.label}
-                  </p>
-                  <h2 className="mt-2 text-2xl font-black leading-snug [text-wrap:balance] md:text-3xl">
-                    {book.id === "zbs" && lang === "en" ? (
-                      <>
-                        {book.title}{" "}
-                        <span lang="zh-CN" className="text-lz-muted">
-                          真本事
-                        </span>
-                      </>
-                    ) : book.id === "zbs" ? (
-                      <>
-                        真本事：
-                        <span className="inline-block">从会工作到会赚钱</span>
-                      </>
-                    ) : (
-                      book.title
-                    )}
-                  </h2>
-                  <p className="mt-3 text-base font-medium leading-7 text-lz-ink-2">
-                    {book.subtitle}
-                  </p>
-                  <p className="mt-3 text-[15.5px] leading-7 text-lz-ink-2">
-                    {book.description}
-                  </p>
-                  {book.id === "growth" && (
-                    <p className="mt-3 text-sm leading-6 text-lz-muted">
-                      {lang === "en" ? "By " : "作者："}
-                      {GROWTH_BOOK_AUTHORS.map((author, i) => (
-                        <span key={author.id}>
-                          {i > 0 && " · "}
-                          <a
-                            href={author.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline decoration-lz-line-2 underline-offset-4 hover:text-lz-green"
-                          >
-                            {lang === "zh" && author.name === "Yuzheng Sun"
-                              ? "孙煜征（Yuzheng Sun）"
-                              : author.name}
-                          </a>
-                        </span>
-                      ))}
-                    </p>
-                  )}
-
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {book.meta.map(item => (
-                      <Badge
-                        key={item}
-                        variant="secondary"
-                        className="max-w-full whitespace-normal break-keep rounded border border-lz-line bg-lz-ivory px-2.5 py-1 text-left text-[11px] font-normal text-lz-ink-2"
-                      >
-                        {item}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {/* Two cards share a row from lg, so the buttons wrap instead of running past the card. */}
-                  <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        {/* The homepage's shelf, complete: the three covers on one line, the newest a size larger;
+            under each, the question it answers, its facts, and where to get it. */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="shelf full">
+              {books[lang].map(book => {
+                const cover = COVERS[book.id as keyof typeof COVERS];
+                const primaryPage = "page" in book.primary && book.primary.page;
+                return (
+                  <article
+                    key={book.id}
+                    id={
+                      book.id === "growth"
+                        ? "growth-data-analytics-playbook"
+                        : book.id
+                    }
+                    className={book.id === "flp" ? "book feature" : "book"}
+                  >
                     <SmartLink
                       href={book.primary.href}
                       external={book.primary.external}
-                      page={"page" in book.primary && book.primary.page}
-                      className={cn(
-                        buttonVariants(),
-                        "min-h-11 rounded-[10px] bg-lz-green px-5 text-white hover:bg-superlinear-deep"
-                      )}
+                      page={primaryPage}
+                      className="stand"
                     >
-                      <BookOpen className="mr-2 h-4 w-4" />
-                      {book.primary.label}
-                      {book.primary.external ? (
-                        <ExternalLink className="ml-2 h-4 w-4" />
-                      ) : (
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      )}
+                      <img
+                        className="cover"
+                        src={cover.src}
+                        alt={cover.alt}
+                        width={cover.width}
+                        height={cover.height}
+                        loading="eager"
+                        decoding="async"
+                      />
                     </SmartLink>
-                    {book.secondary ? (
-                      <SmartLink
-                        href={book.secondary.href}
-                        external={book.secondary.external}
-                        page={"page" in book.secondary && book.secondary.page}
-                        className={cn(
-                          buttonVariants({ variant: "outline" }),
-                          "min-h-11 rounded-[10px] border-lz-ink/45 bg-transparent px-5 text-lz-ink hover:bg-lz-sand"
-                        )}
-                      >
-                        {book.secondary.label}
-                        {book.secondary.external ? (
-                          <ExternalLink className="ml-2 h-4 w-4" />
-                        ) : (
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        )}
-                      </SmartLink>
-                    ) : null}
-                  </div>
-                </div>
-              </article>
-            ))}
+
+                    <div className="about">
+                      <div className="meta">{book.label}</div>
+                      <h2 lang={book.id === "zbs" ? undefined : "en"}>
+                        <SmartLink
+                          href={book.primary.href}
+                          external={book.primary.external}
+                          page={primaryPage}
+                        >
+                          {book.id === "zbs" && lang === "en" ? (
+                            <>
+                              {book.title}{" "}
+                              <span lang="zh-CN" className="zh-name">
+                                真本事
+                              </span>
+                            </>
+                          ) : book.id === "zbs" ? (
+                            <>
+                              真本事：
+                              <span className="phrase">从会工作到会赚钱</span>
+                            </>
+                          ) : (
+                            book.title
+                          )}
+                        </SmartLink>
+                      </h2>
+                      {/* Chinese lines break after punctuation, not inside a word (Phrases). */}
+                      <p className="question">
+                        <Phrases text={book.subtitle} />
+                      </p>
+                      <p>{book.description}</p>
+                      {book.id === "growth" && (
+                        <p className="authors">
+                          {lang === "en" ? "By " : "作者："}
+                          {GROWTH_BOOK_AUTHORS.map((author, i) => (
+                            <span key={author.id}>
+                              {i > 0 && " · "}
+                              <a
+                                href={author.linkedin}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {lang === "zh" && author.name === "Yuzheng Sun"
+                                  ? "孙煜征（Yuzheng Sun）"
+                                  : author.name}
+                              </a>
+                            </span>
+                          ))}
+                        </p>
+                      )}
+
+                      <ul className="facts">
+                        {book.meta.map(item => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+
+                      <div className="ways">
+                        <SmartLink
+                          href={book.primary.href}
+                          external={book.primary.external}
+                          page={primaryPage}
+                          className="btn btn-green"
+                        >
+                          {book.primary.label}
+                        </SmartLink>
+                        {book.secondary ? (
+                          <SmartLink
+                            href={book.secondary.href}
+                            external={book.secondary.external}
+                            page={
+                              "page" in book.secondary && book.secondary.page
+                            }
+                            className="lz-link"
+                          >
+                            {book.secondary.label} <i aria-hidden="true">→</i>
+                          </SmartLink>
+                        ) : null}
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <FoundingBooksLink lang={lang} className="member-line" />
           </div>
         </section>
       </main>

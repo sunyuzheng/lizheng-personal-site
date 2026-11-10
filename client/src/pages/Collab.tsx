@@ -1,19 +1,8 @@
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
-import {
-  ArrowRight,
-  Building2,
-  CalendarDays,
-  Handshake,
-  Mail,
-  Mic2,
-  ShieldCheck,
-} from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { COLLAB_PAGE_META } from "../../../shared/collab-meta";
@@ -29,25 +18,21 @@ const copy = {
       "Talks, team training, and advisory for organizations putting AI to work. Start with what your team needs to understand, learn, or do differently.",
     proofLine:
       "Cornell Economics PhD · Former Tencent AI leader · Early Statsig team, later acquired by OpenAI · 200+ public conversations",
-    creatorLabel: "PODCASTS & CREATOR INVITATIONS",
+    creatorLabel: "Podcasts & creator invitations",
     creatorTitle: "Inviting me to a podcast or video?",
     creatorDetail:
       "Explore possible topics, past episodes, and a ready-to-use host kit. Program invitations are separate from commercial work.",
     creatorCta: "Open the creator page",
-    workEyebrow: "ORGANIZATIONS & LONG-TERM WORK",
+    workEyebrow: "Organizations & long-term work",
     workTitle: "Three practical starting points.",
     paths: [
       {
-        icon: CalendarDays,
-        number: "01",
         title: "Talks & events",
         detail:
           "Keynotes, fireside conversations, and panels on what AI changes, AI-native work and talent, building reliable systems, organizational judgment, and career value.",
         fit: "Most useful when you can name who is in the room and what should change for them afterward.",
       },
       {
-        icon: Building2,
-        number: "02",
         title: "Enterprise AI training and custom programs",
         detail:
           "For engineering and non-engineering teams: use a mature course when it fits, and add company-specific cases or a full redesign only when the work requires it. Selected public team trainings and internal sessions include Tencent, Meituan, Xiaohongshu, DoorDash, and Pinterest.",
@@ -60,8 +45,6 @@ const copy = {
         },
       },
       {
-        icon: Handshake,
-        number: "03",
         title: "Organization advisory & long-term partnerships",
         detail:
           "A focused session or internal conversation can clarify one important product, AI, data, growth, or organizational decision before a team commits to a larger project.",
@@ -71,7 +54,7 @@ const copy = {
     budgetTitle: "Commercial scope",
     budgetDetail:
       "For planning: organization sessions start at $2,000; AI Builders can be purchased by the seat; fully custom enterprise programs start at $100,000. The enterprise page publishes the complete pricing ladder and a team procurement brief. I do not offer paid consulting to individuals—join the free community and ask there instead. Talks are scoped separately; editorial invitations are never priced or bundled here.",
-    principlesEyebrow: "HOW I THINK ABOUT FIT",
+    principlesEyebrow: "How I think about fit",
     principlesTitle:
       "A useful collaboration starts with the work, not the transaction.",
     principles: [
@@ -91,7 +74,7 @@ const copy = {
           "Client, advisory, and investment relationships do not buy editorial access. If they are relevant to public content, they are disclosed.",
       },
     ],
-    contactEyebrow: "START A CONVERSATION",
+    contactEyebrow: "Start a conversation",
     contactTitle: "A short email is enough.",
     contactIntro: "Please include four things:",
     contactItems: [
@@ -121,16 +104,12 @@ const copy = {
     workTitle: "三种常见的合作起点。",
     paths: [
       {
-        icon: CalendarDays,
-        number: "01",
         title: "演讲与活动",
         detail:
           "Keynote、炉边对谈和圆桌，主题包括AI到底改变了什么、AI Native工作与人才、可靠系统、组织判断与职业价值。",
         fit: "最合适的情况：你说得清台下是谁，以及听完后希望他们发生什么变化。",
       },
       {
-        icon: Building2,
-        number: "02",
         title: "企业AI培训与定制",
         detail:
           "面向研发和非研发团队：成熟课程够用，就直接采购；只有企业自己的案例或工作本身确实不同，才增加定制。可公开的团队培训与内部分享包括腾讯、美团、小红书、DoorDash和Pinterest。",
@@ -143,8 +122,6 @@ const copy = {
         },
       },
       {
-        icon: Handshake,
-        number: "03",
         title: "机构咨询与长期合作",
         detail:
           "先用一次聚焦的团队问题梳理会，把产品、AI、数据、增长或组织中的一个重要问题谈清楚，再决定是否值得进入更大的项目。",
@@ -223,20 +200,16 @@ export default function Collab() {
 
   return (
     <div
-      className={cn(
-        "lz-site relative min-h-screen overflow-x-clip bg-superlinear-canvas text-superlinear-ink",
-        lang === "en" && "l-en"
-      )}
+      className={lang === "en" ? "lz-site lz-home lz-sub l-en" : "lz-site lz-home lz-sub"}
+      lang={lang === "en" ? "en" : "zh-CN"}
     >
       <SiteHeader current="collab" />
 
-      <main className="relative z-10">
-        <section className="container py-16 md:py-24">
-          <div className="max-w-4xl">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
-              {t.eyebrow}
-            </p>
-            <h1 className="mt-5 max-w-3xl text-[34px] font-semibold leading-[1.08] text-superlinear-ink md:text-6xl">
+      <main>
+        <section className="page-head">
+          <div className="wrap">
+            <div className="eyebrow">{t.eyebrow}</div>
+            <h1>
               {lang === "zh" ? (
                 <>
                   AI变了，
@@ -247,19 +220,57 @@ export default function Collab() {
                 t.h1
               )}
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-superlinear-body">
-              {t.intro}
-            </p>
-            <p className="mt-6 max-w-3xl border-l border-superlinear/60 pl-4 text-xs font-medium leading-6 text-superlinear-body/80">
-              {t.proofLine}
-            </p>
+            <p className="lede">{t.intro}</p>
+            <p className="aside">{t.proofLine}</p>
           </div>
+        </section>
 
-          <Link
-            href={withLanguage("/collab/creators", lang)}
-            className="group mt-12 grid overflow-hidden rounded-2xl border border-superlinear/35 bg-superlinear-deep text-white transition hover:border-superlinear md:grid-cols-[0.68fr_1fr]"
-          >
-            <div className="relative min-h-56 overflow-hidden md:min-h-full">
+        {/* Three ways to start, side by side between hairlines; what commercial work costs, as a
+            note under them; then the other kind of request, a programme invitation, with its
+            picture. */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head">
+              <div>
+                <div className="eyebrow">{t.workEyebrow}</div>
+                <h2>{t.workTitle}</h2>
+              </div>
+            </div>
+            <div className="cols">
+              {t.paths.map(path => (
+                <article key={path.title}>
+                  <h3>{path.title}</h3>
+                  <p>{path.detail}</p>
+                  <p className="fit">{path.fit}</p>
+                  {"action" in path && path.action ? (
+                    <div className="links">
+                      <Link
+                        className="lz-link"
+                        href={withLanguage(path.action.href, lang)}
+                      >
+                        {path.action.label} <i aria-hidden="true">→</i>
+                      </Link>
+                      <Link
+                        className="lz-link"
+                        href={withLanguage(path.action.secondaryHref, lang)}
+                      >
+                        {path.action.secondaryLabel}{" "}
+                        <i aria-hidden="true">→</i>
+                      </Link>
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+            <div className="note-row">
+              <div className="lab">{t.budgetTitle}</div>
+              <p>{t.budgetDetail}</p>
+            </div>
+
+            <Link
+              href={withLanguage("/collab/creators", lang)}
+              className="pic-row"
+            >
               <img
                 src="/hero/acquired-behind-scenes-desktop.webp"
                 alt={
@@ -267,169 +278,65 @@ export default function Collab() {
                     ? "Yuzheng Sun in conversation with the hosts of Acquired"
                     : "课代表立正与Acquired的主播对谈"
                 }
-                className="absolute inset-0 h-full w-full object-cover object-center"
                 width={2400}
                 height={1600}
+                loading="lazy"
+                decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-superlinear-deep/80 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:to-superlinear-deep/60" />
-            </div>
-            <div className="p-6 md:p-10">
-              <div className="flex items-center gap-2 text-superlinear-on-dark">
-                <Mic2 className="h-4 w-4" />
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em]">
-                  {t.creatorLabel}
-                </p>
+              <div>
+                <div className="eyebrow">{t.creatorLabel}</div>
+                <h2>{t.creatorTitle}</h2>
+                <p>{t.creatorDetail}</p>
               </div>
-              <h2 className="mt-4 text-2xl font-semibold text-white md:text-3xl">
-                {t.creatorTitle}
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-white/75">
-                {t.creatorDetail}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark">
-                {t.creatorCta}
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+              <span className="lz-link">
+                {t.creatorCta} <i aria-hidden="true">→</i>
               </span>
-            </div>
-          </Link>
-
-          <div className="mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
-              {t.workEyebrow}
-            </p>
-            <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight text-superlinear-ink md:text-4xl">
-              {t.workTitle}
-            </h2>
-            <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {t.paths.map(path => {
-                const Icon = path.icon;
-                return (
-                  <article
-                    key={path.number}
-                    className="flex flex-col rounded-2xl border border-superlinear-cream bg-superlinear-surface p-6 md:p-7"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="flex h-10 w-10 items-center justify-center border border-superlinear/20 bg-superlinear-pale text-superlinear-link">
-                        <Icon className="h-5 w-5" />
-                      </span>
-                      <span className="font-mono text-xs text-superlinear-body/60">
-                        {path.number}
-                      </span>
-                    </div>
-                    <h3 className="mt-6 text-xl font-semibold text-superlinear-ink">
-                      {path.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-superlinear-body/80">
-                      {path.detail}
-                    </p>
-                    <p className="mt-4 text-sm leading-7 text-superlinear-body">
-                      {path.fit}
-                    </p>
-                    {"action" in path && path.action ? (
-                      <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-6">
-                        <Link
-                          href={withLanguage(path.action.href, lang)}
-                          className="text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-                        >
-                          {path.action.label} <span aria-hidden="true">→</span>
-                        </Link>
-                        <Link
-                          href={withLanguage(path.action.secondaryHref, lang)}
-                          className="text-sm font-semibold text-superlinear-body/75 transition hover:text-superlinear-ink"
-                        >
-                          {path.action.secondaryLabel}{" "}
-                          <span aria-hidden="true">→</span>
-                        </Link>
-                      </div>
-                    ) : null}
-                  </article>
-                );
-              })}
-            </div>
+            </Link>
           </div>
+        </section>
 
-          <div className="mt-8 rounded-2xl border border-superlinear/20 bg-superlinear-pale p-6 md:p-8">
-            <h3 className="text-lg font-semibold text-superlinear-ink">
-              {t.budgetTitle}
-            </h3>
-            <p className="mt-2 max-w-4xl text-sm leading-7 text-superlinear-body">
-              {t.budgetDetail}
-            </p>
-          </div>
-
-          <div className="mt-20 grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-link">
-                {t.principlesEyebrow}
-              </p>
-              <h2 className="mt-4 text-3xl font-semibold leading-tight text-superlinear-ink">
-                {t.principlesTitle}
-              </h2>
-            </div>
-            <div className="border-t border-superlinear-cream">
-              {t.principles.map((principle, index) => (
-                <div
-                  key={principle.title}
-                  className="grid gap-3 border-b border-superlinear-cream py-6 sm:grid-cols-[2rem_1fr]"
-                >
-                  <span className="font-mono text-xs text-superlinear-body/60">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-semibold text-superlinear-ink">
-                      {principle.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-7 text-superlinear-body/80">
-                      {principle.detail}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <section className="mt-20 rounded-2xl border border-superlinear bg-superlinear p-6 text-white md:p-10">
-            <div className="grid gap-10 md:grid-cols-[0.9fr_1.1fr] md:gap-14">
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="split">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white">
-                  {t.contactEyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold text-white">
-                  {t.contactTitle}
-                </h2>
-                <p className="mt-4 text-sm leading-7 text-white">
-                  {t.contactClose}
-                </p>
+                <div className="eyebrow">{t.principlesEyebrow}</div>
+                <h2>{t.principlesTitle}</h2>
+              </div>
+              <ul className="points">
+                {t.principles.map(principle => (
+                  <li key={principle.title}>
+                    <h3>{principle.title}</h3>
+                    <p>{principle.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <div className="eyebrow">{t.contactEyebrow}</div>
+                <h2>{t.contactTitle}</h2>
+                <p className="say">{t.contactClose}</p>
+                <div className="cta-row">
+                  <a className="btn btn-green" href={buildMailto(lang)}>
+                    {t.contactButton}
+                  </a>
+                </div>
+                <p className="mail">yz@superlinear.academy</p>
               </div>
               <div>
-                <p className="text-sm text-white">{t.contactIntro}</p>
-                <ol className="mt-4 space-y-3">
-                  {t.contactItems.map((item, index) => (
-                    <li key={item} className="flex gap-3 text-sm leading-7">
-                      <span className="font-mono text-white">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-white">{item}</span>
-                    </li>
+                <p className="eyebrow">{t.contactIntro}</p>
+                <ol className="points">
+                  {t.contactItems.map(item => (
+                    <li key={item}>{item}</li>
                   ))}
                 </ol>
-                <a
-                  href={buildMailto(lang)}
-                  className={cn(
-                    buttonVariants(),
-                    "mt-7 bg-white text-superlinear-deep hover:bg-superlinear-hover"
-                  )}
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  {t.contactButton}
-                </a>
               </div>
             </div>
-          </section>
-
-          <div className="mt-10 flex items-center justify-center gap-3 text-xs text-superlinear-body/70">
-            <ShieldCheck className="h-4 w-4" />
-            <span>yz@superlinear.academy</span>
           </div>
         </section>
       </main>

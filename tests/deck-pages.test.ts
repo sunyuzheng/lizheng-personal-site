@@ -35,6 +35,8 @@ describe("deck web versions", () => {
       expect(fs.existsSync(path.join(ROOT, "client", "public", "deck-slides", fileOf(page), slide.image))).toBe(true);
     }
     expect(fs.existsSync(path.join(ROOT, "client", "public", "deck-slides", fileOf(page), "og.jpg"))).toBe(true);
+    // The deck index (client/src/pages/Decks.tsx) shows each web version's first slide as 01.webp.
+    expect(capture.slides[0].image).toBe("01.webp");
     // A slide that names a live page (the deck's data-live) offers it in place of its picture.
     for (const slide of capture.slides as Array<{ live?: { src: string } }>) {
       if (slide.live) expect(html).toContain(`<figure class="live" data-src="${slide.live.src}`);

@@ -7,16 +7,15 @@ import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
 import { STATSIG_WRITING_PATH } from "@shared/writing-links";
-import { Button } from "@/components/ui/button";
 import { pick, useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 import { ABOUT_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildAboutStructuredData } from "@shared/structured-data";
-import { ArrowRight, BookOpen, ExternalLink, MapPin, Mic2 } from "lucide-react";
 import { Fragment, useEffect } from "react";
 import { Link } from "wouter";
+
+const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 // The homepage career band, with the fuller Statsig role kept on the profile.
 const career: Record<Lang, CareerStep[]> = {
@@ -184,14 +183,14 @@ export default function About() {
             href={GROWTH_BOOK_AMAZON_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+            className="inline"
           >
             Growth Data Analytics Playbook
           </a>{" "}
           and wrote{" "}
           <Link
             href="/zbs"
-            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+            className="inline"
           >
             Real Stuff
           </Link>{" "}
@@ -229,14 +228,14 @@ export default function About() {
             href={GROWTH_BOOK_AMAZON_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+            className="inline"
           >
             《Growth Data Analytics Playbook》
           </a>
           ，写了
           <Link
             href="/zbs"
-            className="font-medium text-zinc-200 no-underline hover:text-superlinear-on-dark"
+            className="inline"
           >
             《真本事：从会工作到会赚钱》
           </Link>
@@ -252,298 +251,232 @@ export default function About() {
     },
   });
 
+  const names =
+    lang === "en" ? ["孙煜征", "课代表立正"] : ["孙煜征", "Yuzheng Sun", "课代表立正"];
+  const facts: Array<[string, string]> = [
+    [lang === "en" ? "Based in" : "现居", "Seattle / 西雅图"],
+    [
+      lang === "en" ? "Education" : "学历",
+      lang === "en" ? "Cornell PhD in Economics" : "康奈尔经济学博士",
+    ],
+    [lang === "en" ? "Public name" : "公开名称", "课代表立正"],
+    [
+      lang === "en" ? "Current role" : "现在",
+      lang === "en" ? "Founder · Author" : "创始人 · 作者",
+    ],
+  ];
+
   return (
     <div
-      className={cn(
-        "lz-site min-h-screen bg-lz-forest-3 text-zinc-100",
-        lang === "en" && "l-en"
-      )}
+      className={lang === "en" ? "lz-site lz-home lz-sub l-en" : "lz-site lz-home lz-sub"}
+      lang={lang === "en" ? "en" : "zh-CN"}
     >
       <SiteHeader current="about" />
 
       <main>
-        <section className="border-b border-white/10 py-16 md:py-24">
-          <div className="container grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-20">
+        {/* The opening, on the forest like the homepage's first screen: his name large, who he is
+            in two sentences, and four plain facts; the career band stands under it. */}
+        <section className="about-top grain">
+          <div className="wrap">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
-                {copy.eyebrow}
+              <div className="eyebrow">{copy.eyebrow}</div>
+              <h1>{lang === "en" ? "Yuzheng Sun" : "立正"}</h1>
+              <p className="aka">
+                {names.map((name, index) => (
+                  <Fragment key={name}>
+                    {index > 0 && " "}
+                    <span className="phrase">
+                      {index > 0 && "· "}
+                      {name}
+                    </span>
+                  </Fragment>
+                ))}
               </p>
-              <h1 className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] text-white md:text-6xl">
-                {lang === "en" ? "Yuzheng Sun" : "立正"}
-                <span className="mt-3 block text-lg font-normal leading-7 text-zinc-400 md:text-2xl">
-                  {(lang === "en"
-                    ? ["孙煜征", "课代表立正"]
-                    : ["孙煜征", "Yuzheng Sun", "课代表立正"]
-                  ).map((name, index) => (
-                    <Fragment key={name}>
-                      {index > 0 && " "}
-                      <span className="inline-block">
-                        {index > 0 && "· "}
-                        {name}
-                      </span>
-                    </Fragment>
-                  ))}
-                </span>
-              </h1>
-              <p className="mt-7 max-w-3xl text-lg leading-8 text-zinc-300 md:text-xl md:leading-9">
-                {copy.intro}
-              </p>
-              <p className="mt-5 max-w-3xl border-l border-superlinear-on-dark/40 pl-5 text-base leading-8 text-zinc-400">
-                {copy.belief}
-              </p>
+              <p className="lede">{copy.intro}</p>
+              <p className="belief">{copy.belief}</p>
             </div>
-            <div className="grid grid-cols-2 gap-px bg-white/10">
-              {[
-                [lang === "en" ? "Based in" : "现居", "Seattle / 西雅图"],
-                [
-                  lang === "en" ? "Education" : "学历",
-                  lang === "en"
-                    ? "Cornell PhD in Economics"
-                    : "康奈尔经济学博士",
-                ],
-                [lang === "en" ? "Public name" : "公开名称", "课代表立正"],
-                [
-                  lang === "en" ? "Current role" : "现在",
-                  lang === "en" ? "Founder · Author" : "创始人 · 作者",
-                ],
-              ].map(([label, value]) => (
-                <div key={label} className="bg-lz-forest-2 p-5">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-zinc-500">
-                    {label}
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-white">
-                    {value}
-                  </p>
+            <dl>
+              {facts.map(([label, value]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
           </div>
         </section>
 
         <CareerPath lang={lang} steps={career[lang]} />
 
-        <section className="bg-superlinear-canvas py-16 text-superlinear-ink md:py-20">
-          <div className="container">
-            <div className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-deep">
-                {copy.backgroundTitle}
-              </p>
-              <p className="mt-5 text-lg leading-9 text-[#48443B]">
-                {copy.background}
-              </p>
-              <p className="mt-4 text-lg leading-9 text-[#48443B]">
-                {copy.aie}
-              </p>
-              <div className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:gap-x-8">
-                <a
-                  href="https://economics.cornell.edu/historical-placement-phd-students"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-                >
-                  {lang === "en"
-                    ? "Cornell Economics placement record"
-                    : "康奈尔经济学博士去向记录"}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-                {lang === "zh" && (
-                  // A static page outside the React app, so a plain link.
+        {/* From here one sheet of paper: each chapter's name in the left column, its matter on the
+            right, a hairline in ink between chapters. */}
+        <section className="sec">
+          <div className="wrap">
+            <div className="chap">
+              <h2>{copy.backgroundTitle}</h2>
+              <div className="prose">
+                <p>{copy.background}</p>
+                <p>{copy.aie}</p>
+                <div className="links">
                   <a
-                    href={STATSIG_WRITING_PATH}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                    className="lz-link"
+                    href="https://economics.cornell.edu/historical-placement-phd-students"
+                    {...EXTERNAL}
                   >
-                    在Statsig写的19篇文章（中文版）
-                    <ArrowRight className="h-4 w-4" />
+                    {lang === "en"
+                      ? "Cornell Economics placement record"
+                      : "康奈尔经济学博士去向记录"}{" "}
+                    <i aria-hidden="true">→</i>
                   </a>
-                )}
-                <a
-                  href={`${lang === "en" ? LINKS.aieShanghai : LINKS.aieShanghaiZh}#organizers`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-                >
-                  {copy.aieLink}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-16">
-          <div className="container">
-            <div className="max-w-3xl">
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
-                {lang === "en" ? "Current work" : "现在在做"}
-              </p>
-              <h2 className="mt-5 text-3xl font-semibold text-white md:text-4xl">
-                {copy.currentTitle}
-              </h2>
-              <p className="mt-5 text-base leading-8 text-zinc-400">
-                {copy.currentIntro}
-              </p>
-            </div>
-            <div className="mt-8 grid gap-px bg-white/10 md:grid-cols-2">
-              {currentWork[lang].map(item => (
-                <article key={item.name} className="bg-lz-forest-2 p-6">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-on-dark">
-                    {item.role}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold text-white">
-                    {item.name}
-                  </h3>
-                  <p className="mt-4 text-sm leading-7 text-zinc-400">
-                    {item.detail}
-                  </p>
-                  {item.href.startsWith("/") ? (
-                    <Link
-                      href={withLanguage(item.href, lang)}
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark"
-                    >
-                      {"cta" in item
-                        ? item.cta
-                        : lang === "en"
-                          ? "Website"
-                          : "官网"}
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  ) : (
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark"
-                    >
-                      {"cta" in item
-                        ? item.cta
-                        : lang === "en"
-                          ? "Website"
-                          : "官网"}
-                      <ExternalLink className="h-4 w-4" />
+                  {lang === "zh" && (
+                    // A static page outside the React app, so a plain link.
+                    <a className="lz-link" href={STATSIG_WRITING_PATH}>
+                      在Statsig写的19篇文章（中文版） <i aria-hidden="true">→</i>
                     </a>
                   )}
-                </article>
-              ))}
+                  <a
+                    className="lz-link"
+                    href={`${lang === "en" ? LINKS.aieShanghai : LINKS.aieShanghaiZh}#organizers`}
+                    {...EXTERNAL}
+                  >
+                    {copy.aieLink} <i aria-hidden="true">→</i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="bg-superlinear-canvas py-10 text-superlinear-ink md:py-12">
-          <div className="container [&>div]:mt-0">
-            <CourseReviews />
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <div>
+                <div className="eyebrow">
+                  {lang === "en" ? "Current work" : "现在在做"}
+                </div>
+                <h2>{copy.currentTitle}</h2>
+              </div>
+              <div>
+                <p className="say first">{copy.currentIntro}</p>
+                <ul className="work-rows">
+                  {currentWork[lang].map(item => {
+                    const label =
+                      "cta" in item ? item.cta : lang === "en" ? "Website" : "官网";
+                    return (
+                      <li key={item.name}>
+                        <div>
+                          <b>{item.name}</b>
+                          <small>{item.role}</small>
+                        </div>
+                        <p>{item.detail}</p>
+                        {item.href.startsWith("/") ? (
+                          <Link
+                            className="lz-link"
+                            href={withLanguage(item.href, lang)}
+                          >
+                            {label} <i aria-hidden="true">→</i>
+                          </Link>
+                        ) : (
+                          <a className="lz-link" href={item.href} {...EXTERNAL}>
+                            {label} <i aria-hidden="true">→</i>
+                          </a>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="endorsements" className="scroll-mt-[68px] py-12 md:py-16">
-          <div className="container">
-            <PeerEndorsements />
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <div>
+                <div className="eyebrow">AI Builders</div>
+                <h2>{lang === "en" ? "Learner reviews" : "学员评价"}</h2>
+              </div>
+              <CourseReviews />
+            </div>
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-lz-forest-2 py-16 md:py-20">
-          <div className="container grid gap-12 lg:grid-cols-2 lg:gap-20">
-            <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-superlinear-on-dark">
-                {lang === "en" ? "Books and conversations" : "书与对话"}
-              </p>
-              <h2 className="mt-5 text-3xl font-semibold text-white md:text-4xl">
-                {copy.publicTitle}
-              </h2>
-              <p className="mt-5 text-base leading-8 text-zinc-400">
-                {copy.publicIntro}
-              </p>
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Button
-                  asChild
-                  className="bg-superlinear text-white hover:bg-superlinear-deep"
-                >
-                  <Link href={withLanguage("/books", lang)}>
-                    <BookOpen className="mr-2 h-4 w-4" />
-                    {copy.books}
+        <section id="endorsements" className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <h2>{lang === "en" ? "What peers say" : "来自同行的评价"}</h2>
+              <PeerEndorsements />
+            </div>
+          </div>
+        </section>
+
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <h2>{copy.publicTitle}</h2>
+              <div className="prose">
+                <p>{copy.publicIntro}</p>
+                <div className="links">
+                  <Link className="lz-link" href={withLanguage("/books", lang)}>
+                    {copy.books} <i aria-hidden="true">→</i>
                   </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-auto max-w-full whitespace-normal border-white/20 bg-white/[0.03] py-2 text-center text-white hover:bg-white/[0.08]"
-                >
-                  <Link href={withLanguage("/guests", lang)}>
-                    <Mic2 className="mr-2 h-4 w-4" />
-                    {copy.hosted}
+                  <Link className="lz-link" href={withLanguage("/guests", lang)}>
+                    {copy.hosted} <i aria-hidden="true">→</i>
                   </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="h-auto max-w-full whitespace-normal border-white/20 bg-white/[0.03] py-2 text-center text-white hover:bg-white/[0.08]"
-                >
                   <Link
+                    className="lz-link"
                     href={`${withLanguage("/collab/creators", lang)}#conversations`}
                   >
-                    {copy.appeared}
-                    <ArrowRight className="ml-2 h-4 w-4" />
+                    {copy.appeared} <i aria-hidden="true">→</i>
                   </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="grid gap-px bg-white/10 sm:grid-cols-3 lg:grid-cols-1">
-              {publicFacts.map(item => (
-                <div key={item.value} className="bg-lz-forest-3 p-6">
-                  <p className="lz-num text-3xl font-semibold text-white">
-                    {item.value}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-zinc-400">
-                    {lang === "en" ? item.en : item.zh}
-                  </p>
                 </div>
-              ))}
-              <p className="bg-lz-forest-3 p-4 text-xs leading-5 text-zinc-600 sm:col-span-3 lg:col-span-1">
-                {lang === "en"
-                  ? "Figures checked July 12, 2026."
-                  : "数据核对日期：2026年7月12日。"}
-              </p>
+                <p className="tally">
+                  {publicFacts.map(item => (
+                    <span key={item.value}>
+                      <b>{item.value}</b>
+                      {lang === "en" ? item.en : item.zh}
+                    </span>
+                  ))}
+                </p>
+                <p className="checked">
+                  {lang === "en"
+                    ? "Figures checked July 12, 2026."
+                    : "数据核对日期：2026年7月12日。"}
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-14 md:py-20">
-          <div className="container grid gap-8 border-y border-white/10 py-10 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <div className="flex items-center gap-2 text-superlinear-on-dark">
-                <MapPin className="h-4 w-4" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.2em]">
-                  Seattle / 西雅图
-                </span>
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <h2>{copy.sourcesTitle}</h2>
+              <div className="prose">
+                <p>Seattle / 西雅图</p>
+                <p className="checked">{copy.reviewed}</p>
+                <div className="cta-row">
+                  <Link
+                    className="btn btn-green"
+                    href={withLanguage("/collab/creators", lang)}
+                  >
+                    {copy.invite}
+                  </Link>
+                  <a
+                    className="lz-link"
+                    href="https://github.com/sunyuzheng/yuzheng-profile"
+                    {...EXTERNAL}
+                  >
+                    {lang === "en" ? "Public source kit" : "公开事实资料库"}{" "}
+                    <i aria-hidden="true">→</i>
+                  </a>
+                </div>
               </div>
-              <h2 className="mt-4 text-2xl font-semibold text-white md:text-4xl">
-                {copy.sourcesTitle}
-              </h2>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-zinc-400">
-                {copy.reviewed}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <Button
-                asChild
-                className="bg-superlinear text-white hover:bg-superlinear-deep"
-              >
-                <Link href={withLanguage("/collab/creators", lang)}>
-                  {copy.invite}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <a
-                href="https://github.com/sunyuzheng/yuzheng-profile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-zinc-400 transition hover:text-white"
-              >
-                {lang === "en" ? "Public source kit" : "公开事实资料库"}
-                <ExternalLink className="h-4 w-4" />
-              </a>
             </div>
           </div>
         </section>
+
         <DefiningWork />
       </main>
       <SiteFooter />

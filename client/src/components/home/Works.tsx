@@ -130,10 +130,7 @@ export default function Works({ lang }: { lang: Lang }) {
         {/* One shelf: the three covers stand on one line, the newest a size larger, each with its
             words under it. The member line closes the chapter, as quiet as a colophon. */}
         <div className="shelf">{books}</div>
-        <FoundingBooksLink
-          lang={lang}
-          className="mt-10 rounded-none border-x-0 border-b-0 border-t border-lz-line bg-transparent px-0 pb-0 pt-4"
-        />
+        <FoundingBooksLink lang={lang} className="mt-10" />
       </div>
     </section>
   );

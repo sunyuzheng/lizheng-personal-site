@@ -1,26 +1,25 @@
 import { useLanguage } from "@/contexts/LanguageContext";
-import { cn } from "@/lib/utils";
 
 const brandLayers = {
   en: [
     {
       number: "01",
       title: "Build capability that remains yours.",
-      label: "REAL CAPABILITY",
+      label: "Real capability",
       detail:
         "Strip away the credential, title, company, and fashionable tool. What can you still see, decide, and make happen?",
     },
     {
       number: "02",
       title: "Make something reality can answer.",
-      label: "REAL WORK",
+      label: "Real work",
       detail:
         "Strip away the manager, presentation, and internal scorecard. Does anyone still need it—and can they use, reject, or improve it?",
     },
     {
       number: "03",
       title: "Make what lasts.",
-      label: "THE HORIZON",
+      label: "The horizon",
       detail:
         "Then ask one question further: after the first release, does the work keep creating value—and keep carrying the maker's judgment?",
     },
@@ -50,54 +49,34 @@ const brandLayers = {
   ],
 };
 
-function SectionLabel({
-  children,
-  dark = false,
-}: {
-  children: string;
-  dark?: boolean;
-}) {
-  const { lang } = useLanguage();
-
-  return (
-    <p
-      className={cn(
-        "font-mono text-xs leading-5",
-        lang === "en" ? "uppercase tracking-[0.2em]" : "tracking-[0.1em]",
-        dark ? "text-superlinear-on-dark" : "text-superlinear-deep"
-      )}
-    >
-      {children}
-    </p>
-  );
-}
-
+/**
+ * The question behind the work, closing About: the statement and why it matters; its three layers
+ * side by side between hairlines; then the makers he admires.
+ */
 export default function DefiningWork() {
   const { lang } = useLanguage();
   return (
-    <section
-      id="belief"
-      className="scroll-mt-[72px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
-    >
-      <div className="container">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <section id="belief" className="sec ruled belief">
+      <div className="wrap">
+        <div className="split big">
           <div>
-            <SectionLabel>
-              {lang === "en" ? "THE QUESTION" : "我关心的问题"}
-            </SectionLabel>
-            <h2 className="mt-5 max-w-2xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
+            <div className="eyebrow">
+              {lang === "en" ? "The question" : "我关心的问题"}
+            </div>
+            <h2>
               {lang === "en" ? (
                 "AI can make real work easier. It can also amplify fake work a hundredfold."
               ) : (
                 <>
-                  AI让真东西更容易做出来，也能把
-                  <span className="whitespace-nowrap">fake work</span>
-                  放大一百倍。
+                  <span className="phrase">AI让真东西</span>
+                  <span className="phrase">更容易做出来，</span>
+                  <span className="phrase">也能把fake work</span>
+                  <span className="phrase">放大一百倍。</span>
                 </>
               )}
             </h2>
           </div>
-          <div className="space-y-5 text-base leading-8 text-[#48443B] md:text-lg md:leading-9">
+          <div className="prose">
             <p>
               {lang === "en"
                 ? "Fake work substitutes visible activity for hard-to-measure value. A report, model, meeting, or launch can move the result—or merely produce evidence that someone is busy."
@@ -111,48 +90,29 @@ export default function DefiningWork() {
           </div>
         </div>
 
-        <div className="mt-14 grid border-y border-[#D4D0C7] md:grid-cols-3">
-          {brandLayers[lang].map((item, index) => (
-            <article
-              key={item.number}
-              className={cn(
-                "py-8 md:px-7 md:py-10",
-                index > 0 &&
-                  "border-t border-[#D4D0C7] md:border-l md:border-t-0"
-              )}
-            >
-              <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-xs text-superlinear-deep">
-                  {item.number}
-                </span>
-                <p
-                  className={cn(
-                    "font-mono text-[11px] leading-5 text-superlinear-deep",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {item.label}
-                </p>
-              </div>
-              <h3 className="mt-5 text-2xl font-semibold leading-9">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-[#5E584E]">
-                {item.detail}
-              </p>
+        <div className="cols layers">
+          {brandLayers[lang].map(item => (
+            <article key={item.number}>
+              <div className="t">{item.label}</div>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
             </article>
           ))}
         </div>
 
-        <div className="mt-10 grid gap-5 border-l-2 border-superlinear pl-5 md:grid-cols-[0.88fr_1.12fr] md:gap-12 md:pl-7">
-          <h3 className="max-w-lg text-2xl font-semibold leading-9 md:text-3xl md:leading-10">
-            {lang === "en"
-              ? "I admire people whose work and lives became impossible to separate."
-              : "我敬佩的，是作品与人最终变得无法分开。"}
+        <div className="split admire">
+          <h3>
+            {lang === "en" ? (
+              "I admire people whose work and lives became impossible to separate."
+            ) : (
+              <>
+                <span className="phrase">我敬佩的，</span>
+                <span className="phrase">是作品与人</span>
+                <span className="phrase">最终变得无法分开。</span>
+              </>
+            )}
           </h3>
-          <div className="space-y-3 text-sm leading-7 text-[#5E584E] md:text-base md:leading-8">
+          <div className="prose small">
             <p>
               {lang === "en"
                 ? "I think of the products of Steve Jobs and Zhang Xiaolong, Lionel Messi's football, Christopher Nolan's films, the judgments Geoffrey Hinton and Warren Buffett held through years of disagreement, and Tsunekazu Nishioka's temple craft. Different fields; in each case, the maker is unmistakable in the work."

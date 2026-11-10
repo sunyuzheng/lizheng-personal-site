@@ -276,7 +276,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   };
 
   return (
-    <div className="lz-ask-native rv" id="ask-lizheng">
+    <div className="lz-ask-native" id="ask-lizheng">
       <div className="lz-ask-native-head grain">
         <div>
           <div className="eyebrow">{t.eyebrow}</div>

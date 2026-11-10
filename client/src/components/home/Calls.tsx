@@ -17,7 +17,7 @@ export default function Calls({ lang }: { lang: Lang }) {
   return (
     <section className="sec calls" id={SECTION.calls}>
       <div className="wrap">
-        <div className="head rv">
+        <div className="head">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
@@ -46,7 +46,6 @@ export default function Calls({ lang }: { lang: Lang }) {
                   "call",
                   item.feature ? "featured" : "",
                   item.fold ? "fold" : "",
-                  "rv",
                 ]
                   .filter(Boolean)
                   .join(" ")}

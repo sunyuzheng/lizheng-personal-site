@@ -16,47 +16,11 @@ import { SECTION } from "@/components/home/content";
 import { useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { watchUsage, type UsageMark } from "@/lib/ask-usage";
 import { linkTarget } from "@/lib/link-target";
-import { prefersReducedMotion } from "@/lib/scroll";
 import { track } from "@vercel/analytics";
 import { applyPageSeo } from "@/lib/seo";
 import { HOME_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildHomeStructuredData } from "@shared/structured-data";
 import { useEffect, useRef, type RefObject } from "react";
-
-/**
- * Blocks that start below the first screen rise into place as they arrive.
- * Only transform changes, so content is always visible. A language switch
- * (/ ↔ /zh) reuses this page, so the pass runs again for the new content.
- */
-function useReveal(rootRef: RefObject<HTMLElement | null>, lang: Lang) {
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root || prefersReducedMotion()) return;
-    if (!("IntersectionObserver" in window)) return;
-    const observer = new IntersectionObserver(
-      entries => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.remove("pre");
-          observer.unobserve(entry.target);
-        }
-      },
-      { rootMargin: "0px 0px -6% 0px" }
-    );
-    const blocks = Array.from(root.querySelectorAll<HTMLElement>(".rv"));
-    for (const block of blocks) {
-      const rect = block.getBoundingClientRect();
-      if (rect.height && rect.top > window.innerHeight) {
-        block.classList.add("pre");
-        observer.observe(block);
-      }
-    }
-    return () => {
-      observer.disconnect();
-      for (const block of blocks) block.classList.remove("pre");
-    };
-  }, [rootRef, lang]);
-}
 
 // The chapters whose arrival on screen the owner's usage stats count (lib/ask-usage), in page
 // order; the Ask section counts itself (h_seen). c_works keeps its name for the books chapter.
@@ -111,7 +75,6 @@ export default function Home() {
     });
   }, [lang]);
 
-  useReveal(rootRef, lang);
   useHomeCounts(rootRef, lang);
 
   return (
@@ -122,8 +85,11 @@ export default function Home() {
     >
       <SiteHeader variant="overlay" />
       <main>
-        <Hero lang={lang} />
-        <CareerPath lang={lang} />
+        {/* The first screen: the hero takes whatever height the career band leaves of the window. */}
+        <div className="first-screen">
+          <Hero lang={lang} />
+          <CareerPath lang={lang} />
+        </div>
         <Proof lang={lang} />
         <Scenes lang={lang} />
         <City lang={lang} />

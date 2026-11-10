@@ -24,6 +24,15 @@ def resize(channel):
     return np.asarray(Image.fromarray(channel.astype(np.float32), mode="F").resize((width, height), Image.LANCZOS))
 
 
+# The cut-out kept a sliver of the chair's orange outline under his right sleeve (bottom left of the
+# picture), outside the arm. Clear it before scaling, with a short ramp so no hard edge is left.
+ys, xs = np.mgrid[0 : src.height, 0 : src.width]
+stray = np.clip((61.5 - xs) / 3.0, 0, 1) * np.clip((ys - 856) / 4.0, 0, 1)
+# What is left of it hugs the arm's edge: orange where skin is not (little blue, much red).
+orange = (xs < 72) & (ys > 850) & (rgb[..., 0] - rgb[..., 2] > 0.40)
+alpha = alpha * (1 - np.maximum(stray, orange.astype(np.float32)))
+premultiplied = rgb * alpha[..., None]
+
 colour = np.stack([resize(premultiplied[..., i]) for i in range(3)], -1)
 alpha = np.clip(resize(alpha), 0, 1)
 colour = np.clip(colour / np.where(alpha > 1e-4, alpha, 1.0)[..., None], 0, 1)

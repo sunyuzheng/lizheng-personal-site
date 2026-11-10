@@ -11,7 +11,7 @@ export default function Join({ lang }: { lang: Lang }) {
   return (
     <section className="sec city join grain" id={SECTION.join}>
       <div className="wrap">
-        <div className="head rv">
+        <div className="head">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
@@ -27,7 +27,7 @@ export default function Join({ lang }: { lang: Lang }) {
           {t.paths.map(path => (
             <div
               key={path.title}
-              className={path.main ? "path main rv" : "path rv"}
+              className={path.main ? "path main" : "path"}
             >
               <div className="t">{path.kind}</div>
               <h3>{path.title}</h3>
@@ -44,7 +44,7 @@ export default function Join({ lang }: { lang: Lang }) {
               </div>
               <div className="act">
                 {path.main ? (
-                  <a className="btn btn-green" href={path.href} {...EXTERNAL}>
+                  <a className="btn btn-ivory" href={path.href} {...EXTERNAL}>
                     {path.cta}
                   </a>
                 ) : (
@@ -57,7 +57,7 @@ export default function Join({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="ent rv" id={SECTION.enterprise}>
+        <div className="ent" id={SECTION.enterprise}>
           <figure className="ent-photo">
             <img
               src={t.enterprise.photo.src}

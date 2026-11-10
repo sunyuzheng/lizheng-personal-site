@@ -8,7 +8,6 @@ import {
   type AlsoGuest,
   type Guest,
 } from "./content";
-import Marquee from "./Marquee";
 import { EXTERNAL, Lines, Phrases } from "./parts";
 
 function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
@@ -38,26 +37,11 @@ function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
 }
 
 // Each name opens the guest page, or the conversation when there is no page.
-function AlsoName({
-  guest,
-  lang,
-  loopCopy,
-}: {
-  guest: AlsoGuest;
-  lang: Lang;
-  loopCopy: boolean;
-}) {
-  const focus = loopCopy ? { tabIndex: -1 } : {};
+function AlsoName({ guest, lang }: { guest: AlsoGuest; lang: Lang }) {
   return guest.slug ? (
-    <Link
-      href={withLanguage(`/guests/${guest.slug}`, lang)}
-      draggable={false}
-      {...focus}
-    >
-      {guest.name}
-    </Link>
+    <Link href={withLanguage(`/guests/${guest.slug}`, lang)}>{guest.name}</Link>
   ) : (
-    <a href={guest.href} draggable={false} {...EXTERNAL} {...focus}>
+    <a href={guest.href} {...EXTERNAL}>
       {guest.name}
     </a>
   );
@@ -71,7 +55,7 @@ export default function Talks({ lang }: { lang: Lang }) {
         {/* The head's picture is the show's setting, not an episode: Acquired's hosts on stage with
             him, for those who know them. No link, no play button; the event's name below. The two
             ways on sit under the title, beside the picture, rather than in a row of their own. */}
-        <div className="head talks-head rv">
+        <div className="head talks-head">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
@@ -104,27 +88,19 @@ export default function Talks({ lang }: { lang: Lang }) {
 
         <ul className="guests">
           {t.guests.map(guest => (
-            <li key={guest.name} className="rv">
+            <li key={guest.name}>
               <GuestCard guest={guest} lang={lang} />
             </li>
           ))}
         </ul>
 
-        <Marquee className="names" label={t.alsoAria} speed={34}>
-          {loopCopy => (
-            <>
-              <span className="lab">{t.alsoLabel}</span>
-              {t.also.map(guest => (
-                <AlsoName
-                  key={guest.name}
-                  guest={guest}
-                  lang={lang}
-                  loopCopy={loopCopy}
-                />
-              ))}
-            </>
-          )}
-        </Marquee>
+        {/* Everyone else, as names: a still list (it drifted past in a strip until 2026-11-09). */}
+        <div className="names" role="group" aria-label={t.alsoAria}>
+          <span className="lab">{t.alsoLabel}</span>
+          {t.also.map(guest => (
+            <AlsoName key={guest.name} guest={guest} lang={lang} />
+          ))}
+        </div>
       </div>
     </section>
   );

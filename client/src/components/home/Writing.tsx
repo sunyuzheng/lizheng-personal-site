@@ -7,7 +7,7 @@ export default function Writing({ lang }: { lang: Lang }) {
   return (
     <section className="sec writing" id={SECTION.writing}>
       <div className="wrap">
-        <div className="head rv">
+        <div className="head">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
@@ -20,7 +20,7 @@ export default function Writing({ lang }: { lang: Lang }) {
         </div>
         <ul className="essays">
           {t.essays.map(essay => (
-            <li key={essay.href} className="rv">
+            <li key={essay.href}>
               <a className="essay" href={essay.href} {...EXTERNAL}>
                 <div className="meta">{essay.date}</div>
                 <h3>

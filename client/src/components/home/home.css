@@ -13,7 +13,11 @@
   --lz-member-tint: #f3ead8;
   --lz-member-line: #d9cfbb;
   --lz-member-surface: #faf8f2;
-  background: var(--lz-ivory);
+  /* Small grey text a shade darker than the site's, for comfortable reading on paper. */
+  --lz-muted: #5c6159;
+  --lz-on-forest-2: rgb(248 241 228 / 0.8);
+  --lz-on-forest-3: rgb(248 241 228 / 0.58);
+  background: var(--lz-paper);
   color: var(--lz-ink);
   font-family: var(--sans);
   font-size: 16px;
@@ -253,7 +257,7 @@
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(60% 70% at 72% 42%, rgb(44 154 81 / 0.35), transparent 70%),
+    radial-gradient(60% 70% at 72% 42%, rgb(44 154 81 / 0.2), transparent 70%),
     radial-gradient(40% 50% at 10% 100%, rgb(0 0 0 / 0.25), transparent 70%);
 }
 
@@ -294,13 +298,16 @@
 
 .lz-home .hero h1 {
   margin-top: 26px;
-  font-size: clamp(44px, 6.1vw, 84px);
-  line-height: 1.12;
+  font-size: clamp(44px, 6.5vw, 98px);
+  line-height: 1.1;
   letter-spacing: 0.02em;
 }
 
+/* Three lines in English, so a size smaller than the two Chinese ones: the words and the two
+   buttons still clear the career band on a laptop. */
 .lz-home.l-en .hero h1 {
   font-family: var(--num);
+  font-size: clamp(44px, 5.7vw, 86px);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: -0.01em;
@@ -325,6 +332,9 @@
   align-self: end;
 }
 
+/* The seal behind him is green on the forest (cream until 2026-11-09): the title is then the one
+   cream thing on the screen, and his white shirt stands clear of the seal instead of merging with
+   it. It is the same green mark that signs the page at its end. */
 .lz-home .hero-art .mark {
   position: absolute;
   top: 14%;
@@ -332,8 +342,7 @@
   z-index: 1;
   width: 110%;
   transform: translateX(-50%);
-  color: var(--lz-on-forest);
-  opacity: 0.96;
+  color: var(--lz-green-2);
 }
 
 .lz-home .hero-art .mark svg {
@@ -351,8 +360,8 @@
   height: 92%;
   max-width: none;
   transform: translateX(-50%);
-  /* A close shadow that keeps the white shirt apart from the cream seal; a wide one used to lay a
-     grey haze over the seal around his hair. */
+  /* A close shadow that sets him in front of the seal; a wide one used to lay a grey haze over it
+     around his hair. */
   filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.22));
 }
 
@@ -421,29 +430,104 @@
    its middle, so the head rises as far above them as the hands reach below (2026-10-12, Yuzheng: the
    words had started above his head and ended with a gap under them while his hands ran to the edge). */
 @media (min-width: 861px) {
+  /* A poster: the hero and the career band under it fill the window together, whatever its height
+     (up to 1000px; on a taller screen the page simply goes on). The portrait's height is worked out
+     from the window: what the header and the band leave. Sizes are explicit lengths, not
+     percentages of a stretched box, so every browser lays the screen out the same way. */
+  .lz-home {
+    /* About how tall the career band is at this width (its roles wrap on narrower windows). */
+    --band-h: 220px;
+  }
+
+  .lz-home.l-en {
+    --band-h: 242px;
+  }
+
+  .lz-home .first-screen {
+    display: flex;
+    flex-direction: column;
+    min-height: min(100vh, 1000px);
+    min-height: min(100svh, 1000px);
+  }
+
+  .lz-home .hero {
+    --hero-side: max(
+      var(--lz-gut),
+      calc((100vw - var(--lz-wrap)) / 2 + var(--lz-gut))
+    );
+    --hero-top: calc(var(--lz-header-h) + 18px);
+    /* The portrait is a 900px cut-out: beyond 690px it would show its grain. */
+    --art-h: clamp(
+      430px,
+      calc(min(100vh, 1000px) - var(--hero-top) - var(--band-h)),
+      690px
+    );
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* The words are centred on the portrait (2026-10-12): they share one row, as tall as he is, so
+     his head rises as far above them as his hands reach below. */
   .lz-home .hero .wrap {
+    width: 100%;
+    grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr);
     align-items: center;
-    padding-top: calc(clamp(120px, 10vw, 148px) + env(safe-area-inset-top, 0px));
+    padding-top: calc(var(--hero-top) + env(safe-area-inset-top, 0px));
   }
 
   .lz-home .hero-copy {
-    padding-bottom: 0;
+    padding-block: 20px;
   }
 
   .lz-home .hero-copy > :first-child {
     margin-top: 0;
   }
 
+  /* Each line of the title is a line: it never breaks inside one. */
+  .lz-home .hero h1 {
+    white-space: nowrap;
+  }
+
+  /* The portrait and the seal run out to the window's right edge, past the text column, so on a
+     wide screen they grow with it instead of sitting in a box. */
   .lz-home .hero-art {
-    height: clamp(460px, 40vw, 580px);
+    align-self: end;
+    width: calc(100% + var(--hero-side));
+    height: var(--art-h);
   }
 
   .lz-home .hero-art .portrait {
     height: 100%;
   }
 
+  /* The seal is sized from the portrait's height (its width follows from its proportions), so on a
+     very wide window it stays the portrait's companion and never climbs into the navigation. */
   .lz-home .hero-art .mark {
-    top: 7%;
+    top: auto;
+    bottom: 30%;
+    width: auto;
+    height: 67.6%;
+    aspect-ratio: 1219.04 / 649.23;
+  }
+}
+
+/* Narrower windows: the band's roles take another line, and the text column is narrow, so the seal
+   draws in a little and its left tip stays clear of the introduction. */
+@media (min-width: 861px) and (max-width: 1179px) {
+  .lz-home {
+    --band-h: 236px;
+  }
+
+  .lz-home.l-en {
+    --band-h: 258px;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1100px) {
+  .lz-home .hero-art .mark {
+    height: 58.6%;
   }
 }
 
@@ -601,19 +685,18 @@
 /* ---------- Proof ---------- */
 
 .lz-home .proof {
-  padding-top: 14px;
+  padding-top: 26px;
   background: var(--lz-paper);
-  border-bottom: 1px solid var(--lz-line);
 }
 
 /* Who invited him and what peers say: rows between hairlines, each with a label column on the left,
-   so the lists start at the same edge and the organizations fit on one line. The first row sits
-   straight under the career band, so it needs no line of its own. */
+   so every list starts at the same edge. The first row sits straight under the career band, so it
+   needs no line of its own. */
 .lz-home .proof-row {
   display: grid;
-  grid-template-columns: 7.5rem minmax(0, 1fr);
-  column-gap: 28px;
-  padding-block: 20px;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  column-gap: 32px;
+  padding-block: 26px;
   border-top: 1px solid var(--lz-line);
 }
 
@@ -626,7 +709,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 6px;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--lz-muted);
 }
@@ -641,38 +724,22 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px 24px;
-}
-
-@media (max-width: 1180px) {
-  .lz-home .orgs p {
-    justify-content: flex-start;
-    gap: 6px 18px;
-  }
-
-  .lz-home .orgs .o,
-  .lz-home .cohost .o {
-    font-size: 15.5px;
-  }
-
-  .lz-home .orgs .o.zh {
-    font-size: 14.5px;
-  }
+  gap: 8px 16px;
 }
 
 .lz-home .orgs .o,
 .lz-home .cohost .o {
   font-family: var(--num);
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  color: #474b45;
+  letter-spacing: 0;
+  color: var(--lz-ink);
   white-space: nowrap;
 }
 
 .lz-home .orgs .o.zh {
   font-family: var(--lz-serif-zh);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 
@@ -681,10 +748,26 @@
   color: var(--lz-muted);
 }
 
+@media (max-width: 1240px) {
+  .lz-home .orgs p {
+    justify-content: flex-start;
+    gap: 6px 20px;
+  }
+
+  .lz-home .orgs .o,
+  .lz-home .cohost .o {
+    font-size: 17.5px;
+  }
+
+  .lz-home .orgs .o.zh {
+    font-size: 16.5px;
+  }
+}
+
 /* The conference he co-organizes: its name set like the organizations above (.o), one quiet line
    saying what it is, and the way to its site at the end of the row. */
 .lz-home .cohost {
-  grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+  grid-template-columns: 8rem minmax(0, 1fr) auto;
   align-items: baseline;
 }
 
@@ -692,11 +775,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 2px 18px;
+  gap: 2px 20px;
 }
 
 .lz-home .cohost .note {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--lz-muted);
 }
 
@@ -704,63 +787,77 @@
   content: " · ";
 }
 
-/* Peer endorsements: four short quotes in large serif, each signed in one line. */
+/* Peer endorsements: each one's words in full, set as a statement in the title face, two to a row,
+   signed with a face, a name and a role. */
 .lz-home .peers {
-  padding-block: 22px 34px;
+  padding-block: 34px 44px;
 }
 
 .lz-home .peer-list {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 56px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Two shared rows (quote, signature) via subgrid, so the names line up across the row. */
+/* Each cell is a flex box and so is its figure: the signatures of a row stand on one line without
+   any percentage height. */
 .lz-home .peer-list li {
-  display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
+  display: flex;
 }
 
 .lz-home .peer-list figure {
-  display: grid;
-  grid-row: span 2;
-  grid-template-rows: subgrid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
   margin: 0;
 }
 
-/* Sized so each phrase (up to 12 characters) fits its column on one line. */
 .lz-home .peer-list blockquote {
   margin: 0;
   font-family: var(--serif);
-  font-size: clamp(15.5px, 1.2vw, 17px);
+  font-size: clamp(18px, 1.42vw, 20.5px);
   font-weight: 700;
-  line-height: 1.6;
+  line-height: 1.75;
   letter-spacing: 0.01em;
+  text-wrap: pretty;
   color: var(--lz-ink);
+}
+
+/* The opening mark hangs outside the first phrase, so every line starts on the same edge. */
+.lz-home .peer-list blockquote .phrase {
+  position: relative;
+}
+
+.lz-home .peer-list blockquote .mark {
+  position: absolute;
+  top: 0;
+  right: 100%;
 }
 
 .lz-home.l-en .peer-list blockquote {
   font-family: var(--num);
+  font-size: clamp(18px, 1.45vw, 20.5px);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.55;
+  letter-spacing: 0;
 }
 
 .lz-home .peer-list figcaption {
   display: flex;
   align-items: center;
-  align-self: start;
-  gap: 10px;
-  padding-top: 14px;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
 }
 
 .lz-home .peer-list figcaption img {
   flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
   background: var(--lz-sand);
@@ -768,16 +865,21 @@
 
 .lz-home .peer-list figcaption span {
   min-width: 0;
-  font-size: 12.5px;
-  line-height: 1.45;
+  font-size: 14px;
+  line-height: 1.5;
   color: var(--lz-muted);
 }
 
 .lz-home .peer-list figcaption b {
-  display: block;
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--lz-ink);
+  transition: color 0.2s;
+}
+
+.lz-home .peer-list figcaption a:hover b,
+.lz-home .peer-list figcaption a:focus-visible b {
+  color: var(--lz-green-text);
 }
 
 .lz-home .peer-list figcaption small {
@@ -785,37 +887,34 @@
   font-size: inherit;
 }
 
-/* A subgrid shares the list's row gap, which would also open between a quote and its name, so
-   narrower layouts space rows of quotes by the signature's own bottom padding instead. */
-@media (min-width: 641px) and (max-width: 1100px) {
-  .lz-home .peer-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+/* Beside the name, what the words were said about (his teaching, the community, a book). */
+.lz-home .peer-list figcaption .who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 10px;
+}
 
-  .lz-home .peer-list figcaption {
-    padding-bottom: 24px;
-  }
-
-  .lz-home .peer-list li:nth-last-child(-n + 2) figcaption {
-    padding-bottom: 0;
-  }
+.lz-home .peer-list figcaption i {
+  font-size: 13.5px;
+  font-style: normal;
 }
 
 @media (max-width: 860px) {
   /* The label goes above the row. */
   .lz-home .proof-row {
     grid-template-columns: minmax(0, 1fr);
-    row-gap: 12px;
+    row-gap: 14px;
+    padding-block: 22px;
   }
 
-  .lz-home .proof-row.orgs > .lab,
-  .lz-home .proof-row.peers > .lab {
+  .lz-home .proof-row.orgs > .lab {
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
   }
 
-  /* The label and the link share the first line, as the peers' label and 读完整评价 do. */
+  /* The label and the link share the first line. */
   .lz-home .proof-row.cohost {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -843,132 +942,137 @@
   .lz-home .orgs p {
     gap: 6px 20px;
   }
+
+  .lz-home .peers {
+    padding-block: 24px 36px;
+  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .lz-home .peer-list {
     grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
   }
 
   .lz-home .peer-list blockquote {
-    font-size: 17px;
-  }
-
-  .lz-home .peer-list figcaption {
-    padding-block: 10px 20px;
-  }
-
-  .lz-home .peer-list li:last-child figcaption {
-    padding-bottom: 0;
+    font-size: 18.5px;
   }
 }
 
 /* ---------- Scenes ---------- */
 
+/* The rooms: the fullest one large, the other three in a list beside it, each a small picture with
+   its caption. Nothing moves. */
 .lz-home .scenes {
-  overflow: hidden;
-  padding-block: 32px 40px;
+  padding-block: 12px clamp(56px, 5.6vw, 84px);
   background: var(--lz-paper);
 }
 
-.lz-home .scenes .mask {
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 6%,
-    #000 94%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 6%,
-    #000 94%,
-    transparent
-  );
+.lz-home .scenes-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+  gap: 36px;
+  align-items: stretch;
 }
 
-/* Drifting strips (photos, guest names): scrollable, draggable, seamless. */
-.lz-home .marquee {
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
-  cursor: grab;
-}
-
-.lz-home .marquee::-webkit-scrollbar {
-  display: none;
-}
-
-.lz-home .marquee.dragging {
-  cursor: grabbing;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.lz-home .marquee-track {
-  display: flex;
-  width: max-content;
-}
-
-.lz-home .marquee-copy {
-  display: flex;
-  gap: var(--gap);
-  padding-right: var(--gap);
-}
-
-.lz-home .reel {
-  --gap: 18px;
-}
-
-.lz-home .reel .scene {
-  display: block;
-  width: clamp(260px, 30vw, 420px);
+.lz-home .scene {
   color: inherit;
 }
 
-.lz-home .reel figure {
-  margin: 0;
-}
-
-.lz-home .reel img {
+.lz-home .scene img {
   width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--lz-sand);
   transition: filter 0.3s;
 }
 
-.lz-home .reel .scene:hover img {
-  filter: brightness(1.06);
+.lz-home .scene:hover img,
+.lz-home .scene:focus-visible img {
+  filter: brightness(1.05);
 }
 
-.lz-home .reel figcaption {
-  margin-top: 10px;
-  font-size: 13.5px;
-  line-height: 1.55;
+.lz-home .scene.lead {
+  display: block;
+}
+
+.lz-home .scene.lead figure {
+  margin: 0;
+}
+
+.lz-home .scene.lead figcaption {
+  margin-top: 12px;
+}
+
+.lz-home .scene figcaption,
+.lz-home .scene span {
+  font-size: 14.5px;
+  line-height: 1.6;
   color: var(--lz-muted);
   transition: color 0.2s;
 }
 
-.lz-home .reel .scene:hover figcaption {
+.lz-home .scene:hover :is(figcaption, span),
+.lz-home .scene:focus-visible :is(figcaption, span) {
   color: var(--lz-ink);
 }
 
-.lz-home .reel .scene:hover figcaption::after {
+.lz-home .scene :is(figcaption, span)::after {
   content: " ↗";
-  color: var(--lz-green);
+  color: var(--lz-green-text);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.lz-home .scene:hover :is(figcaption, span)::after,
+.lz-home .scene:focus-visible :is(figcaption, span)::after {
+  opacity: 1;
+}
+
+/* Three rows sharing the large picture's height: the first on its top edge, the last on its bottom. */
+.lz-home .scene-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 0;
+  /* The large picture's caption hangs below it; the list ends where the picture does. */
+  padding: 0 0 35px;
+  list-style: none;
+}
+
+.lz-home .scene-list .scene {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .lz-home .scenes-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+
+  .lz-home .scene-list {
+    gap: 18px;
+    padding-bottom: 0;
+  }
+
+  .lz-home .scene-list .scene {
+    grid-template-columns: 42% minmax(0, 1fr);
+    gap: 14px;
+  }
 }
 
 /* ---------- Section heads ---------- */
 
 /* One chapter, one screen where it can be: the same air above and below every chapter, and a head
-   (eyebrow, title, a line or two) that takes no more room than it needs. */
+   (label, title, a line or two) that takes no more room than it needs. */
 .lz-home .sec {
-  padding-block: clamp(56px, 5.6vw, 80px);
+  padding-block: clamp(60px, 6vw, 88px);
 }
 
 .lz-home .head {
@@ -976,11 +1080,11 @@
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
   gap: 20px 64px;
   align-items: end;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
 .lz-home .head h2 {
-  font-size: clamp(32px, 3.3vw, 46px);
+  font-size: clamp(32px, 3.5vw, 50px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -991,156 +1095,193 @@
 
 .lz-home .head p {
   max-width: 30em;
-  font-size: 16.5px;
+  font-size: 17px;
   line-height: 1.8;
   color: var(--lz-muted);
 }
 
+/* The chapter's name, in ink: on paper, green is kept for what can be clicked. */
 .lz-home .eyebrow {
   margin-bottom: 12px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--lz-green);
+  color: var(--lz-ink-2);
 }
 
 @media (max-width: 860px) {
   .lz-home .head {
     grid-template-columns: 1fr;
-    margin-bottom: 28px;
+    margin-bottom: 30px;
   }
+}
+
+/* The reading chapters (Ask, the show, the books, the public calls, the essays) share one sheet of
+   paper. Between them there is no change of tint: each opens under a hairline in ink, as a chapter
+   does in a book. (Ask needs none: the night above it is its edge.) */
+.lz-home :is(.ask, .talks, .works, .calls, .writing) {
+  background: var(--lz-paper);
+}
+
+.lz-home :is(.talks, .works, .calls, .writing) {
+  padding-top: 0;
+}
+
+/* Arriving from the menu, the chapter's rule sits just under the header, not as a second line
+   below it. */
+.lz-home :is(.talks, .works, .calls, .writing)[id] {
+  scroll-margin-top: calc(var(--lz-header-h) - 2px);
+}
+
+.lz-home :is(.talks, .works, .calls, .writing) > .wrap::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: clamp(40px, 4vw, 56px);
+  background: var(--lz-ink);
 }
 
 /* ---------- Books (the "works" chapter) ---------- */
 
-.lz-home .works {
-  background: var(--lz-ivory);
-}
-
-.lz-home .bento {
+/* One shelf: the covers stand on a single line in ink, the newest a size larger; under the line,
+   each book's words. No cards. Every cover stands in a box of one height, so the line under them is
+   one line; the three books share a row, so their links stand on one line too. */
+.lz-home .shelf {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: 1.22fr 1fr 1fr;
 }
 
-.lz-home .card {
-  position: relative;
+.lz-home .book {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  border-radius: 14px;
-  background: var(--lz-paper);
-  box-shadow: 0 0 0 1px var(--lz-line);
-  transition:
-    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
-    box-shadow 0.35s ease;
+  color: inherit;
 }
 
-.lz-home .card:hover {
-  transform: translateY(-4px);
+.lz-home .book .stand {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  height: 301px;
+  border-bottom: 1px solid var(--lz-ink);
+}
+
+.lz-home .book .cover {
+  width: auto;
+  height: 232px;
+  border-radius: 2px 4px 4px 2px;
   box-shadow:
-    0 0 0 1px var(--lz-line-2),
-    0 28px 50px -30px rgb(20 30 20 / 0.45);
+    0 1px 0 rgb(0 0 0 / 0.06),
+    14px 0 22px -14px rgb(20 30 20 / 0.35),
+    inset 3px 0 0 rgb(255 255 255 / 0.22);
+  transform-origin: 50% 100%;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.lz-home .card .meta {
-  font-size: 13.5px;
-  letter-spacing: 0.03em;
-  color: var(--lz-muted);
+.lz-home .book.feature .cover {
+  height: 300px;
 }
 
-.lz-home .card h3 {
+.lz-home .book:hover .cover,
+.lz-home .book:focus-visible .cover {
+  transform: translateY(-6px);
+}
+
+.lz-home .book .about {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 22px 44px 0 0;
+}
+
+.lz-home .book .meta {
+  font-size: 14px;
   letter-spacing: 0.02em;
-}
-
-.lz-home.l-en .card h3 {
-  font-family: var(--num);
-}
-
-.lz-home .card .go {
-  margin-top: auto;
-  padding-top: 22px;
-}
-
-.lz-home .c-book {
-  grid-column: span 6;
-  display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
-  gap: 28px;
-  align-items: center;
-  padding: 32px;
-}
-
-.lz-home .c-book .cover {
-  width: 150px;
-  height: auto;
-  border-radius: 3px 6px 6px 3px;
-  box-shadow:
-    0 1px 0 rgb(0 0 0 / 0.05),
-    0 24px 32px -18px rgb(0 0 0 / 0.55),
-    inset 3px 0 0 rgb(255 255 255 / 0.25);
-  transform: perspective(900px) rotateY(-10deg);
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.lz-home .c-book:hover .cover {
-  transform: perspective(900px) rotateY(-2deg);
-}
-
-.lz-home .c-book h3 {
-  margin-top: 8px;
-  font-size: 24px;
-  line-height: 1.4;
-}
-
-/* The English card names 真本事 by its English title and keeps the Chinese name beside it. */
-.lz-home .c-book h3 .zh-name {
   color: var(--lz-muted);
 }
 
-.lz-home .c-book p {
+.lz-home .book h3 {
+  margin-top: 8px;
+  font-size: 23px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+
+.lz-home .book.feature h3 {
+  font-size: 27px;
+}
+
+.lz-home.l-en .book h3,
+.lz-home .book h3:lang(en) {
+  font-family: var(--num);
+  letter-spacing: 0;
+}
+
+.lz-home .book:hover h3,
+.lz-home .book:focus-visible h3 {
+  color: var(--lz-green-text);
+}
+
+/* The English shelf names 真本事 by its English title and keeps the Chinese name beside it. */
+.lz-home .book h3 .zh-name {
+  color: var(--lz-muted);
+}
+
+.lz-home .book p {
   margin-top: 10px;
   font-size: 15.5px;
   line-height: 1.75;
   color: var(--lz-ink-2);
 }
 
-.lz-home .c-book .go {
+.lz-home .book .go {
+  margin-top: auto;
   padding-top: 16px;
 }
 
-/* The newest book takes the whole first row; its text keeps a readable measure. */
-.lz-home .c-book.feature {
-  grid-column: span 12;
+/* The member line under the shelf: its link in the green of every other link. */
+.lz-home .works aside a {
+  color: var(--lz-green-text);
 }
 
-.lz-home .c-book.feature > div {
-  max-width: 640px;
-}
-
-@media (max-width: 980px) {
-  .lz-home .bento > .card {
-    grid-column: span 12;
-  }
-}
-
-@media (max-width: 520px) {
-  .lz-home .c-book {
-    grid-template-columns: 96px minmax(0, 1fr);
-    gap: 18px;
-    padding: 24px;
+@media (max-width: 860px) {
+  /* Each book a row: its cover, then its words, between hairlines. */
+  .lz-home .shelf {
+    grid-template-columns: minmax(0, 1fr);
+    border-top: 1px solid var(--lz-ink);
   }
 
-  .lz-home .c-book .cover {
-    width: 96px;
+  .lz-home .book {
+    display: grid;
+    grid-template-columns: 104px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--lz-line);
+  }
+
+  .lz-home .book .stand {
+    height: auto;
+    border-bottom: 0;
+  }
+
+  .lz-home .book .cover,
+  .lz-home .book.feature .cover {
+    width: 104px;
+    height: auto;
+  }
+
+  .lz-home .book .about {
+    padding: 0;
+  }
+
+  .lz-home .book h3,
+  .lz-home .book.feature h3 {
+    font-size: 21px;
   }
 }
 
 /* ---------- Talks ---------- */
-
-.lz-home .talks {
-  background: var(--lz-paper);
-}
 
 .lz-home.l-en .talks .head h2 {
   max-width: 13em;
@@ -1149,7 +1290,7 @@
 .lz-home .guests {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 28px 18px;
+  gap: 28px 20px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1164,27 +1305,25 @@
   height: auto;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--lz-sand);
   filter: saturate(0.82) contrast(1.02);
-  transition:
-    filter 0.3s,
-    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: filter 0.3s;
 }
 
 .lz-home .guest:hover img,
 .lz-home .guest:focus-visible img {
   filter: none;
-  transform: translateY(-3px);
 }
 
 .lz-home .guest b {
   display: block;
   margin-top: 12px;
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  transition: color 0.2s;
 }
 
 .lz-home.l-en .guest b {
@@ -1192,10 +1331,15 @@
   font-weight: 600;
 }
 
+.lz-home .guest:hover b,
+.lz-home .guest:focus-visible b {
+  color: var(--lz-green-text);
+}
+
 .lz-home .guest span {
   display: block;
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.55;
   color: var(--lz-muted);
 }
@@ -1209,75 +1353,86 @@
 
 @media (max-width: 560px) {
   .lz-home .guests {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px 12px;
   }
 
   .lz-home .guest b {
-    font-size: 15px;
+    font-size: 15.5px;
   }
 
   .lz-home .guest span {
-    font-size: 12px;
+    font-size: 12.5px;
   }
 }
 
+/* Everyone else, as names: a still list in the title face, each opening that person's page. */
 .lz-home .names {
-  --gap: 34px;
-  margin-top: 32px;
-  padding-block: 14px;
-  border-block: 1px solid var(--lz-line);
-  -webkit-mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-  mask-image: linear-gradient(
-    90deg,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-}
-
-.lz-home .names .marquee-copy {
+  display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
+  gap: 8px 28px;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lz-line);
   font-family: var(--serif);
-  font-size: 18px;
+  font-size: 17.5px;
   font-weight: 700;
-  color: #575b54;
-  white-space: nowrap;
+  line-height: 1.6;
+  color: var(--lz-ink-2);
 }
 
-.lz-home.l-en .names .marquee-copy {
+.lz-home.l-en .names {
   font-family: var(--num);
   font-weight: 500;
 }
 
 .lz-home .names a {
   color: inherit;
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
-.lz-home .names a:hover {
-  color: var(--lz-green);
+.lz-home .names a:hover,
+.lz-home .names a:focus-visible {
+  color: var(--lz-green-text);
 }
 
 .lz-home .names .lab {
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--lz-muted);
 }
 
-/* The show's head: the eyebrow, title and a line on the left; on the right its picture, Yuzheng on the
+/* On a phone the names would take six lines: one line there, to be swiped. */
+@media (max-width: 720px) {
+  .lz-home .names {
+    flex-wrap: nowrap;
+    margin-inline: calc(-1 * var(--lz-gut));
+    padding-inline: var(--lz-gut);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+
+  .lz-home .names::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* The show's head: the label, title and a line on the left; on the right its picture, Yuzheng on the
    Significance Summit stage with Acquired's hosts. Unframed and unlinked: it sets the scale for those
    who know them, with only the event's name beneath. */
 .lz-home .talks-head {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  align-items: stretch;
+}
+
+/* The words start level with the picture's top edge and the two buttons stand on its bottom edge. */
+.lz-home .talks-head > div {
+  display: flex;
+  flex-direction: column;
 }
 
 .lz-home .talks-head p {
@@ -1285,7 +1440,8 @@
 }
 
 .lz-home .talks-head .more {
-  margin-top: 26px;
+  margin-top: auto;
+  padding: 26px 0 34px;
 }
 
 .lz-home .talks-stage {
@@ -1297,13 +1453,13 @@
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--lz-sand);
 }
 
 .lz-home .talks-stage figcaption {
-  margin-top: 8px;
-  font-size: 12.5px;
+  margin-top: 10px;
+  font-size: 14px;
   letter-spacing: 0.02em;
   color: var(--lz-muted);
 }
@@ -1317,6 +1473,10 @@
   .lz-home .talks-head p {
     margin-top: 12px;
   }
+
+  .lz-home .talks-head .more {
+    padding: 24px 0 8px;
+  }
 }
 
 .lz-home .more {
@@ -1328,81 +1488,46 @@
 
 /* ---------- Public calls (dated record) ---------- */
 
-.lz-home .calls {
-  background: var(--lz-sand);
-}
-
-/* Oldest first along a thin rail; featured calls open on paper cards. */
+/* A ledger, oldest first: the date in its own column, what was said, and where the record is.
+   Rows between hairlines; no cards and no rail, since the date column already carries the order. */
 .lz-home .calls-list {
-  position: relative;
-  margin: 8px 0 0;
-  padding: 0 0 0 34px;
+  margin: 0;
+  padding: 0;
   list-style: none;
-}
-
-.lz-home .calls-list::before {
-  content: "";
-  position: absolute;
-  top: 30px;
-  bottom: 30px;
-  left: 5px;
-  width: 1px;
-  background: var(--lz-line-2);
+  border-top: 1px solid var(--lz-line-2);
 }
 
 .lz-home .call {
-  position: relative;
   display: grid;
-  grid-template-columns: 128px minmax(0, 1fr) minmax(0, 240px);
-  gap: 10px 40px;
-  padding: 24px clamp(24px, 2.6vw, 36px);
-  border-top: 1px solid var(--lz-line);
+  grid-template-columns: 9rem minmax(0, 1fr) minmax(0, 250px);
+  gap: 10px 44px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--lz-line);
 }
 
-.lz-home .call:first-child,
-.lz-home .call.featured,
-.lz-home .call.featured + .call {
-  border-top: 0;
-}
-
-/* Each dot sits level with its date. */
-.lz-home .call::before {
-  content: "";
-  position: absolute;
-  top: 31px;
-  left: -34px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--lz-sand);
-  box-shadow: inset 0 0 0 2px var(--lz-line-2);
-}
-
-/* The date in small figures, like the essays' dates; the title carries the row. */
+/* The date in the numeral face, like a ledger's first column; the title carries the row. */
 .lz-home .call .when b {
   display: block;
-  font-size: 14px;
+  font-family: var(--num);
+  font-size: 17px;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  font-variant-numeric: tabular-nums;
-  color: var(--lz-ink-2);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--lz-ink);
 }
 
+/* What makes the date matter (written before GPT-4), in plain small type under it. */
 .lz-home .call .badge {
-  display: inline-block;
-  white-space: nowrap;
-  margin-top: 10px;
-  padding: 4px 10px;
-  border-radius: 4px;
-  background: rgb(35 131 67 / 0.12);
-  font-size: 12.5px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--lz-green-text);
+  display: block;
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--lz-muted);
 }
 
 .lz-home .call h3 {
-  font-size: 19px;
+  font-size: 21px;
   line-height: 1.45;
 }
 
@@ -1410,21 +1535,48 @@
   font-family: var(--num);
 }
 
+.lz-home .call.featured h3 {
+  font-size: 24px;
+  line-height: 1.4;
+}
+
 .lz-home .call .claim {
   margin-top: 8px;
-  font-size: 14.5px;
+  max-width: 44em;
+  font-size: 15px;
   line-height: 1.8;
   color: var(--lz-muted);
 }
 
+/* The key line: the title's typeface at reading size, not a second headline. */
+.lz-home .call blockquote {
+  margin: 12px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--lz-ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.75;
+  color: var(--lz-ink);
+}
+
+.lz-home.l-en .call blockquote {
+  font-family: var(--num);
+  font-weight: 500;
+}
+
+.lz-home .call.featured .claim {
+  margin-top: 10px;
+}
+
 .lz-home .call .side {
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--lz-ink-2);
 }
 
 .lz-home .call .side .k {
   margin-bottom: 6px;
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--lz-muted);
 }
 
@@ -1440,90 +1592,45 @@
   border-bottom: 1px solid rgb(35 131 67 / 0.3);
   font-weight: 500;
   line-height: 1.6;
-  color: var(--lz-green);
+  color: var(--lz-green-text);
 }
 
-.lz-home .call.featured {
-  margin: 8px 0;
-  padding: clamp(24px, 2.6vw, 36px);
-  border-radius: 16px;
-  background: var(--lz-paper);
-  box-shadow:
-    0 0 0 1px var(--lz-line),
-    0 26px 50px -38px rgb(20 30 20 / 0.45);
-}
-
-.lz-home .call.featured::before {
-  top: calc(clamp(24px, 2.6vw, 36px) + 7px);
-  background: var(--lz-green);
-  box-shadow: 0 0 0 5px rgb(35 131 67 / 0.16);
-}
-
-.lz-home .call.featured h3 {
-  font-size: 21px;
-  line-height: 1.4;
-}
-
-/* The key line: the title's typeface at reading size, not a second headline. */
-.lz-home .call blockquote {
-  margin: 12px 0 0;
-  padding-left: 14px;
-  border-left: 2px solid var(--lz-green);
-  font-family: var(--serif);
-  font-size: 16.5px;
-  font-weight: 500;
-  line-height: 1.75;
-  color: var(--lz-ink);
-}
-
-.lz-home.l-en .call blockquote {
-  font-family: var(--num);
-  font-weight: 500;
-}
-
-.lz-home .call.featured .claim {
-  margin-top: 10px;
+.lz-home .call .side a:hover {
+  border-bottom-color: currentColor;
 }
 
 .lz-home .call .media {
   position: relative;
   display: block;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   overflow: hidden;
-  border-radius: 10px;
+  border: 0;
+  border-radius: 4px;
   background: var(--lz-sand);
-  box-shadow: 0 0 0 1px var(--lz-line);
 }
 
 .lz-home .call .media img {
   display: block;
   width: 100%;
   height: auto;
-  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.lz-home .call .media:hover img {
-  transform: scale(1.03);
 }
 
 .lz-home .call .media.video::after {
   content: "";
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  width: 44px;
-  height: 44px;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: rgb(18 22 19 / 0.72)
     url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9 7l9 5-9 5z' fill='%23f8f1e4'/></svg>")
-    center / 22px no-repeat;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+    center / 20px no-repeat;
 }
 
 @media (max-width: 1040px) {
   .lz-home .call {
-    grid-template-columns: 128px minmax(0, 1fr);
+    grid-template-columns: 9rem minmax(0, 1fr);
   }
 
   .lz-home .call .side {
@@ -1537,24 +1644,10 @@
 }
 
 @media (max-width: 640px) {
-  .lz-home .calls-list {
-    padding-left: 24px;
-  }
-
-  .lz-home .calls-list::before {
-    left: 4px;
-  }
-
   .lz-home .call {
     grid-template-columns: 1fr;
     gap: 8px;
-  }
-
-  .lz-home .call::before {
-    left: -24px;
-    top: 32px;
-    width: 9px;
-    height: 9px;
+    padding: 24px 0;
   }
 
   .lz-home .call .side {
@@ -1562,34 +1655,26 @@
     padding-top: 6px;
   }
 
-  .lz-home .call,
-  .lz-home .call.featured {
-    padding: 24px 22px;
-  }
-
-  .lz-home .call.featured::before {
-    top: 32px;
-  }
-
   .lz-home .call .when {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 12px;
+    align-items: baseline;
+    gap: 2px 12px;
   }
 
   .lz-home .call .badge {
     margin-top: 0;
   }
 
+  .lz-home .call h3,
+  .lz-home .call.featured h3 {
+    font-size: 21px;
+  }
+
   /* A long claim in a phone's narrow column reads better as running text than one phrase a
      line; wider columns keep phrases whole. */
   .lz-home .call .claim .phrase {
     display: inline;
-  }
-
-  .lz-home .calls-more {
-    margin-left: 24px;
   }
 }
 
@@ -1600,14 +1685,10 @@
 }
 
 .lz-home .calls-more {
-  margin: 12px 0 0 34px;
+  margin: 10px 0 0;
 }
 
-/* ---------- Writing + search ---------- */
-
-.lz-home .writing {
-  background: var(--lz-ivory);
-}
+/* ---------- Writing ---------- */
 
 /* A list, not cards: date, then the title and its one line, between hairlines; the whole row
    opens the essay. Titles get the width they need, so they break only between phrases. */
@@ -1615,7 +1696,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  border-top: 1px solid var(--lz-ink);
+  border-top: 1px solid var(--lz-line-2);
 }
 
 .lz-home .essays > li {
@@ -1624,21 +1705,23 @@
 
 .lz-home .essay {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 1fr) auto;
-  column-gap: 28px;
+  grid-template-columns: 9rem minmax(0, 1fr) auto;
+  column-gap: 44px;
   align-items: baseline;
-  padding: 22px 0;
+  padding: 24px 0;
 }
 
 .lz-home .essay .meta {
   grid-row: 1 / span 2;
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  color: var(--lz-muted);
+  font-family: var(--num);
+  font-size: 17px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--lz-ink);
 }
 
 .lz-home .essay h3 {
-  font-size: 22px;
+  font-size: 23px;
   line-height: 1.45;
   transition: color 0.2s;
 }
@@ -1651,14 +1734,14 @@
   grid-column: 2;
   max-width: 40em;
   margin-top: 8px;
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.8;
   color: var(--lz-ink-2);
 }
 
 .lz-home.l-en .essay p {
   font-family: var(--num);
-  font-size: 15.5px;
+  font-size: 16px;
 }
 
 .lz-home .essay .go {
@@ -1673,11 +1756,11 @@
 
 .lz-home .essay:hover h3,
 .lz-home .essay:hover .go {
-  color: var(--lz-green);
+  color: var(--lz-green-text);
 }
 
 .lz-home .essay:hover .go {
-  transform: translate(2px, -2px);
+  transform: translateX(3px);
 }
 
 @media (max-width: 560px) {
@@ -1690,12 +1773,13 @@
   .lz-home .essay .meta {
     grid-row: auto;
     grid-column: 1 / -1;
+    font-size: 15px;
   }
 
   .lz-home .essay h3 {
     grid-column: 1;
     margin-top: 6px;
-    font-size: 19px;
+    font-size: 19.5px;
   }
 
   .lz-home .essay p {
@@ -1713,9 +1797,6 @@
 /* Its own chapter, right after the academy. The head reads like every other chapter's,
    left-aligned. Below it, as on ask.lizheng.ai: a cream question box whose 提问 is the one solid
    green thing, then type, space and hairlines instead of cards and icons. */
-.lz-home .ask {
-  background: var(--lz-sand);
-}
 
 /* The head reads like every other chapter's: the title on the left; on the right, two sentences and
    the way to the full page. */
@@ -1732,7 +1813,7 @@
 }
 
 .lz-home .lz-ask-native-head h2 {
-  font-size: clamp(32px, 3.3vw, 46px);
+  font-size: clamp(32px, 3.5vw, 50px);
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -1811,21 +1892,19 @@
 }
 
 /* The question box. */
+/* A field, not a card: white on the paper inside one line, with no shadow under it. */
 .lz-home .lz-ask-form {
   max-width: 760px;
-  border-radius: 14px;
-  background: #fffefb;
-  box-shadow:
-    0 0 0 1px var(--lz-line),
-    0 30px 60px -44px rgb(20 30 20 / 0.45);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 0 0 1px #b4ae9f;
   transition: box-shadow 0.2s;
 }
 
 .lz-home .lz-ask-form:focus-within {
   box-shadow:
     0 0 0 1px var(--lz-green),
-    0 0 0 4px rgb(35 131 67 / 0.14),
-    0 30px 60px -44px rgb(20 30 20 / 0.45);
+    0 0 0 4px rgb(35 131 67 / 0.14);
 }
 
 /* Two ways to ask, as text tabs: the chosen one in ink with a green rule under it. */
@@ -3055,42 +3134,43 @@
   max-width: 100%;
 }
 
+/* The three ways in stand side by side between hairlines, not in boxes; the free community's
+   button is the one solid thing in the chapter. Subgrid: the three share rows, so the numbers and
+   the actions line up. */
 .lz-home .paths {
   display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  column-gap: 18px;
-  margin-top: 18px;
+  grid-template-columns: 1.08fr 1fr 1fr;
+  border-top: 1px solid var(--lz-forest-line);
 }
 
-/* Subgrid: the three offers share rows, so numbers and actions line up. */
 .lz-home .path {
-  display: grid;
-  grid-row: span 5;
-  grid-template-rows: subgrid;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 40px 34px 0;
 }
 
-.lz-home .path.main {
-  background: var(--lz-on-forest);
-  box-shadow: none;
-  color: var(--lz-forest-3);
+@supports (grid-template-rows: subgrid) {
+  .lz-home .path {
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+  }
+}
+
+.lz-home .path + .path {
+  padding-left: 40px;
+  border-left: 1px solid var(--lz-forest-line);
 }
 
 .lz-home .path .t {
-  font-size: 13.5px;
+  font-size: 14px;
   letter-spacing: 0.06em;
-  color: var(--lz-on-forest-3);
-}
-
-.lz-home .path.main .t {
-  color: #476b53;
+  color: var(--lz-mint);
 }
 
 .lz-home .path h3 {
   margin-top: 8px;
-  font-size: 26px;
+  font-size: 28px;
 }
 
 .lz-home.l-en .path h3 {
@@ -3099,68 +3179,53 @@
 
 .lz-home .path p {
   margin-top: 10px;
-  font-size: 15.5px;
+  font-size: 16px;
   line-height: 1.75;
   color: var(--lz-on-forest-2);
-}
-
-.lz-home .path.main p {
-  color: #3f5646;
 }
 
 .lz-home .path .s {
   display: flex;
   flex-wrap: wrap;
   align-self: start;
-  gap: 4px 18px;
+  gap: 4px 20px;
   margin-top: 18px;
-  font-size: 14px;
+  font-size: 14.5px;
   font-variant-numeric: tabular-nums;
   color: var(--lz-on-forest-2);
-}
-
-.lz-home .path.main .s {
-  color: #476b53;
 }
 
 .lz-home .path .s b {
   margin-right: 4px;
   font-family: var(--num);
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 600;
   color: var(--lz-on-forest);
 }
 
-.lz-home .path.main .s b {
-  color: var(--lz-forest-3);
-}
-
 .lz-home .path .act {
   align-self: end;
-  padding-top: 24px;
+  /* Without subgrid the action still stands on the column's bottom edge. */
+  margin-top: auto;
+  padding-top: 26px;
 }
 
-.lz-home .path.main .btn {
-  width: 100%;
-}
-
+/* Enterprise: one line under the three, with its room. */
 .lz-home .ent {
   display: grid;
   grid-template-columns: 176px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px 26px;
-  margin-top: 18px;
-  padding: 16px 30px 16px 16px;
-  border-radius: 16px;
-  box-shadow: inset 0 0 0 1px var(--lz-forest-line);
-  font-size: 15px;
+  gap: 14px 28px;
+  padding-top: 26px;
+  border-top: 1px solid var(--lz-forest-line);
+  font-size: 15.5px;
   color: var(--lz-on-forest-2);
 }
 
 .lz-home .ent-photo {
   margin: 0;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 4px;
   aspect-ratio: 16 / 9;
   background: var(--lz-forest-2);
 }
@@ -3174,7 +3239,7 @@
 
 .lz-home .ent .note {
   margin-top: 6px;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--lz-on-forest-3);
 }
 
@@ -3198,7 +3263,7 @@
 .lz-home .ent .price b {
   margin-left: 4px;
   font-family: var(--num);
-  font-size: 17px;
+  font-size: 17.5px;
   font-weight: 600;
 }
 
@@ -3207,53 +3272,178 @@
     grid-template-columns: 1fr;
   }
 
-  .lz-home .path {
-    margin-bottom: 18px;
+  .lz-home .path,
+  .lz-home .path + .path {
+    display: block;
+    padding: 28px 0 30px;
+    border-left: 0;
+  }
+
+  .lz-home .path + .path {
+    border-top: 1px solid var(--lz-forest-line);
   }
 }
 
 @media (max-width: 520px) {
-  .lz-home .path {
-    padding: 26px;
-  }
-
   .lz-home .ent {
     grid-template-columns: 1fr;
-    padding: 14px 14px 20px;
+  }
+}
+
+/* ---------- The city, across the whole window (2026-11-09) ---------- */
+
+/* On the homepage the city is not a framed widget: it is the night itself. The chapter turns
+   darker than the forest, the canvas runs from one edge of the window to the other with no border,
+   and the lights come out of the dark under the title. The search sits over its top left corner and
+   the caption with the way in under it, both on the page's text edges; what the community holds
+   closes the chapter. (The window alone, city.lizheng.ai/window, keeps its frame: these rules are
+   scoped to .city-stage.) */
+.lz-home .city-stage {
+  --lz-night: #04170c;
+  padding-block: clamp(48px, 4.6vw, 64px) clamp(56px, 5.6vw, 80px);
+  background:
+    radial-gradient(70% 46% at 50% 52%, rgb(31 110 60 / 0.3), transparent 72%),
+    var(--lz-night);
+}
+
+.lz-home .city-stage .head {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0;
+}
+
+.lz-home .city-stage .city-window {
+  position: relative;
+  /* The city's rim rises between the title and the introduction. */
+  margin-top: -14px;
+}
+
+.lz-home .city-stage .city-window .city-tools {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  left: 0;
+  max-width: var(--lz-wrap);
+  margin: 0 auto;
+  padding-inline: var(--lz-gut);
+  pointer-events: none;
+}
+
+.lz-home .city-stage .city-window .city-find {
+  width: min(320px, 100%);
+  pointer-events: auto;
+}
+
+.lz-home .city-stage .city-window .city-find input {
+  background: rgb(4 23 12 / 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.lz-home .city-stage .city-window .field,
+.lz-home .city-stage .city-window .field:hover {
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* Wide and low, as a city is from the air: the window's width sets its size, and the chapter's
+   title, the city and the way in fit one screen. */
+.lz-home .city-stage .city-window .field canvas {
+  height: clamp(400px, 38.5vw, 660px);
+}
+
+/* The way to the full map is beside the caption, under the city; no second one in its corner. */
+.lz-home .city-stage .city-window .city-enter {
+  display: none;
+}
+
+/* The caption and the way in sit under the city's lower corners, where its rim has curved away. */
+.lz-home .city-stage .city-caption {
+  position: relative;
+  z-index: 2;
+  max-width: var(--lz-wrap);
+  margin: -30px auto 0;
+  padding-inline: var(--lz-gut);
+  pointer-events: none;
+}
+
+.lz-home .city-stage .city-caption > * {
+  pointer-events: auto;
+}
+
+.lz-home .city-stage .city-inside {
+  margin: clamp(40px, 4.4vw, 60px) 0 0;
+}
+
+/* Where the city cannot be drawn, the dot map keeps its frame, inside the text column. */
+.lz-home .city-stage .city-map:not(.city-window) {
+  max-width: var(--lz-wrap);
+  margin: 36px auto 0;
+  padding-inline: var(--lz-gut);
+}
+
+@media (max-width: 860px) {
+  .lz-home .city-stage .city-window {
+    margin-top: 8px;
   }
 
-  .lz-home .ent > div,
-  .lz-home .ent > a {
-    padding: 0 8px;
+  .lz-home .city-stage .city-caption {
+    margin-top: 10px;
+  }
+
+  .lz-home .city-stage .city-window .city-tools {
+    position: static;
+    margin-bottom: 4px;
+  }
+
+  .lz-home .city-stage .city-window .city-find {
+    width: 100%;
+  }
+
+  .lz-home .city-stage .city-window .field canvas {
+    height: clamp(340px, 92vw, 460px);
   }
 }
 
 /* ---------- Invite ---------- */
 
+/* The last words, set like the first: large, from the left. Beside them the seal, in the green of
+   the mark in the header, signs the page the way a seal closes a scroll. */
 .lz-home .invite {
+  overflow: hidden;
   background: var(--lz-paper);
-  text-align: center;
+}
+
+.lz-home .invite .wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 32px 56px;
 }
 
 .lz-home .invite h2 {
-  font-size: clamp(34px, 5.2vw, 66px);
-  line-height: 1.35;
-  letter-spacing: 0.03em;
+  font-size: clamp(34px, 5vw, 68px);
+  line-height: 1.26;
+  letter-spacing: 0.02em;
 }
 
 .lz-home.l-en .invite h2 {
   font-family: var(--num);
+  letter-spacing: 0;
 }
 
 .lz-home .invite p {
-  max-width: 28em;
-  margin: 22px auto 0;
+  max-width: 30em;
+  margin-top: 22px;
   font-size: 17.5px;
-  color: var(--lz-muted);
+  line-height: 1.8;
+  color: var(--lz-ink-2);
 }
 
 .lz-home .invite .cta-row {
-  justify-content: center;
+  align-items: center;
+  gap: 12px;
 }
 
 .lz-home .invite .btn-line {
@@ -3261,60 +3451,40 @@
 }
 
 .lz-home .invite .shop-link {
-  margin-top: 26px;
+  margin-left: 16px;
 }
 
-/* ---------- Reveal on scroll (content always stays visible) ---------- */
-
-.lz-home .rv {
-  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+.lz-home .invite .seal {
+  display: block;
+  width: clamp(240px, 31vw, 430px);
+  height: auto;
+  color: var(--lz-green);
 }
 
-.lz-home .rv.pre {
-  transform: translateY(18px);
-}
-
-/* Items that arrive together rise one after another, left to right. */
-@media (min-width: 861px) {
-  .lz-home .city-inside > li.rv:nth-child(2),
-  .lz-home .paths > .rv:nth-child(2),
-  .lz-home .guests > li.rv:nth-child(6n + 2) {
-    transition-delay: 0.08s;
+@media (max-width: 860px) {
+  .lz-home .invite .wrap {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .lz-home .city-inside > li.rv:nth-child(3),
-  .lz-home .paths > .rv:nth-child(3),
-  .lz-home .guests > li.rv:nth-child(6n + 3) {
-    transition-delay: 0.16s;
+  .lz-home .invite .seal {
+    width: min(58vw, 260px);
+    margin-top: 12px;
   }
 
-  .lz-home .city-inside > li.rv:nth-child(4),
-  .lz-home .guests > li.rv:nth-child(6n + 4) {
-    transition-delay: 0.24s;
-  }
-
-  .lz-home .guests > li.rv:nth-child(6n + 5) {
-    transition-delay: 0.32s;
-  }
-
-  .lz-home .guests > li.rv:nth-child(6n) {
-    transition-delay: 0.4s;
+  .lz-home .invite .shop-link {
+    flex-basis: 100%;
+    margin: 6px 0 0;
   }
 }
 
+/* ---------- Motion ---------- */
+
+/* The page stands still as it is read: nothing slides in on scroll and nothing drifts (the photos
+   and the guests' names did until 2026-11-09). What moves is the first screen arriving, once, and
+   the city, which is alive. */
 @media (prefers-reduced-motion: reduce) {
   .lz-home .hero .mark-in,
   .lz-home .hero .rise {
     animation: none;
-  }
-
-  .lz-home .rv,
-  .lz-home .rv.pre {
-    transform: none;
-    transition: none;
-  }
-
-  .lz-home .marquee-copy[aria-hidden="true"] {
-    display: none;
   }
 }

@@ -725,7 +725,7 @@ export default function CityField({
     : {};
 
   return (
-    <div className="city-map rv">
+    <div className="city-map">
       {/* Always rendered, so the map does not move when the data arrives. */}
       <div
         className={names?.length ? "city-tools" : "city-tools idle"}

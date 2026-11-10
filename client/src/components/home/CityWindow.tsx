@@ -104,6 +104,7 @@ export default function CityWindow({
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const findRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<WindowHandle | null>(null);
   const [mode, setMode] = useState<"window" | "fallback">("window");
   const [data, setData] = useState<Community | null>(null);
@@ -209,7 +210,9 @@ export default function CityWindow({
   }, [data, showCard, closeCard]);
 
   // Keep the card inside the frame: above its light, else below, else
-  // against the edge farther from it.
+  // against the edge farther from it. On the homepage the search box lies
+  // over the map's top corner: a card that would land on it goes below its
+  // light instead, or just under the box.
   useBrowserLayoutEffect(() => {
     const element = cardRef.current;
     const wrap = wrapRef.current;
@@ -226,6 +229,24 @@ export default function CityWindow({
       top = card.y + GAP;
       if (top + height > room - EDGE)
         top = card.y > room / 2 ? EDGE : room - EDGE - height;
+    }
+    const find = findRef.current?.getBoundingClientRect();
+    if (find?.width) {
+      const frame = wrap.getBoundingClientRect();
+      const boxTop = find.top - frame.top - EDGE;
+      const boxBottom = find.bottom - frame.top + EDGE;
+      const onBox =
+        left < find.right - frame.left + EDGE &&
+        left + width > find.left - frame.left - EDGE &&
+        top < boxBottom &&
+        top + height > boxTop;
+      if (onBox) {
+        const below = card.y + GAP;
+        top =
+          below >= boxBottom && below + height <= room - EDGE
+            ? below
+            : Math.min(boxBottom, room - EDGE - height);
+      }
     }
     element.style.left = `${left}px`;
     element.style.top = `${top}px`;
@@ -330,12 +351,12 @@ export default function CityWindow({
   };
 
   return (
-    <div className="city-map city-window rv">
+    <div className="city-map city-window">
       <div
         className={data ? "city-tools" : "city-tools idle"}
         aria-hidden={data ? undefined : true}
       >
-        <div className="city-find">
+        <div ref={findRef} className="city-find">
           <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
             <circle
               cx="11"

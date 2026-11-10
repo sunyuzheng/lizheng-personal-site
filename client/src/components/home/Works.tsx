@@ -8,9 +8,9 @@ import { Arrow, EXTERNAL, Lines, Phrases } from "./parts";
 /**
  * The books chapter (its id stays "works" for older links). The show has its
  * own chapter (the conversations) and Superlinear Academy is the city, so this
- * chapter holds only the books. The newest, Feels Like Progress, takes the
- * first row; it links to the book on Amazon (the books page also links to its
- * free opening on makewhatlasts.com).
+ * chapter holds only the books, standing on one shelf. The newest, Feels Like
+ * Progress, comes first and a size larger; it links to the book on Amazon (the
+ * books page also links to its free opening on makewhatlasts.com).
  */
 export default function Works({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].works;
@@ -18,20 +18,22 @@ export default function Works({ lang }: { lang: Lang }) {
   const flp = (
     <a
       key="flp"
-      className="card c-book feature rv"
+      className="book feature"
       href={LINKS.flpAmazon}
       {...EXTERNAL}
     >
-      <img
-        className="cover"
-        src="/home/books/feels-like-progress.webp"
-        alt={t.flp.alt}
-        width={460}
-        height={736}
-        loading="lazy"
-        decoding="async"
-      />
-      <div>
+      <span className="stand">
+        <img
+          className="cover"
+          src="/home/books/feels-like-progress.webp"
+          alt={t.flp.alt}
+          width={460}
+          height={736}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+      <div className="about">
         <div className="meta">{t.flp.meta}</div>
         <h3 lang="en">{t.flp.title}</h3>
         <p>{t.flp.body}</p>
@@ -43,21 +45,19 @@ export default function Works({ lang }: { lang: Lang }) {
   );
 
   const zbs = (
-    <Link
-      key="zbs"
-      className="card c-book rv"
-      href={withLanguage("/zbs", lang)}
-    >
-      <img
-        className="cover"
-        src="/home/books/zhenbenshi.webp"
-        alt={t.zbs.alt}
-        width={460}
-        height={652}
-        loading="lazy"
-        decoding="async"
-      />
-      <div>
+    <Link key="zbs" className="book" href={withLanguage("/zbs", lang)}>
+      <span className="stand">
+        <img
+          className="cover"
+          src="/home/books/zhenbenshi.webp"
+          alt={t.zbs.alt}
+          width={460}
+          height={652}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+      <div className="about">
         <div className="meta">{t.zbs.meta}</div>
         {lang === "en" ? (
           <h3>
@@ -82,21 +82,23 @@ export default function Works({ lang }: { lang: Lang }) {
   const growth = (
     <a
       key="growth"
-      className="card c-book rv"
+      className="book"
       // Chinese readers get the free Chinese edition on this site; English readers the book on Amazon.
       href={lang === "zh" ? LINKS.growthBookZh : LINKS.growthBook}
       {...(lang === "zh" ? {} : EXTERNAL)}
     >
-      <img
-        className="cover"
-        src="/home/books/gdap.webp"
-        alt={t.growth.alt}
-        width={460}
-        height={711}
-        loading="lazy"
-        decoding="async"
-      />
-      <div>
+      <span className="stand">
+        <img
+          className="cover"
+          src="/home/books/gdap.webp"
+          alt={t.growth.alt}
+          width={460}
+          height={711}
+          loading="lazy"
+          decoding="async"
+        />
+      </span>
+      <div className="about">
         <div className="meta">{t.growth.meta}</div>
         <h3>{t.growth.title}</h3>
         <p>{t.growth.body}</p>
@@ -114,7 +116,7 @@ export default function Works({ lang }: { lang: Lang }) {
     <section className="sec works" id={SECTION.works}>
       <span id={SECTION.books} className="anchor" aria-hidden="true" />
       <div className="wrap">
-        <div className="head rv">
+        <div className="head">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
             <h2>
@@ -125,8 +127,13 @@ export default function Works({ lang }: { lang: Lang }) {
             <Phrases text={t.intro} />
           </p>
         </div>
-        <FoundingBooksLink lang={lang} className="mb-6 rv" />
-        <div className="bento">{books}</div>
+        {/* One shelf: the three covers stand on one line, the newest a size larger, each with its
+            words under it. The member line closes the chapter, as quiet as a colophon. */}
+        <div className="shelf">{books}</div>
+        <FoundingBooksLink
+          lang={lang}
+          className="mt-10 rounded-none border-x-0 border-b-0 border-t border-lz-line bg-transparent px-0 pb-0 pt-4"
+        />
       </div>
     </section>
   );

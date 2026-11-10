@@ -42,7 +42,7 @@
 
 ## 数字怎么保持最新
 
-`scripts/sync-guests.ts` 生成嘉宾快照时，把嘉宾数和视频数写进 `shared/guest-catalog-pin.json` 的 `counts`；页面从 `shared/guest-facts.ts` 读。每次构建先核对 `counts` 和快照一致（`scripts/verify-guest-release.ts`），对不上就不构建。Open Context 一发新版，半小时内的自动同步会把快照、版本和数字一起更新，不用人改。
+`scripts/sync-guests.ts` 生成嘉宾快照时，把嘉宾数和视频数写进 `shared/guest-catalog-pin.json` 的 `counts`；页面从 `shared/guest-facts.ts` 读。每次构建先核对 `counts` 和快照一致（`scripts/verify-guest-release.ts`），对不上就不构建。Open Context 发新版后，自动同步会把快照、版本和数字一起更新，不用人改。这个同步排的是每半小时一次，但 GitHub 实际上几个小时才跑一次（到 11-10 为止的 24 小时里只跑了四次）；想马上生效，手动跑一次 `gh workflow run sync-guests.yml`。
 
 ## 事实库
 

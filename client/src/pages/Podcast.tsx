@@ -383,8 +383,12 @@ export default function Podcast() {
                 <div className="eyebrow">Official Podcast</div>
                 <h1>课代表立正</h1>
                 <p className="lede">AI到底怎么用，钱到底怎么赚？</p>
+                {/* The second sentence stays whole: on a phone its last three characters sat alone on a line. */}
                 <p className="aside">
-                  我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。也有我的单口，十几分钟讲清一个判断。
+                  我去找硅谷和国内一线的研究者、创业者、投资人长谈，聊他们看见了什么、为什么敢下注、现实又怎样改写了答案。
+                  <span className="phrase">
+                    也有我的单口，十几分钟讲清一个判断。
+                  </span>
                 </p>
                 <ul className="listen">
                   {PLATFORMS.map(({ name, href }) => (

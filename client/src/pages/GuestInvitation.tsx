@@ -243,8 +243,10 @@ export default function GuestInvitation() {
             <div className="split">
               <h2>你最想讲清什么？</h2>
               <div>
+                {/* The second sentence stays whole, so its last two words never sit alone on a line. */}
                 <p className="say first">
-                  回信告诉我一个问题，也可以先说不想谈什么。剩下的准备，我来做。
+                  回信告诉我一个问题，也可以先说不想谈什么。
+                  <span className="phrase">剩下的准备，我来做。</span>
                 </p>
                 <div className="cta-row">
                   <a className="btn btn-ivory" href={mailto}>

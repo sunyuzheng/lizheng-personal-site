@@ -298,8 +298,14 @@
   color: var(--lz-ink-2);
 }
 
+/* A longer label gets a wider column. */
+.lz-sub .note-row.wide {
+  grid-template-columns: 12.5rem minmax(0, 1fr);
+}
+
 @media (max-width: 860px) {
-  .lz-sub .note-row {
+  .lz-sub .note-row,
+  .lz-sub .note-row.wide {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 10px;
   }
@@ -1117,5 +1123,1201 @@
   .lz-sub .about-top .wrap,
   .lz-sub .split.big {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- A forest head (the pages below Collaborate) ---------- */
+
+/* The offer pages open on the forest, as About does: where the reader is, the page's statement, and
+   beside it the one thing to weigh (a price, a picture), set between hairlines. */
+.lz-sub .forest-head {
+  position: relative;
+  isolation: isolate;
+  padding-block: 14px clamp(48px, 5vw, 76px);
+  background: var(--lz-forest);
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(26px, 3.4vw, 48px);
+  font-size: 14px;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .crumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--lz-mint);
+}
+
+.lz-sub .crumb a:hover {
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .forest-head .cols2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: 40px 72px;
+  align-items: end;
+}
+
+.lz-sub .forest-head .eyebrow {
+  color: var(--lz-mint);
+}
+
+.lz-sub .forest-head h1 {
+  font-size: clamp(34px, 4.5vw, 60px);
+  line-height: 1.18;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub.l-en .forest-head h1 {
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+/* A title authored as lines keeps each line whole. */
+.lz-sub .forest-head h1 .line {
+  display: block;
+}
+
+.lz-sub .forest-head .lede {
+  max-width: 32em;
+  margin-top: 24px;
+  font-size: clamp(16.5px, 1.4vw, 18.5px);
+  line-height: 1.85;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-sub .forest-head .aside {
+  max-width: 34em;
+  margin-top: 14px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-sub .forest-head .cta-row {
+  margin-top: 30px;
+}
+
+/* What a fully custom programme starts at: a label, the figure, what it covers, the way to talk. */
+.lz-sub .offer {
+  padding-top: 22px;
+  border-top: 1px solid var(--lz-forest-line);
+}
+
+.lz-sub .offer .t {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--lz-mint);
+}
+
+.lz-sub .offer .price {
+  margin-top: 8px;
+  font-family: var(--num);
+  font-size: clamp(44px, 5.2vw, 70px);
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: lining-nums;
+  white-space: nowrap;
+}
+
+.lz-sub .offer p {
+  max-width: 26em;
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--lz-on-forest-2);
+}
+
+.lz-sub .offer .steps {
+  margin-top: 12px;
+  font-size: 14.5px;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .offer .lz-link {
+  margin-top: 18px;
+  color: var(--lz-on-forest);
+}
+
+@media (max-width: 860px) {
+  .lz-sub .forest-head .cols2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Enterprise: reviews, the ladder, the brief, the room ---------- */
+
+/* A head whose two columns both start with a label: they start level. */
+.lz-sub .head.top {
+  align-items: start;
+}
+
+.lz-sub .head .rating {
+  max-width: none;
+  font-family: var(--num);
+  font-size: clamp(46px, 4.8vw, 66px);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+  color: var(--lz-ink);
+}
+
+.lz-sub .head .rating small {
+  font-size: 0.42em;
+  font-weight: 500;
+  color: var(--lz-muted);
+}
+
+/* In a chapter head whose right column holds the title: the line after it, and the way on. */
+.lz-sub .head p.after {
+  margin-top: 12px;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .head .lz-link {
+  margin-top: 10px;
+}
+
+.lz-sub .cols.reviews > figure {
+  margin: 0;
+}
+
+.lz-sub .cols.reviews blockquote {
+  margin: 0;
+  font-family: var(--num);
+  font-size: 18.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--lz-ink);
+}
+
+.lz-sub .cols.reviews figcaption {
+  display: grid;
+  gap: 2px;
+  margin-top: auto;
+  padding-top: 22px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--lz-muted);
+}
+
+.lz-sub .cols.reviews figcaption b {
+  font-family: var(--num);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lz-ink);
+}
+
+/* The ladder: five formats, lightest first. Each a row: its number, what it is, what it starts
+   at, what it covers, the way to ask. The fully custom programme is ruled in ink. */
+.lz-sub .ladder {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .ladder > li {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1.05fr) minmax(10.5rem, auto) minmax(0, 1.25fr) minmax(9.5rem, auto);
+  gap: 8px 32px;
+  align-items: baseline;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .ladder > li.anchor {
+  margin-top: -1px;
+  border-block: 1px solid var(--lz-ink);
+}
+
+.lz-sub .ladder .n {
+  font-family: var(--num);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lz-muted);
+}
+
+.lz-sub .ladder .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .ladder h3 {
+  margin-top: 2px;
+  font-size: 21px;
+  line-height: 1.45;
+}
+
+.lz-sub .ladder .price {
+  font-family: var(--num);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--lz-ink);
+}
+
+.lz-sub .ladder .detail {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .ladder .lz-link {
+  justify-self: end;
+}
+
+.lz-sub .fine {
+  max-width: 62em;
+  margin-top: 18px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--lz-muted);
+}
+
+/* A statement with its way on, at the foot of a list. */
+.lz-sub .aside-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 32px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lz-line);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .aside-row p {
+  max-width: 46em;
+}
+
+/* A document to pass on: its first page, and what is in it. */
+.lz-sub .doc-row {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: 24px 64px;
+  align-items: center;
+  margin-top: clamp(44px, 4.4vw, 64px);
+}
+
+.lz-sub .doc-row img {
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--lz-line-2);
+}
+
+.lz-sub .doc-row h2 {
+  font-size: clamp(25px, 2.4vw, 32px);
+  line-height: 1.32;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub.l-en .doc-row h2 {
+  letter-spacing: 0;
+}
+
+.lz-sub .doc-row p {
+  max-width: 34em;
+  margin-top: 12px;
+  font-size: 16.5px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .doc-row p.fine {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .doc-row .cta-row {
+  margin-top: 22px;
+}
+
+/* The room, and what can be named. */
+.lz-sub .evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 32px 64px;
+  align-items: center;
+}
+
+.lz-sub .evidence figure {
+  margin: 0;
+}
+
+.lz-sub .evidence figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .evidence figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .evidence h2 {
+  font-size: clamp(25px, 2.5vw, 34px);
+  line-height: 1.34;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub.l-en .evidence h2 {
+  letter-spacing: 0;
+}
+
+.lz-sub .say {
+  max-width: 36em;
+  margin-top: 16px;
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .say.small {
+  font-size: 15px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .named {
+  margin-top: 22px;
+  padding-block: 16px;
+  border-block: 1px solid var(--lz-line);
+}
+
+.lz-sub .named .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+/* Names set as the homepage sets the organizations that invited him. */
+.lz-sub .orgs-line {
+  margin-top: 6px;
+  font-family: var(--num);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--lz-ink);
+}
+
+.lz-sub .named .fine {
+  margin-top: 6px;
+}
+
+.lz-sub .evidence .lz-link {
+  margin-top: 16px;
+}
+
+@media (max-width: 1100px) {
+  /* Number, what it is, the price; then what it covers and the way to ask, under the title. */
+  .lz-sub .ladder > li {
+    grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+  }
+
+  .lz-sub .ladder .detail,
+  .lz-sub .ladder .lz-link {
+    grid-column: 2 / -1;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 860px) {
+  .lz-sub .doc-row,
+  .lz-sub .evidence {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .doc-row img {
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 560px) {
+  .lz-sub .ladder > li {
+    grid-template-columns: 1.4rem minmax(0, 1fr);
+    gap: 6px 14px;
+  }
+
+  .lz-sub .ladder .price {
+    grid-column: 2;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .lz-sub .ladder .detail,
+  .lz-sub .ladder .lz-link {
+    grid-column: 2;
+  }
+}
+
+/* ---------- Creators: the head's picture and facts ---------- */
+
+.lz-sub .forest-head .cols2.top {
+  align-items: center;
+}
+
+/* A long English title set as a sentence. */
+.lz-sub .forest-head h1.long {
+  font-size: clamp(30px, 3.5vw, 46px);
+  line-height: 1.14;
+}
+
+.lz-sub .forest-head figure {
+  margin: 0;
+}
+
+.lz-sub .forest-head figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-forest-2);
+}
+
+.lz-sub .forest-head figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .forest-head .cta-row {
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.lz-sub .forest-head .lz-link {
+  color: var(--lz-on-forest);
+}
+
+/* Four plain facts across the foot of the head. */
+.lz-sub .facts-band {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: clamp(36px, 4vw, 56px) 0 0;
+  border-top: 1px solid var(--lz-forest-line);
+}
+
+.lz-sub .facts-band > div {
+  padding: 16px 20px 0 0;
+}
+
+.lz-sub .facts-band dt {
+  font-size: 14px;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .facts-band dd {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* A chapter head with only its title: the title takes the width. */
+.lz-sub .head.solo {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lz-sub .head.solo h2 {
+  max-width: 22em;
+}
+
+/* ---------- Creators: a collaboration in full ---------- */
+
+.lz-sub .cases {
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .case {
+  display: grid;
+  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+  gap: 28px 56px;
+  align-items: start;
+  padding-block: clamp(36px, 4vw, 56px);
+  border-bottom: 1px solid var(--lz-line);
+}
+
+/* The picture and the words share the first row; the screenshots open under both. */
+.lz-sub .case .shot {
+  grid-area: 1 / 1;
+}
+
+.lz-sub .case .body {
+  grid-area: 1 / 2;
+}
+
+/* The second case mirrors the first. */
+.lz-sub .case:nth-child(even) {
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+}
+
+.lz-sub .case:nth-child(even) .shot {
+  grid-area: 1 / 2;
+}
+
+.lz-sub .case:nth-child(even) .body {
+  grid-area: 1 / 1;
+}
+
+.lz-sub .case .shot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .case .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .case h3 {
+  margin-top: 6px;
+  font-size: clamp(24px, 2.3vw, 30px);
+  line-height: 1.36;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub.l-en .case h3 {
+  letter-spacing: 0;
+}
+
+.lz-sub .case .role {
+  margin-top: 4px;
+  font-size: 14.5px;
+  color: var(--lz-muted);
+}
+
+/* What it reached: figures side by side between hairlines, each with what it counts and why it
+   stands out. */
+.lz-sub .metrics {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--lz-line);
+}
+
+.lz-sub .metrics li {
+  padding: 14px 10px 14px 0;
+}
+
+.lz-sub .metrics li + li {
+  padding-left: 14px;
+  border-left: 1px solid var(--lz-line);
+}
+
+.lz-sub .metrics b {
+  display: block;
+  font-family: var(--num);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  font-variant-numeric: lining-nums;
+  color: var(--lz-ink);
+}
+
+.lz-sub .metrics span {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .metrics small {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--lz-muted);
+}
+
+.lz-sub .case .note {
+  margin-top: 18px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .case .fine {
+  margin-top: 8px;
+}
+
+.lz-sub .case blockquote {
+  margin: 16px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--lz-ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.75;
+  color: var(--lz-ink);
+}
+
+.lz-sub.l-en .case blockquote {
+  font-family: var(--num);
+  font-weight: 500;
+}
+
+.lz-sub .case .body > .lz-link {
+  margin-top: 16px;
+}
+
+/* Things kept closed until asked for (screenshots, a long bio, the full record): a text toggle
+   with a chevron, as 再看N条 on the homepage. */
+.lz-sub details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.lz-sub details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.lz-sub :is(.shots, .kit-rows details) > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--lz-green-text);
+}
+
+.lz-sub :is(.shots, .kit-rows details, .archive) > summary::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin: 0 2px 3px 0;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.lz-sub :is(.shots, .kit-rows details, .archive)[open] > summary::after {
+  margin-bottom: 0;
+  transform: rotate(-135deg);
+}
+
+.lz-sub .case .shots {
+  grid-area: 2 / 1 / 3 / -1;
+  border-top: 1px solid var(--lz-line);
+}
+
+.lz-sub .shots .grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+  padding-block: 12px 8px;
+}
+
+.lz-sub .shots .grid.one {
+  grid-template-columns: minmax(0, 520px);
+}
+
+.lz-sub .shots figure {
+  margin: 0;
+}
+
+/* Phone screenshots are tall: each keeps its proportions inside a fixed height, as before. */
+.lz-sub .shots img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 34rem;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--lz-line-2);
+}
+
+.lz-sub .shots figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--lz-muted);
+}
+
+.lz-sub .shots figcaption a {
+  color: var(--lz-green-text);
+}
+
+/* ---------- Creators: questions, shows, the invitation, the record, the kit ---------- */
+
+.lz-sub .points .tag {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .after-list {
+  max-width: 40em;
+  margin-top: 18px;
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+/* Shows that invited him: names in the title face, three to a row between hairlines. */
+.lz-sub .programs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .programs li {
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .programs a {
+  display: block;
+  height: 100%;
+  padding: 20px 24px 20px 0;
+}
+
+.lz-sub .programs li:not(:nth-child(3n + 1)) a {
+  padding-left: 24px;
+  border-left: 1px solid var(--lz-line);
+}
+
+/* Show names mix Latin and Chinese: Latin letters and the apostrophe from the Latin serif. */
+.lz-sub .programs b {
+  display: block;
+  font-family: var(--num);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.45;
+  transition: color 0.2s;
+}
+
+.lz-sub .programs a:hover b {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .programs span {
+  display: block;
+  margin-top: 4px;
+  font-size: 14.5px;
+  color: var(--lz-muted);
+}
+
+/* The invitation, on the forest: the page's one loud stop, as the homepage's ways in. */
+.lz-sub .sec.band {
+  position: relative;
+  isolation: isolate;
+  background: var(--lz-forest-3);
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .band .eyebrow {
+  color: var(--lz-mint);
+}
+
+.lz-sub .band .split .say {
+  color: var(--lz-on-forest-2);
+}
+
+.lz-sub .band .split .mail {
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .split .mail + .mail {
+  margin-top: 4px;
+}
+
+/* Beside how he works: a conversation he hosted, as a sample. */
+.lz-sub .host-ref {
+  display: grid;
+  gap: 4px;
+  max-width: 380px;
+  margin-top: 30px;
+  color: inherit;
+}
+
+.lz-sub .host-ref img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .host-ref .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .host-ref b {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.45;
+  transition: color 0.2s;
+}
+
+.lz-sub.l-en .host-ref b {
+  font-family: var(--num);
+  font-weight: 600;
+}
+
+.lz-sub .host-ref:hover b {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .host-ref .note {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .host-ref .lz-link {
+  margin-top: 6px;
+}
+
+/* Plain facts in two columns (how a recording is arranged). */
+.lz-sub .facts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .facts-grid > div {
+  padding: 16px 20px 16px 0;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .facts-grid dt {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .facts-grid dd {
+  margin: 4px 0 0;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--lz-ink);
+}
+
+/* The complete record of appearances: one line to open, then three columns of rows. */
+.lz-sub .archive {
+  margin-top: clamp(36px, 4vw, 52px);
+  border-block: 1px solid var(--lz-line);
+}
+
+.lz-sub .archive > summary {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 20px 44px 20px 0;
+}
+
+.lz-sub .archive > summary::after {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  margin: -6px 0 0;
+  color: var(--lz-green-text);
+}
+
+.lz-sub .archive > summary .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .archive > summary b {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--lz-green-text);
+}
+
+.lz-sub.l-en .archive > summary b {
+  font-family: var(--num);
+  font-weight: 600;
+}
+
+.lz-sub .archive > summary .note {
+  max-width: 50em;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-muted);
+}
+
+.lz-sub .archive-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 36px;
+  margin: 0;
+  padding: 0 0 20px;
+  list-style: none;
+}
+
+.lz-sub .archive-list a {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  height: 100%;
+  padding: 14px 0;
+  border-top: 1px solid var(--lz-line);
+}
+
+.lz-sub .archive-list time {
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--lz-muted);
+}
+
+.lz-sub .archive-list b {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--lz-ink);
+  transition: color 0.2s;
+}
+
+.lz-sub .archive-list a:hover b {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .archive-list small {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--lz-muted);
+}
+
+.lz-sub .archive-list span {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--lz-muted);
+}
+
+/* The host kit: what to download on the left, what to copy on the right. */
+.lz-sub .kit {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 32px 64px;
+  align-items: start;
+}
+
+.lz-sub .kit h2 {
+  font-size: clamp(25px, 2.4vw, 34px);
+  line-height: 1.32;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub.l-en .kit h2 {
+  letter-spacing: 0;
+}
+
+.lz-sub .kit .cta-row {
+  margin-top: 24px;
+}
+
+.lz-sub .kit .btn {
+  white-space: normal;
+  padding-block: 10px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.lz-sub .headshot {
+  max-width: 260px;
+  margin: 30px 0 0;
+}
+
+.lz-sub .headshot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .headshot figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .kit-rows {
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .kit-rows > * {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .kit-rows > details {
+  padding: 8px 0;
+}
+
+.lz-sub .kit-rows .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .kit-rows p {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .kit-rows details p {
+  margin: 4px 0 12px;
+}
+
+.lz-sub .kit-rows p.line {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--lz-ink);
+}
+
+.lz-sub.l-en .kit-rows p.line {
+  font-family: var(--num);
+  font-weight: 600;
+}
+
+.lz-sub .link-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 24px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-sub .link-list .lz-link {
+  white-space: normal;
+}
+
+.lz-sub .back {
+  margin-top: clamp(36px, 4vw, 52px);
+}
+
+@media (max-width: 860px) {
+  .lz-sub .facts-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 4px;
+  }
+
+  .lz-sub .case,
+  .lz-sub .case:nth-child(even),
+  .lz-sub .kit {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .case .shot,
+  .lz-sub .case:nth-child(even) .shot {
+    grid-area: 1 / 1;
+  }
+
+  .lz-sub .case .body,
+  .lz-sub .case:nth-child(even) .body {
+    grid-area: 2 / 1;
+  }
+
+  .lz-sub .case .shots {
+    grid-area: 3 / 1;
+  }
+
+  .lz-sub .programs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lz-sub .programs li:not(:nth-child(3n + 1)) a {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .lz-sub .programs li:nth-child(even) a {
+    padding-left: 20px;
+    border-left: 1px solid var(--lz-line);
+  }
+
+  .lz-sub .archive-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Four figures become two rows of two. */
+  .lz-sub .metrics {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lz-sub .metrics li:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .lz-sub .metrics li:nth-child(n + 3) {
+    border-top: 1px solid var(--lz-line);
+  }
+
+  .lz-sub .shots .grid,
+  .lz-sub .facts-grid,
+  .lz-sub .archive-list,
+  .lz-sub .link-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .programs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .programs li:nth-child(even) a {
+    padding-left: 0;
+    border-left: 0;
   }
 }

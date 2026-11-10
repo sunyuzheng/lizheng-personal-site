@@ -1,25 +1,9 @@
-import SiteBreadcrumb from "@/components/site/SiteBreadcrumb";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import { buttonVariants } from "@/components/ui/button";
+import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
-import {
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  Clock3,
-  Download,
-  ExternalLink,
-  Languages,
-  Mail,
-  MapPin,
-  Mic2,
-  MonitorUp,
-  ShieldCheck,
-} from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { CREATOR_COLLAB_PAGE_META } from "../../../shared/collab-meta";
@@ -30,7 +14,27 @@ import {
 } from "../../../shared/guest-appearances-snapshot";
 import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 
-function AppearanceCard({
+const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
+
+/**
+ * A line of facts joined by middle dots: each fact keeps its dot, so a line never starts with one.
+ */
+function Dotted({ text }: { text: string }) {
+  const parts = text.split(" · ");
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={index} className="phrase">
+          {part}
+          {index < parts.length - 1 ? " ·\u00a0" : ""}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/** One past appearance in the complete record: when, which show, what it was about. */
+function AppearanceRow({
   appearance,
   lang,
   panelLabel,
@@ -45,38 +49,18 @@ function AppearanceCard({
       : appearance.title;
 
   return (
-    <a
-      href={appearance.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex min-w-0 flex-col bg-lz-forest-2 p-4 transition hover:bg-lz-forest focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark"
-    >
-      <div className="flex items-center justify-between gap-3">
-        <time
-          dateTime={appearance.date.replaceAll(".", "-")}
-          className="font-mono text-[10px] tabular-nums tracking-[0.12em] text-zinc-500"
-        >
+    <li>
+      <a href={appearance.href} {...EXTERNAL}>
+        <time dateTime={appearance.date.replaceAll(".", "-")}>
           {appearance.date}
         </time>
-        <span className="flex flex-wrap items-center justify-end gap-2">
-          {appearance.format === "panel" && (
-            <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-medium leading-none text-zinc-400">
-              {panelLabel}
-            </span>
-          )}
-          <ExternalLink
-            className="h-3.5 w-3.5 text-zinc-600 transition group-hover:text-superlinear-on-dark"
-            aria-hidden="true"
-          />
-        </span>
-      </div>
-      <p className="mt-3 text-sm font-semibold leading-6 text-zinc-100 transition group-hover:text-white">
-        {appearance.show}
-      </p>
-      <p className="mt-1 text-xs leading-5 text-zinc-500 transition group-hover:text-zinc-400">
-        {title}
-      </p>
-    </a>
+        <b>
+          {appearance.show}
+          {appearance.format === "panel" && <small>{panelLabel}</small>}
+        </b>
+        <span>{title}</span>
+      </a>
+    </li>
   );
 }
 
@@ -108,7 +92,7 @@ const copy = {
     ],
     questionCta: "See the collaboration cases",
     kitCta: "Download the guest kit",
-    formatsEyebrow: "WHERE THE VIEW COMES FROM",
+    formatsEyebrow: "Where the view comes from",
     formatsTitle: "I have met the same questions from several sides.",
     formats: [
       {
@@ -133,7 +117,7 @@ const copy = {
         proof: "Superlinear Academy · real projects · enterprise work",
       },
     ],
-    questionsEyebrow: "WHERE AN EPISODE COULD BEGIN",
+    questionsEyebrow: "Where an episode could begin",
     questionsTitle: "Four questions that can carry a full conversation.",
     questionsIntro:
       "Choose the one your audience is already living through. We can take it from a sharp opening claim into mechanisms, first-hand cases, disagreement, and practical consequences.",
@@ -167,7 +151,7 @@ const copy = {
     ],
     otherDirections:
       "Other directions include the public AI calls I made before GPT-4, experimentation, creator businesses, China–U.S. technology, and the design of AI education and community. One real question is stronger than a complete tour.",
-    conversationsEyebrow: "TWO COLLABORATIONS · TWO KINDS OF PROOF",
+    conversationsEyebrow: "Two collaborations · Two kinds of proof",
     conversationsTitle:
       "Good content should hold on its own—and reward further investment.",
     conversationsIntro:
@@ -175,7 +159,7 @@ const copy = {
     conversations: [
       {
         priority: "lead",
-        label: "CASE 01 · THE CONTENT HOLDS",
+        label: "Case 1 · The content holds",
         name: "A remote conversation crossed long-form audio and three video platforms",
         role: "Crossing with Koji × Yuzheng Sun",
         note: "A 63-minute remote recording became one of Crossing’s two most-played episodes. Its clips set Koji’s all-time Douyin like record and annual Xiaohongshu save record. Koji’s team handled the production and publishing; my accounts did not co-publish, so the result is unusually clean evidence of the topic and conversation itself.",
@@ -234,7 +218,7 @@ const copy = {
       },
       {
         priority: "lead",
-        label: "CASE 02 · BOTH SIDES AMPLIFY",
+        label: "Case 2 · Both sides amplify",
         name: "Two teams made different cuts—and introduced the guest to new audiences",
         role: "Yuzheng × Yang Ying (Tulong)",
         note: "Tulong’s team kept the voice of her show. Our team made a second long-form version and clips for Xiaohongshu, YouTube, Bilibili, and the Superlinear community. The collaboration produced breakout numbers and brought Tulong to viewers who had never encountered her before.",
@@ -279,7 +263,7 @@ const copy = {
       },
       {
         priority: "supporting",
-        label: "ANOTHER SAMPLE · I AM THE HOST",
+        label: "Another sample · I am the host",
         name: "Professor Liu Jia: from neuroscience to AI and education",
         role: "Chair, Department of Psychology and Cognitive Science, Tsinghua University",
         note: "This nearly three-hour conversation moves from intelligence, learning, and consciousness to embodied AI, brain–computer interfaces, and education. It has reached 130K+ YouTube views and 460+ comments.",
@@ -303,7 +287,7 @@ const copy = {
     ],
     metricsNote:
       "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
-    appearancesEyebrow: "SELECTED BY OTHER SHOWS",
+    appearancesEyebrow: "Selected by other shows",
     appearancesTitle:
       "Invited across AI, technology, organizations, careers, and creator businesses.",
     appearancesIntro: `The list below emphasizes recognizable shows and repeat invitations. A complete ${guestAppearances.length}-episode guest appearance archive remains available for producers who want to inspect the full record.`,
@@ -343,7 +327,7 @@ const copy = {
     appearancesArchiveDetail:
       "The full guest appearance archive is preserved here for producers who want to check topics, formats, and earlier work.",
     panelLabel: "Panel",
-    agreementsEyebrow: "HOW I WORK",
+    agreementsEyebrow: "How I work",
     agreementsTitle: "Respect the show, and bring a point of view.",
     agreements: [
       {
@@ -369,27 +353,24 @@ const copy = {
     ],
     coproduction:
       "For a jointly published episode, we can agree in advance on the primary cut, editing responsibility, clip rights, and release timing.",
-    logisticsEyebrow: "RECORDING DETAILS",
+    logisticsEyebrow: "Recording details",
     logisticsTitle: "Production details, without ceremony.",
     logistics: [
-      { icon: Languages, label: "Languages", value: "Mandarin or English" },
+      { label: "Languages", value: "Mandarin or English" },
       {
-        icon: MonitorUp,
         label: "Format",
         value: "Remote, or in person in Seattle",
       },
       {
-        icon: Clock3,
         label: "Length",
         value: "Usually 60–120 minutes; adaptable to the show",
       },
       {
-        icon: MapPin,
         label: "Based in",
         value: "Seattle · Pacific Time",
       },
     ],
-    kitEyebrow: "HOST KIT",
+    kitEyebrow: "Host kit",
     kitTitle: "A producer can build the introduction from this page.",
     kitIntro:
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
@@ -423,7 +404,7 @@ const copy = {
         href: "https://staysuperlinear.com",
       },
     ],
-    contactEyebrow: "PROGRAM INVITATIONS",
+    contactEyebrow: "Program invitations",
     contactTitle:
       "If there is a question worth taking all the way, send it over.",
     contactDetail:
@@ -461,7 +442,7 @@ const copy = {
     questionCta: "先看两次合作",
     kitCta: "下载嘉宾资料",
     formatsEyebrow: "这些判断从哪里来",
-    formatsTitle: "这些问题，我在几个不同的位置上都亲手处理过。",
+    formatsTitle: "这些问题，我在几个不同的位置上|都亲手处理过。",
     formats: [
       {
         number: "01",
@@ -486,7 +467,8 @@ const copy = {
       },
     ],
     questionsEyebrow: "这期可以从哪里开始",
-    questionsTitle: "四个足以撑起一整期的问题。",
+    // "|" marks where the title may break (Phrases).
+    questionsTitle: "四个足以撑起|一整期的问题。",
     questionsIntro:
       "挑一个听众真的在碰到的问题。开头可以有一句够尖锐的判断，但接下来要把依据、反例和实际后果讲清楚。",
     questions: [
@@ -518,7 +500,7 @@ const copy = {
     otherDirections:
       "2023年GPT-4发布前留下的AI判断、增长实验、创作者商业、中美科技，以及AI教育和社区怎么做，也都有公开材料和亲历案例。一个真问题，比一张完整的话题清单更有力量。",
     conversationsEyebrow: "两次合作 · 两种证明",
-    conversationsTitle: "好内容自己站得住，双方投入以后还能走得更远。",
+    conversationsTitle: "好内容自己站得住，双方投入以后|还能走得更远。",
     conversationsIntro:
       "Koji那期只用节目方自己的渠道：长音频有人听完，三个视频平台的切片也各自跑出来。屠龙那期则由双方分别编辑和分发，一场对话不只有了更大的影响力，也替节目和嘉宾找到了新的观众。",
     conversations: [
@@ -682,19 +664,16 @@ const copy = {
     logisticsEyebrow: "录制信息",
     logisticsTitle: "录制怎么安排",
     logistics: [
-      { icon: Languages, label: "语言", value: "中文或英文" },
+      { label: "语言", value: "中文或英文" },
       {
-        icon: MonitorUp,
         label: "形式",
         value: "远程；西雅图也可以线下",
       },
       {
-        icon: Clock3,
         label: "时长",
         value: "通常聊60–120分钟，按你的节目调整",
       },
       {
-        icon: MapPin,
         label: "常驻",
         value: "西雅图 · 美国太平洋时间",
       },
@@ -778,47 +757,70 @@ export default function CreatorCollab() {
     [lang]
   );
 
+  const KIT = "/collab/podcast-kit-zh.pdf";
+  const mailto = buildCreatorMailto(lang);
+
   return (
     <div
-      lang={lang === "zh" ? "zh-CN" : "en"}
-      className={cn(
-        "lz-site relative min-h-screen overflow-x-clip bg-lz-forest-3 text-zinc-100",
-        lang === "en" && "l-en",
-        lang === "zh" && "[&_h2]:text-balance [&_h3]:text-balance"
-      )}
+      className={lang === "en" ? "lz-site lz-home lz-sub l-en" : "lz-site lz-home lz-sub"}
+      lang={lang === "en" ? "en" : "zh-CN"}
     >
       <SiteHeader current="collab" />
 
-      <main className="relative z-10">
-        <SiteBreadcrumb
-          parent={{ href: "/collab", en: "Collaborate", zh: "合作" }}
-          current={{ en: "Podcasts & creators", zh: "播客与视频" }}
-        />
-        <section className="container py-12 md:py-20">
-          <div className="grid gap-7 lg:grid-cols-[0.92fr_1.08fr] lg:gap-x-16 lg:gap-y-8">
-            <div className="order-1 lg:col-start-1 lg:row-start-1">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                {t.eyebrow}
-              </p>
-              <h1
-                className={cn(
-                  "mt-5 max-w-3xl font-semibold text-white",
-                  lang === "zh"
-                    ? "text-[2.125rem] leading-[1.3] sm:text-5xl lg:text-[2.5rem] xl:text-5xl"
-                    : "whitespace-pre-line text-4xl leading-[1.08] md:text-[3.5rem]"
-                )}
-              >
-                {lang === "zh"
-                  ? t.h1.split("\n").map(line => (
-                      <span key={line} className="block whitespace-nowrap">
-                        {line}
-                      </span>
-                    ))
-                  : t.h1}
-              </h1>
-            </div>
-            <figure className="order-3 lg:order-none lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-              <div className="overflow-hidden border border-white/10 bg-lz-forest-2">
+      <main>
+        {/* On the forest: what the invitation is, the room it comes from, and four plain facts. */}
+        <section className="forest-head grain">
+          <div className="wrap">
+            <nav className="crumb" aria-label={lang === "en" ? "Breadcrumb" : "位置"}>
+              <Link href={withLanguage("/collab", lang)}>
+                {lang === "en" ? "Collaborate" : "合作"}
+              </Link>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page">
+                {lang === "en" ? "Podcasts & creators" : "播客与视频"}
+              </span>
+            </nav>
+            <div className="cols2 top">
+              <div>
+                <div className="eyebrow">{t.eyebrow}</div>
+                <h1 className={lang === "zh" ? undefined : "long"}>
+                  {lang === "zh"
+                    ? t.h1.split("\n").map(line => (
+                        <span key={line} className="line">
+                          {line}
+                        </span>
+                      ))
+                    : t.h1}
+                </h1>
+                {t.intro.map((paragraph, index) => (
+                  <p key={paragraph} className={index === 0 ? "lede" : "aside"}>
+                    {paragraph}
+                  </p>
+                ))}
+                <div className="cta-row">
+                  {lang === "zh" && (
+                    <a className="btn btn-ivory" href="#contact">
+                      聊聊节目合作
+                    </a>
+                  )}
+                  <a
+                    className={lang === "zh" ? "btn btn-line" : "btn btn-ivory"}
+                    href="#conversations"
+                  >
+                    {t.questionCta}
+                  </a>
+                  {lang === "en" ? (
+                    <a className="btn btn-line" href={KIT} {...EXTERNAL}>
+                      {t.kitCta}
+                    </a>
+                  ) : (
+                    <a className="lz-link" href={KIT} {...EXTERNAL}>
+                      {t.kitCta} <i aria-hidden="true">→</i>
+                    </a>
+                  )}
+                </div>
+              </div>
+              <figure>
                 <img
                   src="/hero/acquired-behind-scenes-desktop.webp"
                   alt={
@@ -826,690 +828,379 @@ export default function CreatorCollab() {
                       ? "Yuzheng Sun in conversation with Ben Gilbert and David Rosenthal of Acquired"
                       : "课代表立正与Acquired的两位主播（Ben Gilbert、David Rosenthal）对谈"
                   }
-                  className="aspect-[4/3] w-full object-cover object-center"
                   width={2400}
                   height={1600}
                 />
-              </div>
-              <figcaption className="mt-3 text-xs leading-5 text-zinc-400">
-                {lang === "en"
-                  ? "With Ben Gilbert and David Rosenthal of Acquired · Significance Summit"
-                  : "Significance Summit现场，与Acquired的两位主播Ben Gilbert、David Rosenthal对谈"}
-              </figcaption>
-            </figure>
-            <div className="order-2 lg:order-none lg:col-start-1 lg:row-start-2">
-              <div className="max-w-2xl space-y-3">
-                {t.intro.map((paragraph, index) => (
-                  <p
-                    key={paragraph}
-                    className={cn(
-                      index === 0
-                        ? "text-base leading-7 text-zinc-300 md:text-lg md:leading-8"
-                        : "text-sm leading-7 text-zinc-400"
-                    )}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                {lang === "zh" && (
-                  <a
-                    href="#contact"
-                    className={cn(
-                      buttonVariants(),
-                      "bg-superlinear text-white hover:bg-superlinear-deep"
-                    )}
-                  >
-                    聊聊节目合作
-                    <ArrowDown className="ml-2 h-4 w-4" />
-                  </a>
-                )}
-                <a
-                  href="#conversations"
-                  className={cn(
-                    buttonVariants({
-                      variant: lang === "zh" ? "outline" : "default",
-                    }),
-                    lang === "zh"
-                      ? "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                      : "bg-superlinear text-white hover:bg-superlinear-deep"
-                  )}
-                >
-                  {t.questionCta}
-                  <ArrowDown className="ml-2 h-4 w-4" />
-                </a>
-                {lang === "en" && (
-                  <a
-                    href="/collab/podcast-kit-zh.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                    )}
-                  >
-                    {t.kitCta}
-                  </a>
-                )}
-              </div>
-              {lang === "zh" && (
-                <a
-                  href="/collab/podcast-kit-zh.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm text-zinc-300 transition hover:text-white"
-                >
-                  <Download className="h-4 w-4 shrink-0" />
-                  {t.kitCta}
-                </a>
-              )}
+                <figcaption>
+                  {lang === "en"
+                    ? "With Ben Gilbert and David Rosenthal of Acquired · Significance Summit"
+                    : "Significance Summit现场，与Acquired的两位主播Ben Gilbert、David Rosenthal对谈"}
+                </figcaption>
+              </figure>
             </div>
-          </div>
-
-          <div className="mt-12 grid border-y border-white/10 md:grid-cols-2 lg:grid-cols-4">
-            {t.heroProofs.map((proof, index) => (
-              <div
-                key={proof.label}
-                className={cn(
-                  "py-5 md:px-5",
-                  index > 0 && "border-t border-white/10 md:border-t-0",
-                  index % 2 === 1 && "md:border-l md:border-white/10",
-                  index > 1 && "lg:border-l lg:border-white/10"
-                )}
-              >
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-superlinear-on-dark">
-                  {proof.label}
-                </p>
-                <p className="mt-2 text-xs font-medium leading-5 text-zinc-300">
-                  {proof.value}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <section
-            id="conversations"
-            className="relative left-1/2 mt-16 w-screen -translate-x-1/2 scroll-mt-24 bg-superlinear-canvas py-16 text-superlinear-ink md:mt-24 md:py-24"
-          >
-            <div className="container">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
-                {t.conversationsEyebrow}
-              </p>
-              <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight md:text-5xl">
-                {t.conversationsTitle}
-              </h2>
-              <p className="mt-5 max-w-3xl text-sm leading-7 text-[#5C574D] md:text-base md:leading-8">
-                {t.conversationsIntro}
-              </p>
-
-              <div className="mt-12 border-b border-[#CEC9BF]">
-                {leadConversations.map((conversation, caseIndex) => (
-                  <article
-                    key={conversation.name}
-                    className="border-t border-[#CEC9BF] py-10 md:py-14"
-                  >
-                    <div
-                      className={cn(
-                        "grid items-start gap-8 lg:gap-14",
-                        caseIndex % 2 === 1
-                          ? "lg:grid-cols-[1.16fr_0.84fr]"
-                          : "lg:grid-cols-[0.84fr_1.16fr]"
-                      )}
-                    >
-                      <a
-                        href={conversation.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={cn(
-                          "group block overflow-hidden bg-[#DDD8CE]",
-                          caseIndex % 2 === 1 && "lg:order-2"
-                        )}
-                        aria-label={conversation.linkLabel}
-                      >
-                        <img
-                          src={conversation.image}
-                          alt={conversation.role}
-                          className="aspect-video h-auto w-full object-cover transition duration-500 group-hover:scale-[1.012]"
-                          loading="lazy"
-                          width={1280}
-                          height={720}
-                        />
-                      </a>
-
-                      <div className={cn(caseIndex % 2 === 1 && "lg:order-1")}>
-                        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-deep">
-                          {conversation.label}
-                        </p>
-                        <h3 className="mt-3 text-2xl font-semibold leading-snug md:text-3xl">
-                          {conversation.name}
-                        </h3>
-                        <p className="mt-2 text-xs leading-5 text-[#6E685D]">
-                          {conversation.role}
-                        </p>
-
-                        <div
-                          className={cn(
-                            "mt-6 grid grid-cols-2 border-y border-[#CEC9BF] sm:grid-cols-4",
-                            conversation.metrics.length === 3 &&
-                              "sm:grid-cols-3"
-                          )}
-                        >
-                          {conversation.metrics.map((metric, metricIndex) => (
-                            <div
-                              key={`${conversation.name}-${metric.label}`}
-                              className={cn(
-                                "min-w-0 py-4 pr-3 sm:px-4 sm:first:pl-0",
-                                metricIndex % 2 === 1 &&
-                                  "border-l border-[#CEC9BF] pl-3",
-                                metricIndex > 1 &&
-                                  "border-t border-[#CEC9BF] sm:border-t-0 sm:border-l",
-                                conversation.metrics.length === 3 &&
-                                  metricIndex === 2 &&
-                                  "col-span-2 sm:col-span-1"
-                              )}
-                            >
-                              <p className="whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-superlinear-ink sm:text-2xl">
-                                {metric.value}
-                              </p>
-                              <p className="mt-1 text-xs font-medium leading-5 text-[#5C574D]">
-                                {metric.label}
-                              </p>
-                              {metric.signal && (
-                                <p className="mt-2 text-[11px] font-semibold leading-4 text-superlinear-deep">
-                                  {metric.signal}
-                                </p>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-
-                        <p className="mt-5 text-sm leading-7 text-[#5C574D]">
-                          {conversation.note}
-                        </p>
-                        {conversation.proofNote && (
-                          <p className="mt-3 text-xs leading-6 text-[#777064]">
-                            {conversation.proofNote}
-                          </p>
-                        )}
-                        {conversation.quote && (
-                          <blockquote className="mt-5 border-l-2 border-superlinear pl-4 text-sm leading-7 text-[#403C35]">
-                            {conversation.quote}
-                          </blockquote>
-                        )}
-
-                        <a
-                          href={conversation.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-                        >
-                          {conversation.linkLabel}
-                          <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      </div>
-                    </div>
-
-                    {conversation.evidenceImages.length > 0 && (
-                      <details className="mt-8 border-y border-[#CEC9BF]">
-                        <summary className="flex min-h-12 cursor-pointer items-center justify-between gap-4 py-3 text-xs font-medium text-[#5C574D] transition hover:text-superlinear-deep">
-                          <span>{conversation.evidenceLabel}</span>
-                          <ArrowDown className="h-3.5 w-3.5 shrink-0" />
-                        </summary>
-                        <div
-                          className={cn(
-                            "grid items-start gap-5 border-t border-[#CEC9BF] py-5 sm:grid-cols-2",
-                            conversation.evidenceImages.length === 1 &&
-                              "sm:grid-cols-1"
-                          )}
-                        >
-                          {conversation.evidenceImages.map(evidence => (
-                            <figure
-                              key={evidence.src}
-                              className="border border-[#CEC9BF] bg-white/45 p-3"
-                            >
-                              <a
-                                href={evidence.src}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group block overflow-hidden bg-[#E7E2D8]"
-                              >
-                                <img
-                                  src={evidence.src}
-                                  alt={evidence.alt}
-                                  className="mx-auto max-h-[34rem] w-full object-contain transition duration-300 group-hover:opacity-90"
-                                  loading="lazy"
-                                />
-                              </a>
-                              <figcaption className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 pt-3 text-[11px] leading-5 text-[#777064]">
-                                <span>{evidence.caption}</span>
-                                <a
-                                  href={evidence.src}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 transition hover:text-superlinear-deep"
-                                >
-                                  {lang === "zh"
-                                    ? "打开完整截图"
-                                    : "Open full screenshot"}
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </figcaption>
-                            </figure>
-                          ))}
-                        </div>
-                      </details>
-                    )}
-                  </article>
-                ))}
-              </div>
-              <p className="mt-4 text-xs leading-5 text-[#777064]">
-                {t.metricsNote}
-              </p>
-            </div>
-          </section>
-
-          <section
-            id="questions"
-            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 border-y border-white/10 bg-lz-forest-2 py-16 md:py-24"
-          >
-            <div className="container grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:gap-16">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                  {t.questionsEyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {t.questionsTitle}
-                </h2>
-                <p className="mt-4 text-sm leading-7 text-zinc-400">
-                  {t.questionsIntro}
-                </p>
-              </div>
-              <div className="border-t border-white/15">
-                {t.questions.map((question, index) => (
-                  <article
-                    key={question.title}
-                    className="grid gap-3 border-b border-white/15 py-6 sm:grid-cols-[2.5rem_1fr]"
-                  >
-                    <span className="font-mono text-xs text-zinc-500">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h3 className="text-lg font-medium leading-8 text-zinc-100">
-                        {question.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-7 text-zinc-400">
-                        {question.detail}
-                      </p>
-                      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.12em] text-superlinear-on-dark">
-                        {question.proof}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-                <p className="mt-6 text-sm leading-7 text-zinc-400">
-                  {t.otherDirections}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-14 md:mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-              {t.formatsEyebrow}
-            </p>
-            <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight text-white md:text-4xl">
-              {t.formatsTitle}
-            </h2>
-            <div className="mt-9 grid border-y border-white/10 lg:grid-cols-3">
-              {t.formats.map(format => (
-                <article
-                  key={format.number}
-                  className="flex flex-col border-b border-white/10 py-7 last:border-b-0 lg:border-b-0 lg:border-l lg:px-7 lg:first:border-l-0 lg:first:pl-0 lg:last:pr-0"
-                >
-                  <span className="font-mono text-xs text-superlinear-on-dark">
-                    {format.number}
-                  </span>
-                  <h3 className="mt-5 text-xl font-semibold text-white">
-                    {format.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-zinc-400">
-                    {format.detail}
-                  </p>
-                  <p className="mt-5 border-t border-white/10 pt-4 text-xs font-medium leading-5 text-superlinear-on-dark">
-                    {format.proof}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="relative left-1/2 mt-16 w-screen -translate-x-1/2 bg-superlinear-canvas py-16 text-superlinear-ink md:mt-24 md:py-20">
-            <div className="container">
-              <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
-                {t.appearancesEyebrow}
-              </p>
-              <h2 className="mt-4 max-w-4xl text-3xl font-semibold leading-tight md:text-4xl">
-                {t.appearancesTitle}
-              </h2>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5C574D]">
-                {t.appearancesIntro}
-              </p>
-
-              <div className="mt-9 grid border-y border-[#CEC9BF] md:grid-cols-2 lg:grid-cols-3">
-                {t.programs.map((program, index) => (
-                  <a
-                    key={program.href}
-                    href={program.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "group flex min-h-28 items-start justify-between gap-4 border-b border-[#CEC9BF] py-5 transition hover:text-superlinear-deep md:px-5",
-                      index % 2 === 1 && "md:border-l",
-                      index > 3 && "md:border-b-0",
-                      index % 3 !== 0 && "lg:border-l",
-                      index > 2 && "lg:border-b-0",
-                      index % 3 === 0 && "lg:pl-0"
-                    )}
-                  >
-                    <div>
-                      <h3 className="text-base font-semibold leading-6">
-                        {program.show}
-                      </h3>
-                      <p className="mt-2 text-xs leading-5 text-[#777064]">
-                        {program.note}
-                      </p>
-                    </div>
-                    <ExternalLink className="mt-1 h-3.5 w-3.5 shrink-0 text-[#999184] transition group-hover:text-superlinear-deep" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section
-            id="contact"
-            className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-24 bg-superlinear py-14 text-center md:py-16"
-          >
-            <div className="container">
-              <Mic2 className="mx-auto h-7 w-7 text-white" />
-              <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-white">
-                {t.contactEyebrow}
-              </p>
-              <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold text-white md:text-4xl">
-                {lang === "zh"
-                  ? t.contactTitle.split(/(?<=？)/).map(phrase => (
-                      <span key={phrase} className="inline-block">
-                        {phrase}
-                      </span>
-                    ))
-                  : t.contactTitle}
-              </h2>
-              <p
-                className={cn(
-                  "mx-auto mt-4 max-w-2xl text-sm leading-7 text-white",
-                  lang === "zh" && "text-balance"
-                )}
-              >
-                {t.contactDetail}
-              </p>
-              <a
-                href={buildCreatorMailto(lang)}
-                className={cn(
-                  buttonVariants(),
-                  "mt-7 bg-white text-superlinear-deep hover:bg-superlinear-canvas"
-                )}
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                {t.contactButton}
-              </a>
-              <div className="mt-5 space-y-2 text-xs text-white">
-                <div className="flex items-center justify-center gap-2">
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>yz@superlinear.academy</span>
+            <dl className="facts-band">
+              {t.heroProofs.map(proof => (
+                <div key={proof.label}>
+                  <dt>{proof.label}</dt>
+                  <dd>
+                    <Dotted text={proof.value} />
+                  </dd>
                 </div>
-                <p>{t.businessContact}</p>
-              </div>
-            </div>
-          </section>
+              ))}
+            </dl>
+          </div>
+        </section>
 
-          <section className="mt-14 border-y border-white/10 py-8 md:mt-20 md:py-12">
-            <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+        {/* Two collaborations in full: the episode, what it reached, what a listener said, and the
+            platform screenshots behind the figures. */}
+        <section id="conversations" className="sec">
+          <div className="wrap">
+            <div className="head">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-on-dark">
-                  {t.agreementsEyebrow}
-                </p>
-                <h2 className="mt-4 text-3xl font-semibold leading-tight text-white md:text-4xl">
-                  {t.agreementsTitle}
+                <div className="eyebrow">{t.conversationsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.conversationsTitle} />
                 </h2>
-                {hostConversation && (
+              </div>
+              <p>{t.conversationsIntro}</p>
+            </div>
+            <div className="cases">
+              {leadConversations.map(conversation => (
+                <article key={conversation.name} className="case">
                   <a
-                    href={hostConversation.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group mt-7 block overflow-hidden border border-white/10 bg-black/15 transition hover:border-superlinear/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-superlinear-on-dark"
+                    className="shot"
+                    href={conversation.href}
+                    aria-label={conversation.linkLabel}
+                    {...EXTERNAL}
                   >
                     <img
-                      src={hostConversation.image}
-                      alt={hostConversation.role}
-                      className="aspect-video w-full object-cover"
+                      src={conversation.image}
+                      alt={conversation.role}
                       loading="lazy"
                       width={1280}
                       height={720}
                     />
-                    <div className="p-4">
-                      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-superlinear-on-dark">
-                        {hostConversation.label}
-                      </p>
-                      <h3 className="mt-2 text-base font-semibold leading-6 text-white">
-                        {hostConversation.name}
+                  </a>
+                  <div className="body">
+                    <div className="t">{conversation.label}</div>
+                    <h3>{conversation.name}</h3>
+                    <p className="role">{conversation.role}</p>
+                    <ul className="metrics">
+                      {conversation.metrics.map(metric => (
+                        <li key={`${conversation.name}-${metric.label}`}>
+                          <b>{metric.value}</b>
+                          <span>{metric.label}</span>
+                          {metric.signal && <small>{metric.signal}</small>}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="note">{conversation.note}</p>
+                    {conversation.proofNote && (
+                      <p className="fine">{conversation.proofNote}</p>
+                    )}
+                    {conversation.quote && (
+                      <blockquote>{conversation.quote}</blockquote>
+                    )}
+                    <a className="lz-link" href={conversation.href} {...EXTERNAL}>
+                      {conversation.linkLabel} <i aria-hidden="true">→</i>
+                    </a>
+                  </div>
+                  {conversation.evidenceImages.length > 0 && (
+                    <details className="shots">
+                      <summary>{conversation.evidenceLabel}</summary>
+                      <div
+                        className={
+                          conversation.evidenceImages.length === 1
+                            ? "grid one"
+                            : "grid"
+                        }
+                      >
+                        {conversation.evidenceImages.map(evidence => (
+                          <figure key={evidence.src}>
+                            <a href={evidence.src} {...EXTERNAL}>
+                              <img
+                                src={evidence.src}
+                                alt={evidence.alt}
+                                loading="lazy"
+                              />
+                            </a>
+                            <figcaption>
+                              <span>{evidence.caption}</span>
+                              <a href={evidence.src} {...EXTERNAL}>
+                                {lang === "zh"
+                                  ? "打开完整截图"
+                                  : "Open full screenshot"}
+                              </a>
+                            </figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                    </details>
+                  )}
+                </article>
+              ))}
+            </div>
+            <p className="fine">{t.metricsNote}</p>
+          </div>
+        </section>
+
+        <section id="questions" className="sec ruled">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <div className="eyebrow">{t.questionsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.questionsTitle} />
+                </h2>
+                <p className="say">{t.questionsIntro}</p>
+              </div>
+              <div>
+                <ul className="points">
+                  {t.questions.map(question => (
+                    <li key={question.title}>
+                      <h3>
+                        <Phrases text={question.title} />
                       </h3>
-                      <p className="mt-2 text-xs leading-6 text-zinc-400">
-                        {hostConversation.note}
-                      </p>
-                      <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-superlinear-on-dark">
-                        {hostConversation.linkLabel}
-                        <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                      </span>
-                    </div>
+                      <p>{question.detail}</p>
+                      <p className="tag">{question.proof}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p className="after-list">{t.otherDirections}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head solo">
+              <div>
+                <div className="eyebrow">{t.formatsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.formatsTitle} />
+                </h2>
+              </div>
+            </div>
+            <div className="cols">
+              {t.formats.map(format => (
+                <article key={format.number}>
+                  <h3>{format.title}</h3>
+                  <p>{format.detail}</p>
+                  <p className="fit">{format.proof}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head">
+              <div>
+                <div className="eyebrow">{t.appearancesEyebrow}</div>
+                <h2>
+                  <Phrases text={t.appearancesTitle} />
+                </h2>
+              </div>
+              <p>{t.appearancesIntro}</p>
+            </div>
+            <ul className="programs">
+              {t.programs.map(program => (
+                <li key={program.href}>
+                  <a href={program.href} {...EXTERNAL}>
+                    <b>{program.show}</b>
+                    <span>{program.note}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* The invitation itself, on the forest: the page's one loud stop. */}
+        <section id="contact" className="sec band grain">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <div className="eyebrow">{t.contactEyebrow}</div>
+                <h2>
+                  <Phrases text={t.contactTitle} />
+                </h2>
+              </div>
+              <div>
+                <p className="say first">{t.contactDetail}</p>
+                <div className="cta-row">
+                  <a className="btn btn-ivory" href={mailto}>
+                    {t.contactButton}
+                  </a>
+                </div>
+                <p className="mail">yz@superlinear.academy</p>
+                <p className="mail">{t.businessContact}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="sec">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <div className="eyebrow">{t.agreementsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.agreementsTitle} />
+                </h2>
+                {hostConversation && (
+                  <a
+                    className="host-ref"
+                    href={hostConversation.href}
+                    {...EXTERNAL}
+                  >
+                    <img
+                      src={hostConversation.image}
+                      alt={hostConversation.role}
+                      loading="lazy"
+                      width={1280}
+                      height={720}
+                    />
+                    <span className="t">{hostConversation.label}</span>
+                    <b>{hostConversation.name}</b>
+                    <span className="note">{hostConversation.note}</span>
+                    <span className="lz-link">
+                      {hostConversation.linkLabel} <i aria-hidden="true">→</i>
+                    </span>
                   </a>
                 )}
               </div>
-              <div className="border-t border-white/10">
-                {t.agreements.map((agreement, index) => (
-                  <div
-                    key={agreement.title}
-                    className="grid gap-3 border-b border-white/10 py-5 sm:grid-cols-[2.5rem_1fr]"
-                  >
-                    <span className="font-mono text-xs text-zinc-400">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <h3 className="font-semibold text-white">
-                        {agreement.title}
+              <div>
+                <ul className="points">
+                  {t.agreements.map(agreement => (
+                    <li key={agreement.title}>
+                      <h3>
+                        <Phrases text={agreement.title} />
                       </h3>
-                      <p className="mt-2 text-sm leading-7 text-zinc-400">
-                        {agreement.detail}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-                <p className="mt-6 text-sm leading-7 text-zinc-300">
-                  {t.coproduction}
-                </p>
+                      <p>{agreement.detail}</p>
+                    </li>
+                  ))}
+                </ul>
+                <p className="after-list">{t.coproduction}</p>
               </div>
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section className="mt-14 md:mt-20">
-            <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-400">
-              {t.logisticsEyebrow}
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold text-white md:text-4xl">
-              {t.logisticsTitle}
-            </h2>
-            <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-              {t.logistics.map(item => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.label} className="bg-lz-forest-2 p-6">
-                    <Icon className="h-5 w-5 text-superlinear-on-dark" />
-                    <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-400">
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-zinc-200">
-                      {item.value}
-                    </p>
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="chap">
+              <div>
+                <div className="eyebrow">{t.logisticsEyebrow}</div>
+                <h2>{t.logisticsTitle}</h2>
+              </div>
+              <dl className="facts-grid">
+                {t.logistics.map(item => (
+                  <div key={item.label}>
+                    <dt>{item.label}</dt>
+                    <dd>{item.value}</dd>
                   </div>
-                );
-              })}
+                ))}
+              </dl>
             </div>
-          </section>
 
-          <section className="mt-14 md:mt-20">
-            <details className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025]">
-              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-5 p-5 transition hover:bg-white/[0.035] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-superlinear-on-dark md:p-7 [&::-webkit-details-marker]:hidden">
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-                    {lang === "en" ? "COMPLETE ARCHIVE" : "完整做客档案"}
-                  </p>
-                  <h2 className="mt-2 text-lg font-semibold text-zinc-100 md:text-xl">
-                    {t.appearancesArchive}
-                  </h2>
-                  <p className="mt-2 max-w-3xl text-xs leading-6 text-zinc-500">
-                    {t.appearancesArchiveDetail}
-                  </p>
-                </div>
-                <ArrowDown
-                  className="h-5 w-5 shrink-0 text-zinc-500 transition-transform duration-200 group-open:rotate-180"
-                  aria-hidden="true"
-                />
+            {/* Every past appearance, for a producer who wants to check: closed until asked for. */}
+            <details className="archive">
+              <summary>
+                <span className="t">
+                  {lang === "en" ? "Complete archive" : "完整做客档案"}
+                </span>
+                <b>{t.appearancesArchive}</b>
+                <span className="note">{t.appearancesArchiveDetail}</span>
               </summary>
-              <div className="grid gap-px border-t border-white/10 bg-white/10 md:grid-cols-2 xl:grid-cols-3">
+              <ul className="archive-list">
                 {guestAppearances.map(appearance => (
-                  <AppearanceCard
+                  <AppearanceRow
                     key={appearance.href}
                     appearance={appearance}
                     lang={lang}
                     panelLabel={t.panelLabel}
                   />
                 ))}
-              </div>
+              </ul>
             </details>
-          </section>
+          </div>
+        </section>
 
-          <section id="host-kit" className="scroll-mt-24 pt-14 md:pt-20">
-            <div className="rounded-2xl border border-white/10 bg-superlinear-canvas p-6 text-superlinear-ink md:p-10">
-              <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-14">
-                <div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-superlinear-deep">
-                    {t.kitEyebrow}
-                  </p>
-                  <h2 className="mt-4 text-3xl font-semibold leading-tight md:text-4xl">
-                    {t.kitTitle}
-                  </h2>
-                  <p className="mt-4 text-sm leading-7 text-[#5C574D]">
-                    {t.kitIntro}
-                  </p>
-                  <a
-                    href="/collab/podcast-kit-zh.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 border border-superlinear/35 bg-white/55 px-4 py-3 text-sm font-semibold text-superlinear-link transition hover:border-superlinear hover:bg-white hover:text-superlinear-deep"
-                  >
-                    <Download className="h-4 w-4" />
+        <section id="host-kit" className="sec ruled">
+          <div className="wrap">
+            <div className="kit">
+              <div>
+                <div className="eyebrow">{t.kitEyebrow}</div>
+                <h2>
+                  <Phrases text={t.kitTitle} />
+                </h2>
+                <p className="say">{t.kitIntro}</p>
+                <div className="cta-row">
+                  <a className="btn btn-green" href={KIT} {...EXTERNAL}>
                     {t.pdfCta}
                   </a>
+                </div>
+                <figure className="headshot">
                   <img
                     src="/yuzheng-sun-headshot.jpg"
                     alt={lang === "en" ? "Yuzheng Sun" : "孙煜征（课代表立正）"}
-                    className="mt-7 aspect-square w-full max-w-72 object-cover"
                     width={1200}
                     height={1200}
                     loading="lazy"
                   />
-                  <p className="mt-3 text-xs text-[#6E685D]">
-                    {t.headshotLabel}
-                  </p>
-                  <a
-                    href="/yuzheng-sun-headshot.jpg"
-                    download="yuzheng-sun-headshot.jpg"
-                    className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link hover:text-superlinear-deep"
-                  >
-                    <Download className="h-4 w-4" />
-                    {t.headshotCta}
-                  </a>
+                  <figcaption>
+                    <span>{t.headshotLabel}</span>
+                    <a
+                      className="lz-link"
+                      href="/yuzheng-sun-headshot.jpg"
+                      download="yuzheng-sun-headshot.jpg"
+                    >
+                      {t.headshotCta} <i aria-hidden="true">→</i>
+                    </a>
+                  </figcaption>
+                </figure>
+              </div>
+              <div className="kit-rows">
+                <div>
+                  <div className="t">{t.shortBioLabel}</div>
+                  <p>{t.shortBio}</p>
+                </div>
+                <details>
+                  <summary>
+                    {lang === "en" ? "View full bio" : "展开长介绍"}
+                  </summary>
+                  <p>{t.longBio}</p>
+                </details>
+                <div>
+                  <div className="t">{t.brandLineLabel}</div>
+                  <p className="line">{t.brandLine}</p>
                 </div>
                 <div>
-                  <div className="border-t border-[#D4D0C7] py-6">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-deep">
-                      {t.shortBioLabel}
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-[#48443B]">
-                      {t.shortBio}
-                    </p>
-                  </div>
-                  <details className="group border-t border-[#D4D0C7] py-6">
-                    <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-superlinear [&::-webkit-details-marker]:hidden">
-                      <span>
-                        {lang === "en" ? "View full bio" : "展开长介绍"}
-                      </span>
-                      <ArrowDown
-                        className="h-4 w-4 transition-transform duration-200 group-open:rotate-180"
-                        aria-hidden="true"
-                      />
-                    </summary>
-                    <p className="mt-3 text-sm leading-7 text-[#48443B]">
-                      {t.longBio}
-                    </p>
-                  </details>
-                  <div className="border-t border-[#D4D0C7] py-6">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-superlinear-deep">
-                      {t.brandLineLabel}
-                    </p>
-                    <p className="mt-3 border-l-2 border-superlinear pl-4 text-lg font-semibold leading-8 text-[#29251F]">
-                      {t.brandLine}
-                    </p>
-                  </div>
-                  <div className="border-t border-[#D4D0C7] py-6">
-                    <h3 className="text-lg font-semibold">{t.factsTitle}</h3>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                      {t.facts.map(fact => (
+                  <div className="t">{t.factsTitle}</div>
+                  <ul className="link-list">
+                    {t.facts.map(fact => (
+                      <li key={fact.label}>
                         <a
-                          key={fact.label}
+                          className="lz-link"
                           href={withLanguage(fact.href, lang)}
-                          target={
-                            fact.href.startsWith("http") ? "_blank" : undefined
-                          }
-                          rel={
-                            fact.href.startsWith("http")
-                              ? "noopener noreferrer"
-                              : undefined
-                          }
-                          className="flex items-start justify-between gap-3 border border-[#D4D0C7] bg-white/45 p-4 text-sm font-medium leading-6 transition hover:border-superlinear/45"
+                          {...(fact.href.startsWith("http") ? EXTERNAL : {})}
                         >
-                          <span>{fact.label}</span>
-                          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-superlinear-deep" />
+                          {fact.label} <i aria-hidden="true">→</i>
                         </a>
-                      ))}
-                    </div>
-                  </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
-          </section>
-
-          <div className="mt-10 flex justify-center">
-            <Link
-              href={withLanguage("/collab", lang)}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "border-white/15 bg-white/5 text-zinc-100 hover:bg-white/10"
-              )}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {t.back}
-            </Link>
+            <p className="back">
+              <Link className="lz-link" href={withLanguage("/collab", lang)}>
+                {t.back} <i aria-hidden="true">→</i>
+              </Link>
+            </p>
           </div>
         </section>
       </main>

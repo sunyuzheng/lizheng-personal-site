@@ -1,19 +1,9 @@
-import SiteBreadcrumb from "@/components/site/SiteBreadcrumb";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import { buttonVariants } from "@/components/ui/button";
+import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { cn } from "@/lib/utils";
-import {
-  ArrowRight,
-  ExternalLink,
-  FileSearch,
-  Mail,
-  PanelsTopLeft,
-  Route,
-} from "lucide-react";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { ENTERPRISE_TRAINING_PAGE_META } from "../../../shared/collab-meta";
@@ -23,7 +13,7 @@ import { buildEnterpriseTrainingStructuredData } from "../../../shared/structure
 const copy = {
   en: {
     section: "Enterprise AI training",
-    eyebrow: "ENTERPRISE AI TRAINING & CUSTOM PROGRAMS",
+    eyebrow: "Enterprise AI training & custom programs",
     title: "The work should be different after the training.",
     titleLines: null,
     intro:
@@ -31,13 +21,13 @@ const copy = {
     proof: "13 cohorts · 3,000+ paid learners · 5.0/5 on Maven",
     primaryCta: "Compare the formats",
     secondaryCta: "Open the team brief (PDF)",
-    anchorLabel: "FULLY CUSTOM ENTERPRISE PROGRAM",
+    anchorLabel: "Fully custom enterprise program",
     anchorPrice: "$100,000+",
     anchorDetail:
       "Start with the work. Leave the team with a program, cases, tools, and evaluation standards it can keep using.",
     anchorNote: "Research · Design · Live delivery · Review",
     anchorCta: "Discuss a custom program",
-    reviewsEyebrow: "PUBLIC MAVEN REVIEWS",
+    reviewsEyebrow: "Public Maven reviews",
     reviewsTitle: "What learners actually took from the course",
     reviewsIntro:
       "These are public Maven reviews. Titles and employers identify the reviewers, not employer endorsements.",
@@ -69,14 +59,14 @@ const copy = {
     individualNote:
       "I do not sell paid consulting to individuals. Join Superlinear Academy for free and ask in the community; I answer individual questions there for free.",
     communityCta: "Ask in the free community",
-    formatsEyebrow: "FIVE WAYS TO WORK TOGETHER",
+    formatsEyebrow: "Five ways to work together",
     formatsTitle: "Start with the simplest useful step.",
     formatsIntro:
       "Start with what must change: shared capability, course content, or the work itself.",
     formats: [
       {
         number: "01",
-        label: "ORGANIZATION SESSION",
+        label: "Organization session",
         title: "Work through one real question",
         price: "From $2,000",
         detail:
@@ -87,7 +77,7 @@ const copy = {
       },
       {
         number: "02",
-        label: "TEAM ENROLLMENT",
+        label: "Team enrollment",
         title: "Bring AI Builders to your team",
         price: "$1,999 per learner",
         detail:
@@ -98,7 +88,7 @@ const copy = {
       },
       {
         number: "03",
-        label: "PRIVATE COHORT",
+        label: "Private cohort",
         title: "Give one organization its own cohort",
         price: "30 learners · $44,977.50+",
         detail:
@@ -109,7 +99,7 @@ const copy = {
       },
       {
         number: "04",
-        label: "COURSE CUSTOMIZATION",
+        label: "Course customization",
         title: "Adapt what the course teaches",
         price: "$20,000+ · plus tuition",
         detail:
@@ -120,7 +110,7 @@ const copy = {
       },
       {
         number: "05",
-        label: "FULLY CUSTOM ENTERPRISE PROGRAM",
+        label: "Fully custom enterprise program",
         title: "Start with the business problem",
         price: "From $100,000",
         detail:
@@ -132,17 +122,17 @@ const copy = {
     ],
     pricingNote:
       "Planning prices in USD, before applicable taxes. Seat prices reflect current US AI Builders 2027 team pricing; final scope, faculty, schedule, payment, cancellation terms, and taxes are set in the quote and order form.",
-    pdfEyebrow: "TEAM PROCUREMENT BRIEF · PDF",
+    pdfEyebrow: "Team procurement brief · PDF",
     pdfTitle: "Forward this two-page brief to your team.",
     pdfBody:
       "Course outcomes, faculty, public reviews, team pricing, private cohorts, customization, and procurement details are all in one place.",
     pdfMeta: "PDF · 2 pages · English · September 2026",
     pdfCta: "Open the team brief",
-    workEyebrow: "FULLY CUSTOM PROGRAMS",
+    workEyebrow: "Fully custom programs",
     workTitle: "Full customization starts with the work.",
     workIntro:
       "Start with the work itself. Then design the program and delivery around it.",
-    confidentialityLabel: "SENSITIVE CONTEXT STAYS WITH THE WORK",
+    confidentialityLabel: "Sensitive context stays with the work",
     confidentialityDetail:
       "Real company materials are used only for the agreed delivery. Client names, materials, and project details are not published without explicit permission.",
     workSteps: [
@@ -162,7 +152,7 @@ const copy = {
           "Turn the decisions into a program, cases, tools, templates, and materials the team can keep using.",
       },
     ],
-    evidenceEyebrow: "COURSE DEPTH · ENTERPRISE REALITY",
+    evidenceEyebrow: "Course depth · Enterprise reality",
     evidenceTitle:
       "The course is refined in public cohorts and tested in real organizations.",
     evidenceBody:
@@ -175,7 +165,7 @@ const copy = {
     faculty:
       "AI Builders is co-taught by Yuzheng Sun and Yan Wang. Faculty and delivery roles for each enterprise engagement are named in the proposal and order form.",
     decksCta: "Browse selected enterprise decks",
-    closeEyebrow: "START WITH ONE CONCRETE CHANGE",
+    closeEyebrow: "Start with one concrete change",
     closeTitle: "Tell us what should be different after the training.",
     closeBody:
       "Include the team, the problem today, the result you want to change, and the rough timing. We will recommend the most useful starting point.",
@@ -338,8 +328,6 @@ const copy = {
   },
 };
 
-const workIcons = [FileSearch, Route, PanelsTopLeft];
-
 function buildMailto(
   lang: "en" | "zh",
   kind: "training" | "advisory" = "training"
@@ -384,163 +372,97 @@ export default function EnterpriseTraining() {
     [lang, meta]
   );
 
+  const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
+  const PDF = "/enterprise/AI-Builders-2027-for-Teams.pdf";
+
   return (
     <div
-      className={cn(
-        "lz-site min-h-screen overflow-x-clip bg-lz-forest-3 text-zinc-100",
-        lang === "en" && "l-en"
-      )}
+      className={lang === "en" ? "lz-site lz-home lz-sub l-en" : "lz-site lz-home lz-sub"}
+      lang={lang === "en" ? "en" : "zh-CN"}
     >
       <SiteHeader current="collab" />
 
       <main>
-        <SiteBreadcrumb
-          parent={{ href: "/collab", en: "Collaborate", zh: "合作" }}
-          current={{ en: "Enterprise AI training", zh: "企业AI培训" }}
-        />
-        <section className="relative overflow-hidden border-b border-white/10 bg-lz-forest-3">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(35,131,67,0.16),transparent_34rem)]" />
-          <div className="container relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.08fr_0.92fr] lg:items-end lg:gap-16">
-            <div>
-              <p
-                className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-on-dark",
-                  lang === "en"
-                    ? "uppercase tracking-[0.2em]"
-                    : "tracking-[0.1em]"
-                )}
-              >
-                {t.eyebrow}
-              </p>
-              <h1 className="mt-6 max-w-4xl text-[2rem] font-semibold leading-[1.04] tracking-[-0.025em] text-white [text-wrap:balance] min-[360px]:text-[2.35rem] sm:text-5xl md:text-6xl">
-                {t.titleLines
-                  ? t.titleLines.map(line => (
-                      <span key={line} className="block whitespace-nowrap">
-                        {line}
-                      </span>
-                    ))
-                  : t.title}
-              </h1>
-              <p className="mt-7 max-w-3xl text-base leading-8 text-zinc-300 md:text-lg md:leading-9">
-                {t.intro}
-              </p>
-              <p className="mt-6 border-l-2 border-superlinear pl-4 text-sm leading-7 text-zinc-400">
-                {t.proof}
-              </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#formats"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "bg-superlinear text-white hover:bg-superlinear-deep"
-                  )}
-                >
-                  {t.primaryCta}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-                <a
-                  href="/enterprise/AI-Builders-2027-for-Teams.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({ size: "lg", variant: "outline" }),
-                    "border-white/20 bg-white/[0.03] text-white hover:bg-white/[0.08]"
-                  )}
-                >
-                  {t.secondaryCta}
-                </a>
+        {/* The offer, on the forest: what should change, and beside it what a fully custom
+            programme starts at, set as type between hairlines (no box, no badge). */}
+        <section className="forest-head grain">
+          <div className="wrap">
+            <nav className="crumb" aria-label={lang === "en" ? "Breadcrumb" : "位置"}>
+              <Link href={withLanguage("/collab", lang)}>
+                {lang === "en" ? "Collaborate" : "合作"}
+              </Link>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page">{t.section}</span>
+            </nav>
+            <div className="cols2">
+              <div>
+                <div className="eyebrow">{t.eyebrow}</div>
+                <h1>
+                  {t.titleLines
+                    ? t.titleLines.map(line => (
+                        <span key={line} className="line">
+                          {line}
+                        </span>
+                      ))
+                    : t.title}
+                </h1>
+                <p className="lede">{t.intro}</p>
+                <p className="aside">{t.proof}</p>
+                <div className="cta-row">
+                  <a className="btn btn-ivory" href="#formats">
+                    {t.primaryCta}
+                  </a>
+                  <a className="btn btn-line" href={PDF} {...EXTERNAL}>
+                    {t.secondaryCta}
+                  </a>
+                </div>
               </div>
+              <aside className="offer">
+                <div className="t">{t.anchorLabel}</div>
+                <p className="price">{t.anchorPrice}</p>
+                <p>{t.anchorDetail}</p>
+                <p className="steps">{t.anchorNote}</p>
+                <a className="lz-link" href={mailto}>
+                  {t.anchorCta} <i aria-hidden="true">→</i>
+                </a>
+              </aside>
             </div>
-
-            <aside className="border border-superlinear-on-dark/30 bg-lz-forest p-6 shadow-[0_28px_90px_rgba(0,0,0,0.25)] md:p-9">
-              <p
-                className={cn(
-                  "font-mono text-[11px] leading-5 text-superlinear-on-dark",
-                  lang === "en"
-                    ? "uppercase tracking-[0.18em]"
-                    : "tracking-[0.1em]"
-                )}
-              >
-                {t.anchorLabel}
-              </p>
-              <p className="mt-5 whitespace-nowrap text-[2.3rem] font-semibold leading-none tracking-[-0.04em] text-white min-[360px]:text-[3.25rem] sm:text-6xl">
-                {t.anchorPrice}
-              </p>
-              <p className="mt-6 text-base leading-8 text-white/80">
-                {t.anchorDetail}
-              </p>
-              <p className="mt-7 border-t border-white/15 pt-5 text-sm leading-7 text-white/55">
-                {t.anchorNote}
-              </p>
-              <a
-                href={mailto}
-                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-on-dark transition hover:text-white"
-              >
-                {t.anchorCta}
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </aside>
           </div>
         </section>
 
-        <section className="border-b border-[#D6D1C7] bg-superlinear-canvas py-14 text-superlinear-ink md:py-20">
-          <div className="container">
-            <div className="grid gap-8 lg:grid-cols-[0.58fr_1.42fr] lg:items-end lg:gap-16">
+        {/* Public reviews: the rating beside the title, three reviewers side by side. */}
+        <section className="sec">
+          <div className="wrap">
+            <div className="head top">
               <div>
-                <p
-                  className={cn(
-                    "font-mono text-[11px] leading-5 text-superlinear-deep",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {t.reviewsEyebrow}
-                </p>
-                <p className="mt-4 text-[4.25rem] font-semibold leading-none tracking-[-0.055em] text-[#173C2A] sm:text-7xl">
-                  5.0<span className="text-3xl text-[#777064]"> / 5</span>
+                <div className="eyebrow">{t.reviewsEyebrow}</div>
+                <p className="rating">
+                  5.0<small> / 5</small>
                 </p>
               </div>
               <div>
-                <h2 className="max-w-3xl text-3xl font-semibold leading-[1.12] [text-wrap:balance] md:text-4xl">
-                  {t.reviewsTitle}
-                </h2>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5C574D] md:text-base">
-                  {t.reviewsIntro}
-                </p>
+                <h2>{t.reviewsTitle}</h2>
+                <p className="after">{t.reviewsIntro}</p>
                 <a
+                  className="lz-link"
                   href="https://maven.com/superlinear/aibuilders#reviews"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                  {...EXTERNAL}
                 >
-                  {t.reviewsCta}
-                  <ExternalLink className="h-4 w-4" />
+                  {t.reviewsCta} <i aria-hidden="true">→</i>
                 </a>
               </div>
             </div>
-
-            <div className="mt-10 grid border-t border-[#CFC9BE] lg:grid-cols-3">
-              {t.reviews.map((review, index) => (
-                <figure
-                  key={review.name}
-                  className={cn(
-                    "flex flex-col border-b border-[#CFC9BE] py-7 lg:px-7 lg:py-8",
-                    index > 0 && "lg:border-l"
-                  )}
-                >
-                  <blockquote className="text-base font-medium leading-7 text-[#26231D]">
-                    “{review.quote}”
-                  </blockquote>
-                  <figcaption className="mt-6 border-t border-[#CFC9BE] pt-5 text-xs leading-5 text-[#5C574D]">
-                    <span className="block text-xl font-semibold tracking-[-0.02em] text-[#173C2A]">
-                      {review.company}
-                    </span>
-                    <span className="mt-1 block font-medium text-[#4E493F]">
+            <div className="cols reviews">
+              {t.reviews.map(review => (
+                <figure key={review.name}>
+                  <blockquote lang="en">“{review.quote}”</blockquote>
+                  <figcaption>
+                    <b>{review.company}</b>
+                    <span>
                       {review.name} · {review.role}
                     </span>
                     {"note" in review && review.note ? (
-                      <span className="mt-1 block">{review.note}</span>
+                      <span>{review.note}</span>
                     ) : null}
                   </figcaption>
                 </figure>
@@ -549,33 +471,18 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        <section
-          id="formats"
-          className="scroll-mt-[76px] bg-superlinear-canvas py-16 text-superlinear-ink md:py-24"
-        >
-          <div className="container">
-            <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end lg:gap-20">
+        {/* The five formats, lightest first: a ladder of rows. The fully custom programme, the
+            one the head names, is ruled in ink. */}
+        <section id="formats" className="sec ruled">
+          <div className="wrap">
+            <div className="head">
               <div>
-                <p
-                  className={cn(
-                    "font-mono text-xs leading-5 text-superlinear-deep",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {t.formatsEyebrow}
-                </p>
-                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] [text-wrap:balance] md:text-5xl">
-                  {t.formatsTitle}
-                </h2>
+                <div className="eyebrow">{t.formatsEyebrow}</div>
+                <h2>{t.formatsTitle}</h2>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-[#5C574D] md:text-lg">
-                {t.formatsIntro}
-              </p>
+              <p>{t.formatsIntro}</p>
             </div>
-
-            <div className="mt-12 border-t border-[#CFC9BE]">
+            <ol className="ladder">
               {t.formats.map(format => {
                 const href =
                   format.href === "training"
@@ -585,236 +492,109 @@ export default function EnterpriseTraining() {
                       : format.href;
                 const isExternal = href.startsWith("http");
                 return (
-                  <article
+                  <li
                     key={format.number}
-                    className={cn(
-                      "grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-4 gap-y-3 border-b border-[#CFC9BE] px-5 py-7 xl:grid-cols-[2.5rem_minmax(0,0.9fr)_minmax(14rem,0.7fr)_minmax(0,1.15fr)_14.5rem] xl:items-start xl:gap-6 xl:px-6",
-                      format.featured &&
-                        "border-l-4 border-l-superlinear bg-superlinear-pale"
-                    )}
+                    className={format.featured ? "anchor" : undefined}
                   >
-                    <span
-                      className={cn(
-                        "row-span-4 font-mono text-xs xl:row-span-1",
-                        format.featured
-                          ? "text-superlinear-deep/55"
-                          : "text-[#797268]"
-                      )}
-                    >
-                      {format.number}
+                    <span className="n" aria-hidden="true">
+                      {Number(format.number)}
                     </span>
-                    <div>
-                      <p
-                        className={cn(
-                          "font-mono text-[10px] leading-5",
-                          lang === "en"
-                            ? "uppercase tracking-[0.15em]"
-                            : "tracking-[0.08em]",
-                          "text-superlinear-deep"
-                        )}
-                      >
-                        {format.label}
-                      </p>
-                      <h3 className="mt-2 text-lg font-semibold leading-7 md:text-xl">
-                        {format.title}
-                      </h3>
+                    <div className="what">
+                      <div className="t">{format.label}</div>
+                      <h3>{format.title}</h3>
                     </div>
-                    <p
-                      className={cn(
-                        "text-xl font-semibold leading-7 tracking-[-0.02em] xl:whitespace-nowrap xl:text-right",
-                        format.featured
-                          ? "text-superlinear-ink"
-                          : "text-[#173C2A]"
-                      )}
-                    >
-                      {format.price}
-                    </p>
-                    <p
-                      className={cn(
-                        "text-sm leading-7",
-                        format.featured
-                          ? "text-superlinear-body"
-                          : "text-[#5C574D]"
-                      )}
-                    >
-                      {format.detail}
-                    </p>
+                    <p className="price">{format.price}</p>
+                    <p className="detail">{format.detail}</p>
                     <a
+                      className="lz-link"
                       href={href}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noopener noreferrer" : undefined}
-                      className={cn(
-                        "inline-flex max-w-full items-center gap-2 self-start text-sm font-semibold xl:justify-self-end xl:whitespace-nowrap",
-                        format.featured
-                          ? "text-superlinear-link hover:text-superlinear-deep"
-                          : "text-superlinear-deep hover:text-superlinear"
-                      )}
+                      {...(isExternal ? EXTERNAL : {})}
                     >
-                      {format.cta}
-                      {isExternal ? (
-                        <ExternalLink className="h-4 w-4 shrink-0" />
-                      ) : (
-                        <ArrowRight className="h-4 w-4 shrink-0" />
-                      )}
+                      {format.cta} <i aria-hidden="true">→</i>
                     </a>
-                  </article>
+                  </li>
                 );
               })}
-            </div>
-
-            <p className="mt-6 max-w-5xl text-xs leading-6 text-[#5C574D]">
-              {t.pricingNote}
-            </p>
-
-            <div className="mt-6 flex flex-col gap-3 border-l-2 border-superlinear pl-4 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
-              <p className="max-w-4xl text-sm leading-7 text-[#5C574D]">
-                {t.individualNote}
-              </p>
+            </ol>
+            <p className="fine">{t.pricingNote}</p>
+            <div className="aside-row">
+              <p>{t.individualNote}</p>
               <a
+                className="lz-link"
                 href="https://www.superlinear.academy/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
+                {...EXTERNAL}
               >
-                {t.communityCta}
-                <ExternalLink className="h-4 w-4" />
+                {t.communityCta} <i aria-hidden="true">→</i>
               </a>
             </div>
 
-            <div className="mt-12 grid overflow-hidden border border-[#CFC9BE] bg-white lg:grid-cols-[0.74fr_1.26fr]">
-              <figure className="border-b border-[#CFC9BE] bg-superlinear-pale p-5 lg:border-b-0 lg:border-r lg:p-7">
+            <div className="doc-row">
+              <a href={PDF} {...EXTERNAL} tabIndex={-1} aria-hidden="true">
                 <img
                   src="/enterprise/ai-builders-2027-for-teams-preview.webp"
-                  alt={
-                    lang === "en"
-                      ? "Preview of the AI Builders 2027 for Teams procurement brief"
-                      : "AI Builders 2027团队采购说明PDF预览"
-                  }
-                  className="mx-auto w-full max-w-md border border-black/10 bg-white shadow-[0_18px_55px_rgba(23,60,42,0.16)]"
+                  alt=""
                   width={1224}
                   height={1584}
                   loading="lazy"
+                  decoding="async"
                 />
-              </figure>
-              <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
-                <p
-                  className={cn(
-                    "font-mono text-[11px] leading-5 text-superlinear-deep",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {t.pdfEyebrow}
-                </p>
-                <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-[1.12] [text-wrap:balance] md:text-4xl">
-                  {t.pdfTitle}
+              </a>
+              <div>
+                <div className="eyebrow">{t.pdfEyebrow}</div>
+                <h2>
+                  <Phrases text={t.pdfTitle} />
                 </h2>
-                <p className="mt-5 max-w-2xl text-sm leading-7 text-[#5C574D] md:text-base">
-                  {t.pdfBody}
-                </p>
-                <p className="mt-5 font-mono text-[11px] tracking-[0.08em] text-[#5C574D]">
-                  {t.pdfMeta}
-                </p>
-                <a
-                  href="/enterprise/AI-Builders-2027-for-Teams.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "mt-7 w-fit bg-superlinear text-white hover:bg-superlinear-deep"
-                  )}
-                >
-                  {t.pdfCta}
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
+                <p>{t.pdfBody}</p>
+                <p className="fine">{t.pdfMeta}</p>
+                <div className="cta-row">
+                  <a className="btn btn-green" href={PDF} {...EXTERNAL}>
+                    {t.pdfCta}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-white/10 bg-lz-forest py-16 md:py-24">
-          <div className="container">
-            <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:gap-20">
+        {/* Fully custom work, in three moves, and what happens to sensitive material. */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head">
               <div>
-                <p
-                  className={cn(
-                    "font-mono text-xs leading-5 text-superlinear-on-dark",
-                    lang === "en"
-                      ? "uppercase tracking-[0.18em]"
-                      : "tracking-[0.1em]"
-                  )}
-                >
-                  {t.workEyebrow}
-                </p>
-                <h2 className="mt-5 max-w-xl text-3xl font-semibold leading-[1.1] text-white [text-wrap:balance] md:text-5xl">
+                <div className="eyebrow">{t.workEyebrow}</div>
+                <h2>
                   {lang === "zh" ? (
                     <>
-                      完整定制，
-                      <span className="block whitespace-nowrap">
-                        从真实工作开始。
-                      </span>
+                      <span className="phrase">完整定制，</span>
+                      <span className="phrase">从真实工作开始。</span>
                     </>
                   ) : (
                     t.workTitle
                   )}
                 </h2>
               </div>
-              <p className="max-w-2xl text-base leading-8 text-white/70 md:text-lg">
-                {t.workIntro}
-              </p>
+              <p>{t.workIntro}</p>
             </div>
-
-            <div className="mt-12 grid border-t border-white/20 md:grid-cols-3">
-              {t.workSteps.map((step, index) => {
-                const Icon = workIcons[index];
-                return (
-                  <article
-                    key={step.title}
-                    className={cn(
-                      "border-b border-white/20 py-7 md:px-6 md:py-9",
-                      index > 0 && "md:border-l"
-                    )}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <Icon className="h-5 w-5 text-superlinear-on-dark" />
-                      <span className="font-mono text-xs text-white/35">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-xl font-semibold text-white">
-                      {step.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-7 text-white/60">
-                      {step.detail}
-                    </p>
-                  </article>
-                );
-              })}
+            <div className="cols">
+              {t.workSteps.map(step => (
+                <article key={step.title}>
+                  <h3>{step.title}</h3>
+                  <p>{step.detail}</p>
+                </article>
+              ))}
             </div>
-
-            <div className="mt-8 grid gap-3 border border-white/20 bg-black/10 p-5 md:grid-cols-[0.34fr_1fr] md:items-start md:gap-10 md:p-7">
-              <p
-                className={cn(
-                  "font-mono text-[10px] leading-5 text-superlinear-on-dark",
-                  lang === "en"
-                    ? "uppercase tracking-[0.15em]"
-                    : "tracking-[0.08em]"
-                )}
-              >
-                {t.confidentialityLabel}
-              </p>
-              <p className="text-sm leading-7 text-white/65">
-                {t.confidentialityDetail}
-              </p>
+            <div className="note-row wide">
+              <div className="lab">{t.confidentialityLabel}</div>
+              <p>{t.confidentialityDetail}</p>
             </div>
           </div>
         </section>
 
-        <section className="bg-white py-16 text-superlinear-ink md:py-24">
-          <div className="container grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-16">
-            <figure>
-              <div className="overflow-hidden bg-[#E9E4DA]">
+        {/* Where the course has been tested: the room, then what can be named. */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="evidence">
+              <figure>
                 <img
                   src="/english-network/doordash-ai-training.webp"
                   alt={
@@ -822,102 +602,58 @@ export default function EnterpriseTraining() {
                       ? "Yuzheng Sun leading an AI training session for DoorDash in Seattle"
                       : "孙煜征在西雅图为DoorDash团队进行AI培训"
                   }
-                  className="aspect-[16/10] w-full object-cover"
                   width={1280}
                   height={720}
                   loading="lazy"
+                  decoding="async"
                 />
+                <figcaption>{t.evidenceCaption}</figcaption>
+              </figure>
+              <div>
+                <div className="eyebrow">{t.evidenceEyebrow}</div>
+                <h2>
+                  <Phrases text={t.evidenceTitle} />
+                </h2>
+                <p className="say">{t.evidenceBody}</p>
+                <div className="named">
+                  <div className="t">{t.publicWorkLabel}</div>
+                  <p className="orgs-line">{t.publicWorkNames}</p>
+                  <p className="fine">{t.publicWorkNote}</p>
+                </div>
+                <p className="say small">{t.faculty}</p>
+                <Link className="lz-link" href={withLanguage("/decks", lang)}>
+                  {t.decksCta} <i aria-hidden="true">→</i>
+                </Link>
               </div>
-              <figcaption className="mt-3 text-xs leading-5 text-[#5C574D]">
-                {t.evidenceCaption}
-              </figcaption>
-            </figure>
-
-            <div>
-              <p
-                className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-deep",
-                  lang === "en"
-                    ? "uppercase tracking-[0.18em]"
-                    : "tracking-[0.1em]"
-                )}
-              >
-                {t.evidenceEyebrow}
-              </p>
-              <h2 className="mt-5 text-3xl font-semibold leading-[1.12] [text-wrap:balance] md:text-4xl">
-                {t.evidenceTitle}
-              </h2>
-              <p className="mt-5 text-base leading-8 text-[#5C574D]">
-                {t.evidenceBody}
-              </p>
-
-              <div className="mt-8 border-l-2 border-superlinear pl-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#5C574D]">
-                  {t.publicWorkLabel}
-                </p>
-                <p className="mt-2 text-sm font-semibold leading-7 text-[#173C2A]">
-                  {t.publicWorkNames}
-                </p>
-                <p className="mt-2 max-w-2xl text-xs leading-6 text-[#5C574D]">
-                  {t.publicWorkNote}
-                </p>
-              </div>
-              <p className="mt-6 text-sm leading-7 text-[#5C574D]">
-                {t.faculty}
-              </p>
-              <Link
-                href={withLanguage("/decks", lang)}
-                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-superlinear-link transition hover:text-superlinear-deep"
-              >
-                {t.decksCta}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
           </div>
         </section>
 
-        <section className="bg-superlinear-canvas py-14 text-superlinear-ink md:py-20">
-          <div className="container grid gap-8 border-y border-[#CFC9BE] py-10 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-16">
-            <div>
-              <p
-                className={cn(
-                  "font-mono text-xs leading-5 text-superlinear-deep",
-                  lang === "en"
-                    ? "uppercase tracking-[0.18em]"
-                    : "tracking-[0.1em]"
-                )}
-              >
-                {t.closeEyebrow}
-              </p>
-              <h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-[1.15] [text-wrap:balance] md:text-4xl">
-                {t.closeTitle}
-              </h2>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5C574D] md:text-base">
-                {t.closeBody}
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-              <a
-                href={mailto}
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "bg-superlinear text-white hover:bg-superlinear-deep"
-                )}
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                {t.closeCta}
-              </a>
-              <Link
-                href={withLanguage("/collab", lang)}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold text-[#5C574D] transition hover:text-superlinear-deep"
-              >
-                {t.collabCta}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="split">
+              <div>
+                <div className="eyebrow">{t.closeEyebrow}</div>
+                <h2>
+                  <Phrases text={t.closeTitle} />
+                </h2>
+              </div>
+              <div>
+                <p className="say first">{t.closeBody}</p>
+                <div className="cta-row">
+                  <a className="btn btn-green" href={mailto}>
+                    {t.closeCta}
+                  </a>
+                  <Link className="lz-link" href={withLanguage("/collab", lang)}>
+                    {t.collabCta} <i aria-hidden="true">→</i>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </div>
   );

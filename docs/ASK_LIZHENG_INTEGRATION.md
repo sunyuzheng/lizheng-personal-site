@@ -5,7 +5,7 @@
 ## 这一章有什么
 
 - `client/src/components/home/Ask.tsx` 渲染 `#ask` 区块，在超线性学院（这座城）之后、对话之前，导航里叫「问问立正」；它把 Open Context 那一行作为 children 交给 `AskLizheng.tsx`，排在最后。
-- `AskLizheng.tsx`：标题区（小标题「AI问答」、h2、两句介绍、「打开完整页面 →」，文案在 `content.ts` 的 `HOME_COPY[lang].ask`）；提问框（想明白、从哪读起两种问法）；框下的提问说明和「说明」（同步来的 `shared/ask-public-qa.js`，和 ask 页、隐私政策一字不差）；中文页的「别人在问什么」（最常问、最近问，先三条，「再看N个问题」到八条，再往后「看更多问题 →」，每条旁边可以点赞）；英文页没有列表，是两个例题，框里多一句「问题会在 ask.lizheng.ai 打开，那一页是中文，可以用英文问」。
+- `AskLizheng.tsx`：标题区（小标题「AI问答」、h2、两句介绍、「打开完整页面 →」，文案在 `content.ts` 的 `HOME_COPY[lang].ask`）；提问框（想明白、从哪读起两种问法）；框下的提问说明和「说明」（同步来的 `shared/ask-public-qa.js`，和 ask 页、隐私政策一字不差）；中文页的「别人在问什么」（最近问、最常问，2026-11-10起先显示最近问；先三条，「再看N个问题」到八条，再往后「看更多问题 →」，每条旁边可以点赞）；英文页没有列表，是两个例题，框里多一句「问题会在 ask.lizheng.ai 打开，那一页是中文，可以用英文问」。
 - 宽屏（1040px 以上）问题框在左、列表在右，Open Context 在问题框下面的空白里；窄屏依次排下来。样式在同目录 `home.css` 的 `.lz-ask-*` 下。根锚点 `#ask-lizheng` 保留（登录完成后的返回地址 `safeReturnPath` 还指向它）。
 
 ## 问题怎么交给 ask 页

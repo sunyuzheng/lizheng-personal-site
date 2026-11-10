@@ -50,7 +50,7 @@ const COPY = {
     discoveryOften: "常被问到",
     discoveryMore: "看更多问题",
     discoveryExpand: (n: number) => `再看${n}个问题`,
-    discoveryViews: ["最常问", "最近问"],
+    discoveryViews: ["最近问", "最常问"],
     discoveryHelpful: "有帮助",
     discoveryHelpfulCount: (n: number) => `有帮助，${n}人`,
     discoveryUnlike: "取消",
@@ -79,7 +79,7 @@ const COPY = {
     discoveryOften: "Often asked",
     discoveryMore: "See more questions",
     discoveryExpand: (n: number) => `Show ${n} more`,
-    discoveryViews: ["Most asked", "Newest"],
+    discoveryViews: ["Newest", "Most asked"],
     discoveryHelpful: "Helpful",
     discoveryHelpfulCount: (n: number) => `Helpful, ${n}`,
     discoveryUnlike: "Undo",
@@ -127,15 +127,18 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   // The page's own voice; the situation is not kept (since 2026-10-04), and is only offered on ask.lizheng.ai.
   const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(services.model), backup: answerService(services.backup), contextKept: false });
 
-  // Real questions others asked, published from Ops: 最常问 and 最近问, the same lists for everyone;
-  // shown on the Chinese page in place of the examples. 最常问 comes first and the list stays folded
-  // to three (2026-10-12, the user: fold it, and show the most common questions); 再看N个 opens up
-  // to eight here, and only then 看更多问题 leads to the whole list on ask.lizheng.ai.
+  // Real questions others asked, published from Ops: 最近问 and 最常问, the same lists for everyone;
+  // shown on the Chinese page in place of the examples. 最近问 comes first, here as on ask.lizheng.ai
+  // (2026-11-10, the user: open on the newest, not the most asked; from 2026-10-12 until then 最常问
+  // came first), unless nobody has asked yet and only the common questions written fresh exist. The
+  // list stays folded to three (2026-10-12); 再看N个 opens up to eight here, and only then 看更多问题
+  // leads to the whole list on ask.lizheng.ai.
   const [questionLists, setQuestionLists] = useState<DiscoveryLists | null>(null);
   const listsNow = useRef<DiscoveryLists | null>(null), pendingLists = useRef<DiscoveryLists | null>(null);
   const listWatcher = useRef<ReturnType<typeof watchDiscoveryLists> | null>(null);
   const [listsPending, setListsPending] = useState(false);
-  const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("frequent");
+  const [discoveryTab, setDiscoveryTab] = useState<DiscoveryView>("recent");
+  const firstLists = useRef(true);
   const [discoveryOpen, setDiscoveryOpen] = useState(false);
   const discoveryShown = useMemo(() => (questionLists ? discoveryView(questionLists, discoveryTab) : []), [questionLists, discoveryTab]);
   const discoveryCards = discoveryShown.slice(0, discoveryOpen ? DISCOVERY_OPEN : DISCOVERY_FOLDED);
@@ -167,6 +170,11 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     watchUsage(discoveryList.current, "d_seen");
   }, [hasDiscovery]);
   const applyLists = (lists: DiscoveryLists) => {
+    if (firstLists.current && (lists.recent.length || lists.frequent.length)) {
+      firstLists.current = false;
+      // Until someone has asked, the common questions written fresh are all there is.
+      if (!discoveryView(lists, "recent").length) setDiscoveryTab("frequent");
+    }
     listsNow.current = lists;
     pendingLists.current = null;
     setListsPending(false);
@@ -351,7 +359,7 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
               {publicTotal && <p className="lz-ask-discovery-live">{c.discoveryTotal(publicTotal)}</p>}
               {/* The same two lists for everyone; 看更多问题 opens the one shown on ask.lizheng.ai. */}
               <div className="lz-ask-discovery-views" role="group" aria-label={c.viewsLabel}>
-                {(["frequent", "recent"] as const).map((view, i) => (
+                {(["recent", "frequent"] as const).map((view, i) => (
                   <button key={view} type="button" aria-pressed={discoveryTab === view} onClick={() => showTab(view)}>{c.discoveryViews[i]}</button>
                 ))}
               </div>

@@ -1575,6 +1575,22 @@
   margin-top: 10px;
 }
 
+/* What time has said since: the row's last word, so it is set darker than the claim it answers.
+   Its label (后来) sits in the line, like a ledger's column name. */
+.lz-home .call .later {
+  margin-top: 12px;
+  max-width: 44em;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-home .call .later b {
+  margin-right: 0.9em;
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
 .lz-home .call .side {
   font-size: 14.5px;
   color: var(--lz-ink-2);
@@ -1679,7 +1695,8 @@
 
   /* A long claim in a phone's narrow column reads better as running text than one phrase a
      line; wider columns keep phrases whole. */
-  .lz-home .call .claim .phrase {
+  .lz-home .call .claim .phrase,
+  .lz-home .call .later .phrase {
     display: inline;
   }
 }

@@ -3,6 +3,7 @@ import DefiningWork from "@/components/DefiningWork";
 import PeerEndorsements from "@/components/PeerEndorsements";
 import CareerPath, { type CareerStep } from "@/components/home/CareerPath";
 import { LINKS } from "@/components/home/content";
+import { Phrases } from "@/components/home/parts";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { FLP_AMAZON_URL, GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
@@ -173,16 +174,46 @@ export default function About() {
         "I’m Yuzheng Sun, known as 立正 / 课代表立正. I have a PhD in Economics from Cornell and founded Superlinear Academy. I live in Seattle.",
       belief:
         "MAKE WHAT LASTS. I want to build things people keep choosing, long after the launch.",
-      backgroundTitle: "Background",
-      background:
-        "I worked as an economist at Amazon, a data scientist at Meta, and Vice Director of Data & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
-      // Worded so it stays true before and after the November 2026 event.
-      aie: "AI Engineer Shanghai 2026, the first AI Engineer conference in China, names Mengying Li and me as its co-organizers. My part is the program, speaker invitations, and connecting developer communities in the US and China.",
+      // The approved English founder line (yuzheng-profile BIOS.md, "Short founder line"), without
+      // its greeting. The career band above already lists the employers, so this chapter gives
+      // the reason instead of the list again.
+      whyTitle: "Why I’m building Superlinear Academy",
+      why: [
+        <>
+          I believe people should have the chance to turn their judgment and
+          craft into work that keeps creating value and remains recognizably
+          theirs. I call that MAKE WHAT LASTS.
+        </>,
+        <>
+          My path from Cornell to Amazon, Meta, Tencent, and Statsig kept
+          moving me closer to the point where an idea has to work. Superlinear
+          is the institution I’m building around that belief, and the defining
+          work I have chosen to place under its standard.
+        </>,
+      ],
+      aie: (
+        <>
+          AI Engineer Shanghai, the first AI Engineer conference in China, took
+          place in November 2026, with Mengying Li and me as its co-organizers.
+          My part was the program, speaker invitations, and connecting
+          developer communities in the US and China. I wrote up how the work
+          behind it was done:{" "}
+          <a
+            href="https://yuzheng.substack.com/p/behind-aie-shanghai-how-a-small-team"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            Behind AIE Shanghai
+          </a>
+          .
+        </>
+      ),
       aieLink: "AI Engineer Shanghai organizing team",
       currentTitle: "The academy I’m building",
       currentIntro:
         "Superlinear Academy is where my teaching, community, and enterprise work come together. You can begin with the free community.",
-      publicTitle: "Books and conversations",
+      publicTitle: "Books, conversations, and a conference",
       publicIntro: (
         <>
           I wrote{" "}
@@ -228,15 +259,67 @@ export default function About() {
         "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院（Superlinear Academy）创始人，现居西雅图。",
       belief:
         "学点真本事，做点真东西。对我来说，就是离开职位和公司名，仍能做出别人需要的东西。",
-      backgroundTitle: "经历",
-      background:
-        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG数据与AI副总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设超线性学院。",
-      aie: "2026年，我和李孟颖联合主办AI Engineer上海站，这是硅谷的AI工程师大会第一次来中国。我参与议程筹划和嘉宾邀请，也帮中美两边的开发者社区牵线。",
+      // The founder motivation approved on 2026-09-07 (yuzheng-profile BIOS.md), word for word,
+      // with its three links. It stood on the homepage until the 2026-09-30 redesign and then
+      // on no page at all. The career band above lists the employers; this chapter says why.
+      whyTitle: "我为什么创办|超线性学院",
+      why: [
+        <>
+          <a
+            href={LINKS.chatgptEssay}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            2023年，我就看到了这场巨变
+          </a>
+          ：AI既是一场大洪水，会颠覆我们的职业与教育；又是第二次文艺复兴，会带来个体的自我发现与自我解放。
+        </>,
+        <>
+          大洪水中，人们需要
+          <a
+            href={LINKS.aiBuilders}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            学会游泳与造船
+          </a>
+          ；文艺复兴，需要
+          <a
+            href={LINKS.florence}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            佛罗伦萨
+          </a>
+          。
+        </>,
+        <>
+          我创办超线性学院，就是要把这两件事做成：教人驾驭AI，也为创造者建一座城。让有想法的人找到高手与同行，在彼此的启发和切磋中，把想法做成作品，把作品磨成代表作。
+        </>,
+      ],
+      aie: (
+        <>
+          2026年11月，我和李孟颖联合主办了AI
+          Engineer上海站，这是硅谷的AI工程师大会第一次来中国。我参与议程筹划和嘉宾邀请，也帮中美两边的开发者社区牵线。幕后是怎么做的，我写了一篇
+          <a
+            href="https://www.superlinear.academy/c/ai-resources/aie-shanghai-ai-workflow-retrospective"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            复盘
+          </a>
+          。
+        </>
+      ),
       aieLink: "AI Engineer上海站组织团队",
       currentTitle: "我正在办的这所学院",
       currentIntro:
         "课程、社区和企业项目，都在超线性学院。想了解我们，可以先从免费社区开始。",
-      publicTitle: "书与对话",
+      publicTitle: "书、对话|和一场大会",
       publicIntro: (
         <>
           我写了
@@ -334,39 +417,18 @@ export default function About() {
         <CareerPath lang={lang} steps={career[lang]} />
 
         {/* From here one sheet of paper: each chapter's name in the left column, its matter on the
-            right, a hairline in ink between chapters. */}
+            right, a hairline in ink between chapters. The first chapter is why he founded the
+            academy; the career band above already names where he worked. */}
         <section className="sec">
           <div className="wrap">
             <div className="chap">
-              <h2>{copy.backgroundTitle}</h2>
-              <div className="prose">
-                <p>{copy.background}</p>
-                <p>{copy.aie}</p>
-                <div className="links">
-                  <a
-                    className="lz-link"
-                    href="https://economics.cornell.edu/historical-placement-phd-students"
-                    {...EXTERNAL}
-                  >
-                    {lang === "en"
-                      ? "Cornell Economics placement record"
-                      : "康奈尔经济学博士去向记录"}{" "}
-                    <i aria-hidden="true">→</i>
-                  </a>
-                  {lang === "zh" && (
-                    // A static page outside the React app, so a plain link.
-                    <a className="lz-link" href={STATSIG_WRITING_PATH}>
-                      在Statsig写的19篇文章（中文版） <i aria-hidden="true">→</i>
-                    </a>
-                  )}
-                  <a
-                    className="lz-link"
-                    href={`${lang === "en" ? LINKS.aieShanghai : LINKS.aieShanghaiZh}#organizers`}
-                    {...EXTERNAL}
-                  >
-                    {copy.aieLink} <i aria-hidden="true">→</i>
-                  </a>
-                </div>
+              <h2>
+                <Phrases text={copy.whyTitle} />
+              </h2>
+              <div className="prose why">
+                {copy.why.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
             </div>
           </div>
@@ -415,6 +477,10 @@ export default function About() {
           </div>
         </section>
 
+        {/* What he cares about, before what others say of him (it closed the page until 2026-11-10,
+            after the contact details). */}
+        <DefiningWork />
+
         <section className="sec ruled">
           <div className="wrap">
             <div className="chap">
@@ -439,9 +505,12 @@ export default function About() {
         <section className="sec ruled">
           <div className="wrap">
             <div className="chap">
-              <h2>{copy.publicTitle}</h2>
+              <h2>
+                <Phrases text={copy.publicTitle} />
+              </h2>
               <div className="prose">
                 <p>{copy.publicIntro}</p>
+                <p>{copy.aie}</p>
                 <div className="links">
                   <Link className="lz-link" href={withLanguage("/books", lang)}>
                     {copy.books} <i aria-hidden="true">→</i>
@@ -484,6 +553,31 @@ export default function About() {
               <h2>{copy.sourcesTitle}</h2>
               <div className="prose">
                 <p>Seattle / 西雅图</p>
+                <div className="links">
+                  <a
+                    className="lz-link"
+                    href="https://economics.cornell.edu/historical-placement-phd-students"
+                    {...EXTERNAL}
+                  >
+                    {lang === "en"
+                      ? "Cornell Economics placement record"
+                      : "康奈尔经济学博士去向记录"}{" "}
+                    <i aria-hidden="true">→</i>
+                  </a>
+                  {lang === "zh" && (
+                    // A static page outside the React app, so a plain link.
+                    <a className="lz-link" href={STATSIG_WRITING_PATH}>
+                      在Statsig写的19篇文章（中文版） <i aria-hidden="true">→</i>
+                    </a>
+                  )}
+                  <a
+                    className="lz-link"
+                    href={`${lang === "en" ? LINKS.aieShanghai : LINKS.aieShanghaiZh}#organizers`}
+                    {...EXTERNAL}
+                  >
+                    {copy.aieLink} <i aria-hidden="true">→</i>
+                  </a>
+                </div>
                 <p className="checked">{copy.reviewed}</p>
                 <div className="cta-row">
                   <Link
@@ -506,7 +600,6 @@ export default function About() {
           </div>
         </section>
 
-        <DefiningWork />
       </main>
       <SiteFooter />
     </div>

@@ -407,15 +407,14 @@ export default function Podcast() {
               <li>
                 {feed ? (
                   <>
-                    RSS收录<b className="in">{feed.episodes.length}</b>期
+                    <b>{feed.episodes.length}</b>期节目
                   </>
                 ) : (
-                  "正在读取官方RSS"
+                  "正在读取节目单"
                 )}
               </li>
               <li>持续更新</li>
               <li>中文</li>
-              <li>RSS实时同步</li>
             </ul>
           </div>
         </section>
@@ -427,7 +426,7 @@ export default function Podcast() {
               <h2>最新一期</h2>
               {feed?.lastBuildAt && (
                 <p className="updated">
-                  RSS更新于{formatDate(feed.lastBuildAt)}
+                  更新于{formatDate(feed.lastBuildAt)}
                 </p>
               )}
             </div>
@@ -445,7 +444,7 @@ export default function Podcast() {
 
             {feedState.status === "error" && (
               <div role="alert" className="feed-error">
-                <h3>暂时没有读到官方RSS</h3>
+                <h3>暂时没有读到节目单</h3>
                 <p>{feedState.error}</p>
                 <div className="cta-row">
                   <button
@@ -453,7 +452,7 @@ export default function Podcast() {
                     className="btn btn-green"
                     onClick={() => setRefreshKey(value => value + 1)}
                   >
-                    重新同步
+                    再读一次
                   </button>
                   <a className="lz-link" href={PUBLIC_FEED_URL} {...EXTERNAL}>
                     打开RSS <i aria-hidden="true">→</i>
@@ -513,7 +512,7 @@ export default function Podcast() {
               <div>
                 <h2>全部单集</h2>
                 <p className="after">
-                  默认按RSS发布日期从新到旧排列。历史修复不会被当成新发布。
+                  按发布时间，从新到旧。
                 </p>
               </div>
               <div className="finder">
@@ -669,7 +668,7 @@ export default function Podcast() {
               <div>
                 <h2>在你常用的平台继续听</h2>
                 <p className="say">
-                  同一份官方RSS会把音频、集数、发布日期和封面同步到各个Podcast平台。
+                  各平台的内容都一样，挑你常用的那个订阅。
                 </p>
               </div>
               <ul className="points platforms">

@@ -1,5 +1,6 @@
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
+import { Quotation } from "@/components/home/Peers";
 import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -191,34 +192,33 @@ const copy = {
     reviewsEyebrow: "Maven公开评价",
     reviewsTitle: "他们在课里真正带走了什么。",
     reviewsIntro:
-      "以下均为Maven公开评价；任职信息用于说明评价者背景，不代表雇主背书。",
+      "以下均为Maven公开评价，中文为译文；任职信息用于说明评价者背景，不代表雇主背书。",
     reviews: [
       {
+        // The same translation as the About page's (components/CourseReviews.tsx).
         quote:
-          "There are many courses teaching you specific tricks but this course helps you build the right mindset and empower you to teach yourself more effectively.",
+          "很多课程教具体技巧；这门课帮你建立正确的思维方式，也让你更有效地继续自学。",
         name: "Shuyang",
         role: "Member of Technical Staff",
         company: "OpenAI",
-        note: "Former Sr. AI Manager · Uber",
+        note: "前Uber高级AI经理",
       },
       {
-        quote:
-          "There can be different new tools coming, but principles remain!",
+        quote: "新工具会不断出现，但原理不变！",
         name: "EZ",
         role: "Engineer",
         company: "Anthropic",
       },
       {
-        quote:
-          "The content and instruction are both outstanding and very engaging.",
+        quote: "内容和讲授都很出色，也很吸引人。",
         name: "Chairy",
         role: "UX Manager",
         company: "Google",
       },
     ],
-    reviewsCta: "在Maven查看公开评价",
+    reviewsCta: "在Maven读英文原文",
     individualNote:
-      "我不接面向个人的付费咨询。个人问题欢迎免费加入超线性学院公开提问，我会在社区里免费回答。",
+      "我不接面向个人的付费咨询。个人问题欢迎到超线性学院的免费社区公开提问。",
     communityCta: "去免费社区提问",
     formatsEyebrow: "五种合作方式",
     formatsTitle: "从够用的那一步开始。",
@@ -455,7 +455,15 @@ export default function EnterpriseTraining() {
             <div className="cols reviews">
               {t.reviews.map(review => (
                 <figure key={review.name}>
-                  <blockquote lang="en">“{review.quote}”</blockquote>
+                  {/* English as the reviewers wrote it; the Chinese page sets its translation in
+                      phrases, as the About page does, so no line ends inside a word. */}
+                  {lang === "zh" ? (
+                    <blockquote>
+                      <Quotation text={review.quote} />
+                    </blockquote>
+                  ) : (
+                    <blockquote lang="en">“{review.quote}”</blockquote>
+                  )}
                   <figcaption>
                     <b>{review.company}</b>
                     <span>

@@ -17,7 +17,7 @@ export const COLLAB_PAGE_META: Record<CollabLang, PageMeta> = {
       "与课代表立正合作：演讲、团队问题梳理会与内部交流、AI Builders团队采购、企业AI培训与定制、顾问与长期合作。",
     canonical: "https://www.lizheng.ai/collab",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-09-04",
+    lastModified: "2026-11-10",
   },
 };
 
@@ -55,6 +55,6 @@ export const ENTERPRISE_TRAINING_PAGE_META: Record<CollabLang, PageMeta> = {
       "让AI真正进入团队工作：AI Builders团队采购与专属班、学费之外$20,000起的课程定制，以及从真实岗位与流程开始的$100,000起完整企业项目。",
     canonical: "https://www.lizheng.ai/collab/enterprise",
     ogImage: "https://www.lizheng.ai/english-network/doordash-ai-training.webp",
-    lastModified: "2026-09-02",
+    lastModified: "2026-11-10",
   },
 };

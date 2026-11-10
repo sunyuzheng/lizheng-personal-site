@@ -26,12 +26,12 @@ export default function FoundingBooksLink({
     >
       <p className="text-[14px] leading-6 text-lz-ink-2">
         {lang === "zh"
-          ? "三本原版的会员内部预览，登录学院账号验证后即可阅读与下载。"
+          ? "三本书都有会员预览版。Founding Member登录学院账号验证后，可以读，也可以下载。"
           : "Member previews of all three books. Verify your Academy account to read and download."}
       </p>
       <a href={FOUNDING_BOOKS_URL} className="lz-link min-h-11">
         {lang === "zh"
-          ? "Founding Member专属领取EPUB/PDF"
+          ? "去领取EPUB和PDF"
           : "Founding Member EPUB/PDF access"}{" "}
         <i aria-hidden="true">→</i>
       </a>

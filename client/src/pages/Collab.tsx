@@ -98,7 +98,7 @@ const copy = {
     creatorLabel: "播客与创作者邀请",
     creatorTitle: "想邀请我上节目？",
     creatorDetail:
-      "可聊的话题、过往节目和介绍素材都在这里。节目邀请与商业合作分开处理。",
+      "可聊的话题、过往节目和介绍素材都在这里。",
     creatorCta: "前往播客与创作者邀请",
     workEyebrow: "组织与长期合作",
     workTitle: "三种常见的合作起点。",
@@ -106,8 +106,12 @@ const copy = {
       {
         title: "演讲与活动",
         detail:
-          "Keynote、炉边对谈和圆桌，主题包括AI到底改变了什么、AI Native工作与人才、可靠系统、组织判断与职业价值。",
+          "Keynote、炉边对谈和圆桌，主题包括AI到底改变了什么、AI Native工作与人才、可靠系统、组织判断与职业价值。讲过的场合有哥伦比亚大学、刘润直播间和Seattle (AI) Startup Summit，也在Significance Summit和Acquired的两位主持人同台对谈。",
         fit: "最合适的情况：你说得清台下是谁，以及听完后希望他们发生什么变化。",
+        action: {
+          label: "看演讲课件与实录",
+          href: "/decks",
+        },
       },
       {
         title: "企业AI培训与定制",
@@ -125,28 +129,27 @@ const copy = {
         title: "机构咨询与长期合作",
         detail:
           "先用一次聚焦的团队问题梳理会，把产品、AI、数据、增长或组织中的一个重要问题谈清楚，再决定是否值得进入更大的项目。",
-        fit: "机构合作$2,000起。长期顾问或投资对话也可以从这里开始，但与节目选题和内容露出彼此独立。",
+        fit: "机构合作$2,000起。长期顾问或投资对话，也可以从这里开始。",
       },
     ],
     budgetTitle: "商业项目的范围",
     budgetDetail:
-      "便于预算判断：团队问题梳理会与内部交流$2,000起；AI Builders可以按席位采购；完整定制企业项目$100,000起。企业页列出了完整价格阶梯，也提供可以内部转发的团队方案。我不接面向个人的付费咨询，个人问题欢迎到免费社区公开提问。演讲另行确定范围；节目邀请不在这里定价，也不与商业项目打包。",
+      "团队问题梳理会与内部交流$2,000起；AI Builders按席位采购；完整定制企业项目$100,000起。完整的价格阶梯，和可以转发给同事的团队方案，都在企业页。演讲按场合另行商量。我不接面向个人的付费咨询，个人问题欢迎到免费社区公开提问。",
     principlesEyebrow: "如何判断是否合适",
     principlesTitle: "有用的合作，应该从事情开始，不是从交易开始。",
     principles: [
       {
-        title: "先说清真实决策或受众需要。",
-        detail:
-          "最有用的邀请会写清：希望什么变得可能，对谁有用，为什么是现在。",
+        title: "先说清你要做的决定，或听众的需要。",
+        detail: "最有用的邀请会写清：想做成什么事，对谁有用，为什么是现在。",
       },
       {
         title: "判断不出售。",
-        detail: "不接受按稿背书，也不为没有形成独立判断的产品提供内容露出。",
+        detail: "不照稿子背书。我自己没有判断过的产品，不替它做内容。",
       },
       {
-        title: "实质商业关系会被披露。",
+        title: "有商业关系，会写明。",
         detail:
-          "客户、顾问和投资关系不会换来编辑入口。如果这些关系与公开内容有关，会明确说明。",
+          "节目邀请和商业项目分开谈。客户、顾问和投资关系，换不来上节目，也换不来被我写进内容；内容里涉及这些关系时，我会写明。",
       },
     ],
     contactEyebrow: "开始聊聊",
@@ -154,12 +157,12 @@ const copy = {
     contactIntro: "请带上四件事：",
     contactItems: [
       "你是谁，正在负责什么。",
-      "希望一起让什么变得可能，对谁有用。",
+      "想一起做成什么事，对谁有用。",
       "大概的形式和时间。",
       "商业项目请说明决策人和预算范围。",
     ],
     contactClose:
-      "具体的上下文，能让我更快给你一个真正有用的回答，包括我不是最合适的人时。",
+      "写得具体，我就能更快给你一个有用的答复，包括告诉你我不合适。",
     contactButton: "发邮件给立正",
   },
 };
@@ -170,7 +173,7 @@ function buildMailto(lang: "en" | "zh") {
   const body =
     lang === "en"
       ? "Who I am:\n\nWhat I want to make possible, and for whom:\n\nFormat and timing:\n\nDecision owner and budget range (for commercial work):\n"
-      : "我是谁：\n\n希望一起让什么变得可能，对谁有用：\n\n形式和时间：\n\n决策人和预算范围（商业项目）：\n";
+      : "我是谁：\n\n想一起做成什么事，对谁有用：\n\n形式和时间：\n\n决策人和预算范围（商业项目）：\n";
   return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
@@ -250,13 +253,16 @@ export default function Collab() {
                       >
                         {path.action.label} <i aria-hidden="true">→</i>
                       </Link>
-                      <Link
-                        className="lz-link"
-                        href={withLanguage(path.action.secondaryHref, lang)}
-                      >
-                        {path.action.secondaryLabel}{" "}
-                        <i aria-hidden="true">→</i>
-                      </Link>
+                      {"secondaryHref" in path.action &&
+                      path.action.secondaryHref ? (
+                        <Link
+                          className="lz-link"
+                          href={withLanguage(path.action.secondaryHref, lang)}
+                        >
+                          {path.action.secondaryLabel}{" "}
+                          <i aria-hidden="true">→</i>
+                        </Link>
+                      ) : null}
                     </div>
                   ) : null}
                 </article>

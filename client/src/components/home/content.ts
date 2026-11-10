@@ -23,6 +23,11 @@ export const LINKS = {
   florence:
     "https://www.superlinear.academy/c/ai-resources/ai-second-renaissance-florence",
   chatgptEssay: "https://www.superlinear.academy/c/ai-resources/chatgpt",
+  // 《Agent的下一个突破，在文件系统》, published 2026-11-09, and its English version.
+  fileSystemEssay:
+    "https://www.superlinear.academy/c/ai-resources/agent-file-system",
+  fileSystemEssayEn:
+    "https://yuzheng.substack.com/p/the-next-breakthrough-for-ai-agents",
   chatgptTalk: "https://youtu.be/mQveBlevbZo",
   growthBook: GROWTH_BOOK_AMAZON_URL,
   growthBookZh: GROWTH_BOOK_ZH_PATH,
@@ -237,6 +242,13 @@ export interface PublicCall {
   sources: Array<[label: string, href: string]>;
   /** Wait behind 「再看另外N条判断」 so the chapter opens with the key calls. */
   fold?: boolean;
+  /**
+   * What time has said since (yuzheng-profile DATED_VIEWS.md asks every dated view for "what
+   * happened next"). Events a reader can check, and the misses he has named himself; never a
+   * verdict on his own foresight. A call too recent to check may instead say what would prove
+   * it wrong, under its own label. Left out when there is nothing to say yet.
+   */
+  later?: { label?: string; text: string };
   /** Featured calls stay open, with their key line and sometimes an image. */
   feature?: {
     badge: string;
@@ -406,8 +418,8 @@ const zh = {
   works: {
     eyebrow: "书",
     title: ["想清楚的事，", "写成了书。"],
-    intro:
-      "一本讲假工作、假学习和AI时代什么会留下来；一本写给想靠能力、而不是靠头衔立足的人；一本写给做产品和增长的人。",
+    // One line: until 2026-11-10 it summarised each book, which the three cards under it do again.
+    intro: "三本书，各回答一个问题。",
     flp: {
       meta: "著 · 英文 · 2026",
       title: "Feels Like Progress",
@@ -481,9 +493,10 @@ const zh = {
   calls: {
     eyebrow: "公开判断",
     title: ["先把判断写下来，", "再让时间检验。"],
-    intro: "说对的，说错的，都留在原处，每一条都附上当时的原始记录。",
+    intro: "说对的，说错的，都留在原处。每条附当时的原始记录；隔得够久的，写上后来怎样。",
     listLabel: "公开判断时间线",
     sources: "原始记录",
+    later: "后来",
     // The calls marked fold wait until asked (on every screen since 2026-10-12); the key ones stay open.
     more: (count: number) => `再看另外${count}条判断`,
     less: "收起",
@@ -501,6 +514,9 @@ const zh = {
           ],
           ["视频：什么样的机器学习真正有效？", "https://youtu.be/sNJ09NOqBXk"],
         ],
+        later: {
+          text: "2022年底ChatGPT出现。2023年2月我写文章判断：这道上限被打破了，见下一条。",
+        },
       },
       {
         date: "2023.02",
@@ -519,6 +535,10 @@ const zh = {
           quote:
             "ChatGPT是“自然语言计算机”，是人类调用数据与算力的近乎完美的形态。",
         },
+        // The two misses are his own words, in the essay's postscript (站在2025年看，有两个错误).
+        later: {
+          text: "推理成本大幅下降，ChatGPT有了长期记忆，也能调用工具。也有两处看错，写在原文的后记里：高估了OpenAI，高估了模型训练的天花板。",
+        },
       },
       {
         date: "2025.01",
@@ -532,6 +552,10 @@ const zh = {
             "https://www.superlinear.academy/c/posts/ai-agents",
           ],
         ],
+        // Claude Code (2025-02), Manus (2025-03) and OpenAI's Codex agent (2025-05).
+        later: {
+          text: "这一年，Claude Code、Manus、Codex相继推出，Agent成了行业的主线。",
+        },
       },
       {
         date: "2025.03",
@@ -540,6 +564,11 @@ const zh = {
         claim:
           "MCP的热度超过了它能可靠交付的东西，协议本身有重大的结构性问题。",
         sources: [["视频", "https://youtu.be/kwwjR6HHJPM"]],
+        // OpenAI adopted MCP on 2025-03-26, Google announced Gemini support on 2025-04-09;
+        // Anthropic's "Code execution with MCP" (2025-11-04) names the problem.
+        later: {
+          text: "MCP成了行业标准，OpenAI和Google当年就接入了。同年11月，Anthropic自己写文章讲它的问题：工具一多，光是工具说明就占满上下文。",
+        },
       },
       {
         date: "2026.03",
@@ -547,9 +576,12 @@ const zh = {
         title: "为什么OpenClaw一定会凉，但仍然值得一试",
         claim: "这个产品品类不会持久；但亲手试一试，能帮你理解这一轮能力变化。",
         sources: [["视频", "https://youtu.be/h_yCYBRzbVw"]],
+        later: { text: "还没到下结论的时候。" },
       },
       {
         date: "2026.09",
+        // Folded since 2026-11-10: the newest call (2026.11) took its place among the open ones.
+        fold: true,
         title: "通过Jev，|辨清AI新技术的叙事陷阱",
         claim:
           "新技术常先让你接受什么才算“厉害”，再证明自己厉害。五层判断帮你跳出叙事陷阱：理解技术、明确边界、拿回评价标准、找到真正合理的比较对象，再判断这个问题值不值得投入。",
@@ -574,6 +606,26 @@ const zh = {
           },
         },
       },
+      {
+        // Every sentence here is from the essay: its TL;DR, and section 7 (我对下一步的预测),
+        // which ends on what would prove him wrong.
+        date: "2026.11",
+        title: "Agent的下一个突破，|在文件系统",
+        claim:
+          "本地的Agent离不开电脑，云电脑把文件绑在了自己的机器上。文件系统需要一次大的革新：文件归人，不归设备，也不归哪一家的云；在哪儿打开都是同一份；哪个Agent能读写什么，由你来定。它未必明年就来。",
+        sources: [
+          ["读文章", LINKS.fileSystemEssay],
+          ["English", LINKS.fileSystemEssayEn],
+        ],
+        feature: {
+          badge: "对下一步的预测",
+          quote: "AI的下一步，通用Agent要得到的突破在文件系统上。",
+        },
+        later: {
+          label: "怎么算我错",
+          text: "通用Agent已经到了大多数人手里，文件却还绑在某一台机器上。",
+        },
+      },
     ] as PublicCall[],
   },
   writing: {
@@ -582,6 +634,13 @@ const zh = {
     intro:
       "在教学、访谈和做产品的过程中，反复遇到的问题。每篇都尽量讲到能被检验的程度。",
     essays: [
+      {
+        date: "2026.11",
+        title:
+          "AIE上海幕后：50多位嘉宾、千人大会，小团队如何无感用AI接住几十轮改动？",
+        line: "AI native不是每个环节都用上AI，而是找到最卡的那个限制，用AI把它撑大。",
+        href: "https://www.superlinear.academy/c/ai-resources/aie-shanghai-ai-workflow-retrospective",
+      },
       {
         date: "2026.09",
         title: "AI会带来第二次文艺复兴，我们需要自己的佛罗伦萨",
@@ -599,12 +658,6 @@ const zh = {
         title: "为什么所有人都在学名词，但真正拉开差距的是动词",
         line: "名词是零件。动词是组装能力。",
         href: "https://www.superlinear.academy/c/ai-resources/verb",
-      },
-      {
-        date: "2026.04",
-        title: "良质与AI：为什么「看一眼才知道好不好」|不可替代",
-        line: "AI只能处理「已经被定义的好」，而你能感受到「还没被定义的好」。",
-        href: "https://www.superlinear.academy/c/ai-resources/quality",
       },
     ] as Essay[],
   },
@@ -642,7 +695,7 @@ const zh = {
     inside: [
       {
         title: "读深度文章",
-        body: "我和鸭哥写AI的原理、工程和产品，从热点讲到背后的机制。",
+        body: "我和联合创始人鸭哥写AI的原理、工程和产品，从热点讲到背后的机制。",
         href: LINKS.knowledgeBank,
       },
       {
@@ -727,7 +780,9 @@ const zh = {
       {
         kind: "付费课程",
         title: "AI Builders",
-        body: "四门课，从AI原理、动手构建、检验结果，到做出能持续运行的系统。和鸭哥一起讲。",
+        // Who Yage is, in one clause (the membership fact sheet: 论文近40篇，发表于CVPR、NeurIPS、
+        // KDD). The card stays the height of the two beside it.
+        body: "四门课，从AI原理、动手构建、检验结果，到做出能持续运行的系统。和鸭哥一起讲，他有近40篇AI顶会论文。",
         stats: [
           ["3,000+", "付费学员"],
           ["5.0", "Maven评分"],
@@ -738,7 +793,7 @@ const zh = {
       {
         kind: "年度会员",
         title: "Stay Superlinear",
-        body: "嘉宾大师课、深度分析，每个月和鸭哥与我直播答疑，带着你自己的问题来。",
+        body: "嘉宾大师课、深度分析，鸭哥和我每月直播答疑，带着你自己的问题来。",
         stats: [["12+", "场大师课/年"]],
         cta: "了解会员",
         href: LINKS.stay,
@@ -758,7 +813,7 @@ const zh = {
   invite: {
     // Echoes the hero (学点真本事，做点真东西), as the English closing echoes MAKE WHAT LASTS.
     title: ["做点真东西，", "从一件小事开始。"],
-    body: "选一件你能负责到底、也愿意被别人拒绝的事，做出来，拿给真实的人看。",
+    body: "选一件你能负责到底的事，做出来，拿给真实的人看，哪怕被拒绝。",
     primary: "免费加入超线性学院",
     secondary: "合作与邀约",
     shop: "逛逛周边店",
@@ -851,8 +906,7 @@ const en: HomeCopy = {
   works: {
     eyebrow: "Books",
     title: ["What I’ve worked out,", "written down."],
-    intro:
-      "One on fake work, fake learning, and what will last when AI can blow it all up; one for people who build products and growth; and one, in Chinese, for people who want to stand on what they can do rather than on a title.",
+    intro: "Three books, each answering one question.",
     flp: {
       meta: "Author · 2026",
       title: "Feels Like Progress",
@@ -918,9 +972,10 @@ const en: HomeCopy = {
     eyebrow: "Public calls",
     title: ["Write the call down.", "Let time check it."],
     intro:
-      "Right or wrong, every call stays where I made it, with the original record attached.",
+      "Right or wrong, every call stays where I made it, with the original record attached. Where enough time has passed, I add what happened.",
     listLabel: "Timeline of public calls",
     sources: "Original record",
+    later: "Since then",
     more: (count: number) => `Show the other ${count} calls`,
     less: "Show fewer",
     items: [
@@ -940,6 +995,9 @@ const en: HomeCopy = {
             "https://youtu.be/sNJ09NOqBXk",
           ],
         ],
+        later: {
+          text: "ChatGPT arrived in late 2022. In February 2023 I wrote that this ceiling had been broken; see the next entry.",
+        },
       },
       {
         date: "2023.02",
@@ -959,6 +1017,9 @@ const en: HomeCopy = {
           quote:
             "ChatGPT is a natural-language computer, close to the ideal way for people to call on data and compute.",
         },
+        later: {
+          text: "Inference got much cheaper, and ChatGPT gained long-term memory and tool use. I also got two things wrong, and they are in the essay’s postscript: I overestimated OpenAI, and I overestimated the ceiling of model training.",
+        },
       },
       {
         date: "2025.01",
@@ -972,6 +1033,9 @@ const en: HomeCopy = {
             "https://github.com/sunyuzheng/lizheng-open-context/blob/main/corpus/english-translations/20250126-FzbkAy0DcQk-en.md",
           ],
         ],
+        later: {
+          text: "Claude Code, Manus, and Codex all launched that year, and agents became the industry’s main line of work.",
+        },
       },
       {
         date: "2025.03",
@@ -980,6 +1044,9 @@ const en: HomeCopy = {
         claim:
           "The hype around MCP exceeds what the protocol can reliably deliver; it has major structural problems.",
         sources: [["Video (Chinese)", "https://youtu.be/kwwjR6HHJPM"]],
+        later: {
+          text: "MCP became the industry standard; OpenAI and Google adopted it the same year. That November, Anthropic wrote up the problem itself: with many tools connected, their definitions alone fill the context window.",
+        },
       },
       {
         date: "2026.03",
@@ -995,9 +1062,11 @@ const en: HomeCopy = {
             "https://github.com/sunyuzheng/lizheng-open-context/blob/main/corpus/english-translations/20260311-h_yCYBRzbVw-en.md",
           ],
         ],
+        later: { text: "Too early to call." },
       },
       {
         date: "2026.09",
+        fold: true,
         title: "Jev and the AI Narrative Trap",
         claim:
           "A new technology can win every comparison you are shown and still be the wrong thing to learn. Five levels of judgment get you out: understand the mechanism, test its limits, choose your own criteria, find the best real alternative, and decide whether the problem deserves your attention.",
@@ -1025,14 +1094,41 @@ const en: HomeCopy = {
           },
         },
       },
+      {
+        // His own English, from the Substack essay: its summary and its prediction section.
+        date: "2026.11",
+        title: "The next breakthrough for AI agents is the file system",
+        claim:
+          "Local agents are tied to one computer, and cloud computers tie your files to their machines. What agents need is one set of files that belongs to you, the same copy everywhere, read and written by you and by your agents. It may not arrive next year.",
+        sources: [
+          ["Read the essay", LINKS.fileSystemEssayEn],
+          ["Chinese original", LINKS.fileSystemEssay],
+        ],
+        feature: {
+          badge: "A prediction for what comes next",
+          quote:
+            "The breakthrough general agents need next is in the file system.",
+        },
+        later: {
+          label: "I’m wrong if",
+          text: "General agents have reached most people and their files are still tied to a single machine.",
+        },
+      },
     ],
   },
   writing: {
     eyebrow: "Writing",
     title: ["What I’m thinking about now"],
     intro:
-      "Questions that keep coming up in teaching, interviews, and building. English versions of essays first written in Chinese.",
+      "Questions that keep coming up in teaching, interviews, and building. Most are English versions of essays first written in Chinese.",
     essays: [
+      {
+        date: "2026.11",
+        title:
+          "Behind AIE Shanghai: How a Small Team Quietly Absorbed Dozens of Rounds of Changes with AI",
+        line: "Being AI-native doesn’t mean using AI at every step. It means finding the one constraint that binds hardest, and using AI to widen it.",
+        href: "https://yuzheng.substack.com/p/behind-aie-shanghai-how-a-small-team",
+      },
       {
         date: "2026.04",
         title: "The Six Levels of AI Products",
@@ -1051,12 +1147,6 @@ const en: HomeCopy = {
         title: "Quality and AI",
         line: "AI can only handle “goodness that has already been defined,” while you can feel “goodness that hasn’t yet been defined.”",
         href: "https://www.superlinear.academy/c/ai-resources-en/quality-and-ai-why-the-most-irreplaceable-human-capacity-is-knowing-it-s-good-at-a-glance",
-      },
-      {
-        date: "2026.03",
-        title: "The AI Native Organization",
-        line: "The bottleneck is not the tools, but the organization.",
-        href: "https://www.superlinear.academy/c/ai-resources-en/the-ai-native-organization-when-execution-costs-drop-the-org-chart-must-be-rewritten",
       },
     ],
   },
@@ -1088,7 +1178,7 @@ const en: HomeCopy = {
     inside: [
       {
         title: "Read in-depth essays",
-        body: "Yage and I write on how AI works, how to build with it, and what it changes, past the news to the mechanism.",
+        body: "My co-founder Yage and I write on how AI works, how to build with it, and what it changes, past the news to the mechanism.",
         href: LINKS.knowledgeBankEn,
       },
       {
@@ -1170,7 +1260,7 @@ const en: HomeCopy = {
       {
         kind: "Courses",
         title: "AI Builders",
-        body: "Four courses: AI foundations, hands-on building, checking results, and systems that keep working. Co-taught with Yage.",
+        body: "Four courses: AI foundations, hands-on building, checking results, and systems that keep working. Co-taught with Yage, who has nearly 40 papers at top AI conferences.",
         stats: [
           ["3,000+", "paying learners"],
           ["5.0", "on Maven"],

@@ -80,7 +80,7 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
       "英文书《Feels Like Progress》讲假工作、假学习，和AI时代什么会留下来。《Growth Data Analytics Playbook》由Mengying Li、Joe Kumar与孙煜征合著，中文版免费阅读和下载。另有孙煜征所著《真本事：从会工作到会赚钱》。",
     canonical: "https://www.lizheng.ai/books",
     ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-21",
+    lastModified: "2026-11-10",
   },
 };
 
@@ -99,7 +99,7 @@ export const PODCAST_PAGE_META: PageMeta = {
     "课代表立正（孙煜征）的中文播客：AI到底怎么用，钱到底怎么赚？他替你去问硅谷和国内一线的研究者、创业者、投资人。嘉宾有Databricks联合创始人Reynold Xin、Cursor设计负责人Ryo Lu、前Meta FAIR研究总监田渊栋、清华教授刘嘉等。",
   canonical: "https://podcast.lizheng.ai/",
   ogImage: "https://podcast.lizheng.ai/podcast/avatar.png",
-  lastModified: "2026-10-30",
+  lastModified: "2026-11-10",
 };
 
 export const GUEST_INVITATION_PAGE_META: PageMeta = {

@@ -16,9 +16,15 @@ import { Link } from "wouter";
  * The page of one book, 《真本事》, in Chinese only. It wears the site's language (see
  * components/site/subpages.css): the forest head with the book standing on its lower edge, then
  * chapters on paper under an ink rule. Three things are its own: the formula set as the heads of
- * its three columns, the contents set as a book's contents page (all 21 lessons open, so readers
+ * its three columns, the contents set as a book's contents page (all 21 chapters open, so readers
  * and search engines see them without a click), and the three endorsements as rows of who and
  * what they wrote.
+ *
+ * The words are the book's (rewritten 2026-11-10 from the printed text): the opening is the
+ * preface's two scenes, the three reasons are the preface's, each factor of the formula carries a
+ * passage from its chapter, and the contents are the book's own 21 chapters. Until then the page
+ * showed the Bilibili course's 21 lessons as the outline and quoted a line the book does not
+ * contain; the course the book grew out of now has one line of its own under the contents.
  */
 
 // ─── Where the book is ───────────────────────────────────
@@ -42,61 +48,53 @@ const SKILL_SOURCE_URL =
 // ─── What is on this page ────────────────────────────────
 const SECTIONS = [
   ["核心框架", "framework"],
+  ["目录", "outline"],
   ["问问立正", "advisor"],
-  ["课程大纲", "outline"],
   ["封面推荐", "endorsements"],
   ["关于作者", "author"],
-  ["加入社群", "community"],
+  ["加入社区", "community"],
 ] as const;
 
-const PAINS = [
+// From the preface (从“天选打工人”到人生无限游戏), shortened; the title he gives himself there is
+// 腾讯数据科学副总监.
+const ORIGIN = [
+  "35岁前，我用“天选打工人”介绍自己：康奈尔经济学博士、亚马逊经济学家、Meta数据科学家、腾讯副总监。有一次活动，主持人问我这个问题，我搜肠刮肚，找不到答案。",
+  "后来在美国出差，我在麦当劳看到一条招聘横幅：时薪17.5美元。我认真地把这份工作和自己的工作放上天平的两端。它不用费脑费心，不用担心被裁，下班以后也不用盯着企业微信。再高的薪水，再高的社会地位，都压不过自由这个砝码。",
+  // Word joiners keep 以后弄明白的事 together, so a phone never leaves 的事 alone on the last line.
+  "这本书写的，是我跳下“仓鼠轮”以\u2060后\u2060弄\u2060明\u2060白\u2060的\u2060事。",
+];
+
+// The preface's 是什么在阻碍我们拿到结果？
+const REASONS = [
   {
-    title: "陷在“仓鼠轮”",
-    body: "工作越忙越看不到前景，绩效还行，却缺乏可控收入。你一直在跑，但跑道本身并不通向你想去的地方。",
+    title: "认知有局限",
+    body: "从小被植入的思维模式，让我们误解了工作、职场和商业的规则。规则理解错了，时间和精力就耗在没有回报的事情上。",
   },
   {
-    title: "被打分体系绑架",
-    body: "害怕犯错，永远只做90%执行，没有10%突破。客体、固定、打分三种错误思维，让你把失去主动权合理化。",
+    title: "缺少有效的指导",
+    body: "大佬的经验往往不适用于普通人。不少“导师”的主要收入就来自“做导师”，道理听起来都对，却落不了地。",
   },
   {
-    title: "副业无法起势",
-    body: "想做副业却找不到方向，赚钱技能无处积累。因为你还没搞清楚：你到底能提供什么市场真正需要的价值？",
+    title: "抓不住重点",
+    body: "时间和精力有限，得聚焦在当下最重要的事上。什么最重要，往往只有处境相似的过来人说得清。",
   },
 ];
 
 const FACTORS = [
   {
     term: "了解市场",
-    title: "找准|高价值问题",
-    body: "读懂行业、组织、用户的真实需求。知道市场要什么，你才能知道把力气用在哪里。",
+    title: "先弄清|每道题值多少钱",
+    body: "书里有个思想实验：面前有一万道题，每道题的价格用阿拉伯文标着。最该做的不是挑最擅长的那道，而是先学阿拉伯语。个人价值，由市场需求决定。",
   },
   {
     term: "打造产品",
-    title: "能力变成|可交付成果",
-    body: "从简历到副业产品再到个人品牌，把你的能力封装成别人买得到、用得上的东西。",
+    title: "把能力做成|别人用得上的东西",
+    body: "用做产品的思路经营自己，积累才有复利。书里拿一份简历从头讲：先了解市场，再打造产品。",
   },
   {
     term: "利用杠杆",
-    title: "成果放大|十倍、百倍",
-    body: "借助平台、内容、AI与资本，把成果放大到更多人和更高收益。一份努力产生复利。",
-  },
-];
-
-const PRACTICE = [
-  {
-    label: "打开认知",
-    title: "拆掉思维的墙",
-    body: "理解财富自由与价值创造的底层逻辑，识别并破除客体思维、固定思维、打分思维三大陷阱。",
-  },
-  {
-    label: "形成判断",
-    title: "向真正做出结果的人学",
-    body: "不只听结论，也看对方经历了什么、根据什么做出选择，再用真实案例检验自己的理解。",
-  },
-  {
-    label: "动手去做",
-    title: "在真实项目里练",
-    body: "用高价值任务或一个小型副业来试，看见结果，再调整下一步。理论真正用过，才会变成自己的本事。",
+    title: "让同一份力气|走得更远",
+    body: "投资里的杠杆，风险和收益一起放大。职场里常常不对称：事情做成了，上升空间很大；做砸了，后果往往有限。所以要学会识别杠杆。",
   },
 ];
 
@@ -105,67 +103,52 @@ const SKILL_TOOLS = [
   ["Claude / ChatGPT", "参考SKILL.md配置项目指令"],
 ] as const;
 
-interface Module {
+interface Part {
   num: string;
   title: string;
   count: string;
-  /** The number of the module's first lesson; the 21 lessons count straight through. */
+  /** The number of the part's first chapter; the 21 chapters count straight through. */
   from: number;
-  lessons: string[];
+  chapters: string[];
 }
 
-const MODULES: Module[] = [
+// The book's contents page (人民邮电出版社, 2026), titles as printed.
+const PARTS: Part[] = [
   {
-    num: "一",
+    num: "上",
     title: "认知觉醒",
-    count: "6课",
+    count: "10章",
     from: 1,
-    lessons: [
-      "你从“好学生 → 好工作 → 赚大钱”的梦中醒来了吗？",
-      "信息爆炸时代，如何筛选“高价值”信息？",
-      "警惕客体思维：努力没回报，是这个世界的错吗？",
-      "警惕固定思维：你的人生本该如此吗？",
-      "警惕打分思维：事业/择偶/情感，人生可以被量化吗？",
-      "改变错误思维，筑牢认知地基，走向“财务自由”",
+    chapters: [
+      "从“好学生→好工作→赚大钱”的梦中醒来",
+      "学习的正确方法——告别校园思维，拥抱真实世界",
+      "警惕客体思维，学会对自己负责",
+      "警惕固定型思维——解锁成功的底层代码，释放人生潜力",
+      "警惕打分思维——接纳世界的多样和复杂",
+      "重塑思维模式，开启你的财务自由之路",
+      "通往财务自由之路——重塑你的财富观",
+      "投资的陷阱：金钱、时间和人生的无底洞",
+      "个人价值公式——从会工作到会赚钱的核心",
+      "从理想到行动——实现个人价值的具体路径",
     ],
   },
   {
-    num: "二",
-    title: "思维变革",
-    count: "4课",
-    from: 7,
-    lessons: [
-      "“财富自由”是可行的，前提是正确认识它",
-      "破解财富自由迷思：三个常见的“破财陷阱”",
-      "获得财富自由的底层逻辑",
-      "打工人如何利用“个人价值”，最大化自己赢面的具体路径",
-    ],
-  },
-  {
-    num: "三",
-    title: "行动升级 · 工作篇",
-    count: "7课",
+    num: "下",
+    title: "知行合一",
+    count: "11章",
     from: 11,
-    lessons: [
-      "强者成事终极秘诀：道天地将法",
-      "只有10%的工作是有意义的，工作如何抓主线？",
-      "如何在工作中改变3种错误思维惯性？",
-      "了解市场：公司/老板/市场，分别要什么样的人？",
-      "打造产品：如何积累“手艺”，打造黄金简历？",
-      "利用杠杆1：工作内外如何将个人能力变成人力资本？",
-      "利用杠杆2：如何积累通向财富自由的第一桶金？",
-    ],
-  },
-  {
-    num: "四",
-    title: "行动升级 · 副业篇",
-    count: "4课",
-    from: 18,
-    lessons: [
-      "来自康奈尔金融博士的科普：为何韭菜总是你？",
-      "搞钱第一步：放下“暴富”心态，打造赚钱技能",
-      "三步走，有效提升“赚钱行动力”",
-      "课程总结：找到你的长坡厚雪",
+    chapters: [
+      "选择的智慧：用“道、天、地、将、法”规划你的职业发展",
+      "抓住工作中10%的核心价值",
+      "洞悉商业本质：实现增长的核心法则",
+      "跨过阻碍，了解真正的市场",
+      "产品打造方法论：以简历为例",
+      "利用杠杆：放大影响力与加速成长",
+      "职场中的“元能力”——沟通",
+      "投资：少踩坑、建体系，理解市场并穿越喧嚣",
+      "赚钱：一项需要磨炼的技能",
+      "告别空想：将赚钱意愿转化为行动",
+      "找到属于你的“长坡厚雪”：坚持与自我认知",
     ],
   },
 ];
@@ -209,7 +192,7 @@ const AUTHOR_FACTS = [
 const FAQ = [
   {
     q: "这本书适合哪些人？",
-    a: "适合想跳出职场内卷、打造副业现金流、或准备职业转型的知识型工作者。无论你处于职场初中期还是管理层，都能在书中找到可落地的策略。书的核心是一套可操作的分析框架。",
+    a: "写给按规则努力工作、却发现离自己想要的生活越来越远的人。上篇讲认知，下篇讲工作和赚钱的具体方法。",
   },
   {
     q: "在哪里可以购买这本书？",
@@ -217,7 +200,8 @@ const FAQ = [
   },
   {
     q: "副业会不会影响主业表现？",
-    a: "书中强调“工作是资本，副业是实验室”。通过抓住10%高价值任务，你反而能在主业中更快成长，并将经验投射到副业变现。二者可以相互促进。",
+    // The preface's 为什么要“先工作，后赚钱”, and chapter 12.
+    a: "书里的顺序是“先工作，后赚钱”：本职工作给你一个好的起点和成长的平台；副业让你更真实地直面商业规则，再慢慢发展成自己的事业。第十二章讲怎样抓住工作中10%的核心价值，把时间和精力腾出来。",
   },
   {
     q: "是否提供线下活动或一对一辅导？",
@@ -291,17 +275,18 @@ export default function ZhenbenShi() {
                   </span>
                   <span className="line">从会工作到会赚钱》</span>
                 </h1>
-                <p className="lede">把工作变成能力，把能力变成收入</p>
+                <p className="lede">
+                  <Phrases text="拿掉证书、职位和公司名以后，|你还真正会什么？" />
+                </p>
+                <p className="aside">把工作变成能力，把能力变成收入。</p>
 
+                {/* The book's two shops. The course it grew out of is under the contents. */}
                 <div className="cta-row">
                   <a className="btn btn-ivory" href={WEREAD_URL} {...EXTERNAL}>
                     微信读书
                   </a>
                   <a className="btn btn-line" href={JD_URL} {...EXTERNAL}>
                     京东购买
-                  </a>
-                  <a className="lz-link" href={COURSE_URL} {...EXTERNAL}>
-                    购买课程 <Arrow />
                   </a>
                 </div>
 
@@ -342,27 +327,33 @@ export default function ZhenbenShi() {
           </div>
         </nav>
 
-        {/* ── Where readers are stuck ── */}
+        {/* ── Where the book comes from: two scenes from its preface, then its three reasons ── */}
         <section className="sec ruled">
           <div className="wrap">
             <div className="split">
               <div>
-                <div className="eyebrow">认知觉醒</div>
+                <div className="eyebrow">这本书从哪里来</div>
                 <h2>
-                  <Phrases text="你明明努力，却仍在原地踏步？" />
+                  <Phrases text="如果不考虑钱，|你最想做什么？" />
                 </h2>
-                <p className="say">
-                  很多时候，真正卡住人的，是努力方向和反馈质量。
-                </p>
               </div>
-              <ul className="points">
-                {PAINS.map(item => (
-                  <li key={item.title}>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </li>
+              <div className="story">
+                {ORIGIN.map(paragraph => (
+                  <p key={paragraph}>{paragraph}</p>
                 ))}
-              </ul>
+              </div>
+            </div>
+
+            <p className="lead-in reasons-lead">
+              很多人跳不出“仓鼠轮”，有三个原因
+            </p>
+            <div className="cols reasons">
+              {REASONS.map(reason => (
+                <div key={reason.title}>
+                  <h3>{reason.title}</h3>
+                  <p>{reason.body}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -372,6 +363,9 @@ export default function ZhenbenShi() {
           <div className="wrap">
             <div className="eyebrow">核心框架</div>
             <h2 className="formula-name">个人价值公式</h2>
+            <p className="formula-for">
+              它不是“速成秘诀”，而是一个用来做选择、定投入、看回报的框架。
+            </p>
 
             <div className="formula-set">
               <p className="formula">
@@ -401,29 +395,55 @@ export default function ZhenbenShi() {
           </div>
         </section>
 
-        {/* ── From knowing to doing: three steps, in order ── */}
-        <section className="sec ruled">
+        {/* ── The contents, set as a book's contents page ── */}
+        <section id="outline" className="sec ruled">
           <div className="wrap">
-            <div className="split">
+            <div className="head">
               <div>
-                <div className="eyebrow">怎样练出本事</div>
-                <h2>从理解到会做</h2>
-                <p className="say">
-                  光靠读书不够。你得在真实项目里试、得到反馈，再调整下一步。
+                <div className="eyebrow">目录</div>
+                <h2>
+                  <Phrases text="上下两篇，21章" />
+                </h2>
+              </div>
+              <div>
+                <p>
+                  上篇剖析三个最普遍、最有害的思维模式，再拆解个人价值公式。下篇讲具体的方法：先工作，后赚钱。
                 </p>
               </div>
-              <ol className="points practice">
-                {PRACTICE.map(step => (
-                  <li key={step.label}>
-                    <div>
-                      <p className="t">{step.label}</p>
-                      <h3>{step.title}</h3>
-                      <p>{step.body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
             </div>
+
+            <div className="contents">
+              {PARTS.map(part => (
+                <section key={part.num} className="module">
+                  <h3>
+                    <span className="n">{part.num}</span>
+                    <span>{part.title}</span>
+                    <small>{part.count}</small>
+                  </h3>
+                  <ol>
+                    {part.chapters.map((chapter, i) => (
+                      <li key={chapter}>
+                        <span className="no">
+                          {String(part.from + i).padStart(2, "0")}
+                        </span>
+                        <span>{chapter}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ))}
+            </div>
+
+            {/* The course the book grew out of: named once, with where to watch and buy it. */}
+            <p className="course-note">
+              <span>这本书由同名B站课程扩写而来。想看视频：</span>
+              <a className="lz-link" href={BILIBILI_COURSE_URL} {...EXTERNAL}>
+                在B站看课程 <Arrow />
+              </a>
+              <a className="lz-link" href={COURSE_URL} {...EXTERNAL}>
+                在学院购买课程 <Arrow />
+              </a>
+            </p>
           </div>
         </section>
 
@@ -469,61 +489,13 @@ export default function ZhenbenShi() {
           </div>
         </section>
 
-        {/* ── The contents, set as a book's contents page ── */}
-        <section id="outline" className="sec ruled">
-          <div className="wrap">
-            <div className="head">
-              <div>
-                <div className="eyebrow">课程大纲</div>
-                <h2>
-                  <Phrases text="21课，4大模块" />
-                </h2>
-              </div>
-              <div>
-                <p>
-                  从认知觉醒到行动落地，完整路径清晰可循。课程与书相互映照，书是课程的深度延伸。
-                </p>
-                <a className="lz-link" href={BILIBILI_COURSE_URL} {...EXTERNAL}>
-                  在B站观看课程 <Arrow />
-                </a>
-              </div>
-            </div>
-
-            <div className="contents">
-              {[MODULES.slice(0, 2), MODULES.slice(2)].map((column, index) => (
-                <div key={index}>
-                  {column.map(mod => (
-                    <section key={mod.num} className="module">
-                      <h3>
-                        <span className="n">{mod.num}</span>
-                        <span>{mod.title}</span>
-                        <small>{mod.count}</small>
-                      </h3>
-                      <ol>
-                        {mod.lessons.map((lesson, i) => (
-                          <li key={lesson}>
-                            <span className="no">
-                              {String(mod.from + i).padStart(2, "0")}
-                            </span>
-                            <span>{lesson}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    </section>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── Who put their name on the cover ── */}
         <section id="endorsements" className="sec ruled">
           <div className="wrap">
             <div className="head solo">
               <div>
                 <div className="eyebrow">封面推荐</div>
-                <h2>他们为这本书背书</h2>
+                <h2>三位推荐人这样说</h2>
               </div>
             </div>
 
@@ -644,8 +616,13 @@ export default function ZhenbenShi() {
                 <Phrases text="想继续读，从这里开始" />
               </h2>
               <div>
-                <p className="say first">
-                  可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入超线性学院的免费社区。
+                {/* The preface's last paragraph: the book in its own words, before the ways to get it. */}
+                <blockquote className="last-words">
+                  所谓的“真本事”，不是靠某次“开挂”瞬间逆袭，而是看你在每个细微处，能不能都比别人多想一步、做得更好。当这些不起眼的“好一点”撞上时间，复利会送你一份意想不到的厚礼。
+                  <cite>《真本事》前言</cite>
+                </blockquote>
+                <p className="say">
+                  可以在微信读书读，也可以买纸质书。想看别人怎样把这些方法用起来，欢迎进入超线性学院的免费社区。
                 </p>
                 <div className="cta-row">
                   <a className="btn btn-ivory" href={WEREAD_URL} {...EXTERNAL}>

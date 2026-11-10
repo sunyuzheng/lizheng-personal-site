@@ -960,6 +960,11 @@
   margin-top: 14px;
 }
 
+/* Why he founded the academy: the last paragraph is the founding sentence itself, set in ink. */
+.lz-sub .prose.why p:last-child {
+  color: var(--lz-ink);
+}
+
 .lz-sub .prose.small p {
   font-size: 16px;
   line-height: 1.85;
@@ -2508,6 +2513,85 @@
   margin-top: 2px;
 }
 
+/* The book's opening: two scenes from its preface as running text beside the question they
+   turn on; the last line, what the book is, is set in ink. */
+.lz-sub .story p {
+  max-width: 34em;
+  font-size: 16.5px;
+  line-height: 1.9;
+  color: var(--lz-ink-2);
+  text-wrap: pretty;
+}
+
+.lz-sub .story p + p {
+  margin-top: 16px;
+}
+
+.lz-sub .story p:last-child {
+  font-weight: 500;
+  color: var(--lz-ink);
+}
+
+/* The line that names the three columns under it. */
+.lz-sub .reasons-lead {
+  margin: 60px 0 14px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--lz-ink-2);
+}
+
+/* Three short paragraphs side by side: lines of even length, so none ends on two characters. */
+.lz-sub .cols.reasons p {
+  text-wrap: balance;
+}
+
+/* What the formula is for, under its name. */
+.lz-sub .formula-for {
+  max-width: 34em;
+  margin-top: 10px;
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+/* The course the book grew out of: one line under the contents. */
+.lz-sub .course-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 26px;
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lz-line);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--lz-muted);
+}
+
+/* The book's last words, on the forest the page closes on. */
+.lz-sub .closing .last-words {
+  max-width: 30em;
+  margin: 0 0 22px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  color: var(--lz-on-forest);
+  text-wrap: pretty;
+}
+
+.lz-sub .closing .last-words cite {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--lz-on-forest-3);
+}
+
 /* One line saying what a list beside a chapter's statement is. */
 .lz-sub .split .lead-in {
   margin-bottom: 12px;
@@ -2536,8 +2620,9 @@
   align-items: start;
 }
 
+/* The two parts stand side by side (one under the other on a phone); the grid's gaps space them. */
 .lz-sub .module + .module {
-  margin-top: 36px;
+  margin-top: 0;
 }
 
 .lz-sub .module h3 {
@@ -2647,6 +2732,7 @@
 .lz-sub .split .say,
 .lz-sub .factor p,
 .lz-sub .module li,
+.lz-sub .cols p,
 .lz-sub .head p {
   text-wrap: pretty;
 }

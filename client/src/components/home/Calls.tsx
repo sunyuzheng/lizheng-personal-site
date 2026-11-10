@@ -4,10 +4,10 @@ import { HOME_COPY, SECTION } from "./content";
 import { EXTERNAL, Lines, Phrases } from "./parts";
 
 /**
- * Dated public calls, oldest first, each with its original record. The calls
- * that matter most stay open: the key line in large type, and the newest one
- * with its video or cover. The calls marked fold wait behind a button, so the
- * chapter starts with the ones that matter most and fits one screen.
+ * Dated public calls, oldest first, each with its original record and, where
+ * enough time has passed, what happened afterwards. The calls that matter most
+ * stay open, with their key line in large type. The calls marked fold wait
+ * behind a button, so the chapter starts with the ones that matter most.
  */
 export default function Calls({ lang }: { lang: Lang }) {
   const t = HOME_COPY[lang].calls;
@@ -66,6 +66,12 @@ export default function Calls({ lang }: { lang: Lang }) {
                   <p className="claim">
                     <Phrases text={item.claim} />
                   </p>
+                  {item.later && (
+                    <p className="later">
+                      <b>{item.later.label ?? t.later}</b>
+                      <Phrases text={item.later.text} />
+                    </p>
+                  )}
                 </div>
                 <div className="side">
                   {image && (

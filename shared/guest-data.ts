@@ -94,8 +94,8 @@ export function getGuestsPageMeta(guests: GuestProfile[]): PageMeta {
   const totalGuests = guests.length;
   const uniqueProgrammes = new Set(guests.flatMap(guest => guest.episodes.map(episode => episode.url))).size;
   return {
-    title: `嘉宾与对谈 · 课代表立正 — ${totalGuests}位嘉宾，${uniqueProgrammes}期对谈`,
-    description: `课代表立正的嘉宾与对谈：${totalGuests}位嘉宾、${uniqueProgrammes}期对谈，可按名字、公司或话题查找。`,
+    title: `嘉宾与对谈 · 课代表立正 — ${totalGuests}位嘉宾，${uniqueProgrammes}个视频`,
+    description: `课代表立正的嘉宾与对谈：${totalGuests}位嘉宾、${uniqueProgrammes}个视频，可按名字、公司或话题查找。`,
     canonical: `${SITE_URL}/guests`,
     ogImage: `${SITE_URL}/yuzheng-sun-headshot.jpg`,
   };
@@ -116,7 +116,12 @@ export function getGuestPageMeta(guest: GuestProfile): PageMeta {
   const years = guestYears(guest);
   // The introduction is labelled as the programmes' own, so a search result never presents it as a current job.
   const label = latest ? `${latest.year ? `${latest.year}年` : ""}节目中的介绍` : "简介";
-  const description = `${guest.guest_name}在「课代表立正」的${guest.episode_count}期对谈${years ? `（${years}）` : ""}，包括《${leadTitle || guest.primary_episode.title}》。${intro ? `${label}：${intro}。` : ""}`;
+  const lead = leadTitle || guest.primary_episode.title;
+  // One recording is often several videos (a full version, parts, clips), so the page counts videos.
+  const programmes = guest.episode_count === 1
+    ? `${guest.guest_name}在「课代表立正」的对谈${years ? `（${years}）` : ""}：《${lead}》。`
+    : `${guest.guest_name}在「课代表立正」的对谈，共${guest.episode_count}个视频${years ? `（${years}）` : ""}，包括《${lead}》。`;
+  const description = `${programmes}${intro ? `${label}：${intro}。` : ""}`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

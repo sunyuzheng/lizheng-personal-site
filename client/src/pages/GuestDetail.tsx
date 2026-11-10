@@ -19,7 +19,7 @@ interface GuestDetailProps {
 const COPY = {
   zh: {
     back: "← 全部嘉宾",
-    episodes: (n: number) => `${n}期对谈`,
+    episodes: (n: number) => `${n}个视频`,
     introduced: "节目中的介绍",
     about: "简介：",
     quote: (q: string) => `原话：${q}`,
@@ -33,7 +33,7 @@ const COPY = {
     xiaohongshu: "小红书 ↗",
     playlist: "YouTube合集 ↗",
     community: (n: number) => `社区文章与活动（${n}）`,
-    all: "全部对谈",
+    all: "全部视频",
     allNote: "按时间从新到旧",
     views: (n: string) => `${n}次观看`,
     missingTitle: "这个嘉宾页不存在",
@@ -42,7 +42,7 @@ const COPY = {
   },
   en: {
     back: "← All guests",
-    episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
+    episodes: (n: number) => `${n} video${n === 1 ? "" : "s"}`,
     introduced: "As introduced in the programmes",
     about: "About: ",
     quote: (q: string) => `Their words: ${q}`,
@@ -56,7 +56,7 @@ const COPY = {
     xiaohongshu: "Xiaohongshu ↗",
     playlist: "YouTube playlist ↗",
     community: (n: number) => `Community posts and events (${n})`,
-    all: "All conversations",
+    all: "All videos",
     allNote: "Newest first",
     views: (n: string) => `${n} views`,
     missingTitle: "This guest page doesn't exist",

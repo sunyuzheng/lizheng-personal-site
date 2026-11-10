@@ -7,6 +7,7 @@ import {
   SectionLink,
 } from "@/components/home/parts";
 import { applyPageSeo } from "@/lib/seo";
+import { guestsZh } from "@shared/guest-facts";
 import { ZHENBENSHI_PAGE_META } from "@shared/page-meta";
 import { buildZhenbenshiStructuredData } from "@shared/structured-data";
 import { useEffect, useState } from "react";
@@ -185,7 +186,7 @@ const AUTHOR_FACTS = [
   "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一布道师",
   "超线性学院（Superlinear Academy）创始人，长期从事AI教育、社区与企业实践",
   // The joiners keep 著有 and 合著 with the title after them, so the line turns at a comma.
-  "2020年以来完成200+场公开对话；著\u2060有《真本事》和英文书《Feels Like Progress》，合\u2060著《Growth Data Analytics Playbook》",
+  `2020年以来与${guestsZh()}嘉宾公开对话；著\u2060有《真本事》和英文书《Feels Like Progress》，合\u2060著《Growth Data Analytics Playbook》`,
   "现居西雅图",
 ];
 

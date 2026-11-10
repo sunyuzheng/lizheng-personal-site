@@ -4,7 +4,9 @@ import os from "node:os";
 import path from "node:path";
 import { appearanceParticipantIds, catalogGuestDirectory, guestDirectoryNameTable, nameKey, validateGuestCatalog, type GuestCatalog, type GuestArticleCatalog } from "../shared/guest-catalog";
 import { getGuestsPageMeta } from "../shared/guest-data";
-import { loadGuestSnapshot, digest, verifyGuestRelease, writeGuestRelease, type GuestReleasePin } from "../scripts/sync-guests";
+import { guestCatalog } from "../shared/guest-catalog-snapshot";
+import { GUEST_COUNT, GUEST_VIDEO_COUNT, guestsFigure, guestsZh } from "../shared/guest-facts";
+import { loadGuestSnapshot, digest, guestReleaseCounts, verifyGuestRelease, verifyGuestReleaseCounts, writeGuestRelease, type GuestReleasePin } from "../scripts/sync-guests";
 
 function fixture(): { catalog: GuestCatalog; articles: GuestArticleCatalog } {
   return { catalog: { schema_version: 1, entities: [{ entity_id: "guest:alpha", entity_type: "person", display_name: "Synthetic Alpha", aliases: ["Alpha"], slug: "alpha", alias_slugs: ["alpha", "old-alpha"], primary_source_id: "youtube-abcdefghijk", thumbnail_url: "https://example.org/image.jpg", guest_title: "Historical title", guest_company: "Historical company", guest_bio: "Synthetic biography", community_resources: [{ kind: "event", title: "Synthetic resource", url: "https://example.org/resource", summary: "Synthetic metadata" }] }],
@@ -97,6 +99,26 @@ describe("single canonical guest catalog", () => {
     const changed = snapshot.replace(hash, "b".repeat(64));
     expect(() => verifyGuestRelease(changed, { ...pin, snapshot_sha256: digest(changed) })).toThrow("guest_snapshot_manifest_drift");
   });
+  it("pins the catalog's own guest and video counts, which the pages print", async () => {
+    const { root, hash } = localInput(); const { snapshot, release } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
+    const { catalog } = fixture();
+    // One guest per entity; a programme with two guests is still one video.
+    expect(release).toEqual({ guests: catalog.entities.length, videos: new Set(catalog.appearances.map(row => row.source_id)).size });
+    expect(guestReleaseCounts({ entities: [1, 2, 3], appearances: [{ source_id: "a" }, { source_id: "a" }, { source_id: "b" }] })).toEqual({ guests: 3, videos: 2 });
+    const pin: GuestReleasePin = { schema_version: 2, repository: "sunyuzheng/lizheng-open-context", commit: "a".repeat(40), manifest_sha256: hash, snapshot_sha256: digest(snapshot), counts: release };
+    verifyGuestRelease(snapshot, pin); verifyGuestReleaseCounts(pin, catalog);
+    expect(() => verifyGuestRelease(snapshot, { ...pin, counts: { guests: 0, videos: 1 } })).toThrow("guest_release_counts_invalid");
+    expect(() => verifyGuestReleaseCounts({ ...pin, counts: { guests: release.guests + 1, videos: release.videos } }, catalog)).toThrow("guest_release_counts_drift");
+    expect(() => verifyGuestReleaseCounts({ ...pin, counts: undefined }, catalog)).toThrow("guest_release_counts_drift");
+    // The committed pin carries the committed snapshot's counts.
+    expect({ guests: GUEST_COUNT, videos: GUEST_VIDEO_COUNT }).toEqual(guestReleaseCounts(guestCatalog));
+  });
+  it("rounds the guest count down to what is certainly true", () => {
+    expect([guestsFigure(157), guestsZh(157)]).toEqual(["150+", "150多位"]);
+    // 160 guests are not "more than 160".
+    expect([guestsFigure(160), guestsZh(160)]).toEqual(["150+", "150多位"]);
+    expect([guestsFigure(161), guestsZh(161)]).toEqual(["160+", "160多位"]);
+  });
   it("restores the previous release if installing its pin fails", async () => {
     const { root, hash } = localInput(); const { snapshot } = await loadGuestSnapshot({ contextDir: root, manifestSha256: hash });
     const pin: GuestReleasePin = { schema_version: 2, repository: "sunyuzheng/lizheng-open-context", commit: "a".repeat(40), manifest_sha256: hash, snapshot_sha256: digest(snapshot) };
@@ -155,7 +177,7 @@ describe("single canonical guest catalog", () => {
   it("allows multiple people to reference one programme without duplicate source copies", () => {
     const f = fixture(); (f.catalog.entities as any[]).push({ ...f.catalog.entities[0], entity_id: "guest:beta", display_name: "Beta", slug: "beta", alias_slugs: ["beta"] });
     (f.catalog.appearances as any[]).push({ ...f.catalog.appearances[0], entity_id: "guest:beta" }); const profiles = catalogGuestDirectory(f.catalog, f.articles); expect(profiles).toHaveLength(2);
-    expect(getGuestsPageMeta(profiles).title).toContain("2位嘉宾，1期对谈");
+    expect(getGuestsPageMeta(profiles).title).toContain("2位嘉宾，1个视频");
   });
   it.each(["entities", "sources", "appearances"] as const)("rejects duplicated %s", key => { const f = fixture(); (f.catalog[key] as any[]).push(f.catalog[key][0]); expect(() => validateGuestCatalog(f.catalog, f.articles)).toThrow(); });
   it("rejects incomplete references, wrong URL-ID, unknown resource and private payload fields", () => {

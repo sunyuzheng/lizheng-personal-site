@@ -3,5 +3,9 @@
   "repository": "sunyuzheng/lizheng-open-context",
   "commit": "62de93be0f9cbe3a5a04a845be61e1dc91f9d440",
   "manifest_sha256": "681a1c494e4da6e02155e0f481104704864c35725ffb913484f3fca8a56106a1",
-  "snapshot_sha256": "be26af5df5e140898e609e47565789f6d27c5b730d009b5f69b7ec64d21c785e"
+  "snapshot_sha256": "be26af5df5e140898e609e47565789f6d27c5b730d009b5f69b7ec64d21c785e",
+  "counts": {
+    "guests": 157,
+    "videos": 411
+  }
 }

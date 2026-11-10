@@ -7,6 +7,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { CREATOR_COLLAB_PAGE_META } from "../../../shared/collab-meta";
+import { guestsFigure, guestsZh } from "../../../shared/guest-facts";
 import { languageAlternates } from "../../../shared/page-meta";
 import {
   guestAppearances,
@@ -86,7 +87,7 @@ const copy = {
       },
       {
         label: "Long-form experience",
-        value: `200+ public conversations · ${guestAppearances.length} verified guest appearances`,
+        value: `Conversations with ${guestsFigure()} guests · ${guestAppearances.length} verified guest appearances`,
       },
       {
         label: "Cross-platform",
@@ -120,7 +121,7 @@ const copy = {
         number: "03",
         title: "Put the ideas inside a system I am responsible for",
         detail:
-          `At Superlinear, the ideas meet courses, a ${membersFigure()} member community, ${PROJECTS_FIGURE} real projects, enterprise programs, and more than 200 public conversations. They have to remain useful after the talk is over.`,
+          `At Superlinear, the ideas meet courses, a ${membersFigure()} member community, ${PROJECTS_FIGURE} real projects, enterprise programs, and public conversations with ${guestsFigure()} guests. They have to remain useful after the talk is over.`,
         proof: "Superlinear Academy · real projects · enterprise work",
       },
     ],
@@ -436,7 +437,7 @@ const copy = {
       "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and an early member of Statsig, which was later acquired by OpenAI. His work asks what capabilities and works matter more when AI makes execution cheaper.",
     longBioLabel: "Long bio",
     longBio:
-      `Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG—where he led a 30-person team and received the highest performance rating in two consecutive cycles—and an early member of Statsig, which was later acquired by OpenAI. He founded Superlinear Academy, the parent institution for its free community, AI Builders, and Stay Superlinear. His defining idea is MAKE WHAT LASTS. As of ${membersAsOf("en")}, he has taught 3,000+ paying learners, held 200+ public conversations with researchers, founders, and operators, and built a free community of ${membersFigure()} members with ${PROJECTS_FIGURE} shared real-world projects. He is the author of Feels Like Progress and 《真本事》 (Real Stuff), and co-author of Growth Data Analytics Playbook.`,
+      `Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is a founder, operator, and author based in Seattle. He was an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG—where he led a 30-person team and received the highest performance rating in two consecutive cycles—and an early member of Statsig, which was later acquired by OpenAI. He founded Superlinear Academy, the parent institution for its free community, AI Builders, and Stay Superlinear. His defining idea is MAKE WHAT LASTS. As of ${membersAsOf("en")}, he has taught 3,000+ paying learners, held public conversations with ${guestsFigure()} guests, among them researchers, founders, and operators, and built a free community of ${membersFigure()} members with ${PROJECTS_FIGURE} shared real-world projects. He is the author of Feels Like Progress and 《真本事》 (Real Stuff), and co-author of Growth Data Analytics Playbook.`,
     brandLineLabel: "One line for the introduction",
     brandLine: "MAKE WHAT LASTS.",
     headshotLabel: "1280 × 1280 headshot",
@@ -448,7 +449,7 @@ const copy = {
         href: "/#judgment",
       },
       {
-        label: "200+ published conversations",
+        label: `Published conversations with ${guestsFigure()} guests`,
         href: "/guests",
       },
       {
@@ -484,7 +485,7 @@ const copy = {
       },
       {
         label: "长对话经验",
-        value: `200+场公开对谈 · ${guestAppearances.length}期做客记录`,
+        value: `与${guestsZh()}嘉宾公开对谈 · ${guestAppearances.length}期做客记录`,
       },
       {
         label: "跨平台内容",
@@ -777,7 +778,7 @@ const copy = {
       "孙煜征（课代表立正），康奈尔大学经济学博士、超线性学院（Superlinear Academy）创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG副总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI改变工作以后，什么能力和作品反而更重要。",
     longBioLabel: "长介绍",
     longBio:
-      `孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；在腾讯带过30人的数据与AI团队，连续两个周期获得最高绩效。他也是Statsig早期成员，Statsig后被OpenAI收购。他从大厂管理岗位进入早期创业公司，后来全职创办超线性学院（Superlinear Academy）；AI Builders课程与Stay Superlinear会员都在这个母体下。截至${membersAsOf("zh")}，他教过3,000多名付费学员，主持或参与了200多场公开对谈，并建立了一个拥有${membersWan()}成员、${PROJECTS_ZH}个真实项目分享的免费社区。他著有《真本事》和英文书《Feels Like Progress》，合著英文书《Growth Data Analytics Playbook》。`,
+      `孙煜征（课代表立正）毕业于康奈尔大学，获经济学博士学位，现居西雅图。他曾任Amazon经济学家、Meta数据科学家、腾讯IEG数据与AI副总监；在腾讯带过30人的数据与AI团队，连续两个周期获得最高绩效。他也是Statsig早期成员，Statsig后被OpenAI收购。他从大厂管理岗位进入早期创业公司，后来全职创办超线性学院（Superlinear Academy）；AI Builders课程与Stay Superlinear会员都在这个母体下。截至${membersAsOf("zh")}，他教过3,000多名付费学员，与${guestsZh()}嘉宾公开对谈，并建立了一个拥有${membersWan()}成员、${PROJECTS_ZH}个真实项目分享的免费社区。他著有《真本事》和英文书《Feels Like Progress》，合著英文书《Growth Data Analytics Playbook》。`,
     brandLineLabel: "节目介绍可用的一句话",
     brandLine: "学点真本事，做点真东西。",
     headshotLabel: "1280 × 1280头像",
@@ -785,7 +786,7 @@ const copy = {
     factsTitle: "相关链接",
     facts: [
       { label: "过去公开做过的AI判断", href: "/#judgment" },
-      { label: "200+场公开对谈", href: "/guests" },
+      { label: `与${guestsZh()}嘉宾的公开对谈`, href: "/guests" },
       {
         label: "AI Builders · 3,000+付费学员",
         href: "https://ai-builders.com",

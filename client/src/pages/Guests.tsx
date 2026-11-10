@@ -12,22 +12,22 @@ import { Link } from "wouter";
 const COPY = {
   zh: {
     title: "嘉宾与对谈",
-    lede: (people: number, programmes: number) => `${people}位嘉宾，${programmes}期对谈。按名字、公司或话题找。`,
+    lede: (people: number, programmes: number) => `${people}位嘉宾，${programmes}个视频。按名字、公司或话题找。`,
     search: "搜名字、公司或话题",
     clear: "清空",
     found: (n: number) => `找到${n}位`,
     none: (q: string) => `没有找到「${q}」。换个名字或话题试试。`,
-    episodes: (n: number) => `${n}期对谈`,
+    episodes: (n: number) => `${n}个视频`,
     cover: (name: string) => `${name}的访谈封面`,
   },
   en: {
     title: "Guests & conversations",
-    lede: (people: number, programmes: number) => `${people} guests, ${programmes} conversations. Search by name, company or topic.`,
+    lede: (people: number, programmes: number) => `${people} guests, ${programmes} videos. Search by name, company or topic.`,
     search: "Search a name, company or topic",
     clear: "Clear",
     found: (n: number) => `${n} found`,
     none: (q: string) => `Nothing found for “${q}”. Try another name or topic.`,
-    episodes: (n: number) => `${n} conversation${n === 1 ? "" : "s"}`,
+    episodes: (n: number) => `${n} video${n === 1 ? "" : "s"}`,
     cover: (name: string) => `Interview cover — ${name}`,
   },
 } as const;

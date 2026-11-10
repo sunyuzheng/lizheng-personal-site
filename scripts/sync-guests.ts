@@ -11,13 +11,27 @@ const SHA = /^[a-f0-9]{64}$/;
 const COMMIT = /^[a-f0-9]{40}$/;
 const REPOSITORY = "sunyuzheng/lizheng-open-context";
 export const digest = (data: Uint8Array | string): string => createHash("sha256").update(data).digest("hex");
-export type GuestReleasePin = { schema_version: 2; repository: string; commit: string; manifest_sha256: string; snapshot_sha256: string };
+/** Guests and videos in the pinned catalog: the figures the pages print (shared/guest-facts.ts). */
+export type GuestReleaseCounts = { guests: number; videos: number };
+export type GuestReleasePin = { schema_version: 2; repository: string; commit: string; manifest_sha256: string; snapshot_sha256: string; counts?: GuestReleaseCounts };
 
 export function verifyGuestRelease(snapshot: string, pin: GuestReleasePin): void {
   requireValue(pin.schema_version === 2 && pin.repository === REPOSITORY && COMMIT.test(pin.commit)
     && SHA.test(pin.manifest_sha256) && SHA.test(pin.snapshot_sha256), "guest_release_pin_invalid");
   requireValue(digest(snapshot) === pin.snapshot_sha256, "guest_snapshot_hash_drift");
   requireValue(snapshot.split("\n")[1] === `// Manifest SHA256: ${pin.manifest_sha256}`, "guest_snapshot_manifest_drift");
+  if (pin.counts !== undefined) requireValue(Number.isSafeInteger(pin.counts.guests) && pin.counts.guests > 0
+    && Number.isSafeInteger(pin.counts.videos) && pin.counts.videos > 0 && Object.keys(pin.counts).length === 2, "guest_release_counts_invalid");
+}
+
+/** The pin's counts are the catalog's own: one guest per entity, one video per programme with a guest. */
+export function guestReleaseCounts(catalog: { entities: readonly unknown[]; appearances: readonly { source_id: string }[] }): GuestReleaseCounts {
+  return { guests: catalog.entities.length, videos: new Set(catalog.appearances.map(row => row.source_id)).size };
+}
+
+export function verifyGuestReleaseCounts(pin: GuestReleasePin, catalog: Parameters<typeof guestReleaseCounts>[0]): void {
+  const counts = guestReleaseCounts(catalog);
+  requireValue(pin.counts && pin.counts.guests === counts.guests && pin.counts.videos === counts.videos, "guest_release_counts_drift");
 }
 
 export function writeGuestRelease(directory: string, snapshot: string, pin: GuestReleasePin): void {
@@ -59,7 +73,7 @@ async function readRemote(commit: string, relative: string, cap: number): Promis
   }
   return Buffer.concat(chunks);
 }
-export async function loadGuestSnapshot(options: { contextDir?: string; manifestSha256: string; commit?: string }): Promise<{ snapshot: string; hashes: Record<string, string>; counts: Record<string, number> }> {
+export async function loadGuestSnapshot(options: { contextDir?: string; manifestSha256: string; commit?: string }): Promise<{ snapshot: string; hashes: Record<string, string>; counts: Record<string, number>; release: GuestReleaseCounts }> {
   requireValue(SHA.test(options.manifestSha256), "manifest_pin_required");
   if (options.contextDir) requireValue(path.isAbsolute(options.contextDir) && !options.commit, "local_context_path_invalid");
   else requireValue(options.commit && COMMIT.test(options.commit), "immutable_commit_required");
@@ -92,7 +106,8 @@ export async function loadGuestSnapshot(options: { contextDir?: string; manifest
   for (const [relative, hash] of Object.entries(hashes)) requireValue(digest(await read(relative)) === hash, "catalog_input_changed_during_read");
   const header = `// Generated from the pinned Open Context release. Do not edit by hand.\n// Manifest SHA256: ${options.manifestSha256}\n// guests.json SHA256: ${hashes[FILES[0]]}\n// guest-articles.json SHA256: ${hashes[FILES[1]]}\n// guest-names.json SHA256: ${hashes[FILES[2]]}\n// guest-appearances.jsonl SHA256: ${hashes[FILES[3]]}\n`;
   return { snapshot: `${header}import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";\n\nexport const guestCatalog: GuestCatalog = ${JSON.stringify(catalog, null, 2)};\n\nexport const guestArticleCatalog: GuestArticleCatalog = ${JSON.stringify(articles, null, 2)};\n\nexport const guestNameTable: GuestNameTable = ${JSON.stringify(names, null, 2)};\n`, hashes,
-    counts: { entities: catalog.entities.length, sources: catalog.sources.length, appearances: catalog.appearances.length, articles: articles.articles.length } };
+    counts: { entities: catalog.entities.length, sources: catalog.sources.length, appearances: catalog.appearances.length, articles: articles.articles.length },
+    release: guestReleaseCounts(catalog) };
 }
 
 async function main(): Promise<void> {
@@ -119,7 +134,7 @@ async function main(): Promise<void> {
     commit = pin.commit; manifestSha256 = pin.manifest_sha256;
   }
   const result = await loadGuestSnapshot({ contextDir, commit: contextDir ? undefined : commit, manifestSha256: manifestSha256! });
-  const pin: GuestReleasePin = { schema_version: 2, repository: REPOSITORY, commit: commit!, manifest_sha256: manifestSha256!, snapshot_sha256: digest(result.snapshot) };
+  const pin: GuestReleasePin = { schema_version: 2, repository: REPOSITORY, commit: commit!, manifest_sha256: manifestSha256!, snapshot_sha256: digest(result.snapshot), counts: result.release };
   const output = path.join(ROOT, "shared/guest-catalog-snapshot.ts"); noSymlinks(path.dirname(output));
   if (fs.existsSync(output)) noSymlinks(output);
   if (apply) {

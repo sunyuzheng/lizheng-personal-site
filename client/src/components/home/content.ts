@@ -10,6 +10,7 @@ import {
   membersFigure,
   membersWan,
 } from "@shared/community-facts";
+import { GUEST_COUNT, guestsFigure, guestsZh } from "@shared/guest-facts";
 
 // Homepage copy and curation for / (English) and /zh. Facts and wording follow
 // the reviewed homepage handoff of 2026-09-30; see
@@ -335,7 +336,7 @@ const zh = {
     lede: [
       "我是立正，创办了",
       { strong: "超线性学院" },
-      `，${membersWan()}人在这里学着用AI做东西。从2020年起，我和顶尖研究者、创业者做了200多场深度对话，再把学到的带回教学和真实的工作里。`,
+      `，${membersWan()}人在这里学着用AI做东西。从2020年起，我和顶尖研究者、创业者等${guestsZh()}嘉宾做了深度对话，再把学到的带回教学和真实的工作里。`,
     ] as Inline[],
     primary: "免费加入超线性学院",
     secondary: "看我的对话",
@@ -447,7 +448,7 @@ const zh = {
     eyebrow: "访谈节目",
     title: ["课代表立正"],
     intro:
-      "从2020年开始，我和研究者、创业者、投资人做了200多场长谈。聊他们看见了什么，为什么敢下注，现实又怎样改写了答案。",
+      `从2020年开始，我和研究者、创业者、投资人等${guestsZh()}嘉宾长谈。聊他们看见了什么，为什么敢下注，现实又怎样改写了答案。`,
     // Six faces, one row (Yuzheng's choice, 2026-10-12); everyone else is a name in the strip below.
     guests: guestsFor("zh", ["tian", "vernal", "evans", "xu", "wei", "yang"]),
     alsoLabel: "还聊过",
@@ -487,7 +488,7 @@ const zh = {
       alt: "在Significance Summit的舞台上，与Acquired主持人Ben Gilbert、David Rosenthal对谈",
       caption: "Significance Summit × Acquired",
     },
-    all: "浏览全部200+场对话",
+    all: `浏览全部${GUEST_COUNT}位嘉宾`,
     subscribe: "在YouTube订阅",
   },
   calls: {
@@ -831,7 +832,7 @@ const en: HomeCopy = {
     lede: [
       "I’m Yuzheng Sun. I founded ",
       { strong: "Superlinear Academy" },
-      `, where ${membersFigure()} people learn to build with AI. Since 2020 I’ve hosted 200+ long conversations with researchers and founders, and I bring what I learn back into teaching and real work.`,
+      `, where ${membersFigure()} people learn to build with AI. Since 2020 I’ve hosted long conversations with ${guestsFigure()} guests, leading researchers and founders among them, and I bring what I learn back into teaching and real work.`,
     ],
     primary: "Join the free community",
     secondary: "Watch the conversations",
@@ -931,9 +932,9 @@ const en: HomeCopy = {
   },
   talks: {
     eyebrow: "My interview show",
-    title: ["200+ long conversations"],
+    title: [`Long conversations with ${guestsFigure()} guests`],
     intro:
-      "Since 2020, with researchers, founders, and investors: what they saw, why they were willing to bet, and how reality rewrote the answer. Mostly in Chinese, some in English.",
+      "Since 2020. Researchers, founders, and investors on what they saw, why they were willing to bet, and how reality rewrote the answer. Mostly in Chinese, some in English.",
     guests: guestsFor("en", ["tian", "vernal", "evans", "xu", "wei", "yang"]),
     alsoLabel: "Also with",
     alsoAria: "More guests",
@@ -965,7 +966,7 @@ const en: HomeCopy = {
       alt: "On the Significance Summit stage with Ben Gilbert and David Rosenthal of Acquired",
       caption: "Significance Summit × Acquired",
     },
-    all: "Browse all 200+ conversations",
+    all: `Browse all ${GUEST_COUNT} guests`,
     subscribe: "Subscribe on YouTube",
   },
   calls: {

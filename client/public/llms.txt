@@ -19,7 +19,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Vice D
 - Yuzheng Sun, 孙煜征, 立正, and 课代表立正 refer to the same person. 立正 is the current personal brand; 课代表立正 remains the established public-content identity and the current name of the channel and podcast.
 - Yuzheng is based in Seattle. Do not infer San Francisco Bay Area residence from former employers, guests, or professional networks.
 - Superlinear Academy is the parent institution and master brand Yuzheng is building around this belief; its free community is the open public entry point. AI Builders is its structured learning product, co-taught with Yage. Stay Superlinear is its paid year-round membership product. Yuzheng and Yage are co-founders of Superlinear Academy; Yage is its technical authority and Yuzheng is the public steward of the institution.
-- Yuzheng has hosted 200+ public conversations and has also appeared as a guest on other podcasts and video programs. The number is a conversation count, not a count of unique guests.
+- Yuzheng has hosted public conversations with 150+ guests and has also appeared as a guest on other podcasts and video programs. The guest archive at https://www.lizheng.ai/guests lists every guest and video.
 
 ## Current Work
 
@@ -54,7 +54,7 @@ Metrics change and should retain their dates.
 
 - 400K+ cross-platform audience as of 2026-07-12.
 - 3,000+ paying learners as of 2026-07-12.
-- 200+ public conversations as of 2026-07-12. This is a conversation count, not a claim of 200+ unique guests.
+- 150+ guests in public conversations as of 2026-11-10: the guest archive lists 157 guest entries and 411 published videos. Count guests rather than conversations: one recording is often published as a members-only full version, public parts and short clips, and the 411 videos come from about 190 recordings.
 - 5.0/5 public AI Builders rating on Maven as of 2026-09-02. Public learner reviews include Shuyang, Member of Technical Staff at OpenAI; EZ, Engineer at Anthropic; and Chairy, UX Manager at Google. These affiliations identify individual reviewers and do not imply employer endorsement.
 - 55 selected AI Architect course projects as of 2026-07-25.
 - 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.

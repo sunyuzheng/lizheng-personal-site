@@ -13,6 +13,7 @@ import {
   membersFigure,
   membersWan,
 } from "@shared/community-facts";
+import { guestsFigure } from "@shared/guest-facts";
 import { STATSIG_WRITING_PATH } from "@shared/writing-links";
 import { pick, useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -133,9 +134,9 @@ const currentWork = {
 
 const publicFacts = [
   {
-    value: "200+",
-    en: "public conversations with technology leaders and AI researchers",
-    zh: "与科技领袖和AI研究者的公开对话",
+    value: guestsFigure(),
+    en: "guests in public conversations",
+    zh: "位公开对话的嘉宾",
   },
   {
     value: "400K+",
@@ -539,8 +540,8 @@ export default function About() {
                 </p>
                 <p className="checked">
                   {lang === "en"
-                    ? "Figures checked July 12, 2026."
-                    : "数据核对日期：2026年7月12日。"}
+                    ? "Guests as listed in the guest directory; the other two figures were checked July 12, 2026."
+                    : "嘉宾数按嘉宾目录；另两项核对于2026年7月12日。"}
                 </p>
               </div>
             </div>

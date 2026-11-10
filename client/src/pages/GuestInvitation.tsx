@@ -2,6 +2,7 @@ import { Quotation } from "@/components/home/Peers";
 import { Dotted, EXTERNAL } from "@/components/home/parts";
 import { SoloFooter, SoloHeader } from "@/components/site/SoloShell";
 import { applyPageSeo } from "@/lib/seo";
+import { guestsFigure } from "@shared/guest-facts";
 import { GUEST_INVITATION_PAGE_META } from "@shared/page-meta";
 import { buildPodcastGuestInvitationStructuredData } from "@shared/structured-data";
 import { useEffect } from "react";
@@ -164,7 +165,7 @@ export default function GuestInvitation() {
 
             <ul className="facts-line">
               <li>
-                <b>200+</b>场公开对话
+                <b>{guestsFigure()}</b>位嘉宾
               </li>
               <li>康奈尔经济学博士</li>
               <li>

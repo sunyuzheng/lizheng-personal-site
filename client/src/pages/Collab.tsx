@@ -6,6 +6,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { useEffect } from "react";
 import { Link } from "wouter";
 import { COLLAB_PAGE_META } from "../../../shared/collab-meta";
+import { guestsFigure, guestsZh } from "../../../shared/guest-facts";
 import { languageAlternates } from "../../../shared/page-meta";
 import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 
@@ -17,7 +18,7 @@ const copy = {
     intro:
       "Talks, team training, and advisory for organizations putting AI to work. Start with what your team needs to understand, learn, or do differently.",
     proofLine:
-      "Cornell Economics PhD · Former Tencent AI leader · Early Statsig team, later acquired by OpenAI · 200+ public conversations",
+      `Cornell Economics PhD · Former Tencent AI leader · Early Statsig team, later acquired by OpenAI · Public conversations with ${guestsFigure()} guests`,
     creatorLabel: "Podcasts & creator invitations",
     creatorTitle: "Inviting me to a podcast or video?",
     creatorDetail:
@@ -94,7 +95,7 @@ const copy = {
     intro:
       "企业想用好AI，先要说清楚：团队需要看懂什么、学会什么，或改变哪项工作。可以从演讲、培训或一次团队交流开始。",
     proofLine:
-      "康奈尔经济学博士 · 前腾讯总监 · OpenAI收购团队早期成员 · 200+场科技领袖与AI研究者对话",
+      `康奈尔经济学博士 · 前腾讯总监 · OpenAI收购团队早期成员 · 与${guestsZh()}嘉宾公开对话`,
     creatorLabel: "播客与创作者邀请",
     creatorTitle: "想邀请我上节目？",
     creatorDetail:

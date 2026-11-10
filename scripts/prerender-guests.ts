@@ -220,7 +220,7 @@ function buildGuestsNoscript(guests: GuestProfile[], description: string) {
   const items = guests
     .map(guest => {
       const years = guestYears(guest);
-      return `<li><a href="${escapeHtml(guest.share_url)}">${escapeHtml(guest.guest_name)}</a>（${guest.episode_count}期对谈${years ? `，${years}` : ""}）</li>`;
+      return `<li><a href="${escapeHtml(guest.share_url)}">${escapeHtml(guest.guest_name)}</a>（${guest.episode_count}个视频${years ? `，${years}` : ""}）</li>`;
     })
     .join("\n        ");
 
@@ -282,7 +282,7 @@ function buildGuestNoscript(guest: GuestProfile, description: string) {
     ${guest.interview_date ? `<p>Recorded: ${escapeHtml(guest.interview_date)}</p>` : ""}
     ${guest.youtube_playlist_url ? `<p><a href="${escapeHtml(guest.youtube_playlist_url)}">YouTube个人合集</a></p>` : ""}
     ${insights}
-    <h2>全部对谈（按时间从新到旧）</h2>
+    <h2>全部视频（按时间从新到旧）</h2>
     <ol>
         ${items}
     </ol>

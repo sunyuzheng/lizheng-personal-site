@@ -364,7 +364,7 @@ def draw_cover(c: canvas.Canvas) -> None:
     c.drawRightString(
         W - M,
         517,
-        "200+场公开对谈 · 全网40万+关注者 · 截至2026.08",
+        "与150多位嘉宾公开对谈 · 全网40万+关注者 · 截至2026.11",
     )
 
     image_y, image_h = 108, 400

@@ -91,6 +91,19 @@ function attrByTag(
   );
 }
 
+/**
+ * The feed's summaries are HTML (<p>…</p>). The page shows and searches them as plain text, so the
+ * markup is read as a document and only its words are kept; a paragraph break becomes a space.
+ */
+function plainText(html: string) {
+  if (!html.includes("<") && !html.includes("&")) return html;
+  const body = new DOMParser().parseFromString(
+    html.replace(/<\/(p|div|li|h[1-6])>|<br\s*\/?>/gi, "$& "),
+    "text/html"
+  ).body;
+  return (body.textContent || "").replace(/\s+/g, " ").trim();
+}
+
 function parseFeed(source: string): PodcastFeed {
   const xml = new DOMParser().parseFromString(source, "application/xml");
   if (xml.querySelector("parsererror")) throw new Error("RSS格式无法解析");
@@ -116,8 +129,9 @@ function parseFeed(source: string): PodcastFeed {
           Number.isFinite(episodeNumber) && episodeNumber > 0
             ? episodeNumber
             : null,
-        description:
-          textByTag(item, "itunes:summary") || textByTag(item, "description"),
+        description: plainText(
+          textByTag(item, "itunes:summary") || textByTag(item, "description")
+        ),
         publishedAt,
         durationSeconds:
           Number.isFinite(duration) && duration > 0 ? duration : null,

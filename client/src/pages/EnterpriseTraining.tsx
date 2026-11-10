@@ -218,7 +218,7 @@ const copy = {
     ],
     reviewsCta: "在Maven查看公开评价",
     individualNote:
-      "我不接面向个人的付费咨询。个人问题欢迎免费加入Superlinear Academy公开提问，我会在社区里免费回答。",
+      "我不接面向个人的付费咨询。个人问题欢迎免费加入超线性学院公开提问，我会在社区里免费回答。",
     communityCta: "去免费社区提问",
     formatsEyebrow: "五种合作方式",
     formatsTitle: "从够用的那一步开始。",

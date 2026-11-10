@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsx scripts/verify-guest-release.ts && tsx scripts/sync-guest-appearances.ts --check && vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts && tsx scripts/prerender-decks.ts && tsx scripts/prerender-community.ts",
+    "build": "tsx scripts/sync-community-count.ts && tsx scripts/verify-guest-release.ts && tsx scripts/sync-guest-appearances.ts --check && vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && tsx scripts/prerender-guests.ts && tsx scripts/prerender-book.ts && tsx scripts/prerender-writing.ts && tsx scripts/prerender-decks.ts && tsx scripts/prerender-community.ts",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",

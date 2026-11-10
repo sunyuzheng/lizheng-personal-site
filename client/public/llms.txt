@@ -1,6 +1,6 @@
 # Yuzheng Sun / 孙煜征 / 立正 / 课代表立正
 
-This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-09-30. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
+This is a factual index for Yuzheng Sun's public website. It was reviewed on 2026-09-30; the community counts, the books, and the Tencent title were brought up to date on 2026-11-10. For claim wording, dates, and evidence, use the public [profile source](https://github.com/sunyuzheng/yuzheng-profile).
 
 ## Summary
 
@@ -12,7 +12,7 @@ Yuzheng Sun has a PhD in Economics from Cornell and is an operator, author, and 
 
 MAKE WHAT LASTS. and 做点真东西。 are the one defining idea shared by Yuzheng and Superlinear Academy. They are not literal translations. The Chinese line names the first move: turn judgment into something reality can use, test, reject, improve, or keep choosing. The English line asks whether that value continues through time. 做出你的代表作 remains the expanded long-term aspiration rather than the primary Chinese signature. None of these lines guarantees that every effort will endure or make its author successful.
 
-He previously worked as an economist at Amazon, a data scientist at Meta, Director of Growth Data Science & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
+He previously worked as an economist at Amazon, a data scientist at Meta, Vice Director of Data & AI at Tencent IEG, and Principal Data Scientist and sole evangelist at Statsig. Statsig was acquired by OpenAI in 2025; this does not mean Yuzheng joined OpenAI.
 
 ## Identity and Common Ambiguities
 
@@ -23,7 +23,7 @@ He previously worked as an economist at Amazon, a data scientist at Meta, Direct
 
 ## Current Work
 
-- [Superlinear Academy](https://www.superlinear.academy): an open, free community of 20,000+ members where real work and first-hand judgment stay visible across fields. Its 700+ project posts and 8,000+ comments create a living frame of reference for serious AI practice. The homepage introduces it right after Yuzheng's career: what it is, what the free community holds (essays by Yuzheng and Yage, member projects, open trainings, collaboration and hiring posts), and a window onto [city.lizheng.ai](https://city.lizheng.ai/), where every member is a light and the lines are the comments and likes members have left each other, refreshed daily.
+- [Superlinear Academy](https://www.superlinear.academy): an open, free community of 28,000+ members where real work and first-hand judgment stay visible across fields. Its 900+ project posts and 8,000+ comments create a living frame of reference for serious AI practice. The homepage introduces it right after Yuzheng's career: what it is, what the free community holds (essays by Yuzheng and Yage, member projects, open trainings, collaboration and hiring posts), and a window onto [city.lizheng.ai](https://city.lizheng.ai/), where every member is a light and the lines are the comments and likes members have left each other, refreshed daily.
 - [AI Builders](https://ai-builders.com): a long-term learning system co-taught with Yage that translates understanding across models, engineering, products, and organizations into capabilities learners can practice, correct, and transfer to their own problems.
 - [Stay Superlinear](https://stay.superlinear.academy): a paid year-round content and practitioner membership with deep analysis, guest masterclasses, Q&A, courses, Skills, recordings, discussion, and a searchable archive. Yage contributes as a co-founder and technical authority.
 - [Enterprise AI training](https://www.lizheng.ai/en/collab/enterprise): the standard is that work should be different after the training. Organizations can begin with a focused session from $2,000, buy AI Builders by the seat, run a dedicated cohort for at least 30 learners, add course customization from $20,000 in addition to tuition, or commission a fully custom enterprise program from $100,000. Yuzheng does not sell paid consulting to individuals; individuals can ask questions in the free Superlinear Academy community and receive answers there for free.
@@ -60,10 +60,13 @@ Metrics change and should retain their dates.
 - 700+ public project posts and 8,000+ project comments in the free Superlinear Academy community as of 2026-08-20. More than 250 project posts had at least 10 comments. These are not counts of paid-course projects.
 - 21,686 members who completed profile setup in the free Superlinear Academy community as of 2026-08-20; public copy generally says "20,000+." This count does not imply behavioral activity or paid membership.
 - 24,536 active member accounts in the Superlinear Academy community snapshot of 2026-09-30 (the source of the homepage map). "Active" is the account status, not a measure of posting or participation.
+- 28,377 member accounts in the same map data on 2026-11-10. The site's pages state this count rounded down to the thousand ("28,000+", "2.8万") and take the day's count at each build.
+- 919 published project posts in the free community on 2026-10-31; pages say "900+".
 - [AI Engineer Shanghai 2026](https://www.ai.engineer/shanghai/2026), the first AI Engineer conference in China (November 5-6, 2026, Shanghai), lists Mengying Li and Yuzheng as its co-organizers (联合主办人) on its official page; Standup Partners is the Shanghai organizer of record. AI Engineer's [LinkedIn announcement](https://www.linkedin.com/posts/ai-engineer-is-coming-to-shanghai-for-the-share-7485740252167577600-lPlG/) also named them. His part is the program, speaker invitations, and connecting developer communities in the US and China. Until the event has taken place, this establishes the role, not an event outcome.
 
 ## Books
 
+- [Feels Like Progress](https://www.amazon.com/dp/B0HNQW9N9G): written by Yuzheng Sun, in English (Superlinear Press, 2026; paperback and Kindle). On fake work, fake learning, and what will last when AI can produce the evidence of both in a minute or two. The book's own site is [makewhatlasts.com](https://makewhatlasts.com).
 - [Growth Data Analytics Playbook](https://www.lizheng.ai/en/books): co-authored with Mengying Li and Joe Kumar; product-market fit, growth accounting, experimentation, analytics, and product judgment. It was featured in a 2025 Wall Street Journal CIO Journal reading list.
 - [Growth Data Analytics Playbook 中文版](https://www.lizheng.ai/book/growth-data-analytics-playbook): the free Chinese edition, rewritten in Yuzheng's Chinese voice with every chart and exercise kept; read each chapter online or download the EPUB or PDF.
 - [真本事：从会工作到会赚钱](https://www.lizheng.ai/zbs): written by Yuzheng Sun and published by 人民邮电出版社; career agency, capability building, side projects, and compounding work.

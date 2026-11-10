@@ -23,6 +23,7 @@ export default defineConfig({
       "tests/ask-db-watch.test.ts",
       "tests/ask-health.test.ts",
       "tests/api-imports.test.ts",
+      "tests/community-facts.test.ts",
       "tests/ask-app-files.test.ts",
       "tests/ask-public-qa.test.ts",
       "tests/ask-public-files.test.ts",

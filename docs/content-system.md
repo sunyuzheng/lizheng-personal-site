@@ -167,7 +167,7 @@ Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心�
 - `做出你的代表作`是展开后的长期向往，不与主签名竞争。
 - 付费产品第一次出现写`Stay Superlinear会员`，后文写`会员`。
 - 不单独用`Stay`代指产品。
-- 免费社区写`Superlinear Academy免费社区`或语境清楚时写`免费社区`。
+- 学院的中文名统一写`超线性学院`（2026-10-30起）；一页里第一次出现可以写`超线性学院（Superlinear Academy）`。免费社区写`超线性学院免费社区`，语境清楚时写`免费社区`。
 - 网站自写中文与英文、数字相接时不机械加空格，例如`AI教育`、`2026年`、`200+场`。品牌和人名内部原有空格保留，例如`AI Builders`与`Ben Gilbert`。
 
 ## 事实来源
@@ -187,7 +187,12 @@ Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心�
 
 ## 当前可用口径
 
-最后核对：2026-09-02。
+最后核对：2026-09-02；成员数、项目数、书和腾讯头衔的写法 2026-11-10 更新。
+
+- 成员数不手写：各页用 `shared/community-facts.ts` 的 `membersWan()`（「2.8万」）和 `membersFigure()`（「28,000+」），数字来自社区地图每天发布的数据，每次构建读一次（`scripts/sync-community-count.ts`）。下面 8 月的 21,686 是另一种口径（完成资料设置的成员），留作记录。
+- 项目帖 900+（2026-10-31 是 919 篇），写在 `shared/community-facts.ts`。
+- 腾讯头衔：履历、事实页、长介绍写正式头衔「腾讯IEG数据与AI副总监」；短介绍写「腾讯IEG副总监」；标题式的一行可以写「前腾讯总监」（口径见 `yuzheng-profile` 的 `BIOS.md`）。
+- 书是三本：《Feels Like Progress》（著）、《真本事：从会工作到会赚钱》（著）、《Growth Data Analytics Playbook》（合著）。
 
 - 400K+跨平台关注者（数据截至2026-07-12）
 - 3,000+付费学员（数据截至2026-07-12）

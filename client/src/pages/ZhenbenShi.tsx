@@ -198,11 +198,11 @@ const ENDORSEMENTS: Endorser[] = [
 ];
 
 const AUTHOR_FACTS = [
-  "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任增长数据科学与AI总监",
-  "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一evangelist",
-  "Superlinear Academy创始人，长期从事AI教育、社区与企业实践",
-  // The joiner keeps 著有 with the title after it, so the line turns at the comma.
-  "截至2026年8月，累计完成200+场公开对话；合著《Growth Data Analytics Playbook》，著\u2060有《真本事》",
+  "康奈尔大学经济学博士；曾在Amazon任经济学家、在Meta任数据科学家、在腾讯IEG任数据与AI副总监",
+  "OpenAI收购团队早期成员；曾任Statsig Principal Data Scientist及公司唯一布道师",
+  "超线性学院（Superlinear Academy）创始人，长期从事AI教育、社区与企业实践",
+  // The joiners keep 著有 and 合著 with the title after them, so the line turns at a comma.
+  "2020年以来完成200+场公开对话；著\u2060有《真本事》和英文书《Feels Like Progress》，合\u2060著《Growth Data Analytics Playbook》",
   "现居西雅图",
 ];
 
@@ -221,7 +221,7 @@ const FAQ = [
   },
   {
     q: "是否提供线下活动或一对一辅导？",
-    a: "页面下方可以直接浏览Superlinear Academy免费社区，具体活动以社区当期公告为准。如有合作或讲座需求，欢迎发邮件至yz@superlinear.academy。",
+    a: "这一页上面可以直接浏览超线性学院免费社区，具体活动以社区当期公告为准。如有合作或讲座需求，欢迎发邮件至yz@superlinear.academy。",
   },
 ];
 
@@ -569,7 +569,7 @@ export default function ZhenbenShi() {
                 <div className="eyebrow">关于作者</div>
                 <h2>孙煜征</h2>
                 <p className="say">
-                  <Dotted text="康奈尔大学经济学博士 · Superlinear Academy · 创始人 · 作者" />
+                  <Dotted text="康奈尔大学经济学博士 · 超线性学院创始人、作者" />
                 </p>
 
                 <ul className="points">
@@ -596,21 +596,20 @@ export default function ZhenbenShi() {
           <div className="wrap">
             <div className="head">
               <div>
-                <div className="eyebrow">Superlinear社群</div>
+                <div className="eyebrow">超线性学院社区</div>
                 <h2>
                   <Phrases text="在免费社区里|把书里的方法用起来" />
                 </h2>
               </div>
               <p>
-                Superlinear
-                Academy长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
+                超线性学院的社区长期免费开放。你可以带着书里的框架和自己的真实问题，看看其他人怎样实践，也把自己的尝试放进讨论。
               </p>
             </div>
 
             <div className="feed">
               <iframe
                 src={COMMUNITY_FEED_URL}
-                title="Superlinear社群"
+                title="超线性学院社区"
                 loading="lazy"
               />
             </div>
@@ -646,7 +645,7 @@ export default function ZhenbenShi() {
               </h2>
               <div>
                 <p className="say first">
-                  可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入Superlinear社区。
+                  可以在微信读书阅读，也可以购买纸质书。想看别人如何把这些方法用起来，也欢迎进入超线性学院的免费社区。
                 </p>
                 <div className="cta-row">
                   <a className="btn btn-ivory" href={WEREAD_URL} {...EXTERNAL}>
@@ -656,7 +655,7 @@ export default function ZhenbenShi() {
                     京东购买
                   </a>
                   <a className="lz-link" href={COMMUNITY_URL} {...EXTERNAL}>
-                    加入Superlinear社群 <Arrow />
+                    免费加入超线性学院 <Arrow />
                   </a>
                 </div>
                 <p className="mail">

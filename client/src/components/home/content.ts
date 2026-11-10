@@ -4,6 +4,12 @@ import {
   GROWTH_BOOK_AMAZON_URL,
   GROWTH_BOOK_ZH_PATH,
 } from "@shared/book-links";
+import {
+  PROJECTS_FIGURE,
+  PROJECTS_ZH,
+  membersFigure,
+  membersWan,
+} from "@shared/community-facts";
 
 // Homepage copy and curation for / (English) and /zh. Facts and wording follow
 // the reviewed homepage handoff of 2026-09-30; see
@@ -317,7 +323,7 @@ const zh = {
     lede: [
       "我是立正，创办了",
       { strong: "超线性学院" },
-      "，两万多人在这里学着用AI做东西。从2020年起，我和顶尖研究者、创业者做了200多场深度对话，再把学到的带回教学和真实的工作里。",
+      `，${membersWan()}人在这里学着用AI做东西。从2020年起，我和顶尖研究者、创业者做了200多场深度对话，再把学到的带回教学和真实的工作里。`,
     ] as Inline[],
     primary: "免费加入超线性学院",
     secondary: "看我的对话",
@@ -334,7 +340,7 @@ const zh = {
         org: "腾讯IEG",
         latin: false,
         // "|" marks where a narrow column may break (Phrases), so no character is left alone on a line.
-        role: ["增长数据科学|与AI总监", "带领30人团队"],
+        role: ["数据与AI|副总监", "带领30人团队"],
       },
       {
         org: "Statsig",
@@ -641,7 +647,7 @@ const zh = {
       },
       {
         title: "分享你做的东西",
-        body: "700多个成员项目发在这里，评论里有试用、追问和建议。",
+        body: `${PROJECTS_ZH}个成员项目发在这里，评论里有试用、追问和建议。`,
         href: LINKS.projects,
       },
       {
@@ -658,12 +664,12 @@ const zh = {
     field: {
       label: (count: string) =>
         `社区地图：${count}个点，每个点是一位成员，越亮，发帖和评论越多`,
-      fallbackLabel: "社区示意：两万多个点，每个点是一位成员",
+      fallbackLabel: `社区示意：${membersWan()}个点，每个点是一位成员`,
       caption: (count: string) => [
         `这里有${count}个点，每个点是一位真实成员。`,
         "越亮，发帖和评论越多；每个点都能点开，看看是谁。",
       ],
-      fallbackCaption: ["20,000+位成员在这里学习、分享和讨论。", ""],
+      fallbackCaption: [`${membersFigure()}位成员在这里学习、分享和讨论。`, ""],
       updated: (date: string) => `成员数据更新于${date}`,
       open: "打开TA的主页",
       openNamed: (name: string) => `打开${name}的主页`,
@@ -711,8 +717,8 @@ const zh = {
         // The academy chapter already lists what is inside; this card points back to it.
         body: "就是上面那座城。先进来看看，再决定要不要往深里走。",
         stats: [
-          ["20,000+", "成员"],
-          ["700+", "项目分享"],
+          [membersFigure(), "成员"],
+          [PROJECTS_FIGURE, "项目分享"],
         ],
         cta: "免费加入超线性学院",
         href: LINKS.community,
@@ -770,7 +776,7 @@ const en: HomeCopy = {
     lede: [
       "I’m Yuzheng Sun. I founded ",
       { strong: "Superlinear Academy" },
-      ", where 20,000+ people learn to build with AI. Since 2020 I’ve hosted 200+ long conversations with researchers and founders, and I bring what I learn back into teaching and real work.",
+      `, where ${membersFigure()} people learn to build with AI. Since 2020 I’ve hosted 200+ long conversations with researchers and founders, and I bring what I learn back into teaching and real work.`,
     ],
     primary: "Join the free community",
     secondary: "Watch the conversations",
@@ -786,7 +792,7 @@ const en: HomeCopy = {
       {
         org: "Tencent IEG",
         latin: true,
-        role: ["Director, Growth Data Science & AI", "Led a 30-person team"],
+        role: ["Vice Director, Data & AI", "Led a 30-person team"],
       },
       {
         org: "Statsig",
@@ -1087,7 +1093,7 @@ const en: HomeCopy = {
       },
       {
         title: "Share what you build",
-        body: "700+ member projects, with tryouts, questions, and suggestions in the comments.",
+        body: `${PROJECTS_FIGURE} member projects, with tryouts, questions, and suggestions in the comments.`,
         href: LINKS.projects,
       },
       {
@@ -1104,12 +1110,12 @@ const en: HomeCopy = {
     field: {
       label: count =>
         `Community map: ${count} dots, one per member, brighter for more posts and comments`,
-      fallbackLabel: "Community sketch: twenty thousand dots, one per member",
+      fallbackLabel: `Community sketch: ${membersFigure()} dots, one per member`,
       caption: count => [
         `${count} dots, one for each real member.`,
         "The brighter the dot, the more they have posted and commented. Every dot opens a member’s profile.",
       ],
-      fallbackCaption: ["20,000+ members learn, share, and discuss here.", ""],
+      fallbackCaption: [`${membersFigure()} members learn, share, and discuss here.`, ""],
       updated: date => `Member data updated ${date}`,
       open: "Open this member’s profile",
       openNamed: name => `Open ${name}’s profile`,
@@ -1154,8 +1160,8 @@ const en: HomeCopy = {
         title: "Start here",
         body: "The city above. Come in and look around, then decide how far you want to go.",
         stats: [
-          ["20,000+", "members"],
-          ["700+", "project posts"],
+          [membersFigure(), "members"],
+          [PROJECTS_FIGURE, "project posts"],
         ],
         cta: "Join the free community",
         href: LINKS.community,

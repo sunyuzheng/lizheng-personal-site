@@ -5,7 +5,13 @@ import CareerPath, { type CareerStep } from "@/components/home/CareerPath";
 import { LINKS } from "@/components/home/content";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import { GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
+import { FLP_AMAZON_URL, GROWTH_BOOK_AMAZON_URL } from "@shared/book-links";
+import {
+  PROJECTS_FIGURE,
+  PROJECTS_ZH,
+  membersFigure,
+  membersWan,
+} from "@shared/community-facts";
 import { STATSIG_WRITING_PATH } from "@shared/writing-links";
 import { pick, useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
@@ -26,7 +32,7 @@ const career: Record<Lang, CareerStep[]> = {
     {
       org: "Tencent IEG",
       latin: true,
-      role: ["Director, Growth Data Science & AI", "Led a 30-person team"],
+      role: ["Vice Director, Data & AI", "Led a 30-person team"],
     },
     {
       org: "Statsig",
@@ -45,7 +51,7 @@ const career: Record<Lang, CareerStep[]> = {
     {
       org: "腾讯IEG",
       latin: false,
-      role: ["增长数据科学与AI总监", "带领30人团队"],
+      role: ["数据与AI副总监", "带领30人团队"],
     },
     {
       org: "Statsig",
@@ -65,7 +71,7 @@ const currentWork = {
       name: "Superlinear Academy",
       role: "Free community",
       detail:
-        "See how people use AI, share your work, and bring your questions. 20,000+ members, 700+ project posts, and 8,000+ project comments.",
+        `See how people use AI, share your work, and bring your questions. ${membersFigure()} members, ${PROJECTS_FIGURE} project posts, and 8,000+ project comments.`,
       href: "https://www.superlinear.academy/",
     },
     {
@@ -93,10 +99,10 @@ const currentWork = {
   ],
   zh: [
     {
-      name: "Superlinear Academy",
+      name: "超线性学院",
       role: "免费社区",
       detail:
-        "看别人怎么用AI，分享自己的项目，也带着问题来讨论。2万+成员，700+项目帖，8,000+条项目评论。",
+        `看别人怎么用AI，分享自己的项目，也带着问题来讨论。${membersWan()}成员，${PROJECTS_ZH}个项目帖，8,000多条项目评论。`,
       href: "https://www.superlinear.academy/",
     },
     {
@@ -132,6 +138,7 @@ const publicFacts = [
   },
   {
     value: "400K+",
+    valueZh: "40万+",
     en: "cross-platform audience",
     zh: "跨平台关注者",
   },
@@ -168,7 +175,7 @@ export default function About() {
         "MAKE WHAT LASTS. I want to build things people keep choosing, long after the launch.",
       backgroundTitle: "Background",
       background:
-        "I worked as an economist at Amazon, a data scientist at Meta, and Director of Growth Data Science & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
+        "I worked as an economist at Amazon, a data scientist at Meta, and Vice Director of Data & AI at Tencent IEG. I then joined early-stage Statsig, later acquired by OpenAI, before building Superlinear Academy full time.",
       // Worded so it stays true before and after the November 2026 event.
       aie: "AI Engineer Shanghai 2026, the first AI Engineer conference in China, names Mengying Li and me as its co-organizers. My part is the program, speaker invitations, and connecting developer communities in the US and China.",
       aieLink: "AI Engineer Shanghai organizing team",
@@ -178,7 +185,23 @@ export default function About() {
       publicTitle: "Books and conversations",
       publicIntro: (
         <>
-          I co-authored{" "}
+          I wrote{" "}
+          <a
+            href={FLP_AMAZON_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            Feels Like Progress
+          </a>{" "}
+          and{" "}
+          <Link
+            href="/zbs"
+            className="inline"
+          >
+            Real Stuff
+          </Link>{" "}
+          (<span lang="zh-CN">真本事</span>), a book in Chinese, and co-authored{" "}
           <a
             href={GROWTH_BOOK_AMAZON_URL}
             target="_blank"
@@ -186,15 +209,8 @@ export default function About() {
             className="inline"
           >
             Growth Data Analytics Playbook
-          </a>{" "}
-          and wrote{" "}
-          <Link
-            href="/zbs"
-            className="inline"
-          >
-            Real Stuff
-          </Link>{" "}
-          (<span lang="zh-CN">真本事</span>), a book in Chinese. I host
+          </a>
+          . I host
           long-form conversations on my channel and join other shows as a guest.
         </>
       ),
@@ -209,21 +225,37 @@ export default function About() {
     zh: {
       eyebrow: "关于我",
       intro:
-        "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院Superlinear Academy创始人，现居西雅图。",
+        "我是孙煜征，大家叫我立正。康奈尔经济学博士，超线性学院（Superlinear Academy）创始人，现居西雅图。",
       belief:
         "学点真本事，做点真东西。对我来说，就是离开职位和公司名，仍能做出别人需要的东西。",
       backgroundTitle: "经历",
       background:
-        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG增长数据科学与AI总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设Superlinear Academy。",
+        "我做过Amazon经济学家、Meta数据科学家和腾讯IEG数据与AI副总监，也是OpenAI收购团队Statsig的早期成员。现在全职建设超线性学院。",
       aie: "2026年，我和李孟颖联合主办AI Engineer上海站，这是硅谷的AI工程师大会第一次来中国。我参与议程筹划和嘉宾邀请，也帮中美两边的开发者社区牵线。",
       aieLink: "AI Engineer上海站组织团队",
       currentTitle: "我正在办的这所学院",
       currentIntro:
-        "课程、社区和企业项目，都在Superlinear Academy。想了解我们，可以先从免费社区开始。",
+        "课程、社区和企业项目，都在超线性学院。想了解我们，可以先从免费社区开始。",
       publicTitle: "书与对话",
       publicIntro: (
         <>
-          我合著了
+          我写了
+          <a
+            href={FLP_AMAZON_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline"
+          >
+            《Feels Like Progress》
+          </a>
+          和
+          <Link
+            href="/zbs"
+            className="inline"
+          >
+            《真本事：从会工作到会赚钱》
+          </Link>
+          ，合著了
           <a
             href={GROWTH_BOOK_AMAZON_URL}
             target="_blank"
@@ -232,13 +264,6 @@ export default function About() {
           >
             《Growth Data Analytics Playbook》
           </a>
-          ，写了
-          <Link
-            href="/zbs"
-            className="inline"
-          >
-            《真本事：从会工作到会赚钱》
-          </Link>
           。也在自己的频道里做长访谈，去别人的节目做嘉宾。
         </>
       ),
@@ -434,7 +459,11 @@ export default function About() {
                 <p className="tally">
                   {publicFacts.map(item => (
                     <span key={item.value}>
-                      <b>{item.value}</b>
+                      <b>
+                        {lang === "zh" && "valueZh" in item
+                          ? item.valueZh
+                          : item.value}
+                      </b>
                       {lang === "en" ? item.en : item.zh}
                     </span>
                   ))}

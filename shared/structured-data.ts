@@ -26,7 +26,7 @@ export const PODCAST_URL = "https://podcast.lizheng.ai";
 
 const PERSON_DESCRIPTION = {
   en: "Yuzheng Sun (孙煜征, 立正, 课代表立正) has a PhD in Economics from Cornell and is the Seattle-based founder of Superlinear Academy. He studies what's worth building and how judgment becomes work people keep choosing.",
-  zh: "立正，本名孙煜征，亦以课代表立正为人所知；康奈尔大学经济学博士，Superlinear Academy创始人，现居西雅图。他研究什么值得做，以及怎样把判断和本事做成人们真正会用的东西。",
+  zh: "立正，本名孙煜征，亦以课代表立正为人所知；康奈尔大学经济学博士，超线性学院（Superlinear Academy）创始人，现居西雅图。他研究什么值得做，以及怎样把判断和本事做成人们真正会用的东西。",
 } satisfies Record<SiteLang, string>;
 
 function personNode(lang: SiteLang) {

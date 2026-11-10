@@ -321,6 +321,13 @@
   color: var(--lz-on-forest-2);
 }
 
+/* The Chinese phrases are laid out in lines of even length. Filling each line as far as it goes
+   left one short phrase (我和顶尖研究者、) alone on a line at some phone widths, and which widths
+   depended on how wide the member count happened to be. English wraps by words and stays as it was. */
+.lz-home:not(.l-en) .hero .lede {
+  text-wrap: balance;
+}
+
 .lz-home .hero .lede b {
   color: var(--lz-on-forest);
   font-weight: 500;

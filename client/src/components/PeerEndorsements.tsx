@@ -49,9 +49,10 @@ export const endorsements = [
       punch: "Yuzheng has built an AI education community that is carefully curated, practical…",
     },
     zh: {
-      name: "Wei Manfredi",
-      role: "IHG Hotels & Resorts AI与架构高级副总裁",
-      shortRole: "IHG AI与架构高级副总裁",
+      // The same name and company as her guest card further down the homepage (魏慧, 洲际酒店集团).
+      name: "魏慧（Wei Manfredi）",
+      role: "洲际酒店集团（IHG）AI与架构高级副总裁",
+      shortRole: "洲际酒店集团AI与架构高级副总裁",
       subject: "关于社群",
       quote:
         "立正做的AI教育社群很少见：内容筛选认真，实战密度高，也确实贴近工作里的问题。",

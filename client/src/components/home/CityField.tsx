@@ -10,6 +10,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
+import { CITY_DATA_URL, COMMUNITY_MEMBERS } from "@shared/community-facts";
 import type { CityCopy } from "./content";
 import { Phrases } from "./parts";
 
@@ -45,16 +46,14 @@ export interface CityData {
   comments?: number[];
 }
 
-// Published every day by .github/workflows/community-city.yml (see
+// CITY_DATA_URL is published every day by .github/workflows/community-city.yml (see
 // docs/community-graph.md). The dev server reads the local file instead.
-const CITY_DATA_URL =
-  "https://kwicxc1px65aokwa.public.blob.vercel-storage.com/community/city.json";
 // Vite sets import.meta.env; the prerender runs under tsx, where it is absent.
 const DEV = Boolean((import.meta as { env?: { DEV?: boolean } }).env?.DEV);
 const DATA_URL = DEV ? "/community/city.json" : CITY_DATA_URL;
 
 const PROFILE_BASE = "https://www.superlinear.academy/u/";
-const FALLBACK_COUNT = 20000;
+const FALLBACK_COUNT = COMMUNITY_MEMBERS;
 // Cells beyond the member count stay empty, which softens the city's edge.
 const SPARE_CELLS = 1.16;
 const SNAP_CELLS = 3;

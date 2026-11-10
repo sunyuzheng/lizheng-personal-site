@@ -33,6 +33,23 @@ function Dotted({ text }: { text: string }) {
   );
 }
 
+/**
+ * A quotation followed by who said it: the attribution stays in one piece, so a narrow column
+ * moves it to the next line whole instead of leaving its last two characters there.
+ */
+function Quoted({ text }: { text: string }) {
+  const end = text.lastIndexOf("”");
+  if (end < 0 || end === text.length - 1) return <>{text}</>;
+  const rest = text.slice(end + 1);
+  return (
+    <>
+      {text.slice(0, end + 1)}
+      {rest.startsWith(" ") ? " " : ""}
+      <span className="phrase">{rest.trimStart()}</span>
+    </>
+  );
+}
+
 /** One past appearance in the complete record: when, which show, what it was about. */
 function AppearanceRow({
   appearance,
@@ -151,11 +168,11 @@ const copy = {
     ],
     otherDirections:
       "Other directions include the public AI calls I made before GPT-4, experimentation, creator businesses, China–U.S. technology, and the design of AI education and community. One real question is stronger than a complete tour.",
-    conversationsEyebrow: "Two collaborations · Two kinds of proof",
+    conversationsEyebrow: "Three collaborations · Three kinds of proof",
     conversationsTitle:
-      "Good content should hold on its own—and reward further investment.",
+      "Good content should hold on its own, reward further investment—and travel to a different audience.",
     conversationsIntro:
-      "The Koji episode shows what the conversation can do with a simple remote setup and the host’s own channels. The Tulong episode shows what can happen when both teams edit, distribute, and build around the same recording.",
+      "The Koji episode shows what the conversation can do with a simple remote setup and the host’s own channels. The Tulong episode shows what can happen when both teams edit, distribute, and build around the same recording. The Yang Tiannan episode began with a topic I proposed and ran on a personal-finance podcast: 45K plays in under two weeks.",
     conversations: [
       {
         priority: "lead",
@@ -262,6 +279,55 @@ const copy = {
         ],
       },
       {
+        priority: "lead",
+        label: "Case 3 · A different audience",
+        name: "A topic I proposed became an episode of a personal-finance podcast",
+        role: "听懂涨声 with Yang Tiannan × Yuzheng Sun",
+        note: "听懂涨声 is a Chinese podcast about family wealth, spending, and investing, with 190K+ subscribers on Xiaoyuzhou. I proposed “fake work” to its host, Yang Tiannan—the second question in the list below. He made the conversation an episode of his own show, where listeners used the comments to talk about their own jobs. Our team cut a 71-minute video and co-published it on Xiaohongshu.",
+        metrics: [
+          {
+            value: "45K",
+            label: "Xiaoyuzhou plays",
+            signal: "In under two weeks",
+          },
+          {
+            value: "175K",
+            label: "Xiaohongshu views",
+            signal: "A 71-minute video",
+          },
+          {
+            value: "4,220",
+            label: "Xiaohongshu saves",
+            signal: "Close to likes",
+          },
+          {
+            value: "1,480",
+            label: "Xiaohongshu shares",
+            signal: "Co-published",
+          },
+        ],
+        proofNote:
+          "Also: 113 Xiaoyuzhou comments and 534 saves; 4,660 Xiaohongshu likes and 113 comments; 17K YouTube views.",
+        quote:
+          "“So when Yuzheng proposed this topic, I said yes right away.” — Yang Tiannan, in the episode’s show notes (translated)",
+        href: "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f",
+        linkLabel: "Listen to the episode on Xiaoyuzhou",
+        image: "https://img.youtube.com/vi/ur-HjD422ig/maxresdefault.jpg",
+        evidenceLabel: "View platform screenshots (2)",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/yangtiannan-xiaoyuzhou.webp",
+            alt: "The 听懂涨声 episode page on Xiaoyuzhou with 45,403 plays and 113 comments",
+            caption: "Xiaoyuzhou · 45K plays · 113 comments",
+          },
+          {
+            src: "/collab/creator-proof/yangtiannan-xiaohongshu.webp",
+            alt: "The co-published video on Xiaohongshu with 175.3K views, 4,660 likes, 4,220 saves, 1,480 shares and 113 comments",
+            caption: "Xiaohongshu · 175K views · 4,220 saves · 1,480 shares",
+          },
+        ],
+      },
+      {
         priority: "supporting",
         label: "Another sample · I am the host",
         name: "Professor Liu Jia: from neuroscience to AI and education",
@@ -286,7 +352,7 @@ const copy = {
       },
     ],
     metricsNote:
-      "Counts come from public platform pages and screenshots captured in July 2026. Platforms use different counting methods.",
+      "Counts for the first two cases come from public platform pages and screenshots captured in July 2026; the third was captured on November 9, 2026, less than two weeks after release. Platforms use different counting methods.",
     appearancesEyebrow: "Selected by other shows",
     appearancesTitle:
       "Invited across AI, technology, organizations, careers, and creator businesses.",
@@ -439,7 +505,7 @@ const copy = {
         value: "远程或西雅图线下 · 可剪辑、切片与联发",
       },
     ],
-    questionCta: "先看两次合作",
+    questionCta: "先看三次合作",
     kitCta: "下载嘉宾资料",
     formatsEyebrow: "这些判断从哪里来",
     formatsTitle: "这些问题，我在几个不同的位置上|都亲手处理过。",
@@ -499,10 +565,10 @@ const copy = {
     ],
     otherDirections:
       "2023年GPT-4发布前留下的AI判断、增长实验、创作者商业、中美科技，以及AI教育和社区怎么做，也都有公开材料和亲历案例。一个真问题，比一张完整的话题清单更有力量。",
-    conversationsEyebrow: "两次合作 · 两种证明",
-    conversationsTitle: "好内容自己站得住，双方投入以后|还能走得更远。",
+    conversationsEyebrow: "三次合作 · 三种证明",
+    conversationsTitle: "好内容自己站得住，双方投入走得更远，|换一群听众也成立。",
     conversationsIntro:
-      "Koji那期只用节目方自己的渠道：长音频有人听完，三个视频平台的切片也各自跑出来。屠龙那期则由双方分别编辑和分发，一场对话不只有了更大的影响力，也替节目和嘉宾找到了新的观众。",
+      "Koji那期只用节目方自己的渠道：长音频有人听完，三个视频平台的切片也各自跑出来。屠龙那期则由双方分别编辑和分发，一场对话不只有了更大的影响力，也替节目和嘉宾找到了新的观众。杨天楠那期是我提的选题，发在一档讲家庭财富和投资的播客里，不到两周4.5万次播放。",
     conversations: [
       {
         priority: "lead",
@@ -576,6 +642,39 @@ const copy = {
         ],
       },
       {
+        priority: "lead",
+        label: "案例三 · 换一群听众也成立",
+        name: "我提的选题，成了一档财经播客的一期",
+        role: "听懂涨声 × 课代表立正",
+        note: "《听懂涨声》讲家庭财富、消费和投资，小宇宙有19万订阅。我向主播杨天楠提了fake work这个选题，就是下面四个问题里的第二个。他把对话做成自己节目的一期，评论区里听众聊的是各自的工作；我们剪出71分钟的视频，在小红书联合发布。",
+        metrics: [
+          { value: "4.5万", label: "小宇宙播放", signal: "发布不到两周" },
+          { value: "17.5万", label: "小红书观看", signal: "71分钟长视频" },
+          { value: "4,220", label: "小红书收藏", signal: "收藏接近点赞" },
+          { value: "1,480", label: "小红书转发", signal: "联合发布" },
+        ],
+        proofNote:
+          "其他数据：小宇宙113条评论、534次收藏；小红书4,660赞、113条评论；YouTube 1.7万观看。",
+        quote:
+          "“当课代表立正和我提了这个选题，我立刻答应了下来。”——杨天楠，《听懂涨声》节目介绍",
+        href: "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f",
+        linkLabel: "去小宇宙听《听懂涨声》这一期",
+        image: "https://img.youtube.com/vi/ur-HjD422ig/maxresdefault.jpg",
+        evidenceLabel: "查看平台数据截图（2张）",
+        evidenceImages: [
+          {
+            src: "/collab/creator-proof/yangtiannan-xiaoyuzhou.webp",
+            alt: "《听懂涨声》这一期在小宇宙的页面，显示45,403次播放和113条评论",
+            caption: "小宇宙 · 4.5万播放 · 113条评论",
+          },
+          {
+            src: "/collab/creator-proof/yangtiannan-xiaohongshu.webp",
+            alt: "课代表立正在小红书联合发布的视频，显示17.5万次观看、4,660赞、4,220收藏、1,480转发和113条评论",
+            caption: "小红书 · 17.5万观看 · 4,220收藏 · 1,480转发",
+          },
+        ],
+      },
+      {
         priority: "supporting",
         label: "另一个样本 · 我做主持",
         name: "刘嘉教授：从脑科学聊到AI和教育",
@@ -595,7 +694,8 @@ const copy = {
         evidenceImages: [],
       },
     ],
-    metricsNote: "数据来自2026年7月的平台页面与截图；各平台统计口径不同。",
+    metricsNote:
+      "前两个案例的数据来自2026年7月的平台页面与截图；第三个采集于2026年11月9日，发布不到两周。各平台统计口径不同。",
     appearancesEyebrow: "节目做客",
     appearancesTitle: "从AI与技术组织，到职业选择与创作者商业。",
     appearancesIntro: `这里优先保留有辨识度的节目与重复邀请。完整${guestAppearances.length}期做客记录仍在页面后面，制作人可以随时核对题目、形式与成片。`,
@@ -883,7 +983,9 @@ export default function CreatorCollab() {
                   </a>
                   <div className="body">
                     <div className="t">{conversation.label}</div>
-                    <h3>{conversation.name}</h3>
+                    <h3>
+                      <Phrases text={conversation.name} />
+                    </h3>
                     <p className="role">{conversation.role}</p>
                     <ul className="metrics">
                       {conversation.metrics.map(metric => (
@@ -899,7 +1001,9 @@ export default function CreatorCollab() {
                       <p className="fine">{conversation.proofNote}</p>
                     )}
                     {conversation.quote && (
-                      <blockquote>{conversation.quote}</blockquote>
+                      <blockquote>
+                        <Quoted text={conversation.quote} />
+                      </blockquote>
                     )}
                     <a className="lz-link" href={conversation.href} {...EXTERNAL}>
                       {conversation.linkLabel} <i aria-hidden="true">→</i>

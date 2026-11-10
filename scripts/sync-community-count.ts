@@ -33,6 +33,25 @@ export function acceptCount(
   return { count, asOf: generatedAt };
 }
 
+/**
+ * Whether this build may rewrite the committed count.
+ * - A Vercel deploy always takes today's count and date: its pages are the ones served.
+ * - Any other CI run never touches the file. The guest sync builds only to check itself and
+ *   then requires a clean working tree before it commits; a count rewritten there would stop
+ *   every guest update.
+ * - On a developer's machine the file changes only when the figure the pages show changes
+ *   (a new thousand), so an ordinary build leaves the working tree clean.
+ */
+export function mayRewriteCount(
+  env: Readonly<Record<string, string | undefined>>,
+  current: number,
+  next: number
+): boolean {
+  if (env.VERCEL) return true;
+  if (env.CI) return false;
+  return Math.floor(next / 1000) !== Math.floor(current / 1000);
+}
+
 async function main() {
   let data: unknown;
   try {
@@ -54,14 +73,8 @@ async function main() {
     return;
   }
 
-  // On a developer's machine the file changes only when the figure the pages show changes
-  // (a new thousand), so an ordinary build leaves the working tree clean. A deploy build
-  // always takes today's count and date.
-  const deploy = Boolean(process.env.VERCEL || process.env.CI);
-  const sameThousand =
-    Math.floor(result.count / 1000) === Math.floor(COMMUNITY_MEMBER_COUNT / 1000);
-  if (!deploy && sameThousand) {
-    console.log(`   成员数：${result.count}（页面写法没变，文件不动）`);
+  if (!mayRewriteCount(process.env, COMMUNITY_MEMBER_COUNT, result.count)) {
+    console.log(`   成员数：今天是 ${result.count}，沿用文件里的 ${COMMUNITY_MEMBER_COUNT}（这次构建不改文件）`);
     return;
   }
 

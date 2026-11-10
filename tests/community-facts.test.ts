@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { membersFigure, membersWan } from "../shared/community-facts";
-import { acceptCount } from "../scripts/sync-community-count";
+import { acceptCount, mayRewriteCount } from "../scripts/sync-community-count";
 
 describe("how the pages say the member count", () => {
   it("rounds down to a thousand for figures", () => {
@@ -34,5 +34,16 @@ describe("taking the count from the community map's data", () => {
     expect(acceptCount(28377, { ...today, count: 28376 })).toHaveProperty("reason");
     expect(acceptCount(28377, { ...today, count: 90000 })).toHaveProperty("reason");
     expect(acceptCount(28377, { ...today, count: 28500.5 })).toHaveProperty("reason");
+  });
+
+  it("rewrites the committed count on a deploy, never in other CI runs, locally only at a new thousand", () => {
+    // Vercel builds the pages that are served: always today's count.
+    expect(mayRewriteCount({ VERCEL: "1", CI: "1" }, 28377, 28378)).toBe(true);
+    // The guest sync on GitHub Actions needs a clean working tree to commit.
+    expect(mayRewriteCount({ CI: "true" }, 28377, 28500)).toBe(false);
+    expect(mayRewriteCount({ CI: "true" }, 28377, 29100)).toBe(false);
+    // A developer's build stays clean until the figure on the pages changes.
+    expect(mayRewriteCount({}, 28377, 28999)).toBe(false);
+    expect(mayRewriteCount({}, 28377, 29000)).toBe(true);
   });
 });

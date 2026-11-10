@@ -90,7 +90,7 @@ export const ZHENBENSHI_PAGE_META: PageMeta = {
     "孙煜征所著《真本事：从会工作到会赚钱》，由人民邮电出版社出版。关于工作、能力、副业与长期价值的一套实践框架。",
   canonical: "https://www.lizheng.ai/zbs",
   ogImage: "https://www.lizheng.ai/book/cover-front.png",
-  lastModified: "2026-09-30",
+  lastModified: "2026-11-09",
 };
 
 export const PODCAST_PAGE_META: PageMeta = {

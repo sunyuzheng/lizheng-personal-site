@@ -13,6 +13,11 @@ interface LanguageToggleProps {
   variant?: "segmented" | "pill";
   /** Accessible name for the `pill` variant. */
   label?: string;
+  /**
+   * Where the `pill` leads on a page written in one language only (the page
+   * about a Chinese book leads to that book on the English shelf).
+   */
+  href?: string;
 }
 
 export default function LanguageToggle({
@@ -21,6 +26,7 @@ export default function LanguageToggle({
   surface = "dark",
   variant = "segmented",
   label,
+  href,
 }: LanguageToggleProps) {
   const { lang, setReaderLang } = useLanguage();
   const [location] = useLocation();
@@ -43,7 +49,7 @@ export default function LanguageToggle({
     }
     return (
       <Link
-        href={withLanguage(location, other)}
+        href={href ?? withLanguage(location, other)}
         hrefLang={other === "en" ? "en" : "zh-CN"}
         lang={other === "en" ? "en" : "zh-CN"}
         aria-label={label}

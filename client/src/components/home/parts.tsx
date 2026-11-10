@@ -50,6 +50,24 @@ export function Phrases({ text }: { text: string }) {
   );
 }
 
+/**
+ * A line of facts joined by middle dots: each fact keeps its dot, so a line never starts with one
+ * and a fact (an ISBN, a title) is not split across two lines while it fits on one.
+ */
+export function Dotted({ text }: { text: string }) {
+  const parts = text.split(" · ");
+  return (
+    <>
+      {parts.map((part, index) => (
+        <span key={index} className="phrase">
+          {part}
+          {index < parts.length - 1 ? " ·\u00a0" : ""}
+        </span>
+      ))}
+    </>
+  );
+}
+
 /** Inline copy; with `phrases`, its plain text keeps phrases together as Phrases does. */
 export function RichText({
   value,

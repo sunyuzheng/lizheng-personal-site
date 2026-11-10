@@ -1,6 +1,6 @@
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
-import { Phrases } from "@/components/home/parts";
+import { Dotted, Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
@@ -15,23 +15,6 @@ import {
 import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 
 const EXTERNAL = { target: "_blank", rel: "noopener noreferrer" } as const;
-
-/**
- * A line of facts joined by middle dots: each fact keeps its dot, so a line never starts with one.
- */
-function Dotted({ text }: { text: string }) {
-  const parts = text.split(" · ");
-  return (
-    <>
-      {parts.map((part, index) => (
-        <span key={index} className="phrase">
-          {part}
-          {index < parts.length - 1 ? " ·\u00a0" : ""}
-        </span>
-      ))}
-    </>
-  );
-}
 
 /**
  * A quotation followed by who said it: the attribution stays in one piece, so a narrow column

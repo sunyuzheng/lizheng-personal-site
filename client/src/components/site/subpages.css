@@ -2321,3 +2321,520 @@
     border-left: 0;
   }
 }
+
+/* ---------- A book's own page (/zbs) ---------- */
+
+/* The head: the title on the left, and the book itself standing on the line where the forest ends,
+   as the covers on the shelf stand on their line in ink. */
+.lz-sub .book-head {
+  padding-bottom: 0;
+  /* The cover's shadow stays on the forest; none of it falls on the paper under the fold. */
+  overflow: hidden;
+  overflow: clip;
+}
+
+.lz-sub .book-head .cols2 {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 36px 64px;
+}
+
+.lz-sub .book-head .words {
+  padding-bottom: clamp(44px, 4.8vw, 72px);
+}
+
+/* Nine characters wide at its longest line: sized so that line always fits beside the cover. */
+.lz-sub .book-head h1 {
+  font-size: clamp(40px, 4.8vw, 70px);
+  line-height: 1.17;
+}
+
+.lz-sub .book-head h1 .line {
+  white-space: nowrap;
+}
+
+/* The opening bracket carries half a character of blank on its left: taken back, so the title
+   starts on the same edge as the lines under it. */
+.lz-sub .book-head h1 .open {
+  margin-left: -0.46em;
+}
+
+.lz-sub .book-head .lede {
+  margin-top: 18px;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.7vw, 23px);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub .colophon {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--lz-on-forest-3);
+}
+
+.lz-sub .plinth img {
+  width: clamp(230px, 26vw, 372px);
+  height: auto;
+  border-radius: 2px 4px 0 0;
+  box-shadow:
+    22px 0 34px -22px rgb(0 0 0 / 0.6),
+    inset 3px 0 0 rgb(255 255 255 / 0.2);
+}
+
+/* What is further down the page: one quiet line between the forest and the first chapter. */
+.lz-sub .toc ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 30px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+}
+
+.lz-sub .toc a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14.5px;
+  color: var(--lz-ink-2);
+  transition: color 0.2s;
+}
+
+.lz-sub .toc a:hover {
+  color: var(--lz-green-text);
+}
+
+/* The formula is the chapter's large line; its name above it is a caption, not a second title. */
+.lz-sub .formula-name {
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* One set of columns for both rows: the left-hand side, then the three factors. Each factor heads
+   the column that explains it, so the formula reads across and each term reads down. The widths
+   are lengths of the formula's own type size, the same in both rows. */
+.lz-sub .formula-set {
+  --f: clamp(30px, 3.5vw, 50px);
+  --lhs: calc(var(--f) * 5.3);
+  --gap: calc(var(--f) * 1.15);
+  margin-top: clamp(30px, 3.4vw, 48px);
+}
+
+.lz-sub .formula,
+.lz-sub .factors {
+  display: grid;
+  grid-template-columns: var(--lhs) repeat(3, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+
+.lz-sub .formula {
+  font-family: var(--serif);
+  font-size: var(--f);
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.lz-sub .formula .op {
+  font-family: var(--num);
+  font-weight: 400;
+  color: var(--lz-muted);
+}
+
+.lz-sub .formula .lhs .op {
+  margin-left: 0.22em;
+}
+
+/* The multiplication sign stands in the gap before its factor, so the factor's first character
+   stays on its column's edge. */
+.lz-sub .formula .term {
+  position: relative;
+}
+
+.lz-sub .formula .term .op {
+  position: absolute;
+  top: 0;
+  right: 100%;
+  width: var(--gap);
+  text-align: center;
+}
+
+.lz-sub .factors {
+  margin-top: 18px;
+}
+
+.lz-sub .factor {
+  padding-top: 18px;
+  border-top: 1px solid var(--lz-ink);
+}
+
+.lz-sub .factor:first-child {
+  grid-column-start: 2;
+}
+
+.lz-sub .factor .t {
+  display: none;
+}
+
+.lz-sub .factor h3 {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.lz-sub .factor h3 + p {
+  margin-top: 8px;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+/* Three steps in order: the count, the step's name, what it is, how. */
+.lz-sub ol.points.practice > li {
+  padding: 20px 0 22px;
+}
+
+.lz-sub .practice .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .practice h3 {
+  margin-top: 2px;
+}
+
+/* One line saying what a list beside a chapter's statement is. */
+.lz-sub .split .lead-in {
+  margin-bottom: 12px;
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--lz-ink-2);
+}
+
+/* Product names in Latin letters take the Latin serif. */
+.lz-sub .tools h3 {
+  font-family: var(--num);
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.lz-sub .split .points + .cta-row {
+  margin-top: 22px;
+}
+
+/* The contents, as a book sets them: two columns, each module's name on a line in ink, then its
+   lessons numbered straight through from 01 to 21. */
+.lz-sub .contents {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 64px;
+  align-items: start;
+}
+
+.lz-sub .module + .module {
+  margin-top: 36px;
+}
+
+.lz-sub .module h3 {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--lz-ink);
+  font-size: 22px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub .module h3 .n {
+  color: var(--lz-muted);
+}
+
+.lz-sub .module h3 small {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--lz-muted);
+}
+
+.lz-sub .module ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-sub .module li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--lz-line);
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .module .no {
+  font-family: var(--num);
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--lz-muted);
+}
+
+/* The endorsements: who, then what they wrote. Read down the left column and it is three names. */
+.lz-sub .blurbs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .blurbs li {
+  padding: 30px 0 32px;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .blurbs figure {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  column-gap: 56px;
+  align-items: start;
+  margin: 0;
+}
+
+.lz-sub .blurbs figcaption b {
+  display: block;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub .blurbs figcaption small {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--lz-muted);
+}
+
+.lz-sub .blurbs blockquote {
+  position: relative;
+  max-width: 43em;
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.95;
+  color: var(--lz-ink);
+  text-wrap: pretty;
+}
+
+/* The opening mark hangs in the gutter, as on the homepage. */
+.lz-sub .blurbs blockquote .mark {
+  position: absolute;
+  top: 0;
+  right: 100%;
+}
+
+/* Short paragraphs do not end on a single character, where the browser can arrange it. */
+.lz-sub .points p,
+.lz-sub .split .say,
+.lz-sub .factor p,
+.lz-sub .module li,
+.lz-sub .head p {
+  text-wrap: pretty;
+}
+
+/* The author: the photograph on the left, who he is on the right. */
+.lz-sub .author {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: 28px 64px;
+  align-items: start;
+}
+
+.lz-sub .author .face {
+  margin: 0;
+}
+
+.lz-sub .author .face img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 4px;
+  background: var(--lz-sand);
+}
+
+.lz-sub .author .face figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .author h2 {
+  font-size: clamp(27px, 2.7vw, 38px);
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.lz-sub .author .say {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .author .points {
+  margin-top: 22px;
+}
+
+.lz-sub .author .points > li {
+  padding: 14px 0;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+  text-wrap: pretty;
+}
+
+.lz-sub .author .note {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .author .lz-link {
+  margin-top: 16px;
+}
+
+/* The community's own page, live, in a plain frame. */
+.lz-sub .feed {
+  overflow: hidden;
+  border: 1px solid var(--lz-line-2);
+  border-radius: 4px;
+  background: #fff;
+}
+
+.lz-sub .feed iframe {
+  display: block;
+  width: 100%;
+  height: min(75vh, 46rem);
+  border: 0;
+}
+
+/* The page closes on the green it opened on, a step lighter than the footer under it. */
+.lz-sub .sec.band.closing {
+  background: var(--lz-forest);
+}
+
+/* On the forest, a text link is ivory, as in the head. */
+.lz-sub .band .lz-link {
+  color: var(--lz-on-forest);
+}
+
+.lz-sub .band .split .cta-row {
+  gap: 12px 20px;
+}
+
+.lz-sub .band .split .mail {
+  margin-top: 30px;
+}
+
+@media (max-width: 860px) {
+  /* One column: the words, then the book, still standing on the forest's lower edge. */
+  .lz-sub .book-head .cols2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .book-head .words {
+    padding-bottom: 0;
+  }
+
+  .lz-sub .book-head h1 {
+    font-size: clamp(27px, 9.2vw, 56px);
+  }
+
+  .lz-sub .plinth img {
+    width: min(58vw, 300px);
+  }
+
+  /* Six stops: two rows of three, in columns. */
+  .lz-sub .toc ul {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    gap: 0 28px;
+  }
+
+  /* The formula stacks, a term to a line; each factor then carries its own name again. */
+  .lz-sub .formula-set {
+    --f: clamp(30px, 9vw, 44px);
+  }
+
+  .lz-sub .formula,
+  .lz-sub .factors {
+    display: block;
+  }
+
+  .lz-sub .formula .lhs,
+  .lz-sub .formula .term {
+    display: block;
+  }
+
+  /* The three factors stand in one column, each multiplication sign in the margin before its
+     factor, the way a sum is written down a page. */
+  .lz-sub .formula .term {
+    padding-left: 1.05em;
+  }
+
+  .lz-sub .formula .term .op {
+    right: auto;
+    left: 0;
+    width: 1.05em;
+    text-align: left;
+  }
+
+  .lz-sub .factors {
+    margin-top: 22px;
+    border-top: 1px solid var(--lz-ink);
+  }
+
+  .lz-sub .factor {
+    padding-block: 18px 20px;
+    border-top: 0;
+    border-bottom: 1px solid var(--lz-line);
+  }
+
+  .lz-sub .factor .t {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 14px;
+    color: var(--lz-muted);
+  }
+
+  .lz-sub .contents {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 36px;
+  }
+
+  .lz-sub .blurbs figure,
+  .lz-sub .author {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 14px;
+  }
+
+  .lz-sub .author .face {
+    max-width: 240px;
+  }
+
+  .lz-sub .feed iframe {
+    height: min(70vh, 40rem);
+  }
+}

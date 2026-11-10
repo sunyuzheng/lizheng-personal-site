@@ -23,11 +23,14 @@ interface SiteHeaderProps {
   variant?: "overlay" | "solid";
   /** Marks the matching "More" link as the current page. */
   current?: SitePage;
+  /** Where the language switch leads on a page written in one language only. */
+  languageHref?: string;
 }
 
 export default function SiteHeader({
   variant = "solid",
   current,
+  languageHref,
 }: SiteHeaderProps) {
   const { lang } = useLanguage();
   const [location] = useLocation();
@@ -243,6 +246,7 @@ export default function SiteHeader({
             variant="pill"
             className="lz-lang"
             label={copy.switchLabel}
+            href={languageHref}
           />
           <a
             className="lz-join"

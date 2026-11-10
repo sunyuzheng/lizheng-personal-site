@@ -85,6 +85,15 @@ export function guestIntro(guest: Pick<GuestProfile, "guest_company" | "guest_ti
   return [guest.guest_company, guest.guest_title].filter(Boolean).join(" · ");
 }
 
+/**
+ * The line under a guest's name in the directory: the catalog's profile line, or, for a guest who
+ * has none yet (a new guest may be published before one is written), what their newest programme
+ * said about them. Empty when there is neither.
+ */
+export function guestLine(guest: Pick<GuestProfile, "guest_company" | "guest_title" | "introductions">): string {
+  return guestIntro(guest) || guest.introductions?.[0]?.text || "";
+}
+
 /** Ask Lizheng opened on 从哪读起 with this guest's name in the box (not sent). */
 export function guestAskLink(guest: Pick<GuestProfile, "guest_name">): string {
   return `https://ask.lizheng.ai/?${new URLSearchParams({ q: guest.guest_name, mode: "find" })}`;

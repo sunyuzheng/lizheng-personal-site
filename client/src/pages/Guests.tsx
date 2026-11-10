@@ -3,7 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { getGuestsPageMeta, guestIntro, guestYears, type GuestProfile } from "@shared/guest-data";
+import { getGuestsPageMeta, guestLine, guestYears, type GuestProfile } from "@shared/guest-data";
 import { guestMatchesQuery } from "@shared/guest-search";
 import { buildGuestsListStructuredData } from "@shared/structured-data";
 import { useEffect, useState } from "react";
@@ -36,7 +36,7 @@ function GuestItem({ guest, lang }: { guest: GuestProfile; lang: "en" | "zh" }) 
   const copy = COPY[lang];
   const name = lang === "en" && guest.guest_en_name ? guest.guest_en_name : guest.guest_name;
   const years = guestYears(guest);
-  const intro = guestIntro(guest);
+  const intro = guestLine(guest);
   return (
     <Link href={withLanguage(`/guests/${guest.slug}`, lang)} className="lz-guest">
       <span className="lz-guest-thumb">

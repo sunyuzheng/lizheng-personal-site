@@ -306,6 +306,7 @@
   color: var(--lz-on-forest);
 }
 
+/* Who the guest is: the first line under the name. */
 .lz-guest-introduction {
   max-width: 36em;
   margin-top: 16px;
@@ -313,9 +314,15 @@
   line-height: 1.75;
 }
 
+/* Catalog lines turn at their punctuation, not inside a word (Phrases). */
+.lz-guest-introduction .phrase,
+.lz-guest-introductions li .phrase {
+  display: inline-block;
+}
+
 .lz-guest-introductions {
   max-width: 38em;
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .lz-guest-introductions-label {
@@ -325,8 +332,10 @@
 
 .lz-guest-introductions ul {
   display: grid;
-  gap: 6px;
-  margin-top: 6px;
+  /* minmax(0, …): a long programme title wraps instead of widening the list past the screen. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 8px;
   padding: 0;
   list-style: none;
 }
@@ -336,18 +345,23 @@
   line-height: 1.6;
 }
 
+/* Each introduction is two lines: what was said, then the programme it comes from. */
 .lz-guest-introductions a {
-  margin-left: 10px;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 2px;
   font-size: 13px;
+  line-height: 1.5;
   color: var(--lz-mint);
-  white-space: nowrap;
 }
 
 .lz-guest-introductions a:hover {
   color: var(--lz-on-forest);
 }
 
-.lz-guest-introduction span {
+/* The label (简介：), not the phrases after it. */
+.lz-guest-introduction > span:first-child {
   color: var(--lz-on-forest-3);
 }
 

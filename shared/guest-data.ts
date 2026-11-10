@@ -109,19 +109,20 @@ export function introductionSource(intro: Pick<GuestQuotedIntroduction, "title" 
 
 export function getGuestPageMeta(guest: GuestProfile): PageMeta {
   const latest = guest.introductions?.[0];
-  const intro = truncateMetaText(latest ? latest.text : guestIntro(guest), 52);
+  const about = truncateMetaText(guestIntro(guest), 48);
   const leadTitle = guest.primary_episode?.title
     ? truncateMetaText(guest.primary_episode.title, 56)
     : "";
   const years = guestYears(guest);
-  // The introduction is labelled as the programmes' own, so a search result never presents it as a current job.
-  const label = latest ? `${latest.year ? `${latest.year}年` : ""}节目中的介绍` : "简介";
+  // The catalog's line is an "about"; an introduction is labelled as the programme's own, with its year,
+  // so a search result never presents either as a current job.
+  const quoted = latest ? `${latest.year ? `${latest.year}年` : ""}节目中的介绍：${truncateMetaText(latest.text, 52)}。` : "";
   const lead = leadTitle || guest.primary_episode.title;
   // One recording is often several videos (a full version, parts, clips), so the page counts videos.
   const programmes = guest.episode_count === 1
     ? `${guest.guest_name}在「课代表立正」的对谈${years ? `（${years}）` : ""}：《${lead}》。`
     : `${guest.guest_name}在「课代表立正」的对谈，共${guest.episode_count}个视频${years ? `（${years}）` : ""}，包括《${lead}》。`;
-  const description = `${programmes}${intro ? `${label}：${intro}。` : ""}`;
+  const description = `${programmes}${about ? `简介：${about}。` : ""}${quoted}`;
 
   return {
     title: `${guest.guest_name} · 课代表立正`,

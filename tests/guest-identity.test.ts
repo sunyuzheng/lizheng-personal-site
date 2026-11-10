@@ -66,6 +66,9 @@ describe("introductions stay the programmes' own", () => {
     const quoted = getGuestPageMeta({ ...p, introductions: [
       { text: "清华本科，Meta机器学习工程师", quote: "我是清华的本科", title: "Web3是一场白日梦吗？", url: "https://www.youtube.com/watch?v=abcdefghijk&t=30s", year: 2023 }] });
     expect(quoted.description).toContain("2023年节目中的介绍：清华本科，Meta机器学习工程师");
+    // The about line stays with a quoted introduction, and comes first: who they are, then what the programme said.
+    expect(quoted.description.indexOf("简介：Historical company · Historical title")).toBeGreaterThan(0);
+    expect(quoted.description.indexOf("简介：")).toBeLessThan(quoted.description.indexOf("2023年节目中的介绍："));
   });
   it("resolves quoted introductions to their programme and time, newest first", async () => {
     const { catalogGuestDirectory } = await import("../shared/guest-catalog");

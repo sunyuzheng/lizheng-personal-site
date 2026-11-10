@@ -1,6 +1,7 @@
 import GuestsLayout from "@/components/guests/GuestsLayout";
 import GuestInsightCard from "@/components/guests/GuestInsightCard";
 import GuestCommunityResources from "@/components/guests/GuestCommunityResources";
+import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useGuestDirectory } from "@/hooks/useGuestDirectory";
 import { withLanguage } from "@/lib/language-url";
@@ -64,6 +65,15 @@ const COPY = {
     missingBack: "See all guests",
   },
 } as const;
+
+/**
+ * Lines from the catalog break at their own joints: after Chinese punctuation (Phrases), and a
+ * short title stays whole after the " · " that follows the company (a bar marks the joint; the
+ * no-break space keeps the gap). A long title wraps by its own punctuation or spaces.
+ */
+function phrased(text: string): string {
+  return text.replace(/\|/g, "").replace(/ · (?=[^·]{1,16}$)/, " ·\u00a0|");
+}
 
 function formatViews(views: number | undefined | null, lang: "en" | "zh"): string | null {
   if (!views) return null;
@@ -163,22 +173,24 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
           <div className="lz-guest-head">
             <div>
               <h1>{name}</h1>
+              {/* Who this is comes first; what each programme said about them follows, with its year. */}
+              {intro && <p className="lz-guest-introduction"><span>{copy.about}</span><Phrases text={phrased(intro)} /></p>}
               <p className="lz-guest-facts">{copy.episodes(guest.episode_count)}{years ? ` · ${years}` : ""}</p>
               {!!guest.members?.length && <p className="lz-guest-members"><span>{copy.members}</span><PersonLinks people={guest.members} lang={lang} /></p>}
               {!!guest.member_of?.length && <p className="lz-guest-members"><span>{copy.memberOf}</span><PersonLinks people={guest.member_of} lang={lang} /></p>}
-              {guest.introductions?.length ? (
+              {!!guest.introductions?.length && (
                 <div className="lz-guest-introductions">
                   <p className="lz-guest-introductions-label">{copy.introduced}</p>
                   <ul>
                     {guest.introductions.slice(0, 4).map(item => (
                       <li key={item.url}>
-                        {item.text}
+                        <Phrases text={phrased(item.text)} />
                         <a href={item.url} target="_blank" rel="noopener noreferrer" title={copy.quote(item.quote)}>{introductionSource(item, lang)} ↗</a>
                       </li>
                     ))}
                   </ul>
                 </div>
-              ) : intro && <p className="lz-guest-introduction"><span>{copy.about}</span>{intro}</p>}
+              )}
               {bio && <p className="lz-guest-bio">{bio}</p>}
               <div className="lz-guest-actions">
                 <a className="lz-guest-watch" href={featured.url} target="_blank" rel="noopener noreferrer">

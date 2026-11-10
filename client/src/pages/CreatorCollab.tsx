@@ -423,7 +423,7 @@ const copy = {
     kitTitle: "A producer can build the introduction from this page.",
     kitIntro:
       "Use whichever bio length fits the show. The facts and links are here for verification, not as required talking points.",
-    pdfCta: "Download the six-page Chinese guest kit",
+    pdfCta: "Download the seven-page Chinese guest kit",
     shortBioLabel: "Short bio",
     shortBio:
       "Yuzheng Sun (课代表立正) has a PhD in Economics from Cornell and is the founder of Superlinear Academy. He was an economist at Amazon, a data scientist at Meta, Director of Growth Data Science & AI at Tencent IEG, and an early member of Statsig, which was later acquired by OpenAI. His work asks what capabilities and works matter more when AI makes execution cheaper.",
@@ -764,7 +764,7 @@ const copy = {
     kitEyebrow: "嘉宾资料",
     kitTitle: "做节目介绍需要的资料，都在这里。",
     kitIntro: "短版、长版，你按节目需要选。经历和数据都附了链接，方便核对。",
-    pdfCta: "下载六页播客与视频访谈资料（PDF）",
+    pdfCta: "下载七页播客与视频访谈资料（PDF）",
     shortBioLabel: "短介绍",
     shortBio:
       "孙煜征（课代表立正），康奈尔大学经济学博士、Superlinear Academy创始人。曾任Amazon经济学家、Meta数据科学家、腾讯IEG增长数据科学与AI总监，也是Statsig早期成员；Statsig后被OpenAI收购。他长期研究AI改变工作以后，什么能力和作品反而更重要。",

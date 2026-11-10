@@ -28,6 +28,12 @@ BUSINESS_COPY = Path(
 )
 IMAGE_CACHE = ROOT / "tmp" / "pdfs" / "image-cache"
 TULONG_SCREENSHOT = ROOT / "scripts" / "assets" / "tulong-xiaohongshu-performance.png"
+TIANNAN_SCREENSHOT = (
+    ROOT / "scripts" / "assets" / "yangtiannan-xiaohongshu-performance.png"
+)
+TIANNAN_XIAOYUZHOU = (
+    PUBLIC / "collab" / "creator-proof" / "yangtiannan-xiaoyuzhou.webp"
+)
 
 W, H = A4
 M = 42
@@ -67,6 +73,7 @@ URL_TULONG_COMMENT = (
     "https://www.youtube.com/watch?v=vd_oYgwQSBM"
     "&lc=UgxFa4IYFTFcAJUFOsd4AaABAg"
 )
+URL_TIANNAN = "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f"
 URL_LIU_JIA_YT = "https://www.youtube.com/watch?v=-Et3GJRSI_0"
 URL_LIU_JIA_BILI = "https://www.bilibili.com/video/BV1VvQ1BmE4T"
 EMAIL = "yz@superlinear.academy"
@@ -259,9 +266,9 @@ def draw_footer(c: canvas.Canvas, page: int, dark: bool = False) -> None:
     color = Color(1, 1, 1, alpha=0.42) if dark else MUTED
     c.setFillColor(color)
     c.setFont(FONT_REGULAR, 7.2)
-    c.drawString(M, 24, "课代表立正 · 播客与视频访谈资料 · 2026.08")
+    c.drawString(M, 24, "课代表立正 · 播客与视频访谈资料 · 2026.11")
     c.setFont(FONT_MONO, 7.2)
-    c.drawRightString(W - M, 24, f"{page:02d} / 06")
+    c.drawRightString(W - M, 24, f"{page:02d} / 07")
 
 
 def draw_metric(
@@ -772,10 +779,148 @@ def draw_tulong_page(c: canvas.Canvas, page: int) -> None:
     draw_footer(c, page)
 
 
+def draw_tiannan_page(c: canvas.Canvas, page: int) -> None:
+    """The third case: a personal-finance podcast made the topic an episode of its own."""
+    c.setFillColor(NAVY)
+    c.rect(0, 0, W, H, fill=1, stroke=0)
+    draw_label(
+        c,
+        "04 / CASE STUDY · TIANNAN · A DIFFERENT AUDIENCE",
+        M,
+        H - 50,
+        color=ACCENT_ON_DARK,
+    )
+    c.setFillColor(WHITE)
+    c.setFont(FONT_BOLD, 27)
+    c.drawString(M, H - 91, "换一群听众，对话照样成立。")
+    c.setFont(FONT_BOLD, 19)
+    c.drawString(M, H - 120, "立正提的选题，成了一档财经播客的一期。")
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 9.5)
+    c.drawString(M, H - 146, "《听懂涨声》×课代表立正｜小宇宙19万订阅，讲家庭财富、消费和投资")
+
+    metrics = [
+        ("4.5万", "小宇宙播放", "发布不到两周"),
+        ("17.5万", "小红书观看", "71分钟长视频"),
+        ("4,220", "小红书收藏", "收藏接近点赞"),
+        ("1,480", "小红书转发", "联合发布"),
+    ]
+    metric_gap = 8
+    metric_w = (W - 2 * M - 3 * metric_gap) / 4
+    for index, metric in enumerate(metrics):
+        draw_metric(
+            c,
+            M + index * (metric_w + metric_gap),
+            590,
+            metric_w,
+            92,
+            *metric,
+            dark=True,
+        )
+
+    # The Xiaohongshu screenshot stands on the left this time (the Tulong page has it on the right).
+    phone_x, phone_y, phone_w, phone_h = M, 94, 214, 466
+    draw_image(
+        c,
+        TIANNAN_SCREENSHOT,
+        phone_x,
+        phone_y,
+        phone_w,
+        phone_h,
+        fit="contain",
+        radius=24,
+    )
+
+    right_x = phone_x + phone_w + 25
+    right_w = W - M - right_x
+    draw_label(
+        c,
+        "选题由立正提出，节目是对方自己的",
+        right_x,
+        548,
+        color=ACCENT_ON_DARK,
+        font=FONT_BOLD,
+    )
+    draw_paragraph(
+        c,
+        "立正向主播杨天楠提了fake work这个选题，也就是下一页的方向二。杨天楠把对话做成《听懂涨声》的一期，听众在评论区聊各自的工作；立正团队再剪出71分钟的视频，在小红书联合发布，YouTube这一版另有1.7万观看。",
+        right_x,
+        521,
+        right_w,
+        size=10,
+        leading=17,
+        color=SOFT_WHITE,
+    )
+
+    # What the other show's own page says.
+    box_y, box_h = 296, 132
+    c.setFillColor(NAVY_2)
+    c.setStrokeColor(Color(1, 1, 1, alpha=0.12))
+    c.roundRect(right_x, box_y, right_w, box_h, 12, fill=1, stroke=1)
+    shot_w, shot_h = 126, 108
+    draw_image(
+        c,
+        TIANNAN_XIAOYUZHOU,
+        right_x + 12,
+        box_y + 12,
+        shot_w,
+        shot_h,
+        fit="contain",
+        radius=10,
+    )
+    text_x = right_x + 12 + shot_w + 14
+    draw_label(c, "小宇宙《听懂涨声》", text_x, box_y + box_h - 26, color=ACCENT_ON_DARK, font=FONT_BOLD, size=8)
+    c.setFillColor(WHITE)
+    c.setFont(FONT_BOLD, 15)
+    c.drawString(text_x, box_y + box_h - 50, "4.5万播放")
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 8.5)
+    c.drawString(text_x, box_y + box_h - 70, "113条评论 · 534次收藏")
+    c.drawString(text_x, box_y + box_h - 86, "69分钟 · 发布不到两周")
+
+    # The host's own sentence, from his show notes.
+    quote_y, quote_h = 180, 100
+    c.setFillColor(Color(1, 1, 1, alpha=0.08))
+    c.roundRect(right_x, quote_y, right_w, quote_h, 10, fill=1, stroke=0)
+    draw_label(c, "主播写在节目介绍里", right_x + 15, quote_y + quote_h - 24, color=ACCENT_ON_DARK, font=FONT_BOLD)
+    quote_end = draw_paragraph(
+        c,
+        "“当课代表立正和我提了这个选题，我立刻答应了下来。”",
+        right_x + 15,
+        quote_y + quote_h - 47,
+        right_w - 30,
+        font=FONT_SERIF,
+        size=11.5,
+        leading=19,
+        color=WHITE,
+    )
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 8)
+    c.drawString(right_x + 15, quote_end - 1, "——杨天楠")
+
+    draw_qr(c, URL_TIANNAN, right_x + 5, 102, 54)
+    c.setFillColor(ACCENT_ON_DARK)
+    c.setFont(FONT_BOLD, 8.5)
+    c.drawString(right_x + 76, 139, "去小宇宙听《听懂涨声》这一期")
+    c.setFillColor(SOFT_WHITE)
+    c.setFont(FONT_REGULAR, 7.6)
+    c.drawString(right_x + 76, 122, "2026年10月29日发布 · 69分钟")
+    c.linkURL(URL_TIANNAN, (right_x + 70, 110, W - M, 156), relative=0)
+
+    c.setFillColor(Color(1, 1, 1, alpha=0.48))
+    c.setFont(FONT_REGULAR, 7.4)
+    c.drawString(
+        M,
+        69,
+        "数据核对至2026-11-09，两个平台都是发布不到两周时的数字；平台口径不同。",
+    )
+    draw_footer(c, page, dark=True)
+
+
 def draw_questions_page(c: canvas.Canvas, page: int) -> None:
     c.setFillColor(PAPER)
     c.rect(0, 0, W, H, fill=1, stroke=0)
-    draw_label(c, "04 / EDITORIAL DIRECTIONS", M, H - 50)
+    draw_label(c, "05 / EDITORIAL DIRECTIONS", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
     c.drawString(M, H - 91, "三个方向，选一个问题聊透。")
@@ -879,7 +1024,7 @@ def draw_questions_page(c: canvas.Canvas, page: int) -> None:
 def draw_host_kit(c: canvas.Canvas, page: int) -> None:
     c.setFillColor(PAPER)
     c.rect(0, 0, W, H, fill=1, stroke=0)
-    draw_label(c, "05 / HOST KIT & CONTACT", M, H - 50)
+    draw_label(c, "06 / HOST KIT & CONTACT", M, H - 50)
     c.setFillColor(INK)
     c.setFont(FONT_BOLD, 27)
     c.drawString(M, H - 91, "问题值得聊透，录制就可以很简单。")
@@ -1026,9 +1171,11 @@ def generate() -> Path:
     c.showPage()
     draw_tulong_page(c, 4)
     c.showPage()
-    draw_questions_page(c, 5)
+    draw_tiannan_page(c, 5)
     c.showPage()
-    draw_host_kit(c, 6)
+    draw_questions_page(c, 6)
+    c.showPage()
+    draw_host_kit(c, 7)
     c.save()
     BUSINESS_COPY.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(OUTPUT, BUSINESS_COPY)

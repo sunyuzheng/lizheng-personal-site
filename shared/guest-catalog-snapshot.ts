@@ -1,8 +1,8 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 4a4a7c3cf4c1eccbdd8c62270f71b916789f89f7735c973170223ac47ff61c14
-// guests.json SHA256: 7957274ffd511711792ba41ae3f8568e6b7eb719c0148eaae907667328960f77
+// Manifest SHA256: 6201c901ed1d1f96e7d9917f2123d7c1f58cf3c1c11f59f019a5f70b590143f2
+// guests.json SHA256: b34172f911724fdaff09370184de615d4d7d6b674b5aaa710592501895ba9b8f
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
-// guest-names.json SHA256: bd6e8a3a38cb7da10577be551e3cd5e5efe017305b4450d0536d91f8c0643ac6
+// guest-names.json SHA256: 8db26433d03565212672733eb81fdf8638ba79cb936ab9d7858fcd8fe21cd72f
 // guest-appearances.jsonl SHA256: 7da0609006a278df8aa6ff700e7ba152690cf9aca581f34328494aa581ee9fab
 import type { GuestCatalog, GuestArticleCatalog, GuestNameTable } from "./guest-catalog";
 
@@ -5799,7 +5799,7 @@ export const guestCatalog: GuestCatalog = {
       "introductions": [
         {
           "source_id": "youtube-hckVR-Aa-vs",
-          "text": "曾任Facebook生态数据科学负责人，后在Instacart带60人的数据科学团队",
+          "text": "曾负责Facebook生态数据科学，后在Instacart带60人团队，录制时任Grow Therapy数据负责人",
           "quote": "this role, I have two brilliant guests. Kim, who was the head of ecosystem data scientist at Facebook. Then he led a 60-person data scientist org at Instacart, the class growth and ads. Now he's the head of data at Growth Therapy.",
           "locator": [
             "youtube-hckVR-Aa-vs#cue-18",
@@ -5812,7 +5812,8 @@ export const guestCatalog: GuestCatalog = {
           "start_seconds": 37
         }
       ],
-      "guest_title": "前Facebook生态数据科学负责人，曾在Instacart带60人数据科学团队"
+      "guest_title": "B2B团队；曾任Grow Therapy数据副总裁、Instacart增长与广告数据科学高级总监",
+      "guest_company": "OpenAI"
     }
   ],
   "sources": [
@@ -16310,6 +16311,12 @@ export const guestNameTable: GuestNameTable = {
       {
         "name": "四川大学",
         "key": "四川大学"
+      }
+    ],
+    "guest:gene-tabach": [
+      {
+        "name": "OpenAI",
+        "key": "openai"
       }
     ],
     "guest:guang": [

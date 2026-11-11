@@ -10,7 +10,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from "react";
-import { CITY_DATA_URL, COMMUNITY_MEMBERS } from "@shared/community-facts";
+import { CITY_DATA_URL, MAP_MEMBERS } from "@shared/community-facts";
 import type { CityCopy } from "./content";
 import { Phrases } from "./parts";
 
@@ -53,7 +53,7 @@ const DEV = Boolean((import.meta as { env?: { DEV?: boolean } }).env?.DEV);
 const DATA_URL = DEV ? "/community/city.json" : CITY_DATA_URL;
 
 const PROFILE_BASE = "https://www.superlinear.academy/u/";
-const FALLBACK_COUNT = COMMUNITY_MEMBERS;
+const FALLBACK_COUNT = MAP_MEMBERS;
 // Cells beyond the member count stay empty, which softens the city's edge.
 const SPARE_CELLS = 1.16;
 const SNAP_CELLS = 3;

@@ -189,7 +189,7 @@ Creator页面可以讨论`Strong opinions, weakly held`等主持人真正关心�
 
 最后核对：2026-09-02；成员数、项目数、嘉宾数、书和腾讯头衔的写法 2026-11-10 更新。
 
-- 成员数不手写：各页用 `shared/community-facts.ts` 的 `membersWan()`（「2.8万」）和 `membersFigure()`（「28,000+」），数字来自社区地图每天发布的数据，每次构建读一次（`scripts/sync-community-count.ts`）。下面 8 月的 21,686 是另一种口径（完成资料设置的成员），留作记录。
+- 成员数不手写：各页用 `shared/community-facts.ts` 的 `membersWan()`（「3万」）和 `membersFigure()`（「30,000+」）。2026-11-10 立正定对外至少写「3万」：算上社区全部账号（含已邀请、还没完成资料的，当天 29,417）和 Maven waitlist；所以页面写的数取「地图当天的数」和 30,000 里大的那个，地图数过了三万就自动跟着涨。地图本身（点数和旁边的数）仍用地图的数（`MAP_MEMBERS`，当天 28,377）。数字来自社区地图每天发布的数据，每次构建读一次（`scripts/sync-community-count.ts`）。下面 8 月的 21,686 是另一种口径（完成资料设置的成员），留作记录。
 - 项目帖 900+（2026-10-31 是 919 篇），写在 `shared/community-facts.ts`。
 - 嘉宾数不手写，也不数「场」：各页用 `shared/guest-facts.ts` 的 `guestsZh()`（「150多位」）和 `guestsFigure()`（「150+」），嘉宾目录写精确数（2026-11-10 是 157 位嘉宾、411 个视频）。数字跟着嘉宾目录的版本走（`shared/guest-catalog-pin.json` 里的 `counts`，每次构建和快照核对）。一次录制常常发成会员完整版、公开的上下集和几条切片，411 个视频大约是 190 次录制，所以「200+场」不再用，目录里也不把视频叫「期对谈」。怎么数的见 `docs/reviews/guest-counts-2026-11-10.md`。
 - 腾讯头衔：履历、事实页、长介绍写正式头衔「腾讯IEG数据与AI副总监」；短介绍写「腾讯IEG副总监」；标题式的一行可以写「前腾讯总监」（口径见 `yuzheng-profile` 的 `BIOS.md`）。

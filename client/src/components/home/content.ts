@@ -9,6 +9,7 @@ import {
   PROJECTS_ZH,
   membersFigure,
   membersWan,
+  MAP_MEMBERS,
 } from "@shared/community-facts";
 import { GUEST_COUNT, guestsFigure, guestsZh } from "@shared/guest-facts";
 
@@ -718,7 +719,7 @@ const zh = {
     field: {
       label: (count: string) =>
         `社区地图：${count}个点，每个点是一位成员，越亮，发帖和评论越多`,
-      fallbackLabel: `社区示意：${membersWan()}个点，每个点是一位成员`,
+      fallbackLabel: `社区示意：${membersWan(MAP_MEMBERS)}个点，每个点是一位成员`,
       caption: (count: string) => [
         `这里有${count}个点，每个点是一位真实成员。`,
         "越亮，发帖和评论越多；每个点都能点开，看看是谁。",
@@ -1201,7 +1202,7 @@ const en: HomeCopy = {
     field: {
       label: count =>
         `Community map: ${count} dots, one per member, brighter for more posts and comments`,
-      fallbackLabel: `Community sketch: ${membersFigure()} dots, one per member`,
+      fallbackLabel: `Community sketch: ${membersFigure(MAP_MEMBERS)} dots, one per member`,
       caption: count => [
         `${count} dots, one for each real member.`,
         "The brighter the dot, the more they have posted and commented. Every dot opens a member’s profile.",

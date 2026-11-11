@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLocation } from "wouter";
+import { membersFigure, membersWan, PROJECTS_FIGURE, PROJECTS_ZH } from "@shared/community-facts";
 
 if (typeof window !== "undefined") {
   void import("./home-experiment.css");
@@ -60,13 +61,13 @@ export const proof = {
   en: [
     ["Model", "Cornell Economics PhD"],
     ["Operate", "Led a 30-person Data & AI team"],
-    ["Build", "20,000+ people in the open community"],
+    ["Build", `${membersFigure()} people in the open community`],
     ["Learn", "200+ public conversations"],
   ],
   zh: [
     ["理解", "康奈尔大学经济学博士"],
     ["负责", "带领30人数据与AI团队"],
-    ["建造", "20,000+人的开放社区"],
+    ["建造", `${membersWan()}人的开放社区`],
     ["求证", "200+场公开对话"],
   ],
 };
@@ -242,7 +243,7 @@ export const workItems = {
     [
       "01",
       "The free community",
-      "20,000+ members · 700+ public project posts · 8,000+ project comments",
+      `${membersFigure()} members · ${PROJECTS_FIGURE} public project posts · 8,000+ project comments`,
       "Unfinished work meets analysis, real projects, first-hand experience, complementary people, collaboration, and opportunity.",
       "https://www.superlinear.academy",
       "Join for free",
@@ -276,7 +277,7 @@ export const workItems = {
     [
       "01",
       "免费社区",
-      "20,000+名成员·700+项目帖·8,000+条项目评论",
+      `${membersWan()}成员·${PROJECTS_ZH}个项目帖·8,000多条项目评论`,
       "让还没完成的作品，尽早遇到深度解析、真实项目、一手经验、互补的人、合作与机会。",
       "https://www.superlinear.academy",
       "免费加入",

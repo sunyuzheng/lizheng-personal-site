@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { membersFigure, membersWan } from "../shared/community-facts";
+import {
+  COMMUNITY_MEMBERS,
+  MAP_MEMBERS,
+  PUBLIC_MEMBERS_FLOOR,
+  membersFigure,
+  membersWan,
+} from "../shared/community-facts";
 import { acceptCount, mayRewriteCount } from "../scripts/sync-community-count";
 
 describe("how the pages say the member count", () => {
@@ -16,6 +22,20 @@ describe("how the pages say the member count", () => {
     expect(membersWan(30412)).toBe("3万");
     expect(membersWan(31900)).toBe("3.1万");
     expect(membersWan(100500)).toBe("10万");
+  });
+});
+
+describe("the public floor (立正, 2026-11-10)", () => {
+  it("never states fewer than 3万 / 30,000+ members", () => {
+    expect(PUBLIC_MEMBERS_FLOOR).toBe(30000);
+    expect(COMMUNITY_MEMBERS).toBe(Math.max(MAP_MEMBERS, 30000));
+    expect(COMMUNITY_MEMBERS).toBeGreaterThanOrEqual(30000);
+    expect(Number(membersFigure().replace(/[^0-9]/g, ""))).toBeGreaterThanOrEqual(30000);
+    expect(membersWan(30000)).toBe("3万");
+  });
+
+  it("lets the map keep its own count", () => {
+    expect(MAP_MEMBERS).toBeLessThanOrEqual(COMMUNITY_MEMBERS);
   });
 });
 

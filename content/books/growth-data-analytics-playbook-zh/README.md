@@ -1,6 +1,6 @@
 # Growth Data Analytics Playbook 中文版
 
-《Growth Data Analytics Playbook》（Mengying Li、Joe Kumar、孙煜征合著，Statsig Press 2025）的免费中文版。不是逐句翻译：按立正的中文表达习惯整本重写，保留原书全部框架、案例、图表和练习，几道练习补了计算过程或注意事项。改写由AI协助完成，立正授权在lizheng.ai免费发布。
+《Growth Data Analytics Playbook》（Mengying Li、Joe Kumar、孙煜征合著，Statsig Press 2025）的中文版，可免费在线阅读。不是逐句翻译：按立正的中文表达习惯整本重写，保留原书全部框架、案例、图表和练习，几道练习补了计算过程或注意事项。改写由AI协助完成，立正授权在lizheng.ai免费在线发布；PDF与EPUB下载是Stay Superlinear Founding Member专属权益。
 
 线上地址：`/book/growth-data-analytics-playbook`（目录页）和 `/book/growth-data-analytics-playbook/<1–10|conclusion>`（每章一页）。`/book` 和首页代表作里的这本书都链接到这里，不另设书目。
 
@@ -15,7 +15,7 @@
 | `styles/` | EPUB和PDF的样式 |
 | `html/` | **生成的**每章正文HTML，网站构建时由 `scripts/book-pages.ts` 套上页面 |
 
-`client/public/book/growth-data-analytics-playbook/` 里的网页图片（WebP）、封面、分享图、EPUB和PDF也是生成的。
+`client/public/book/growth-data-analytics-playbook/` 里的网页图片（WebP）、封面和分享图也是生成的。完整EPUB和PDF只生成到忽略的`.local/book-downloads/`，经审阅后复制到私有`stay-coffee-pass/private/library/`，更新该项目的`edition-lock.json`并发布。网站的旧文件地址转到会员书架；公开构建发现完整下载文件时会报错。
 
 ## 改了正文以后
 
@@ -23,7 +23,7 @@
 python3 scripts/books/build_gdap_zh.py
 ```
 
-需要本机有pandoc 3、Pillow、pypdf和带Playwright的Node（`scripts/books/render.mjs` 说明了Playwright从哪里找）。脚本会核对每章H1和 `book.json` 一致、引用的图都在，然后重新生成 `html/`、网页图片、封面、EPUB和PDF。把这些生成的文件一起提交；Vercel构建只读它们，不跑pandoc和Chromium。
+需要本机有pandoc 3、Pillow、pypdf和带Playwright的Node（`scripts/books/render.mjs` 说明了Playwright从哪里找）。脚本会核对每章H1和 `book.json` 一致、引用的图都在，然后重新生成 `html/`、网页图片、封面、EPUB和PDF。网页HTML与图片一起提交；完整下载文件不得进入`client/public/`或网站仓库；Vercel构建只读它们，不跑pandoc和Chromium。
 
 正文改了，记得更新 `book.json` 的 `dateModified`（sitemap用它）。上线后对改过的地址提交IndexNow（见 `docs/seo-geo.md`）。
 

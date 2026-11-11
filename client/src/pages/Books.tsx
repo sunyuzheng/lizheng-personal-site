@@ -117,7 +117,7 @@ const books = {
       title: "Growth Data Analytics Playbook",
       subtitle: "产品为什么增长？",
       description:
-        "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。中文版完整重写，保留全部图表和练习，可以免费在线读，也可以下载EPUB和PDF。",
+        "一本写给数据科学家、产品经理和创始人的实战书，讨论产品市场匹配、增长核算、留存、指标与实验。中文版完整重写，保留全部图表和练习，可以免费在线读；EPUB和PDF下载是Stay Superlinear Founding Member专属权益。",
       meta: [
         "入选《华尔街日报》CIO Journal 2025年书单",
         "Statsig · 2025",

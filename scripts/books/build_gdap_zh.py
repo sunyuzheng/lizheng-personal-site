@@ -10,9 +10,10 @@ It needs pandoc 3, Pillow, pypdf, and Node with Playwright (see render.mjs), and
 
     content/books/growth-data-analytics-playbook-zh/html/   chapter bodies that scripts/prerender-book.ts
                                                             wraps into pages during the site build
-    client/public/book/growth-data-analytics-playbook/      web figures, cover, share image, EPUB and PDF
+    client/public/book/growth-data-analytics-playbook/      web figures, cover and share image
+    .local/book-downloads/                                private EPUB and PDF for the member library
 
-Commit both. The site build itself never runs pandoc or Chromium.
+Commit the web HTML and images; keep full files outside the public site. The site build itself never runs pandoc or Chromium.
 """
 from __future__ import annotations
 
@@ -32,6 +33,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "content/books/growth-data-analytics-playbook-zh"
 OUT_HTML = SRC / "html"
 PUBLIC = ROOT / "client/public/book/growth-data-analytics-playbook"
+DOWNLOADS = ROOT / ".local/book-downloads"
 RENDER = ROOT / "scripts/books/render.mjs"
 WEB_WIDTH = 1400  # figures show at most 700 CSS pixels wide on the site
 SEP = "　"  # between a chapter's number and its title, as in the headings
@@ -131,7 +133,7 @@ def colophon_lines(book: dict) -> list[str]:
         f"中文版：{book['datePublished'][:4]}年{int(book['datePublished'][5:7])}月，由孙煜征（立正）在lizheng.ai免费发布。"
         "按立正的中文表达习惯改写，改写由AI协助完成。",
         f"在线阅读：https://www.lizheng.ai{book['path']}",
-        "可以免费阅读、下载和分享本书的链接；未经许可，请勿整本转载或用于商业用途。",
+        "可以免费在线阅读和分享本书的链接。PDF与EPUB下载仅限Stay Superlinear Founding Member本人阅读，请勿转发文件、整本转载或用于商业用途。",
     ]
 
 
@@ -152,7 +154,7 @@ def build_epub(book: dict, cover: Path, work: Path) -> Path:
     files = [str(work / "colophon.md"), str(SRC / "chapters" / book["front"])]
     files += [str(SRC / "chapters" / chapter["file"]) for chapter in book["chapters"]]
     files += [str(SRC / "chapters" / book["back"])]
-    out = PUBLIC / book["files"]["epub"]
+    out = DOWNLOADS / book["files"]["epub"]
     subprocess.run([
         "pandoc", *files, "-f", "markdown", "-t", "epub3", "-o", str(out),
         "--metadata-file", str(work / "epub.yaml"), "--epub-cover-image", str(cover),
@@ -200,7 +202,7 @@ def print_document(book: dict, images: Path) -> str:
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&display=block" rel="stylesheet">
 <link rel="stylesheet" href="{(SRC / 'styles/print.css').as_uri()}"></head>
 <body>
-<section class="title-page"><p class="kicker">免费电子书 · lizheng.ai</p><p class="book-title">{html.escape(book['title'])}</p>
+<section class="title-page"><p class="kicker">Founding Member专属电子书 · lizheng.ai</p><p class="book-title">{html.escape(book['title'])}</p>
 <p class="edition">{book['edition']}</p><p class="subtitle">{html.escape(book['subtitle'])}</p><p class="authors">{authors}</p></section>
 <section class="colophon">{colophon}</section>
 <nav class="toc"><h2>目录</h2><ol>{''.join(toc)}</ol></nav>
@@ -221,7 +223,7 @@ def build_pdf(book: dict, cover: Path, work: Path) -> Path:
     writer.append(PdfReader(str(work / "body.pdf")), import_outline=True)
     writer.add_metadata({"/Title": f"{book['title']} {book['edition']}", "/Author": "、".join(book["authors"]),
                          "/Subject": book["subtitle"], "/Creator": "lizheng.ai"})
-    out = PUBLIC / book["files"]["pdf"]
+    out = DOWNLOADS / book["files"]["pdf"]
     with out.open("wb") as handle:
         writer.write(handle)
     return out
@@ -230,6 +232,7 @@ def build_pdf(book: dict, cover: Path, work: Path) -> Path:
 def main() -> None:
     book = load_book()
     PUBLIC.mkdir(parents=True, exist_ok=True)
+    DOWNLOADS.mkdir(parents=True, exist_ok=True)
     OUT_HTML.mkdir(parents=True, exist_ok=True)
 
     sources = {"about": book["front"], "authors": book["back"]}

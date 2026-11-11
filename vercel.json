@@ -7,6 +7,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
+    { "src": "^/book/growth-data-analytics-playbook/growth-data-analytics-playbook-zh\\.(?:pdf|epub)$", "status": 307, "headers": { "Location": "https://coffee.staysuperlinear.com/books#growth-data-analytics-playbook-zh", "Cache-Control": "no-store" } },
     { "src": "^/en(?:/books)?/?$", "has": [{ "type": "host", "value": "books\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://www.lizheng.ai/en/books" } },
     { "src": "^/(.*)$", "has": [{ "type": "host", "value": "books\\.lizheng\\.ai" }], "status": 308, "headers": { "Location": "https://www.lizheng.ai/books" } },
     { "src": "^/book/?$", "has": [{ "type": "host", "value": "(?:www\\.)?lizheng\\.ai" }], "status": 308, "headers": { "Location": "/books" } },

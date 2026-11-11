@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { SEAL } from "../shared/ask-seal.ts";
 import { growthBookAuthorIdentities, growthBookAuthorProfiles } from "../shared/book-authors.ts";
+import { FOUNDING_BOOKS_URL } from "../shared/book-links.ts";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SOURCE = path.join(ROOT, "content", "books", "growth-data-analytics-playbook-zh");
@@ -73,10 +74,6 @@ function body(slug: string): string {
 /** The about and authors texts sit under the contents page's own headings, one level down. */
 function demote(html: string): string {
   return html.replace(/<(\/?)h2\b/g, "<$1h3");
-}
-
-function megabytes(file: string): string {
-  return `${(fs.statSync(file).size / 1e6).toFixed(1)}MB`;
 }
 
 const STYLE = `
@@ -217,11 +214,8 @@ ${page.main}
 `;
 }
 
-function downloads(book: Book, dist: string, ghost: boolean): string {
-  const folder = path.join(dist, ...book.path.split("/").filter(Boolean));
-  const link = (format: "pdf" | "epub", label: string, extra: string) =>
-    `<a class="button${extra}" href="${book.path}/${book.files[format]}" download="${escapeHtml(`${book.files.downloadName}.${format}`)}" data-download="${format}">${label} <span class="size">${megabytes(path.join(folder, book.files[format]))}</span></a>`;
-  return `${link("pdf", "下载PDF", ghost ? " ghost" : "")}${link("epub", "下载EPUB", " ghost")}`;
+function downloads(ghost: boolean): string {
+  return `<a class="button${ghost ? " ghost" : ""}" href="${FOUNDING_BOOKS_URL}#growth-data-analytics-playbook-zh">Founding Member下载PDF / EPUB ↗</a>`;
 }
 
 function bookNode(book: Book) {
@@ -243,8 +237,8 @@ function bookNode(book: Book) {
     publisher: { "@id": PERSON_ID },
     isBasedOn: { "@id": ORIGINAL_BOOK_ID },
     associatedMedia: [
-      { "@type": "MediaObject", contentUrl: `${SITE_URL}${book.path}/${book.files.pdf}`, encodingFormat: "application/pdf" },
-      { "@type": "MediaObject", contentUrl: `${SITE_URL}${book.path}/${book.files.epub}`, encodingFormat: "application/epub+zip" },
+      { "@type": "MediaObject", contentUrl: "https://coffee.staysuperlinear.com/api/library/growth-data-analytics-playbook-zh/pdf", encodingFormat: "application/pdf", isAccessibleForFree: false },
+      { "@type": "MediaObject", contentUrl: "https://coffee.staysuperlinear.com/api/library/growth-data-analytics-playbook-zh/epub", encodingFormat: "application/epub+zip", isAccessibleForFree: false },
     ],
     hasPart: book.chapters.map((chapter, i) => ({ "@type": "Chapter", "@id": `${SITE_URL}${chapterPath(book, chapter)}#chapter`, position: i + 1, name: heading(chapter), url: `${SITE_URL}${chapterPath(book, chapter)}` })),
   };
@@ -260,7 +254,7 @@ function breadcrumbs(book: Book, last?: { name: string; url: string }) {
   return { "@type": "BreadcrumbList", itemListElement: items.map((item, i) => ({ "@type": "ListItem", position: i + 1, name: item.name, item: item.url })) };
 }
 
-function renderIndex(book: Book, dist: string): string {
+function renderIndex(book: Book): string {
   const url = bookUrl(book);
   const contents = book.chapters.map(chapter =>
     `<li><a href="${chapterPath(book, chapter)}"><span class="n">${chapter.label === chapter.title ? "" : escapeHtml(chapter.label)}</span><span><b>${escapeHtml(chapter.title)}</b></span><p>${escapeHtml(chapter.description)}</p></a></li>`).join("\n");
@@ -284,7 +278,7 @@ function renderIndex(book: Book, dist: string): string {
     head: `<div class="head cover-head"><div><p class="kicker"><span>书</span><span>${book.edition}</span><span>免费阅读</span></p>
 <h1>${escapeHtml(book.title)} ${book.edition}</h1>
 <p class="lede">${escapeHtml(book.subtitle)}。Mengying Li、Joe Kumar和孙煜征合著；中文版按立正的中文习惯重写，保留全部图表和练习。</p>
-<div class="actions"><a class="button" href="${chapterPath(book, book.chapters[0])}">从第1章读起</a>${downloads(book, dist, true)}</div></div>
+<div class="actions"><a class="button" href="${chapterPath(book, book.chapters[0])}">从第1章读起</a>${downloads(true)}</div></div>
 <img src="${book.path}/cover.webp" alt="《${escapeHtml(fullTitle(book))}》封面" width="640" height="960" fetchpriority="high"></div>`,
     main: `<div class="body">
 <section class="block" id="contents" aria-labelledby="contents-title" style="margin-top:0"><h2 id="contents-title">目录</h2><ol class="toc">
@@ -297,15 +291,16 @@ ${demote(body("about"))}
 ${demote(body("authors"))}
 </section>
 <section class="block get" id="download" aria-labelledby="download-title"><h2 id="download-title">下载整本书</h2>
+<p>中文版可免费在线阅读。PDF与EPUB下载是Stay Superlinear Founding Member专属权益，使用Academy账号验证身份后即可领取。</p>
 <p>PDF适合在电脑和平板上看，EPUB适合在微信读书、Apple Books、Kindle这类阅读器里看。</p>
-<div class="actions">${downloads(book, dist, false)}</div>
+<div class="actions">${downloads(false)}</div>
 <p class="facts">英文原书：${escapeHtml(original.title)}，${escapeHtml(original.publisher)}，${original.year}年，ISBN ${original.isbn}。<a href="${AMAZON_URL}" rel="noopener" target="_blank">在Amazon查看</a></p>
 </section>
 </div>`,
   });
 }
 
-function renderChapter(book: Book, index: number, dist: string): string {
+function renderChapter(book: Book, index: number): string {
   const chapter = book.chapters[index];
   const url = `${SITE_URL}${chapterPath(book, chapter)}`;
   const prev = index > 0 ? book.chapters[index - 1] : null;
@@ -337,7 +332,7 @@ ${chapter.original && chapter.original !== "Conclusion" ? `<p class="orig">对�
 ${body(chapter.slug)}
 </div>
 ${pager}
-<section class="get" aria-labelledby="get-title"><h2 id="get-title">下载整本书</h2><p>${escapeHtml(fullTitle(book))}，免费下载。</p><div class="actions">${downloads(book, dist, false)}</div></section>
+<section class="get" aria-labelledby="get-title"><h2 id="get-title">下载整本书</h2><p>PDF与EPUB下载是Stay Superlinear Founding Member专属权益，使用Academy账号验证身份后即可领取。</p><div class="actions">${downloads(false)}</div></section>
 </article>`,
   });
 }
@@ -345,12 +340,17 @@ ${pager}
 /** Writes the contents page and every chapter page into the built site (dist/public). */
 export function writeBookPages(dist: string): number {
   const book = loadBook();
+  for (const file of [book.files.pdf, book.files.epub]) {
+    if (fs.existsSync(path.join(dist, book.path.slice(1), file))) {
+      throw new Error(`Member download must remain outside the public build: ${file}`);
+    }
+  }
   const write = (route: string, html: string) => {
     const directory = path.join(dist, ...route.split("/").filter(Boolean));
     fs.mkdirSync(directory, { recursive: true });
     fs.writeFileSync(path.join(directory, "index.html"), html, "utf-8");
   };
-  write(book.path, renderIndex(book, dist));
-  book.chapters.forEach((chapter, i) => write(chapterPath(book, chapter), renderChapter(book, i, dist)));
+  write(book.path, renderIndex(book));
+  book.chapters.forEach((chapter, i) => write(chapterPath(book, chapter), renderChapter(book, i)));
   return book.chapters.length + 1;
 }

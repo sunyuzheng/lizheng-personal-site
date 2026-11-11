@@ -12,7 +12,7 @@
 
 改写由AI协助完成。书里的「我们」指原书的三位作者；第十章Marketplace的故事是立正本人的经历。
 
-中文版可以在lizheng.ai免费在线阅读，也可以免费下载EPUB和PDF。英文原书在Amazon有售。
+中文版可以在lizheng.ai免费在线阅读。EPUB和PDF下载是Stay Superlinear Founding Member专属权益，使用Academy账号验证身份后即可领取。英文原书在Amazon有售。
 
 ## 这本书写给谁
 

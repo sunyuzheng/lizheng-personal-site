@@ -14,7 +14,9 @@ const { chromium } = createRequire(import.meta.url)(moduleDir);
 
 const [mode, input, output, ...rest] = process.argv.slice(2);
 const url = pathToFileURL(input).href;
-const browser = await chromium.launch();
+const browser = await chromium.launch({
+  ...(process.env.CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.CHROMIUM_EXECUTABLE_PATH } : {}),
+});
 
 try {
   if (mode === "shot") {

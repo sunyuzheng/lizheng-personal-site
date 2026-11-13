@@ -5,7 +5,7 @@ import { Phrases } from "@/components/home/parts";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "wouter";
 import { ENTERPRISE_TRAINING_PAGE_META } from "../../../shared/collab-meta";
 import { languageAlternates } from "../../../shared/page-meta";
@@ -19,7 +19,7 @@ const copy = {
     titleLines: null,
     intro:
       "When a team needs shared capability, AI Builders is the direct route. When the work itself needs to change, we start with the roles, workflows, materials, and evaluation—then design the program, cases, and tools the team actually needs.",
-    proof: "13 cohorts · 3,000+ paid learners · 5.0/5 on Maven",
+    proof: "14 cohorts · 3,000+ paid learners · 5.0/5 on Maven",
     primaryCta: "Compare the formats",
     secondaryCta: "Open the team brief (PDF)",
     anchorLabel: "Fully custom enterprise program",
@@ -28,6 +28,51 @@ const copy = {
       "Start with the work. Leave the team with a program, cases, tools, and evaluation standards it can keep using.",
     anchorNote: "Research · Design · Live delivery · Review",
     anchorCta: "Discuss a custom program",
+    shiftsEyebrow: "What training has to fix",
+    shiftsTitle: "Rolling out the tools was the easy part.",
+    shiftsIntro:
+      "The five problems leaders bring to us most often, what changes once their team trains together, and the evidence for each. The team brief shows every result in full.",
+    shiftsHead: ["What you see", "What changes", "The evidence"],
+    shifts: [
+      {
+        problem:
+          "Everyone learned AI on their own, so everyone has a different theory of what it can do.",
+        change:
+          "One shared technical understanding and one set of standard practices: state the outcome, supply the context, set acceptance criteria, check the result. People speak the same language, your few experts stop re-teaching, and work can be handed off without a walkthrough.",
+        proof:
+          "One page of shared rules took first-time accuracy from 10 of 28 to 28 of 28.",
+      },
+      {
+        problem:
+          "Half the team over-trusts polished output. The other half wrote AI off after one bad try.",
+        change:
+          "A calibrated sense of what AI can and can't do today, reasoned from how it works rather than from headlines, and the habit of telling an answer that looks right from one that is right.",
+        proof:
+          "Our predictions, written down with odds in 2023 and graded since.",
+      },
+      {
+        problem: "“AI doesn't work on our data.”",
+        change:
+          "Most bad results are a method problem, not a model problem: missing context, no definition of done, the wrong layer fixed. People learn to diagnose before they blame, and to put their effort where it pays.",
+        proof:
+          "Same model: 0 of 6 runs right with a 16-step plan, 6 of 6 with five acceptance criteria.",
+      },
+      {
+        problem: "People are anxious, or quietly opting out.",
+        change:
+          "The fear of no longer being needed, old learning habits, and goals too vague to act on give way to small wins finished early. People learn that crude tools mean the era is early, not that they are bad at this.",
+        proof:
+          "One learner's tool took three versions to get right, and that is the normal path.",
+      },
+      {
+        problem: "Everyone is faster. The team isn't.",
+        change:
+          "Workflows, reviews, and metrics priced for an era of expensive execution get recomputed. People own results end to end, and specialists ship tools colleagues can use instead of answering one-off requests.",
+        proof:
+          "Six beliefs from the last era; line-by-line approval caught 13.6% of dangerous commands.",
+      },
+    ],
+    shiftsCta: "See the evidence in the team brief (PDF)",
     reviewsEyebrow: "Public Maven reviews",
     reviewsTitle: "What learners actually took from the course",
     reviewsIntro:
@@ -124,10 +169,10 @@ const copy = {
     pricingNote:
       "Planning prices in USD, before applicable taxes. Seat prices reflect current US AI Builders 2027 team pricing; final scope, faculty, schedule, payment, cancellation terms, and taxes are set in the quote and order form.",
     pdfEyebrow: "Team procurement brief · PDF",
-    pdfTitle: "Forward this two-page brief to your team.",
+    pdfTitle: "Forward this brief to the people deciding.",
     pdfBody:
-      "Course outcomes, faculty, public reviews, team pricing, private cohorts, customization, and procurement details are all in one place.",
-    pdfMeta: "PDF · 2 pages · English · September 2026",
+      "The five problems above and what changes, six beliefs from the last era, four controlled experiments, our predictions graded by reality, enterprise sessions you can watch, and every format with its price.",
+    pdfMeta: "PDF · 8 pages · English · November 2026",
     pdfCta: "Open the team brief",
     workEyebrow: "Fully custom programs",
     workTitle: "Full customization starts with the work.",
@@ -157,12 +202,18 @@ const copy = {
     evidenceTitle:
       "The course is refined in public cohorts and tested in real organizations.",
     evidenceBody:
-      "AI Builders has been taught across 13 cohorts and 3,000+ paid learners. Inside a team, the test becomes concrete: will people adopt it, can the result be evaluated, and does the method remain after the session ends?",
+      "AI Builders has been taught across 14 cohorts and 3,000+ paid learners. Inside a team, the test becomes concrete: will people adopt it, can the result be evaluated, and does the method remain after the session ends?",
     evidenceCaption: "DoorDash Analytics team offsite · Seattle",
     publicWorkLabel: "Selected public team trainings and internal sessions",
-    publicWorkNames: "Tencent · Meituan · Xiaohongshu · Pinterest · DoorDash",
+    publicWork: [
+      { name: "Tencent", href: "https://www.superlinear.academy/c/open-videos/tencent-ai-transformation" },
+      { name: "Meituan", href: "https://www.superlinear.academy/c/open-videos/meituan-user-to-builder" },
+      { name: "Xiaohongshu", href: "https://www.superlinear.academy/c/open-videos/xiaohongshu-ai-productivity" },
+      { name: "Pinterest", href: "https://www.superlinear.academy/c/open-videos/pinterest-data-science-triangle" },
+      { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
+    ],
     publicWorkNote:
-      "These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
+      "Each name opens the recording of that session, free to watch. These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
     faculty:
       "AI Builders is co-taught by Yuzheng Sun and Yan Wang. Faculty and delivery roles for each enterprise engagement are named in the proposal and order form.",
     decksCta: "Browse selected enterprise decks",
@@ -180,7 +231,7 @@ const copy = {
     titleLines: ["培训结束以后，", "工作应该真的变了。"],
     intro:
       "团队要补共性能力，就直接用AI Builders。要改变一套真实工作，我们会先看岗位、流程、材料和结果怎么验收，再决定该做什么课程、案例与工具。",
-    proof: "13期教学 · 3,000+付费学员 · Maven 5.0/5",
+    proof: "14期教学 · 3,000+付费学员 · Maven 5.0/5",
     primaryCta: "查看合作方式",
     secondaryCta: "打开团队方案PDF",
     anchorLabel: "完整定制企业项目",
@@ -189,6 +240,44 @@ const copy = {
       "从真实工作开始，把判断做成团队能继续使用的课程、案例、工具与验收方式。",
     anchorNote: "研究 · 设计 · 现场交付 · 复盘",
     anchorCta: "讨论完整定制",
+    shiftsEyebrow: "培训要解决的事",
+    shiftsTitle: "工具发下去，只是最容易的一步。",
+    shiftsIntro:
+      "请我们去讲课的负责人，最常提这五个问题。下面是团队一起学完以后的变化，和每条对应的证据；证据的细节都在团队方案PDF里。",
+    shiftsHead: ["看到的问题", "学完以后", "证据"],
+    shifts: [
+      {
+        problem: "大家各自摸索着学AI，每个人对它能做什么，都有自己的一套说法。",
+        change:
+          "团队有了共同的技术理解和一套标准做法：先说清要什么结果，交代背景，定好验收标准，再检查结果。大家说的是同一种话，少数高手不用再一遍遍给别人补课，活儿交给同事也不用从头讲。",
+        proof: "一页五条的共同规则，让一次做对从28条里的10条，涨到28条全对。",
+      },
+      {
+        problem: "一半人太信AI写得像模像样的东西，另一半人试过一次就不再用了。",
+        change:
+          "知道AI今天能做什么、做不了什么，是从它怎么工作推出来的，不是看新闻得来的；也分得清「看着对」和「真的对」。",
+        proof: "2023年写下的六个带概率的预测，后来逐个打了分。",
+      },
+      {
+        problem: "「AI在我们的数据上就是不好用。」",
+        change:
+          "多数时候不好用，是方法的问题，不是模型的问题：没给背景，没说清怎样才算做完，修错了地方。大家先找原因再下结论，力气用在有用的地方。",
+        proof: "同一个模型，照16步的清单做6次，一次都没全对；只给5条验收标准，6次全对。",
+      },
+      {
+        problem: "有人焦虑，有人悄悄不用。",
+        change:
+          "怕自己不再被需要、老的学习习惯、目标太虚，这些靠早早做完的小成果一点点化开。大家也知道：工具还粗糙，说明时代还早，不说明自己不行。",
+        proof: "一位学员做的工具，改到第三版才好用，这本来就是正常的路。",
+      },
+      {
+        problem: "每个人都快了，团队没快。",
+        change:
+          "那些按「执行很贵」设计的流程、审批和考核，按新的价格重新算一遍。每个人对结果从头负责到尾；专家做出同事能直接用的工具，不再只是回答零碎的需求。",
+        proof: "上个时代留下的六个旧认知；逐条点批准，只拦住了13.6%的危险操作。",
+      },
+    ],
+    shiftsCta: "在团队方案PDF里看证据",
     reviewsEyebrow: "Maven公开评价",
     reviewsTitle: "他们在课里真正带走了什么。",
     reviewsIntro:
@@ -282,10 +371,10 @@ const copy = {
     pricingNote:
       "以上为美元未税参考价。席位价格基于当前AI Builders 2027美国区团队方案；最终范围、讲师、时间、付款、取消条款与税费，以正式报价和双方签署的订单确认书（order form）为准。",
     pdfEyebrow: "团队采购说明 · PDF",
-    pdfTitle: "把这两页材料，直接转给同事。",
+    pdfTitle: "把这份材料，直接转给做决定的人。",
     pdfBody:
-      "课程、讲师、公开评价、团队价格、专属班、定制方式与采购信息都在里面。",
-    pdfMeta: "PDF · 2页 · 英文 · 2026年9月",
+      "上面五个问题和学完以后的变化、上个时代的六个旧认知、四个对照实验、我们写下来的预测和后来的打分、能直接看的企业内训录像，以及每种合作方式和价格。",
+    pdfMeta: "PDF · 8页 · 英文 · 2026年11月",
     pdfCta: "打开团队方案PDF",
     workEyebrow: "完整定制企业项目",
     workTitle: "完整定制，从真实工作开始。",
@@ -310,12 +399,18 @@ const copy = {
     evidenceEyebrow: "课程深度 · 企业现实",
     evidenceTitle: "课程在公开班里反复打磨，也在企业现场接受现实检验。",
     evidenceBody:
-      "AI Builders已经经历13期教学和3,000+名付费学员。进入企业现场，检验会变得更具体：团队是否真的采用，结果能否验收，做法能不能留下来。",
+      "AI Builders已经经历14期教学和3,000+名付费学员。进入企业现场，检验会变得更具体：团队是否真的采用，结果能否验收，做法能不能留下来。",
     evidenceCaption: "DoorDash Analytics团队线下培训 · 西雅图",
     publicWorkLabel: "部分可公开的企业培训与内部分享",
-    publicWorkNames: "腾讯 · 美团 · 小红书 · Pinterest · DoorDash",
+    publicWork: [
+      { name: "腾讯", href: "https://www.superlinear.academy/c/open-videos/tencent-ai-transformation" },
+      { name: "美团", href: "https://www.superlinear.academy/c/open-videos/meituan-user-to-builder" },
+      { name: "小红书", href: "https://www.superlinear.academy/c/open-videos/xiaohongshu-ai-productivity" },
+      { name: "Pinterest", href: "https://www.superlinear.academy/c/open-videos/pinterest-data-science-triangle" },
+      { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
+    ],
     publicWorkNote:
-      "以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
+      "点名字可以看那一场的录像，免费观看。以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
     faculty:
       "AI Builders由立正与鸭哥共同授课。企业项目由谁参与、分别负责什么，会写进提案与订单确认书。",
     decksCta: "查看精选企业课件",
@@ -430,8 +525,49 @@ export default function EnterpriseTraining() {
           </div>
         </section>
 
-        {/* Public reviews: the rating beside the title, three reviewers side by side. */}
+        {/* What training has to fix, as the people deciding see it: each problem, what changes,
+            and the evidence, between hairlines. The evidence itself is in the team brief. */}
         <section className="sec">
+          <div className="wrap">
+            <div className="head">
+              <div>
+                <div className="eyebrow">{t.shiftsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.shiftsTitle} />
+                </h2>
+              </div>
+              <p>{t.shiftsIntro}</p>
+            </div>
+            <div className="shifts-head" aria-hidden="true">
+              <span />
+              {t.shiftsHead.map(label => (
+                <span key={label}>{label}</span>
+              ))}
+            </div>
+            <ol className="shifts">
+              {t.shifts.map((shift, index) => (
+                <li key={shift.problem}>
+                  <span className="n" aria-hidden="true">
+                    {index + 1}
+                  </span>
+                  <p className="q">{shift.problem}</p>
+                  <p className="a" data-label={t.shiftsHead[1]}>
+                    {shift.change}
+                  </p>
+                  <p className="e" data-label={t.shiftsHead[2]}>
+                    {shift.proof}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <a className="lz-link shifts-more" href={PDF} {...EXTERNAL}>
+              {t.shiftsCta} <i aria-hidden="true">→</i>
+            </a>
+          </div>
+        </section>
+
+        {/* Public reviews: the rating beside the title, three reviewers side by side. */}
+        <section className="sec ruled">
           <div className="wrap">
             <div className="head top">
               <div>
@@ -625,7 +761,16 @@ export default function EnterpriseTraining() {
                 <p className="say">{t.evidenceBody}</p>
                 <div className="named">
                   <div className="t">{t.publicWorkLabel}</div>
-                  <p className="orgs-line">{t.publicWorkNames}</p>
+                  <p className="orgs-line">
+                    {t.publicWork.map((org, index) => (
+                      <Fragment key={org.name}>
+                        {index > 0 ? " · " : null}
+                        <a href={org.href} {...EXTERNAL}>
+                          {org.name}
+                        </a>
+                      </Fragment>
+                    ))}
+                  </p>
                   <p className="fine">{t.publicWorkNote}</p>
                 </div>
                 <p className="say small">{t.faculty}</p>

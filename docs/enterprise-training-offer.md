@@ -1,6 +1,6 @@
 # 企业AI培训合作框架
 
-最后核对：2026-09-02
+最后核对：2026-11-12（2026-09-02 首版）
 
 ## 页面要完成什么
 
@@ -19,6 +19,8 @@
 - 完整定制压成三个可复述的动作：看真实工作、决定人和AI怎么分工、把做法留在团队里。
 - 团队采购PDF、公开评价、DoorDash现场与保密说明都是业务成熟度的直接证据；只需交代事实与边界，不在证据后重复结论。
 - 个人免费提问入口保留在合作梯度之后，避免个人咨询与企业采购混淆。
+- 2026-11-12 起，首屏之后是「培训要解决的事」：从买单的决策者视角列五个问题（各自摸索没有统一认知、什么可能什么不可能、做不好是方法问题、心理阻力、流程和旧认知），每行写学完以后的变化和一条证据。说法和团队方案PDF第2页一致，证据细节（对照实验、判断记录、录像）在PDF里，页面只写一句并链到PDF。
+- 企业名单的每个名字链到那一场的公开录像（超线性学院免费公开课），让采购者先看我们怎么讲。
 
 ## 当前合作阶梯
 
@@ -47,6 +49,6 @@
 - 公开课程价格与评分：[Maven上的AI Builders](https://maven.com/superlinear/aibuilders)。
 - 企业案例与公开课件：主站Deck索引及各交付项目的公开版本。
 - 团队问题梳理会与完整定制起价：立正2026-09-02确认的公开业务决策。
-- 可公开团队PDF的上游owner：`/Users/sunyuzheng/Desktop/superlinear/3-品牌营销/brand-assets/03_enterprise/ai-builders-maven-teams/`；发布到个人站前必须移除受合同限制的客户名称，并逐页检查。
+- 可公开团队PDF的上游owner：`/Users/sunyuzheng/Desktop/superlinear/3-品牌营销/brand-assets/03_enterprise/ai-builders-maven-teams/2026-11-team-package/`（8页，2026-11-12；每条说法的出处在该目录README）；9月两页价格单在上一级目录。发布到个人站前必须移除受合同限制的客户名称，并逐页检查；换PDF时用同一个文件名，旧链接不变，并重出 `client/public/enterprise/ai-builders-2027-for-teams-preview.webp`（第1页，1224×1584）。
 
 课程价格或团队折扣变化时，先更新它们各自的产品owner，再同步本页、metadata、结构化数据与`client/public/llms.txt`。个人站不成为Maven结账信息的第二个独立owner。

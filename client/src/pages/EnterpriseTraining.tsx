@@ -253,13 +253,13 @@ const copy = {
         proof: "一页五条的共同规则，让一次做对从28条里的10条，涨到28条全对。",
       },
       {
-        problem: "一半人太信AI写得像模像样的东西，另一半人试过一次就不再用了。",
+        problem: "一半人太信AI的漂亮答案，另一半人试过一次就不用了。",
         change:
           "知道AI今天能做什么、做不了什么，是从它怎么工作推出来的，不是看新闻得来的；也分得清「看着对」和「真的对」。",
         proof: "2023年写下的六个带概率的预测，后来逐个打了分。",
       },
       {
-        problem: "「AI在我们的数据上就是不好用。」",
+        problem: "「AI在我们的数据上就是不好用」",
         change:
           "多数时候不好用，是方法的问题，不是模型的问题：没给背景，没说清怎样才算做完，修错了地方。大家先找原因再下结论，力气用在有用的地方。",
         proof: "同一个模型，照16步的清单做6次，一次都没全对；只给5条验收标准，6次全对。",
@@ -550,7 +550,9 @@ export default function EnterpriseTraining() {
                   <span className="n" aria-hidden="true">
                     {index + 1}
                   </span>
-                  <p className="q">{shift.problem}</p>
+                  <p className="q">
+                    <Phrases text={shift.problem} />
+                  </p>
                   <p className="a" data-label={t.shiftsHead[1]}>
                     {shift.change}
                   </p>

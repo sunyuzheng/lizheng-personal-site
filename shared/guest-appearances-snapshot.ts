@@ -1,6 +1,57 @@
 // Generated from Open Context catalog/guest-appearances.jsonl. Do not edit by hand.
 export const guestAppearances = [
   {
+    "date": "2026.11.09",
+    "show": "刘润读书会",
+    "title": "假工作的终结：AI让它先爆炸，再贬值｜做客刘润读书会",
+    "href": "https://www.superlinear.academy/c/recording/liurun-end-of-fake-work-20261102",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.29",
+    "show": "听懂涨声",
+    "title": "离开大厂之后，我才发现，没有Fake Work的工作其实很开心｜对话课代表立正",
+    "titleEn": "Yuzheng Sun × Yang Tiannan (live recording)",
+    "href": "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.27",
+    "show": "常青朋友 · AI对谈",
+    "title": "功成名就的大佬们需要学AI吗？｜沈明高博士对话课代表立正",
+    "href": "https://www.superlinear.academy/c/recording/minggao-lizheng-ai-partner",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.23",
+    "show": "上桌！",
+    "title": "做客《上桌》：赚钱需要四步，打工只需要一步",
+    "href": "https://www.superlinear.academy/c/recording/hanhan-lizheng-work-to-business",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.21",
+    "show": "灵感爆棚",
+    "title": "从「会工作」到「会赚钱」，建立自己的事业",
+    "titleEn": "Yuzheng Sun × 灵感爆棚 (live recording)",
+    "href": "https://www.xiaoyuzhoufm.com/episode/6ad8ce0cb381c0fcba19b6f8",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.20",
+    "show": "中国好生意",
+    "title": "71 AI时代，值得深耕十年的复利生意，反而变多了？",
+    "href": "https://www.xiaoyuzhoufm.com/episode/6ad6c82f285041df1c737125",
+    "format": "guest"
+  },
+  {
+    "date": "2026.10.07",
+    "show": "不止牛马",
+    "title": "做客《不止牛马》：别拿考试的规则打工",
+    "href": "https://www.superlinear.academy/c/recording/ivanka-russell-work-ai-life-20261006",
+    "format": "guest"
+  },
+  {
     "date": "2026.09.25",
     "show": "西雅图中文电台 · 专家论坛",
     "title": "专家论坛：AI时代，如何重新设计自己的职业与人生？——对话“课代表立正”孙煜征",
@@ -12,22 +63,6 @@ export const guestAppearances = [
     "show": "破局点|TURNING POINT",
     "title": "34.FDE是伪命题吗？为什么用AI提效10倍，公司反而更忙了？|对谈课代表立正",
     "href": "https://www.xiaoyuzhoufm.com/episode/6ab21a58f04646b3a9555296",
-    "format": "guest"
-  },
-  {
-    "date": "2026.09.16",
-    "show": "听懂涨声 · 杨天楠",
-    "title": "课代表立正 x 杨天楠（直播录制版）",
-    "titleEn": "Yuzheng Sun × Yang Tiannan (live recording)",
-    "href": "https://www.youtube.com/watch?v=z6EG4FeJbho",
-    "format": "guest"
-  },
-  {
-    "date": "2026.09.12",
-    "show": "灵感爆棚",
-    "title": "课代表立正 x 灵感爆棚（直播录制版）",
-    "titleEn": "Yuzheng Sun × 灵感爆棚 (live recording)",
-    "href": "https://www.youtube.com/watch?v=C5TJ1Njvyj0",
     "format": "guest"
   },
   {

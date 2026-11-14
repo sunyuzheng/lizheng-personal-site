@@ -13,6 +13,10 @@ import {
   guestAppearances,
   type GuestAppearance,
 } from "../../../shared/guest-appearances-snapshot";
+import {
+  appearanceShows,
+  appearanceShowsCapturedAt,
+} from "../../../shared/guest-appearance-shows";
 import { buildPersonWebPageStructuredData } from "../../../shared/structured-data";
 import {
   PROJECTS_FIGURE,
@@ -41,7 +45,57 @@ function Quoted({ text }: { text: string }) {
   );
 }
 
-/** One past appearance in the complete record: when, which show, what it was about. */
+/**
+ * The appearances shown large, in this order: the shows a producer is most likely to know. Each is
+ * looked up in the Open Context list by its link, so a title or date corrected there shows here.
+ */
+const FEATURED_APPEARANCES = [
+  "https://www.xiaoyuzhoufm.com/episode/684775cbcdecf72d4ca2fcc5",
+  "https://www.xiaoyuzhoufm.com/episode/63f5f66e1324e63d1259b079",
+  "https://www.xiaoyuzhoufm.com/episode/6ad6c82f285041df1c737125",
+  "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f",
+  "https://www.xiaoyuzhoufm.com/episode/643926bdb41b2b266b5962cf",
+  "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+  "https://www.xiaoyuzhoufm.com/episode/6a3a1a139d2f5743683c5833",
+  "https://www.xiaoyuzhoufm.com/episode/69ea11c5824bf96fa14802c9",
+];
+
+const SHOWS: Record<string, { cover: string; subscribers: number }> =
+  appearanceShows;
+
+/** A show's audience in round figures: 64万 and 8.6万 in Chinese, 644K in English. */
+function audience(subscribers: number, lang: "en" | "zh") {
+  if (lang === "en") return `${Math.floor(subscribers / 1000)}K`;
+  const wan = subscribers / 10000;
+  return wan >= 10 ? `${Math.floor(wan)}万` : `${Math.floor(wan * 10) / 10}万`;
+}
+
+function appearanceTitle(appearance: GuestAppearance, lang: "en" | "zh") {
+  return lang === "en" && "titleEn" in appearance
+    ? appearance.titleEn
+    : appearance.title;
+}
+
+/** A show's cover, or its first character on paper where there is no cover to show. */
+function ShowCover({ appearance }: { appearance: GuestAppearance }) {
+  const show = SHOWS[appearance.href];
+  return show ? (
+    <img
+      className="cover"
+      src={show.cover}
+      alt=""
+      width={240}
+      height={240}
+      loading="lazy"
+    />
+  ) : (
+    <span className="cover blank" aria-hidden="true">
+      {appearance.show.slice(0, 1)}
+    </span>
+  );
+}
+
+/** One past appearance in the complete record: the show's cover, when, which show, what about. */
 function AppearanceRow({
   appearance,
   lang,
@@ -51,22 +105,20 @@ function AppearanceRow({
   lang: "en" | "zh";
   panelLabel: string;
 }) {
-  const title =
-    lang === "en" && "titleEn" in appearance
-      ? appearance.titleEn
-      : appearance.title;
-
   return (
     <li>
       <a href={appearance.href} {...EXTERNAL}>
-        <time dateTime={appearance.date.replaceAll(".", "-")}>
-          {appearance.date}
-        </time>
-        <b>
-          {appearance.show}
-          {appearance.format === "panel" && <small>{panelLabel}</small>}
-        </b>
-        <span>{title}</span>
+        <ShowCover appearance={appearance} />
+        <span className="what">
+          <time dateTime={appearance.date.replaceAll(".", "-")}>
+            {appearance.date.slice(5)}
+          </time>
+          <b>
+            {appearance.show}
+            {appearance.format === "panel" && <small>{panelLabel}</small>}
+          </b>
+          <span>{appearanceTitle(appearance, lang)}</span>
+        </span>
       </a>
     </li>
   );
@@ -344,45 +396,89 @@ const copy = {
     ],
     metricsNote:
       "Counts for the first two cases come from public platform pages and screenshots captured in July 2026; the third was captured on November 9, 2026, less than two weeks after release. Platforms use different counting methods.",
-    appearancesEyebrow: "Selected by other shows",
-    appearancesTitle:
-      "Invited across AI, technology, organizations, careers, and creator businesses.",
-    appearancesIntro: `The list below emphasizes recognizable shows and repeat invitations. A complete ${guestAppearances.length}-episode guest appearance archive remains available for producers who want to inspect the full record.`,
-    programs: [
+    appearancesEyebrow: "Guest appearances",
+    appearancesTitle: "The shows that have had me on.",
+    appearancesIntro: `${guestAppearances.length} episodes since 2020. Silicon Valley 101 (硅谷101), What’s Next, 中国好生意 and 听懂涨声 each have more than 190K subscribers on Xiaoyuzhou, the main Chinese podcast app. INDIGO TALK, The Build Log and Chinese Radio Seattle have each invited me twice. Every episode is linked.`,
+    audienceLabel: (figure: string) => `${figure} subscribers on Xiaoyuzhou`,
+    appearancesArchiveLabel: "Complete record",
+    appearancesArchive: `Open all ${guestAppearances.length} appearances`,
+    appearancesArchiveDetail:
+      "Listed by year, for producers who want to check topics, formats, and earlier work.",
+    appearancesNote: `Subscriber counts are from public Xiaoyuzhou pages, captured on ${new Date(`${appearanceShowsCapturedAt}T12:00:00Z`).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}.`,
+    academyEyebrow: "Guests from the Academy",
+    academyTitle: "Beyond me: people at Superlinear Academy worth having on.",
+    academyIntro: `Superlinear Academy is a community of ${membersFigure()} members who have shared ${PROJECTS_FIGURE} real projects. Each of the five people below has written up their own story; the posts are in Chinese and open to read. Tell me what kind of guest your show is looking for, and I will make the introduction.`,
+    academyTopicsLabel: "Could talk about",
+    academyPeople: [
       {
-        show: "Crossing with Koji",
-        note: "Remote long-form · show Top 2",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        name: "Venus Wong",
+        who: "A humanities graduate and former postdoc, a self-described outsider to programming",
+        story:
+          "After a year and a half of learning AI, took on a first paid project: reworking a small company’s business processes, for $30,000. Partway through, an automation wiped the data once. The project ran about ten weeks and the client signed off.",
+        topics: [
+          "How someone who doesn’t write code lands a first paid AI project",
+          "Where the client came from",
+          "What happened after the data was wiped",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/30-000-ai",
+        linkLabel: "Read the post (Chinese)",
       },
       {
-        show: "Tulong Dashihua",
-        note: "Co-produced · cross-platform breakout",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a3a1a139d2f5743683c5833",
+        name: "Brian Hsu",
+        who: "A programmer and father in the Bay Area",
+        story:
+          "To help his daughters find a McDonald’s toy series, he coded from Friday night into Saturday morning and shipped Happy Toy Scout, a map of the toys at more than 13,000 U.S. stores. A week later 79,000 people were using it; the free cloud quota ran out in under two days.",
+        topics: [
+          "How a weekend tool reached 79,000 users in a week",
+          "Finding the first users with no budget",
+          "Keeping the cloud bill in check when traffic arrives all at once",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/side-project-7-9",
+        linkLabel: "Read the post (Chinese)",
       },
       {
-        show: "Silicon Valley 101",
-        note: "AI Agent roundtable",
-        href: "https://www.xiaoyuzhoufm.com/episode/684775cbcdecf72d4ca2fcc5",
+        name: "Challen",
+        who: "More than ten years at a large internet company, leading its data department",
+        story:
+          "Set two rules: study AI from midnight to 1 a.m. every night, and spend at least 1% of each month’s salary on anything to do with AI. Two or three months later, asked for and got a part in building the company’s agent development platform, and later became the person in charge of it.",
+        topics: [
+          "What AI can do for a manager who is no longer hands-on",
+          "How to get onto an AI project inside a large company",
+          "Why spend 1% of a salary on AI every month",
+        ],
+        href: "https://www.superlinear.academy/c/posts/ai-5a06ef",
+        linkLabel: "Read the post (Chinese)",
       },
       {
-        show: "INDIGO TALK",
-        note: "Two invitations",
-        href: "https://www.xiaoyuzhoufm.com/episode/69d3dbb3b977fb2c473d2a7e",
+        name: "Rita Sun",
+        who: "Economics PhD, data analyst at a software company",
+        story:
+          "By Rita’s own account, almost no coding experience beyond SQL. Worried about being replaced when GPT-5 came out, started with a very simple Android widget, then brought the method into daily work and taught colleagues. Twice named the data team’s AI Champion of the month.",
+        topics: [
+          "How someone from a non-technical background gets AI into daily work",
+          "From fearing replacement to teaching colleagues: which step was hardest",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/android-widget",
+        linkLabel: "Read the first post (Chinese)",
       },
       {
-        show: "The Build Log",
-        note: "Two invitations",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a135fde2507d98728e967e4",
-      },
-      {
-        show: "What’s Next",
-        note: "Pre-GPT-4 AI discussion · 2023",
-        href: "https://www.xiaoyuzhoufm.com/episode/63f5f66e1324e63d1259b079",
+        name: "Josh Zhang",
+        who: "A finance-structure consultant in Tokyo who works with Chinese business owners in Japan",
+        story:
+          "Doesn’t write code. In a little over a year, went from asking AI for a script to stating requirements while a group of AI agents designs, codes, tests and ships: an ERP for a travel agency, a bookkeeping tool for Japanese accounting firms, an internal system for a visa office. The biggest trap along the way: AI reported that the tests had passed when they had never been run.",
+        topics: [
+          "How a professional who can’t code gets a product shipped",
+          "Managing a group of AIs: what can’t be handed over",
+          "What AI can and can’t do in finance and visa work, where mistakes are costly",
+        ],
+        href: "https://www.superlinear.academy/c/start-here/superlinear#comment_wrapper_120463737",
+        linkLabel: "Read the sign-up note (Chinese)",
       },
     ],
-    appearancesArchive: `Open all ${guestAppearances.length} verified guest appearances`,
-    appearancesArchiveDetail:
-      "The full guest appearance archive is preserved here for producers who want to check topics, formats, and earlier work.",
+    academyAfter:
+      "Since October, Miao, who leads partnerships at the Academy, has kept a standing call in the community for members who want to go on shows, and talks with each one about their experience and the topics they can carry. Before that, the podcast 义乌听见 came to us looking for a guest working on AI for cross-border business. Send the show and the direction you have in mind: we will look for the right person in the community and help them prepare their story and cases before recording. Most members record in Mandarin; ask about English.",
+    academyCta: "Ask me for an introduction",
+    academyPostLabel: "See the call for guests in the community (Chinese)",
     panelLabel: "Panel",
     agreementsEyebrow: "How I work",
     agreementsTitle: "Respect the show, and bring a point of view.",
@@ -465,7 +561,7 @@ const copy = {
     contactTitle:
       "If there is a question worth taking all the way, send it over.",
     contactDetail:
-      "Send the show or channel, the question you most want to pursue, and a rough format and timing. If I have something genuinely new to add, we can set a time and prepare around the show.",
+      "Send the show or channel, the question you most want to pursue, and a rough format and timing. If I have something genuinely new to add, we can set a time and prepare around the show. If you would like to meet a member of the Academy, say so in the same email.",
     businessContact: "Business contact: Miao (喵老师) | WeChat: FM13870617",
     contactButton: "Discuss an episode",
     back: "Back to all collaboration options",
@@ -688,43 +784,89 @@ const copy = {
     metricsNote:
       "前两个案例的数据来自2026年7月的平台页面与截图；第三个采集于2026年11月9日，发布不到两周。各平台统计口径不同。",
     appearancesEyebrow: "节目做客",
-    appearancesTitle: "从AI与技术组织，到职业选择与创作者商业。",
-    appearancesIntro: `这里优先保留有辨识度的节目与重复邀请。完整${guestAppearances.length}期做客记录仍在页面后面，制作人可以随时核对题目、形式与成片。`,
-    programs: [
+    // "|" marks where the title may break (Phrases).
+    appearancesTitle: "这些节目，|都请我去聊过。",
+    appearancesIntro: `从2020年到现在，一共${guestAppearances.length}期。硅谷101、科技早知道、中国好生意、听懂涨声在小宇宙的订阅都超过19万；INDIGO TALK、The Build Log和西雅图中文电台各请过两次。每一期都能点开听。`,
+    audienceLabel: (figure: string) => `小宇宙 · ${figure}订阅`,
+    appearancesArchiveLabel: "完整做客记录",
+    appearancesArchive: `展开全部${guestAppearances.length}期`,
+    appearancesArchiveDetail:
+      "按年份排列，制作人可以核对过往的题目、形式和成片。",
+    appearancesNote: `订阅数取自小宇宙公开页面（${Number(appearanceShowsCapturedAt.slice(0, 4))}年${Number(appearanceShowsCapturedAt.slice(5, 7))}月${Number(appearanceShowsCapturedAt.slice(8, 10))}日）。`,
+    academyEyebrow: "学院里的嘉宾",
+    academyTitle: "除了我，超线性学院里|还有很多人值得请。",
+    academyIntro: `超线性学院有${membersWan()}成员，在社区里分享过${PROJECTS_ZH}个真实项目。下面五位都把自己的经历写成了帖子，可以先点开看。你的节目想找什么样的嘉宾，告诉我，我来介绍。`,
+    academyTopicsLabel: "可以聊",
+    academyPeople: [
       {
-        show: "十字路口 Crossing",
-        note: "远程长谈 · 节目播放前二",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a275ed57444b5722235a897",
+        name: "Venus Wong",
+        who: "文科生，做过博士后，自称编程门外汉",
+        story:
+          "学了一年半AI以后，接下第一个付费项目：帮一家中小企业改造业务流程，3万美元。做到一半，自动化流程把数据清空过一次。项目做了大约十周，客户验收。",
+        topics: [
+          "不会写代码的人，怎么接到第一个付费的AI项目",
+          "客户是从哪里来的",
+          "数据被清空以后做了什么",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/30-000-ai",
+        linkLabel: "看原帖",
       },
       {
-        show: "屠龙大实话",
-        note: "双方制作 · 跨平台破圈",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a3a1a139d2f5743683c5833",
+        name: "Brian Hsu",
+        who: "湾区的程序员爸爸",
+        story:
+          "为了帮女儿找麦当劳的联名玩具，从周五深夜写到周六早上，做出一张全美一万三千多家门店的玩具地图 Happy Toy Scout。一周后，7.9万人在用。上线不到两天，免费的云服务额度就用完了。",
+        topics: [
+          "一个周末做的小工具，怎么在一周里有了7.9万用户",
+          "没有预算，第一批用户怎么来",
+          "流量一下子涌进来，怎么管住云服务的账单",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/side-project-7-9",
+        linkLabel: "看原帖",
       },
       {
-        show: "硅谷101",
-        note: "AI Agent深度使用者圆桌",
-        href: "https://www.xiaoyuzhoufm.com/episode/684775cbcdecf72d4ca2fcc5",
+        name: "Challen",
+        who: "在互联网大厂做了十几年，带数据部门",
+        story:
+          "给自己定了两条规矩：每晚12点到1点学AI；每个月至少拿出薪水的1%，花在跟AI有关的东西上。两三个月后，主动争取到参与公司Agent开发平台的建设，后来成了这个平台的负责人。",
+        topics: [
+          "管理者不在一线动手，AI能帮上什么",
+          "怎么在大公司里争取到AI项目",
+          "为什么规定自己每月花1%的薪水在AI上",
+        ],
+        href: "https://www.superlinear.academy/c/posts/ai-5a06ef",
+        linkLabel: "看原帖",
       },
       {
-        show: "INDIGO TALK",
-        note: "两次邀请",
-        href: "https://www.xiaoyuzhoufm.com/episode/69d3dbb3b977fb2c473d2a7e",
+        name: "Rita Sun",
+        who: "经济学博士，软件公司的数据分析师",
+        story:
+          "自称写代码的经验几乎为零，只会SQL。GPT-5发布时担心自己会被取代，从一个很简单的安卓小部件开始动手，再把方法用到每天的工作里、教同事一起用，两次当上数据团队的月度AI Champion。",
+        topics: [
+          "非技术出身的人，怎么在工作里把AI用起来",
+          "从怕被取代到教同事用，中间哪一步最难",
+        ],
+        href: "https://www.superlinear.academy/c/share-your-projects/android-widget",
+        linkLabel: "看最早的帖子",
       },
       {
-        show: "The Build Log",
-        note: "两次邀请",
-        href: "https://www.xiaoyuzhoufm.com/episode/6a135fde2507d98728e967e4",
-      },
-      {
-        show: "What’s Next｜科技早知道",
-        note: "2023年GPT-4发布前谈AI",
-        href: "https://www.xiaoyuzhoufm.com/episode/63f5f66e1324e63d1259b079",
+        name: "Josh Zhang",
+        who: "东京的财务架构顾问，帮在日华人老板理清公司的财务结构；短视频账号「极客财务官」",
+        story:
+          "不会写代码。一年多里，从让AI写一段脚本，做到只提需求，由一组AI设计、写代码、测试和上线：旅行社的ERP、给日本会计事务所用的记账工具、签证事务所的内部系统。踩过的最大一个坑：AI说测试通过了，其实测试从来没跑过。",
+        topics: [
+          "不会写代码的专业人士，怎么把产品做上线",
+          "怎么管一群AI：哪些事不能放手",
+          "财务、签证这类出错代价高的行业，AI现在能做什么",
+        ],
+        href: "https://www.superlinear.academy/c/start-here/superlinear#comment_wrapper_120463737",
+        linkLabel: "看报名留言",
       },
     ],
-    appearancesArchive: `展开全部${guestAppearances.length}期做客记录`,
-    appearancesArchiveDetail:
-      "完整的做客记录保留在这里，方便制作人核对过往话题、节目形式和成片。",
+    academyAfter:
+      "10月起，商务负责人喵老师在社区里长期征集愿意上节目的成员，一位一位了解经历，整理能聊的话题。在这之前，播客《义乌听见》来找过我们，想请一位正在做AI出海的嘉宾。发来你的节目和想聊的方向，我们从社区里找合适的人，录之前也会帮嘉宾把经历和案例准备好。",
+    academyCta: "请我介绍嘉宾",
+    academyPostLabel: "看社区里的征集帖",
     panelLabel: "圆桌",
     agreementsEyebrow: "怎么一起录",
     agreementsTitle: "录之前把边界说清，录的时候就可以放开聊。",
@@ -799,7 +941,7 @@ const copy = {
     contactEyebrow: "一起做节目",
     contactTitle: "有想聊的话题？我们一起录一期。",
     contactDetail:
-      "发来你的节目或频道、想聊的话题，以及大概的形式和时间。我们一起商量怎么聊、怎么录，后续素材怎么用。",
+      "发来你的节目或频道、想聊的话题，以及大概的形式和时间。我们一起商量怎么聊、怎么录，后续素材怎么用。想请学院里的成员，也写在邮件里。",
     businessContact: "商务负责人：喵老师｜微信：FM13870617",
     contactButton: "聊聊这期节目",
     back: "回到全部合作入口",
@@ -817,6 +959,20 @@ function buildCreatorMailto(lang: "en" | "zh") {
       : "节目或频道链接：\n\n想聊的话题：\n\n想怎么合作（做客、串台或共同策划）：\n\n大概时间：\n";
   return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
+
+function buildAcademyMailto(lang: "en" | "zh") {
+  const subject =
+    lang === "en"
+      ? "A guest from Superlinear Academy for our show"
+      : "想请超线性学院的成员上节目";
+  const body =
+    lang === "en"
+      ? "Show or channel:\n\nWhat the episode is about:\n\nThe kind of guest you are looking for:\n\nLanguage and rough recording window:\n"
+      : "节目或频道链接：\n\n这期想聊什么：\n\n想找什么样的嘉宾：\n\n大概时间：\n";
+  return `mailto:yz@superlinear.academy?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+const ACADEMY_CALL = "https://www.superlinear.academy/c/start-here/superlinear";
 
 export default function CreatorCollab() {
   const { lang } = useLanguage();
@@ -850,6 +1006,13 @@ export default function CreatorCollab() {
 
   const KIT = "/collab/podcast-kit-zh.pdf";
   const mailto = buildCreatorMailto(lang);
+  const featuredAppearances = FEATURED_APPEARANCES.flatMap(href => {
+    const appearance = guestAppearances.find(item => item.href === href);
+    return appearance && SHOWS[href] ? [appearance] : [];
+  });
+  const appearanceYears = Array.from(
+    new Set(guestAppearances.map(appearance => appearance.date.slice(0, 4)))
+  );
 
   return (
     <div
@@ -1089,7 +1252,9 @@ export default function CreatorCollab() {
           </div>
         </section>
 
-        <section className="sec ruled">
+        {/* Where he has been a guest: the best-known shows by their covers, then every episode by
+            year, closed until asked for. */}
+        <section id="appearances" className="sec ruled">
           <div className="wrap">
             <div className="head">
               <div>
@@ -1100,16 +1265,102 @@ export default function CreatorCollab() {
               </div>
               <p>{t.appearancesIntro}</p>
             </div>
-            <ul className="programs">
-              {t.programs.map(program => (
-                <li key={program.href}>
-                  <a href={program.href} {...EXTERNAL}>
-                    <b>{program.show}</b>
-                    <span>{program.note}</span>
+            <ul className="shows">
+              {featuredAppearances.map(appearance => (
+                <li key={appearance.href}>
+                  <a href={appearance.href} {...EXTERNAL}>
+                    <ShowCover appearance={appearance} />
+                    <b>{appearance.show}</b>
+                    <small>
+                      {t.audienceLabel(
+                        audience(SHOWS[appearance.href].subscribers, lang)
+                      )}
+                    </small>
+                    <span>{appearanceTitle(appearance, lang)}</span>
+                    <time dateTime={appearance.date.replaceAll(".", "-")}>
+                      {appearance.date}
+                      {appearance.format === "panel" && ` · ${t.panelLabel}`}
+                    </time>
                   </a>
                 </li>
               ))}
             </ul>
+            <details className="archive">
+              <summary>
+                <span className="t">{t.appearancesArchiveLabel}</span>
+                <b>{t.appearancesArchive}</b>
+                <span className="note">{t.appearancesArchiveDetail}</span>
+              </summary>
+              {appearanceYears.map(year => (
+                <div key={year} className="year">
+                  <h3>{year}</h3>
+                  <ul className="archive-list">
+                    {guestAppearances
+                      .filter(appearance => appearance.date.startsWith(year))
+                      .map(appearance => (
+                        <AppearanceRow
+                          key={appearance.href}
+                          appearance={appearance}
+                          lang={lang}
+                          panelLabel={t.panelLabel}
+                        />
+                      ))}
+                  </ul>
+                </div>
+              ))}
+            </details>
+            <p className="fine">{t.appearancesNote}</p>
+          </div>
+        </section>
+
+        {/* Beyond him: members of the Academy a show could have on, each with a post to read first,
+            and the offer to make the introduction. */}
+        <section id="academy" className="sec ruled">
+          <div className="wrap">
+            <div className="head">
+              <div>
+                <div className="eyebrow">{t.academyEyebrow}</div>
+                <h2>
+                  <Phrases text={t.academyTitle} />
+                </h2>
+              </div>
+              <p>{t.academyIntro}</p>
+            </div>
+            <ul className="people">
+              {t.academyPeople.map(person => (
+                <li key={person.name}>
+                  <div className="whois">
+                    <h3>{person.name}</h3>
+                    <p>{person.who}</p>
+                  </div>
+                  <div className="did">
+                    <p>{person.story}</p>
+                    <a className="lz-link" href={person.href} {...EXTERNAL}>
+                      {person.linkLabel} <i aria-hidden="true">→</i>
+                    </a>
+                  </div>
+                  <div className="topics">
+                    <div className="t">{t.academyTopicsLabel}</div>
+                    <ul>
+                      {person.topics.map(topic => (
+                        <li key={topic}>{topic}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="people-after">
+              <p>{t.academyAfter}</p>
+              <div className="links">
+                <a className="lz-link" href={buildAcademyMailto(lang)}>
+                  {t.academyCta} <i aria-hidden="true">→</i>
+                </a>
+                <a className="lz-link" href={ACADEMY_CALL} {...EXTERNAL}>
+                  {t.academyPostLabel} <i aria-hidden="true">→</i>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1201,26 +1452,6 @@ export default function CreatorCollab() {
               </dl>
             </div>
 
-            {/* Every past appearance, for a producer who wants to check: closed until asked for. */}
-            <details className="archive">
-              <summary>
-                <span className="t">
-                  {lang === "en" ? "Complete archive" : "完整做客档案"}
-                </span>
-                <b>{t.appearancesArchive}</b>
-                <span className="note">{t.appearancesArchiveDetail}</span>
-              </summary>
-              <ul className="archive-list">
-                {guestAppearances.map(appearance => (
-                  <AppearanceRow
-                    key={appearance.href}
-                    appearance={appearance}
-                    lang={lang}
-                    panelLabel={t.panelLabel}
-                  />
-                ))}
-              </ul>
-            </details>
           </div>
         </section>
 

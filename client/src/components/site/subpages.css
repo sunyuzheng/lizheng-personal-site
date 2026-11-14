@@ -2215,49 +2215,83 @@
   color: var(--lz-ink-2);
 }
 
-/* Shows that invited him: names in the title face, three to a row between hairlines. */
-.lz-sub .programs {
+/* Shows that had him on, by their covers: four to a row between hairlines. Under each cover the
+   show, its audience, the episode, and when. */
+.lz-sub .shows {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--lz-line-2);
 }
 
-.lz-sub .programs li {
+.lz-sub .shows li {
   border-bottom: 1px solid var(--lz-line);
 }
 
-.lz-sub .programs a {
-  display: block;
+.lz-sub .shows a {
+  display: grid;
+  align-content: start;
   height: 100%;
-  padding: 20px 24px 20px 0;
+  padding: 26px 28px 24px 0;
 }
 
-.lz-sub .programs li:not(:nth-child(3n + 1)) a {
-  padding-left: 24px;
+.lz-sub .shows li:not(:nth-child(4n + 1)) a {
+  padding-left: 28px;
   border-left: 1px solid var(--lz-line);
 }
 
-/* Show names mix Latin and Chinese: Latin letters and the apostrophe from the Latin serif. */
-.lz-sub .programs b {
+/* A cover is a square with a hairline, so a white cover still has an edge on the paper. */
+.lz-sub :is(.shows, .archive-list) .cover {
   display: block;
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px var(--lz-line);
+  background: var(--lz-sand);
+}
+
+.lz-sub .shows .cover {
+  width: 104px;
+  margin-bottom: 18px;
+}
+
+/* Show names mix Latin and Chinese: Latin letters and the apostrophe from the Latin serif. */
+.lz-sub .shows b {
   font-family: var(--num);
   font-size: 20px;
   font-weight: 700;
-  line-height: 1.45;
+  line-height: 1.4;
+  /* A name breaks at its bar or its space, never inside a Chinese word. */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
   transition: color 0.2s;
 }
 
-.lz-sub .programs a:hover b {
+.lz-sub .shows a:hover b {
   color: var(--lz-green-text);
 }
 
-.lz-sub .programs span {
-  display: block;
-  margin-top: 4px;
+.lz-sub .shows small {
+  margin-top: 3px;
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--lz-muted);
+}
+
+.lz-sub .shows span {
+  margin-top: 12px;
   font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .shows time {
+  margin-top: 8px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
   color: var(--lz-muted);
 }
 
@@ -2407,22 +2441,66 @@
   color: var(--lz-muted);
 }
 
+/* Inside: one block a year, the year on the left and its episodes in two columns. */
+.lz-sub .archive .year {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 0 20px;
+  padding: 6px 0 22px;
+  border-top: 1px solid var(--lz-line);
+}
+
+.lz-sub .archive .year h3 {
+  padding-top: 14px;
+  font-family: var(--num);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
 .lz-sub .archive-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 36px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
   margin: 0;
-  padding: 0 0 20px;
+  padding: 0;
   list-style: none;
 }
 
 .lz-sub .archive-list a {
   display: grid;
-  align-content: start;
-  gap: 2px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
   height: 100%;
   padding: 14px 0;
+}
+
+.lz-sub .archive-list li:nth-child(n + 3) a {
   border-top: 1px solid var(--lz-line);
+}
+
+.lz-sub .archive-list .cover {
+  width: 44px;
+  margin-top: 3px;
+  border-radius: 4px;
+}
+
+/* No cover to show: the show's first character, on paper. */
+.lz-sub .archive-list .cover.blank {
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lz-muted);
+}
+
+.lz-sub .archive-list .what {
+  display: grid;
+  gap: 2px;
 }
 
 .lz-sub .archive-list time {
@@ -2450,10 +2528,94 @@
   color: var(--lz-muted);
 }
 
-.lz-sub .archive-list span {
+.lz-sub .archive-list .what > span {
   font-size: 14px;
   line-height: 1.6;
   color: var(--lz-muted);
+}
+
+/* Members of the Academy a show could have on: who, what they did, what they could talk about. */
+.lz-sub .people {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--lz-line-2);
+}
+
+.lz-sub .people > li {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.42fr) minmax(0, 1fr);
+  gap: 20px 48px;
+  align-items: start;
+  padding: 28px 0 30px;
+  border-bottom: 1px solid var(--lz-line);
+}
+
+.lz-sub .people h3 {
+  font-family: var(--num);
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.lz-sub .people .whois p {
+  margin-top: 6px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--lz-muted);
+}
+
+.lz-sub .people .did p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .people .did .lz-link {
+  margin-top: 12px;
+}
+
+.lz-sub .people .t {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .people .topics ul {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lz-sub .people .topics li {
+  padding: 7px 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--lz-ink);
+}
+
+.lz-sub .people .topics li + li {
+  border-top: 1px solid var(--lz-line);
+}
+
+.lz-sub .people-after {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 56px;
+  align-items: end;
+  margin-top: 26px;
+}
+
+.lz-sub .people-after p {
+  max-width: 44em;
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .people-after .links {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
 }
 
 /* The host kit: what to download on the left, what to copy on the right. */
@@ -2594,23 +2756,42 @@
     grid-area: 3 / 1;
   }
 
-  .lz-sub .programs {
+  .lz-sub .shows {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .lz-sub .programs li:not(:nth-child(3n + 1)) a {
+  .lz-sub .shows li:not(:nth-child(4n + 1)) a {
     padding-left: 0;
     border-left: 0;
   }
 
-  .lz-sub .programs li:nth-child(even) a {
+  .lz-sub .shows li:nth-child(even) a {
     padding-left: 20px;
     border-left: 1px solid var(--lz-line);
   }
 
+  .lz-sub .shows a {
+    padding-right: 20px;
+  }
+
   .lz-sub .archive-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0 24px;
+  }
+
+  .lz-sub .archive .year {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lz-sub .people > li {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .lz-sub .people .whois {
+    grid-column: 1 / -1;
+  }
+
+  .lz-sub .people-after {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -2637,13 +2818,37 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .lz-sub .programs {
-    grid-template-columns: minmax(0, 1fr);
+  .lz-sub .archive-list li:nth-child(n + 2) a {
+    border-top: 1px solid var(--lz-line);
   }
 
-  .lz-sub .programs li:nth-child(even) a {
-    padding-left: 0;
-    border-left: 0;
+  .lz-sub .shows .cover {
+    width: 76px;
+    margin-bottom: 14px;
+  }
+
+  .lz-sub .shows a {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 14px;
+  }
+
+  .lz-sub .shows li:nth-child(even) a {
+    padding-left: 14px;
+  }
+
+  .lz-sub .shows b {
+    font-size: 17px;
+  }
+
+  .lz-sub .shows span {
+    font-size: 14px;
+  }
+
+  .lz-sub .people > li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 24px 0 26px;
   }
 }
 

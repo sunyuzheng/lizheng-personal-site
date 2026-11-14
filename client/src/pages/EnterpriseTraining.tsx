@@ -213,7 +213,7 @@ const copy = {
       { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
     ],
     publicWorkNote:
-      "Each name opens the recording of that session, free to watch. These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
+      "These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
     faculty:
       "AI Builders is co-taught by Yuzheng Sun and Yan Wang. Faculty and delivery roles for each enterprise engagement are named in the proposal and order form.",
     decksCta: "Browse selected enterprise decks",
@@ -410,7 +410,7 @@ const copy = {
       { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
     ],
     publicWorkNote:
-      "点名字可以看那一场的录像，免费观看。以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
+      "以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
     faculty:
       "AI Builders由立正与鸭哥共同授课。企业项目由谁参与、分别负责什么，会写进提案与订单确认书。",
     decksCta: "查看精选企业课件",
@@ -767,9 +767,7 @@ export default function EnterpriseTraining() {
                     {t.publicWork.map((org, index) => (
                       <Fragment key={org.name}>
                         {index > 0 ? " · " : null}
-                        <a href={org.href} {...EXTERNAL}>
-                          {org.name}
-                        </a>
+                        {org.name}
                       </Fragment>
                     ))}
                   </p>

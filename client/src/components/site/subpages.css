@@ -1426,17 +1426,162 @@
   }
 }
 
-/* Names that open the recording of each session. */
-.lz-sub .orgs-line a {
+/* The page of the brief where a line of evidence is shown in full. */
+.lz-sub .shifts .e .pg {
+  display: block;
+  margin-top: 4px;
+  font-size: 13.5px;
   color: var(--lz-green-text);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-decoration-color: rgb(28 107 55 / 0.35);
-  text-underline-offset: 4px;
 }
 
-.lz-sub .orgs-line a:hover {
-  text-decoration-color: currentColor;
+.lz-sub .shifts .e .pg:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Tested before taught: three results in ink. An answer struck through and the answer that
+   replaced it; six runs as six dots; two shares as two bars. */
+.lz-sub .cols.tests h3 {
+  font-size: 21px;
+  line-height: 1.45;
+}
+
+.lz-sub .cols.tests .setup {
+  margin-top: 8px;
+  min-height: 5.4em;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--lz-muted);
+}
+
+.lz-sub .tests .demo-acts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.lz-sub .tests .act {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+  padding: 14px 16px 16px;
+  border-radius: 4px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  background: var(--lz-sand);
+  color: var(--lz-muted);
+}
+
+.lz-sub .tests .act .lab {
+  font-size: 13px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .tests .act b {
+  font-family: var(--num);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--lz-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.lz-sub .tests .act.good {
+  background: var(--lz-ink);
+  color: rgb(255 255 255 / 0.78);
+}
+
+.lz-sub .tests .act.good .lab {
+  color: rgb(255 255 255 / 0.6);
+}
+
+.lz-sub .tests .act.good b {
+  color: #fff;
+  text-decoration: none;
+}
+
+.lz-sub .tests .tally {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.lz-sub .tests .tally .lab {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
+.lz-sub .tests .tally .n {
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+.lz-sub .tests .tally .n.on {
+  font-weight: 600;
+  color: var(--lz-ink);
+}
+
+.lz-sub .tests .dots {
+  display: flex;
+  gap: 8px;
+}
+
+.lz-sub .tests .dots i {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--lz-ink);
+}
+
+.lz-sub .tests .dots.off i {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px var(--lz-muted);
+}
+
+.lz-sub .tests .bar {
+  display: block;
+  height: 14px;
+  min-width: 6px;
+  background: var(--lz-ink);
+}
+
+.lz-sub .tests .bar.dim {
+  background: var(--lz-line-2);
+}
+
+.lz-sub .cols.tests .take {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--lz-ink);
+}
+
+.lz-sub .cols.tests .src {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--lz-muted);
+}
+
+.lz-sub .cols.tests .src a {
+  color: var(--lz-green-text);
+}
+
+.lz-sub .cols.tests .src a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .lz-sub .cols.tests .setup {
+    min-height: 0;
+  }
 }
 
 /* The ladder: five formats, lightest first. Each a row: its number, what it is, what it starts

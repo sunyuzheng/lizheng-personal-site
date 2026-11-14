@@ -40,7 +40,8 @@ const copy = {
         change:
           "One shared technical understanding and one set of standard practices: state the outcome, supply the context, set acceptance criteria, check the result. People speak the same language, your few experts stop re-teaching, and work can be handed off without a walkthrough.",
         proof:
-          "One page of shared rules took first-time accuracy from 10 of 28 to 28 of 28.",
+          "Experiment: a five-line rules file took two models to 28 of 28 right on the first try.",
+        page: 5,
       },
       {
         problem:
@@ -48,31 +49,75 @@ const copy = {
         change:
           "A calibrated sense of what AI can and can't do today, reasoned from how it works rather than from headlines, and the habit of telling an answer that looks right from one that is right.",
         proof:
-          "Our predictions, written down with odds in 2023 and graded since.",
+          "“I used to think that many scenarios were beyond AI’s capabilities.” A Microsoft applied scientist, in a public review.",
+        page: 7,
       },
       {
         problem: "“AI doesn't work on our data.”",
         change:
           "Most bad results are a method problem, not a model problem: missing context, no definition of done, the wrong layer fixed. People learn to diagnose before they blame, and to put their effort where it pays.",
         proof:
-          "Same model: 0 of 6 runs right with a 16-step plan, 6 of 6 with five acceptance criteria.",
+          "Live at DoorDash’s analytics offsite: same AI, same prompt, a wrong answer. One document fixed, the right answer.",
+        page: 5,
       },
       {
         problem: "People are anxious, or quietly opting out.",
         change:
           "The fear of no longer being needed, old learning habits, and goals too vague to act on give way to small wins finished early. People learn that crude tools mean the era is early, not that they are bad at this.",
         proof:
-          "One learner's tool took three versions to get right, and that is the normal path.",
+          "Learners at Google, TikTok, and Microsoft describe the shift in their own words.",
+        page: 7,
       },
       {
         problem: "Everyone is faster. The team isn't.",
         change:
           "Workflows, reviews, and metrics priced for an era of expensive execution get recomputed. People own results end to end, and specialists ship tools colleagues can use instead of answering one-off requests.",
         proof:
-          "Six beliefs from the last era; line-by-line approval caught 13.6% of dangerous commands.",
+          "People approving each step caught 13.6% of dangerous commands; an automated check caught 89%.",
+        page: 5,
       },
     ],
-    shiftsCta: "See the evidence in the team brief (PDF)",
+    shiftsPage: (n: number) => `Team brief, page ${n}`,
+    testsEyebrow: "Tested before taught",
+    testsTitle: "We test a method before we teach it.",
+    testsIntro:
+      "Three results a team lead can use right away. The raw runs of our own experiment are public.",
+    demo: {
+      title: "Same AI, same prompt. One document changed.",
+      setup:
+        "A live demo at DoorDash’s analytics offsite, on mock data: how much did a campaign lift order value?",
+      act1: "Act 1 · the wiki page is out of date",
+      answer1: "0% lift",
+      note1: "Wrong, and stated with confidence. The page pointed AI at a retired table.",
+      act3: "Act 3 · one new data-model document",
+      answer3: "60% lift",
+      note3:
+        "Correct. AI wrote the document from the live database; a person added the one thing it couldn’t find.",
+      take: "“AI doesn’t work on our data” is usually a documentation problem.",
+      src: "Yan Wang at DoorDash’s analytics offsite, August 2025",
+    },
+    runs: {
+      title: "Describe the destination, not the steps.",
+      setup:
+        "Transcribing a 55-minute meeting recorded in two overlapping files. Same top model, six runs each way.",
+      a: "Following its own 16-step plan",
+      aResult: "0 of 6 met every requirement",
+      b: "Given five acceptance criteria",
+      bResult: "6 of 6",
+      take: "Every check in a step list checks the list’s own assumptions.",
+      src: "AI Builders course text, lesson 3.7 · raw runs",
+      href: "https://www.ai-builders.com/resources/aibuilder2027/m03/en/experiments/3_7_formulation/",
+    },
+    approve: {
+      title: "Approving every step is false control.",
+      setup:
+        "Anthropic’s study with 1,053 professional testers: dangerous commands slipped into an AI coding session. Share caught:",
+      a: "People approving each command",
+      b: "An automated check",
+      take: "Put people on direction and plans, not on clicking approve.",
+      src: "Anthropic, 2026",
+      href: "https://claude.com/blog/auto-mode-default-in-claude-code",
+    },
     reviewsEyebrow: "Public Maven reviews",
     reviewsTitle: "What learners actually took from the course",
     reviewsIntro:
@@ -171,7 +216,7 @@ const copy = {
     pdfEyebrow: "Team procurement brief · PDF",
     pdfTitle: "Forward this brief to the people deciding.",
     pdfBody:
-      "The five problems above and what changes, six beliefs from the last era, four controlled experiments, our predictions graded by reality, enterprise sessions you can watch, and every format with its price.",
+      "The five problems above and what changes, six beliefs from the last era, what your people do in the course, the demo and experiments in full, our predictions graded by reality, slides from our company sessions, and every format with its price.",
     pdfMeta: "PDF · 8 pages · English · November 2026",
     pdfCta: "Open the team brief",
     workEyebrow: "Fully custom programs",
@@ -206,11 +251,13 @@ const copy = {
     evidenceCaption: "DoorDash Analytics team offsite · Seattle",
     publicWorkLabel: "Selected public team trainings and internal sessions",
     publicWork: [
-      { name: "Tencent", href: "https://www.superlinear.academy/c/open-videos/tencent-ai-transformation" },
-      { name: "Meituan", href: "https://www.superlinear.academy/c/open-videos/meituan-user-to-builder" },
-      { name: "Xiaohongshu", href: "https://www.superlinear.academy/c/open-videos/xiaohongshu-ai-productivity" },
-      { name: "Pinterest", href: "https://www.superlinear.academy/c/open-videos/pinterest-data-science-triangle" },
-      { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
+      { name: "DoorDash" },
+      { name: "Pinterest" },
+      { name: "LinkedIn" },
+      { name: "Amazon" },
+      { name: "Tencent" },
+      { name: "Meituan" },
+      { name: "Xiaohongshu" },
     ],
     publicWorkNote:
       "These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
@@ -250,34 +297,78 @@ const copy = {
         problem: "大家各自摸索着学AI，每个人对它能做什么，都有自己的一套说法。",
         change:
           "团队有了共同的技术理解和一套标准做法：先说清要什么结果，交代背景，定好验收标准，再检查结果。大家说的是同一种话，少数高手不用再一遍遍给别人补课，活儿交给同事也不用从头讲。",
-        proof: "一页五条的共同规则，让一次做对从28条里的10条，涨到28条全对。",
+        proof: "实验：加一页五条的规则，28条任务里一次做对的，从10条涨到28条。",
+        page: 5,
       },
       {
         problem: "一半人太信AI的漂亮答案，另一半人试过一次就不用了。",
         change:
           "知道AI今天能做什么、做不了什么，是从它怎么工作推出来的，不是看新闻得来的；也分得清「看着对」和「真的对」。",
-        proof: "2023年写下的六个带概率的预测，后来逐个打了分。",
+        proof: "一位微软的应用科学家在公开评价里写：以前觉得很多场景AI做不了，现在遇到问题先想怎么用AI。",
+        page: 7,
       },
       {
         problem: "「AI在我们的数据上就是不好用」",
         change:
           "多数时候不好用，是方法的问题，不是模型的问题：没给背景，没说清怎样才算做完，修错了地方。大家先找原因再下结论，力气用在有用的地方。",
-        proof: "同一个模型，照16步的清单做6次，一次都没全对；只给5条验收标准，6次全对。",
+        proof: "DoorDash线下会上的现场演示：同一个AI、同一句话，先答错；只补一份文档，就答对了。",
+        page: 5,
       },
       {
         problem: "有人焦虑，有人悄悄不用。",
         change:
           "怕自己不再被需要、老的学习习惯、目标太虚，这些靠早早做完的小成果一点点化开。大家也知道：工具还粗糙，说明时代还早，不说明自己不行。",
-        proof: "一位学员做的工具，改到第三版才好用，这本来就是正常的路。",
+        proof: "Google、TikTok、微软的学员，用自己的话写下了这种变化。",
+        page: 7,
       },
       {
         problem: "每个人都快了，团队没快。",
         change:
           "那些按「执行很贵」设计的流程、审批和考核，按新的价格重新算一遍。每个人对结果从头负责到尾；专家做出同事能直接用的工具，不再只是回答零碎的需求。",
-        proof: "上个时代留下的六个旧认知；逐条点批准，只拦住了13.6%的危险操作。",
+        proof: "让人逐条点批准，只拦住13.6%的危险操作；自动检查拦住89%。",
+        page: 5,
       },
     ],
-    shiftsCta: "在团队方案PDF里看证据",
+    shiftsPage: (n: number) => `团队方案PDF第${n}页`,
+    testsEyebrow: "先测过，再教",
+    testsTitle: "讲的方法，我们先自己测过。",
+    testsIntro:
+      "下面三个结果，团队负责人马上用得上。我们自己做的实验，原始数据是公开的。",
+    demo: {
+      title: "同一个AI，同一句话，只换了一份文档",
+      setup:
+        "DoorDash数据分析团队线下会上的现场演示，用的是模拟数据：一个活动给订单带来多少增长？",
+      act1: "第一幕 · 文档过期了",
+      answer1: "增长0%",
+      note1: "错的，还说得很肯定。旧文档把AI带到了一张已经停用的表上。",
+      act3: "第三幕 · 补了一份数据说明",
+      answer3: "增长60%",
+      note3: "对的。这份说明是AI照着数据库自己写的，人只补了它查不到的那一条。",
+      take: "「AI在我们的数据上不好用」，多半是文档的问题。",
+      src: "鸭哥在DoorDash数据分析团队线下会上的演示，2025年8月",
+    },
+    runs: {
+      title: "交代终点，别交代步骤",
+      setup:
+        "整理一场55分钟的会议录音，两段录音有重叠。同一个模型，两种交代方式各跑6次。",
+      a: "照它自己写的16步清单做",
+      aResult: "0次全部达标",
+      b: "只给5条验收标准",
+      bResult: "6次全部达标",
+      take: "步骤里的检查，查的是步骤自己的假设。",
+      src: "AI Builders教材3.7 · 实验数据",
+      href: "https://www.ai-builders.com/resources/aibuilder2027/m03/zh/experiments/3_7_formulation/",
+    },
+    approve: {
+      title: "逐条点批准，拦不住危险操作",
+      setup:
+        "Anthropic请1,053名专业测试者做的研究：往AI编程的过程里混进危险命令，看能拦住多少。",
+      a: "人逐条点批准",
+      b: "自动检查",
+      take: "人该把关的是方向和整体方案，不是一条条点同意。",
+      src: "Anthropic，2026年",
+      href: "https://claude.com/blog/auto-mode-default-in-claude-code",
+    },
     reviewsEyebrow: "Maven公开评价",
     reviewsTitle: "他们在课里真正带走了什么。",
     reviewsIntro:
@@ -373,7 +464,7 @@ const copy = {
     pdfEyebrow: "团队采购说明 · PDF",
     pdfTitle: "把这份材料，直接转给做决定的人。",
     pdfBody:
-      "上面五个问题和学完以后的变化、上个时代的六个旧认知、四个对照实验、我们写下来的预测和后来的打分、能直接看的企业内训录像，以及每种合作方式和价格。",
+      "上面五个问题和学完以后的变化、上个时代的六个旧认知、团队在课里具体做什么、演示和实验的完整结果、我们写下来的预测和后来的打分、几场公司课的课件，以及每种合作方式和价格。",
     pdfMeta: "PDF · 8页 · 英文 · 2026年11月",
     pdfCta: "打开团队方案PDF",
     workEyebrow: "完整定制企业项目",
@@ -403,11 +494,13 @@ const copy = {
     evidenceCaption: "DoorDash Analytics团队线下培训 · 西雅图",
     publicWorkLabel: "部分可公开的企业培训与内部分享",
     publicWork: [
-      { name: "腾讯", href: "https://www.superlinear.academy/c/open-videos/tencent-ai-transformation" },
-      { name: "美团", href: "https://www.superlinear.academy/c/open-videos/meituan-user-to-builder" },
-      { name: "小红书", href: "https://www.superlinear.academy/c/open-videos/xiaohongshu-ai-productivity" },
-      { name: "Pinterest", href: "https://www.superlinear.academy/c/open-videos/pinterest-data-science-triangle" },
-      { name: "DoorDash", href: "https://www.superlinear.academy/c/open-videos/doordash-context-management" },
+      { name: "腾讯" },
+      { name: "美团" },
+      { name: "小红书" },
+      { name: "Pinterest" },
+      { name: "DoorDash" },
+      { name: "LinkedIn" },
+      { name: "Amazon" },
     ],
     publicWorkNote:
       "以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
@@ -558,13 +651,98 @@ export default function EnterpriseTraining() {
                   </p>
                   <p className="e" data-label={t.shiftsHead[2]}>
                     {shift.proof}
+                    <a className="pg" href={`${PDF}#page=${shift.page}`} {...EXTERNAL}>
+                      {t.shiftsPage(shift.page)}
+                    </a>
                   </p>
                 </li>
               ))}
             </ol>
-            <a className="lz-link shifts-more" href={PDF} {...EXTERNAL}>
-              {t.shiftsCta} <i aria-hidden="true">→</i>
-            </a>
+          </div>
+        </section>
+
+        {/* Tested before taught: three results drawn in ink, each with where it comes from. */}
+        <section className="sec ruled">
+          <div className="wrap">
+            <div className="head">
+              <div>
+                <div className="eyebrow">{t.testsEyebrow}</div>
+                <h2>
+                  <Phrases text={t.testsTitle} />
+                </h2>
+              </div>
+              <p>{t.testsIntro}</p>
+            </div>
+            <div className="cols tests">
+              <article>
+                <h3>
+                  <Phrases text={t.demo.title} />
+                </h3>
+                <p className="setup">{t.demo.setup}</p>
+                <div className="demo-acts">
+                  <div className="act bad">
+                    <span className="lab">{t.demo.act1}</span>
+                    <b>{t.demo.answer1}</b>
+                    <span>{t.demo.note1}</span>
+                  </div>
+                  <div className="act good">
+                    <span className="lab">{t.demo.act3}</span>
+                    <b>{t.demo.answer3}</b>
+                    <span>{t.demo.note3}</span>
+                  </div>
+                </div>
+                <p className="take">{t.demo.take}</p>
+                <p className="src">{t.demo.src}</p>
+              </article>
+              <article>
+                <h3>
+                  <Phrases text={t.runs.title} />
+                </h3>
+                <p className="setup">{t.runs.setup}</p>
+                <div className="tally">
+                  <span className="lab">{t.runs.a}</span>
+                  <span className="dots off" aria-hidden="true">
+                    <i /><i /><i /><i /><i /><i />
+                  </span>
+                  <span className="n">{t.runs.aResult}</span>
+                </div>
+                <div className="tally">
+                  <span className="lab">{t.runs.b}</span>
+                  <span className="dots" aria-hidden="true">
+                    <i /><i /><i /><i /><i /><i />
+                  </span>
+                  <span className="n on">{t.runs.bResult}</span>
+                </div>
+                <p className="take">{t.runs.take}</p>
+                <p className="src">
+                  <a href={t.runs.href} {...EXTERNAL}>
+                    {t.runs.src}
+                  </a>
+                </p>
+              </article>
+              <article>
+                <h3>
+                  <Phrases text={t.approve.title} />
+                </h3>
+                <p className="setup">{t.approve.setup}</p>
+                <div className="tally">
+                  <span className="lab">{t.approve.a}</span>
+                  <span className="bar dim" style={{ width: "13.6%" }} aria-hidden="true" />
+                  <span className="n on">13.6%</span>
+                </div>
+                <div className="tally">
+                  <span className="lab">{t.approve.b}</span>
+                  <span className="bar" style={{ width: "89%" }} aria-hidden="true" />
+                  <span className="n on">89%</span>
+                </div>
+                <p className="take">{t.approve.take}</p>
+                <p className="src">
+                  <a href={t.approve.href} {...EXTERNAL}>
+                    {t.approve.src}
+                  </a>
+                </p>
+              </article>
+            </div>
           </div>
         </section>
 

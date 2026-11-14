@@ -29,55 +29,60 @@ const copy = {
     anchorNote: "Research · Design · Live delivery · Review",
     anchorCta: "Discuss a custom program",
     shiftsEyebrow: "What training has to fix",
-    shiftsTitle: "Rolling out the tools was the easy part.",
+    shiftsTitle: "Five things team leaders tell us",
     shiftsIntro:
-      "The five problems leaders bring to us most often, what changes once their team trains together, and the evidence for each. The team brief shows every result in full.",
-    shiftsHead: ["What you see", "What changes", "The evidence"],
+      "Each is followed by what changes once the team has trained together, and the evidence we can show.",
+    shiftsHead: ["What they say", "After training", "Evidence"],
     shifts: [
       {
         problem:
-          "Everyone learned AI on their own, so everyone has a different theory of what it can do.",
+          "“Everyone learned AI on their own, and everyone talks about it differently.”",
         change:
-          "One shared technical understanding and one set of standard practices: state the outcome, supply the context, set acceptance criteria, check the result. People speak the same language, your few experts stop re-teaching, and work can be handed off without a walkthrough.",
+          "The whole team hands work to AI the same way: say what result you want, give it the background, agree on what counts as done, then check against that. A colleague can pick up your work without a walkthrough, and your strongest users stop re-teaching everyone else.",
         proof:
-          "Experiment: a five-line rules file took two models to 28 of 28 right on the first try.",
+          "Experiment: five written rules took two AI models to 28 of 28 right on the first try.",
         page: 5,
       },
       {
-        problem:
-          "Half the team over-trusts polished output. The other half wrote AI off after one bad try.",
+        problem: "“Some people trust AI too much. Others tried it once and gave up.”",
         change:
-          "A calibrated sense of what AI can and can't do today, reasoned from how it works rather than from headlines, and the habit of telling an answer that looks right from one that is right.",
+          "People learn how AI works, so they know which jobs it can take today and which it can’t. They can also tell an answer that looks right from one that is right.",
         proof:
           "“I used to think that many scenarios were beyond AI’s capabilities.” A Microsoft applied scientist, in a public review.",
         page: 7,
       },
       {
-        problem: "“AI doesn't work on our data.”",
+        problem: "“AI doesn’t work on our data.”",
         change:
-          "Most bad results are a method problem, not a model problem: missing context, no definition of done, the wrong layer fixed. People learn to diagnose before they blame, and to put their effort where it pays.",
+          "When AI gets something wrong, people first check what they handed it. Did it have the background? Did it know what done means? They fix the cause before they switch tools or models.",
         proof:
-          "Live at DoorDash’s analytics offsite: same AI, same prompt, a wrong answer. One document fixed, the right answer.",
+          "At DoorDash’s analytics offsite, the same AI went from a wrong answer to the right one. One document changed.",
         page: 5,
       },
       {
-        problem: "People are anxious, or quietly opting out.",
+        problem: "“People are anxious, or quietly not using it.”",
         change:
-          "The fear of no longer being needed, old learning habits, and goals too vague to act on give way to small wins finished early. People learn that crude tools mean the era is early, not that they are bad at this.",
+          "Some fear they won’t be needed. Some don’t know what being good at AI would look like. In the course everyone finishes something small in the first week, and finishing settles a lot of that. They also learn that today’s tools are rough because it is early.",
         proof:
-          "Learners at Google, TikTok, and Microsoft describe the shift in their own words.",
-        page: 7,
+          "Rita Sun, a data analyst, thought the job was gone. Within a year Rita was the company’s AI Champion, twice.",
+        page: 2,
       },
       {
-        problem: "Everyone is faster. The team isn't.",
+        problem: "“Everyone is faster. The team isn’t.”",
         change:
-          "Workflows, reviews, and metrics priced for an era of expensive execution get recomputed. People own results end to end, and specialists ship tools colleagues can use instead of answering one-off requests.",
+          "Many workflows, reviews, and metrics were set when doing the work was expensive. The team goes through them again and drops what no longer earns its cost. One person owns a result from start to finish, and specialists turn what they know into tools colleagues can use.",
         proof:
           "People approving each step caught 13.6% of dangerous commands; an automated check caught 89%.",
         page: 5,
       },
     ],
     shiftsPage: (n: number) => `Team brief, page ${n}`,
+    caseLabel: "One learner, inside a data team",
+    caseBody:
+      "Rita Sun is a Staff Data Analyst at a B2B SaaS company, with a PhD in economics and no engineering background. Watching the GPT-5 launch in 2025, Rita “felt I was about to lose my job,” and started our course that September. Early in 2026 Rita began writing context files for the team’s AI assistant, the way the course teaches, and in April taught the method to the whole data organization. In May the company asked Rita to lead a small group turning those files into shared skills, and product managers began pulling their own data. Within three months Rita was named AI Champion of the month twice at the data team’s all-hands.",
+    caseQuote:
+      "“A colleague asked if I was digging the analysts’ grave. I am only replacing the dullest part of the job.”",
+    caseSrc: "From Rita’s post in our community, July 2026. Translated from Chinese.",
     testsEyebrow: "Tested before taught",
     testsTitle: "We test a method before we teach it.",
     testsIntro:
@@ -85,36 +90,37 @@ const copy = {
     demo: {
       title: "Same AI, same prompt. One document changed.",
       setup:
-        "A live demo at DoorDash’s analytics offsite, on mock data: how much did a campaign lift order value?",
+        "A live demo at DoorDash’s analytics offsite, on mock data. The question for AI: how much did a campaign lift order value?",
       act1: "Act 1 · the wiki page is out of date",
       answer1: "0% lift",
-      note1: "Wrong, and stated with confidence. The page pointed AI at a retired table.",
+      note1: "Wrong, and stated with confidence. The old page sent AI to a retired table.",
       act3: "Act 3 · one new data-model document",
       answer3: "60% lift",
       note3:
         "Correct. AI wrote the document from the live database; a person added the one thing it couldn’t find.",
-      take: "“AI doesn’t work on our data” is usually a documentation problem.",
-      src: "Yan Wang at DoorDash’s analytics offsite, August 2025",
+      take: "Across the three acts the AI, the prompt, and the business context stayed the same. Only the document changed.",
+      src: "Yan Wang at DoorDash’s analytics offsite, August 2025 · recording, free sign-up",
+      href: "https://www.superlinear.academy/c/public",
     },
     runs: {
       title: "Describe the destination, not the steps.",
       setup:
-        "Transcribing a 55-minute meeting recorded in two overlapping files. Same top model, six runs each way.",
+        "AI transcribes a 55-minute meeting recorded in two files that overlap by 40 seconds. Same top model, six runs each way.",
       a: "Following its own 16-step plan",
       aResult: "0 of 6 met every requirement",
       b: "Given five acceptance criteria",
       bResult: "6 of 6",
-      take: "Every check in a step list checks the list’s own assumptions.",
+      take: "All six plans assumed the two files didn’t overlap, so the overlapping passage came out twice. Given only the criteria, the model found the overlap itself.",
       src: "AI Builders course text, lesson 3.7 · raw runs",
       href: "https://www.ai-builders.com/resources/aibuilder2027/m03/en/experiments/3_7_formulation/",
     },
     approve: {
-      title: "Approving every step is false control.",
+      title: "Approving each step catches little.",
       setup:
-        "Anthropic’s study with 1,053 professional testers: dangerous commands slipped into an AI coding session. Share caught:",
+        "Anthropic had 1,053 professional testers review an AI coding session with dangerous commands slipped in. Share caught:",
       a: "People approving each command",
       b: "An automated check",
-      take: "Put people on direction and plans, not on clicking approve.",
+      take: "In everyday use, people approve 97% of the permission prompts they see.",
       src: "Anthropic, 2026",
       href: "https://claude.com/blog/auto-mode-default-in-claude-code",
     },
@@ -216,7 +222,7 @@ const copy = {
     pdfEyebrow: "Team procurement brief · PDF",
     pdfTitle: "Forward this brief to the people deciding.",
     pdfBody:
-      "The five problems above and what changes, six beliefs from the last era, what your people do in the course, the demo and experiments in full, our predictions graded by reality, slides from our company sessions, and every format with its price.",
+      "Eight pages. The first half covers what changes after a team trains together. The second half is evidence and price: the demo and experiments, our predictions graded by reality, slides from company sessions, and every format.",
     pdfMeta: "PDF · 8 pages · English · November 2026",
     pdfCta: "Open the team brief",
     workEyebrow: "Fully custom programs",
@@ -260,7 +266,8 @@ const copy = {
       { name: "Xiaohongshu" },
     ],
     publicWorkNote:
-      "These are public trainings and internal sessions. Full custom engagements are named only with client permission.",
+      "These are the sessions we are free to name. Many of our other trainings were private, for one company, under NDA, and those clients are not listed. Recordings are free in Superlinear Academy once you sign up.",
+    recordingsCta: "Watch the recordings",
     faculty:
       "AI Builders is co-taught by Yuzheng Sun and Yan Wang. Faculty and delivery roles for each enterprise engagement are named in the proposal and order form.",
     decksCta: "Browse selected enterprise decks",
@@ -288,84 +295,94 @@ const copy = {
     anchorNote: "研究 · 设计 · 现场交付 · 复盘",
     anchorCta: "讨论完整定制",
     shiftsEyebrow: "培训要解决的事",
-    shiftsTitle: "工具发下去，只是最容易的一步。",
+    shiftsTitle: "请我们去讲课的人，|最常讲这五件事",
     shiftsIntro:
-      "请我们去讲课的负责人，最常提这五个问题。下面是团队一起学完以后的变化，和每条对应的证据；证据的细节都在团队方案PDF里。",
-    shiftsHead: ["看到的问题", "学完以后", "证据"],
+      "每件事后面，写了团队一起学完以后会怎样，和我们拿得出的证据。",
+    shiftsHead: ["他们说的", "学完以后", "证据"],
     shifts: [
       {
-        problem: "大家各自摸索着学AI，每个人对它能做什么，都有自己的一套说法。",
+        problem: "大家各学各的，说起AI各说各话。",
         change:
-          "团队有了共同的技术理解和一套标准做法：先说清要什么结果，交代背景，定好验收标准，再检查结果。大家说的是同一种话，少数高手不用再一遍遍给别人补课，活儿交给同事也不用从头讲。",
-        proof: "实验：加一页五条的规则，28条任务里一次做对的，从10条涨到28条。",
+          "全组用同一套办法交代AI干活：先说清要什么结果，把背景给它，定好怎样算做完，再照着检查。同事接手你的活，不用你从头讲一遍；会用的那几个人，也不用老给别人补课。",
+        proof: "实验：给AI加一页五条的规矩，28条任务里一次做对的，从10条涨到28条。",
         page: 5,
       },
       {
-        problem: "一半人太信AI的漂亮答案，另一半人试过一次就不用了。",
+        problem: "有人太信AI，有人试了一次就不用了。",
         change:
-          "知道AI今天能做什么、做不了什么，是从它怎么工作推出来的，不是看新闻得来的；也分得清「看着对」和「真的对」。",
-        proof: "一位微软的应用科学家在公开评价里写：以前觉得很多场景AI做不了，现在遇到问题先想怎么用AI。",
+          "大家弄懂AI是怎么工作的，就知道哪些活现在能交给它，哪些还不行。它交上来的东西，看着对和真的对，也分得出来。",
+        proof:
+          "一位微软的应用科学家在公开评价里写：以前觉得很多事AI做不了，现在遇到问题会先想怎么用AI。",
         page: 7,
       },
       {
         problem: "「AI在我们的数据上就是不好用」",
         change:
-          "多数时候不好用，是方法的问题，不是模型的问题：没给背景，没说清怎样才算做完，修错了地方。大家先找原因再下结论，力气用在有用的地方。",
-        proof: "DoorDash线下会上的现场演示：同一个AI、同一句话，先答错；只补一份文档，就答对了。",
+          "AI做错的时候，大家先查是不是自己没交代清楚：背景给了没有，怎样算做完说了没有。查到原因再改，不急着换工具、换模型。",
+        proof:
+          "DoorDash线下会上的现场演示：同一个AI、同一句话，文档过期时答错；补了一份文档，就答对了。",
         page: 5,
       },
       {
         problem: "有人焦虑，有人悄悄不用。",
         change:
-          "怕自己不再被需要、老的学习习惯、目标太虚，这些靠早早做完的小成果一点点化开。大家也知道：工具还粗糙，说明时代还早，不说明自己不行。",
-        proof: "Google、TikTok、微软的学员，用自己的话写下了这种变化。",
-        page: 7,
+          "有人怕自己以后没用了，有人不知道学到什么样才算会。课上每个人第一周就亲手做完一件小东西，做完了，心就定了一半。大家也会明白，工具现在不顺手，是因为时代还早。",
+        proof:
+          "学员Rita Sun看GPT-5发布会时「觉得自己要失业了」；一年不到，两次被公司提名为当月的AI Champion。",
+        page: 2,
       },
       {
         problem: "每个人都快了，团队没快。",
         change:
-          "那些按「执行很贵」设计的流程、审批和考核，按新的价格重新算一遍。每个人对结果从头负责到尾；专家做出同事能直接用的工具，不再只是回答零碎的需求。",
-        proof: "让人逐条点批准，只拦住13.6%的危险操作；自动检查拦住89%。",
+          "很多流程、审批和考核，是在「动手做很贵」的年代定的。团队把它们拿出来重新过一遍，该省的省掉。一件事交给一个人从头管到尾。专家把自己的经验做成同事能直接用的工具，不用再一个个回答零碎的问题。",
+        proof: "Anthropic的研究：让人逐条点批准，只拦住13.6%的危险操作；自动检查拦住89%。",
         page: 5,
       },
     ],
     shiftsPage: (n: number) => `团队方案PDF第${n}页`,
+    caseLabel: "一位学员在自己团队里做的事",
+    caseBody:
+      "Rita Sun是一家B2B SaaS公司的数据分析师，经济学博士，不是技术出身。2025年看GPT-5发布会那天，Rita「觉得自己要失业了」，9月开始学我们的课。2026年初，Rita学着课里的办法，把背景和规矩写成文档交给AI，写SQL快了很多；4月起，把这个办法教给了整个数据团队。5月以后，公司让Rita带几位同事把这些文档做成全组共用的Skill，不少产品经理开始自己取数。三个月里，Rita两次在数据团队大会上被提名为当月的AI Champion。",
+    caseQuote:
+      "「有同事问我，我现在做的这些不就是给DA们掘坟吗……但是我只是在取代DA工作中最无聊的部分。」",
+    caseSrc: "Rita Sun，2026年7月发在超线性学院社区",
     testsEyebrow: "先测过，再教",
     testsTitle: "讲的方法，我们先自己测过。",
     testsIntro:
-      "下面三个结果，团队负责人马上用得上。我们自己做的实验，原始数据是公开的。",
+      "下面三个结果，带团队的人马上用得上。我们自己做的实验，数据是公开的。",
     demo: {
       title: "同一个AI，同一句话，只换了一份文档",
       setup:
-        "DoorDash数据分析团队线下会上的现场演示，用的是模拟数据：一个活动给订单带来多少增长？",
-      act1: "第一幕 · 文档过期了",
+        "DoorDash数据分析团队线下会上的现场演示，用的是模拟数据。问AI：这个活动给订单带来多少增长？",
+      act1: "第一幕 · 文档是过期的",
       answer1: "增长0%",
-      note1: "错的，还说得很肯定。旧文档把AI带到了一张已经停用的表上。",
+      note1: "答错了，口气还很肯定。旧文档把AI带到了一张停用的表上。",
       act3: "第三幕 · 补了一份数据说明",
       answer3: "增长60%",
-      note3: "对的。这份说明是AI照着数据库自己写的，人只补了它查不到的那一条。",
-      take: "「AI在我们的数据上不好用」，多半是文档的问题。",
-      src: "鸭哥在DoorDash数据分析团队线下会上的演示，2025年8月",
+      note3: "答对了。说明是AI照着数据库自己写的，人只补了一条它查不到的。",
+      take: "三幕里，AI、问法、业务背景都没变，变的只有那份文档。",
+      src: "鸭哥在DoorDash线下会上的演示，2025年8月 · 录像免费注册后可看",
+      href: "https://www.superlinear.academy/c/public",
     },
     runs: {
       title: "交代终点，别交代步骤",
       setup:
-        "整理一场55分钟的会议录音，两段录音有重叠。同一个模型，两种交代方式各跑6次。",
-      a: "照它自己写的16步清单做",
+        "让AI整理一场55分钟的会议录音。录音分两段，中间有40秒重叠。同一个模型，两种交代方式各跑6次。",
+      a: "让它照自己写的16步清单做",
       aResult: "0次全部达标",
-      b: "只给5条验收标准",
+      b: "只告诉它5条验收标准",
       bResult: "6次全部达标",
-      take: "步骤里的检查，查的是步骤自己的假设。",
+      take: "六份清单都默认两段录音不重叠，照着做，重叠的那段话出现了两遍。只给标准的那六次，它自己发现了重叠。",
       src: "AI Builders教材3.7 · 实验数据",
       href: "https://www.ai-builders.com/resources/aibuilder2027/m03/zh/experiments/3_7_formulation/",
     },
     approve: {
-      title: "逐条点批准，拦不住危险操作",
+      title: "让人逐条点批准，拦不住多少",
       setup:
-        "Anthropic请1,053名专业测试者做的研究：往AI编程的过程里混进危险命令，看能拦住多少。",
+        "Anthropic找了1,053名专业测试者，往AI写代码的过程里混进危险命令，看能拦下多少。",
       a: "人逐条点批准",
       b: "自动检查",
-      take: "人该把关的是方向和整体方案，不是一条条点同意。",
+      take: "平时使用中，弹出来的确认，97%被人点了同意。",
       src: "Anthropic，2026年",
       href: "https://claude.com/blog/auto-mode-default-in-claude-code",
     },
@@ -464,7 +481,7 @@ const copy = {
     pdfEyebrow: "团队采购说明 · PDF",
     pdfTitle: "把这份材料，直接转给做决定的人。",
     pdfBody:
-      "上面五个问题和学完以后的变化、上个时代的六个旧认知、团队在课里具体做什么、演示和实验的完整结果、我们写下来的预测和后来的打分、几场公司课的课件，以及每种合作方式和价格。",
+      "一共8页。前半讲团队一起学完以后会有什么不一样；后半是证据和价格：演示和实验的结果、我们公开写下的预测对了多少、公司课的课件、五种合作方式。",
     pdfMeta: "PDF · 8页 · 英文 · 2026年11月",
     pdfCta: "打开团队方案PDF",
     workEyebrow: "完整定制企业项目",
@@ -503,7 +520,8 @@ const copy = {
       { name: "Amazon" },
     ],
     publicWorkNote:
-      "以上为可公开的培训与内部分享；完整定制项目仅在客户许可后具名。",
+      "以上是可以公开的。另外还有不少企业专属培训签了保密协议，这里不具名。录像都在超线性学院的免费公开课里，注册后可以看。",
+    recordingsCta: "去看公开课录像",
     faculty:
       "AI Builders由立正与鸭哥共同授课。企业项目由谁参与、分别负责什么，会写进提案与订单确认书。",
     decksCta: "查看精选企业课件",
@@ -658,6 +676,15 @@ export default function EnterpriseTraining() {
                 </li>
               ))}
             </ol>
+            {/* One learner's account of what happened on the learner's own team, with a line from the post. */}
+            <div className="case-row">
+              <div className="lab">{t.caseLabel}</div>
+              <div>
+                <p>{t.caseBody}</p>
+                <blockquote>{t.caseQuote}</blockquote>
+                <p className="fine">{t.caseSrc}</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -692,7 +719,11 @@ export default function EnterpriseTraining() {
                   </div>
                 </div>
                 <p className="take">{t.demo.take}</p>
-                <p className="src">{t.demo.src}</p>
+                <p className="src">
+                  <a href={t.demo.href} {...EXTERNAL}>
+                    {t.demo.src}
+                  </a>
+                </p>
               </article>
               <article>
                 <h3>
@@ -952,9 +983,14 @@ export default function EnterpriseTraining() {
                   <p className="fine">{t.publicWorkNote}</p>
                 </div>
                 <p className="say small">{t.faculty}</p>
-                <Link className="lz-link" href={withLanguage("/decks", lang)}>
-                  {t.decksCta} <i aria-hidden="true">→</i>
-                </Link>
+                <div className="links-row">
+                  <Link className="lz-link" href={withLanguage("/decks", lang)}>
+                    {t.decksCta} <i aria-hidden="true">→</i>
+                  </Link>
+                  <a className="lz-link" href="https://www.superlinear.academy/c/public" {...EXTERNAL}>
+                    {t.recordingsCta} <i aria-hidden="true">→</i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>

@@ -1426,6 +1426,65 @@
   }
 }
 
+/* One learner's story under the list: what it is on the left, the account and her words on the right. */
+.lz-sub .case-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+  gap: 12px 48px;
+  margin-top: 36px;
+}
+
+.lz-sub .case-row .lab {
+  font-family: var(--num);
+  font-size: 19.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--lz-ink);
+}
+
+.lz-sub .case-row p {
+  max-width: 44em;
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--lz-ink-2);
+}
+
+.lz-sub .case-row blockquote {
+  max-width: 34em;
+  margin: 16px 0 0;
+  padding-left: 18px;
+  border-left: 2px solid var(--lz-ink);
+  font-family: var(--num);
+  font-size: 18.5px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--lz-ink);
+}
+
+.lz-sub .case-row p.fine {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--lz-muted);
+}
+
+@media (max-width: 860px) {
+  .lz-sub .case-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Two ways on, side by side under the named sessions. */
+.lz-sub .evidence .links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  margin-top: 16px;
+}
+
+.lz-sub .evidence .links-row .lz-link {
+  margin-top: 0;
+}
+
 /* The page of the brief where a line of evidence is shown in full. */
 .lz-sub .shifts .e .pg {
   display: block;

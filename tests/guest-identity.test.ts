@@ -43,6 +43,7 @@ describe("canonical identity presentation", () => {
     const p = { ...profile("Alpha", "alpha", "abcdefghijk"), entity_type, entity_id: "guest:alpha" };
     const detail = buildGuestStructuredData(p, "Synthetic description");
     const list = buildGuestsListStructuredData([p], "Synthetic description");
+    expect(detail["@type"]).toBe(entity_type === "person" ? "ProfilePage" : "CollectionPage");
     expect(detail.mainEntity["@type"]).toBe(entity_type === "person" ? "Person" : "Thing");
     expect(list.itemListElement[0].item["@type"]).toBe(entity_type === "person" ? "Person" : "Thing");
     for (const value of [detail, list]) {

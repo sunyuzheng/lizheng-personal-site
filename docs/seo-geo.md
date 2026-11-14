@@ -1,6 +1,6 @@
 # lizheng.ai SEO / GEO 维护说明
 
-最后核对：2026-09-30。
+最后核对：2026-11-13。
 
 ## 原则
 
@@ -21,6 +21,7 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 | 中文                 | 英文                    | 任务                                     |
 | -------------------- | ----------------------- | ---------------------------------------- |
 | `/`                  | `/en`                   | 人物主线                                 |
+| `/courses`           | `/en/courses`           | 课代表立正与鸭哥的AI课程、四门课学习路线与官方报名入口 |
 | `/about`             | `/en/about`             | 中性事实、履历、项目关系与口径澄清       |
 | `/books`             | `/en/books`             | 三本书与Founding Member领取入口            |
 | `/collab`            | `/en/collab`            | 演讲、企业项目与长期合作                 |
@@ -76,3 +77,13 @@ GEO 不是一套独立于 SEO 的标签或提示词。对这个站最重要的�
 不要在本仓库里用 canonical 假装能解决站外冲突。Circle 的社区访问权限也不能仅靠导航隐藏或 `robots.txt` 代替。
 
 后续最值得新增的内容不是批量 SEO 文章，而是少量有原始日期、证据、后续发展和自我修正的观点页。在原始文字稿与证据未整理好之前，不为了“GEO”凭空生成。
+
+
+## 课程搜索与嘉宾结构化数据
+
+- `/courses`与`/en/courses`承接「课代表立正的AI课程」「立正AI课程」「AI Builders」等查找课程的需求。先说清讲师、学习路线、适合人群、自学与英文直播方式，再直接链接`https://ai-builders.com/`与Maven；价格和交易条件继续由课程官网维护。
+- 四门课的角色和课程／Stay权限关系以`course-marketing-system/01_offers/ai-builders-2027-offer.md`与`05_assets/current-course-curriculum-ledger.json`为源。页面正文与JSON-LD共用`shared/courses.ts`，预渲染进入初始HTML，并出现在导航、sitemap与llms.txt。
+- 课程的跨站实体标识沿用`https://ai-builders.com/#course`，立正沿用`https://www.lizheng.ai/#person`，鸭哥沿用课程站的`https://ai-builders.com/#wangyan`。不另造同一课程的销售实体。
+- 课程页出站点击记录为Vercel Analytics的`Course Link`，只含目标站、hero／enrollment位置和语言。
+- 嘉宾条目只有`entity_type=person`使用`ProfilePage`与`og:type=profile`。组合、虚拟角色、匿名标签或未决身份保留其`Thing`实体，以`CollectionPage`整理相关节目，避免为满足人物富结果而伪造`Person`。
+- 部署后核对新页面及受影响嘉宾页的初始HTML，再在Search Console验证ProfilePage修复、检查新课程页的收录与查询表现。已发现未收录不等于页面代码故障；不要承诺提交后即收录或排名。

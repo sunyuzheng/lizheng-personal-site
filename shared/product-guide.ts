@@ -97,6 +97,7 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
       distinction:
         "需要完整学习主线和终身课程权限时，选这个计划；课程所含的12个月会员无需再重复购买。",
       links: [
+        { label: "课程介绍与学习顺序", href: "/courses" },
         { label: "课程、内容与购买方案", href: "https://ai-builders.com/" },
         {
           label: "英文直播班与当前班期",
@@ -211,6 +212,7 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
           label: "Curriculum and purchase options",
           href: "https://ai-builders.com/",
         },
+        { label: "Course introduction and learning path", href: "/courses" },
         {
           label: "English live cohorts on Maven",
           href: "https://maven.com/superlinear/aibuilders",

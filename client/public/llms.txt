@@ -83,6 +83,8 @@ Later dated calls, each with its original record: in January 2025, that agentic 
 
 ## Canonical Pages
 
+- [课代表立正的AI课程](https://www.lizheng.ai/courses) / [AI courses with Yuzheng Sun and Yage](https://www.lizheng.ai/en/courses): AI Builders 2027, its four-course learning path, prerequisites, self-paced formats, and the separate Maven English live cohort. Course details and enrollment: https://ai-builders.com/.
+
 Chinese is the site's default language; English versions live under /en.
 
 - [Products & resources](https://www.lizheng.ai/en/for-agents): How Yuzheng Sun, Superlinear Academy, its free community, AI Builders, Stay Superlinear, and enterprise programs fit together. [中文](https://www.lizheng.ai/for-agents).

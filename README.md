@@ -14,6 +14,7 @@ The site connects that belief to the intellectual foundations Yuzheng has actual
 - **About:** factual biography, career and project relationships, and the full defining-work philosophy relocated from the homepage. The homepage curates; this page provides depth.
 - **Books:** `/books` (Chinese) and `/en/books` (English) introduce the three books and link to Founding Member previews. `books.lizheng.ai` redirects to the Chinese page; the former `/book` and `/en/book` URLs redirect to their plural replacements. Public Chinese chapters and book assets retain their existing `/book/…` paths.
 - **Products & resources:** `/for-agents` and `/en/for-agents` explain the product family, compare community/course/membership/enterprise options, and link to public source material for readers and AI assistants. See [`docs/product-guide.md`](docs/product-guide.md) for fact owners and maintenance.
+- **AI courses:** `/courses` and `/en/courses` introduce the four-course learning path co-taught by Yuzheng and Yage, link to the official course site and Maven, and explain how courses differ from membership.
 - **AI Builders:** a long-term learning system, co-taught with Yage, that turns understanding across models, engineering, products, and organizations into capability learners can practice, correct, and transfer.
 - **Stay Superlinear membership:** the paid year-round content and practitioner environment.
 - **Superlinear Academy:** the open, free learning and builder community.

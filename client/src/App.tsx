@@ -19,6 +19,7 @@ import Podcast from "./pages/Podcast";
 import GuestInvitation from "./pages/GuestInvitation";
 import Decks from "./pages/Decks";
 import ProductGuide from "./pages/ProductGuide";
+import Courses from "./pages/Courses";
 import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "wouter";
 
@@ -102,6 +103,8 @@ function Router() {
         <Route path={"/en"} component={Home} />
         <Route path={"/about"} component={About} />
         <Route path={"/en/about"} component={About} />
+        <Route path={"/courses"} component={Courses} />
+        <Route path={"/en/courses"} component={Courses} />
         <Route path={"/for-agents"} component={ProductGuide} />
         <Route path={"/en/for-agents"} component={ProductGuide} />
         <Route path={"/guests/:slug"}>

@@ -134,7 +134,7 @@ export default function GuestDetail({ slug }: GuestDetailProps) {
   useEffect(() => {
     if (!guest) return;
     const meta = getGuestPageMeta(guest);
-    return applyPageSeo({ ...meta, type: "profile", jsonLd: buildGuestStructuredData(guest, meta.description) });
+    return applyPageSeo({ ...meta, type: guest.entity_type === "person" ? "profile" : "website", jsonLd: buildGuestStructuredData(guest, meta.description) });
   }, [guest]);
 
   if (loading || error || !guest) {

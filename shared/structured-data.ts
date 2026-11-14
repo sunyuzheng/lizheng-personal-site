@@ -764,7 +764,7 @@ export function buildGuestStructuredData(
 ) {
   return {
     "@context": "https://schema.org",
-    "@type": "ProfilePage",
+    "@type": guestSchemaType(guest) === "Person" ? "ProfilePage" : "CollectionPage",
     name: `${guest.guest_name} · 课代表立正`,
     description,
     url: guest.share_url,

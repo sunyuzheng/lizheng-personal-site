@@ -782,9 +782,8 @@ const zh = {
       {
         kind: "付费课程",
         title: "AI Builders",
-        // Who Yage is, in one clause (the membership fact sheet: 论文近40篇，发表于CVPR、NeurIPS、
-        // KDD). The card stays the height of the two beside it.
-        body: "四门课，从AI原理、动手构建、检验结果，到做出能持续运行的系统。和鸭哥一起讲，他有近40篇AI顶会论文。",
+        // Name the instructors and courses for visitors arriving from branded searches.
+        body: "我和鸭哥主讲的AI课程。从AI Coding入门，到AI Builders实战、AI Architect项目课，另含Agentic AI选修。",
         stats: [
           ["3,000+", "付费学员"],
           ["5.0", "Maven评分"],
@@ -1262,7 +1261,7 @@ const en: HomeCopy = {
       {
         kind: "Courses",
         title: "AI Builders",
-        body: "Four courses: AI foundations, hands-on building, checking results, and systems that keep working. Co-taught with Yage, who has nearly 40 papers at top AI conferences.",
+        body: "AI courses I co-teach with Yage. Start with AI Coding, apply AI Builders to real work, and build your own system in AI Architect. Agentic AI is an elective.",
         stats: [
           ["3,000+", "paying learners"],
           ["5.0", "on Maven"],

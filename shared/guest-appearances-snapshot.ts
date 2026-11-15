@@ -11,7 +11,7 @@ export const guestAppearances = [
     "date": "2026.10.29",
     "show": "听懂涨声",
     "title": "离开大厂之后，我才发现，没有Fake Work的工作其实很开心｜对话课代表立正",
-    "titleEn": "Yuzheng Sun × Yang Tiannan (live recording)",
+    "titleEn": "After leaving big tech, I found that work without fake work is actually fun · with Yuzheng Sun",
     "href": "https://www.xiaoyuzhoufm.com/episode/6ae1e359c96c8942ec13bb1f",
     "format": "guest"
   },
@@ -33,7 +33,7 @@ export const guestAppearances = [
     "date": "2026.10.21",
     "show": "灵感爆棚",
     "title": "从「会工作」到「会赚钱」，建立自己的事业",
-    "titleEn": "Yuzheng Sun × 灵感爆棚 (live recording)",
+    "titleEn": "From knowing how to work to knowing how to earn: building a business of your own",
     "href": "https://www.xiaoyuzhoufm.com/episode/6ad8ce0cb381c0fcba19b6f8",
     "format": "guest"
   },

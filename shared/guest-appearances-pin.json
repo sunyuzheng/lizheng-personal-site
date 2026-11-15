@@ -3,10 +3,10 @@
   "repository": "sunyuzheng/lizheng-open-context",
   "source_path": "catalog/guest-appearances.jsonl",
   "source_status": "committed-release",
-  "upstream_commit": "59aa1bdb6397984f8ce18e3343e95efd04f0b320",
-  "manifest_sha256": "aa566a45271f5918ac22c1fd81019427c0a217ef77166df3d5e806bd3db6bc9a",
-  "catalog_sha256": "1b985241ca0a51b952c701de913003e1be2e1d6752534323535b5c7a3056a992",
+  "upstream_commit": "5807c87c298c8b3cbb3ad6c1332bd14122a8fdaf",
+  "manifest_sha256": "0e9bdbdd4c308f9dcf330e14c5a9a7cbba2ff47d6857ec1b13be44950989e16d",
+  "catalog_sha256": "b922436bb8829dd98458df39bf1834eccf6c6be031f36cc2e7ac949dc4bd03a4",
   "catalog_matches_manifest": true,
-  "snapshot_sha256": "d128fc9b0c0fb5d3990e1666c2b27a1ce5c606d94aa551e1532def2a95241cff",
+  "snapshot_sha256": "1ae27443ca6f9320c7d7b0fb47e344ffb70aecbaac6793ebacc1d2bb9b060237",
   "row_count": 33
 }

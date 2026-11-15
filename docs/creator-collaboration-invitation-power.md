@@ -121,11 +121,11 @@ Hero以后立刻放Koji与屠龙，而不是先让读者穿过履历和话题卡
 
 ### 做客记录
 
-- **名单**仍然只来自 Open Context 的 `catalog/guest-appearances.jsonl`。它不会自动同步（自动流程只跟嘉宾目录），要手动跑 `pnpm sync:guest-appearances --commit <提交> --manifest-sha256 <清单哈希> --apply`。这次从 28 期同步到 33 期（Open Context `59aa1bd`）。
+- **名单**仍然只来自 Open Context 的 `catalog/guest-appearances.jsonl`。它不会自动同步（自动流程只跟嘉宾目录），要手动跑 `pnpm sync:guest-appearances --commit <提交> --manifest-sha256 <清单哈希> --apply`。这次从 28 期同步到 33 期（Open Context `59aa1bd`，改英文标题后是 `5807c87`）。
 - **封面和订阅数**是页面这一层加的，不进 Open Context：`python3 scripts/sync-appearance-shows.py` 读名单里每个小宇宙单集的公开页面，把节目封面存成 240 像素的图，订阅数和采集日期写进 `shared/guest-appearance-shows.ts`。名单同步以后跑一次。不在小宇宙的节目（刘润读书会、常青朋友、上桌！、不止牛马、西雅图中文电台）没有封面，名单里显示节目名的第一个字。
 - **放大的八个节目**在 `CreatorCollab.tsx` 的 `FEATURED_APPEARANCES`，按小宇宙订阅数从高到低：硅谷101、科技早知道、中国好生意、听懂涨声、商业WHY酱、十字路口、屠龙大实话、AI炼金术。只放订阅数，不放单集播放：小节目的单集播放只有几十，放出来会拉低整体印象；订阅数回答的是「这档节目有多少人听」。
 - 导语里的三个事实要跟着名单核对：四档节目订阅超过 19 万；INDIGO TALK、The Build Log、西雅图中文电台各两次。
-- 已知的小问题：英文页上听懂涨声和灵感爆棚两期的英文标题还写着 “(live recording)”，链接已经是正式上线的那一期。这是 Open Context 里 `title_en` 没跟着改，要在那边修。
+- 英文页上的英文标题也来自 Open Context 的 `title_en`。11-14 上线当天修过一处：听懂涨声和灵感爆棚两期链接已是正式上线的那一期，英文标题还写着 “(live recording)”，在 Open Context `5807c87` 改掉后重新同步。
 
 ### 学院里的嘉宾
 
@@ -141,7 +141,7 @@ Hero以后立刻放Koji与屠龙，而不是先让读者穿过履历和话题卡
 | Rita Sun | 经济学博士、软件公司数据分析师；只会 SQL；GPT-5 发布时担心被取代；从安卓小部件做起；两次当上数据团队的月度 AI Champion | 公开帖《小白做了个非常简单的 Android Widget》；GPT-5 和 AI Champion 两处来自会员区的帖子《从 SQL monkey 到 AI Champion》，经社区证据库整理 |
 | Josh Zhang | 东京财务架构顾问；不会写代码；一年多里做出旅行社 ERP 等三个系统；「测试通过」其实没跑 | 11-14 在征集帖《长期招募！Superlinear带你上节目》下的公开报名留言，话题是他自己列的 |
 
-**上线前要确认的：**
+**当时列的上线前要确认的事（立正 11-14 看过后决定两段一起上线，下面三件留作上线后跟进）：**
 
 1. 五位都还不知道自己被放在这一页上。Josh 是自己报名进嘉宾池的，Venus 同意过另一种用途；Brian、Challen、Rita 没有问过。上线前由喵老师逐个说一声，谁不愿意就换人。
 2. Rita 那两处来自会员区帖子，证据库里记着「由本人决定哪些可以公开」。

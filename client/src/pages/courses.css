@@ -43,7 +43,8 @@
 }
 .course-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* Three courses sit in one row; a 2x2 grid would leave an empty cell. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 36px;
   gap: 1px;
   background: var(--lz-line-2);
@@ -131,6 +132,11 @@
 .course-free {
   margin-top: 30px;
   font-size: 14px;
+}
+@media (max-width: 900px) {
+  .course-grid {
+    grid-template-columns: 1fr;
+  }
 }
 @media (max-width: 640px) {
   .course-grid,

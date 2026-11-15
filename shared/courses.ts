@@ -87,7 +87,7 @@ export const COURSE_COPY = {
     faqs: [
       {
         q: "AI Builders是一个课程，还是三门课的名字？",
-        a: "两者都有。AI Builders 2027是完整学习计划的品牌，包含上面的三门课；AI Builders也是其中第二门主线课的名字。课程官网有每门课的完整目录。",
+        a: "两者都有。AI Builders 2027是完整学习计划的品牌，包含上面的三门课；AI Builders也是其中第二门课的名字。课程官网有每门课的完整目录。",
       },
       {
         q: "是自学，还是直播？",

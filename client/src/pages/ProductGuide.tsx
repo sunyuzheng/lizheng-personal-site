@@ -41,11 +41,11 @@ const copy = {
     overlap: [
       {
         title: "想走完整学习主线",
-        text: "AI Builders提供四门课的终身权限与后续更新，当前另含12个月Stay。先选课程，就不用再为这12个月重复买会员。",
+        text: "AI Builders提供三门课的终身权限与后续更新，当前另含12个月Stay。先选课程，就不用再为这12个月重复买会员。",
       },
       {
         title: "想持续学、持续交流",
-        text: "可以独立加入Stay，不需要先上AI Builders。会员期内含AI Coding、Agentic AI和《真本事》课程；AI Builders与AI Architect旗舰课由完整学习计划提供。",
+        text: "可以独立加入Stay，不需要先上AI Builders。会员期内含AI Coding和《真本事》课程；AI Builders与AI Architect旗舰课由完整学习计划提供。",
       },
     ],
     resourcesTitle: "读内容，也找到原始来源。",
@@ -116,11 +116,11 @@ const copy = {
     overlap: [
       {
         title: "For the complete learning path",
-        text: "AI Builders provides lifetime access and future updates to all four courses, plus 12 months of Stay. Those included membership months do not need to be purchased separately.",
+        text: "AI Builders provides lifetime access and future updates to all three courses, plus 12 months of Stay. Those included membership months do not need to be purchased separately.",
       },
       {
         title: "For ongoing learning and discussion",
-        text: "Join Stay independently; prior AI Builders enrollment is not required. Member courses include AI Coding, Agentic AI, and 真本事 during membership. The flagship AI Builders and AI Architect courses belong to the complete learning plan.",
+        text: "Join Stay independently; prior AI Builders enrollment is not required. Member courses include AI Coding and 真本事 during membership. The flagship AI Builders and AI Architect courses belong to the complete learning plan.",
       },
     ],
     resourcesTitle: "Read the work. Follow the sources.",

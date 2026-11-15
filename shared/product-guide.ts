@@ -84,13 +84,13 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
       category: "完整学习计划",
       need: "系统学懂AI，把它用进真实工作，做出可靠的应用。",
       description:
-        "立正与鸭哥共同教学。主线是AI Coding → AI Builders → AI Architect，Agentic AI作为选修穿插学习，从第一次动手走向可靠交付与自己的核心项目。",
+        "立正与鸭哥共同教学。按AI Coding → AI Builders → AI Architect的顺序学，从第一次动手走向可靠交付与自己的核心项目。",
       audience:
         "已有专业积累的技术与非技术学习者；不要求先成为程序员，需要愿意动手做项目。",
       format:
-        "按自己的节奏自学。四门中文课程；AI Builders与AI Architect另含英文版。需要英文直播和固定班期，可另看Maven。",
+        "按自己的节奏自学。三门中文课程；AI Builders与AI Architect另含英文版。需要英文直播和固定班期，可另看Maven。",
       access:
-        "一次购买，四门课终身权限与后续更新；当前另含12个月Stay Superlinear会员。会员到期不影响课程权限。",
+        "一次购买，三门课终身权限与后续更新；当前另含12个月Stay Superlinear会员。会员到期不影响课程权限。",
       price: "$1,048 / ¥7,145 · 一次购买",
       priceNote:
         "北京时间2027年1月1日起，美元价格调整为$1,299。当前自学计划提供购买后14天内无理由退款。",
@@ -117,12 +117,12 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
       format:
         "以中文内容与交流为主；线上活动、讨论、回放与课程，也可以按自己的节奏阅读和使用。",
       access:
-        "会员有效期内使用当期内容与权益。含AI Coding、Agentic AI和《真本事》课程；不含AI Builders与AI Architect旗舰课。",
+        "会员有效期内使用当期内容与权益。含AI Coding和《真本事》课程；不含AI Builders与AI Architect旗舰课。",
       price: "Founding年费 $149 / ¥999",
       priceNote:
         "前3,000位新年费会员适用；连续年费续订保留Founding价格。此后新年费为$299 / ¥1,999。季度与14天付费体验方案见官网，外部工具权益按方案区分。",
       distinction:
-        "希望持续获得内容、活动与同行交流时，可直接加入Stay；完整四门课的终身权限由AI Builders计划提供。",
+        "希望持续获得内容、活动与同行交流时，可直接加入Stay；完整三门课的终身权限由AI Builders计划提供。",
       links: [
         {
           label: "会员内容与当前方案",
@@ -195,13 +195,13 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
       category: "STRUCTURED LEARNING",
       need: "Understand AI systematically and build reliable work with it.",
       description:
-        "Co-taught by Yuzheng Sun and Yage. Follow AI Coding → AI Builders → AI Architect, with Agentic AI as an elective, progressing from a first build to reliable delivery and a substantial project of your own.",
+        "Co-taught by Yuzheng Sun and Yage. Follow AI Coding → AI Builders → AI Architect, progressing from a first build to reliable delivery and a substantial project of your own.",
       audience:
         "Technical and non-technical professionals with domain experience. Prior programming expertise is not required; hands-on project work is part of the learning.",
       format:
-        "Self-paced. Four courses in Chinese; AI Builders and AI Architect also have English versions. Maven offers a separate scheduled English live-cohort option.",
+        "Self-paced. Three courses in Chinese; AI Builders and AI Architect also have English versions. Maven offers a separate scheduled English live-cohort option.",
       access:
-        "One purchase includes lifetime access and future updates to all four courses, plus 12 months of Stay Superlinear. Course access continues after membership ends.",
+        "One purchase includes lifetime access and future updates to all three courses, plus 12 months of Stay Superlinear. Course access continues after membership ends.",
       price: "$1,048 / ¥7,145 · one-time purchase",
       priceNote:
         "The USD price becomes $1,299 on January 1, 2027, Beijing time. The current self-paced plan has a 14-day, no-reason refund policy.",
@@ -231,7 +231,7 @@ export const GUIDE_PRODUCTS: Record<SiteLang, GuideProduct[]> = {
       format:
         "Primarily Chinese content and discussion, with online activities, recordings, and courses. Reading and using resources at your own pace is also a complete way to participate.",
       access:
-        "Benefits are available during membership. Current member courses include AI Coding, Agentic AI, and 真本事; the flagship AI Builders and AI Architect courses are separate.",
+        "Benefits are available during membership. Current member courses include AI Coding and 真本事; the flagship AI Builders and AI Architect courses are separate.",
       price: "Founding annual plan: $149 / ¥999",
       priceNote:
         "Available to the first 3,000 new annual members; continuous annual renewals retain the Founding price. Later new annual plans are $299 / ¥1,999. See the official site for quarterly and 14-day paid trial options; external-tool benefits vary by plan.",

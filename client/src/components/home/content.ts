@@ -783,7 +783,7 @@ const zh = {
         kind: "付费课程",
         title: "AI Builders",
         // Name the instructors and courses for visitors arriving from branded searches.
-        body: "我和鸭哥主讲的AI课程。从AI Coding入门，到AI Builders实战、AI Architect项目课，另含Agentic AI选修。",
+        body: "我和鸭哥主讲的AI课程。从AI Coding入门，到AI Builders实战、AI Architect项目课。",
         stats: [
           ["3,000+", "付费学员"],
           ["5.0", "Maven评分"],
@@ -1261,7 +1261,7 @@ const en: HomeCopy = {
       {
         kind: "Courses",
         title: "AI Builders",
-        body: "AI courses I co-teach with Yage. Start with AI Coding, apply AI Builders to real work, and build your own system in AI Architect. Agentic AI is an elective.",
+        body: "AI courses I co-teach with Yage. Start with AI Coding, apply AI Builders to real work, and build your own system in AI Architect.",
         stats: [
           ["3,000+", "paying learners"],
           ["5.0", "on Maven"],

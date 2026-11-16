@@ -22,7 +22,14 @@ function GuestCard({ guest, lang }: { guest: Guest; lang: Lang }) {
         decoding="async"
       />
       <b>{guest.name}</b>
-      <span>{guest.role}</span>
+      {/* Break only after a middle dot or an enumeration comma, so a role never ends on one stranded character. */}
+      <span>
+        {guest.role.split(/(?<= · )|(?<=、)/).map((part, index) => (
+          <span key={index} className="phrase">
+            {part}
+          </span>
+        ))}
+      </span>
     </>
   );
   return guest.slug ? (

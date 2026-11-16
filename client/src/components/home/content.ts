@@ -783,7 +783,7 @@ const zh = {
         kind: "付费课程",
         title: "AI Builders",
         // Name the instructors and courses for visitors arriving from branded searches.
-        body: "我和鸭哥主讲的AI课程。从AI Coding入门，到AI Builders实战、AI Architect项目课。",
+        body: "我和鸭哥主讲的三门自学课：一个晚上上手，约40小时搞懂底层原理，再做一个自己的项目。",
         stats: [
           ["3,000+", "付费学员"],
           ["5.0", "Maven评分"],
@@ -794,7 +794,7 @@ const zh = {
       {
         kind: "年度会员",
         title: "Stay Superlinear",
-        body: "嘉宾大师课、深度分析，鸭哥和我每月直播答疑，带着你自己的问题来。",
+        body: "每天Deep News拆AI热点，鸭哥和我每月直播答疑，每年12+场闭门大师课。带着你自己的问题来。",
         stats: [["12+", "场大师课/年"]],
         cta: "了解会员",
         href: LINKS.stay,
@@ -1261,7 +1261,7 @@ const en: HomeCopy = {
       {
         kind: "Courses",
         title: "AI Builders",
-        body: "AI courses I co-teach with Yage. Start with AI Coding, apply AI Builders to real work, and build your own system in AI Architect.",
+        body: "Three self-paced courses I co-teach with Yage: get started in one evening, spend about 40 hours on how AI really works, then build a project of your own.",
         stats: [
           ["3,000+", "paying learners"],
           ["5.0", "on Maven"],
@@ -1272,7 +1272,7 @@ const en: HomeCopy = {
       {
         kind: "Membership",
         title: "Stay Superlinear",
-        body: "Guest masterclasses, in-depth analysis, and a monthly live Q&A with Yage and me.",
+        body: "Deep News on the day's AI stories, a monthly live Q&A with Yage and me, and 12+ closed-door masterclasses a year.",
         stats: [["12+", "masterclasses a year"]],
         cta: "Explore the membership",
         href: LINKS.stay,

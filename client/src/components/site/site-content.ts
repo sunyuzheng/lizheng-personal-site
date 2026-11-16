@@ -17,6 +17,8 @@ export const HOME_SECTIONS = [
   { id: "conversations", zh: "对话", en: "Conversations" },
   { id: "judgment", zh: "判断", en: "Calls" },
   { id: "thinking", zh: "文章", en: "Writing" },
+  // The paid courses and the membership sit near the end of the page; this is the way to them from the top.
+  { id: "join", zh: "课程与会员", en: "Courses" },
 ] as const;
 
 export const SITE_PAGES: Array<{

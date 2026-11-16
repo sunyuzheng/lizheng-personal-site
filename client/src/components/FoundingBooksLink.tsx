@@ -26,7 +26,7 @@ export default function FoundingBooksLink({
     >
       <p className="text-[14px] leading-6 text-lz-ink-2">
         {lang === "zh"
-          ? "三本书都有会员预览版。Founding Member登录学院账号验证后，可以读，也可以下载。"
+          ? "三本书都有会员预览版。超线性学院的创始会员（Founding Member）登录学院账号验证后，可以读，也可以下载。"
           : "Member previews of all three books. Verify your Academy account to read and download."}
       </p>
       <a href={FOUNDING_BOOKS_URL} className="lz-link min-h-11">

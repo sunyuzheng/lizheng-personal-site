@@ -65,6 +65,26 @@ def test_finish_once_and_no_resurrection_without_start(r):
     assert json.loads(r.hget(P+'record:'+rid(1),'answer'))['summary']=='合成回答'
     assert r.ttl(P+'record:'+rid(1))==-1
 
+def test_trace_is_saved_atomically_only_by_first_finish_and_not_backfilled(r):
+    trace = json.dumps({'v': 1, 'synthetic_trace_marker': 'metadata only'})
+    def finish_trace(value):
+        return r.eval(SCRIPTS['OPS_FINISH_SCRIPT'], 2, P+'record:'+rid(1), P+'total',
+            'answered', 1200, P, '{"status":"answered","summary":"synthetic"}', '', '', rid(1),
+            '2026-10-02T03:00:00.000Z', 1790870500000, value)
+    assert finish_trace(trace) == [0, '', '']
+    assert not r.keys('*')
+    start(r)
+    assert finish_trace(trace) == [1, '', D]
+    assert r.hget(P+'record:'+rid(1), 'retrieval_trace_json') == trace
+    assert finish_trace('different trace') == [0, '', D]
+    assert r.hget(P+'record:'+rid(1), 'retrieval_trace_json') == trace
+    assert r.hget(P+'total', 'completed') == '1'
+    assert r.ttl(P+'record:'+rid(1)) == -1
+    r.flushall()
+    start(r); finish(r)
+    assert finish_trace(trace) == [0, '', D]
+    assert not r.hexists(P+'record:'+rid(1), 'retrieval_trace_json')
+
 
 def test_v4_intake_keeps_notice_background_and_situation(r):
     assert start(r, notice=('v4', '1', '合成处境')) == 1

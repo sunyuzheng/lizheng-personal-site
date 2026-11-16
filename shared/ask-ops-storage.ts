@@ -2,6 +2,7 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { AccessError, redis } from "./ask-access.js";
 import { archivedAnswer, type ArchivedAnswer } from "./ask-archive-answer.js";
+import { retrievalTrace, type RetrievalTrace } from "./ask-retrieval-trace.js";
 export const OPS_BODY_LIMIT = 262_144;
 
 export const OPS_PREFIX = "ask-ops:{v3}:";
@@ -43,6 +44,7 @@ export type OpsFinish = {
   error_code: string | null;
   // The English word the model gave an answered question, for its page's address (2026-10-14).
   share_word?: string;
+  retrieval_trace?: RetrievalTrace | null;
 };
 /** One to four lowercase English words: the word of a page's address (ask.lizheng.ai/s/<day>/<word>). */
 export const PAGE_WORD = /^[a-z0-9]{1,40}(?:-[a-z0-9]{1,40}){0,3}$/;
@@ -135,9 +137,7 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
       ? "notice_version" in r
         ? [...start, "notice_version", "has_background", "context"]
         : start
-      : "share_word" in r
-        ? [...finish, "share_word"]
-        : finish;
+      : [...finish, ...("share_word" in r ? ["share_word"] : []), ...("retrieval_trace" in r ? ["retrieval_trace"] : [])];
   if (
     JSON.stringify(Object.keys(r).sort()) !== JSON.stringify(keys.sort()) ||
     r.v !== 3 ||
@@ -146,6 +146,9 @@ export function opsEvent(body: Buffer, now = Date.now()): OpsStart | OpsFinish {
   )
     fail();
   if (r.event === "finish") {
+    if ("retrieval_trace" in r) {
+      try { r.retrieval_trace = retrievalTrace(r.retrieval_trace); } catch { fail(); }
+    }
     if (
       !(OPS_STATUSES as readonly string[]).includes(r.status) ||
       !Number.isInteger(r.duration_ms) ||
@@ -269,6 +272,7 @@ if row[5] and redis.call('EXISTS',ARGV[3]..'conversation-redacted:'..row[5]) == 
 local status,day,done=row[1],row[2] or '',0
 if status == 'generating' then
  redis.call('HSET',KEYS[1],'status',ARGV[1],'duration_ms',ARGV[2],'answer',ARGV[4],'error_code',ARGV[5])
+ if (ARGV[10] or '') ~= '' then redis.call('HSET',KEYS[1],'retrieval_trace_json',ARGV[10]) end
  for _,key in ipairs({KEYS[2],ARGV[3]..'day:'..day}) do
   redis.call('HINCRBY',key,'generating',-1)
   redis.call('HINCRBY',key,ARGV[1],1)
@@ -363,6 +367,7 @@ export async function storeOpsEvent(
       r.record_id,
       new Date(now).toISOString(),
       now,
+      r.retrieval_trace ? JSON.stringify(r.retrieval_trace) : "",
     ]);
     if (
       !Array.isArray(result) ||

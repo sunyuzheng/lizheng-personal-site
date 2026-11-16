@@ -17,6 +17,7 @@ export default defineConfig({
       "tests/ask-usage.test.ts",
       "tests/ask-archive.test.ts",
       "tests/ask-attribution-archive.test.ts",
+      "tests/ask-retrieval-trace.test.ts",
       "tests/ask-attribution-render.test.ts",
       "tests/ask-public-page.test.ts",
       "tests/ask-share.test.ts",

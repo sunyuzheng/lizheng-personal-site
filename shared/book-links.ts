@@ -12,3 +12,5 @@ export const FLP_READ_URL = "https://makewhatlasts.com/#read";
 export const FLP_AMAZON_URL = "https://www.amazon.com/dp/B0HNQW9N9G";
 
 export const FOUNDING_BOOKS_URL = "https://coffee.staysuperlinear.com/books";
+
+export const WHITE_LYU_AMAZON_URL = "https://www.amazon.com/dp/B0HP8C7YNN";

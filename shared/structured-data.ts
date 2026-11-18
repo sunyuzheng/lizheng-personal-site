@@ -1,3 +1,4 @@
+import { WHITE_LYU_AMAZON_URL } from "./book-links";
 import {
   FLP_AMAZON_URL,
   FLP_BOOK_URL,
@@ -402,7 +403,18 @@ function zhenbenshiBookNode() {
 }
 
 export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
-  const name = lang === "en" ? "Books by Yuzheng Sun" : "孙煜征的书";
+  const name = lang === "en" ? "Books and publishing" : "书与出版";
+  const lyuBook = {
+    "@type": "Book",
+    "@id": `${SITE_URL}/books#white-lyu`,
+    name: "Content Creation from Zero to One",
+    author: { "@type": "Person", name: "White Lyu", alternateName: "吕白" },
+    publisher: { "@type": "Organization", name: "Superlinear Press" },
+    isbn: "9798982282026",
+    inLanguage: "en",
+    url: WHITE_LYU_AMAZON_URL,
+    image: `${SITE_URL}/home/books/white-lyu-cover.webp`,
+  };
   const flpBook = flpBookNode();
   const growthBook = growthBookNode();
   const zhenbenshiBook = zhenbenshiBookNode();
@@ -421,7 +433,7 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
         dateModified: BOOKS_PAGE_META[lang].lastModified,
         mainEntity: {
           "@type": "ItemList",
-          numberOfItems: 3,
+          numberOfItems: 4,
           itemListElement: [
             {
               "@type": "ListItem",
@@ -438,6 +450,7 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
               position: 3,
               item: { "@id": zhenbenshiBook["@id"] },
             },
+            { "@type": "ListItem", position: 4, item: { "@id": lyuBook["@id"] } },
           ],
         },
       },
@@ -446,6 +459,7 @@ export function buildBooksStructuredData(lang: SiteLang, canonical: string) {
       flpBook,
       growthBook,
       zhenbenshiBook,
+      lyuBook,
       breadcrumbNode(
         canonical,
         name,

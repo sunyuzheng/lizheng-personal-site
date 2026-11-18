@@ -592,7 +592,7 @@ const staticPages: StaticPage[] = [
     lang: "en",
     jsonLd: buildBooksStructuredData("en", BOOKS_PAGE_META.en.canonical),
     alternates: booksAlternates,
-    imageAlt: "Yuzheng Sun at the Growth Data Analytics Playbook launch",
+    imageAlt: "Feels Like Progress, Growth Data Analytics Playbook, and Real Stuff on the bookshelf",
   },
   {
     route: "/books",
@@ -600,7 +600,7 @@ const staticPages: StaticPage[] = [
     lang: "zh",
     jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),
     alternates: booksAlternates,
-    imageAlt: "孙煜征在《Growth Data Analytics Playbook》新书活动现场",
+    imageAlt: "书架上的《Feels Like Progress》《Growth Data Analytics Playbook》和《真本事》",
   },
   {
     route: "/zbs",

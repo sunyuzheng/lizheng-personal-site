@@ -68,21 +68,21 @@ export const ABOUT_PAGE_META: Record<SiteLang, PageMeta> = {
 export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
   en: {
     title:
-      "Feels Like Progress, Growth Data Analytics Playbook & Real Stuff · Yuzheng Sun",
+      "Books and publishing · Yuzheng Sun & Superlinear Press",
     description:
-      "Feels Like Progress: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. And Yuzheng's Chinese book Real Stuff (真本事).",
+      "Feels Like Progress: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. Real Stuff (真本事) by Yuzheng Sun. White Lyu’s Content Creation from Zero to One from Superlinear Press.",
     canonical: "https://www.lizheng.ai/en/books",
-    ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-10-21",
+    ogImage: "https://www.lizheng.ai/home/books/reading-room-en.jpg",
+    lastModified: "2026-11-18",
   },
   zh: {
     title:
-      "Feels Like Progress、Growth Data Analytics Playbook与《真本事》｜孙煜征的书",
+      "书与出版｜孙煜征与Superlinear Press",
     description:
-      "英文书《Feels Like Progress》讲假工作、假学习，和AI时代什么会留下来。《Growth Data Analytics Playbook》由Mengying Li、Joe Kumar与孙煜征合著，中文版免费阅读和下载。另有孙煜征所著《真本事：从会工作到会赚钱》。",
+      "孙煜征的《Feels Like Progress》《真本事》，与Mengying Li、Joe Kumar合著的《Growth Data Analytics Playbook》，以及Superlinear Press为吕白出版《从零开始做内容》英文版的故事。",
     canonical: "https://www.lizheng.ai/books",
-    ogImage: "https://www.lizheng.ai/book/growth-data-launch.webp",
-    lastModified: "2026-11-10",
+    ogImage: "https://www.lizheng.ai/home/books/reading-room-zh.jpg",
+    lastModified: "2026-11-18",
   },
 };
 

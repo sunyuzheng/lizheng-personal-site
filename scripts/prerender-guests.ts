@@ -592,7 +592,7 @@ const staticPages: StaticPage[] = [
     lang: "en",
     jsonLd: buildBooksStructuredData("en", BOOKS_PAGE_META.en.canonical),
     alternates: booksAlternates,
-    imageAlt: "Feels Like Progress, Growth Data Analytics Playbook, and Real Stuff on the bookshelf",
+    imageAlt: "Yuzheng Sun’s three authored or coauthored books and White Lyu’s English edition on the bookshelf",
   },
   {
     route: "/books",
@@ -600,7 +600,7 @@ const staticPages: StaticPage[] = [
     lang: "zh",
     jsonLd: buildBooksStructuredData("zh", BOOKS_PAGE_META.zh.canonical),
     alternates: booksAlternates,
-    imageAlt: "书架上的《Feels Like Progress》《Growth Data Analytics Playbook》和《真本事》",
+    imageAlt: "书架上是孙煜征的三本著作与合著，以及 Superlinear Press 为吕白出版的英文版",
   },
   {
     route: "/zbs",

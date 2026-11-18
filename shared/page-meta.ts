@@ -72,7 +72,7 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
     description:
       "Feels Like Progress: fake work, fake learning, and what will last when AI can blow it all up. Growth Data Analytics Playbook by Mengying Li, Joe Kumar, and Yuzheng Sun. Real Stuff (真本事) by Yuzheng Sun. White Lyu’s Content Creation from Zero to One from Superlinear Press.",
     canonical: "https://www.lizheng.ai/en/books",
-    ogImage: "https://www.lizheng.ai/home/books/reading-room-en.jpg",
+    ogImage: "https://www.lizheng.ai/home/books/gallery-shelf-en.jpg",
     lastModified: "2026-11-18",
   },
   zh: {
@@ -81,7 +81,7 @@ export const BOOKS_PAGE_META: Record<SiteLang, PageMeta> = {
     description:
       "孙煜征的《Feels Like Progress》《真本事》，与Mengying Li、Joe Kumar合著的《Growth Data Analytics Playbook》，以及Superlinear Press为吕白出版《从零开始做内容》英文版的故事。",
     canonical: "https://www.lizheng.ai/books",
-    ogImage: "https://www.lizheng.ai/home/books/reading-room-zh.jpg",
+    ogImage: "https://www.lizheng.ai/home/books/gallery-shelf-zh.jpg",
     lastModified: "2026-11-18",
   },
 };

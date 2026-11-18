@@ -8,11 +8,11 @@ import {
 import { GROWTH_BOOK_AUTHORS } from "@shared/book-authors";
 import SiteFooter from "@/components/site/SiteFooter";
 import FoundingBooksLink from "@/components/FoundingBooksLink";
-import SiteHeader from "@/components/site/SiteHeader";
+import BookGallery from "@/components/book-gallery/BookGallery";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { withLanguage } from "@/lib/language-url";
 import { applyPageSeo } from "@/lib/seo";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { BOOKS_PAGE_META, languageAlternates } from "@shared/page-meta";
 import { buildBooksStructuredData } from "@shared/structured-data";
@@ -145,27 +145,6 @@ const books = {
   ],
 };
 
-const COVERS = {
-  flp: {
-    src: "/home/books/feels-like-progress.webp",
-    alt: "Feels Like Progress",
-    width: 460,
-    height: 736,
-  },
-  zbs: {
-    src: "/home/books/zhenbenshi.webp",
-    alt: "《真本事：从会工作到会赚钱》",
-    width: 460,
-    height: 652,
-  },
-  growth: {
-    src: "/home/books/gdap.webp",
-    alt: "Growth Data Analytics Playbook",
-    width: 460,
-    height: 711,
-  },
-} as const;
-
 const specimens = {
   flp: {
     src: "/home/books/flp-prologue.webp",
@@ -246,110 +225,10 @@ function SmartLink({
   );
 }
 
-function BookViewer({
-  initial,
-  onClose,
-}: {
-  initial: number;
-  onClose: () => void;
-}) {
-  const { lang } = useLanguage();
-  const zh = lang === "zh";
-  const [index, setIndex] = useState(initial);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const book = books[lang][index];
-  const id = book.id as keyof typeof COVERS;
-  const specimen = specimens[id];
-  const read =
-    id === "flp" || (id === "growth" && !zh) ? book.secondary : book.primary;
-
-  useEffect(() => {
-    const node = dialog.current;
-    node?.showModal();
-    return () => {
-      if (node?.open) node.close();
-    };
-  }, []);
-
-  return (
-    <dialog
-      className="book-viewer"
-      ref={dialog}
-      aria-labelledby="viewer-title"
-      onClose={event => {
-        if (!event.currentTarget.open) onClose();
-      }}
-      onClick={event => {
-        if (event.target === event.currentTarget) dialog.current?.close();
-      }}
-    >
-      <div className="viewer-body">
-        <div className="viewer-bar">
-          <span>
-            {book.id === "growth"
-              ? GROWTH_BOOK_AUTHORS.map(author =>
-                  zh && author.name === "Yuzheng Sun" ? "孙煜征" : author.name
-                ).join(" · ")
-              : zh
-                ? "孙煜征 著"
-                : "Yuzheng Sun"}
-          </span>
-          <button
-            type="button"
-            className="viewer-close"
-            onClick={() => dialog.current?.close()}
-            autoFocus
-            aria-label={
-              zh ? "合上书，返回书架" : "Close book and return to shelf"
-            }
-          >
-            ×
-          </button>
-        </div>
-        <div className={`viewer-leaves viewer-${id}`} key={id}>
-          <figure className="viewer-plate">
-            <img
-              className="viewer-art"
-              src={specimen.src}
-              alt={specimen[lang].alt}
-            />
-            <span className="viewer-board" aria-hidden="true">
-              <img src={COVERS[id].src} alt="" />
-            </span>
-            <figcaption>{specimen[lang].caption}</figcaption>
-          </figure>
-          <div className="viewer-story">
-            <h2 id="viewer-title" lang={id === "zbs" && zh ? "zh-CN" : "en"}>
-              {book.title}
-            </h2>
-            <p>{book.description}</p>
-            <SmartLink {...read} className="viewer-read">
-              {read.label}
-            </SmartLink>
-          </div>
-        </div>
-        <div className="viewer-nav">
-          <span aria-live="polite">
-            {zh ? "我的著作与合著" : "Authored & co-authored"} · {index + 1} /{" "}
-            {books[lang].length}
-          </span>
-          <button
-            type="button"
-            onClick={() => setIndex((index + 1) % books[lang].length)}
-          >
-            {zh ? "翻下一本" : "Next book"} <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      </div>
-    </dialog>
-  );
-}
-
 export default function Books() {
   const { lang } = useLanguage();
   const zh = lang === "zh";
   const [inside, setInside] = useState(false);
-  const [openBook, setOpenBook] = useState<number | null>(null);
 
   useEffect(() => {
     const meta = BOOKS_PAGE_META[lang];
@@ -371,102 +250,8 @@ export default function Books() {
       }
       lang={lang === "en" ? "en" : "zh-CN"}
     >
-      <SiteHeader current="book" />
-
       <main className="book-room">
-        <section className="book-desk">
-          <div className="wrap desk-inner">
-            <div className="desk-intro">
-              <h1>{zh ? "书与出版" : "Books & publishing"}</h1>
-              <p>
-                {zh
-                  ? "第一本英文书，我和两位同行写产品增长。后来，我们自己出版了《Feels Like Progress》，也为吕白做了《从零开始做内容》的英文版。"
-                  : "My first book in English was a growth handbook I wrote with two colleagues. We went on to publish Feels Like Progress ourselves, then brought White Lyu’s book on making content to readers in English."}
-              </p>
-              <a className="desk-press-link" href="#superlinear-press">
-                {zh
-                  ? "看Superlinear Press的出版故事"
-                  : "The story of Superlinear Press"}
-              </a>
-            </div>
-            <div className="desk-display">
-              <nav
-                className="desk-shelf"
-                aria-label={zh ? "选择一本著作" : "Choose a book"}
-              >
-                {books[lang].map((book, index) => {
-                  const cover = COVERS[book.id as keyof typeof COVERS];
-                  return (
-                    <a
-                      className={`desk-volume volume-${book.id}`}
-                      key={book.id}
-                      aria-haspopup="dialog"
-                      onPointerMove={event => {
-                        if (
-                          event.pointerType !== "mouse" ||
-                          window.matchMedia("(prefers-reduced-motion: reduce)")
-                            .matches
-                        )
-                          return;
-                        const cover = event.currentTarget;
-                        const bounds = cover.getBoundingClientRect();
-                        const across = Math.max(
-                          0,
-                          Math.min(
-                            1,
-                            (event.clientX - bounds.left) / bounds.width
-                          )
-                        );
-                        cover.style.setProperty(
-                          "--light-position",
-                          `${across * 100}%`
-                        );
-                        cover.style.setProperty(
-                          "--cover-turn",
-                          `${across * 10 - 5}deg`
-                        );
-                      }}
-                      aria-label={
-                        zh ? `翻开《${book.title}》` : `Open ${book.title}`
-                      }
-                      onClick={event => {
-                        if (
-                          event.ctrlKey ||
-                          event.metaKey ||
-                          event.shiftKey ||
-                          event.altKey ||
-                          typeof HTMLDialogElement === "undefined" ||
-                          !HTMLDialogElement.prototype.showModal
-                        )
-                          return;
-                        event.preventDefault();
-                        setOpenBook(index);
-                      }}
-                      href={
-                        book.id === "growth"
-                          ? "#growth-data-analytics-playbook"
-                          : `#${book.id}`
-                      }
-                    >
-                      <span className="book-block">
-                        <img
-                          src={cover.src}
-                          alt={cover.alt}
-                          width={cover.width}
-                          height={cover.height}
-                        />
-                      </span>
-                    </a>
-                  );
-                })}
-              </nav>
-              <p className="shelf-hint">
-                {zh ? "点一本书，翻开看看" : "Choose a cover to open the book"}
-              </p>
-            </div>
-          </div>
-        </section>
-
+        <BookGallery lang={lang} />
         <div className="wrap reading-list">
           {books[lang].map(book => {
             const specimen = specimens[book.id as keyof typeof specimens];
@@ -649,9 +434,6 @@ export default function Books() {
             </div>
           </div>
         </section>
-        {openBook !== null && (
-          <BookViewer initial={openBook} onClose={() => setOpenBook(null)} />
-        )}
       </main>
       <SiteFooter />
     </div>

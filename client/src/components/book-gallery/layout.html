@@ -1,0 +1,55 @@
+<a class="skip" href="#details">跳到作品介绍</a>
+<section class="room">
+  <div class="exhibit">
+    <header class="mast">
+      <a class="home" href="/">孙煜征 <span>/</span> 书与出版</a>
+      <div class="mast-actions">
+        <a class="language" href="/en/books" hreflang="en">EN</a
+        ><button hidden id="shelf" aria-pressed="false">看书架</button
+        ><button hidden id="light" aria-pressed="false">
+          <span class="sun" aria-hidden="true">☼</span
+          ><span id="lightLabel">调暗灯光</span>
+        </button>
+      </div>
+    </header>
+    <nav class="index" aria-label="选书"></nav>
+    <h1 class="intro" lang="en">Feels Like Progress</h1>
+    <div class="pair">
+      <div class="stage">
+        <div class="backdrop"></div>
+        <div class="backdrop" style="opacity: 0"></div>
+        <div class="veil"></div>
+        <img
+          class="poster"
+          src="/home/books/gallery/cover.webp"
+          alt="Feels Like Progress"
+        /><canvas class="scene" aria-label="书的三维模型，可拖动翻页"></canvas>
+        <div class="caption">
+          <small></small>
+          <p></p>
+        </div>
+      </div>
+      <section hidden id="details" class="readingtext" tabindex="-1">
+        <div class="info-meta"></div>
+        <h2></h2>
+        <p></p>
+        <figure>
+          <img alt="" />
+          <figcaption></figcaption>
+        </figure>
+        <a></a>
+      </section>
+    </div>
+    <div class="tools">
+      <div class="credit" id="credit"></div>
+      <button id="open"></button><button id="detail">书的来历 ↘</button>
+      <div class="reader-controls" hidden>
+        <button id="close">← 合书</button>
+        <div class="folio" aria-live="polite"></div>
+        <button class="arrow" id="prev" aria-label="上一页">←</button
+        ><button class="arrow" id="next" aria-label="下一页">→</button
+        ><a id="textlink" href="https://makewhatlasts.com/#read">文字版 ↗︎</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -14,9 +14,6 @@
   background: var(--ground);
   color: var(--ink);
   font-family: Arial, "PingFang SC", sans-serif;
-  transition:
-    background-color 0.7s,
-    color 0.7s;
 }
 button,
 a {
@@ -135,8 +132,6 @@ button:disabled {
   height: 100%;
 }
 .backdrop {
-  background-position: center;
-  background-size: cover;
   transition: opacity 0.65s;
   pointer-events: none;
 }
@@ -497,5 +492,103 @@ button:disabled {
   }
   .exhibit.detail .readingtext {
     scroll-margin-top: 16px;
+  }
+}
+
+/* Documentary photographs keep their original edges. The opposite side is the surface supporting the volume. */
+.backdrop {
+  background: #d7d4cb;
+  overflow: hidden;
+}
+.backdrop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.backdrop[data-art="office"],
+.backdrop[data-art="proof"] {
+  display: flex;
+  align-items: center;
+  padding: 2% 0 8% 3.2%;
+  background: #dedbd1;
+}
+.backdrop[data-art="proof"] {
+  background: #d8d7d2;
+}
+.backdrop:is([data-art="office"], [data-art="proof"]) img {
+  width: 47%;
+  height: 100%;
+  max-width: 1000px;
+  object-fit: contain;
+  object-position: left center;
+}
+.stage:is([data-art="office"], [data-art="proof"]) .caption {
+  color: #30372f;
+  text-shadow: none;
+  max-width: 45%;
+}
+.stage[data-art="wine"] .caption {
+  top: clamp(16px, 2.3vw, 38px);
+  bottom: auto;
+  max-width: 36%;
+  text-shadow: 0 1px 3px #17140f;
+}
+.backdrop[data-art="wine"] img {
+  object-position: 45% 56%;
+}
+.backdrop[data-art="kirkland"] img {
+  object-position: 45% 48%;
+}
+.stage[data-art="kirkland"] .caption {
+  text-shadow:
+    0 1px 3px #1f211c,
+    0 2px 12px #171915;
+}
+:host([data-dim]) .stage:is([data-art="office"], [data-art="proof"]) .caption {
+  color: #fffaf0;
+  text-shadow: 0 1px 4px #333;
+}
+.readingtext .artwork-source {
+  margin-top: 1rem;
+  font:
+    12px/1.5 Arial,
+    sans-serif;
+}
+@media (max-width: 680px) {
+  .backdrop:is([data-art="office"], [data-art="proof"]) {
+    padding: 0;
+    align-items: flex-start;
+  }
+  .backdrop:is([data-art="office"], [data-art="proof"]) img {
+    position: absolute;
+    left: 4%;
+    top: 6%;
+    width: 70%;
+    height: 55%;
+    object-position: left top;
+  }
+  .stage:is([data-art="office"], [data-art="proof"]) .caption {
+    max-width: 87%;
+  }
+  .stage[data-art="wine"] .caption {
+    top: 15px;
+    left: 15px;
+    max-width: 72%;
+  }
+  .backdrop[data-art="kirkland"] img {
+    object-position: 60% 45%;
+  }
+  .backdrop[data-art="wine"] img {
+    object-position: 35% 50%;
+  }
+}
+
+@media (max-width: 680px) {
+  .stage .poster {
+    width: 56%;
+    left: 40%;
+    height: 65%;
+    top: 17%;
   }
 }

@@ -31,6 +31,7 @@ const chineseBooks = [
     spine: "#313237",
     credit: "Mengying Li · Joe Kumar · 孙煜征 合著",
     date: "中文版 · 第一章插图",
+    sceneCredit: "克洛德·莫奈　约 1862–1863 年",
     caption: "在餐桌旁，他和客人聊上几句，就知道该推荐哪瓶酒。",
     head: "当侍酒师开了一家网店",
     desc: "到了网上，餐桌旁的几句闲聊消失了。产品做大时，创始人也会失去对用户的感觉。我们从这个故事讲起，再讲留存、增长核算和实验。",
@@ -98,6 +99,7 @@ const englishCopy = [
     short: "Growth Playbook",
     credit: "Mengying Li · Joe Kumar · Yuzheng Sun",
     date: "Chinese edition · Chapter one illustration",
+    sceneCredit: "Claude Monet　·　c. 1862–1863",
     caption:
       "A few minutes at the table told the sommelier which bottle to bring.",
     head: "When a sommelier opened an online shop",

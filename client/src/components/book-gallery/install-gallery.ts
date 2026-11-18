@@ -41,8 +41,9 @@ export function installGallery(host: HTMLDivElement, lang: Lang) {
   }
   // Paint the printed cover while the independent 3D chunk is loading.
   const mobile = window.matchMedia("(max-width: 680px)").matches;
-  root.querySelector<HTMLElement>(".backdrop")!.style.backgroundImage =
-    `url("${mobile ? assets["office-m"] : assets["office-w"]}")`;
+  root.querySelector<HTMLImageElement>(".backdrop img")!.src = mobile
+    ? assets["office-m"]
+    : assets["office-w"];
   root.querySelector("#credit")!.textContent = english
     ? "Yuzheng Sun · Superlinear Press"
     : "孙煜征 著 · Superlinear Press";

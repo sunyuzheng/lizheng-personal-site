@@ -66,10 +66,8 @@ export function mountGallery(root, lang) {
     return b;
   });
   function background(div, d) {
-    div.style.backgroundPosition =
-      small() && d.art === "kirkland" ? "87% center" : "center";
-    div.style.backgroundImage =
-      "url(" + assets[d.art + (small() ? "-m" : "-w")] + ")";
+    div.dataset.art = d.art;
+    div.querySelector("img").src = assets[d.art + (small() ? "-m" : "-w")];
   }
   function updateInfo() {
     const d = defs[selected];
@@ -84,16 +82,23 @@ export function mountGallery(root, lang) {
       : selected === 3
         ? label("出版故事　＋", "Publishing story　＋")
         : label("书的来历　＋", "About the book　＋");
-    $(".caption small").textContent = d.date;
+    stage.dataset.art = d.art;
+    host.toggleAttribute("data-dim", night);
+    $(".caption small").textContent = d.sceneCredit || d.date;
+    $(".artwork-source").hidden = !d.sceneCredit;
+    $(".artwork-source a").textContent = label(
+      "背景画作 · 美国国家美术馆 ↗︎",
+      "Background painting · National Gallery of Art ↗︎"
+    );
     $(".caption p").textContent = d.caption;
-    $(".readingtext figure img").src = assets[d.art];
+    if (detailsOpen) $(".readingtext figure img").src = assets[d.art];
     $(".readingtext figure img").alt = d.date;
     $(".readingtext figcaption").textContent = d.date;
     $(".info-meta").textContent = d.credit;
     $(".readingtext h2").textContent = d.head;
     $(".readingtext p").textContent = d.desc;
-    $(".readingtext a").href = d.link;
-    $(".readingtext a").textContent = d.linkLabel + " ↗︎";
+    $(".book-link").href = d.link;
+    $(".book-link").textContent = d.linkLabel + " ↗︎";
     btns.forEach((b, i) =>
       b.setAttribute("aria-pressed", String(i === selected))
     );
@@ -307,7 +312,7 @@ export function mountGallery(root, lang) {
       o = smooth(open);
     const display = Math.max(
       H / (m ? 0.65 : 0.87),
-      W / (aspect * (m ? 0.59 : 0.49))
+      W / (aspect * (m ? 0.54 : 0.49))
     );
     const readWidth = m ? W * 0.85 : W * 2.15;
     const readHeight = Math.max(H / (m ? 1.07 : 0.91), readWidth / aspect);
@@ -319,7 +324,7 @@ export function mountGallery(root, lang) {
     camera.updateProjectionMatrix();
     const paperFocus = m ? -W * 0.5 * face * smooth((open - 0.62) / 0.38) : 0;
     const targetX = mix(
-      worldWidth * (m ? 0.195 : 0.175) - W * 0.46,
+      worldWidth * (m ? 0.18 : 0.175) - W * 0.46,
       paperFocus,
       o
     );
@@ -351,7 +356,13 @@ export function mountGallery(root, lang) {
       const inShelf = shelf * (1 - (i === selected ? o : 0));
       root.position.set(
         mix(displayX, shelfX + retreat, inShelf),
-        mix(m ? 0.06 : -0.025, -0.016, o),
+        mix(
+          m && (i === 0 || i === 3)
+            ? -worldHeight * 0.05 * (1 - shelf)
+            : -0.025,
+          -0.016,
+          o
+        ),
         mix(
           mix(0.22, 0.015, o) + Math.sin(PI * open) * 0.24,
           -0.11 + 0.24 * weight,

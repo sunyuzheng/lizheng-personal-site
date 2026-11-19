@@ -1,5 +1,5 @@
 // Generated from the pinned Open Context release. Do not edit by hand.
-// Manifest SHA256: 0e9bdbdd4c308f9dcf330e14c5a9a7cbba2ff47d6857ec1b13be44950989e16d
+// Manifest SHA256: 3acf8fade871c75dfed9a480e680d95824bd386585591ca38cddd590dce64435
 // guests.json SHA256: 342e622cdd10977d418c69aaa0617c6a8e7524b8b8e5d649815e0d89aeeceedd
 // guest-articles.json SHA256: dd45794f82e396cb7d2eed5c0fab6ad8d4d64742e3b691f08d5ceb0191cd21ac
 // guest-names.json SHA256: 1eae0e99af80194093bd51e3e000fe8e208b8aae79b700eae5f725cb2cff7712

@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
   "repository": "sunyuzheng/lizheng-open-context",
-  "commit": "f654449dec49a184e4b33c1c628cab952b6ed951",
-  "manifest_sha256": "8256fabf9cb53330177e609dcf70970e5e787f0146fc956a504dbe46830a75cb",
-  "snapshot_sha256": "1d548c98c5d3c85ca0426f494ec432cf1852096238eed192b5ae14beb1a526f5",
+  "commit": "1817eeab0e9e6f47f4890e930488f54b9f313358",
+  "manifest_sha256": "8b1b1c360f213079c5f6cc502df658c2f4fc0fb28e2edbd09339c92d8c53096d",
+  "snapshot_sha256": "7e0a369313e301d616478db01d1b8dbe4f96fe53bd269b9afd1c27c651241914",
   "counts": {
     "guests": 157,
     "videos": 415

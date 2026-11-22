@@ -9,7 +9,7 @@
       "slides": "/decks/zimeiti/slides",
       "nav": "call:deckShowFinal",
       "active": ".slide.cur",
-      "count": 40,
+      "count": 41,
       "viewport": [
         1920,
         1080

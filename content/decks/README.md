@@ -22,7 +22,7 @@
 
 讲稿只在 `sources.json` 写了 `notes` 的 deck 里读。加之前先看一遍备注是不是讲给听众的话：
 
-- 适合：哥伦比亚《假学习的终结》、两套AI副业、腾讯游戏战略、通往AGI之路直播《差的不是人，是市场》，备注就是讲稿。
+- 适合：哥伦比亚《假学习的终结》、两套AI副业、腾讯游戏战略、通往AGI之路直播《差的不是人，是市场》、社区直播《自媒体不是玄学，是手艺》，备注就是讲稿。
 - 不适合：Amazon那套的备注是写给自己的提示（"Open with…""Say that…"）；《AI会让假工作先爆炸，再贬值》是录视频用的提词卡，备注是"照着说""停一下再翻页"。这两套只用幻灯片上的文字。
 
 暂时没做网页版的（卡片照旧链到原来的地方）：
@@ -84,4 +84,3 @@ node scripts/decks/capture_decks.mjs fake-work      # 地址里含这个词的
 - `/decks/ask-lizheng-one-day`（《问问立正一天上线》竖屏PPT，2026-10-26）：给小红书「AI玩家」小赛的短视频录屏用，立正点一下走一步、边讲边录。内容本来就要公开，所以没加密；同样不进列表、不让搜索引擎收录。源文件在 `superlinear/4-知识资产/video-scripts/projects/ask-lizheng-builder-space/vertical-deck/`（`tools/build_dist.sh` 生成 `dist/`），回源是 Vercel 项目 `ask-lizheng-one-day-2026`（`ask-lizheng-one-day-2026.vercel.app`）。
 - `/decks/hicap-aie-2026`（海普智联在AIE上海的演讲《制造业的AI转型，连1%都没完成》第一版，2026-10-30）：给海普团队内部讨论用，整份课件连截图和讲稿一起加密，打开先输密码。源文件和加密构建在 `superlinear/6-活动/AIE shanghai/海普智联演讲/web/`（`build.py` 把图片内嵌进页面，`scripts/build_protected.mjs` 加密），回源是 Vercel 项目 `hicap-aie-2026`（`hicap-aie-2026.vercel.app`）。
 - `/decks/anthropic-ipo`（《Anthropic 上市：用招股书回答六个问题》，2026-11-17）：给立正录 Anthropic 招股书拆解视频用的 16:9 画面，28 屏，点一下走一步、边讲边录，按 N 有讲稿栏。数字都来自公开的招股书，所以没加密；视频还没发，同样不进列表、不让搜索引擎收录。源文件在 `superlinear/4-知识资产/video-scripts/projects/anthropic-ipo-s1-20261117/deck/`（`tools/build_dist.sh` 生成 `dist/`），回源是 Vercel 项目 `anthropic-ipo-deck-2026`（`anthropic-ipo-deck-2026.vercel.app`）。
-- `/decks/zimeiti`（《自媒体不是玄学，是手艺》，2026-11-22）：立正 2026-11-24 社区直播（和 Jiabin Lu）上讲的 16:9 画面，30 屏，点一下走一步，按 N 有讲稿栏；同一个浏览器开两个窗口会同步翻页（一个共享给观众，一个自己看讲稿）。里面有他自己 YouTube 后台的长线数据（订阅、播放、点击率，不含收入），是他说要放的；没加密，不进列表、不让搜索引擎收录。源文件在 `superlinear/6-活动/社区直播/2026-11-24-立正-Jiabin-Lu-死磕自媒体/03-deck/`（`tools/build_dist.sh` 生成 `dist/`），回源是 Vercel 项目 `zimeiti-shouyi-deck-2026`（`zimeiti-shouyi-deck-2026.vercel.app`）。

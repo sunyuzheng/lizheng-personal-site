@@ -2,6 +2,25 @@
   "note": "Which decks get a web version at /decks/<slug>, and how scripts/decks/capture_decks.mjs reads each one. See README.md in this folder.",
   "decks": [
     {
+      "page": "/decks/zimeiti",
+      "deck": "zimeiti-shouyi-2026",
+      "language": "zh",
+      "capture": "https://zimeiti-shouyi-deck-2026.vercel.app/?capture=1",
+      "slides": "/decks/zimeiti/slides",
+      "nav": "call:deckShowFinal",
+      "active": ".slide.cur",
+      "count": 40,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "wait": 500,
+      "notes": {
+        "from": "global",
+        "expr": "deckAPI.says[i].join('')"
+      }
+    },
+    {
       "page": "/decks/end-of-fake-work",
       "deck": "end-of-fake-work-2026",
       "language": "zh",

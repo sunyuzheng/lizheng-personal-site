@@ -110,9 +110,9 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
   const input = useRef<HTMLTextAreaElement>(null);
   // How the question box was last filled, sent with the hand-over: typed or example.
   const questionFrom = useRef("typed");
-  // Which services write and check the answers, named in 说明 (/api/meta). Read once someone starts a
+  // Which service writes the answers, named in 说明 (/api/meta). Read once someone starts a
   // question or opens 说明, which also wakes the answer service before the question arrives there.
-  const [services, setServices] = useState({ model: "", backup: "" });
+  const [services, setServices] = useState({ model: "" });
   const warmed = useRef(false);
   const warm = () => {
     if (warmed.current) return;
@@ -120,12 +120,12 @@ export default function AskLizheng({ lang, children }: { lang: Lang; children?: 
     void fetch("/api/ask-lizheng/meta", { cache: "no-store", credentials: "omit", signal: AbortSignal.timeout(30_000) })
       .then(response => (response.ok ? response.json() : null))
       .then(value => {
-        if (value) setServices({ model: typeof value.model === "string" ? value.model : "", backup: typeof value.backup_model === "string" ? value.backup_model : "" });
+        if (value) setServices({ model: typeof value.model === "string" ? value.model : "" });
       })
       .catch(() => {});
   };
   // The page's own voice; the situation is not kept (since 2026-10-04), and is only offered on ask.lizheng.ai.
-  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(services.model), backup: answerService(services.backup), contextKept: false });
+  const qa = publicQaCopy(lang, { owner: "我", self: "我", answerer: answerService(services.model), contextKept: false });
 
   // Real questions others asked, published from Ops: 最近问 and 最常问, the same lists for everyone;
   // shown on the Chinese page in place of the examples. 最近问 comes first, here as on ask.lizheng.ai

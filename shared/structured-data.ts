@@ -88,6 +88,7 @@ function organizationNodes(lang: SiteLang) {
       "@type": "EducationalOrganization",
       "@id": SUPERLINEAR_ID,
       name: "Superlinear Academy",
+      alternateName: ["超线性学院", "Superlinear"],
       url: "https://www.superlinear.academy/",
       slogan: lang === "en" ? "MAKE WHAT LASTS." : "做点真东西。",
       founder: { "@id": PERSON_ID },

@@ -296,7 +296,7 @@ export function buildProductGuideStructuredData(lang: SiteLang) {
         "@type": "EducationalOrganization",
         "@id": SUPERLINEAR_ID,
         name: "Superlinear Academy",
-        alternateName: "超线性学院",
+        alternateName: ["超线性学院", "Superlinear"],
         url: "https://www.superlinear.academy/community",
         founder: { "@id": PERSON_ID },
       },
